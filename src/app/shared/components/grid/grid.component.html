@@ -383,7 +383,7 @@
     <tr>
     <ng-container *ngFor="let item of data|str2json:true|keyvalue:sort_order_func(sorted); let last=last">
       <ng-container *ngIf="check_empty(item.value)">
-        <td *ngIf="!_.isArray(item.value)" class="text-center" [style.border-right]="last? 'none': '1px solid #e8e8e8'">{{ replace_known_value(item.value) }}</td>
+        <td *ngIf="!_.isArray(item.value)" class="text-center" [style.border-right]="last? 'none': '1px solid #e8e8e8'">{{ item.value|currency:'USD':'symbol-narrow':'1.2-2' }}</td>
         <td *ngIf="_.isArray(item.value)" class="text-center" [style.border-right]="last? 'none': '1px solid #e8e8e8'">
           <ng-container *ngFor="let iv of item.value; let last=last">
             {{ iv }} <br *ngIf="!last"/>
