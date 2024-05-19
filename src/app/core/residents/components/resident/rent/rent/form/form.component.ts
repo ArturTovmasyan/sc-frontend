@@ -147,13 +147,20 @@ export class FormComponent extends AbstractForm implements OnInit {
       const control = this.add_field('source', {
         id: source.id,
         amount: source.get_amount(this.admission.care_level),
-        responsible_person_id: null
+        responsible_person_id: null,
+        field_text: ''
       });
 
       if (source.private_pay) {
         control.get('responsible_person_id').enable();
       } else {
         control.get('responsible_person_id').disable();
+      }
+
+      if (source.field_name !== null) {
+        control.get('field_text').enable();
+      } else {
+        control.get('field_text').disable();
       }
 
       this.source_selector = null;
@@ -184,7 +191,8 @@ export class FormComponent extends AbstractForm implements OnInit {
         return this.formBuilder.group({
           id: [null, Validators.required],
           amount: [null, Validators.required],
-          responsible_person_id: [null, Validators.required]
+          responsible_person_id: [null, Validators.required],
+          field_text: ['', Validators.compose([Validators.required, Validators.maxLength(32)])],
         });
       default:
         return null;
@@ -204,6 +212,12 @@ export class FormComponent extends AbstractForm implements OnInit {
         } else {
           controls[idx].get('responsible_person_id').disable();
         }
+
+        if (source.field_name !== null) {
+          controls[idx].get('field_text').enable();
+        } else {
+          controls[idx].get('field_text').disable();
+        }
       });
     }
   }
@@ -218,6 +232,18 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
 
     return source ? source.title : '';
+  }
+
+  public get_additional_field(idx: number) {
+    const control = this.get_form_array('source').controls[idx];
+
+    let source = null;
+
+    if (control && this.payment_sources) {
+      source = this.payment_sources.filter(item => item.id === control.get('id').value).pop();
+    }
+
+    return source ? source.field_name : '';
   }
 
   public get_group_title() {

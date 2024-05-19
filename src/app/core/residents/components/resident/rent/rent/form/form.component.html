@@ -98,8 +98,11 @@
         <th class="w-25">
           <nz-form-label nzRequired>Amount</nz-form-label>
         </th>
-        <th class="w-50">
+        <th class="w-25">
           <nz-form-label nzRequired>Responsible Person</nz-form-label>
+        </th>
+        <th class="w-25">
+          <nz-form-label nzRequired>Additional Field</nz-form-label>
         </th>
         <th>&nbsp;</th>
       </tr>
@@ -109,7 +112,7 @@
         <td>
           Source(s)
         </td>
-        <td colspan="2">
+        <td colspan="3">
           <nz-select class="sc-wide" nzSize="small" nzMode="default" nzPlaceHolder="Select source" [(ngModel)]="source_selector"
                      [ngModelOptions]="{standalone: true}">
             <nz-option *ngFor="let payment_source of payment_sources"
@@ -141,6 +144,10 @@
               <nz-option [nzLabel]="residentResponsiblePerson.responsible_person|responsible_person" [nzValue]="residentResponsiblePerson.id"></nz-option>
             </ng-container>
           </nz-select>
+        </td>
+        <td>
+          <div style="text-align: center">{{ get_additional_field(i) }}</div>
+          <input *ngIf="get_form_array('source').get(i.toString()).get('field_text').enabled" nz-input placeholder="Field Text" formControlName="field_text">
         </td>
         <td class="text-center">
           <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_source(i);">

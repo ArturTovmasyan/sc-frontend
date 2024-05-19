@@ -98,15 +98,6 @@
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="field_text">Field Text</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('field_text')?'error':null">
-      <input nz-input placeholder="Field Text" formControlName="field_text">
-      <nz-form-explain *ngIf="hasErrors('field_text')">
-        <app-field-errors [errors]="fieldErrors('field_text')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
 
   <div style="text-align: center">
     <strong>Away Reduction</strong>

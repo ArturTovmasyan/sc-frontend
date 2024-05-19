@@ -22,7 +22,6 @@ export class PaymentSource implements IdInterface {
   resident_name: boolean;
   date_of_birth: boolean;
   field_name: string;
-  field_text: string;
   only_for_occupied_days: boolean;
 
   public get_amount(care_level: CareLevel): number {

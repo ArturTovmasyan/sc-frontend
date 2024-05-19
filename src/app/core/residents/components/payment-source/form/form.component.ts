@@ -49,7 +49,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       resident_name: [false, Validators.required],
       date_of_birth: [false, Validators.required],
       field_name: ['', Validators.compose([Validators.maxLength(32)])],
-      field_text: ['', Validators.compose([Validators.maxLength(32)])],
       only_for_occupied_days: [false, Validators.required],
     });
 
