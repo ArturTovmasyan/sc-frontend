@@ -12,6 +12,16 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="in_chooser" nzRequired>In Chooser</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="in_chooser"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('in_chooser')">
+        <app-field-errors [errors]="fieldErrors('in_chooser')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="ffc" nzRequired>FFC</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="ffc"></nz-switch>

@@ -26,6 +26,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
       title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(100)])],
 
+      in_chooser: [true, Validators.required],
       ffc: [true, Validators.required],
       ihc: [true, Validators.required],
       il: [true, Validators.required],
