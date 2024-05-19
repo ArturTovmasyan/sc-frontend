@@ -489,7 +489,7 @@
       "id": "ID",
       "credit_item": "Credit Item",
       "start": "Start Date",
-      "end": "End Date",
+      "end": "Valid Through Date",
       "amount": "Amount",
       "notes": "Notes"
     },
@@ -497,7 +497,7 @@
       "id": "ID",
       "discount_item": "Discount Item",
       "start": "Start Date",
-      "end": "End Date",
+      "end": "Valid Through Date",
       "amount": "Amount",
       "notes": "Notes"
     },
