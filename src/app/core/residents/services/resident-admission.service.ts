@@ -26,41 +26,15 @@ export class ResidentAdmissionService extends GridService<ResidentAdmission> {
     return this.http.get<ResidentAdmission>(this.SERVICE_URL_BASE + `/${resident_id}/active`);
   }
 
-  list_by_options(state: boolean, type: number, type_id: number): Observable<Resident[]> {
-    let prefix = '';
-    let suffix = '';
-
-    if (type == null && type_id == null) {
-      prefix = 'no-admission';
-    } else {
-      if (state) {
-        prefix = 'active';
-      } else {
-        prefix = 'inactive';
-      }
-      suffix = `/${type}/${type_id}`;
-    }
-
-    return this.http.get<Resident[]>(this.SERVICE_URL_BASE + `/${prefix}${suffix}`);
+  public list_active_first(): Observable<any> {
+    return this.http.get(this.SERVICE_URL_BASE + `/active/first`);
   }
 
-  public move(data: any): Observable<any> { // TODO(haykg): review when backend will be ready
-    const request_data = {id: data.id};
-
-    request_data['group_type'] = data.group_type;
-
-    if (data.group_id) {
-      request_data['move_id'] = data.group_id;
-    }
-
-    if (data.bed_id) {
-      request_data['move_id'] = data.bed_id;
-    }
-
-    return this.http.put<Message>(this.SERVICE_URL_BASE + `/${data.id}/move`, request_data);
+  public list_active(type: number, type_id: number): Observable<Resident[]> {
+    return this.http.get<Resident[]>(this.SERVICE_URL_BASE + `/active/${type}/${type_id}`);
   }
 
-  list_by_page(params: {key: any, value: any}[]): Observable<PagedResponse<Resident>> {
+  public list_by_page(params: {key: any, value: any}[]): Observable<PagedResponse<Resident>> {
     let query = new HttpParams();
     if (params) {
       params.forEach(param => {
@@ -82,9 +56,26 @@ export class ResidentAdmissionService extends GridService<ResidentAdmission> {
     let url_segment = `${state}/${page}/${per_page}`;
 
     if (type !== null && type_id !== null && type !== undefined && type_id !== undefined) {
-      url_segment += `/${type}/${type_id}`;
+      url_segment += `?type=${type}&type_id=${type_id}`;
     }
 
-    return this.http.get<PagedResponse<Resident>>(`${this.SERVICE_URL_BASE}/${url_segment}`);
+    return this.http.get<PagedResponse<Resident>>(`${this.SERVICE_URL_BASE}/paged/${url_segment}`);
   }
+
+  public move(data: any): Observable<any> { // TODO(haykg): review when backend will be ready
+    const request_data = {id: data.id};
+
+    request_data['group_type'] = data.group_type;
+
+    if (data.group_id) {
+      request_data['move_id'] = data.group_id;
+    }
+
+    if (data.bed_id) {
+      request_data['move_id'] = data.bed_id;
+    }
+
+    return this.http.put<Message>(this.SERVICE_URL_BASE + `/${data.id}/move`, request_data);
+  }
+
 }

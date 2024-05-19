@@ -159,7 +159,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
       case 'list_admission':
         this.$subscriptions[key] = this.residentAdmission$
-          .list_by_options(true, this.form.get('group').value, this.form.get('group_id').value)
+          .list_active(this.form.get('group').value, this.form.get('group_id').value)
           .pipe(first()).subscribe(res => {
             if (res) {
               this.residents = res;
