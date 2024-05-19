@@ -200,7 +200,7 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
   <div *ngIf="option.facility_bed && option.facility_bed.room && option.facility_bed.room.facility" nz-row
        [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Facility:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.facility_bed.room.facility.name }}</div>
+    <div nz-col [nzSpan]="16"><a [routerLink]="['/facility', option.facility_bed.room.facility.id]">{{ option.facility_bed.room.facility.name }}</a></div>
   </div>
   <div *ngIf="option.facility_bed && option.facility_bed.room" nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Room/Bed:</strong></div>
@@ -215,7 +215,7 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
   <div *ngIf="option.apartment_bed && option.apartment_bed.room && option.apartment_bed.room.apartment" nz-row
        [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Apartment:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.apartment_bed.room.apartment.name }}</div>
+    <div nz-col [nzSpan]="16"><a [routerLink]="['/apartment', option.apartment_bed.room.apartment.id]">{{ option.apartment_bed.room.apartment.name }}</a></div>
   </div>
   <div *ngIf="option.apartment_bed && option.apartment_bed.room" nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Room/Bed:</strong></div>
@@ -250,7 +250,7 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
 
   <div *ngIf="option.region" nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Region:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.region.name }}</div>
+    <div nz-col [nzSpan]="16"><a [routerLink]="['/region', option.region.id]">{{ option.region.name }}</a></div>
   </div>
   <div nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>City State Zip:</strong></div>

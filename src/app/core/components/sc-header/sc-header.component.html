@@ -1,0 +1,5 @@
+<p *ngIf="user && user.space" style="margin: 0;font-weight: 700;font-size: x-large;font-family: sans-serif;">{{ user.space.name }}
+  <ng-container *ngIf="show_group && facility">- {{ facility.name }}</ng-container>
+  <ng-container *ngIf="show_group && apartment">- {{ apartment.name }}</ng-container>
+  <ng-container *ngIf="show_group && region">- {{ region.name }}</ng-container>
+</p>

@@ -10,6 +10,8 @@ import {FormComponent as FacilityFormComponent} from '../form/form.component';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {FacilityService} from '../../../services/facility.service';
 import {Facility} from '../../../models/facility';
+import {ResidentSelectorService} from '../../../services/resident-selector.service';
+import {GroupType} from '../../../models/group-type.enum';
 
 @Component({
   templateUrl: './view.component.html'
@@ -28,6 +30,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     private modal$: NzModalService,
     private title$: TitleService,
     private facility$: FacilityService,
+    private resident_selector$: ResidentSelectorService,
     private route$: ActivatedRoute,
     private auth_$: AuthGuard
   ) {
@@ -59,6 +62,8 @@ export class ViewComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.facility$.get(params.facility_id).pipe(first()).subscribe(res => {
           if (res) {
             this.facility = res;
+            this.resident_selector$.type.next(GroupType.FACILITY);
+            this.resident_selector$.group.next(this.facility.id);
           }
         });
         break;
