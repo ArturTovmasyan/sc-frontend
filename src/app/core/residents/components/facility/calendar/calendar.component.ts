@@ -224,7 +224,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
-      nzWidth: '45rem',
+      nzWidth: '35rem',
       nzTitle: null,
       nzContent: form_component,
       nzFooter: footer
@@ -366,7 +366,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   type_change($event: any) {
-    console.log($event, this.show_resident);
     this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: this.show_resident});
   }
 
