@@ -30,7 +30,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   show: {
     group: boolean, group_all: boolean,
     resident: boolean, resident_all: boolean,
-    date: boolean, date_from: boolean, date_to: boolean
+    date: boolean, date_from: boolean, date_to: boolean, discontinued: boolean
   } = {
     group: false,
     group_all: false,
@@ -38,7 +38,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     resident_all: false,
     date: false,
     date_from: false,
-    date_to: false
+    date_to: false,
+    discontinued: false
   };
 
   private static php2js_date_format(format: string) {
@@ -78,6 +79,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       date_from: [new Date(), Validators.required],
       date_to: [new Date(), Validators.required],
+
+      discontinued: [false, Validators.required],
     });
 
     this.form.disable();
@@ -210,6 +213,13 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.show.resident_all = true;
         this.form.get('resident_all').enable();
       }
+    }
+
+    if (parameters.hasOwnProperty('discontinued')) {
+      const parameter_config = parameters['discontinued'];
+      this.show.discontinued = true;
+      this.form.get('discontinued').enable();
+      this.form.get('discontinued').setValue(false);
     }
 
     if (parameters.hasOwnProperty('group')) {

@@ -109,6 +109,16 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item *ngIf="show.discontinued">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="discontinued">With discontinued medications</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="discontinued"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('discontinued')">
+        <app-field-errors [errors]="fieldErrors('discontinued')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item *ngIf="formErrors()">
     <nz-form-control [nzSm]="24" [nzXs]="24">
       <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>

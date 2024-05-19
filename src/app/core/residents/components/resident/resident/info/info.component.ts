@@ -30,13 +30,6 @@ export class InfoComponent implements OnInit {
   today: Date = new Date();
 
   loading: boolean;
-  protected loading_report: any = {
-    profile_no_admission: false,
-    face_sheet_no_admission: false,
-    medication_chart_no_admission: false,
-    medication_list_resident_no_admission: false
-  };
-
   protected loading_edit_modal: boolean = false;
 
   resident_id: number;
@@ -283,12 +276,9 @@ export class InfoComponent implements OnInit {
     });
   }
 
-  show_report(group: string, alias: string): void {
-    this.loading_report[alias.replace('-', '_')] = true;
-    this.report$.report(group, alias, 'pdf', {group: 1, resident_id: this.residentSelector$.resident.value}, () => {
-      this.loading_report[alias.replace('-', '_')] = false;
+  show_report(group: string, alias: string, params: any = {}): void {
+    this.report$.report(group, alias, 'pdf', {group: 1, resident_id: this.residentSelector$.resident.value, ...params}, () => {
     }, (error) => {
-      this.loading_report[alias.replace('-', '_')] = false;
     });
   }
 }

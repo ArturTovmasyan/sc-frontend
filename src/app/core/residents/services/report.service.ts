@@ -28,6 +28,9 @@ export class ReportService {
     if (params.group_all) {
       request_params = request_params.append('type_all', params.group_all);
     }
+    if (params.discontinued) {
+      request_params = request_params.append('discontinued', params.discontinued);
+    }
     if (params.resident_id) {
       request_params = request_params.append('resident_id', params.resident_id);
     }

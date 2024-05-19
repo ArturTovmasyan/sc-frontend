@@ -11,7 +11,7 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="organization_required" nzRequired>Organization Name</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="organization_required">Organization Name</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="organization_required"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('organization_required')">
@@ -20,7 +20,7 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="representative_required" nzRequired>Representative</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="representative_required">Representative</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="representative_required"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('representative_required')">

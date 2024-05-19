@@ -34,7 +34,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emergency" nzRequired>Emergency</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emergency">Emergency</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="emergency"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('emergency')">
@@ -44,7 +44,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="financially" nzRequired>Financially</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="financially">Financially</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="financially"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('financially')">
