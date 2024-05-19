@@ -459,7 +459,7 @@
       "id": "ID",
       "full_name": "Full Name",
       "organization": "Organization",
-      "email": "E-Mail",
+      "emails": "E-Mail(s)",
       "notes": "Notes",
       "created_by": "Created By",
       "space": "Space"
