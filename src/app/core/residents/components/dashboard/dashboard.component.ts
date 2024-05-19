@@ -6,12 +6,15 @@ import {FacilityService} from '../../services/facility.service';
 import {Facility} from '../../models/facility';
 import {simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
+import {FacilityDashboard} from '../../models/facility-dashboard';
 
 @Component({
   templateUrl: './dashborad.component.html',
   providers: []
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+  FacilityDashboard = FacilityDashboard;
+
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   public facilities: Facility[];
@@ -66,19 +69,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.$subscriptions.hasOwnProperty(key)) {
       this.$subscriptions[key].unsubscribe();
     }
-  }
-
-  getEndingStyle(data: any) {
-    let style = {};
-
-    if (data.ending_occupancy > data.capacity_yellow) {
-      style = {'background-color': '#a2ddb7'};
-    } else if (data.ending_occupancy > data.break_even && data.ending_occupancy <= data.capacity_yellow) {
-      style = {'background-color': '#ffdf7e'};
-    } else if (data.ending_occupancy <= data.break_even) {
-      style = {'background-color': '#ed969e', 'color': 'white', 'font-weight': 'bold'};
-    }
-
-    return style;
   }
 }

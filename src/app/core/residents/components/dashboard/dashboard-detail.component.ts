@@ -5,12 +5,16 @@ import {first} from 'rxjs/operators';
 import {KeyValue} from '@angular/common';
 import {DomSanitizer} from '@angular/platform-browser';
 import {simpleEmptyImage} from 'ng-zorro-antd';
+import {ActivatedRoute} from '@angular/router';
+import { FacilityDashboard } from '../../models/facility-dashboard';
 
 @Component({
   templateUrl: './dashborad-detail.component.html',
   providers: []
 })
 export class DashboardDetailComponent implements OnInit, OnDestroy {
+  FacilityDashboard = FacilityDashboard;
+
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   public lineChartData: Array<any>;
@@ -23,14 +27,14 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private facilityDashboard$: FacilityDashboardService
+    private facilityDashboard$: FacilityDashboardService,
+    private route$: ActivatedRoute
   ) {
     this.$subscriptions = {};
   }
 
   ngOnInit() {
-    this.subscribe('list_facility');
-    this.subscribe('list_dashboard');
+    this.subscribe('param_id');
   }
 
   ngOnDestroy(): void {
@@ -39,12 +43,18 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'param_id':
+        this.$subscriptions[key] = this.route$.paramMap.subscribe(route_params => {
+          if (route_params.has('id')) {
+            const date = new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toJSON();
+            this.subscribe('list_dashboard', {facility_id: route_params.get('id'), date: date});
+          }
+        });
+        break;
       case 'list_dashboard':
-        const date = new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toJSON();
-
         this.$subscriptions[key] = this.facilityDashboard$.all([
-          {key: 'facility_id', value: '5'},
-          {key: 'date_from', value: date}
+          {key: 'facility_id', value: params.facility_id },
+          {key: 'date_from', value: params.date}
         ]).pipe(first()).subscribe(res => {
           if (res) {
             this.dashboardData = res[0];
@@ -81,20 +91,6 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
     if (this.$subscriptions.hasOwnProperty(key)) {
       this.$subscriptions[key].unsubscribe();
     }
-  }
-
-  getEndingStyle(data: any) {
-    let style = {};
-
-    if (data.ending_occupancy > data.capacity_yellow) {
-      style = {'background-color': '#a2ddb7'};
-    } else if (data.ending_occupancy > data.break_even && data.ending_occupancy <= data.capacity_yellow) {
-      style = {'background-color': '#ffdf7e'};
-    } else if (data.ending_occupancy <= data.break_even) {
-      style = {'background-color': '#ed969e', 'color': 'white', 'font-weight': 'bold'};
-    }
-
-    return style;
   }
 
   public no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {

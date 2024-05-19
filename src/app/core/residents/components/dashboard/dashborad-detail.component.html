@@ -58,7 +58,7 @@
           <tr>
             <td>Ending Occ</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
-              <td class="text-center" [ngStyle]="getEndingStyle(item.value)">{{item.value.ending_occupancy}}</td>
+              <td class="text-center" [ngStyle]="FacilityDashboard.getEndingStyle(item.value)">{{item.value.ending_occupancy}}</td>
             </ng-container>
           </tr>
           <tr>

@@ -58,7 +58,7 @@
           <tr>
             <td>Ending Occ</td>
             <ng-container *ngFor="let facility of facilities">
-              <td class="text-center" [ngStyle]="getEndingStyle(dashboardData[facility.id])">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.ending_occupancy : '-' }}</td>
+              <td class="text-center" [ngStyle]="FacilityDashboard.getEndingStyle(dashboardData[facility.id])">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.ending_occupancy : '-' }}</td>
             </ng-container>
           </tr>
           <tr>

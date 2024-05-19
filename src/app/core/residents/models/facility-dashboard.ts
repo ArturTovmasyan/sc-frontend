@@ -8,6 +8,20 @@ export class FacilityDashboard {
 
   name?: string;
   data?: FacilityDashboardData;
+
+  public static getEndingStyle(data: any) {
+    let style = {};
+
+    if (data.ending_occupancy > data.capacity_yellow) {
+      style = {'background-color': '#a2ddb7'};
+    } else if (data.ending_occupancy > data.break_even && data.ending_occupancy <= data.capacity_yellow) {
+      style = {'background-color': '#ffdf7e'};
+    } else if (data.ending_occupancy <= data.break_even) {
+      style = {'background-color': '#ed969e', 'color': 'white', 'font-weight': 'bold'};
+    }
+
+    return style;
+  }
 }
 
 class FacilityDashboardData {
