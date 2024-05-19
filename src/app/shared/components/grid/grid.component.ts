@@ -434,6 +434,15 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected routeInfo(route: string, id: number) {
     const route_prefix = route.replace('/:id', '');
-    return [route_prefix, id];
+
+    const route_params = [];
+    route_params.push(route_prefix);
+    route_params.push(id);
+
+    if (route_prefix === '/resident') {
+      route_params.push({outlets: {'resident-details': ['responsible-persons']}});
+    }
+
+    return route_params;
   }
 }

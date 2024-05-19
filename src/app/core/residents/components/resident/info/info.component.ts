@@ -197,7 +197,9 @@ export class InfoComponent implements OnInit {
                 // TODO(haykg): review add case
                 if (result === null && res !== null && res.length > 0) {
                   modal.close();
-                  this.router$.navigate(['/resident', res[0]]);
+                  this.router$.navigate(
+                    ['/resident', res[0], {outlets: {'resident-details': ['responsible-persons']}}]
+                  );
                 } else {
                   this.loading = true;
                   this.resident$.get(this.resident_id).pipe(first()).subscribe(next => {

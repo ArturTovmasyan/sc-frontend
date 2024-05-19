@@ -1,19 +1,10 @@
 export const navItems = [
-  // {
-  //   name: 'Dashboard',
-  //   url: '/dashboard',
-  //   icon: 'icon-speedometer',
-  //   badge: {
-  //     variant: 'info',
-  //     text: 'NEW'
-  //   }
-  // },
   {
     divider: true
   },
   {
     title: true,
-    name: 'Space',
+    name: 'Residents',
   },
   {
     url: '/residents',
@@ -110,10 +101,6 @@ export const navItems = [
         icon: 'icon-puzzle'
       }
     ]
-  },
-  {
-    title: true,
-    name: 'Common',
   },
   {
     url: '/allergens',
