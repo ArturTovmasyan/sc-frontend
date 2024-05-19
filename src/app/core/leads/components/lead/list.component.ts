@@ -31,8 +31,48 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
 
   ngAfterViewInit(): void {
     this.add_button_right(new Button(
-      'all',
-      'grid.lead-lead-list.button.all',
+      'open',
+      'grid.lead-lead-list.button.open',
+      'default',
+      ButtonMode.FREE_SELECT,
+      null,
+      'fas fa-star-half-alt',
+      false,
+      true,
+      () => {
+          const btn = this._btnBar.buttons_right[0];
+
+          this.params = [];
+          if (btn.name === 'open') {
+              this.params.push({key: 'open', value: '1'});
+          }
+
+          this.reload_data(true);
+      }));
+
+    this.add_button_right(new Button(
+      'closed',
+      'grid.lead-lead-list.button.closed',
+      'default',
+      ButtonMode.FREE_SELECT,
+      null,
+      'fas fa-star-half-alt',
+      false,
+      true,
+      () => {
+          const btn = this._btnBar.buttons_right[1];
+
+          this.params = [];
+          if (btn.name === 'closed') {
+              this.params.push({key: 'closed', value: '1'});
+          }
+
+          this.reload_data(true);
+      }));
+
+    this.add_button_right(new Button(
+      'both',
+      'grid.lead-lead-list.button.both',
       'default',
       ButtonMode.FREE_SELECT,
       null,
@@ -40,41 +80,37 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
       false,
       true,
       () => {
-        const btn = this._btnBar.buttons_right[0];
+          const btn = this._btnBar.buttons_right[2];
 
-        this.params = [];
-        if (btn.name === 'all') {
-          this.params.push({key: 'all', value: '1'});
-        }
+          this.params = [];
+          if (btn.name === 'both') {
+              this.params.push({key: 'both', value: '1'});
+          }
 
-      btn.faIcon = btn.name === 'open' ? 'fas fa-star' : 'fas fa-star-half-alt';
-      btn.title = btn.name === 'open' ? 'grid.lead-lead-list.button.all' : 'grid.lead-lead-list.button.open';
-      btn.name = btn.name === 'open' ? 'all' : 'open';
-
-        this.reload_data(true);
+          this.reload_data(true);
       }));
 
-    this.add_button_right(new Button(
-      'spam',
-      'grid.lead-lead-list.button.spam',
-      'default',
-      ButtonMode.FREE_SELECT,
-      'file-exclamation',
-      null,
-      false,
-      true,
-      () => {
-        const btn = this._btnBar.buttons_right[1];
-
-        this.params = [];
-        if (btn.name === 'spam') {
-          this.params.push({key: 'spam', value: '1'});
-        }
-        this.reload_data(true);
-
-        btn.name = btn.name === 'spam' ? 'not_spam' : 'spam';
-        btn.nzIcon = btn.name === 'spam' ? 'file-exclamation' : 'file-done';
-        btn.title = btn.name === 'not_spam' ? 'grid.lead-lead-list.button.not_spam' : 'grid.lead-lead-list.button.spam';
-      }));
+    // this.add_button_right(new Button(
+      // 'spam',
+      // 'grid.lead-lead-list.button.spam',
+      // 'default',
+      // ButtonMode.FREE_SELECT,
+      // 'file-exclamation',
+      // null,
+      // false,
+      // true,
+      // () => {
+      //   const btn = this._btnBar.buttons_right[4];
+      //
+      //   this.params = [];
+      //   if (btn.name === 'spam') {
+      //     this.params.push({key: 'spam', value: '1'});
+      //   }
+      //   this.reload_data(true);
+      //
+      //   btn.name = btn.name === 'spam' ? 'not_spam' : 'spam';
+      //   btn.nzIcon = btn.name === 'spam' ? 'file-exclamation' : 'file-done';
+      //   btn.title = btn.name === 'not_spam' ? 'grid.lead-lead-list.button.not_spam' : 'grid.lead-lead-list.button.spam';
+      // }));
   }
 }

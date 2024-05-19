@@ -555,10 +555,9 @@
     "lead-lead-list": {
       "button": {
         "open": "Open",
-        "all": "All",
-        "report": "Report",
-        "spam": "Show Spam",
-        "not_spam": "Hide Spam"
+        "closed": "Closed",
+        "both": "Open & Closed",
+        "report": "Report"
       },
       "id": "ID",
       "date": "Date",
