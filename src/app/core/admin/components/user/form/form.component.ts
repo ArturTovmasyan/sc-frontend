@@ -1,4 +1,4 @@
-﻿import {Component, ElementRef, OnInit} from '@angular/core';
+﻿import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
@@ -14,15 +14,13 @@ import {AuthGuard} from '../../../../guards/auth.guard';
 @Component({
   templateUrl: 'form.component.html'
 })
-export class FormComponent extends AbstractForm implements OnInit {
+export class FormComponent extends AbstractForm implements OnInit, AfterViewInit {
   roles: Role[];
   spaces: Space[];
 
   phone_types: { id: PhoneType, name: string }[];
 
   grant_lists: {};
-
-  selectedTab: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,8 +34,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedTab = 0;
-
     this.form = this.formBuilder.group({
       id: [''],
       username: ['', Validators.compose([CoreValidator.notEmpty])],
@@ -73,11 +69,15 @@ export class FormComponent extends AbstractForm implements OnInit {
       const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
       if (invalid_el) {
         const tab_el = invalid_el.closest('.ant-tabs-tabpane');
-        this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
+        this.tabSelected.next([].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el));
       }
     };
 
     this.add_space();
+  }
+
+  ngAfterViewInit() {
+    this.tabCountRecalculate(this._el);
   }
 
   private add_space() {

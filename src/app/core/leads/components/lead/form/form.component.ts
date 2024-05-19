@@ -1,4 +1,4 @@
-﻿import {Component, ElementRef, OnInit} from '@angular/core';
+﻿import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {first} from 'rxjs/operators';
@@ -35,7 +35,7 @@ import {ContactService} from '../../../services/contact.service';
 @Component({
   templateUrl: 'form.component.html'
 })
-export class FormComponent extends AbstractForm implements OnInit {
+export class FormComponent extends AbstractForm implements OnInit, AfterViewInit {
   city_state_zips: CityStateZip[];
   payment_sources: PaymentSource[];
   users: User[];
@@ -52,7 +52,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   phone_types: { id: PhoneType, name: string }[];
 
-  selectedTab: number;
   contact: Contact;
 
   constructor(
@@ -73,8 +72,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedTab = 0;
-
     this.form = this.formBuilder.group({
       id: [''],
 
@@ -119,7 +116,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
       if (invalid_el) {
         const tab_el = invalid_el.closest('.ant-tabs-tabpane');
-        this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
+        this.tabSelected.next([].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el));
       }
     };
 
@@ -147,6 +144,10 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_organization');
     this.subscribe('list_contact');
     this.subscribe('list_referrer_type');
+  }
+
+  ngAfterViewInit() {
+    this.tabCountRecalculate(this._el);
   }
 
   public get_form_array_skeleton(key: string): FormGroup {

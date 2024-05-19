@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {OnDestroy} from '@angular/core';
+import {OnDestroy, TemplateRef, ViewChild} from '@angular/core';
 import {KeyValue} from '@angular/common';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd';
@@ -11,6 +11,8 @@ import {FormGroup} from '@angular/forms';
 
 export class GridComponent<T extends IdInterface, Service extends GridService<T>> implements OnDestroy {
   _ = _;
+
+  @ViewChild('modalFooter') modalFooter: TemplateRef<any>;
 
   protected grid_options_loaded: BehaviorSubject<boolean>;
 
@@ -87,6 +89,17 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   protected $subscriptions: { [key: string]: Subscription; };
 
   protected without_save_and_add: boolean = false;
+
+  protected modal_cancel: () => void;
+  protected modal_previous: () => void;
+  protected modal_next: () => void;
+  protected modal_save: () => void;
+  protected modal_save_add: () => void;
+  protected modal_save_add_show: () => boolean;
+  protected modal_previous_show: () => boolean;
+  protected modal_next_show: () => boolean;
+  protected modal_save_loading: () => boolean;
+  protected modal_save_disabled: () => boolean;
 
   constructor(protected service$: Service, protected title$: TitleService, protected modal$: NzModalService) {
     this.title$.getTitle().subscribe(v => this.title = v);
@@ -364,92 +377,114 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     let valid = false;
     let loading = false;
 
-    const footer = [
-      {
-        label: 'Cancel',
-        onClick: () => {
-          modal.close();
-        }
-      },
-      {
-        type: 'primary',
-        label: 'Save',
-        loading: () => loading,
-        disabled: () => !valid,
-        onClick: () => {
-          loading = true;
-
-          const component = <AbstractForm>modal.getContentComponent();
-          component.before_submit();
-          const form_data = component.formObject.value;
-
-          component.submitted = true;
-
-          submit(form_data).subscribe(
-            res => {
-              loading = false;
-
-              this.reload_data();
-              component.after_submit();
-
-              modal.close();
-            },
-            error => {
-              loading = false;
-
-              component.handleSubmitError(error);
-              component.postSubmit(null);
-              // console.error(error);
-            });
-        }
-      },
-    ];
-
-    if (result === null && this.without_save_and_add === false) {
-      footer.push({
-        type: 'primary',
-        label: 'Save & Add',
-        loading: () => loading,
-        disabled: () => !valid,
-        onClick: () => {
-          loading = true;
-
-          const component = <AbstractForm>modal.getContentComponent();
-          component.before_submit();
-          const form_data = component.formObject.value;
-
-          component.submitted = true;
-
-          submit(form_data).subscribe(
-            res => {
-              loading = false;
-
-              this.reload_data();
-              component.after_submit();
-
-              modal.close();
-
-              this.create_modal(submit, result, form_data);
-            },
-            error => {
-              loading = false;
-
-              component.handleSubmitError(error);
-              component.postSubmit(null);
-              // console.error(error);
-            });
-        }
-      });
-    }
-
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
       nzWidth: '45rem',
       nzTitle: null,
       nzContent: this.component,
-      nzFooter: footer
+      nzFooter: this.modalFooter
     });
+
+    this.modal_cancel = () => {
+      modal.close();
+    };
+    this.modal_save = () => {
+      loading = true;
+
+      const component = <AbstractForm>modal.getContentComponent();
+      component.before_submit();
+      const form_data = component.formObject.value;
+
+      component.submitted = true;
+
+      submit(form_data).subscribe(
+        res => {
+          loading = false;
+
+          this.reload_data();
+          component.after_submit();
+
+          modal.close();
+        },
+        error => {
+          loading = false;
+
+          component.handleSubmitError(error);
+          component.postSubmit(null);
+          // console.error(error);
+        });
+    };
+
+    this.modal_save_add = () => {
+      loading = true;
+
+      const component = <AbstractForm>modal.getContentComponent();
+      component.before_submit();
+      const form_data = component.formObject.value;
+
+      component.submitted = true;
+
+      submit(form_data).subscribe(
+        res => {
+          loading = false;
+
+          this.reload_data();
+          component.after_submit();
+
+          modal.close();
+
+          this.create_modal(submit, result, form_data);
+        },
+        error => {
+          loading = false;
+
+          component.handleSubmitError(error);
+          component.postSubmit(null);
+          // console.error(error);
+        });
+    };
+
+    this.modal_previous = () => {
+      const component = modal.getContentComponent();
+      if (component instanceof AbstractForm) {
+        if (component.tabSelected.value > 0) {
+          if (component.tabSelected.value > 0) {
+            component.tabSelected.next(component.tabSelected.value - 1);
+          }
+        }
+      }
+    };
+
+    this.modal_next = () => {
+      const component = modal.getContentComponent();
+      if (component instanceof AbstractForm) {
+        if (component.tabSelected.value < component.tabCount) {
+            component.tabSelected.next(component.tabSelected.value + 1);
+        }
+      }
+    };
+
+    this.modal_previous_show = () => {
+      const component = modal.getContentComponent();
+      if (component instanceof AbstractForm) {
+        return component.tabCount > 0 && component.tabSelected.value > 0;
+      }
+      return false;
+    };
+
+    this.modal_next_show = () => {
+      const component = modal.getContentComponent();
+      if (component instanceof AbstractForm) {
+        // console.log(component.tabCount);
+        return component.tabCount > 0 && component.tabSelected.value < (component.tabCount - 1);
+      }
+      return false;
+    };
+
+    this.modal_save_add_show = () => result === null && this.without_save_and_add === false;
+    this.modal_save_loading = () => loading;
+    this.modal_save_disabled = () => !valid;
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();

@@ -1,7 +1,7 @@
 ﻿<h4>{{ 'form.admin.user._title'|translate }}</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
-  <nz-tabset [nzSelectedIndex]="selectedTab">
+  <nz-tabset [nzSelectedIndex]="tabSelected.value" (nzSelectedIndexChange)="tabChanged($event);">
     <nz-tab nzTitle="{{ 'form.admin.user.tab_personal_info'|translate }}">
 
       <nz-form-item>

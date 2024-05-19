@@ -1,7 +1,7 @@
 ﻿<h4>Lead</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
-  <nz-tabset [nzSelectedIndex]="selectedTab">
+  <nz-tabset [nzSelectedIndex]="tabSelected.value" (nzSelectedIndexChange)="tabChanged($event);">
     <nz-tab nzTitle="Personal Info">
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>

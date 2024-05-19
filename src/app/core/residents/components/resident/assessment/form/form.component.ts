@@ -1,5 +1,5 @@
 ﻿import * as _ from 'lodash';
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
@@ -12,10 +12,9 @@ import {ResidentSelectorService} from '../../../../services/resident-selector.se
   templateUrl: 'form.component.html',
   styleUrls: ['form.component.scss']
 })
-export class FormComponent extends AbstractForm implements OnInit {
+export class FormComponent extends AbstractForm implements OnInit, AfterViewInit {
   assessment_forms: AssessmentForm[];
 
-  tab_selected: number;
   tab_data_disabled: boolean;
 
   categories: AssessmentCategory[];
@@ -75,7 +74,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tab_selected = 0;
     this.tab_data_disabled = true;
 
     this.category_selected = 0;
@@ -103,12 +101,16 @@ export class FormComponent extends AbstractForm implements OnInit {
       const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
       if (invalid_el) {
         const tab_el = invalid_el.closest('.ant-tabs-tabpane');
-        this.tab_selected = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
+        this.tabSelected.next([].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el));
       }
     };
 
     this.subscribe('rs_resident');
     this.subscribe('list_assessment_form');
+  }
+
+  ngAfterViewInit() {
+    this.tabCountRecalculate(this._el);
   }
 
   protected subscribe(key: string, params?: any): void {

@@ -1,5 +1,5 @@
 ﻿import * as _ from 'lodash';
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
@@ -26,10 +26,8 @@ import {ResidentService} from '../../../../services/resident.service';
 @Component({
   templateUrl: 'form.component.html'
 })
-export class FormComponent extends AbstractForm implements OnInit {
+export class FormComponent extends AbstractForm implements OnInit, AfterViewInit, AfterViewChecked {
   GROUP_TYPE = GroupType;
-
-  selectedTab: number;
 
   public group_helper: GroupHelper;
 
@@ -63,8 +61,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     super();
 
     this.group_helper = new GroupHelper();
-
-    this.selectedTab = 0;
   }
 
   ngOnInit(): void {
@@ -115,9 +111,17 @@ export class FormComponent extends AbstractForm implements OnInit {
       const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
       if (invalid_el) {
         const tab_el = invalid_el.closest('.ant-tabs-tabpane');
-        this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
+        this.tabSelected.next([].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el));
       }
     };
+  }
+
+  ngAfterViewInit() {
+    this.tabCountRecalculate(this._el);
+  }
+
+  ngAfterViewChecked() {
+    this.tabCountRecalculate(this._el);
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -135,7 +139,7 @@ export class FormComponent extends AbstractForm implements OnInit {
               case AdmissionType.DISCHARGE:
                 this.form.get('group').disable();
                 this.form.get('group_type').disable();
-                this.selectedTab = 0;
+                this.tabSelected.next(0);
                 break;
             }
 

@@ -1,3 +1,18 @@
+<ng-template #modalFooter>
+  <button nz-button type="button" nzType="default" (click)="modal_cancel();">Cancel</button>
+  <button *ngIf="modal_previous_show()" nz-button type="button" nzType="default" (click)="modal_previous();">Previous</button>
+  <button *ngIf="modal_next_show()" nz-button type="button" nzType="default" (click)="modal_next();">Next</button>
+  <button *ngIf="!modal_next_show()" nz-button type="button" nzType="primary" (click)="modal_save();"
+          [nzLoading]="modal_save_loading()"
+          [disabled]="modal_save_disabled()">
+    Save
+  </button>
+  <button *ngIf="!modal_next_show() && modal_save_add_show()" nz-button type="button" nzType="dashed" (click)="modal_save_add();"
+          [nzLoading]="modal_save_loading()"
+          [disabled]="modal_save_disabled()">
+    Save & Add
+  </button>
+</ng-template>
 <ng-container *ngIf="card">
   <div class="card">
     <div class="card-header">

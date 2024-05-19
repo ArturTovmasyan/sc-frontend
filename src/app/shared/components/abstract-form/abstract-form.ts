@@ -1,11 +1,14 @@
 import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
 import {FormError} from '../../models/form-error';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {OnDestroy} from '@angular/core';
+import {ElementRef, OnDestroy} from '@angular/core';
 import {NzModalService} from 'ng-zorro-antd';
 
 export class AbstractForm implements OnDestroy {
   public form: FormGroup;
+
+  public tabSelected: BehaviorSubject<number>;
+  public tabCount: number = 0;
 
   public edit_mode: boolean = false;
 
@@ -27,6 +30,7 @@ export class AbstractForm implements OnDestroy {
   };
 
   constructor() {
+    this.tabSelected = new BehaviorSubject<number>(0);
     this._loaded = new BehaviorSubject<boolean>(true);
 
     this.$subscriptions = {};
@@ -376,5 +380,13 @@ export class AbstractForm implements OnDestroy {
         }
       }
     });
+  }
+
+  tabCountRecalculate(el: ElementRef) {
+    this.tabCount = el.nativeElement.querySelectorAll('.ant-tabs-tabpane').length;
+  }
+
+  tabChanged($event: number) {
+    this.tabSelected.next($event);
   }
 }
