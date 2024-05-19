@@ -36,7 +36,7 @@
 
       <div nz-row [nzGutter]="4">
         <div nz-col [nzSpan]="8" class="text-right"><strong>Birthday:</strong></div>
-        <div nz-col [nzSpan]="16">{{ resident.birthday|date:'MMM d, y':'UTC' }}
+        <div nz-col [nzSpan]="16">{{ resident.birthday|date:'MMM d, y' }}
           ({{ today | amDifference: resident.birthday :'years' : false }} years)
         </div>
       </div>
@@ -73,7 +73,7 @@
       <ng-container *ngIf="admission" [ngSwitch]="admission.group_type">
         <div nz-row [nzGutter]="4">
           <div nz-col [nzSpan]="8" class="text-right"><strong>Effective Date:</strong></div>
-          <div nz-col [nzSpan]="16">{{ admission.date|date:'MMM d, y':'UTC' }}</div>
+          <div nz-col [nzSpan]="16">{{ admission.date|date:'MMM d, y' }}</div>
         </div>
 
         <div nz-row [nzGutter]="4">

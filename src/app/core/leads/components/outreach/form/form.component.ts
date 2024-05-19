@@ -124,18 +124,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  before_set_form_data(data: any, previous_data?: any): void {
-    super.before_set_form_data(data, previous_data);
-
-    if (data !== null) {
-      if (data.date !== null && data.date !== undefined) {
-        data.date = DateHelper.convertUTC(data.date);
-      }
-    }
-  }
-
   before_submit(): void {
-    this.form.get('date').setValue(DateHelper.magicDate(this.form.get('date').value));
+    this.form.get('date').setValue(DateHelper.magicDate(this.form.get('date').value)); // TODO: #846 - Review date/time fields in all system
   }
 
 }

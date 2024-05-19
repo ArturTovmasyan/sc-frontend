@@ -210,7 +210,7 @@ export class CoreValidator {
         return null;
       }
 
-      return !(me.value > other.value) ? {'later_than': {value: DateHelper.convertFromUTC(other.value), datetime: datetime}} : null;
+      return !(me.value > other.value) ? {'later_than': {value: other.value, datetime: datetime}} : null;
     };
   }
 
@@ -240,7 +240,7 @@ export class CoreValidator {
         return null;
       }
 
-      return !(me.value >= other.value) ? {'later_than_equal': {value: DateHelper.convertFromUTC(other.value), datetime: datetime}} : null;
+      return !(me.value >= other.value) ? {'later_than_equal': {value: other.value, datetime: datetime}} : null;
     };
   }
 
@@ -270,7 +270,7 @@ export class CoreValidator {
         return null;
       }
 
-      return !(me.value < other.value) ? {'earlier_than': {value: DateHelper.convertFromUTC(other.value), datetime: datetime}} : null;
+      return !(me.value < other.value) ? {'earlier_than': {value: other.value, datetime: datetime}} : null;
     };
   }
 
@@ -300,12 +300,7 @@ export class CoreValidator {
         return null;
       }
 
-      return !(me.value <= other.value) ? {
-        'earlier_than_equal': {
-          value: DateHelper.convertFromUTC(other.value),
-          datetime: datetime
-        }
-      } : null;
+      return !(me.value <= other.value) ? {'earlier_than_equal': {value: other.value, datetime: datetime}} : null;
     };
   }
 

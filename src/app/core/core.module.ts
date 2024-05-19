@@ -319,6 +319,7 @@ import {RentIncreaseReasonPipe} from './residents/pipes/rent-increase-reason.pip
 import {ViewComponent as ResidentRentViewComponent} from './residents/components/resident/rent/rent/view/view.component';
 import {ViewComponent as ResidentRentIncreaseViewComponent} from './residents/components/resident/rent/rent-increase/view/view.component';
 import {EventRepeatPipe} from './residents/pipes/event-repeat.pipe';
+import {DateInterceptor} from './interceptors/date.interceptor';
 
 registerLocaleData(en);
 
@@ -811,6 +812,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: DateInterceptor, multi: true},
     {provide: NZ_I18N, useValue: en_US},
     {provide: NzFormItemComponent},
     {provide: NzFormExplainComponent},

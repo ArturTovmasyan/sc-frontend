@@ -286,18 +286,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  before_set_form_data(data: any, previous_data?: any): void {
-    super.before_set_form_data(data, previous_data);
-
-    if (this.edit_mode) {
-      data.start_date = DateHelper.convertUTC(data.start_date);
-      data.start_time = DateHelper.convertUTC(data.start_time);
-      data.end_date = DateHelper.convertUTC(data.end_date);
-      data.end_time = DateHelper.convertUTC(data.end_time);
-      data.repeat_end = DateHelper.convertUTC(data.repeat_end);
-    }
-  }
-
   after_set_form_data(): void {
     if (this.edit_mode) {
       if (this.form.get('facilities').value === null || this.form.get('facilities').value.length === 0) {

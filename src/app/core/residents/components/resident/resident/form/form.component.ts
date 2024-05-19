@@ -63,7 +63,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     ];
 
     this.disabledDate = (current: Date): boolean => {
-      const today = DateHelper.convertUTC(new Date());
+      const today = new Date();
       return differenceInCalendarDays(current, today) > 0;
     };
 
@@ -264,14 +264,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.photo_file_name = null;
     this.photo_size_exceed = false;
     this.form.get('photo').setValue(null);
-  }
-
-  before_set_form_data(data: any, previous_data?: any): void {
-    super.before_set_form_data(data, previous_data);
-
-    if (this.edit_mode) {
-      data.birthday = DateHelper.convertUTC(data.birthday);
-    }
   }
 
   after_set_form_data(): void {

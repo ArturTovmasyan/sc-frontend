@@ -33,7 +33,7 @@ export class InfoComponent implements OnInit {
 
   state: ResidentState = null;
 
-  today: Date = DateHelper.convertUTC(new Date());
+  today: Date = new Date();
 
   loading: boolean;
   protected loading_edit_modal: boolean = false;
