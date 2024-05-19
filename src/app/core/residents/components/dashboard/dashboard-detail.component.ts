@@ -7,6 +7,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {simpleEmptyImage} from 'ng-zorro-antd';
 import {ActivatedRoute} from '@angular/router';
 import { FacilityDashboard } from '../../models/facility-dashboard';
+import {DateHelper} from '../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: './dashborad-detail.component.html',
@@ -46,7 +47,7 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
       case 'param_id':
         this.$subscriptions[key] = this.route$.paramMap.subscribe(route_params => {
           if (route_params.has('id')) {
-            const date = new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toJSON();
+            const date = DateHelper.getPreviousYear().toJSON();
             this.subscribe('list_dashboard', {facility_id: route_params.get('id'), date: date});
           }
         });

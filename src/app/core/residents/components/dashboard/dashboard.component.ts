@@ -7,6 +7,7 @@ import {Facility} from '../../models/facility';
 import {simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
 import {FacilityDashboard} from '../../models/facility-dashboard';
+import {DateHelper} from '../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: './dashborad.component.html',
@@ -31,7 +32,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {
     this.$subscriptions = {};
 
-    this.todayDate = new Date();
+    this.todayDate = DateHelper.newDate();
   }
 
   ngOnInit() {

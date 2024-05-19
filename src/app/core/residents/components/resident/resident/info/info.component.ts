@@ -33,7 +33,7 @@ export class InfoComponent implements OnInit {
 
   state: ResidentState = null;
 
-  today: Date = new Date();
+  today: Date = DateHelper.newDate();
 
   loading: boolean;
   protected loading_edit_modal: boolean = false;

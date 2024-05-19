@@ -1,4 +1,3 @@
-import * as moment from 'moment';
 import {Injectable} from '@angular/core';
 import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
@@ -7,16 +6,13 @@ import {DateHelper} from '../../shared/helpers/date-helper';
 
 @Injectable()
 export class DateInterceptor implements HttpInterceptor {
-  private dateRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)$/;
-  private utcDateRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
-
   constructor() {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (request.responseType === 'json') {
-      this.convertTo(request.body);
-    }
+    // if (request.responseType === 'json') {
+    //   this.convertTo(request.body);
+    // }
 
     return next.handle(request)
       .pipe(tap((event: HttpEvent<any>) => {
@@ -50,12 +46,12 @@ export class DateInterceptor implements HttpInterceptor {
         this.convertFrom(value);
       }
 
-      if (typeof value === 'string' && this.dateRegex.test(value)) {
+      if (typeof value === 'string' && DateHelper.REGEX_LOCAL.test(value)) {
         object[key] = new Date(value);
       }
 
-      if (typeof value === 'string' && this.utcDateRegex.test(value)) {
-        object[key] = DateHelper.convertUTC(value);
+      if (typeof value === 'string' && DateHelper.REGEX_UTC.test(value)) {
+        object[key] = DateHelper.convertUTCString(value);
       }
     }
   }
@@ -85,7 +81,7 @@ export class DateInterceptor implements HttpInterceptor {
       }
 
       if (value instanceof Date) {
-        object[key] = DateHelper.convertFromUTC(value);
+        object[key] = value; // DateHelper.convertFromUTC(value);
       }
     }
   }

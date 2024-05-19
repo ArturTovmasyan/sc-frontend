@@ -1,4 +1,3 @@
-import * as moment from 'moment';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
@@ -25,6 +24,7 @@ import {ViewComponent as ResidentRentViewComponent} from '../rent/rent/view/view
 import {ViewComponent as ResidentRentIncreaseViewComponent} from '../rent/rent-increase/view/view.component';
 import {ResidentRentService} from '../../../services/resident-rent.service';
 import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
+import {DateHelper} from '../../../../../shared/helpers/date-helper';
 
 @Component({
   selector: 'app-resident-calendar',
@@ -95,8 +95,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: event.id,
                 event_type: CalendarEventType.FACILITY,
-                start: moment(event.start).format('YYYY-MM-DD HH:mm:ss'),
-                end: event.end ? moment(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
+                start: DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
+                end: DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
                 title: event.title
               });
             });
@@ -108,8 +108,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: event.id,
                 event_type: CalendarEventType.RESIDENT,
-                start: moment(event.start).format('YYYY-MM-DD HH:mm:ss'),
-                end: event.end ? moment(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
+                start: DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
+                end: DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
                 title: event.title
               });
             });
@@ -121,7 +121,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: admission.id,
                 event_type: CalendarEventType.ADMISSION,
-                start: moment(admission.start).format('YYYY-MM-DD'),
+                start: DateHelper.formatMoment(admission.start, 'YYYY-MM-DD'),
                 end: null,
                 title: (new AdmissionTypePipe()).transform(admission.admission_type)
               });
@@ -134,8 +134,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: rent.id,
                 event_type: CalendarEventType.RENT,
-                start: moment(rent.start).format('YYYY-MM-DD'),
-                end: rent.end ? moment(rent.end).format('YYYY-MM-DD') : null,
+                start: DateHelper.formatMoment(rent.start, 'YYYY-MM-DD'),
+                end: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD'),
                 title: (new PaymentPeriodPipe()).transform(rent.period)
               });
             });
@@ -147,8 +147,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: rent_increase.id,
                 event_type: CalendarEventType.RENT_INCREASE,
-                start: moment(rent_increase.start).format('YYYY-MM-DD'),
-                end: rent_increase.end ? moment(rent_increase.end).format('YYYY-MM-DD') : null,
+                start: DateHelper.formatMoment(rent_increase.start, 'YYYY-MM-DD'),
+                end: DateHelper.formatMoment(rent_increase.end, 'YYYY-MM-DD'),
                 title: (new RentIncreaseReasonPipe()).transform(rent_increase.reason)
               });
             });

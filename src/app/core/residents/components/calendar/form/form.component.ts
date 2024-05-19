@@ -35,8 +35,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       return false;
     }
 
-    let startDate = this.form.get('start_date').value;
-    startDate = startDate instanceof Date ? startDate : new Date(startDate);
+    const startDate = DateHelper.makeDateOnly(this.form.get('start_date').value);
 
     return differenceInCalendarDays(value, startDate) < 0;
   };
@@ -46,10 +45,11 @@ export class FormComponent extends AbstractForm implements OnInit {
       return [];
     }
 
-    let startDate = this.form.get('start_time').value;
-    startDate = startDate instanceof Date ? startDate : new Date(startDate);
+    const startDate = DateHelper.makeDateOnly(this.form.get('start_date').value);
+    const endDate = DateHelper.makeDateOnly(this.form.get('end_date').value);
+    const startTime = DateHelper.makeDateType(this.form.get('start_time').value);
 
-    return this.numberRange(startDate.getHours());
+    return startDate.getTime() === endDate.getTime() ? this.numberRange(startTime.getHours()) : [];
   };
 
   disabledEndMinutes = (hour: number): number[] => {
@@ -57,10 +57,11 @@ export class FormComponent extends AbstractForm implements OnInit {
       return [];
     }
 
-    let startDate = this.form.get('start_time').value;
-    startDate = startDate instanceof Date ? startDate : new Date(startDate);
+    const startDate = DateHelper.makeDateOnly(this.form.get('start_date').value);
+    const endDate = DateHelper.makeDateOnly(this.form.get('end_date').value);
+    const startTime = DateHelper.makeDateType(this.form.get('start_time').value);
 
-    return startDate.getHours() === hour ? this.numberRange(startDate.getMinutes()) : [];
+    return (startDate.getTime() === endDate.getTime() && startTime.getHours() === hour) ? this.numberRange(startTime.getMinutes()) : [];
   };
 
   disabledRepeatEndDate = (value: Date): boolean => {
@@ -68,11 +69,8 @@ export class FormComponent extends AbstractForm implements OnInit {
       return false;
     }
 
-    let startDate = this.form.get('start_date').value;
-    startDate = startDate instanceof Date ? startDate : new Date(startDate);
-
-    let endDate = this.form.get('end_date').value;
-    endDate = endDate instanceof Date ? endDate : new Date(endDate);
+    const startDate = DateHelper.makeDateOnly(this.form.get('start_date').value);
+    const endDate = DateHelper.makeDateOnly(this.form.get('end_date').value);
 
     return (this.form.get('end_date').enabled && differenceInCalendarDays(value, endDate) < 0)
       || (this.form.get('start_date').enabled && differenceInCalendarDays(value, startDate) < 0);

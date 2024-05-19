@@ -1,4 +1,3 @@
-import * as moment from 'moment';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
@@ -11,10 +10,10 @@ import {AuthGuard} from '../../../guards/auth.guard';
 import {CalendarEventType} from '../../models/event-definition';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {FormComponent} from './form/form.component';
-import {AdmissionType} from '../../models/resident-admission';
 import {UserService} from '../../../admin/services/user.service';
 import {CorporateEventService} from '../../services/corporate-event.service';
 import {TitleService} from '../../../services/title.service';
+import {DateHelper} from '../../../../shared/helpers/date-helper';
 
 @Component({
   selector: 'app-corporate-calendar',
@@ -79,8 +78,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: event.id,
                 event_type: CalendarEventType.CORPORATE,
-                start: moment(event.start).format('YYYY-MM-DD HH:mm:ss'),
-                end: event.end ? moment(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
+                start: DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
+                end: DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
                 title: event.title
               });
             });
@@ -94,19 +93,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   addIfHasPermission(permission: string) {
     return this.auth_$.checkPermission([permission]);
-  }
-
-  formatAdmissionEnd(admission: any) {
-    if (admission.end === null) {
-      if (admission.admission_type === AdmissionType.DISCHARGE) {
-        return null;
-      } else {
-        return moment(new Date()).format('YYYY-MM-DD');
-      }
-    } else {
-      return moment(admission.end).format('YYYY-MM-DD');
-    }
-
   }
 
   show_modal_add(): void {
