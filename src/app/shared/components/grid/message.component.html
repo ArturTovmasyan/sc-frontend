@@ -1,6 +1,6 @@
 <nz-alert *ngIf="(title !== null || message !== null) && (title !== '' || message !== '')"
           nzShowIcon [nzType]="type" [nzMessage]="title" [nzDescription]="message"></nz-alert>
-<p class="text-center">
-  <i *ngIf="!((title !== null || message !== null) && (title !== '' || message !== ''))" class="fa fa-warning text-danger"></i>
+<p class="text-center text-danger">
+  <i *ngIf="!((title !== null || message !== null) && (title !== '' || message !== ''))" class="fa fa-warning"></i>
   Are you sure you want to <strong>delete</strong> selected record(s)?
 </p>
