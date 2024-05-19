@@ -7,7 +7,7 @@ import {KeyValue} from '@angular/common';
 import {DomSanitizer} from '@angular/platform-browser';
 import {simpleEmptyImage} from 'ng-zorro-antd';
 import {ActivatedRoute} from '@angular/router';
-import { FacilityDashboard } from '../../models/facility-dashboard';
+import {FacilityDashboard} from '../../models/facility-dashboard';
 import {DateHelper} from '../../../../shared/helpers/date-helper';
 
 @Component({
@@ -25,6 +25,8 @@ export class DashboardMonthlyComponent implements OnInit, OnDestroy {
   public facilityId: number;
   public facilityName: string;
   public dashboardData: any;
+
+  public currentDate: Date;
 
   protected $subscriptions: { [key: string]: Subscription; };
 
@@ -49,15 +51,15 @@ export class DashboardMonthlyComponent implements OnInit, OnDestroy {
       case 'param_id':
         this.$subscriptions[key] = this.route$.paramMap.subscribe(route_params => {
           if (route_params.has('id')) {
-            const date = DateHelper.getPreviousYear();
-            this.subscribe('list_dashboard', {facility_id: route_params.get('id'), date: date});
+            this.getCurrentMonth(parseInt(route_params.get('id'), 10));
           }
         });
         break;
       case 'list_dashboard':
         this.$subscriptions[key] = this.facilityDashboard$.all([
-          {key: 'facility_id', value: params.facility_id },
-          {key: 'date_from', value: moment(params.date).format('YYYY-MM-DD')},
+          {key: 'facility_id', value: params.facility_id},
+          {key: 'date_from', value: moment(params.from).format('YYYY-MM-DD')},
+          {key: 'date_to', value: moment(params.to).format('YYYY-MM-DD')},
           {key: 'type', value: '1'}
         ]).pipe(first()).subscribe(res => {
           if (res) {
@@ -100,5 +102,50 @@ export class DashboardMonthlyComponent implements OnInit, OnDestroy {
 
   public no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {
     return 0;
+  }
+
+  show(button: string): boolean {
+    const today = moment(DateHelper.newDate());
+    const current = moment(this.currentDate);
+
+    switch (button) {
+      case 'previous':
+        return false;
+      case 'next':
+        return current.isSameOrAfter(today, 'month');
+    }
+  }
+
+  getCurrentMonth(facility_id: number): void {
+    const fromDate = DateHelper.getPreviousYear();
+    this.currentDate = DateHelper.newDate();
+
+    this.subscribe('list_dashboard', {facility_id: facility_id, from: fromDate, to: this.currentDate});
+  }
+
+  getPreviousMonth(): void {
+    const today = moment(DateHelper.newDate());
+    const fromDate = moment(this.currentDate).subtract(2, 'years').startOf('month').toDate();
+    this.currentDate = moment(this.currentDate).subtract(1, 'years').endOf('month').toDate();
+
+    console.log(fromDate, this.currentDate);
+
+    if (today.isSame(this.currentDate, 'month')) {
+      this.currentDate = today.toDate();
+    }
+
+    this.subscribe('list_dashboard', {facility_id: this.facilityId, from: fromDate, to: this.currentDate});
+  }
+
+  getNextMonth(): void {
+    const today = moment(DateHelper.newDate());
+    const fromDate = moment(this.currentDate).add(1, 'years').startOf('month').toDate();
+    this.currentDate = moment(this.currentDate).add(2, 'years').endOf('month').toDate();
+
+    if (today.isSame(this.currentDate, 'month')) {
+      this.currentDate = today.toDate();
+    }
+
+    this.subscribe('list_dashboard', {facility_id: this.facilityId, from: fromDate, to: this.currentDate});
   }
 }

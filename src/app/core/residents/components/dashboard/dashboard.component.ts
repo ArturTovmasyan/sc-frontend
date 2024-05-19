@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   show(button: string): boolean {
-    const today = moment(new Date());
+    const today = moment(DateHelper.newDate());
     const current = moment(this.currentDate);
 
     switch (button) {
@@ -97,7 +97,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getCurrentMonth(): void {
-    const today = moment(new Date());
+    const today = moment(DateHelper.newDate());
     const fromDate = moment(today).startOf('month').toDate();
     this.currentDate = today.toDate();
 
@@ -105,7 +105,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getPreviousMonth(): void {
-    const today = moment(new Date());
+    const today = moment(DateHelper.newDate());
     const fromDate = moment(this.currentDate).subtract(1, 'months').startOf('month').toDate();
     this.currentDate = moment(this.currentDate).subtract(1, 'months').endOf('month').toDate();
 
@@ -117,7 +117,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getNextMonth(): void {
-    const today = moment(new Date());
+    const today = moment(DateHelper.newDate());
     const fromDate = moment(this.currentDate).add(1, 'months').startOf('month').toDate();
     this.currentDate = moment(this.currentDate).add(1, 'months').endOf('month').toDate();
 

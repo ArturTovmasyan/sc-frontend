@@ -1,7 +1,14 @@
 <div class="card">
   <div class="card-header">
-    {{ facilityName }} Weekly Dashboard {{ title ? '(' + title + ')' : ''}}
-  </div>
+    <div class="d-flex justify-content-between">
+      <button style="margin-top: 0.1rem;" nz-button nzType="default" [disabled]="show('previous')"
+              (click)="getPreviousMonth()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous
+      </button>
+      {{ facilityName }} Weekly Dashboard ({{ currentDate|date:'MMM-yy' }})
+      <button style="margin-top: 0.1rem;" nz-button nzType="default" [disabled]="show('next')" (click)="getNextMonth()">
+        Next <i nz-icon nzType="arrow-right" nzTheme="outline"></i></button>
+    </div>
+</div>
   <div class="card-body">
     <div class="d-flex justify-content-center">
       <nz-empty *ngIf="!dashboardData" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>

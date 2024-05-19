@@ -1,6 +1,10 @@
 <div class="card">
   <div class="card-header">
-    Dashboard
+    <div class="d-flex justify-content-between">
+      <button style="margin-top: 0.1rem;" nz-button nzType="default" [disabled]="show('previous')" (click)="getPreviousMonth()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous</button>
+      Dashboard
+      <button style="margin-top: 0.1rem;" nz-button nzType="default" [disabled]="show('next')" (click)="getNextMonth()">Next <i nz-icon nzType="arrow-right" nzTheme="outline"></i></button>
+    </div>
   </div>
   <div class="card-body">
     <div class="d-flex justify-content-center">
@@ -9,12 +13,8 @@
       <div *ngIf="dashboardData && facilities" class="table-responsive">
         <table class="table table-sm table-bordered">
           <tr>
-            <th [colSpan]="1 + (facilities ? facilities.length : 0)">
-              <div class="d-flex justify-content-between">
-                <button nz-button nzType="default" [disabled]="show('previous')" (click)="getPreviousMonth()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous</button>
+            <th class="text-center" [colSpan]="1 + (facilities ? facilities.length : 0)">
                 {{ currentDate|date:'MM/01/yyyy' }} through {{ currentDate|date:'MM/dd/yyyy'}}
-                <button nz-button nzType="default" [disabled]="show('next')" (click)="getNextMonth()">Next <i nz-icon nzType="arrow-right" nzTheme="outline"></i></button>
-              </div>
             </th>
           </tr>
           <tr>
