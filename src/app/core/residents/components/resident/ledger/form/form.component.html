@@ -5,7 +5,7 @@
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="amount">Amount</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('amount')?'error':null">
       <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
-                       nzPlaceHolder="Amount" formControlName="amount" [nzDisabled]="true"></nz-input-number>
+                       nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('amount')">
         <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
       </nz-form-explain>
@@ -15,7 +15,7 @@
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="balance_due">Balance Due</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('balance_due')?'error':null">
       <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
-                       nzPlaceHolder="Balance Due" formControlName="balance_due" [nzDisabled]="true"></nz-input-number>
+                       nzPlaceHolder="Balance Due" formControlName="balance_due"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('balance_due')">
         <app-field-errors [errors]="fieldErrors('balance_due')"></app-field-errors>
       </nz-form-explain>
@@ -37,11 +37,11 @@
       <tbody>
       <tr *ngFor="let item of get_form_array('source').controls;let i = index" [formGroupName]="i">
         <td>
-          <input type="hidden" formControlName="id" [disabled]="true">
+          <input type="hidden" formControlName="id">
           {{ get_title(i) }}
         </td>
         <td>
-          <nz-input-number [nzMin]="0" [nzStep]="0.01" [nzFormatter]="formatterDollar" [nzDisabled]="true"
+          <nz-input-number [nzMin]="0" [nzStep]="0.01" [nzFormatter]="formatterDollar"
                            nzSize="small" nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
         </td>
       </tr>

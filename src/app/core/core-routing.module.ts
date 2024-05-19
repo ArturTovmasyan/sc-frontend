@@ -50,7 +50,7 @@ import {ListComponent as PaymentSourceListComponent} from './residents/component
 import {ListComponent as RpPaymentTypeListComponent} from './residents/components/rp-payment-type/list.component';
 import {ListComponent as ExpenseItemListComponent} from './residents/components/expense-item/list.component';
 import {ListComponent as CreditDiscountItemListComponent} from './residents/components/credit-discount-item/list.component';
-import {ListComponent as KeyFinanceTypeListComponent} from './residents/components/key-finance-type/list.component';
+import {ListComponent as KeyFinanceDatesListComponent} from './residents/components/key-finance-dates/list.component';
 import {ListComponent as AssessmentCategoryListComponent} from './residents/components/assessment/category/list.component';
 import {ListComponent as AssessmentFormListComponent} from './residents/components/assessment/form/list.component';
 import {ListComponent as AssessmentCareLevelListComponent} from './residents/components/assessment/care-level/list.component';
@@ -654,11 +654,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'key-finance-types', component: KeyFinanceTypeListComponent,
+        path: 'key-finance-dates', component: KeyFinanceDatesListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
-          title: 'Key Finance Types',
-          permissions: ['activity-reference', 'persistence-common-key_finance_type']
+          title: 'Key Finance Dates',
+          permissions: ['activity-reference', 'persistence-common-key_finance_dates']
         },
         canActivate: [AuthGuard]
       },

@@ -35,9 +35,9 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.form = this.formBuilder.group({
             id: [''],
 
-            amount: [0, Validators.compose([Validators.required])],
+            amount: [{value: 0, disabled: true}, Validators.compose([Validators.required])],
 
-            balance_due: [0, Validators.compose([Validators.required])],
+            balance_due: [{value: 0, disabled: true}, Validators.compose([Validators.required])],
 
             source: this.formBuilder.array([]),
 
@@ -73,8 +73,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     switch (key) {
       case 'source':
         return this.formBuilder.group({
-          id: [null, Validators.required],
-          amount: [null, Validators.required],
+          id: [{value: null, disabled: true}, Validators.required],
+          amount: [{value: null, disabled: true}, Validators.required],
         });
       default:
         return null;

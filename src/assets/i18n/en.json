@@ -174,9 +174,10 @@
       "valid_through_date": "Valid Through Date",
       "space": "Space"
     },
-    "key-finance-type-list": {
+    "key-finance-dates-list": {
       "id": "ID",
       "title": "Title",
+      "date": "Date",
       "description": "Description",
       "space": "Space"
     },
@@ -489,12 +490,6 @@
       "start": "1st Day Away",
       "end": "Last Day Away",
       "reason": "Reason"
-    },
-    "resident-key-finance-date-list": {
-      "id": "ID",
-      "title": "Title",
-      "date": "Date",
-      "description": "Description"
     },
     "resident-rent-increase-list": {
       "id": "ID",

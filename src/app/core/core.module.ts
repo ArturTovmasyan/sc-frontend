@@ -193,9 +193,6 @@ import {FormComponent as ResidentPaymentReceivedItemFormComponent} from './resid
 import {ListComponent as ResidentAwayDaysListComponent} from './residents/components/resident/ledger/ledger/away-days/list.component';
 import {FormComponent as ResidentAwayDaysFormComponent} from './residents/components/resident/ledger/ledger/away-days/form/form.component';
 
-import {ListComponent as ResidentKeyFinanceDateListComponent} from './residents/components/resident/ledger/ledger/key-finance-date/list.component';
-import {FormComponent as ResidentKeyFinanceDateFormComponent} from './residents/components/resident/ledger/ledger/key-finance-date/form/form.component';
-
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
 import {FormComponent as ResidentDietFormComponent} from './residents/components/resident/dietary-restriction/form/form.component';
 
@@ -243,8 +240,8 @@ import {FormComponent as ExpenseItemFormComponent} from './residents/components/
 import {ListComponent as CreditDiscountItemListComponent} from './residents/components/credit-discount-item/list.component';
 import {FormComponent as CreditDiscountItemFormComponent} from './residents/components/credit-discount-item/form/form.component';
 
-import {ListComponent as KeyFinanceTypeListComponent} from './residents/components/key-finance-type/list.component';
-import {FormComponent as KeyFinanceTypeFormComponent} from './residents/components/key-finance-type/form/form.component';
+import {ListComponent as KeyFinanceDatesListComponent} from './residents/components/key-finance-dates/list.component';
+import {FormComponent as KeyFinanceDatesFormComponent} from './residents/components/key-finance-dates/form/form.component';
 
 import {ListComponent as EventDefinitionListComponent} from './residents/components/event-definition/list.component';
 import {FormComponent as EventDefinitionFormComponent} from './residents/components/event-definition/form/form.component';
@@ -620,9 +617,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentAwayDaysListComponent,
     ResidentAwayDaysFormComponent,
 
-    ResidentKeyFinanceDateListComponent,
-    ResidentKeyFinanceDateFormComponent,
-
     ResidentAssessmentListComponent,
     ResidentAssessmentFormComponent,
 
@@ -639,8 +633,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RpPaymentTypeListComponent,
     RpPaymentTypeFormComponent,
 
-    KeyFinanceTypeListComponent,
-    KeyFinanceTypeFormComponent,
+    KeyFinanceDatesListComponent,
+    KeyFinanceDatesFormComponent,
 
     ExpenseItemListComponent,
     ExpenseItemFormComponent,
@@ -869,8 +863,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentAwayDaysFormComponent,
 
-    ResidentKeyFinanceDateFormComponent,
-
     ResidentAssessmentFormComponent,
 
     ReportFormComponent,
@@ -878,7 +870,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PaymentSourceFormComponent,
     PaymentSourceBaseRateFormComponent,
     RpPaymentTypeFormComponent,
-    KeyFinanceTypeFormComponent,
+    KeyFinanceDatesFormComponent,
     ExpenseItemFormComponent,
     CreditDiscountItemFormComponent,
 
