@@ -20,7 +20,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description" nzRequired>Description</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description">Description</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('description')?'error':null">
       <textarea formControlName="description" nz-input rows="2" placeholder="Description"></textarea>
       <nz-form-explain *ngIf="hasErrors('description')">

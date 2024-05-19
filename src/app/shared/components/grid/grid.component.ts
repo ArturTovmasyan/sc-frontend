@@ -213,8 +213,12 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   }
 
   show_modal_edit(): void {
+    this.open_edit_modal(this.checkbox_config.ids[0]);
+  }
+
+  open_edit_modal(id: number) {
     this.loading_edit_modal = true;
-    this.load_data(this.checkbox_config.ids[0]).subscribe(
+    this.load_data(id).subscribe(
       res => {
         this.loading_edit_modal = false;
 

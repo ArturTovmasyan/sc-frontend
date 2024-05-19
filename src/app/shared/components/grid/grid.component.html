@@ -29,7 +29,7 @@
     </nz-button-group>
 
     <!--<nz-button-group [nzSize]="'small'" class="ml-auto">-->
-      <!--{{ checkbox_config.ids }}-->
+    <!--{{ checkbox_config.ids }}-->
     <!--</nz-button-group>-->
 
 
@@ -47,7 +47,7 @@
 
     <nz-button-group [nzSize]="'small'" class="ml-auto">
       <!--<button nz-button nzType="dashed" (click)="download_pdf()">-->
-        <!--<i nz-icon type="file-pdf"></i> {{ "grid.pdf"|translate }}-->
+      <!--<i nz-icon type="file-pdf"></i> {{ "grid.pdf"|translate }}-->
       <!--</button>-->
     </nz-button-group>
   </div>
@@ -73,35 +73,54 @@
       <th nzShowCheckbox [(nzChecked)]="checkbox_config.all" [nzIndeterminate]="checkbox_config.indeterminate"
           (nzCheckedChange)="checkbox_all($event)"></th>
       <ng-template ngFor let-field [ngForOf]="fields" let-first="first">
-        <th *ngIf="!field.hidden && field.sortable && !field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id">
+        <th *ngIf="!field.hidden && field.sortable && !field.filterable" [nzShowSort]="field.sortable"
+            [nzSortKey]="field.id">
           {{ ("grid." + name + "." + field.id)|translate }}
         </th>
         <th *ngIf="!field.hidden && !field.sortable && field.filterable" nzCustomFilter [ngSwitch]="field.type">
           {{ ("grid." + name + "." + field.id)|translate }}
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'id'" [ngTemplateOutlet]="filterNumber"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'string'" [ngTemplateOutlet]="filterString"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'number'" [ngTemplateOutlet]="filterNumber"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'date'" [ngTemplateOutlet]="filterDate"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'datetime'" [ngTemplateOutlet]="filterDate"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'time'" [ngTemplateOutlet]="filterDate"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'enum'" [ngTemplateOutlet]="filterEnum"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'boolean'" [ngTemplateOutlet]="filterEnum"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'id'"
+                    [ngTemplateOutlet]="filterNumber"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'string'"
+                    [ngTemplateOutlet]="filterString"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'number'"
+                    [ngTemplateOutlet]="filterNumber"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'date'"
+                    [ngTemplateOutlet]="filterDate"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'datetime'"
+                    [ngTemplateOutlet]="filterDate"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'time'"
+                    [ngTemplateOutlet]="filterDate"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'enum'"
+                    [ngTemplateOutlet]="filterEnum"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'boolean'"
+                    [ngTemplateOutlet]="filterEnum"></template>
           <strong *ngSwitchDefault>?</strong>
         </th>
-        <th *ngIf="!field.hidden && field.sortable && field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id"
+        <th *ngIf="!field.hidden && field.sortable && field.filterable" [nzShowSort]="field.sortable"
+            [nzSortKey]="field.id"
             nzCustomFilter [ngSwitch]="field.type">
           {{ ("grid." + name + "." + field.id)|translate }}
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'id'" [ngTemplateOutlet]="filterNumber"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'string'" [ngTemplateOutlet]="filterString"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'number'" [ngTemplateOutlet]="filterNumber"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'date'" [ngTemplateOutlet]="filterDate"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'datetime'" [ngTemplateOutlet]="filterDate"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'time'" [ngTemplateOutlet]="filterDate"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'enum'" [ngTemplateOutlet]="filterEnum"></template>
-          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'boolean'" [ngTemplateOutlet]="filterEnum"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'id'"
+                    [ngTemplateOutlet]="filterNumber"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'string'"
+                    [ngTemplateOutlet]="filterString"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'number'"
+                    [ngTemplateOutlet]="filterNumber"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'date'"
+                    [ngTemplateOutlet]="filterDate"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'datetime'"
+                    [ngTemplateOutlet]="filterDate"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'time'"
+                    [ngTemplateOutlet]="filterDate"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'enum'"
+                    [ngTemplateOutlet]="filterEnum"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'boolean'"
+                    [ngTemplateOutlet]="filterEnum"></template>
           <strong *ngSwitchDefault>?</strong>
         </th>
-        <th *ngIf="!field.hidden && !field.sortable && !field.filterable">{{ ("grid." + name + "." + field.id)|translate }}</th>
+        <th
+          *ngIf="!field.hidden && !field.sortable && !field.filterable">{{ ("grid." + name + "." + field.id)|translate }}</th>
       </ng-template>
     </tr>
     </thead>
@@ -128,7 +147,12 @@
           {{ row[field.id]|date:'MM/dd/yyyy HH:mm:ss' }}
         </ng-container>
         <ng-container *ngSwitchDefault>
-          <a *ngIf="field.link" [routerLink]="routeInfo(field.link, row.id)">{{ row[field.id] }}</a>
+          <ng-container *ngIf="field.link">
+            <ng-container [ngSwitch]="field.link">
+              <a *ngSwitchCase="':edit'" href="javascript:void(0);" (click)="open_edit_modal(row.id)">{{ row[field.id] }}</a>
+              <a *ngSwitchDefault [routerLink]="routeInfo(field.link, row.id)">{{ row[field.id] }}</a>
+            </ng-container>
+          </ng-container>
           <span *ngIf="!field.link">{{ row[field.id] }}</span>
         </ng-container>
       </td>
