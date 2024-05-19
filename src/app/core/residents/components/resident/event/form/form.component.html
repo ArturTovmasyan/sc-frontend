@@ -29,7 +29,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item *ngIf="show.date">
+  <nz-form-item *ngIf="this.form.get('additional_date').enabled">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="additional_date" nzRequired>End Date</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('additional_date')?'error':null">
       <nz-date-picker formControlName="additional_date"></nz-date-picker>
@@ -40,7 +40,7 @@
   </nz-form-item>
 
 
-  <nz-form-item *ngIf="show.physician">
+  <nz-form-item *ngIf="this.form.get('physician_id').enabled">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician_id" nzRequired>Physician</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('physician_id')?'error':null">
       <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
@@ -54,7 +54,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item *ngIf="show.responsible_person">
+  <nz-form-item *ngIf="this.form.get('responsible_person_id').enabled">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_person_id" nzRequired>Responsible Person</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_person_id')?'error':null">
       <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">

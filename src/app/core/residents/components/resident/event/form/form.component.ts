@@ -24,8 +24,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   resident_id: number;
 
-  show: { date: boolean, physician: boolean, responsible_person: boolean } = {date: false, physician: false, responsible_person: false};
-
   constructor(
     private formBuilder: FormBuilder,
     private medication$: MedicationService,
@@ -56,6 +54,10 @@ export class FormComponent extends AbstractForm implements OnInit {
       resident_id: [null, Validators.required]
     });
 
+    this.form.get('additional_date').disable();
+    this.form.get('responsible_person_id').disable();
+    this.form.get('physician_id').disable();
+
     this.subscribe('rs_resident');
     this.subscribe('list_definition');
     this.subscribe('list_physician');
@@ -73,6 +75,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             if (params) {
               this.form.get('definition_id').setValue(params.definition_id);
+            } else {
+              this.form.get('definition_id').setValue(this.form.get('definition_id').value);
             }
           }
         });
@@ -81,6 +85,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.physician$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.physicians = res;
+            this.form.get('physician_id').setValue(this.form.get('physician_id').value);
           }
         });
         break;
@@ -88,22 +93,34 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.responsible_person$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.responsible_persons = res;
+            this.form.get('responsible_person_id').setValue(this.form.get('responsible_person_id').value);
           }
         });
         break;
       case 'vc_definition_id':
         this.$subscriptions[key] = this.form.get('definition_id').valueChanges.subscribe(next => {
-          const definition = this.definitions.filter(item => item.id === this.form.get('definition_id').value).pop();
+          if (next) {
+            const definition = this.definitions.filter(item => item.id === next).pop();
 
-          // TODO: review
-          if (definition) {
-            this.show.date = definition.additional_date;
-            this.show.responsible_person = definition.responsible_person;
-            this.show.physician = definition.physician;
+            if (definition) {
+              if (definition.additional_date) {
+                this.form.get('additional_date').enable();
+              } else {
+                this.form.get('additional_date').disable();
+              }
 
-            this.show.date ? this.form.get('additional_date').enable() : this.form.get('additional_date').disable();
-            this.show.responsible_person ? this.form.get('responsible_person_id').enable() : this.form.get('responsible_person_id').disable();
-            this.show.physician ? this.form.get('physician_id').enable() : this.form.get('physician_id').disable();
+              if (definition.physician) {
+                this.form.get('physician_id').enable();
+              } else {
+                this.form.get('physician_id').disable();
+              }
+
+              if (definition.responsible_person) {
+                this.form.get('responsible_person_id').enable();
+              } else {
+                this.form.get('responsible_person_id').disable();
+              }
+            }
           }
         });
         break;
