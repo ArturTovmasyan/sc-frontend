@@ -47,6 +47,8 @@ import {FormComponent as RoleFormComponent} from './admin/components/role/form/f
 import {ListComponent as SpaceListComponent} from './admin/components/space/list.component';
 import {FormComponent as SpaceFormComponent} from './admin/components/space/form/form.component';
 
+import {DocumentViewerComponent} from './components/document-viewer/document-viewer.component';
+
 import {ListComponent as AllergenListComponent} from './residents/components/allergen/list.component';
 import {FormComponent as AllergenFormComponent} from './residents/components/allergen/form/form.component';
 
@@ -113,12 +115,15 @@ import {FormComponent as FacilityRoomFormComponent} from './residents/components
 import {ListComponent as FacilityRoomTypeListComponent} from './residents/components/facility-room-type/list.component';
 import {FormComponent as FacilityRoomTypeFormComponent} from './residents/components/facility-room-type/form/form.component';
 
+import {ListComponent as FacilityRoomBaseRateListComponent} from './residents/components/facility-room-base-rate/list.component';
+import {FormComponent as FacilityRoomBaseRateFormComponent} from './residents/components/facility-room-base-rate/form/form.component';
+
 import {ListComponent as FacilityBedListComponent} from './residents/components/facility-bed/list.component';
 
 import {ListComponent as FacilityDiningRoomListComponent} from './residents/components/facility-dining-room/list.component';
 import {FormComponent as FacilityDiningRoomFormComponent} from './residents/components/facility-dining-room/form/form.component';
 
-import {ListComponent as FacilityDocumentListComponent} from './residents/components/facility-document/list.component';
+import {ViewComponent as FacilityDocumentViewComponent} from './residents/components/facility-document/view/view.component';
 import {FormComponent as FacilityDocumentFormComponent} from './residents/components/facility-document/form/form.component';
 
 import {ListComponent as RegionListComponent} from './residents/components/region/list.component';
@@ -222,6 +227,8 @@ import {FormComponent as ResidentHealthInsuranceFormComponent} from './residents
 
 import {ListComponent as ResidentDocumentListComponent} from './residents/components/resident/document/list.component';
 import {FormComponent as ResidentDocumentFormComponent} from './residents/components/resident/document/form/form.component';
+
+
 
 import {ViewComponent as DocumentViewComponent} from './documents/components/document/view/view.component';
 import {FormComponent as DocumentFormComponent} from './documents/components/document/form/form.component';
@@ -387,6 +394,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SpaceListComponent,
     SpaceFormComponent,
 
+    DocumentViewerComponent,
+
     AllergenListComponent,
     AllergenFormComponent,
 
@@ -448,6 +457,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     FacilityRoomTypeListComponent,
     FacilityRoomTypeFormComponent,
+    FacilityRoomBaseRateListComponent,
+    FacilityRoomBaseRateFormComponent,
     FacilityRoomListComponent,
     FacilityRoomFormComponent,
     FacilityBedListComponent,
@@ -455,7 +466,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FacilityDiningRoomListComponent,
     FacilityDiningRoomFormComponent,
 
-    FacilityDocumentListComponent,
+    FacilityDocumentViewComponent,
     FacilityDocumentFormComponent,
 
     RegionListComponent,
@@ -689,6 +700,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     FacilityRoomFormComponent,
     FacilityRoomTypeFormComponent,
+    FacilityRoomBaseRateFormComponent,
 
     FacilityDiningRoomFormComponent,
 

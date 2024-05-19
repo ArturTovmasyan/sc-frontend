@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormComponent} from '../form/form.component';
-import {DocumentService} from '../../../services/document.service';
+import {FacilityDocumentService} from '../../../services/facility-document.service';
 
 @Component({
   templateUrl: './view.component.html'
@@ -9,7 +9,7 @@ export class ViewComponent {
   _FormComponent = FormComponent;
 
   constructor(
-    private service$: DocumentService,
+    private service$: FacilityDocumentService,
   ) {
   }
 

@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="card">
+      <div class="card-header">
+        {{ title }}
+        <div *ngIf="checkPermission(['persistence-common-document_category'])" class="card-header-actions">
+          <nz-select class="card-header-action" nzShowSearch [nzAllowClear]="true" nzSize="small"
+                     style="width: 200px;font-weight: normal;" nzPlaceHolder="Select Category"
+                     [(ngModel)]="category" (ngModelChange)="category_changes($event)"
+          >
+            <nz-option [nzLabel]="'All'" [nzValue]="null"></nz-option>
+            <ng-container *ngFor="let category of categories">
+              <nz-option [nzLabel]="category.title" [nzValue]="category.id"></nz-option>
+            </ng-container>
+          </nz-select>
+        </div>
+      </div>
+      <div class="card-body">
+        <nz-empty *ngIf="!documents" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+        <nz-list *ngIf="documents" [nzDataSource]="documents" [nzRenderItem]="tplItem" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+          <ng-template #tplItem let-item>
+            <nz-list-item>
+              <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
+                <ng-template #nzTitle>
+                  <a [routerLink]="" (click)="openPDF(item)" style="font-size: 16px;">
+                    <strong *ngIf="document && (document.id === item.id)">{{ item.title }}</strong>
+                    <ng-container *ngIf="!document || (document && document.id !== item.id)">{{ item.title }}</ng-container>
+                  </a>
+                </ng-template>
+                <ng-template #nzDescription>
+                  <p>{{item.description}}</p>
+                  <p class="text-muted" style="font-size: smaller;">
+                    <span>{{item.date_modified|date:'MM/dd/yyyy HH:mm:ss'}}</span> <span class="pull-right">by {{ item.owner }}</span>
+                  </p>
+                </ng-template>
+              </nz-list-item-meta>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
+        <nz-divider *ngIf="addIfHasPermission('persistence-common-document', 2)"></nz-divider>
+        <div class="d-flex" *ngIf="addIfHasPermission('persistence-common-document', 2)">
+          <nz-button-group [nzSize]="'small'" class="ml-auto">
+            <button *ngIf="addIfHasPermission('persistence-common-document', 3)" type="button"
+                    nz-button nzType="primary" (click)="show_modal_add(); $event.preventDefault();">
+              <i nz-icon nzType="plus"></i> {{ "grid.add"|translate }}
+            </button>
+            <button *ngIf="addIfHasPermission('persistence-common-document', 2) && document"
+                    type="button"
+                    nz-button nzType="default" (click)="show_modal_edit(); $event.preventDefault();"
+                    [nzLoading]="loading_edit_modal">
+              <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
+            </button>
+            <button *ngIf="addIfHasPermission('persistence-common-document', 4) && document"
+                    type="button"
+                    nz-button nzType="danger" (click)="show_modal_remove(); $event.preventDefault();">
+              <i nz-icon nzType="delete"></i> {{ "grid.remove"|translate }}
+            </button>
+          </nz-button-group>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-8">
+    <div class="card">
+      <div *ngIf="document" class="card-header">
+        {{ document.title }}
+      </div>
+      <div class="card-body">
+        <nz-empty *ngIf="!document" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+        <div id="documentsPDFViewer" *ngIf="!(!document)" style="width:100%;height:80vh"></div>
+      </div>
+    </div>
+  </div>
+</div>

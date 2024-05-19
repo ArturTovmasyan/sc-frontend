@@ -99,11 +99,12 @@ import {ViewComponent as LeadContactViewComponent} from './leads/components/cont
 import {ListComponent as DocumentCategoryListComponent} from './documents/components/category/list.component';
 import {DashboardComponent as ResidentDashboardComponent} from './residents/components/dashboard/dashboard.component';
 import {DashboardDetailComponent as ResidentDashboardDetailComponent} from './residents/components/dashboard/dashboard-detail.component';
-import {ListComponent as FacilityDocumentListComponent} from './residents/components/facility-document/list.component';
+import {ViewComponent as FacilityDocumentViewComponent} from './residents/components/facility-document/view/view.component';
 import {CalendarComponent as CorporateCalendarComponent} from './residents/components/calendar/calendar.component';
 import {ListComponent as AssessmentTypeListComponent} from './residents/components/assessment/type/list.component';
 import {ListComponent as FacilityBedListComponent} from './residents/components/facility-bed/list.component';
 import {ListComponent as ApartmentBedListComponent} from './residents/components/apartment-bed/list.component';
+import {ListComponent as FacilityRoomBaseRateListComponent} from './residents/components/facility-room-base-rate/list.component';
 
 const routes: Routes = [
   {
@@ -443,6 +444,15 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'facility/room-base-rates', component: FacilityRoomBaseRateListComponent,
+        data: {
+          nav: {show: true, group: 'Facility', title: 'Room Base Rates'},
+          title: 'Facility Room Base Rates',
+          permissions: ['persistence-facility', 'persistence-facility_room_base_rate']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'rent-reasons', component: RentReasonListComponent,
         data: {
           nav: {show: true, group: 'Facility'},
@@ -452,7 +462,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'facility/documents', component: FacilityDocumentListComponent,
+        path: 'facility/documents', component: FacilityDocumentViewComponent,
         data: {
           nav: {show: true, group: 'Facility', title: 'Documents'},
           title: 'Facility Documents',

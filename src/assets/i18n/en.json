@@ -101,7 +101,12 @@
       "facility": "Facility",
       "title": "Title",
       "description": "Description",
-      "private": "Private",
+      "private": "Private"
+    },
+    "facility-room-base-rate-list": {
+      "id": "ID",
+      "room_type": "Room Type",
+      "date": "Effective Date",
       "base_rates": "Base Rates"
     },
     "physician-speciality-list": {
@@ -138,8 +143,13 @@
       "period": "Period",
       "away_reduction": "Away Reduction",
       "care_level_adjustment": "Care Level Adjustment",
-      "base_rates": "Base Rates",
       "space": "Space"
+    },
+    "payment-source-base-rates-list": {
+      "id": "ID",
+      "payment-source": "Payment Source",
+      "date": "Effective Date",
+      "base_rates": "Base Rates"
     },
     "event-definition-list": {
       "id": "ID",
