@@ -150,7 +150,7 @@
 </div>
 <div class="card">
   <div class="card-header">
-    {{ facilityName }} Weekly Chart {{ title ? '(' + title + ')' : ''}}
+    {{ facilityName }} Weekly Chart ({{ currentDate|date:'MMM-yy' }})
   </div>
   <div class="card-body">
     <nz-empty *ngIf="!lineChartData" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
