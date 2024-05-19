@@ -3,7 +3,7 @@
   [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 125, height: 32, alt: 'Senior Care'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/logo_sm.png', width: 30, height: 30, alt: 'Senior Care'}"
   [sidebarToggler]="'lg'"
-  [asideMenuToggler]="asideVisible"
+  [asideMenuToggler]="addIfHasPermission('persistence-common-change_log')?'lg':false"
   [mobileAsideMenuToggler]="false">
   <p *ngIf="user && user.space"
      style="font-weight: 700;font-size: x-large;margin: 0 auto;font-family: sans-serif;">{{ user.space.name }}</p>
@@ -51,7 +51,7 @@
   </main>
 
   <app-aside *ngIf="addIfHasPermission('persistence-common-change_log')" [fixed]="true" [display]="true">
-    <app-user-activity [asideVisible]="this.asideVisible"></app-user-activity>
+    <app-user-activity></app-user-activity>
   </app-aside>
 </div>
 <app-footer>

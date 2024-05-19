@@ -517,7 +517,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected routeInfo(route: string, row: any) {
     const multi_pattern: any = route.match(/^([_a-z]+):<(([_a-z0-9\/]+\/:[_a-z]+\|?)+)>$/);
-    console.log(multi_pattern);
+
     if (multi_pattern !== null && multi_pattern.length !== 0) {
       if (multi_pattern.length > 3 && row.hasOwnProperty(multi_pattern[1])) {
         const idx = row[multi_pattern[1]] - 1;

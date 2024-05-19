@@ -21,7 +21,6 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
 
   public user: User;
 
-  public asideVisible: string | boolean = false;
   public licenseVisible: boolean = false;
 
   private $subscriptions: { [key: string]: Subscription; };
@@ -34,7 +33,6 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     private idle$: Idle
   ) {
     this.$subscriptions = {};
-    this.asideVisible = false;
 
     this.changes = new MutationObserver((mutations) => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');

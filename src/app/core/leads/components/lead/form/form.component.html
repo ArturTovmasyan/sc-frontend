@@ -76,7 +76,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state">State</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state">Status</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state')?'error':null">
           {{ form.get('state').value|lead_state }}
           <nz-form-explain *ngIf="hasErrors('state')">
@@ -88,7 +88,7 @@
       <!-- State -->
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state_change_reason_id">State Change Reason</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state_change_reason_id">Status Change Reason</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state_change_reason_id')?'error':null">
           <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select"
                      formControlName="state_change_reason_id">
@@ -103,7 +103,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state_effective_date">State Effective Date</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state_effective_date">Status Effective Date</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state_effective_date')?'error':null">
           <nz-date-picker formControlName="state_effective_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
           <nz-form-explain *ngIf="hasErrors('state_effective_date')">
@@ -208,11 +208,16 @@
       <nz-form-item *ngIf="form.get('referral.organization_id').enabled">
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="organization_id" nzRequired>Organization</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.organization_id')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="organization_id">
-            <ng-container *ngFor="let organization of organizations">
-              <nz-option [nzLabel]="organization.title" [nzValue]="organization.id"></nz-option>
-            </ng-container>
-          </nz-select>
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="organization_id">
+              <ng-container *ngFor="let organization of organizations">
+                <nz-option [nzLabel]="organization.title" [nzValue]="organization.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('organization');">
+              <i nz-icon type="plus"></i>
+            </button>
+          </div>
           <nz-form-explain *ngIf="hasErrors('referral.organization_id')">
             <app-field-errors [errors]="fieldErrors('referral.organization_id')"></app-field-errors>
           </nz-form-explain>

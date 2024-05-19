@@ -48,15 +48,15 @@
                 <div nz-col [nzSpan]="16">{{ lead.payment_type.title }}</div>
               </div>
               <div nz-row [nzGutter]="4" *ngIf="lead.state">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>State:</strong></div>
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Status:</strong></div>
                 <div nz-col [nzSpan]="16">{{ lead.state|lead_state }}</div>
               </div>
               <div nz-row [nzGutter]="4" *ngIf="lead.state_change_reason">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>State Change Reason:</strong></div>
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Status Change Reason:</strong></div>
                 <div nz-col [nzSpan]="16">{{ lead.state_change_reason.title }}</div>
               </div>
               <div nz-row [nzGutter]="4" *ngIf="lead.state_effective_date">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>State Effective Date:</strong></div>
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Status Effective Date:</strong></div>
                 <div nz-col [nzSpan]="16">{{ lead.state_effective_date|date:'MM/dd/yyyy' }}</div>
               </div>
               <div nz-row [nzGutter]="4" *ngIf="lead.owner">

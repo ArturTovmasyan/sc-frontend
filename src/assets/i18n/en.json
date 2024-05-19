@@ -392,7 +392,7 @@
     "lead-state-change-reason-list": {
       "id": "ID",
       "title": "Title",
-      "state": "State",
+      "state": "Status",
       "space": "Space"
     },
     "lead-change-log-list": {
@@ -436,8 +436,8 @@
       "date": "Date",
       "full_name": "Full Name",
       "owner": "Owner",
-      "state": "State",
-      "state_change_reason": "State Change Reason",
+      "state": "Status",
+      "state_change_reason": "Status Change Reason",
       "effective_date": "Effective Date",
       "referral": "Referral",
       "primary_facility": "Primary Facility"

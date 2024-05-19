@@ -21,6 +21,8 @@ import {StateChangeReasonService} from '../../../services/state-change-reason.se
 import {PaymentSource} from '../../../../residents/models/payment-source';
 import {PaymentSourceService} from '../../../../residents/services/payment-source.service';
 import {LeadState} from '../../../models/lead';
+import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -46,6 +48,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private _el: ElementRef,
+    private modal$: NzModalService,
     private csz$: CityStateZipService,
     private payment_source$: PaymentSourceService,
     private user$: UserService,
@@ -286,6 +289,23 @@ export class FormComponent extends AbstractForm implements OnInit {
             }
           }
         });
+        break;
+      default:
+        break;
+    }
+  }
+
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'organization':
+        this.create_modal(
+          this.modal$,
+          OrganizationFormComponent,
+          data => this.organization$.add(data),
+          data => {
+            this.subscribe('list_organization', {organization_id: data[0]});
+            return null;
+          });
         break;
       default:
         break;

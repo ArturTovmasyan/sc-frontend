@@ -10,11 +10,10 @@ import {ChangeLogType} from '../../models/change-log-type.enum';
 @Component({
   selector: 'app-user-activity',
   templateUrl: './user-activity.component.html',
+  styleUrls: ['./user-activity.component.scss']
 })
 export class UserActivityComponent implements OnInit {
   ChangeLogType = ChangeLogType;
-
-  @Input('asideVisible') asideVisible: boolean|string;
 
   public change_logs: ChangeLog[];
 
@@ -37,14 +36,8 @@ export class UserActivityComponent implements OnInit {
         this.$subscriptions[key] = this.change_log$.all().subscribe(res => {
           if (res) {
             this.change_logs = res;
-
-            if (this.change_logs.length > 0) {
-              this.asideVisible = 'lg';
-            } else {
-              this.asideVisible = false;
-            }
           }
-          // this.subscribe('timer_change_log');
+          this.subscribe('timer_change_log');
         });
         break;
       case 'timer_change_log':

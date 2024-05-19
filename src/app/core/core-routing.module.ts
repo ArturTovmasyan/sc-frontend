@@ -86,6 +86,8 @@ import {ListComponent as NotificationTypeListComponent} from './admin/components
 import {ListComponent as InsuranceCompanyListComponent} from './residents/components/insurance-company/list.component';
 import {ViewComponent as DocumentViewComponent} from './documents/components/view/view.component';
 import {HelpComponent} from './components/help/help.component';
+// import {DashboardComponent as LeadDashboardComponent} from './leads/components/dashboard/dashboard.component';
+// import {FormComponent as LeadContactFormComponent} from './leads/components/contact/form/form.component';
 
 const routes: Routes = [
   {
@@ -122,6 +124,16 @@ const routes: Routes = [
               permissions: ['persistence-lead-lead']
             }
           },
+          // {
+          //   path: 'dashboard',
+          //   component: LeadDashboardComponent,
+          //   canActivate: [AuthGuard],
+          //   data: {
+          //     nav: {show: true, group: 'Leads'},
+          //     title: 'Dashboard',
+          //     permissions: ['persistence-lead-lead']
+          //   }
+          // },
           {
             path: 'leads', component: LeadListComponent,
             data: {
@@ -196,6 +208,15 @@ const routes: Routes = [
                 },
                 canActivate: [AuthGuard]
               },
+              // {
+              //   path: 'contacts', component: LeadContactFormComponent,
+              //   data: {
+              //     nav: {show: true, group: 'Leads'},
+              //     title: 'Contacts',
+              //     permissions: ['persistence-lead-referral'] // contact
+              //   },
+              //   canActivate: [AuthGuard]
+              // },
               {
                 path: 'referrer-type', component: ReferrerTypeListComponent,
                 data: {
@@ -255,7 +276,7 @@ const routes: Routes = [
                 path: 'state-change-reason', component: StateChangeReasonListComponent,
                 data: {
                   nav: {show: true, group: 'Leads'},
-                  title: 'State Change Reasons',
+                  title: 'Status Change Reasons',
                   permissions: ['persistence-lead-state_change_reason']
                 },
                 canActivate: [AuthGuard]
