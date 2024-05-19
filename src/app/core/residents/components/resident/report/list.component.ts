@@ -114,7 +114,7 @@ export class ListComponent implements OnInit, OnDestroy {
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
       if (component instanceof FormComponent) {
-        component.init_report_parameters(result.parameters);
+        component.init_report_parameters(result.title, result.parameters);
 
         const form = component.formObject;
 

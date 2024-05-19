@@ -24,6 +24,17 @@
 }
 
 ::ng-deep {
+  .ant-modal {
+    h4 {
+      font-size: x-large;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .ant-divider-horizontal {
+      margin: 10px 0;
+    }
+  }
   .modal-confirm {
     i {
       padding: 1rem;

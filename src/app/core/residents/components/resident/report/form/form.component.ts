@@ -25,7 +25,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   format_date_from: string = 'MM/yyyy';
   format_date_to: string = 'MM/dd/yyyy';
 
-  resident_id: number;
+  title: string;
 
   show: {
     group: boolean, group_all: boolean,
@@ -83,90 +83,114 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form.disable();
     this.form.get('group').enable();
 
-    this.residentSelector$.type.subscribe(next => {
-      if (next) {
-        this.form.get('group').setValue(next);
-      }
-    });
+    this.subscribe('rs_resident');
+    this.subscribe('rs_type');
+    this.subscribe('rs_group');
 
-    this.residentSelector$.group.subscribe(next => {
-      if (next) {
-        this.form.get('group_id').setValue(next);
-        this.form.get('group_list').setValue(this.group_helper.get_group_data(next, this.form.get('group').value));
-      }
-    });
+    this.subscribe('list_facility');
+    this.subscribe('list_apartment');
+    this.subscribe('list_region');
 
-    this.facility$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.group_helper.facilities = res;
-        this.group_helper.facilities.forEach((v, i) => {
-          this.group_helper.facilities[i]['type'] = GroupType.FACILITY;
-        });
-
-        this.residentSelector$.group.next(this.residentSelector$.group.value);
-      }
-    });
-    this.apartment$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.group_helper.apartments = res;
-        this.group_helper.apartments.forEach((v, i) => {
-          this.group_helper.apartments[i]['type'] = GroupType.APARTMENT;
-        });
-
-        this.residentSelector$.group.next(this.residentSelector$.group.value);
-      }
-    });
-    this.region$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.group_helper.regions = res;
-        this.group_helper.regions.forEach((v, i) => {
-          this.group_helper.regions[i]['type'] = GroupType.REGION;
-        });
-
-        this.residentSelector$.group.next(this.residentSelector$.group.value);
-      }
-    });
-
-    this.residentAdmission$.list_by_options(true, this.form.get('group').value, this.form.get('group_id').value).pipe(first())
-      .subscribe(res => {
-        if (res) {
-          this.residents = res;
-        }
-      });
-
-    this.form.get('resident_all').valueChanges.subscribe(next => {
-      if (next) {
-        this.form.get('resident_id').disable();
-      } else {
-        this.form.get('resident_id').enable();
-      }
-    });
-
-    this.form.get('group_all').valueChanges.subscribe(next => {
-      if (next) {
-        this.form.get('group_id').disable();
-        this.form.get('group_list').disable();
-      } else {
-        this.form.get('group_id').enable();
-        this.form.get('group_list').enable();
-      }
-    });
-
-    this.form.get('group_list').valueChanges.subscribe(next => {
-      if (next) {
-        this.form.get('group').setValue(next.type);
-        this.form.get('group_id').setValue(next.id);
-      }
-    });
-
+    this.subscribe('list_admission');
+    this.subscribe('vc_resident_all');
+    this.subscribe('vc_group_all');
+    this.subscribe('vc_group_list');
   }
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'list_facility':
+        this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.group_helper.facilities = res;
+            this.group_helper.facilities.forEach((v, i) => {
+              this.group_helper.facilities[i]['type'] = GroupType.FACILITY;
+            });
+
+            this.residentSelector$.group.next(this.residentSelector$.group.value);
+          }
+        });
+        break;
+      case 'list_apartment':
+        this.$subscriptions[key] = this.apartment$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.group_helper.apartments = res;
+            this.group_helper.apartments.forEach((v, i) => {
+              this.group_helper.apartments[i]['type'] = GroupType.APARTMENT;
+            });
+
+            this.residentSelector$.group.next(this.residentSelector$.group.value);
+          }
+        });
+        break;
+      case 'list_region':
+        this.$subscriptions[key] = this.region$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.group_helper.regions = res;
+            this.group_helper.regions.forEach((v, i) => {
+              this.group_helper.regions[i]['type'] = GroupType.REGION;
+            });
+
+            this.residentSelector$.group.next(this.residentSelector$.group.value);
+          }
+        });
+        break;
+      case 'list_admission':
+        this.$subscriptions[key] = this.residentAdmission$
+          .list_by_options(true, this.form.get('group').value, this.form.get('group_id').value)
+          .pipe(first()).subscribe(res => {
+            if (res) {
+              this.residents = res;
+            }
+          });
+        break;
       case 'rs_resident':
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {
             this.form.get('resident_id').setValue(next);
+          }
+        });
+        break;
+      case 'rs_type':
+        this.$subscriptions[key] = this.residentSelector$.type.subscribe(next => {
+          if (next) {
+            this.form.get('group').setValue(next);
+          }
+        });
+        break;
+      case 'rs_group':
+        this.$subscriptions[key] = this.residentSelector$.group.subscribe(next => {
+          if (next) {
+            this.form.get('group_id').setValue(next);
+            this.form.get('group_list').setValue(this.group_helper.get_group_data(next, this.form.get('group').value));
+          }
+        });
+        break;
+      case 'vc_resident_all':
+        this.$subscriptions[key] = this.form.get('resident_all').valueChanges.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').disable();
+          } else {
+            this.form.get('resident_id').enable();
+          }
+        });
+        break;
+      case 'vc_group_list':
+        this.$subscriptions[key] = this.form.get('group_list').valueChanges.subscribe(next => {
+          if (next) {
+            this.form.get('group').setValue(next.type);
+            this.form.get('group_id').setValue(next.id);
+          }
+        });
+        break;
+      case 'vc_group_all':
+        this.$subscriptions[key] = this.form.get('group_all').valueChanges.subscribe(next => {
+          if (next) {
+            this.form.get('group_id').disable();
+            this.form.get('group_list').disable();
+          } else {
+            this.form.get('group_id').enable();
+            this.form.get('group_list').enable();
           }
         });
         break;
@@ -175,7 +199,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public init_report_parameters(parameters: any) {
+  public init_report_parameters(title: string, parameters: any) {
+    this.title = title;
     if (parameters.hasOwnProperty('resident')) {
       const parameter_config = parameters['resident'];
       this.show.resident = true;
