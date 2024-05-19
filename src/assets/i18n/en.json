@@ -436,6 +436,9 @@
       "full_name": "Full Name",
       "owner": "Owner",
       "state": "Status",
+      "funnel_stage": "Funnel Stage",
+      "funnel_date": "Funnel Date",
+      "temperature": "Temperature",
       "referral": "Referral",
       "primary_facility": "Primary Facility"
     },
