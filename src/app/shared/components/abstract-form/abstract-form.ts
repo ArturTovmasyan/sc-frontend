@@ -58,7 +58,7 @@ export class AbstractForm {
     return Object.keys(control.errors)
       .filter((error) => control.errors[error])
       .map((error) => {
-        let params = control.errors[error];
+        const params = control.errors[error];
         return {
           error: error,
           params: params === true || params === {} ? null : params
@@ -79,7 +79,7 @@ export class AbstractForm {
   }
 
   public fieldErrors(name: string): FormError[] {
-    let control = this.findFieldControl(name);
+    const control = this.findFieldControl(name);
     if (control != null && !(control instanceof FormGroup) && (control.dirty || control.touched) && control.errors != null) {
       return this.getErrors(control);
     } else {

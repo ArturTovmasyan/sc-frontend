@@ -22,10 +22,9 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group_id" nzRequired>Group</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group_id')?'error':null">
-          <nz-select nzShowSearch [(ngModel)]="group_id" (ngModelChange)="init_subform($event);"
-                     [ngModelOptions]="{standalone: true}">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group" nzRequired>Group</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group')?'error':null">
+          <nz-select nzShowSearch formControlName="group">
             <nz-option-group nzLabel="FFC - Facilities">
               <ng-container *ngFor="let facility of facilities">
                 <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
@@ -42,13 +41,14 @@
               </ng-container>
             </nz-option-group>
           </nz-select>
-          <nz-form-explain *ngIf="hasErrors('group_id')">
-            <app-field-errors [errors]="fieldErrors('group_id')"></app-field-errors>
+          <nz-form-explain *ngIf="hasErrors('group')">
+            <app-field-errors [errors]="fieldErrors('group')"></app-field-errors>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </nz-tab>
-    <nz-tab *ngIf="form.get('type').value == ResidentType.FACILITY" formGroupName="option"
+
+    <nz-tab *ngIf="form.get('type').value == ResidentType.FACILITY && form.get('option') !== null && form.get('option').value !== null" formGroupName="option"
             nzTitle="Facility Information">
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state" nzRequired>State</nz-form-label>
@@ -149,8 +149,7 @@
         </nz-form-control>
       </nz-form-item>
     </nz-tab>
-
-    <nz-tab *ngIf="form.get('type').value == ResidentType.APARTMENT" formGroupName="option"
+    <nz-tab *ngIf="form.get('type').value == ResidentType.APARTMENT && form.get('option') !== null && form.get('option').value !== null" formGroupName="option"
             nzTitle="Apartment Information">
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state" nzRequired>State</nz-form-label>
@@ -184,7 +183,7 @@
         </nz-form-control>
       </nz-form-item>
     </nz-tab>
-    <nz-tab *ngIf="form.get('type').value == ResidentType.REGION" formGroupName="option"
+    <nz-tab *ngIf="form.get('type').value == ResidentType.REGION && form.get('option') !== null && form.get('option').value !== null" formGroupName="option"
             nzTitle="IHC Region Information">
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state" nzRequired>State</nz-form-label>

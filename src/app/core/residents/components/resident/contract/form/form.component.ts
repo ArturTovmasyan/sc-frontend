@@ -14,8 +14,7 @@ import {CareLevel} from '../../../../models/care-level';
 import {FacilityDiningRoom} from '../../../../models/facility-dining-room';
 import {FacilityRoom} from '../../../../models/facility-room';
 import {ApartmentRoom} from '../../../../models/apartment-room';
-import {PaymentPeriod} from '../../../../models/payment-period.enum';
-import {State} from '../../../../models/resident-contract';
+import {ResidentContract, State} from '../../../../models/resident-contract';
 import {Apartment} from '../../../../models/apartment';
 import {Facility} from '../../../../models/facility';
 import {Region} from '../../../../models/region';
@@ -39,7 +38,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   facility_rooms: FacilityRoom[];
   apartment_rooms: ApartmentRoom[];
 
-  group_id: any; /** TODO: review **/
+  /** TODO: review **/
+  group_id: any;
+  edit_data: ResidentContract;
+  /** TODO: review **/
 
   resident_id: number;
   selectedTab: number;
@@ -72,38 +74,58 @@ export class FormComponent extends AbstractForm implements OnInit {
       start: [new Date(), Validators.required],
       end: [null],
 
-      group_id: [null, Validators.required],
+      group: [null, Validators.required],
       type: [null, Validators.required],
 
       resident_id: [this.resident_id, Validators.required],
 
-      option: []
+      option: [null]
     });
 
     this.facility$.all().pipe(first()).subscribe(res => {
       if (res) {
-        this.facilities = res;
-        this.facilities.forEach((v, i) => {
-          this.facilities[i]['type'] = ResidentType.FACILITY;
+        res.forEach((v, i) => {
+          res[i]['type'] = ResidentType.FACILITY;
         });
+
+        this.facilities = res;
+        if (this.form.get('group').value === null) {
+          this.form.get('group').setValue(this.get_group_data(this.group_id));
+        }
       }
     });
 
     this.apartment$.all().pipe(first()).subscribe(res => {
       if (res) {
-        this.apartments = res;
-        this.apartments.forEach((v, i) => {
-          this.apartments[i]['type'] = ResidentType.APARTMENT;
+        res.forEach((v, i) => {
+          res[i]['type'] = ResidentType.APARTMENT;
         });
+
+        this.apartments = res;
+        if (this.form.get('group').value === null) {
+          this.form.get('group').setValue(this.get_group_data(this.group_id));
+        }
       }
     });
 
     this.region$.all().pipe(first()).subscribe(res => {
       if (res) {
-        this.regions = res;
-        this.regions.forEach((v, i) => {
-          this.regions[i]['type'] = ResidentType.REGION;
+        res.forEach((v, i) => {
+          res[i]['type'] = ResidentType.REGION;
         });
+
+        this.regions = res;
+
+        if (this.form.get('group').value === null) {
+          this.form.get('group').setValue(this.get_group_data(this.group_id));
+        }
+      }
+    });
+
+    this.form.get('group').valueChanges.subscribe(next => {
+      if (next) {
+        this.form.get('type').setValue(next.type);
+        this.init_subform(next);
       }
     });
 
@@ -115,8 +137,11 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.selectedTab = 0;
     this.postSubmit = (data: any) => {
-      const tab_el = this._el.nativeElement.querySelector(':not(form).ng-invalid').closest('.ant-tabs-tabpane');
-      this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
+      const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
+      if (invalid_el) {
+        const tab_el = invalid_el.closest('.ant-tabs-tabpane');
+        this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
+      }
     };
   }
 
@@ -195,9 +220,62 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
     }
 
-    this.form.get('group_id').setValue(group_id);
-    this.form.get('type').setValue(group_type);
-    this.form.setControl('option', option);
+    if (this.edit_data !== null && group_id === this.group_id) {
+      this.set_form_data(this, option, this.edit_data);
+    }
+
+    if (this.edit_mode) {
+      this.form.removeControl('option');
+      this.form.addControl('option', option);
+    } else {
+      this.form.setControl('option', option);
+    }
+  }
+
+  before_set_form_data(data: any): void {
+    if (data !== null) {
+      this.edit_data = data.option;
+
+      this.form.removeControl('option');
+      this.form.get('type').setValue(data.type);
+
+      switch (this.form.get('type').value) {
+        case ResidentType.FACILITY:
+          this.group_id = data.option.bed.room.facility.id;
+          break;
+        case ResidentType.APARTMENT:
+          this.group_id = data.option.bed.room.apartment.id;
+          break;
+        case ResidentType.REGION:
+          this.group_id = data.option.region.id;
+          break;
+      }
+    }
+  }
+
+  get_group_data(id: number) {
+    let group = null;
+
+    switch (this.form.get('type').value) {
+      case ResidentType.FACILITY:
+        if (this.facilities) {
+          group = this.facilities.filter(v => v.id === id).pop();
+        }
+        break;
+      case ResidentType.REGION:
+        if (this.regions) {
+          group = this.regions.filter(v => v.id === id).pop();
+        }
+        break;
+      case ResidentType.APARTMENT:
+        if (this.apartments) {
+          group = this.apartments.filter(v => v.id === id).pop();
+        }
+        break;
+      default:
+        break;
+    }
+    return group;
   }
 
 }

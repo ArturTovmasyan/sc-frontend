@@ -161,4 +161,15 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
+  before_submit(): void {
+    const form_value = this.form.get('grants').value;
+    const final_value = {};
+    Object.keys(form_value).forEach(key => {
+      if (this.grant_lists.hasOwnProperty(key)) {
+        final_value[key] = form_value[key];
+      } else {
+        this.grants.removeControl(key);
+      }
+    });
+  }
 }
