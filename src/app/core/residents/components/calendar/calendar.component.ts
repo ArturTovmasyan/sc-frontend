@@ -1,7 +1,7 @@
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin, {ListView} from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NzModalService} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Observable, Subscription} from 'rxjs';
@@ -14,6 +14,7 @@ import {UserService} from '../../../admin/services/user.service';
 import {CorporateEventService} from '../../services/corporate-event.service';
 import {TitleService} from '../../../services/title.service';
 import {DateHelper} from '../../../../shared/helpers/date-helper';
+import {FullCalendarComponent} from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-corporate-calendar',
@@ -21,8 +22,10 @@ import {DateHelper} from '../../../../shared/helpers/date-helper';
   providers: []
 })
 export class CalendarComponent implements OnInit, OnDestroy {
+  @ViewChild('calendar', {static: false}) calendarComponent: FullCalendarComponent;
   title: string;
 
+  calendarLastView: any;
   calendarPlugins = [dayGridPlugin, listPlugin, bootstrapPlugin]; // important!
   calendarCustomButtons = {
     add_event: {
@@ -96,6 +99,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 title: event.title
               });
             });
+
+            this.calendarComponent.getApi().changeView('dayGridMonth');
           }
         });
         break;
@@ -275,6 +280,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
         list.innerHTML = '';
         reorderedEvents.forEach(tr_element => list.append(tr_element));
       }
+    } else {
+      if (this.calendarLastView instanceof ListView) {
+        this.calendarComponent.getApi().today();
+      }
     }
+
+    this.calendarLastView = $event.view;
   }
 }

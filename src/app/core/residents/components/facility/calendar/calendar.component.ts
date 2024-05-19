@@ -1,7 +1,7 @@
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin, {ListView} from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CurrencyPipe} from '@angular/common';
 import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -22,6 +22,7 @@ import {ResidentEventService} from '../../../services/resident-event.service';
 import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
 import {ResidentRentService} from '../../../services/resident-rent.service';
 import {DateHelper} from '../../../../../shared/helpers/date-helper';
+import {FullCalendarComponent} from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-facility-calendar',
@@ -32,7 +33,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   @Input() facility_id: number;
+  @ViewChild('calendar', {static: false}) calendarComponent: FullCalendarComponent;
 
+  calendarLastView: any;
   calendarPlugins = [dayGridPlugin, listPlugin, bootstrapPlugin]; // important!
   calendarCustomButtons = {
     add_event: {
@@ -186,6 +189,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                   });
                 }
               }
+
+              this.calendarComponent.getApi().changeView('dayGridMonth');
             }
           });
         break;
@@ -458,6 +463,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
         list.innerHTML = '';
         reorderedEvents.forEach(tr_element => list.append(tr_element));
       }
+    } else {
+      if (this.calendarLastView instanceof ListView) {
+        this.calendarComponent.getApi().today();
+      }
     }
+
+    this.calendarLastView = $event.view;
   }
 }
