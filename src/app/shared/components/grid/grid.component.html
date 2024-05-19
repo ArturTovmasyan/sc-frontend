@@ -12,7 +12,7 @@
   <template [ngTemplateOutlet]="table"></template>
 </ng-container>
 <ng-template #table>
-  <div class="d-flex">
+  <div class="d-flex justify-content-between">
     <nz-button-group *ngIf="component !== null" [nzSize]="'small'">
       <button *ngIf="button_shows.add"
               nz-button nzType="primary"
@@ -32,15 +32,22 @@
         (click)="show_modal_remove(); $event.preventDefault();">
         <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
       </button>
+
+      <ng-container *ngIf="fields != null && buttons_left">
+        <ng-container *ngFor="let button of buttons_left">
+          <button nz-button [nzType]="button.type" (click)="button_action(button)"
+                  [disabled]="button.free === false && (button.multiselect == false && checkbox_config.ids.length != 1)
+                 || (button.multiselect == true && checkbox_config.ids.length == 0)">
+            <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
+            <i *ngIf="button.faIcon" [class]="button.faIcon"></i>
+            {{ ("grid." + name + ".button." + button.name)|translate }}
+          </button>
+        </ng-container>
+      </ng-container>
     </nz-button-group>
 
-    <!--<nz-button-group [nzSize]="'small'" class="ml-auto">-->
-    <!--{{ checkbox_config.ids }}-->
-    <!--</nz-button-group>-->
-
-
-    <nz-button-group *ngIf="buttons" [nzSize]="'small'" class="ml-auto">
-      <ng-container *ngFor="let button of buttons">
+    <nz-button-group *ngIf="fields != null && buttons_center" [nzSize]="'small'">
+      <ng-container *ngFor="let button of buttons_center">
         <button nz-button [nzType]="button.type" (click)="button_action(button)"
                 [disabled]="button.free === false && (button.multiselect == false && checkbox_config.ids.length != 1)
                  || (button.multiselect == true && checkbox_config.ids.length == 0)">
@@ -51,11 +58,23 @@
       </ng-container>
     </nz-button-group>
 
-    <nz-button-group [nzSize]="'small'" class="ml-auto">
+    <nz-button-group *ngIf="fields != null && buttons_right" [nzSize]="'small'">
+      <ng-container *ngFor="let button of buttons_right">
+        <button nz-button [nzType]="button.type" (click)="button_action(button)"
+                [disabled]="button.free === false && (button.multiselect == false && checkbox_config.ids.length != 1)
+                 || (button.multiselect == true && checkbox_config.ids.length == 0)">
+          <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
+          <i *ngIf="button.faIcon" [class]="button.faIcon"></i>
+          {{ ("grid." + name + ".button." + button.name)|translate }}
+        </button>
+      </ng-container>
+    </nz-button-group>
+
+    <!--<nz-button-group [nzSize]="'small'">-->
       <!--<button nz-button nzType="dashed" (click)="download_pdf()">-->
       <!--<i nz-icon type="file-pdf"></i> {{ "grid.pdf"|translate }}-->
       <!--</button>-->
-    </nz-button-group>
+    <!--</nz-button-group>-->
   </div>
   <nz-table
     *ngIf="fields != null"

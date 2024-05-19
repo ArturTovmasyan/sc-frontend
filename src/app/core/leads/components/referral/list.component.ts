@@ -31,7 +31,7 @@ export class ListComponent extends GridComponent<Referral, ReferralService> impl
   }
 
   ngOnInit(): void {
-    this.buttons.push(
+    this.buttons_center.push(
       {
         name: 'report',
         type: 'default',

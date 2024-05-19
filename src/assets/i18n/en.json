@@ -411,6 +411,8 @@
     },
     "lead-lead-list": {
       "button": {
+        "open": "Open",
+        "all": "All",
         "report": "Report"
       },
       "id": "ID",

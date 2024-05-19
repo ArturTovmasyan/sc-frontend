@@ -92,8 +92,8 @@
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state_change_reason_id')?'error':null">
           <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select"
                      formControlName="state_change_reason_id">
-            <ng-container *ngFor="let user of users">
-              <nz-option [nzLabel]="user|resident" [nzValue]="user.id"></nz-option>
+            <ng-container *ngFor="let state_change_reason of state_change_reasons">
+              <nz-option [nzLabel]="state_change_reason.title" [nzValue]="state_change_reason.id"></nz-option>
             </ng-container>
           </nz-select>
           <nz-form-explain *ngIf="hasErrors('state_change_reason_id')">

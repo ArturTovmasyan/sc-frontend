@@ -44,7 +44,27 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   protected title: string = null;
   protected name: string = null;
 
-  protected buttons: {
+  protected buttons_left: {
+    name: string,
+    type: string,
+    multiselect: boolean,
+    free: boolean,
+    nzIcon: string,
+    faIcon: string,
+    click: (ids: number[]) => void
+  }[] = [];
+
+  protected buttons_center: {
+    name: string,
+    type: string,
+    multiselect: boolean,
+    free: boolean,
+    nzIcon: string,
+    faIcon: string,
+    click: (ids: number[]) => void
+  }[] = [];
+
+  protected buttons_right: {
     name: string,
     type: string,
     multiselect: boolean,

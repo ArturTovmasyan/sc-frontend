@@ -30,7 +30,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
   }
 
   ngOnInit(): void {
-    this.buttons.push(
+    this.buttons_center.push(
       {
         name: 'blank',
         type: 'default',
@@ -48,7 +48,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
       }
     );
 
-    this.buttons.push(
+    this.buttons_center.push(
       {
         name: 'filled',
         type: 'default',

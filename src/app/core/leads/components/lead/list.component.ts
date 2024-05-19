@@ -31,7 +31,33 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
   }
 
   ngOnInit(): void {
-    this.buttons.push(
+    this.buttons_right.push(
+      {
+        name: 'all',
+        type: 'default',
+        multiselect: false,
+        free: true,
+        nzIcon: null,
+        faIcon: 'fas fa-star',
+        click: (ids: number[]) => {
+          if (this.buttons_right[0].name === 'open') {
+            this.buttons_right[0].name = 'all';
+            this.buttons_right[0].faIcon = 'fas fa-star';
+
+            this.params = [];
+            this.reload_data(true);
+          } else {
+            this.buttons_right[0].name = 'open';
+            this.buttons_right[0].faIcon = 'fas fa-star-half-alt';
+
+            this.params = [];
+            this.params.push({key: 'all', value: '1'});
+            this.reload_data(true);
+          }
+        }
+      }
+    );
+    this.buttons_center.push(
       {
         name: 'report',
         type: 'default',

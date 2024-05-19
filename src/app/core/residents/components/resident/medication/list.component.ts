@@ -30,7 +30,7 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
   ngOnInit(): void {
     this.subscribe('rs_resident');
 
-    this.buttons.push(this.get_show_hide_button());
+    this.buttons_center.push(this.get_show_hide_button());
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -81,8 +81,8 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
         this.params.push({key: 'discontinued', value: value});
         super.init(true);
 
-        this.buttons = [];
-        this.buttons.push(this.get_show_hide_button());
+        this.buttons_center = [];
+        this.buttons_center.push(this.get_show_hide_button());
       }
     };
   }
