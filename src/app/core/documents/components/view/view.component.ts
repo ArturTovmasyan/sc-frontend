@@ -81,8 +81,6 @@ export class ViewComponent implements OnInit, OnDestroy {
               v.file = ViewComponent.b64toBlob(v.file.replace('data:application/pdf;base64,', ''), 'application/pdf');
             });
 
-            console.log(this.documents);
-
             if (params) {
               this.document = this.documents.filter(v => v.id = params.document_id).pop();
             }
