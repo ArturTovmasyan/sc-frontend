@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {AssessmentFormService} from '../../../services/assessment-form.service';
@@ -11,12 +12,16 @@ import {AssessmentForm} from '../../../models/assessment-form';
   styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
   providers: [AssessmentFormService]
 })
-export class ListComponent extends GridComponent<AssessmentForm, AssessmentFormService> {
-  constructor(service$: AssessmentFormService, title$: TitleService, modal$: NzModalService) {
+export class ListComponent extends GridComponent<AssessmentForm, AssessmentFormService> implements OnInit {
+  constructor(service$: AssessmentFormService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute) {
     super(service$, title$, modal$);
 
     this.component = FormComponent;
 
     this.name = 'assessment-form-list';
+  }
+
+  ngOnInit(): void {
+    super.init();
   }
 }

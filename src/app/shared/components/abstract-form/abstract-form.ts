@@ -3,11 +3,12 @@ import {FormError} from '../../models/form-error';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 export class AbstractForm {
-  protected form: FormGroup;
-  protected loading: boolean = false;
+  public form: FormGroup;
+  public loading: boolean = false;
+  public message: string = null;
+
   private _submitted: boolean = false;
   protected error: string = null;
-  protected message: string = null;
 
   private _loaded: BehaviorSubject<boolean>;
 
@@ -66,7 +67,7 @@ export class AbstractForm {
     }
   }
 
-  protected hasErrors(name: string) {
+  public hasErrors(name: string) {
     const control = this.findFieldControl(name);
 
     return control != null && !(control instanceof FormGroup) && (control.dirty || control.touched) && control.errors != null;
@@ -184,9 +185,80 @@ export class AbstractForm {
     return null;
   }
 
+  /** Submit **/
   public before_submit(): void {
   }
 
+  public after_submit(): void {
+  }
+
+  /** Set Data **/
+  public before_set_form_data(): void {
+  }
+
   public after_set_form_data(): void {
+  }
+
+  public set_form_data(component: AbstractForm, form: FormGroup, result: any) {
+    const form_controls = Object.keys(form.controls);
+    const data = result;
+
+    Object.keys(data).forEach((key) => {
+      if (form_controls.includes(key) === false && form_controls.includes(key + '_id') === false) {
+        // console.log('NF', key);
+        delete data[key];
+      } else if (form_controls.includes(key + '_id')) {
+        // console.log('ID', key);
+        data[key + '_id'] = data[key] ? data[key].id : null;
+        delete data[key];
+
+        form.get(key + '_id').setValue(data[key + '_id'], {emitEvent: true});
+      } else if ((data[key] instanceof Array) && !(form.get(key) instanceof FormArray)) {
+        // console.log('AR', key);
+        if (data[key].length > 0 && data[key][0] != null && data[key][0].hasOwnProperty('id')) {
+          data[key] = data[key].map(v => v.id);
+        }
+        form.get(key).setValue(data[key]);
+      } else if ((data[key] instanceof Array) && (form.get(key) instanceof FormArray)) {
+        // console.log('FA', key);
+        // console.log('FA', data[key]);
+
+        const form_array = <FormArray>form.get(key);
+
+        form_array.controls = [];
+        for (let i = 0; i < data[key].length; i++) {
+          const skeleton = component.get_form_array_skeleton(key);
+          if (skeleton instanceof FormGroup) {
+            // skeleton.setValue(data[key]);
+            this.set_form_data(component, skeleton, data[key][i]);
+            form_array.push(skeleton);
+          } else if (skeleton instanceof FormControl) {
+            // console.log('FC', key);
+            // console.log('FC', data[key][i]);
+
+            // TODO(haykg): temp solution
+            if (data[key][i] != null && data[key][i].hasOwnProperty('id')) {
+              data[key][i] = data[key][i].id;
+            }
+
+            skeleton.setValue(data[key][i]);
+
+            form_array.push(skeleton);
+          }
+        }
+
+        delete data[key];
+      } else if (form.get(key) instanceof FormGroup) {
+        // console.log('FG', key);
+        this.set_form_data(component, <FormGroup>form.get(key), data[key]);
+
+        delete data[key];
+      } else {
+        // console.log('ELSE', key);
+        if (form.get(key) !== null) {
+          form.get(key).setValue(data[key]);
+        }
+      }
+    });
   }
 }

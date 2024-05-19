@@ -93,11 +93,14 @@
       <tbody>
       <tr *ngFor="let row of data">
         <td nzShowCheckbox [(nzChecked)]="row.checked" (nzCheckedChange)="checkbox_refresh()"></td>
-        <td *ngFor="let field of fields">
-          <ng-container *ngIf="field.type == 'enum'">
+        <td *ngFor="let field of fields" [ngSwitch]="field.type">
+          <ng-container *ngSwitchCase="'enum'">
             {{ field.enum_map[row[field.id]] }}
           </ng-container>
-          <ng-container *ngIf="field.type != 'enum'">
+          <ng-container *ngSwitchCase="'date'">
+            {{ row[field.id]|date }}
+          </ng-container>
+          <ng-container *ngSwitchDefault>
             {{ row[field.id] }}
           </ng-container>
         </td>

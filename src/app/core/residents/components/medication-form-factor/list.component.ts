@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../services/title.service';
 import {MedicationFormFactorService} from '../../services/medication-form-factor.service';
@@ -11,12 +12,16 @@ import {MedicationFormFactor} from '../../models/medication-form-factor';
   styleUrls: ['../../../../shared/components/grid/grid.component.scss'],
   providers: [MedicationFormFactorService]
 })
-export class ListComponent extends GridComponent<MedicationFormFactor, MedicationFormFactorService> {
-  constructor(service$: MedicationFormFactorService, title$: TitleService, modal$: NzModalService) {
+export class ListComponent extends GridComponent<MedicationFormFactor, MedicationFormFactorService> implements OnInit {
+  constructor(service$: MedicationFormFactorService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute) {
     super(service$, title$, modal$);
 
     this.component = FormComponent;
 
     this.name = 'medication-form-factor-list';
+  }
+
+  ngOnInit(): void {
+    super.init();
   }
 }

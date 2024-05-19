@@ -64,15 +64,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     });
   }
 
-  public get_form_array_skeleton(key: string): FormGroup| FormControl {
-    switch (key) {
-      case 'categories':
-        return new FormControl();
-      default:
-        return null;
-    }
-  }
-
   public get_title(idx: number) {
     const control = this.get_form_array('categories').controls[idx];
 
@@ -83,19 +74,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
 
     return category ? category.title : '';
-  }
-
-  public after_set_form_data(): void {
-    const controls = this.get_form_array('categories').controls;
-
-    if (controls && this.categories) {
-      Object.keys(controls).forEach(idx => {
-        // console.log(controls[idx].value);
-        // console.log(this.categories);
-        const category = this.categories.filter(item => item.id === controls[idx].value).pop();
-        category.disabled = true;
-      });
-    }
   }
 
   add_category() {
@@ -119,6 +97,15 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
+  public get_form_array_skeleton(key: string): FormGroup| FormControl {
+    switch (key) {
+      case 'categories':
+        return new FormControl();
+      default:
+        return null;
+    }
+  }
+
   public before_submit(): void {
     const rows: FormArray = this.get_form_array('categories');
     const rows_copy = [];
@@ -127,5 +114,18 @@ export class FormComponent extends AbstractForm implements OnInit {
       rows_copy.push(row.value);
     }
     rows.reset(rows_copy);
+  }
+
+  public after_set_form_data(): void {
+    const controls = this.get_form_array('categories').controls;
+
+    if (controls && this.categories) {
+      Object.keys(controls).forEach(idx => {
+        // console.log(controls[idx].value);
+        // console.log(this.categories);
+        const category = this.categories.filter(item => item.id === controls[idx].value).pop();
+        category.disabled = true;
+      });
+    }
   }
 }

@@ -97,7 +97,8 @@ import {ResidentSelectorComponent} from './residents/components/resident-selecto
 
 import {ResidentComponent} from './residents/components/resident/resident.component';
 import {InfoComponent as ResidentInfoComponent} from './residents/components/resident/info/info.component';
-import {FormComponent as ResidentFormComponent} from './residents/components/resident/form/form.component';
+import {FormComponent as ResidentFormComponent} from './residents/components/resident/info/form/form.component';
+import {ImageEditorComponent as ResidentImageEditorComponent} from './residents/components/resident/info/img-editor/image-editor.component';
 
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
 import {FormComponent as ResidentResponsiblePersonFormComponent} from './residents/components/resident/responsible-person/form/form.component';
@@ -167,6 +168,11 @@ import {MomentModule} from 'ngx-moment';
 import {GenderPipe} from './residents/pipes/gender.pipe';
 import {PhoneType} from './residents/models/phone-type.enum';
 import {PhoneTypePipe} from './residents/pipes/phone-type.pipe';
+import {LyResizingCroppingImageModule} from '@alyle/ui/resizing-cropping-images';
+import {LyButtonModule} from '@alyle/ui/button';
+import {LyIconModule} from '@alyle/ui/icon';
+import {LY_THEME, LyThemeModule} from '@alyle/ui';
+import {MinimaLight} from '@alyle/ui/themes/minima';
 
 registerLocaleData(en);
 
@@ -268,6 +274,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentComponent,
     ResidentInfoComponent,
     ResidentFormComponent,
+    ResidentImageEditorComponent,
 
     ResidentDietListComponent,
     ResidentDietFormComponent,
@@ -324,7 +331,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     EventDefinitionListComponent,
     EventDefinitionFormComponent,
-
   ],
   entryComponents: [
     RoleFormComponent,
@@ -365,6 +371,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RegionFormComponent,
 
     ResidentFormComponent,
+    ResidentImageEditorComponent,
 
     ResidentDietFormComponent,
     ResidentMedicationFormComponent,
@@ -406,10 +413,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     NgZorroAntdModule,
-    NzFormModule,
     ColorPickerModule,
     MomentModule,
     DndModule.forRoot(),
+    LyThemeModule.setTheme('minima-light'),
+    LyResizingCroppingImageModule,
+    LyButtonModule,
+    LyIconModule,
     CoreRoutingModule,
     SharedModule
   ],
@@ -419,6 +429,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {provide: NZ_I18N, useValue: en_US},
     {provide: NzFormItemComponent},
     {provide: NzFormExplainComponent},
+    {provide: LY_THEME, useClass: MinimaLight, multi: true}, // name: `minima-light`
   ],
   exports: [
     CityStateZipPipe

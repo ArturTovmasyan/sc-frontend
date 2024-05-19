@@ -22,12 +22,14 @@ export class GridService<T extends IdInterface> {
   public list(page: number,
               per_page: number,
               sort: { key: string, value: string }[],
-              filter: { [id: string]: { condition: number, value: any[] } }): Observable<T[]> {
+              filter: { [id: string]: { condition: number, value: any[] } },
+              params?: { key: string, value: string }[]
+  ): Observable<T[]> {
 
     return this.http.get<T[]>(
       this.SEVICE_URL_BASE + '/grid',
       {
-        params: this.build_query(page, per_page, sort, filter)
+        params: this.build_query(page, per_page, sort, filter, params)
       });
   }
 
@@ -71,19 +73,21 @@ export class GridService<T extends IdInterface> {
   private build_query(page: number,
                       per_page: number,
                       sort: { key: string, value: string }[],
-                      filter: { [id: string]: { condition: number, value: any[] } }): HttpParams {
-    let params = new HttpParams()
+                      filter: { [id: string]: { condition: number, value: any[] } },
+                      params?: { key: string, value: string }[]
+  ): HttpParams {
+    let query = new HttpParams()
       .append('page', `${page}`)
       .append('per_page', `${per_page}`);
 
     sort.forEach(sort_config => {
-      params = params.append('sort[' + sort_config.key + ']', sort_config.value.replace('end', ''));
+      query = query.append('sort[' + sort_config.key + ']', sort_config.value.replace('end', ''));
     });
 
     Object.entries(filter).forEach(
       ([key, value]) => {
         if (value.condition != null) {
-          params = params.append('filter[' + key + '][c]', `${value.condition}`);
+          query = query.append('filter[' + key + '][c]', `${value.condition}`);
         }
         if (value.value != null) {
           value.value.forEach((v, i) => {
@@ -92,13 +96,20 @@ export class GridService<T extends IdInterface> {
                 v = formatDate(v, 'yyy-MM-ddTHH:mm:ss', 'en-US');
               }
 
-              params = params.append('filter[' + key + '][v][' + i + ']', v);
+              query = query.append('filter[' + key + '][v][' + i + ']', v);
             }
           });
         }
       }
     );
 
-    return params;
+    if (params) {
+      params.forEach(param => {
+        query = query.append(param.key, param.value);
+      });
+    }
+
+    return query;
   }
+
 }

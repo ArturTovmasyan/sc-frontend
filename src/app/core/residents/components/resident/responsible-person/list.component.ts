@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
@@ -11,13 +12,20 @@ import {ResidentResponsiblePerson} from '../../../models/resident-responsible-pe
   styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
   providers: [ResidentResponsiblePersonService]
 })
-export class ListComponent extends GridComponent<ResidentResponsiblePerson, ResidentResponsiblePersonService> {
-  constructor(service$: ResidentResponsiblePersonService, title$: TitleService, modal$: NzModalService) {
+export class ListComponent extends GridComponent<ResidentResponsiblePerson, ResidentResponsiblePersonService> implements OnInit {
+  constructor(service$: ResidentResponsiblePersonService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute) {
     super(service$, title$, modal$);
 
     this.card = false;
     this.component = FormComponent;
 
     this.name = 'resident-responsible-person-list';
+  }
+
+  ngOnInit(): void {
+    const resident_id = this.route$.snapshot.parent.params['id'];
+    this.params.push({key: 'resident_id', value: resident_id});
+
+    super.init();
   }
 }

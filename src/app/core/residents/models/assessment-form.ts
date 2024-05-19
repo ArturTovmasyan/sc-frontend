@@ -7,7 +7,7 @@ export class AssessmentForm implements IdInterface {
   title: string;
 
   care_level_groups: AssessmentCareLevelGroup[];
-  form_categories: AssessmentCategory[];
+  categories: AssessmentCategory[];
 
   space: Space;
 }

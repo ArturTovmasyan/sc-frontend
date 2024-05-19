@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import {OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {TitleService} from '../../../core/services/title.service';
 import {NzModalService} from 'ng-zorro-antd';
@@ -11,9 +10,8 @@ import {AbstractForm} from '../abstract-form/abstract-form';
 //   templateUrl: './grid.component.html',
 //   styleUrls: ['./grid.component.scss']
 // })
-export class GridComponent<T extends IdInterface, Service extends GridService<T>>
-  implements OnInit {
-  protected card: boolean = true; // TODO(haykg): review to convert Input
+export class GridComponent<T extends IdInterface, Service extends GridService<T>> {
+  public card: boolean = true; // TODO(haykg): review to convert Input
   protected loading_edit_modal: boolean = false;
 
   protected loading = false;
@@ -42,11 +40,13 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   private filter: { [id: string]: { condition: number, value: any[] } } = {};
   private sort: { key: string, value: string }[] = [];
 
+  protected params: { key: string, value: string }[] = [];
+
   constructor(protected service$: Service, protected title$: TitleService, protected modal$: NzModalService) {
     title$.getTitle().subscribe(v => this.title = v);
   }
 
-  ngOnInit(): void {
+  init(): void {
     this.load_grid_fields().subscribe((data: any) => {
       this.fields = data;
       this.fields.forEach(
@@ -311,7 +311,9 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
         if (result !== null) {
           component.loaded.subscribe(v => {
             if (v) {
-              this.set_form_data(component, form, result);
+              component.before_set_form_data();
+              component.set_form_data(component, form, result);
+              component.after_set_form_data();
             }
           });
         }
@@ -332,7 +334,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
                       per_page: number,
                       sort: { key: string, value: string }[],
                       filter: { [id: string]: { condition: number, value: any[] } }) {
-    return this.service$.list(page, per_page, sort, filter);
+    return this.service$.list(page, per_page, sort, filter, this.params);
   }
 
   protected load_pdf(callback: any) {
@@ -355,63 +357,4 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     return this.service$.removeBulk(ids);
   }
 
-  protected set_form_data(component: AbstractForm, form: FormGroup, result: any) {
-    const form_controls = Object.keys(form.controls);
-    const data = result;
-
-    Object.keys(data).forEach((key) => {
-      if (form_controls.includes(key) === false && form_controls.includes(key + '_id') === false) {
-        // console.log('NF', key);
-        delete data[key];
-      } else if (form_controls.includes(key + '_id')) {
-        // console.log('ID', key);
-        data[key + '_id'] = data[key] ? data[key].id : null;
-        delete data[key];
-
-        form.get(key + '_id').setValue(data[key + '_id']);
-      } else if ((data[key] instanceof Array) && !(form.get(key) instanceof FormArray)) {
-        // console.log('AR', key);
-        if (data[key].length > 0 && data[key][0] != null && data[key][0].hasOwnProperty('id')) {
-          data[key] = data[key].map(v => v.id);
-        }
-        form.get(key).setValue(data[key]);
-      } else if ((data[key] instanceof Array) && (form.get(key) instanceof FormArray)) {
-        // console.log('FA', key);
-        // console.log('FA', data[key]);
-
-        const form_array = <FormArray>form.get(key);
-
-        form_array.controls = [];
-        for (let i = 0; i < data[key].length; i++) {
-          const skeleton = component.get_form_array_skeleton(key);
-          if (skeleton instanceof FormGroup) {
-            // skeleton.setValue(data[key]);
-            this.set_form_data(component, skeleton, data[key][i]);
-            form_array.push(skeleton);
-          } else if (skeleton instanceof FormControl) {
-            // console.log('FC', key);
-            // console.log('FC', data[key][i]);
-
-            skeleton.setValue(data[key][i].category.id); // TODO(haykg): review
-
-            form_array.push(skeleton);
-          }
-        }
-
-        delete data[key];
-      } else if (form.get(key) instanceof FormGroup) {
-        // console.log('FG', key);
-        this.set_form_data(component, <FormGroup>form.get(key), data[key]);
-
-        delete data[key];
-      } else {
-        // console.log('ELSE', key);
-        if (form.get(key) !== null) {
-          form.get(key).setValue(data[key]);
-        }
-      }
-    });
-
-    component.after_set_form_data();
-  }
 }

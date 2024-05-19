@@ -8,7 +8,7 @@ import {TitleService} from '../../../services/title.service';
   templateUrl: './resident.component.html'
 })
 export class ResidentComponent implements OnInit {
-  protected title: string = null;
+  public title: string = null;
 
   resident: Resident;
 

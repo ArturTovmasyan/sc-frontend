@@ -35,6 +35,7 @@
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "node_modules/@coreui/icons/css/coreui-icons.css",
               "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "node_modules/@beyerleinf/ngx-dnd/styles.css",
               "src/scss/senior-care-font.scss",
               "src/scss/style.scss"
@@ -69,7 +70,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumError": "10mb"
                 }
               ]
             }
@@ -101,7 +102,10 @@
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "node_modules/@coreui/icons/css/coreui-icons.css",
               "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "node_modules/@beyerleinf/ngx-dnd/styles.css",
               "src/scss/senior-care-font.scss",
               "src/scss/style.scss"
             ],

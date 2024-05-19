@@ -6,9 +6,9 @@ import {Resident} from '../../../models/resident';
 import {ResidentType} from '../../../models/resident-type.enum';
 import {Observable} from 'rxjs';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
-import {FormComponent} from '../form/form.component';
+import {FormComponent} from './form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
-import {FormArray, FormGroup} from '@angular/forms';
+import {ImageEditorComponent} from './img-editor/image-editor.component';
 
 @Component({
   selector: 'app-resident-info',
@@ -28,7 +28,10 @@ export class InfoComponent implements OnInit {
 
   resident_id: number;
 
-  constructor(private el: ElementRef, private resident$: ResidentService, protected modal$: NzModalService, private route$: ActivatedRoute) {
+  constructor(private el: ElementRef,
+              private resident$: ResidentService,
+              protected modal$: NzModalService,
+              private route$: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -46,8 +49,12 @@ export class InfoComponent implements OnInit {
     });
   }
 
+  show_modal_image_editor(): void {
+    this.create_modal(ImageEditorComponent, data => this.resident$.put_photo(data), null);
+  }
+
   show_modal_add(): void {
-    this.create_modal(data => this.resident$.add(data), null);
+    this.create_modal(FormComponent, data => this.resident$.add(data), null);
   }
 
   show_modal_edit(): void {
@@ -56,7 +63,7 @@ export class InfoComponent implements OnInit {
       res => {
         this.loading_edit_modal = false;
 
-        this.create_modal(data => this.resident$.edit(data), res);
+        this.create_modal(FormComponent, data => this.resident$.edit(data), res);
       },
       error => {
         this.loading_edit_modal = false;
@@ -111,7 +118,7 @@ export class InfoComponent implements OnInit {
     ;
   }
 
-  private create_modal(submit: (data: any) => Observable<any>, result: any) {
+  private create_modal(form_component: any, submit: (data: any) => Observable<any>, result: any) {
     let valid = false;
     let loading = false;
 
@@ -119,7 +126,7 @@ export class InfoComponent implements OnInit {
       nzClosable: false,
       nzMaskClosable: false,
       nzTitle: null,
-      nzContent: FormComponent,
+      nzContent: form_component,
       nzFooter: [
         {
           label: 'Cancel',
@@ -135,7 +142,7 @@ export class InfoComponent implements OnInit {
           onClick: () => {
             loading = true;
 
-            const component = <FormComponent>modal.getContentComponent();
+            const component = <AbstractForm>modal.getContentComponent();
             const form_data = component.formObject.value;
 
             component.submitted = true;
@@ -145,7 +152,7 @@ export class InfoComponent implements OnInit {
                 loading = false;
 
                 // TODO(haykg): review add case
-                this.loading = false;
+                this.loading = true;
                 this.resident$.get(this.resident_id).pipe(first()).subscribe(resident => {
                   this.loading = false;
                   if (resident) {
@@ -169,7 +176,7 @@ export class InfoComponent implements OnInit {
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
-      if (component instanceof AbstractForm) {
+      if (component instanceof FormComponent) {
         const form = component.formObject;
 
         component.type = this.resident.type;
@@ -178,7 +185,9 @@ export class InfoComponent implements OnInit {
         if (result !== null) {
           component.loaded.subscribe(v => {
             if (v) {
-              this.set_form_data(component, form, result);
+              component.before_set_form_data();
+              component.set_form_data(component, form, result);
+              component.after_set_form_data();
             }
           });
         }
@@ -187,57 +196,23 @@ export class InfoComponent implements OnInit {
         form.valueChanges.subscribe(val => {
           valid = form.valid;
         });
-      }
-    });
-  }
-
-  protected set_form_data(component: AbstractForm, form: FormGroup, result: any) {
-    const form_controls = Object.keys(form.controls);
-    const data = result;
-
-    Object.keys(data).forEach((key) => {
-      if (form_controls.includes(key) === false && form_controls.includes(key + '_id') === false) {
-        // console.log('NF', key);
-        delete data[key];
-      } else if (form_controls.includes(key + '_id')) {
-        // console.log('ID', key);
-        data[key + '_id'] = data[key] ? data[key].id : null;
-        delete data[key];
-
-        form.get(key + '_id').setValue(data[key + '_id']);
-      } else if ((data[key] instanceof Array) && !(form.get(key) instanceof FormArray)) {
-        // console.log('AR', key);
-        if (data[key].length > 0 && data[key][0] != null && data[key][0].hasOwnProperty('id')) {
-          data[key] = data[key].map(v => v.id);
-        }
-        form.get(key).setValue(data[key]);
-      } else if ((data[key] instanceof Array) && (form.get(key) instanceof FormArray)) {
-        // console.log('FA', key);
-        // console.log('FA', data[key]);
-
-        const form_array = <FormArray>form.get(key);
-
-        form_array.controls = [];
-        for (let i = 0; i < data[key].length; i++) {
-          const skeleton = component.get_form_array_skeleton(key);
-          if (skeleton instanceof FormGroup) {
-            // skeleton.setValue(data[key]);
-            this.set_form_data(component, skeleton, data[key][i]);
-            form_array.push(skeleton);
+      } else if (component instanceof ImageEditorComponent) {
+        const form = component.formObject;
+        component.loaded.subscribe(v => {
+          if (v) {
+            component.before_set_form_data();
+            component.set_form_data(component, form, {
+              id: this.resident.id,
+              photo: this.resident.photo
+            });
+            component.after_set_form_data();
           }
-        }
+        });
 
-        delete data[key];
-      } else if (form.get(key) instanceof FormGroup) {
-        // console.log('FG', key);
-        this.set_form_data(component, <FormGroup>form.get(key), data[key]);
-
-        delete data[key];
-      } else {
-        // console.log('ELSE', key);
-        if (form.get(key) !== null) {
-          form.get(key).setValue(data[key]);
-        }
+        valid = form.valid;
+        form.valueChanges.subscribe(val => {
+          valid = form.valid;
+        });
       }
     });
   }

@@ -282,6 +282,14 @@
       "amount": "Amount",
       "physician": "Physician",
       "responsible_person": "Responsible Person"
+    },
+    "resident-assessment-list": {
+      "id": "ID",
+      "form": "Form",
+      "date": "Date",
+      "performed_by": "Performed By",
+      "notes": "Notes",
+      "score": "Score"
     }
   }
 }

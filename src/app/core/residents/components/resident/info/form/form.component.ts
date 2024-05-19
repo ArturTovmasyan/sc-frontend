@@ -1,25 +1,25 @@
 ﻿import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
-import {Space} from '../../../../models/space';
-import {SpaceService} from '../../../../services/space.service';
+import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
+import {Space} from '../../../../../models/space';
+import {SpaceService} from '../../../../../services/space.service';
 import {first} from 'rxjs/operators';
-import {ResidentType} from '../../../models/resident-type.enum';
-import {Salutation} from '../../../models/salutation';
-import {SalutationService} from '../../../services/salutation.service';
-import {CityStateZip} from '../../../models/city-state-zip';
-import {CityStateZipService} from '../../../services/city-state-zip.service';
-import {FacilityDiningRoomService} from '../../../services/facility-dining-room.service';
-import {FacilityRoomService} from '../../../services/facility-room.service';
-import {ApartmentRoom} from '../../../models/apartment-room';
-import {ApartmentRoomService} from '../../../services/apartment-room.service';
-import {FacilityDiningRoom} from '../../../models/facility-dining-room';
-import {FacilityRoom} from '../../../models/facility-room';
-import {State} from '../../../models/resident';
-import {Gender} from '../../../models/gender.enum';
-import {CareLevel} from '../../../models/care-level';
-import {CareLevelService} from '../../../services/care-level.service';
-import {PhoneType} from '../../../models/phone-type.enum';
+import {ResidentType} from '../../../../models/resident-type.enum';
+import {Salutation} from '../../../../models/salutation';
+import {SalutationService} from '../../../../services/salutation.service';
+import {CityStateZip} from '../../../../models/city-state-zip';
+import {CityStateZipService} from '../../../../services/city-state-zip.service';
+import {FacilityDiningRoomService} from '../../../../services/facility-dining-room.service';
+import {FacilityRoomService} from '../../../../services/facility-room.service';
+import {ApartmentRoom} from '../../../../models/apartment-room';
+import {ApartmentRoomService} from '../../../../services/apartment-room.service';
+import {FacilityDiningRoom} from '../../../../models/facility-dining-room';
+import {FacilityRoom} from '../../../../models/facility-room';
+import {State} from '../../../../models/resident';
+import {Gender} from '../../../../models/gender.enum';
+import {CareLevel} from '../../../../models/care-level';
+import {CareLevelService} from '../../../../services/care-level.service';
+import {PhoneType} from '../../../../models/phone-type.enum';
 
 @Component({
   templateUrl: 'form.component.html'

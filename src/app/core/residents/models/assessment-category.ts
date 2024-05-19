@@ -9,6 +9,8 @@ export class AssessmentCategory implements IdInterface {
   space: Space;
 
   disabled: boolean;
+  check_group: { label: string, value: number, checked: boolean }[];
+  row: number;
 }
 
 export class AssessmentCategoryRow implements IdInterface {

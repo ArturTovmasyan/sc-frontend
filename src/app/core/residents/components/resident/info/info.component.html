@@ -2,15 +2,20 @@
   <div *ngIf="resident">
     <div *ngIf="resident.photo" nz-row>
       <div nz-col [nzSpan]="24">
-        <p class="text-center m-0">
-        <img src="{{ resident.photo }}" class="img-thumbnail"
-             style="max-height: 25rem"
-             alt="{{ resident.salutation.title }} {{ resident.first_name }} {{ resident.middle_name }} {{ resident.last_name }}"
-             title="{{ resident.salutation.title }} {{ resident.first_name }} {{ resident.middle_name }} {{ resident.last_name }}"
-        />
-        </p>
+        <div class="text-center m-0">
+          <div class="resident-photo">
+            <img src="{{ resident.photo }}" class="img-thumbnail"
+                 style="max-height: 25rem"
+                 alt="{{ residen|resident }}" title="{{ resident|resident }}" />
+            <div class="edit">
+              <button nz-button nzType="primary" (click)="show_modal_image_editor();"><i class="fas fa-pencil-alt"></i></button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!--<app-resident-image-editor base64-url="{{ resident.photo }}"></app-resident-image-editor>-->
 
     <div nz-row>
       <div nz-col [nzSpan]="24">

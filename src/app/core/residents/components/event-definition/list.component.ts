@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../services/title.service';
 import {EventDefinitionService} from '../../services/event-definition.service';
@@ -11,12 +12,16 @@ import {EventDefinition} from '../../models/event-definition';
   styleUrls: ['../../../../shared/components/grid/grid.component.scss'],
   providers: [EventDefinitionService]
 })
-export class ListComponent extends GridComponent<EventDefinition, EventDefinitionService> {
-  constructor(service$: EventDefinitionService, title$: TitleService, modal$: NzModalService) {
+export class ListComponent extends GridComponent<EventDefinition, EventDefinitionService> implements OnInit {
+  constructor(service$: EventDefinitionService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute) {
     super(service$, title$, modal$);
 
     this.component = FormComponent;
 
     this.name = 'event-definition-list';
+  }
+
+  ngOnInit(): void {
+    super.init();
   }
 }
