@@ -39,6 +39,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.room_orig_occupation = 0;
     this.room_curr_occupation = 0;
+    this.other_occupation = 0;
 
     this.button_loading = new Array<boolean>(100);
   }
@@ -55,22 +56,22 @@ export class FormComponent extends AbstractForm implements OnInit {
       apartment_id: [null, Validators.required]
     });
 
+    this.form.get('beds').valueChanges.subscribe(next => {
+      this.room_curr_occupation = next.length;
+    });
+
+    this.form.get('apartment_id').valueChanges.subscribe(next => {
+      if (next) {
+        if (this.apartments) {
+          this.apartment = this.apartments.filter(v => v.id === next).pop();
+          this.other_occupation = this.apartment.occupation - this.room_orig_occupation;
+        }
+      }
+    });
+
     this.apartment$.all().pipe(first()).subscribe(res => {
       if (res) {
         this.apartments = res;
-
-        this.form.get('beds').valueChanges.subscribe(next => {
-          this.room_curr_occupation = next.length;
-
-          this.btn_add_bed.el.disabled = (this.room_curr_occupation + this.other_occupation) >= this.apartment.capacity;
-        });
-
-        this.form.get('apartment_id').valueChanges.subscribe(next => {
-          if (next) {
-            this.apartment = this.apartments.filter(v => v.id === next).pop();
-            this.other_occupation = this.apartment.occupation - this.room_orig_occupation;
-          }
-        });
 
         this.form.get('apartment_id').setValue(this.form.get('apartment_id').value);
       }
@@ -219,5 +220,32 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
     });
 
+  }
+
+  before_set_form_data(data: any, previous_data?: any): void {
+    if (data === null && previous_data !== null) {
+      if (previous_data.hasOwnProperty('apartment_id')) {
+        this.apartment_room$.last_number(previous_data.apartment_id).subscribe(res => {
+          if (res) {
+            const number = res[0].replace(/(\d+)$/, function (match, n) {
+              return ++n;
+            });
+            this.form.get('number').setValue(number);
+          } else {
+            if (previous_data.hasOwnProperty('number')) {
+              const number = previous_data.number.replace(/(\d+)$/, function (match, n) {
+                return ++n;
+              });
+              this.form.get('number').setValue(number);
+            }
+          }
+        });
+
+        this.form.get('apartment_id').setValue(previous_data.apartment_id);
+        if (previous_data.hasOwnProperty('floor')) {
+          this.form.get('floor').setValue(previous_data.floor);
+        }
+      }
+    }
   }
 }

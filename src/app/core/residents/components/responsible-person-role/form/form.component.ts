@@ -29,5 +29,4 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
     });
   }
-
 }

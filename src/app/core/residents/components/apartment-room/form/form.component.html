@@ -56,7 +56,8 @@
     <legend class="senior-care-legend">
       Bed(s)
       <button [style.float]="'right'" #addBed nz-button nzType="primary" nzSize="small" nzShape="circle"
-              (click)="add_field('beds');" [disabled]="!form.get('apartment_id').value">
+              (click)="add_field('beds');" [disabled]="!form.get('apartment_id').value
+        || (apartment !== null && ((room_curr_occupation + other_occupation) >= apartment.capacity))">
         <i nz-icon type="plus"></i>
       </button>
     </legend>

@@ -209,7 +209,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   }
 
   show_modal_add(): void {
-    this.create_modal(data => this.add_data(data), null);
+    this.create_modal(data => this.add_data(data), null, null);
   }
 
   show_modal_edit(): void {
@@ -222,7 +222,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
       res => {
         this.loading_edit_modal = false;
 
-        this.create_modal(data => this.edit_data(data), res);
+        this.create_modal(data => this.edit_data(data), res, null);
       },
       error => {
         this.loading_edit_modal = false;
@@ -280,55 +280,94 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     ;
   }
 
-  private create_modal(submit: (data: any) => Observable<any>, result: any) {
+  private create_modal(submit: (data: any) => Observable<any>, result: any, previous_data?: any) {
     let valid = false;
     let loading = false;
+
+    const footer = [
+      {
+        label: 'Cancel',
+        onClick: () => {
+          modal.close();
+        }
+      },
+      {
+        type: 'primary',
+        label: 'Save',
+        loading: () => loading,
+        disabled: () => !valid,
+        onClick: () => {
+          loading = true;
+
+          const component = <AbstractForm>modal.getContentComponent();
+          component.before_submit();
+          const form_data = component.formObject.value;
+
+          component.submitted = true;
+
+          submit(form_data).subscribe(
+            res => {
+              loading = false;
+
+              this.reload_data();
+              this.checkbox_refresh();
+
+              modal.close();
+            },
+            error => {
+              loading = false;
+
+              component.handleSubmitError(error);
+              component.postSubmit(null);
+              // console.error(error);
+            });
+        }
+      },
+    ];
+
+    if (result === null) {
+      footer.push({
+        type: 'primary',
+        label: 'Save & Add',
+        loading: () => loading,
+        disabled: () => !valid,
+        onClick: () => {
+          loading = true;
+
+          const component = <AbstractForm>modal.getContentComponent();
+          component.before_submit();
+          const form_data = component.formObject.value;
+
+          component.submitted = true;
+
+          submit(form_data).subscribe(
+            res => {
+              loading = false;
+
+              this.reload_data();
+              this.checkbox_refresh();
+
+              modal.close();
+
+              this.create_modal(submit, result, form_data);
+            },
+            error => {
+              loading = false;
+
+              component.handleSubmitError(error);
+              component.postSubmit(null);
+              // console.error(error);
+            });
+        }
+      });
+    }
 
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
       nzTitle: null,
       nzContent: this.component,
-      nzFooter: [
-        {
-          label: 'Cancel',
-          onClick: () => {
-            modal.close();
-          }
-        },
-        {
-          type: 'primary',
-          label: 'Save',
-          loading: () => loading,
-          disabled: () => !valid,
-          onClick: () => {
-            loading = true;
-
-            const component = <AbstractForm>modal.getContentComponent();
-            component.before_submit();
-            const form_data = component.formObject.value;
-
-            component.submitted = true;
-
-            submit(form_data).subscribe(
-              res => {
-                loading = false;
-
-                this.reload_data();
-                this.checkbox_refresh();
-
-                modal.close();
-              },
-              error => {
-                loading = false;
-
-                component.handleSubmitError(error);
-                component.postSubmit(null);
-                // console.error(error);
-              });
-          }
-        }
-      ]
+      nzFooter: footer
     });
 
     modal.afterOpen.subscribe(() => {
@@ -347,7 +386,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
           });
         } else {
           component.edit_mode = false;
-          component.before_set_form_data(null); // review
+          component.before_set_form_data(null, previous_data); // review
         }
 
         valid = form.valid;

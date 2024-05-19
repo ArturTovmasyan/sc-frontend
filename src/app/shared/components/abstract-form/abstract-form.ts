@@ -294,7 +294,7 @@ export class AbstractForm implements OnDestroy {
   }
 
   /** Set Data **/
-  public before_set_form_data(data: any): void {
+  public before_set_form_data(data: any, previous_data?: any): void {
   }
 
   public after_set_form_data(): void {

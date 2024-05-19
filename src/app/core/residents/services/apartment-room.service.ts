@@ -11,4 +11,8 @@ export class ApartmentRoomService extends GridService<ApartmentRoom> {
 
     this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/apartment/room`;
   }
+
+  last_number(apartment_id: number) {
+    return  this.http.get(this.SEVICE_URL_BASE + `/${apartment_id}/last`);
+  }
 }
