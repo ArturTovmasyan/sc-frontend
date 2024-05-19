@@ -302,7 +302,7 @@ const routes: Routes = [
         path: 'residents/inactive', component: ResidentIndexComponent,
         data: {
           nav: {show: true, group: 'Residents'},
-          title: 'Move Out',
+          title: 'Moved-Out',
           permissions: ['persistence-resident-resident']
         }
       },
@@ -475,15 +475,6 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'relationships', component: RelationshipListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Relationships',
-          permissions: ['activity-reference', 'persistence-common-relationship']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
         path: 'dashboard',
         children: [
           {
@@ -548,6 +539,15 @@ const routes: Routes = [
           nav: {show: true, group: 'Corporate'},
           title: 'Documents',
           permissions: ['persistence-common-document']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'relationships', component: RelationshipListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Relationships',
+          permissions: ['activity-reference', 'persistence-common-relationship']
         },
         canActivate: [AuthGuard]
       },
@@ -977,7 +977,7 @@ const routes: Routes = [
       {
         path: 'notifications', component: NotificationListComponent,
         data: {
-          nav: {show: true, group: 'Administration'},
+          nav: {show: true, group: 'Notifications', title: 'List'},
           title: 'Notifications',
           permissions: ['persistence-common-notification']
         },
@@ -986,7 +986,7 @@ const routes: Routes = [
       {
         path: 'notification-types', component: NotificationTypeListComponent,
         data: {
-          nav: {show: true, group: 'Administration'},
+          nav: {show: true, group: 'Notifications'},
           title: 'Notification Types',
           permissions: ['persistence-common-notification_type']
         },
