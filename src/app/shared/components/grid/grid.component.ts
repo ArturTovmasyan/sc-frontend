@@ -8,6 +8,8 @@ import {GridService} from '../../services/grid.service';
 import {AbstractForm} from '../abstract-form/abstract-form';
 
 export class GridComponent<T extends IdInterface, Service extends GridService<T>> implements OnDestroy {
+  _ = _;
+
   public card: boolean = true; // TODO(haykg): review to convert Input
   protected loading_edit_modal: boolean = false;
 
@@ -458,7 +460,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   }
 
   public check_empty(value: any) {
-    return !_.isEmpty(value) && !_.isEmpty(_.trim(value));
+    return !_.isEmpty(value) && !_.isEmpty(_.trim(value)) && value[0] !== null;
   }
 
   protected replace_known_value(value: any) {

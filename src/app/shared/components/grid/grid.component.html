@@ -340,7 +340,12 @@
       <ng-container *ngFor="let item of entry|str2json|keyvalue:no_sort_order">
         <ng-container *ngIf="check_empty(item.value)">
           <dt>{{ item.key }}</dt>
-          <dd>{{ replace_known_value(item.value) }}</dd>
+          <dd *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</dd>
+          <dd *ngIf="_.isArray(item.value)">
+            <ng-container *ngFor="let iv of item.value">
+              {{ iv }} <br/>
+            </ng-container>
+          </dd>
         </ng-container>
       </ng-container>
     </ng-container>
