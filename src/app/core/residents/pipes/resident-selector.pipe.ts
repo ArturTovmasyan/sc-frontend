@@ -6,7 +6,7 @@ export class ResidentSelectorPipe implements PipeTransform {
   transform(value: Resident) {
     if (value) {
       return (value.room_number ? value.room_number : '') +
-        (value.bed_number && value.bed_number !== '' ? ' (' + value.bed_number + ') - ' : '') +
+        (value.bed_number && !value.private ? ' (' + value.bed_number + ') - ' : '') +
         (value.salutation ? (value.salutation + ' ') : '') +
         (value.first_name + ' ' + value.last_name);
     } else {

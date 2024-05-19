@@ -54,8 +54,8 @@
                 {{ resident|resident }}
               </a><br/>
               <span *ngIf="type === GROUP_TYPE.FACILITY || type === GROUP_TYPE.APARTMENT">
-                <ng-container *ngIf="resident.bed_number !== ''">{{ resident.room_number }} ({{ resident.bed_number }})</ng-container>
-                <ng-container *ngIf="resident.bed_number === ''">{{ resident.room_number }}</ng-container>
+                <ng-container *ngIf="!resident.private">{{ resident.room_number }} ({{ resident.bed_number }})</ng-container>
+                <ng-container *ngIf="resident.private">{{ resident.room_number }}</ng-container>
               </span>
             </p>
           </div>
