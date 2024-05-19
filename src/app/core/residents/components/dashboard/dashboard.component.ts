@@ -20,6 +20,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public facilities: Facility[];
   public dashboardData: any;
 
+  public todayDate: Date;
+
   protected $subscriptions: { [key: string]: Subscription; };
 
   constructor(
@@ -28,6 +30,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private facility$: FacilityService
   ) {
     this.$subscriptions = {};
+
+    this.todayDate = new Date();
   }
 
   ngOnInit() {

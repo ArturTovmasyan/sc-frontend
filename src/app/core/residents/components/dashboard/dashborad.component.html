@@ -8,6 +8,11 @@
       <div *ngIf="dashboardData && facilities" class="table-responsive">
         <table class="table table-sm table-bordered">
           <tr>
+            <th class="text-center" [colSpan]="1 + (facilities ? facilities.length : 0)">
+              {{ todayDate|date:'MM/01/yyyy':'UTC' }} through {{ todayDate|date:'MM/dd/yyyy':'UTC'}}
+            </th>
+          </tr>
+          <tr>
             <th>Occupancy Tracker</th>
             <ng-container *ngFor="let facility of facilities">
               <th class="text-center"><a [routerLink]="['/dashboard', facility.id]">{{ facility.name }}</a></th>

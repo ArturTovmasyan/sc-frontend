@@ -1,7 +1,10 @@
-<full-calendar defaultView="dayGridMonth"
-               [header]="{left: 'prev,next today',center: 'title',right: 'dayGridMonth,dayGridWeek,dayGridDay,listMonth'}"
-               [eventTimeFormat]="{hour: '2-digit',minute: '2-digit',second: '2-digit',meridiem: false}"
-               [plugins]="calendarPlugins" [events]="calendarEvents"></full-calendar>
+<full-calendar
+  [header]="calendarHeader"
+  [eventTimeFormat]="calendarTimeFormat"
+  [plugins]="calendarPlugins"
+  [events]="calendarEvents"
+></full-calendar>
+<!--(eventMouseEnter)="eventMouseEnter($event)"-->
 <div class="d-flex justify-content-between" style="margin-top: 1rem;">
   <div><span class="fc-event-dot" style="background-color:#fac22b"></span> - Admission</div>
   <div><span class="fc-event-dot" style="background-color:#009da1"></span> - Rent</div>

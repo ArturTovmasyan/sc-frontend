@@ -1,18 +1,18 @@
+import * as moment from 'moment';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Subscription} from 'rxjs';
+import {first} from 'rxjs/operators';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {ResidentService} from '../../../services/resident.service';
-import {first} from 'rxjs/operators';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
 import {PaymentPeriodPipe} from '../../../pipes/payment-period.pipe';
 import {RentIncreaseReasonPipe} from '../../../pipes/rent-increase-reason.pipe';
-import * as moment from 'moment';
 import {AdmissionType} from '../../../models/resident-admission';
 
 @Component({
@@ -23,6 +23,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   calendarPlugins = [dayGridPlugin, listPlugin, bootstrapPlugin]; // important!
+  calendarHeader = {left: 'prev,next today', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listMonth'};
+  calendarTimeFormat = {hour: '2-digit', minute: '2-digit', second: '2-digit', meridiem: false};
   calendarEvents = [];
 
   protected $subscriptions: { [key: string]: Subscription; };
@@ -134,5 +136,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
       return moment(admission.end).format('YYYY-MM-DD');
     }
 
+  }
+
+  eventMouseEnter($event: any) {
+    console.log($event);
   }
 }
