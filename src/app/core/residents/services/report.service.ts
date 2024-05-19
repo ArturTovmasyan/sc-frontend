@@ -80,6 +80,10 @@ export class ReportService {
       request_params = request_params.append('assessment_form_id', params.assessment_form_id);
     }
 
+    if (params.discontinued) {
+      request_params = request_params.append('discontinued', '1');
+    }
+
     return request_params;
   }
 }
