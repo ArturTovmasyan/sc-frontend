@@ -86,18 +86,20 @@
     </nz-form-control>
   </nz-form-item>
 
-  <div style="text-align: center">
-    <strong>Additional Fields</strong>
-  </div>
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="field_name">Field Name</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('field_name')?'error':null">
-      <input nz-input placeholder="Field Name" formControlName="field_name">
-      <nz-form-explain *ngIf="hasErrors('field_name')">
-        <app-field-errors [errors]="fieldErrors('field_name')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
+  <ng-container *ngIf="form.get('field_name').enabled">
+    <div style="text-align: center">
+      <strong>Additional Fields</strong>
+    </div>
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="field_name">Field Name</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('field_name')?'error':null">
+        <input nz-input placeholder="Field Name" formControlName="field_name">
+        <nz-form-explain *ngIf="hasErrors('field_name')">
+          <app-field-errors [errors]="fieldErrors('field_name')"></app-field-errors>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
 
   <div style="text-align: center">
     <strong>Away Reduction</strong>

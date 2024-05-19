@@ -153,14 +153,15 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       if (source.private_pay) {
         control.get('responsible_person_id').enable();
+        control.get('field_text').disable();
       } else {
         control.get('responsible_person_id').disable();
-      }
 
-      if (source.field_name !== null) {
-        control.get('field_text').enable();
-      } else {
-        control.get('field_text').disable();
+        if (source.field_name !== null) {
+          control.get('field_text').enable();
+        } else {
+          control.get('field_text').disable();
+        }
       }
 
       this.source_selector = null;
@@ -209,14 +210,15 @@ export class FormComponent extends AbstractForm implements OnInit {
 
         if (source.private_pay) {
           controls[idx].get('responsible_person_id').enable();
+          controls[idx].get('field_text').disable();
         } else {
           controls[idx].get('responsible_person_id').disable();
-        }
 
-        if (source.field_name !== null) {
-          controls[idx].get('field_text').enable();
-        } else {
-          controls[idx].get('field_text').disable();
+          if (source.field_name !== null) {
+            controls[idx].get('field_text').enable();
+          } else {
+            controls[idx].get('field_text').disable();
+          }
         }
       });
     }

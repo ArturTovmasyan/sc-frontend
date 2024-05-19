@@ -59,6 +59,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     ];
 
     this.subscribe('vc_care_level_adjustment');
+    this.subscribe('vc_private_pay');
 
     this.add_space();
   }
@@ -86,6 +87,15 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get('amount').disable();
           } else {
             this.form.get('amount').enable();
+          }
+        });
+        break;
+      case 'vc_private_pay':
+        this.$subscriptions[key] = this.form.get('private_pay').valueChanges.subscribe(next => {
+          if (next) {
+            this.form.get('field_name').disable();
+          } else {
+            this.form.get('field_name').enable();
           }
         });
         break;
