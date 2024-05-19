@@ -147,14 +147,14 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
       case 'resident_data':
         this.$subscriptions[key] = this.resident$.last_admission(this.form.get('resident_id').value).pipe(first()).subscribe(res => {
-            if (res) {
-              res.id = null;
+          if (res) {
+            res.id = null;
 
-              this.before_set_form_data(res);
-              this.set_form_data(this, this.form, res);
-              this.form.get('facility_bed_id').setValue(null);
-              this.form.get('apartment_bed_id').setValue(null);
-            }
+            this.before_set_form_data(res);
+            this.set_form_data(this, this.form, res);
+            this.form.get('facility_bed_id').setValue(null);
+            this.form.get('apartment_bed_id').setValue(null);
+          }
         });
         break;
       case 'list_facility':
@@ -220,20 +220,26 @@ export class FormComponent extends AbstractForm implements OnInit {
           if (res) {
             this.apartment_rooms = res;
 
-            if (this.edit_mode && this.edit_data.apartment_bed !== null) {
-              const rooms = this.apartment_rooms.filter(v => v.id === this.edit_data.apartment_bed.room.id);
+            if (this.edit_mode) {
+              if (this.edit_data.apartment_bed !== null
+                && this.edit_data.apartment_bed.room.apartment.id === this.form.get('group').value.id) {
+                const rooms = this.apartment_rooms.filter(v => v.id === this.edit_data.apartment_bed.room.id);
 
-              let room;
-              if (rooms.length === 0) {
-                room = new FacilityRoom();
-                this.apartment_rooms.push(room);
+                let room;
+                if (rooms.length === 0) {
+                  room = new FacilityRoom();
+                  this.apartment_rooms.push(room);
 
-                room.id = this.edit_data.apartment_bed.room.id;
-                room.number = this.edit_data.apartment_bed.room.number;
-                room.beds = [this.edit_data.apartment_bed];
+                  room.id = this.edit_data.apartment_bed.room.id;
+                  room.number = this.edit_data.apartment_bed.room.number;
+                  room.beds = [this.edit_data.apartment_bed];
+                } else {
+                  room = rooms[0];
+                  room.beds.push(this.edit_data.apartment_bed);
+                }
+                this.form.get('apartment_bed_id').setValue(this.edit_data.apartment_bed.id);
               } else {
-                room = rooms[0];
-                room.beds.push(this.edit_data.apartment_bed);
+                this.form.get('apartment_bed_id').setValue(null);
               }
             }
           }
@@ -247,20 +253,26 @@ export class FormComponent extends AbstractForm implements OnInit {
           if (res) {
             this.facility_rooms = res;
 
-            if (this.edit_mode && this.edit_data.facility_bed !== null) {
-              const rooms = this.facility_rooms.filter(v => v.id === this.edit_data.facility_bed.room.id);
+            if (this.edit_mode) {
+              if (this.edit_data.facility_bed !== null
+                && this.edit_data.facility_bed.room.facility.id === this.form.get('group').value.id) {
+                const rooms = this.facility_rooms.filter(v => v.id === this.edit_data.facility_bed.room.id);
 
-              let room;
-              if (rooms.length === 0) {
-                room = new FacilityRoom();
-                this.facility_rooms.push(room);
+                let room;
+                if (rooms.length === 0) {
+                  room = new FacilityRoom();
+                  this.facility_rooms.push(room);
 
-                room.id = this.edit_data.facility_bed.room.id;
-                room.number = this.edit_data.facility_bed.room.number;
-                room.beds = [this.edit_data.facility_bed];
+                  room.id = this.edit_data.facility_bed.room.id;
+                  room.number = this.edit_data.facility_bed.room.number;
+                  room.beds = [this.edit_data.facility_bed];
+                } else {
+                  room = rooms[0];
+                  room.beds.push(this.edit_data.facility_bed);
+                }
+                this.form.get('facility_bed_id').setValue(this.edit_data.facility_bed.id);
               } else {
-                room = rooms[0];
-                room.beds.push(this.edit_data.facility_bed);
+                this.form.get('facility_bed_id').setValue(null);
               }
             }
           }
@@ -272,8 +284,16 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (res) {
               this.dining_rooms = res;
 
-              if (!this.edit_mode && this.dining_rooms.filter(v => v.id === this.form.get('dining_room_id').value).length === 0) {
+              if (this.dining_rooms.filter(v => v.id === this.form.get('dining_room_id').value).length === 0) {
                 this.form.get('dining_room_id').setValue(null);
+              } else {
+                if (this.edit_mode && this.edit_data.dining_room !== null) {
+                  if (this.dining_rooms.filter(v => v.id === this.edit_data.dining_room.id).length === 0) {
+                    this.form.get('dining_room_id').setValue(null);
+                  } else {
+                    this.form.get('dining_room_id').setValue(this.edit_data.dining_room.id);
+                  }
+                }
               }
             }
           });
