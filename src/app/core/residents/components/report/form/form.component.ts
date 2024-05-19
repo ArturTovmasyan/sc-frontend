@@ -33,12 +33,13 @@ export class FormComponent extends AbstractForm implements OnInit {
   title: string;
 
   show: {
-    group: boolean, group_all: boolean,
+    group: boolean, group_multi: boolean, group_all: boolean,
     resident: boolean, resident_all: boolean,
     date: boolean, date_from: boolean, date_to: boolean, discontinued: boolean,
     assessment: boolean
   } = {
     group: false,
+    group_multi: false,
     group_all: false,
     resident: false,
     resident_all: false,
@@ -85,6 +86,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       group_list: [null, Validators.required],
       group: [null, Validators.required],
       group_id: [null, Validators.required],
+      group_ids: [null, Validators.required],
       group_all: [false, Validators.required],
 
       resident_id: [null, Validators.required],
@@ -215,8 +217,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'vc_group_list':
         this.$subscriptions[key] = this.form.get('group_list').valueChanges.subscribe(next => {
           if (next) {
-            this.form.get('group').setValue(next.type);
-            this.form.get('group_id').setValue(next.id);
+            if (this.show.group_multi) {
+              this.form.get('group').setValue(next.map(v => v.type).pop()); // TODO: review
+              this.form.get('group_ids').setValue(next.map(v => v.id));
+            } else {
+              this.form.get('group').setValue(next.type);
+              this.form.get('group_id').setValue(next.id);
+            }
           }
         });
         break;
@@ -225,9 +232,14 @@ export class FormComponent extends AbstractForm implements OnInit {
           this.form.get('group').setValue(GroupType.FACILITY); // TODO: review this when enabling apartment and region
           if (next) {
             this.form.get('group_id').disable();
+            this.form.get('group_ids').disable();
             this.form.get('group_list').disable();
           } else {
-            this.form.get('group_id').enable();
+            if (this.show.group_multi) {
+              this.form.get('group_ids').enable();
+            } else {
+              this.form.get('group_id').enable();
+            }
             this.form.get('group_list').enable();
           }
         });
@@ -270,13 +282,30 @@ export class FormComponent extends AbstractForm implements OnInit {
       const parameter_config = parameters['group'];
       this.show.group = true;
       this.form.get('group').enable();
-      this.form.get('group_id').enable();
       this.form.get('group_list').enable();
 
-      this.form.get('group_id').setValue(this.residentSelector$.group.value);
-      this.form.get('group_list').setValue(
-        this.group_helper.get_group_data(this.residentSelector$.group.value, this.form.get('group').value)
-      );
+      if (parameter_config.select_multi) {
+        this.show.group_multi = true;
+        this.form.get('group_ids').enable();
+
+        let group_value = [];
+        let group_list_value = [];
+
+        if (this.residentSelector$.group.value) {
+          group_value = [this.residentSelector$.group.value];
+          group_list_value = [this.group_helper.get_group_data(this.residentSelector$.group.value, this.form.get('group').value)];
+        }
+
+        this.form.get('group_ids').setValue(group_value);
+        this.form.get('group_list').setValue(group_list_value);
+      } else {
+        this.show.group_multi = false;
+        this.form.get('group_id').enable();
+        this.form.get('group_id').setValue(this.residentSelector$.group.value);
+        this.form.get('group_list').setValue(
+          this.group_helper.get_group_data(this.residentSelector$.group.value, this.form.get('group').value)
+        );
+      }
 
       if (parameter_config.select_all) {
         this.show.group_all = true;

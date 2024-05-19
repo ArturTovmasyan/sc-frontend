@@ -59,7 +59,7 @@
 
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group_list')?'error':null"
                      class="sc-select-all">
-      <nz-select nzShowSearch nzMode="default" formControlName="group_list">
+      <nz-select nzShowSearch [nzMode]="show.group_multi ? 'multiple' : 'default'" formControlName="group_list">
         <ng-container *ngIf="!form.get('group').value">
           <nz-option-group nzLabel="FFC - Facilities">
             <ng-container *ngFor="let facility of group_helper.facilities">

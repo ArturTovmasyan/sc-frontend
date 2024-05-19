@@ -63,6 +63,12 @@ export class ReportService {
     if (!_.isNil(params.group_id)) {
       request_params = request_params.append('type_id', params.group_id);
     }
+    if (!_.isNil(params.group_ids) && !_.isEmpty(params.group_ids)) {
+      params.group_ids.forEach(value => {
+        request_params = request_params.append('type_ids[]', value);
+      });
+    }
+
     if (!_.isNil(params.group_all) && (params.group_all === true || params.group_all === 'true')) {
       request_params = request_params.append('type_all', params.group_all);
     }
