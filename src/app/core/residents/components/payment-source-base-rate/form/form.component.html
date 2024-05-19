@@ -30,7 +30,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item *ngIf="this.care_levels && this.care_levels.length > 0 && get_form_array('levels').controls.length > 0">
+  <nz-form-item *ngIf="get_form_array('levels').enabled && this.care_levels && this.care_levels.length > 0 && get_form_array('levels').controls.length > 0">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Base Rates</nz-form-label>
     <div nz-col [nzSpan]="16">
       <table

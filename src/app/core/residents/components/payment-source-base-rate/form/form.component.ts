@@ -43,6 +43,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     });
 
     this.subscribe('list_payment_source');
+    this.subscribe('list_care_level');
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -94,7 +95,9 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             if (payment_source) {
               if (payment_source.care_level_adjustment) {
-                this.subscribe('list_care_level');
+                this.form.get('levels').enable();
+              } else {
+                this.form.get('levels').disable();
               }
             }
           }
