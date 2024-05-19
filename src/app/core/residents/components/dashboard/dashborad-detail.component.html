@@ -115,7 +115,7 @@
           <tr>
             <td>Average Room Rent</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
-              <td class="text-center">{{item.value.average_room_rent}}</td>
+              <td class="text-center">&dollar;{{item.value.average_room_rent}}</td>
             </ng-container>
           </tr>
         </table>
