@@ -4,8 +4,8 @@ import {AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators}
 export class CoreValidator {
   public static Patterns = {
     PASSWORD: /(\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*)/,
-    DOSAGE: /[0-9\.\-\/]+/,
-    DOSAGE_UNIT: /[a-zA-Z0-9\%\+\/]+/,
+    DOSAGE: /^[0-9\.\-\/]+$/,
+    DOSAGE_UNIT: /^[a-zA-Z0-9\%\+\/]+$/,
 
     FLOOR: /^[1-9][0-9]?$/,
     ROOM: /^[A-Za-z0-9]+$/,
@@ -14,9 +14,9 @@ export class CoreValidator {
     PAYMENT_AMOUNT: /(^0$)|(^[1-9][0-9]*$)|(^[0-9]+(\.[0-9]{1,2})$)/,
     INSURANCE_NUMBER: /^[A-Za-z0-9]+$/,
 
-    GROUP_CAPACITY: /(^[1-9][0-9]*$)/,
-    CARE_GROUP: /(^[1-9][0-9]*$)/,
-    STATE_ABBR: /\b([A-Z]{2})\b/,
+    GROUP_CAPACITY: /^[1-9][0-9]*$/,
+    CARE_GROUP: /^[1-9][0-9]*$/,
+    STATE_ABBR: /^[A-Z]{2}$/,
     ZIP_MAIN: /^[0-9]{5}([- ]?[0-9]{4})?$/,
     PHONE: /^\([0-9]{3}\)\s?[0-9]{3}-[0-9]{4}$/,
   };
