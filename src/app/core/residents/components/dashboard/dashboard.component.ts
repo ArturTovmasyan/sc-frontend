@@ -51,8 +51,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       case 'list_dashboard':
         this.$subscriptions[key] = this.facilityDashboard$
           .all([
-            {key: 'date', value: moment(params.from).format('YYYY-MM-DD')},
-            {key: 'date', value: moment(params.to).format('YYYY-MM-DD')}
+            {key: 'date_from', value: moment(params.from).format('YYYY-MM-DD')},
+            {key: 'date_to', value: moment(params.to).format('YYYY-MM-DD')}
           ])
           .pipe(first())
           .subscribe(res => {
