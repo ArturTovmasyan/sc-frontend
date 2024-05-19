@@ -16,6 +16,7 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
 import {FormComponent as OutreachTypeFormComponent} from '../../outreach-type/form/form.component';
 import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
 import {FormComponent as LeadContactFormComponent} from '../../contact/form/form.component';
+import {AuthGuard} from '../../../../guards/auth.guard';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -32,7 +33,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     private organization$: OrganizationService,
     private outreach_type$: OutreachTypeService,
     private contact$: ContactService,
-    private user$: UserService
+    private user$: UserService,
+    private auth_$: AuthGuard
   ) {
     super(modal$);
     this.modal_map = [
@@ -49,7 +51,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       date: [new Date(), Validators.compose([Validators.required])],
       type_id: [null, Validators.compose([Validators.required])],
 
-      users: [[], Validators.compose([Validators.required])],
+      participants: [[], Validators.compose([Validators.required])],
       contacts: [[], Validators.compose([Validators.required])],
 
       organization_id: [null, Validators.compose([])],
@@ -109,6 +111,11 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.user$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.users = res;
+
+            const user_id = this.auth_$.gerUserId();
+            if (!this.edit_mode && user_id !== null) {
+              this.form.get('participants').setValue([user_id]);
+            }
           }
         });
         break;

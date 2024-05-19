@@ -47,4 +47,14 @@ export class AuthGuard implements CanActivate {
       return false;
     }
   }
+
+  public gerUserId() {
+    const user_info = JSON.parse(atob(localStorage.getItem('user')));
+    if (user_info != null && user_info.hasOwnProperty('id')) {
+      return user_info.id;
+    }
+
+    return null;
+  }
+
 }

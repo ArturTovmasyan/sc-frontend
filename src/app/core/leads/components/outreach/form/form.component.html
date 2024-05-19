@@ -30,15 +30,15 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="users" nzRequired>User(s)</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('users')?'error':null">
-        <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="users">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="participants" nzRequired>Participants(s)</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('participants')?'error':null">
+        <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="participants">
           <ng-container *ngFor="let user of users">
             <nz-option [nzLabel]="user|user" [nzValue]="user.id"></nz-option>
           </ng-container>
         </nz-select>
-      <nz-form-explain *ngIf="hasErrors('users')">
-        <app-field-errors [errors]="fieldErrors('users')"></app-field-errors>
+      <nz-form-explain *ngIf="hasErrors('participants')">
+        <app-field-errors [errors]="fieldErrors('participants')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
