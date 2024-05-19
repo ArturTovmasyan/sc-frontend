@@ -108,6 +108,66 @@ export class CoreValidator {
       ? null : {not_empty: 'This field is required.'};
   }
 
+  public static lessThan(otherName: string): ValidatorFn {
+    let me: FormControl;
+    let other: FormControl;
+
+    return (control: FormControl): { [key: string]: any } => {
+      if (!control.parent) {
+        return null;
+      }
+
+      if (!me) {
+        me = control;
+        other = control.parent.get(otherName) as FormControl;
+
+        if (!other) {
+          throw new Error('lessThan(): other control is not found in parent group');
+        }
+
+        other.valueChanges.subscribe(() => {
+            me.updateValueAndValidity();
+        });
+      }
+
+      if (!other) {
+        return null;
+      }
+
+      return Number(me.value) > Number(other.value) ? {'less_than': {value: other.value}} : null;
+    };
+  }
+
+  public static greaterThan(otherName: string): ValidatorFn {
+    let me: FormControl;
+    let other: FormControl;
+
+    return (control: FormControl): { [key: string]: any } => {
+      if (!control.parent) {
+        return null;
+      }
+
+      if (!me) {
+        me = control;
+        other = control.parent.get(otherName) as FormControl;
+
+        if (!other) {
+          throw new Error('greaterThan(): other control is not found in parent group');
+        }
+
+        other.valueChanges.subscribe(() => {
+          me.updateValueAndValidity();
+        });
+      }
+
+      if (!other) {
+        return null;
+      }
+
+      return Number(me.value) < Number(other.value) ? {'greater_than': {value: other.value}} : null;
+    };
+  }
+
   private static patternValidate(pattern: string | RegExp, error: ValidationErrors): ValidatorFn {
     if (!pattern) {
       return Validators.nullValidator;

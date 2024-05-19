@@ -13,6 +13,8 @@ import {FormError} from '../../../models/form-error';
       <span *ngSwitchCase="'maxlength'">The field maximum length must be {{ e.params.requiredLength }}.</span>
       <span *ngSwitchCase="'backend'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'not_empty'">{{ e.params }}&nbsp;</span>
+      <span *ngSwitchCase="'less_than'">This value must be less than {{ e.params.value }}.</span>
+      <span *ngSwitchCase="'greater_than'">This value must be greater than {{ e.params.value }}.</span>
       <span *ngSwitchCase="'pattern_validator_match_another'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_password'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_phone'">{{ e.params }}&nbsp;</span>

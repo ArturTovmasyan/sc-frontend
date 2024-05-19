@@ -14,6 +14,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {ResidentAdmission} from '../../../../models/resident-admission';
 import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
 import {ReportService} from '../../../../services/report.service';
+import {GroupHelper} from '../../../../helper/group-helper';
 
 @Component({
   selector: 'app-resident-info',
@@ -69,27 +70,20 @@ export class InfoComponent implements OnInit {
           if (res != null && !Array.isArray(res)) {
             this.admission = res;
 
-            let group_id = null;
-            if (this.admission.group_type) {
-              switch (this.admission.group_type) {
-                case GroupType.FACILITY:
-                  group_id = this.admission.facility_bed.room.facility.id;
-                  break;
-                case GroupType.REGION:
-                  group_id = this.admission.region.id;
-                  break;
-                case GroupType.APARTMENT:
-                  group_id = this.admission.apartment_bed.room.apartment.id;
-                  break;
-              }
-            }
-
             this.residentSelector$.type.next(this.admission.group_type);
-            this.residentSelector$.group.next(group_id);
+            this.residentSelector$.group.next(GroupHelper.get_group_id(this.admission));
           } else {
             this.admission = null;
-            this.residentSelector$.type.next(null);
-            this.residentSelector$.group.next(null);
+
+            this.resident$.last_admission(this.resident_id).pipe(first()).subscribe(last_admission => {
+              if (last_admission) {
+                this.residentSelector$.type.next(last_admission.group_type);
+                this.residentSelector$.group.next(GroupHelper.get_group_id(last_admission));
+              } else {
+                this.residentSelector$.type.next(null);
+                this.residentSelector$.group.next(null);
+              }
+            });
           }
         }, error => {
           this.admission = null;
