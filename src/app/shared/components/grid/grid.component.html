@@ -376,19 +376,19 @@
 </ng-template>
 
 <ng-template #json_field let-data="data">
-  <dl class="grid-definition-list" style="width: 25rem;">
+  <table style="width: 100%;">
     <ng-container *ngFor="let entry of data|str2json">
       <ng-container *ngFor="let item of entry|str2json|keyvalue:no_sort_order">
-        <ng-container *ngIf="check_empty(item.value)">
-          <dt>{{ item.key }}</dt>
-          <dd *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</dd>
-          <dd *ngIf="_.isArray(item.value)">
+        <tr *ngIf="check_empty(item.value)">
+          <th class="text-right" style="padding-right: 0.5rem;">{{ item.key }}:</th>
+          <td *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</td>
+          <td *ngIf="_.isArray(item.value)">
             <ng-container *ngFor="let iv of item.value">
               {{ iv }} <br/>
             </ng-container>
-          </dd>
-        </ng-container>
+          </td>
+        </tr>
       </ng-container>
     </ng-container>
-  </dl>
+  </table>
 </ng-template>
