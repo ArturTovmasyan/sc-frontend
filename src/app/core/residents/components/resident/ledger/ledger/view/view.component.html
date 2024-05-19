@@ -216,7 +216,7 @@
                             <td style="width: 15% !important;"></td>
                             <td style="width: 15% !important;"></td>
                             <td style="width: 20% !important;"></td>
-                            <td style="width: 15% !important; color:#FF0000">
+                            <td class="text-right" style="width: 15% !important; color:#FF0000">
                               ({{ledger.prior_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}})
                             </td>
                           </tr>
@@ -230,7 +230,7 @@
                               <td style="width: 15% !important;"></td>
                               <td
                                 style="width: 20% !important;">{{ get_resident_responsible_person_name(item.responsible_person_id) }}</td>
-                              <td style="width: 15% !important; color:#FF0000">
+                              <td class="text-right" style="width: 15% !important; color:#FF0000">
                                 ({{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}})
                               </td>
                             </tr>
@@ -247,7 +247,7 @@
                               <td
                                 style="width: 20% !important;">{{item.responsible_person?.responsible_person|responsible_person}}</td>
                               <td
-                                style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                                class="text-right" style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
                             </tr>
                           </ng-container>
                         </ng-container>
@@ -259,7 +259,7 @@
                               <td style="width: 15% !important;"></td>
                               <td style="width: 15% !important;"></td>
                               <td style="width: 20% !important;"></td>
-                              <td style="width: 15% !important; color:#FF0000">
+                              <td class="text-right" style="width: 15% !important; color:#FF0000">
                                 ({{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}})
                               </td>
                             </tr>
@@ -274,7 +274,7 @@
                               <td style="width: 15% !important;"></td>
                               <td style="width: 20% !important;"></td>
                               <td
-                                style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                                class="text-right" style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
                             </tr>
                           </ng-container>
                         </ng-container>
@@ -288,7 +288,7 @@
                               <td style="width: 15% !important;"></td>
                               <td style="width: 20% !important;"></td>
                               <td
-                                style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                                class="text-right" style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
                             </tr>
                           </ng-container>
                         </ng-container>
@@ -299,7 +299,7 @@
                           <td style="width: 15% !important;"></td>
                           <td style="width: 20% !important;"><strong>Balance Due</strong></td>
                           <td
-                            style="width: 15% !important;">
+                            class="text-right" style="width: 15% !important;">
                             <strong>{{ledger.private_pay_balance_due + ledger.prior_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}}</strong>
                           </td>
                         </tr>
@@ -367,7 +367,7 @@
                             <td style="width: 15% !important;"></td>
                             <td style="width: 15% !important;"></td>
                             <td style="width: 20% !important;"></td>
-                            <td style="width: 15% !important; color:#FF0000">
+                            <td class="text-right" style="width: 15% !important; color:#FF0000">
                               ({{ledger.prior_not_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}})
                             </td>
                           </tr>
@@ -381,7 +381,7 @@
                               <td style="width: 15% !important;"></td>
                               <td
                                 style="width: 20% !important;"></td>
-                              <td style="width: 15% !important; color:#FF0000">
+                              <td class="text-right" style="width: 15% !important; color:#FF0000">
                                 ({{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}})
                               </td>
                             </tr>
@@ -397,7 +397,7 @@
                               <td style="width: 15% !important;">{{item.transaction_number}}</td>
                               <td style="width: 20% !important;"></td>
                               <td
-                                style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                                class="text-right" style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
                             </tr>
                           </ng-container>
                         </ng-container>
@@ -420,7 +420,7 @@
                           <td style="width: 15% !important;"></td>
                           <td style="width: 20% !important;"><strong>Balance Due</strong></td>
                           <td
-                            style="width: 15% !important;">
+                            class="text-right" style="width: 15% !important;">
                             <strong>{{ledger.not_private_pay_balance_due + ledger.prior_not_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}}</strong>
                           </td>
                         </tr>
@@ -456,7 +456,7 @@
                           <td colspan="3" style="width: 80% !important;">
                             Room {{ item.room }} {{ item.typeShorthand }} - {{ item.roomType }} Base Rate
                           </td>
-                          <td class="text-center" style="width: 20% !important;">
+                          <td class="text-right" style="width: 20% !important;">
                             {{ item.baseRate|currency:'USD':'symbol-narrow':'1.2-2' }}
                           </td>
                         </tr>
@@ -473,7 +473,7 @@
                                   {{ get_source_title(privat_pay.id) }}
                                   - {{ get_resident_responsible_person_name(privat_pay.responsible_person_id) }}
                                 </td>
-                                <td class="text-center" style="width: 20% !important;">
+                                <td class="text-right" style="width: 20% !important;">
                                   {{ privat_pay.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
                                 </td>
                               </tr>
@@ -484,7 +484,7 @@
                           <td colspan="3" style="width: 80% !important;">
                             Partial Month Credit - Late Move-In/Early Move-Out
                           </td>
-                          <td class="text-center" style="width: 20% !important;">
+                          <td class="text-right" style="width: 20% !important;">
                             {{ (get_days_in_month(ledger.date_created|date:'M', ledger.date_created|date:'yyyy') - get_private_pay_billable_days_for_rent(ledger.privat_pay_source, rent_id)) * get_private_pay_sum_for_rent(ledger.privat_pay_source, rent_id) * 12 / 365 |currency:'USD':'symbol-narrow':'1.2-2' }}
                           </td>
                         </tr>
@@ -492,7 +492,7 @@
                           <td colspan="3" style="width: 80% !important;">
                             <strong><i>Private Pay Total Amount Due</i></strong>
                           </td>
-                          <td class="text-center" style="width: 20% !important;">
+                          <td class="text-right" style="width: 20% !important;">
                             <ng-container
                               *ngIf="ledger.privat_pay_source && ledger.privat_pay_source.length > 0; else elseBlockPrivatPay">
                               <strong>{{ get_private_pay_sum_for_rent(ledger.privat_pay_source, rent_id)|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
@@ -539,7 +539,7 @@
                                       </ng-container>
                                     </ng-container>
                                   </td>
-                                  <td class="text-center" style="width: 20% !important;">
+                                  <td class="text-right" style="width: 20% !important;">
                                     {{ not_privat_pay.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
                                   </td>
                                 </tr>
@@ -550,7 +550,7 @@
                                     {{ get_source_title(not_privat_pay.id) }}
                                     - {{ get_source_period(not_privat_pay.id)|payment_period }}
                                   </td>
-                                  <td class="text-center" style="width: 20% !important;">
+                                  <td class="text-right" style="width: 20% !important;">
                                     {{ not_privat_pay.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
                                   </td>
                                 </tr>
@@ -562,7 +562,7 @@
                           <td colspan="3" style="width: 80% !important;">
                             <strong><i>3rd Party Sources Total Due</i></strong>
                           </td>
-                          <td class="text-center" style="width: 20% !important;">
+                          <td class="text-right" style="width: 20% !important;">
                             <ng-container
                               *ngIf="ledger.not_privat_pay_source && ledger.not_privat_pay_source.length > 0; else elseBlockNotPrivatPay">
                               <strong>{{ get_not_private_pay_sum_for_rent(ledger.not_privat_pay_source, rent_id)|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
@@ -576,7 +576,7 @@
                           <td colspan="3" style="width: 80% !important;">
                             <strong>Total Rent Due (all sources)</strong>
                           </td>
-                          <td class="text-center" style="width: 20% !important;">
+                          <td class="text-right" style="width: 20% !important;">
                             <strong>{{ (get_private_pay_sum_for_rent(ledger.privat_pay_source, rent_id) + get_not_private_pay_sum_for_rent(ledger.not_privat_pay_source, rent_id))|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
                           </td>
                         </tr>
@@ -584,7 +584,7 @@
                           <td colspan="3" style="width: 80% !important;">
                             <strong>{{ ledger.date_created|date:'MMMM' }} Effective Discount to Base Rate</strong>
                           </td>
-                          <td class="text-center" style="width: 20% !important;">
+                          <td class="text-right" style="width: 20% !important;">
                             <strong>{{ get_discount_item_sum()|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
                           </td>
                         </tr>
