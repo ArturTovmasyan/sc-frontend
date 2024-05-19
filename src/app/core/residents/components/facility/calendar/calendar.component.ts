@@ -18,6 +18,8 @@ import {FormComponent} from '../event-form/form.component';
 import {CalendarEventType, EventDefinition} from '../../../models/event-definition';
 import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
 import {EventDefinitionService} from '../../../services/event-definition.service';
+import {ViewComponent as ResidentEventViewComponent} from '../../resident/event/view/view.component';
+import {ResidentEventService} from '../../../services/resident-event.service';
 
 @Component({
   selector: 'app-facility-calendar',
@@ -53,6 +55,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private modal$: NzModalService,
     private facility$: FacilityService,
     private facilityEvent$: FacilityEventService,
+    private residentEvent$: ResidentEventService,
     private eventDefinition$: EventDefinitionService,
     private auth_$: AuthGuard
   ) {
@@ -200,6 +203,41 @@ export class CalendarComponent implements OnInit, OnDestroy {
     });
   }
 
+  show_modal_view(id: number): void {
+    this.residentEvent$.get(id).pipe(first()).subscribe(res => {
+      if (res) {
+        this.create_modal_view(ResidentEventViewComponent, res);
+      }
+    });
+  }
+
+  private create_modal_view(form_component: any, result: any) {
+    const footer = [
+      {
+        label: 'Close',
+        onClick: () => {
+          modal.close();
+        }
+      },
+    ];
+
+    const modal = this.modal$.create({
+      nzClosable: false,
+      nzMaskClosable: false,
+      nzWidth: '45rem',
+      nzTitle: null,
+      nzContent: form_component,
+      nzFooter: footer
+    });
+
+    modal.afterOpen.subscribe(() => {
+      const component = modal.getContentComponent();
+      if (component instanceof ResidentEventViewComponent) {
+        component.event = result;
+      }
+    });
+  }
+
   private create_modal(form_component: any, submit: (data: any) => Observable<any>, result: any) {
     let valid = false;
     let loading = false;
@@ -315,8 +353,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   eventMouseEnter($event: any) {
-    if ($event.event.extendedProps.event_type === CalendarEventType.FACILITY) {
-      this.show_modal_edit($event.event.id);
+    switch ($event.event.extendedProps.event_type) {
+      case CalendarEventType.FACILITY:
+        this.show_modal_edit($event.event.id);
+        break;
+      case CalendarEventType.RESIDENT:
+        this.show_modal_edit($event.event.id);
+        break;
+      default:
+        break;
     }
   }
 
