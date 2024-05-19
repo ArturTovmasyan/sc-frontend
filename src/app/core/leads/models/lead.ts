@@ -45,6 +45,10 @@ export class Lead implements IdInterface {
   spam: boolean;
   next_lead_id: number;
   previous_lead_id: number;
+
+  funnel_stage: string;
+  temperature: string;
+  contact: string;
 }
 
 export enum LeadState {

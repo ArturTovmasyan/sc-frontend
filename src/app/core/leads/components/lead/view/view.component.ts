@@ -21,6 +21,10 @@ import {AuthGuard} from '../../../../guards/auth.guard';
 export class ViewComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
+  activity_log_section_title = 'Activity Log';
+  assessment_section_title = 'Assessments';
+  hobby_section_title = 'Hobbies & Interests';
+
   broadcast_reload: number;
 
   lead: Lead;
