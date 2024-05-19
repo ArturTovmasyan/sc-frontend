@@ -77,7 +77,7 @@ export class CSVComponent implements OnInit, OnDestroy {
             .pipe(first()).subscribe(res => {
             if (res != null && Array.isArray(res) && res.length === 1) {
               const url = 'https://sheet.zoho.com/sheet/importview.do?url='
-                + encodeURI(`${environment.apiUrl}/api/v1.0/report/csv-view/` + res[0]);
+                + encodeURIComponent(`${environment.apiUrl}/api/v1.0/report/csv-view/` + res[0]);
 
               console.log(url);
 
