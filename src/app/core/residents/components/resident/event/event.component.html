@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header">
     {{ title }}
-    <div class="card-header-actions">
+    <div *ngIf="checkPermission(['activity-resident_calendar'])" class="card-header-actions">
           <span class="card-header-action" (click)="mode = !mode">
             <i *ngIf="mode" style="vertical-align: baseline;" nz-icon nzType="appstore"></i>
             <i *ngIf="!mode" style="vertical-align: baseline;" nz-icon nzType="unordered-list"></i>
@@ -9,7 +9,10 @@
     </div>
   </div>
   <div class="card-body">
+    <ng-container *ngIf="checkPermission(['activity-resident_calendar'])">
     <app-resident-calendar *ngIf="!mode"></app-resident-calendar>
     <app-resident-event *ngIf="mode"></app-resident-event>
+    </ng-container>
+    <app-resident-event *ngIf="!checkPermission(['activity-resident_calendar'])"></app-resident-event>
   </div>
 </div>

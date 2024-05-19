@@ -381,7 +381,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Corporate'},
           title: 'Calendar',
-          permissions: ['persistence-corporate-corporate_event']
+          permissions: ['activity-corporate-calendar']
         }
       },
       {

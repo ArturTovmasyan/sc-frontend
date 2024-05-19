@@ -1,6 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {TitleService} from '../../../../services/title.service';
+import {ActivatedRoute} from '@angular/router';
+import {AuthGuard} from '../../../../guards/auth.guard';
 
 @Component({
   templateUrl: './event.component.html'
@@ -12,7 +14,8 @@ export class EventComponent implements OnInit, OnDestroy {
   protected $subscriptions: { [key: string]: Subscription; };
 
   constructor(
-    private title$: TitleService
+    private title$: TitleService,
+    private auth_$: AuthGuard
   ) {
     this.$subscriptions = {};
   }
@@ -23,6 +26,10 @@ export class EventComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
+  }
+
+  public checkPermission(expected_permissions: string[]): boolean {
+    return this.auth_$.checkPermission(expected_permissions);
   }
 
   protected subscribe(key: string, params?: any): void {
