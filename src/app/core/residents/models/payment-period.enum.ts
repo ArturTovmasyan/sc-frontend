@@ -1,6 +1,5 @@
 export enum PaymentPeriod {
-  HOURLY = 1,
-  DAILY = 2,
-  WEEKLY = 3,
-  MONTHLY = 4
+  DAILY = 1,
+  WEEKLY = 2,
+  MONTHLY = 3
 }
