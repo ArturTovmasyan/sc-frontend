@@ -409,6 +409,7 @@
       "amount": "Amount",
       "notes": "Notes",
       "info": "Sources",
+      "reason": "Reason",
       "space": "Space"
     },
     "resident-rent-increase-list": {
