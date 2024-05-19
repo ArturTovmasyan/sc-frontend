@@ -4,7 +4,7 @@
       Resident
     </ng-container>
     <ng-container *ngIf="resident">
-      {{ resident.salutation.title }} {{ resident.first_name }} {{ resident.middle_name }} {{ resident.last_name }}
+      {{ resident|resident }}
     </ng-container>
   </div>
   <div class="card-body">

@@ -165,6 +165,9 @@ import {ListComponent as AssessmentCareLevelListComponent} from './residents/com
 import {FormComponent as AssessmentCareLevelFormComponent} from './residents/components/assessment/care-level/form/form.component';
 import {ListComponent as AssessmentCareLevelGroupListComponent} from './residents/components/assessment/care-level-group/list.component';
 import {FormComponent as AssessmentCareLevelGroupFormComponent} from './residents/components/assessment/care-level-group/form/form.component';
+
+import {HomeComponent} from './residents/components/home/home.component';
+
 import {CityStateZipPipe} from './residents/pipes/csz.pipe';
 import {PhysicianPipe} from './residents/pipes/physician.pipe';
 import {ResidentPipe} from './residents/pipes/resident.pipe';
@@ -360,6 +363,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     EventDefinitionListComponent,
     EventDefinitionFormComponent,
+
+    HomeComponent
   ],
   entryComponents: [
     UserFormComponent,

@@ -19,7 +19,7 @@ export class ResidentSelectorService {
 
     this.param_subscription = this.routerParams$.params.subscribe((params: Array<any>): void => {
       if (params) {
-        params = params.filter(v => _.indexOf(v.params, 'id') && _.indexOf(v.url, 'resident') !== -1);
+        params = params.filter(v => v.params.hasOwnProperty('id') && _.indexOf(v.url, 'resident') !== -1);
 
         if (params.length > 0) {
           const resident_id: number = +(params[0].params.id);

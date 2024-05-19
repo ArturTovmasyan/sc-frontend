@@ -78,6 +78,14 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'residents/:type/:group', component: ResidentListComponent,
+        data: {
+          title: 'Residents',
+          permissions: ['persistence-resident-resident']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'facility',
         data: {
           nav: {show: true, group: 'Residents'},
