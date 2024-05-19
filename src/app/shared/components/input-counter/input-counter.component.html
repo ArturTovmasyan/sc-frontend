@@ -1,0 +1,17 @@
+<textarea
+  nz-input
+  rows="4"
+  [id]="id"
+  [name]="name"
+  [placeholder]="placeholder"
+  [maxlength]="maxlength"
+  [disabled]="disabled"
+  [pattern]="pattern"
+  [required]="required"
+  [(ngModel)]="value"
+  (focus)="onFocus()"
+  (blur)="onBlur()"></textarea>
+<p *ngIf="enabled" class="text-input-counter">
+  <span *ngIf="displayMinLength()">{{ minlength }} characters at least required: </span>{{ counter }}<span
+  *ngIf="displayMaxLength()">/{{ maxlength }}</span>
+</p>

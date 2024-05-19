@@ -10,12 +10,14 @@ import {TranslateModule} from '@ngx-translate/core';
 import {StringPipe} from './pipes/string.pipe';
 import {String2JsonPipe} from './pipes/str2json.pipe';
 import {MessageComponent} from './components/grid/message.component';
+import {InputCounterComponent} from './components/input-counter/input-counter.component';
 
 @NgModule({
   declarations: [
     FieldErrorsComponent,
     FormErrorsComponent,
     MessageComponent,
+    InputCounterComponent,
     StringPipe,
     String2JsonPipe
   ],
@@ -40,6 +42,7 @@ import {MessageComponent} from './components/grid/message.component';
     TranslateModule,
     FieldErrorsComponent,
     FormErrorsComponent,
+    InputCounterComponent,
     StringPipe,
     String2JsonPipe
   ]

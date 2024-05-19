@@ -89,7 +89,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
-      <textarea formControlName="notes" nz-input rows="4" placeholder="Description"></textarea>
+      <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
       <nz-form-explain *ngIf="hasErrors('notes')">
         <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
       </nz-form-explain>
