@@ -319,6 +319,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
         if (result !== null) {
           component.loaded.subscribe(v => {
             if (v) {
+              component.edit_mode = true;
               component.before_set_form_data();
               component.set_form_data(component, form, result);
               component.after_set_form_data();

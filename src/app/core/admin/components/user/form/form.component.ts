@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+﻿import {Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
@@ -18,11 +18,16 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   phone_types: { id: PhoneType, name: string }[];
 
-  constructor(private formBuilder: FormBuilder, private role$: RoleService, private space$: SpaceService) {
+  selectedTab: number;
+
+  constructor(private formBuilder: FormBuilder, private role$: RoleService, private space$: SpaceService,
+              private _el: ElementRef) {
     super();
   }
 
   ngOnInit(): void {
+    this.selectedTab = 0;
+
     this.form = this.formBuilder.group({
       id: [''],
       username: ['', Validators.required],
@@ -62,6 +67,11 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: PhoneType.FAX, name: 'FAX'},
       {id: PhoneType.ROOM, name: 'ROOM'}
     ];
+
+    this.postSubmit = (data: any) => {
+      const tab_el = this._el.nativeElement.querySelector(':not(form).ng-invalid').closest('.ant-tabs-tabpane');
+      this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
+    };
   }
 
   public get_form_array_skeleton(key: string): FormGroup {
@@ -79,4 +89,19 @@ export class FormComponent extends AbstractForm implements OnInit {
         return null;
     }
   }
+
+  public before_set_form_data(): void {
+    if (this.edit_mode) {
+      console.log(this.form);
+
+      this.form.get('password').setErrors(null);
+      this.form.get('password').clearValidators();
+      this.form.get('re_password').setErrors(null);
+      this.form.get('re_password').clearValidators();
+
+      this.form.get('password').setValidators(CoreValidator.password);
+      this.form.get('re_password').setValidators(CoreValidator.match_other('password', 'password'));
+    }
+  }
+
 }
