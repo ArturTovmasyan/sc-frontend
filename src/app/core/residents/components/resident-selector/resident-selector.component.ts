@@ -7,6 +7,8 @@ import {Resident} from '../../models/resident';
 import {Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 import {ResidentAdmissionService} from '../../services/resident-admission.service';
+import {FormComponent as ResidentSwapFormComponent} from '../resident/swap-form/form.component';
+import {ModalFormService} from '../../../../shared/services/modal-form.service';
 
 @Component({
   selector: 'app-resident-selector',
@@ -22,6 +24,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
+    private modal$: ModalFormService,
     private router$: Router,
     private auth_$: AuthGuard,
     private residentAdmission$: ResidentAdmissionService,
@@ -93,5 +96,13 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
       this.residentSelector$.resident.next(this.resident_id);
       this.router$.navigate(this.routeInfo('responsible-persons'));
     }
+  }
+
+  show_swap_modal() {
+    const modal = this.modal$.create_sub(ResidentSwapFormComponent);
+    modal.modal_callback = (data) => {
+      window.location.reload();
+    };
+    modal.create(data => this.residentAdmission$.swap(data), null, null);
   }
 }

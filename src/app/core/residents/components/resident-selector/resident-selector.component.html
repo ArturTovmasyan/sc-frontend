@@ -86,4 +86,8 @@
       <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
     </ng-container>
   </nz-select>
+
+  <button style="margin-left: 1em;" nz-button (click)="show_swap_modal()">
+    <i nz-icon nzType="swap" nzTheme="outline"></i> Swap
+  </button>
 </div>
