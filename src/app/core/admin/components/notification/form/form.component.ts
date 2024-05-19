@@ -24,6 +24,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   regions: Region[];
   apartments: Apartment[];
 
+  show_facilities: boolean;
+
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
@@ -46,6 +48,8 @@ export class FormComponent extends AbstractForm implements OnInit {
       emails: [[]],
 
       facilities: [[]],
+      facilities_all: [false, Validators.required],
+
       apartments: [[]],
       regions: [[]]
     });
@@ -98,6 +102,16 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.apartment$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.apartments = res;
+          }
+        });
+        break;
+      case 'vc_facilities_all':
+        this.$subscriptions[key] = this.form.get('facilities_all').valueChanges.subscribe(next => {
+          if (next) {
+            this.form.get('facilities').setValue([]);
+            this.show_facilities = false;
+          } else {
+            this.show_facilities = true;
           }
         });
         break;

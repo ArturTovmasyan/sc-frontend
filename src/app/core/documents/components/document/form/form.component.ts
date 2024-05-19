@@ -21,6 +21,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   categories: Category[];
   facilities: Facility[];
 
+  show_facilities: boolean;
+
   @ViewChild('file', {static: true}) el_file: ElementRef;
 
   files: FileModel[];
@@ -58,6 +60,8 @@ export class FormComponent extends AbstractForm implements OnInit {
       category_id: [null, Validators.compose([Validators.required])],
 
       facilities: [[], Validators.compose([Validators.required])],
+      facilities_all: [false, Validators.required],
+
       roles: [[], Validators.compose([Validators.required])]
 
     });
@@ -65,6 +69,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_category');
     this.subscribe('list_role');
     this.subscribe('list_facility');
+    this.subscribe('vc_facilities_all');
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -91,6 +96,16 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('category_id').setValue(params.category_id);
             }
+          }
+        });
+        break;
+      case 'vc_facilities_all':
+        this.$subscriptions[key] = this.form.get('facilities_all').valueChanges.subscribe(next => {
+          if (next) {
+            this.form.get('facilities').setValue([]);
+            this.show_facilities = false;
+          } else {
+            this.show_facilities = true;
           }
         });
         break;
