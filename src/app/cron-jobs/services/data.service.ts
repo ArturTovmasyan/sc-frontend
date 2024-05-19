@@ -6,7 +6,7 @@ export class DataService {
 
   private defaultConfig: CronJobsConfig = {
     quartz: false,
-    bootstrap: true,
+    bootstrap: false,
     multiple: false,
   };
 
