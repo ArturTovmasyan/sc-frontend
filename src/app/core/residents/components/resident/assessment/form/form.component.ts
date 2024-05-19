@@ -221,7 +221,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   public rows_controls() {
     const controls = (<FormArray>this.form.get('rows')).controls;
-    return controls ? controls : [];
+    return controls && controls.length === this.categories.length ? controls : [];
   }
 
 }
