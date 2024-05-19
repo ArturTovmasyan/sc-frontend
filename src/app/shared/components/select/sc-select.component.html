@@ -1,0 +1,59 @@
+<div cdkOverlayOrigin
+  sc-select-top-control
+  tabindex="0"
+  class="ant-select-selection"
+  [scOpen]="open"
+  [@.disabled]="noAnimation?.nzNoAnimation"
+  [nzNoAnimation]="noAnimation?.nzNoAnimation"
+  [scMaxTagPlaceholder]="scMaxTagPlaceholder"
+  [scPlaceHolder]="scPlaceHolder"
+  [scAllowClear]="scAllowClear"
+  [scMaxTagCount]="scMaxTagCount"
+  [scShowArrow]="scShowArrow"
+  [scLoading]="scLoading"
+  [scCustomTemplate]="scCustomTemplate"
+  [scSuffixIcon]="scSuffixIcon"
+  [scClearIcon]="scClearIcon"
+  [scRemoveIcon]="scRemoveIcon"
+  [scShowSearch]="scShowSearch"
+  [scTokenSeparators]="scTokenSeparators"
+  [class.ant-select-selection--single]="scSelectService.isSingleMode"
+  [class.ant-select-selection--multiple]="scSelectService.isMultipleOrTags"
+  (keydown)="onKeyDown($event)">
+</div>
+<ng-template
+  cdkConnectedOverlay
+  scConnectedOverlay
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayMinWidth]="scDropdownMatchSelectWidth? null : triggerWidth"
+  [cdkConnectedOverlayWidth]="scDropdownMatchSelectWidth? triggerWidth : null"
+  [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
+  (backdropClick)="closeDropDown()"
+  (detach)="closeDropDown();"
+  (positionChange)="onPositionChange($event)"
+  [cdkConnectedOverlayOpen]="open">
+  <div
+    class="ant-select-dropdown"
+    [class.ant-select-dropdown--single]="scSelectService.isSingleMode"
+    [class.ant-select-dropdown--multiple]="scSelectService.isMultipleOrTags"
+    [class.ant-select-dropdown-placement-bottomLeft]="dropDownPosition === 'bottom'"
+    [class.ant-select-dropdown-placement-topLeft]="dropDownPosition === 'top'"
+    [nzClassListAdd]="[scDropdownClassName]"
+    [@slideMotion]="dropDownPosition"
+    [@.disabled]="noAnimation?.nzNoAnimation"
+    [nzNoAnimation]="noAnimation?.nzNoAnimation"
+    [ngStyle]="scDropdownStyle">
+    <div sc-option-container
+      style="overflow: auto;transform: translateZ(0px);"
+      (keydown)="onKeyDown($event)"
+      [scMenuItemSelectedIcon]="scMenuItemSelectedIcon"
+      [scNotFoundContent]="scNotFoundContent"
+      (scScrollToBottom)="scScrollToBottom.emit()">
+    </div>
+    <ng-template [ngTemplateOutlet]="scDropdownRender"></ng-template>
+  </div>
+</ng-template>
+<!--can not use ViewChild since it will match sub options in option group -->
+<ng-template>
+  <ng-content></ng-content>
+</ng-template>

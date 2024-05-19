@@ -42,8 +42,8 @@
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="emails">{{ 'form.admin.notification.emails'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('emails')?'error':null">
-      <nz-select nzShowSearch nzMode="tags" [nzTokenSeparators]="[' ', ',']" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="emails">
-      </nz-select>
+      <sc-select scShowSearch scMode="tags" [scTokenSeparators]="[' ', ',']" scPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="emails">
+      </sc-select>
       <nz-form-explain *ngIf="hasErrors('emails')">
         <app-field-errors [errors]="fieldErrors('emails')"></app-field-errors>
       </nz-form-explain>

@@ -15,6 +15,7 @@ import {KeysPipe} from './pipes/keys.pipe';
 import {String2JsonPipe} from './pipes/str2json.pipe';
 import {StringPipe} from './pipes/string.pipe';
 import {CronPipe} from './pipes/cron.pipe';
+import {ScSelectModule} from './components/select/sc-select.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {CronPipe} from './pipes/cron.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     TranslateModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    ScSelectModule
   ],
   entryComponents: [
     MessageComponent
@@ -51,6 +53,7 @@ import {CronPipe} from './pipes/cron.pipe';
     HttpClientModule,
     TranslateModule,
     NgZorroAntdModule,
+    ScSelectModule,
 
     FieldErrorsComponent,
     FormErrorsComponent,

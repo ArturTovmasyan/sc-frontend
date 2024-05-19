@@ -24,8 +24,8 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emails">E-Mail(s)</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('emails')?'error':null">
-      <nz-select nzShowSearch nzMode="tags" [nzTokenSeparators]="[' ', ',']" nzPlaceHolder="Please select" formControlName="emails">
-      </nz-select>
+      <sc-select scShowSearch scMode="tags" [scTokenSeparators]="[' ', ',']" scPlaceHolder="Please select" formControlName="emails">
+      </sc-select>
       <nz-form-explain *ngIf="hasErrors('emails')">
         <app-field-errors [errors]="fieldErrors('emails')"></app-field-errors>
       </nz-form-explain>

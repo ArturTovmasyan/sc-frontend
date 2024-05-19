@@ -1,0 +1,39 @@
+<ul #dropdownUl
+  class="ant-select-dropdown-menu ant-select-dropdown-menu-root ant-select-dropdown-menu-vertical"
+  role="menu"
+  tabindex="0">
+  <li *ngIf="scSelectService.isShowNotFound"
+    sc-select-unselectable
+    class="ant-select-dropdown-menu-item ant-select-dropdown-menu-item-disabled">
+    <nz-embed-empty [nzComponentName]="'select'" [specificContent]="scNotFoundContent"></nz-embed-empty>
+  </li>
+  <li sc-option-li
+    *ngIf="scSelectService.addedTagOption"
+    [scMenuItemSelectedIcon]="scMenuItemSelectedIcon"
+    [scOption]="scSelectService.addedTagOption">
+  </li>
+  <li sc-option-li
+    *ngFor="let option of scSelectService.listOfScOptionComponent | scFilterOption : scSelectService.searchValue : scSelectService.filterOption : scSelectService.serverSearch; trackBy: trackValue"
+    [scMenuItemSelectedIcon]="scMenuItemSelectedIcon"
+    [scOption]="option">
+  </li>
+  <li class="ant-select-dropdown-menu-item-group"
+    *ngFor="let group of scSelectService.listOfScOptionGroupComponent | scFilterGroupOption : scSelectService.searchValue : scSelectService.filterOption :scSelectService.serverSearch; trackBy: trackLabel">
+    <div class="ant-select-dropdown-menu-item-group-title"
+      [attr.title]="group.isLabelString ? group.scLabel : ''">
+      <ng-container *nzStringTemplateOutlet="group.scLabel"> {{group.scLabel}} </ng-container>
+    </div>
+    <ul class="ant-select-dropdown-menu-item-group-list">
+      <li sc-option-li
+        *ngFor="let option of group.listOfScOptionComponent | scFilterOption : scSelectService.searchValue : scSelectService.filterOption :scSelectService.serverSearch; trackBy: trackValue"
+        [scMenuItemSelectedIcon]="scMenuItemSelectedIcon"
+        [scOption]="option">
+      </li>
+    </ul>
+  </li>
+  <li sc-option-li
+    *ngFor="let option of scSelectService.listOfTagOption | scFilterOption : scSelectService.searchValue : scSelectService.filterOption : scSelectService.serverSearch; trackBy: trackValue "
+    [scMenuItemSelectedIcon]="scMenuItemSelectedIcon"
+    [scOption]="option">
+  </li>
+</ul>

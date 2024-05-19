@@ -1,0 +1,6 @@
+<ng-container *ngIf="!scOption.scCustomContent; else scOption.template">
+  {{scOption.scLabel}}
+</ng-container>
+<ng-container *ngIf="scSelectService.isMultipleOrTags">
+  <i nz-icon nzType="check" class="ant-select-selected-icon" *ngIf="!scMenuItemSelectedIcon; else scMenuItemSelectedIcon"></i>
+</ng-container>
