@@ -6,13 +6,15 @@
         <span style="font-size: small;margin-right: 0.5rem;">Sort by:</span>
         <nz-button-group [nzSize]="'small'" class="ml-auto">
           <a nz-button nzSize="small" nzType="default" (click)="sort('resident')">
-            <i *ngIf="options.sort_resident === true" nz-icon nzType="caret-up" nzTheme="outline"></i>
-            <i *ngIf="options.sort_resident === false" nz-icon nzType="caret-down" nzTheme="outline"></i>
+            <i *ngIf="options.sort_resident === null" class="fas fa-sort"></i>
+            <i *ngIf="options.sort_resident === true" class="fas fa-sort-up"></i>
+            <i *ngIf="options.sort_resident === false" class="fas fa-sort-down"></i>
             Resident
           </a>
           <a *ngIf="show_room_sort()" nz-button nzSize="small" nzType="default" (click)="sort('room')">
-            <i *ngIf="options.sort_room === true" nz-icon nzType="caret-up" nzTheme="outline"></i>
-            <i *ngIf="options.sort_room === false" nz-icon nzType="caret-down" nzTheme="outline"></i>
+            <i *ngIf="options.sort_room === null" class="fas fa-sort"></i>
+            <i *ngIf="options.sort_room === true" class="fas fa-sort-up"></i>
+            <i *ngIf="options.sort_room === false" class="fas fa-sort-down"></i>
             Room
           </a>
         </nz-button-group>
