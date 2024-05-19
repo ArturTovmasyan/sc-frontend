@@ -142,7 +142,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                   textColor: '#ffffff',
                   id: event.id,
                   event_type: CalendarEventType.FACILITY,
-                  start: event.all_day ? DateHelper.formatMoment(event.start, 'YYYY-MM-DD', true) : DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
+                  start: event.all_day ? DateHelper.formatMoment(event.start, 'YYYY-MM-DD') : DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
                   end: event.all_day ? null : DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
                   title: event.title
                 });
@@ -176,8 +176,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                       textColor: '#ffffff',
                       id: rent.id,
                       event_type: CalendarEventType.RENT,
-                      start: DateHelper.formatMoment(rent.start, 'YYYY-MM-DD', true),
-                      end: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD', true),
+                      start: DateHelper.formatMoment(rent.start, 'YYYY-MM-DD'),
+                      end: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD'),
                       title: this.formatResident(CalendarEventType.RENT, rent)
                     });
                   });
@@ -191,7 +191,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                       textColor: '#ffffff',
                       id: rent_increase.id,
                       event_type: CalendarEventType.RENT_INCREASE,
-                      start: DateHelper.formatMoment(rent_increase.start, 'YYYY-MM-DD', true),
+                      start: DateHelper.formatMoment(rent_increase.start, 'YYYY-MM-DD'),
                       end: null,
                       title: this.formatResident(CalendarEventType.RENT_INCREASE, rent_increase),
                     });
