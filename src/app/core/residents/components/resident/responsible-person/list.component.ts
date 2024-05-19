@@ -22,6 +22,7 @@ export class ListComponent implements OnInit, OnDestroy {
   selected_tab: number;
 
   loading_edit_modal: boolean;
+
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   private $subscriptions: { [key: string]: Subscription; };

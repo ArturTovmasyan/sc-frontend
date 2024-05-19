@@ -92,5 +92,9 @@
             (click)="show_modal_remove(); $event.preventDefault();">
       <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
     </button>
+    <button *ngIf="(physicians && physicians.length > 1)"
+            nz-button nzType="default" (click)="show_modal_reorder(); $event.preventDefault();">
+      <i nz-icon type="drag"></i> Reorder
+    </button>
   </nz-button-group>
 </div>

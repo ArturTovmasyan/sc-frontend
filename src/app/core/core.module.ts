@@ -13,7 +13,6 @@ import {ColorPickerModule} from 'ngx-color-picker';
 import {DndModule} from '@beyerleinf/ngx-dnd';
 
 import {CoreRoutingModule} from './core-routing.module';
-
 // import {SignUpComponent} from './components/account/sign-up/sign-up.component';
 import {ActivateComponent} from './components/account/activate/activate.component';
 import {SignInComponent} from './components/security/sign-in/sign-in.component';
@@ -122,6 +121,7 @@ import {FormComponent as ResidentResponsiblePersonReorderFormComponent} from './
 
 import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
 import {FormComponent as ResidentPhysicianFormComponent} from './residents/components/resident/physician/form/form.component';
+import {FormComponent as ResidentPhysicianReorderFormComponent} from './residents/components/resident/physician/reorder/form.component';
 
 import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
 import {FormComponent as ResidentMedicationFormComponent} from './residents/components/resident/medication/form/form.component';
@@ -223,10 +223,6 @@ import {ListComponent as LeadActivityListComponent} from './leads/components/lea
 import {ListComponent as ReferralActivityListComponent} from './leads/components/referral/view/activity-list.component';
 import {ListComponent as OrganizationActivityListComponent} from './leads/components/organization/view/activity-list.component';
 import {ListComponent as OrganizationReferralListComponent} from './leads/components/organization/view/referral-list.component';
-
-// import {ListComponent as ListComponent} from './residents/components//list.component';
-// import {FormComponent as FormComponent} from './residents/components//form/form.component';
-
 import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
 import {FormComponent as NotificationFormComponent} from './admin/components/notification/form/form.component';
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
@@ -234,6 +230,9 @@ import {FormComponent as NotificationTypeFormComponent} from './admin/components
 import {CronJobsModule} from '../cron-jobs/cron-jobs.module';
 import {ChangeLogPipe} from './pipes/change-log.pipe';
 import {ActivityTypePipe} from './leads/pipes/activity-type.pipe';
+
+// import {ListComponent as ListComponent} from './residents/components//list.component';
+// import {FormComponent as FormComponent} from './residents/components//form/form.component';
 
 registerLocaleData(en);
 
@@ -378,6 +377,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentPhysicianListComponent,
     ResidentPhysicianFormComponent,
+    ResidentPhysicianReorderFormComponent,
 
     ResidentHistoryComponent,
 
@@ -525,6 +525,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentRentFormComponent,
 
     ResidentPhysicianFormComponent,
+
+    ResidentPhysicianReorderFormComponent,
 
     ResidentDiagnoseFormComponent,
 

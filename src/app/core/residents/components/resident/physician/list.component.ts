@@ -10,6 +10,7 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {first} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
+import {FormComponent as ReorderFormComponent} from './reorder/form.component';
 
 @Component({
   templateUrl: './list.component.html',
@@ -75,6 +76,17 @@ export class ListComponent implements OnInit, OnDestroy {
         if (id) {
           this.selected_tab = this.physicians.findIndex(v => v === this.physicians.find(value => value.id === id));
         }
+      }
+    });
+  }
+
+  show_modal_reorder(): void {
+    this.service$.all([{key: 'resident_id', value: `${this.residentSelector$.resident.value}`}])
+      .pipe(first()).subscribe(next => {
+      if (next) {
+        this.create_modal(ReorderFormComponent, data => this.service$.reorder(data), {
+          physicians: next
+        });
       }
     });
   }
@@ -260,8 +272,12 @@ export class ListComponent implements OnInit, OnDestroy {
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
-      if (component instanceof FormComponent) {
+      if (component instanceof FormComponent || component instanceof ReorderFormComponent) {
         const form = component.formObject;
+
+        if (component instanceof ReorderFormComponent) {
+          component.resident_physicians = this.physicians;
+        }
 
         if (result !== null) {
           component.loaded.subscribe(v => {

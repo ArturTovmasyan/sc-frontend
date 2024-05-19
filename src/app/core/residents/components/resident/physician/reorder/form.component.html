@@ -1,0 +1,37 @@
+﻿<h4>Reorder Physicians</h4>
+<nz-divider></nz-divider>
+<p class="text-center">Please drag and drop following items to reorder them.</p>
+<form nz-form [formGroup]="form">
+  <nz-list
+    formArrayName="physicians"
+    dnd-sortable-container
+    [sortableData]="get_form_array('physicians').controls"
+    [nzDataSource]="get_form_array('physicians').controls"
+    nzBordered
+    nzSize="small"
+    [nzRenderItem]="item"
+  >
+    <ng-template #item let-item>
+      <nz-list-item
+        [formGroupName]="get_form_array('physicians').controls.indexOf(item)"
+        dnd-sortable
+        [sortableIndex]="get_form_array('physicians').controls.indexOf(item)"
+
+        dnd-sortable-handle
+      >
+        <input type="hidden" formControlName="id"/>
+        <strong>{{ get_p_by_id(item.get('id').value)|physician }}</strong>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
