@@ -59,6 +59,10 @@ export class FormComponent extends AbstractForm implements OnInit {
     return null;
   }
 
+  disabledDate = (current: Date): boolean => {
+    return current > DateHelper.newDate();
+  };
+
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
