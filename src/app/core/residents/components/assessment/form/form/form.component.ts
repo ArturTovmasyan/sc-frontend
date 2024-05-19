@@ -67,9 +67,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'list_category':
         this.$subscriptions[key] = this.category$.all().pipe(first()).subscribe(res => {
           if (res) {
-            res.sort((a, b) => a.title.localeCompare(b.title));
             this.categories = res;
-
             this.after_set_form_data();
           }
         });
@@ -77,7 +75,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'list_care_level_group':
         this.$subscriptions[key] = this.care_level_group$.all().pipe(first()).subscribe(res => {
           if (res) {
-            res.sort((a, b) => a.title.localeCompare(b.title));
             this.care_level_groups = res;
           }
         });
@@ -106,7 +103,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       this.add_field('categories', category.id);
 
-      this.category_selector = null;
+      const next = this.categories.filter(item => !item.disabled).sort((a, b) => b.title.localeCompare(a.title)).pop();
+      this.category_selector = next ? next.id : null;
     }
   }
 
@@ -150,5 +148,17 @@ export class FormComponent extends AbstractForm implements OnInit {
         category.disabled = true;
       });
     }
+  }
+
+  public get_category_info(idx: number) {
+    const control = this.get_form_array('categories').controls[idx];
+
+    let category = null;
+
+    if (control && this.categories) {
+      category = this.categories.filter(item => item.id === control.value).pop();
+    }
+
+    return category;
   }
 }

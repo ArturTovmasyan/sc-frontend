@@ -65,6 +65,16 @@
         </td>
         <td>
           {{ get_title(i) }}
+          <i class="far fa-question-circle"
+             nz-popover [nzTitle]="get_category_info(i).title" [nzContent]="tplCategory"
+             nzTrigger="click" nzPlacement="topLeft">
+            <ng-template #tplCategory>
+              <p>Multi-item: {{ get_category_info(i).multi_item ? 'Yes' : 'No' }}</p>
+              <ul *ngFor="let row of get_category_info(i).rows">
+                <li>{{ row.title }} <span *ngIf="!get_category_info(i).multi_item">({{row.score}})</span></li>
+              </ul>
+            </ng-template>
+          </i>
         </td>
         <td class="text-center">
           <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_category(i);">
