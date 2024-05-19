@@ -14,18 +14,41 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="icon">Icon</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('icon')?'error':null">
-      <span
-             [iconPicker]="iconPicked"
-             [ipIconPack]="'fa5'"
-             [ipPosition]="'bottom'"
-             [ipWidth]="'250px'"
-             [ipPlaceHolder]="'Choose an icon'"
-             [ipFallbackIcon]="'far fa-image'"
-             (iconPickerSelect)="onIconPickerSelect($event)">
-        <i [attr.class]="form.get('icon').value ? form.get('icon').value : 'far fa-image'" style="font-size: 48px;"></i>
-      </span>
+      <button nz-button nzType="default" nzSize="large"
+        [iconPicker]="iconPicked"
+        [ipIconPack]="'fa5'"
+        [ipPosition]="'bottom'"
+        [ipWidth]="'250px'"
+        [ipPlaceHolder]="'Choose an icon'"
+        (iconPickerSelect)="onIconPickerSelect($event);"
+      (click)="check();"
+      >
+          <i [attr.class]="form.get('icon').value ? form.get('icon').value : 'far fa-image'"></i>
+
+        Click to select
+      </button>
       <nz-form-explain *ngIf="hasErrors('icon')">
         <app-field-errors [errors]="fieldErrors('icon')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emergency" nzRequired>Emergency</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="emergency"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('emergency')">
+        <app-field-errors [errors]="fieldErrors('emergency')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="financially" nzRequired>Financially</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="financially"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('financially')">
+        <app-field-errors [errors]="fieldErrors('financially')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

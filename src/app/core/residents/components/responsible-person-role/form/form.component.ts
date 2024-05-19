@@ -4,7 +4,6 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {Space} from '../../../../models/space';
 import {SpaceService} from '../../../../services/space.service';
 import {first} from 'rxjs/operators';
-import {NzModalService} from 'ng-zorro-antd';
 import {AuthGuard} from '../../../../guards/auth.guard';
 
 @Component({
@@ -13,7 +12,7 @@ import {AuthGuard} from '../../../../guards/auth.guard';
 export class FormComponent extends AbstractForm implements OnInit {
   spaces: Space[];
 
-  iconPicked: string = '';
+  iconPicked: string = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,9 +27,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
       title: ['', Validators.compose([Validators.required, Validators.maxLength(255)])],
       icon: ['', Validators.compose([Validators.maxLength(255)])],
+      emergency: [false, Validators.required],
+      financially: [false, Validators.required],
     });
 
     this.add_space();
+
+    this.subscribe('vc_icon');
   }
 
   private add_space() {
@@ -63,6 +66,12 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   public onIconPickerSelect($event): void {
-    this.form.get('icon').setValue($event);
+    if (this.iconPicked !== null) {
+      this.form.get('icon').setValue($event);
+    }
+  }
+
+  public check() {
+    this.iconPicked = '';
   }
 }

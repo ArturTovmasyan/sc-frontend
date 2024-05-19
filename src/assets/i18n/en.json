@@ -91,6 +91,8 @@
       "id": "ID",
       "title": "Title",
       "icon": "Icon",
+      "financially": "Financially",
+      "emergency": "Emergency",
       "space": "Space"
     },
     "physician-list": {
