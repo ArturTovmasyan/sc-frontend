@@ -1,0 +1,160 @@
+﻿<h4>Organization</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
+      <input nz-input placeholder="Title" formControlName="title">
+      <nz-form-explain *ngIf="hasErrors('title')">
+        <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="category_id" nzRequired>Category</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('category_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="category_id">
+        <ng-container *ngFor="let referrer_type of referrer_types">
+          <nz-option [nzLabel]="referrer_type.title" [nzValue]="referrer_type.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('category_id')">
+        <app-field-errors [errors]="fieldErrors('category_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="address_1" nzRequired>Address</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('address_1')?'error':null">
+      <input nz-input placeholder="Address" formControlName="address_1">
+      <nz-form-explain *ngIf="hasErrors('address_1')">
+        <app-field-errors [errors]="fieldErrors('address_1')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="address_2">Address (Optional)</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('address_2')?'error':null">
+      <input nz-input placeholder="Address (Optional)" formControlName="address_2">
+      <nz-form-explain *ngIf="hasErrors('address_2')">
+        <app-field-errors [errors]="fieldErrors('address_2')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="website_url">Website</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('website_url')?'error':null">
+      <input nz-input placeholder="Website" formControlName="website_url">
+      <nz-form-explain *ngIf="hasErrors('website_url')">
+        <app-field-errors [errors]="fieldErrors('website_url')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="csz_id" nzRequired>CSZ</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('csz_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="csz_id">
+        <ng-container *ngFor="let city_state_zip of city_state_zips">
+          <nz-option [nzLabel]="city_state_zip|csz" [nzValue]="city_state_zip.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('csz_id')">
+        <app-field-errors [errors]="fieldErrors('csz_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emails" nzRequired>E-Mail(s)</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('emails')?'error':null">
+      <nz-select nzShowSearch nzMode="tags" [nzTokenSeparators]="[' ', ',']" nzPlaceHolder="Please select" formControlName="emails">
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('emails')">
+        <app-field-errors [errors]="fieldErrors('emails')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <fieldset formArrayName="phones">
+    <legend class="senior-care-legend">
+      Phone Number(s)
+      <button [style.float]="'right'" type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
+              (click)="add_field('phones');">
+        <i nz-icon type="plus"></i>
+      </button>
+    </legend>
+    <table class="senior-care-form-table table table-hover table-bordered table-sm"
+           *ngIf="get_form_array('phones').controls.length > 0">
+      <thead>
+      <tr>
+        <th style="width:20%;">
+          <nz-form-label>Primary</nz-form-label>
+        </th>
+        <th style="width:35%;">
+          <nz-form-label nzRequired>Type</nz-form-label>
+        </th>
+        <th style="width:35%;">
+          <nz-form-label nzRequired>Number</nz-form-label>
+        </th>
+        <th style="width:10%;">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let phone of get_form_array('phones').controls;let i = index">
+        <tr [formGroupName]="i">
+          <td class="text-center">
+            <nz-switch nzSize="small" formControlName="primary"></nz-switch>
+          </td>
+          <td>
+            <nz-form-item>
+              <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('phones.'+i+'.type')?'error':null">
+                <nz-select nzSize="small" nzMode="default" nzPlaceHolder="Select Type" formControlName="type">
+                  <ng-container *ngFor="let type of phone_types">
+                    <nz-option [nzLabel]="(type.name)|translate" [nzValue]="type.id"></nz-option>
+                  </ng-container>
+                </nz-select>
+                <nz-form-explain *ngIf="hasErrors('phones.'+i+'.type')">
+                  <app-field-errors [errors]="fieldErrors('phones.'+i+'.type')"></app-field-errors>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </td>
+          <td>
+            <nz-form-item>
+              <nz-form-control [nzSm]="16" [nzXs]="24"
+                               [nzValidateStatus]="hasErrors('phones.'+i+'.number')?'error':null">
+                <input nz-input nzSize="small" placeholder="(000) 000-0000" formControlName="number"
+                       mask="(000) 000-0000" [showMaskTyped]="true" [dropSpecialCharacters]="false">
+                <nz-form-explain *ngIf="hasErrors('phones.'+i+'.number')">
+                  <app-field-errors [errors]="fieldErrors('phones.'+i+'.number')"></app-field-errors>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </td>
+          <td class="text-center">
+            <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_field('phones', i);">
+              <i nz-icon type="minus"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </fieldset>
+  <!--Phone-->
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

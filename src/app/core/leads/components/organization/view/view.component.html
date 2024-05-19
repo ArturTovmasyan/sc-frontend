@@ -1,0 +1,110 @@
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <ng-container *ngIf="!organization">
+          Organization
+        </ng-container>
+        <ng-container *ngIf="organization">
+          {{ organization.title }}
+        </ng-container>
+      </div>
+      <div class="card-body">
+        <nz-empty *ngIf="!organization" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+        <div *ngIf="organization">
+          <div nz-row [nzGutter]="4" *ngIf="organization.category">
+            <div nz-col [nzSpan]="8" class="text-right"><strong>Type:</strong></div>
+            <div nz-col [nzSpan]="16">{{ organization.category.title }}</div>
+          </div>
+          <div nz-row [nzGutter]="4" *ngIf="organization.address_1">
+            <div nz-col [nzSpan]="8" class="text-right"><strong>Address:</strong></div>
+            <div nz-col [nzSpan]="16">{{ organization.address_1 }}</div>
+          </div>
+          <div nz-row [nzGutter]="4" *ngIf="organization.address_2">
+            <div nz-col [nzSpan]="8" class="text-right"><strong>Address (optional):</strong></div>
+            <div nz-col [nzSpan]="16">{{ organization.address_2 }}</div>
+          </div>
+          <div nz-row [nzGutter]="4" *ngIf="organization.csz">
+            <div nz-col [nzSpan]="8" class="text-right"><strong>City, State, Zip:</strong></div>
+            <div nz-col [nzSpan]="16">{{ organization.csz|csz }}</div>
+          </div>
+          <div nz-row [nzGutter]="4" *ngIf="organization.website_url">
+            <div nz-col [nzSpan]="8" class="text-right"><strong>Website:</strong></div>
+            <div nz-col [nzSpan]="16"><a [href]="organization.website_url"
+                                         target="_blank">{{ organization.website_url }}<i
+              class="fas fa-external-link-alt"></i></a></div>
+          </div>
+          <ng-container *ngIf="organization.phones && organization.phones.length > 0">
+            <div nz-row [nzGutter]="4">
+              <div nz-col [nzSpan]="8" class="text-right"><strong>Phone Numbers:</strong></div>
+              <div nz-col [nzSpan]="12">&nbsp;</div>
+            </div>
+            <div nz-row [nzGutter]="4" *ngFor="let phone of organization.phones">
+              <div nz-col [nzSpan]="8" class="text-right"><strong>{{ phone.type|phone_type }}:</strong></div>
+              <div nz-col [nzSpan]="12">
+                <a href="tel:{{ phone.number| mask: '(000) 000-0000' }}">{{ phone.number| mask: '(000) 000-0000' }}</a>
+                <ng-container *ngIf="phone.extension">, ext. {{ phone.extension }}</ng-container>
+              </div>
+              <div *ngIf="phone.primary" nz-col [nzSpan]="2">
+                <i class="fas fa-key" title="Primary"></i>
+              </div>
+              <div *ngIf="phone.sms_enabled" nz-col [nzSpan]="2">
+                <i class="fas fa-sms" title="SMS Enabled"></i>
+              </div>
+            </div>
+          </ng-container>
+          <div nz-row [nzGutter]="4" *ngIf="organization.emails && organization.emails.length > 0">
+            <div nz-col [nzSpan]="8" class="text-right"><strong>Email(s):</strong></div>
+            <div nz-col [nzSpan]="16">
+              <ng-container *ngFor="let email of organization.emails; let last = last;">
+                {{ email }}
+                <ng-container *ngIf="!last">,</ng-container>
+              </ng-container>
+            </div>
+          </div>
+
+          <nz-divider></nz-divider>
+          <div class="d-flex">
+            <nz-button-group [nzSize]="'small'" class="ml-auto">
+              <button nz-button nzType="default"
+                      (click)="show_modal_edit('organization'); $event.preventDefault();">
+                <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+              </button>
+            </nz-button-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-8">
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+
+        <div class="card">
+          <div class="card-header">
+            Referrals
+          </div>
+          <div class="card-body">
+            <nz-empty *ngIf="!organization" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+            <app-lead-organization-referral *ngIf="organization"
+                                            [organization_id]="organization.id"></app-lead-organization-referral>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <div class="card">
+          <div class="card-header">
+            Activity Log
+          </div>
+          <div class="card-body">
+            <nz-empty *ngIf="!organization" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+            <app-lead-organization-activity *ngIf="organization"
+                                            [organization_id]="organization.id"></app-lead-organization-activity>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

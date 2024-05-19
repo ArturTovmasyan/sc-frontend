@@ -1,15 +1,18 @@
 import * as _ from 'lodash';
 import {OnDestroy} from '@angular/core';
 import {KeyValue} from '@angular/common';
-import {Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../core/services/title.service';
 import {GridService} from '../../services/grid.service';
 import {AbstractForm} from '../abstract-form/abstract-form';
 import {MessageComponent} from './message.component';
+import {Form, FormGroup} from '@angular/forms';
 
 export class GridComponent<T extends IdInterface, Service extends GridService<T>> implements OnDestroy {
   _ = _;
+
+  protected grid_options_loaded: BehaviorSubject<boolean>;
 
   public card: boolean = true; // TODO(haykg): review to convert Input
   protected loading_edit_modal: boolean = false;
@@ -63,6 +66,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   constructor(protected service$: Service, protected title$: TitleService, protected modal$: NzModalService) {
     this.title$.getTitle().subscribe(v => this.title = v);
 
+    this.grid_options_loaded = new BehaviorSubject<boolean>(false);
+
     this.$subscriptions = {};
   }
 
@@ -82,6 +87,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   init(reset: boolean = false): void {
     this.load_grid_fields().subscribe((data: any) => {
       this.button_shows = data.buttons;
+      this.grid_options_loaded.next(true);
+
       this.fields = data.fields;
       this.fields.forEach(
         field => {
@@ -431,7 +438,9 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
           });
         } else {
           component.edit_mode = false;
-          component.before_set_form_data(null, previous_data); // review
+
+          this.preset_modal_form_data(form); // TODO: review
+          component.before_set_form_data(null, previous_data); // TODO: review
         }
 
         valid = form.valid;
@@ -519,5 +528,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     }
 
     return 'inherit';
+  }
+
+  protected preset_modal_form_data(form: FormGroup) {
   }
 }

@@ -66,6 +66,19 @@ import {InvitationComponent} from './components/account/invitation/invitation.co
 import {LoggedActivate} from './guards/logged.guard';
 
 
+import {ListComponent as ActivityStatusListComponent} from './leads/components/activity-status/list.component';
+import {ListComponent as ActivityTypeListComponent} from './leads/components/activity-type/list.component';
+import {ListComponent as CareTypeListComponent} from './leads/components/care-type/list.component';
+import {ListComponent as StateChangeReasonListComponent} from './leads/components/state-change-reason/list.component';
+import {ListComponent as ReferrerTypeListComponent} from './leads/components/referrer-type/list.component';
+import {ListComponent as OrganizationListComponent} from './leads/components/organization/list.component';
+import {ListComponent as ReferralListComponent} from './leads/components/referral/list.component';
+import {ListComponent as ActivityListComponent} from './leads/components/activity/list.component';
+import {ListComponent as LeadListComponent} from './leads/components/lead/list.component';
+import {ViewComponent as OrganizationViewComponent} from './leads/components/organization/view/view.component';
+import {ViewComponent as ReferralViewComponent} from './leads/components/referral/view/view.component';
+import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/view.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -73,6 +86,160 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {title: 'Home', permissions: []},
     children: [
+      {
+        path: 'lead',
+        children: [
+          {
+            path: 'lead/:id',
+            component: LeadViewComponent,
+            canActivate: [AuthGuard],
+            data: {
+              title: 'Lead',
+              permissions: ['persistence-lead-lead']
+            }
+          },
+          {
+            path: 'leads', component: LeadListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Leads',
+              permissions: ['persistence-lead-lead']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'activities',
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Activity Logs',
+              permissions: ['persistence-lead-activity']
+            },
+            children: [
+              {
+                path: 'all', component: ActivityListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'All Activity Logs',
+                  permissions: ['persistence-lead-activity']
+                },
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'my', component: ActivityListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'My Activity Logs',
+                  permissions: ['persistence-lead-activity']
+                },
+                canActivate: [AuthGuard]
+              },
+            ]
+          },
+          {
+            path: 'referral',
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Referral',
+              permissions: []
+            },
+            canActivate: [AuthGuard],
+            children: [
+              {
+                path: 'organization/:id',
+                component: OrganizationViewComponent,
+                canActivate: [AuthGuard],
+                data: {
+                  nav: {show: false, group: 'Leads'},
+                  title: 'Organization',
+                  permissions: ['persistence-lead-organization']
+                }
+              },
+              {
+                path: 'referrals', component: ReferralListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Referrals',
+                  permissions: ['persistence-lead-referral']
+                },
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'organizations', component: OrganizationListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Organizations',
+                  permissions: ['persistence-lead-organization']
+                },
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'referrer-type', component: ReferrerTypeListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Referrer Types',
+                  permissions: ['persistence-lead-referrer_type']
+                },
+                canActivate: [AuthGuard]
+              },
+              {
+                path: ':id',
+                component: ReferralViewComponent,
+                canActivate: [AuthGuard],
+                data: {
+                  nav: {show: false, group: 'Leads'},
+                  title: 'Referral',
+                  permissions: ['persistence-lead-referral']
+                }
+              }
+            ]
+          },
+          {
+            path: 'admin',
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Admin Items',
+              permissions: []
+            },
+            children: [{
+              path: 'activity-status', component: ActivityStatusListComponent,
+              data: {
+                nav: {show: true, group: 'Leads'},
+                title: 'Activity Statuses',
+                permissions: ['persistence-lead-activity_status']
+              },
+              canActivate: [AuthGuard]
+            },
+              {
+                path: 'activity-type', component: ActivityTypeListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Activity Types',
+                  permissions: ['persistence-lead-activity_type']
+                },
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'care-type', component: CareTypeListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Care Types',
+                  permissions: ['persistence-lead-care_type']
+                },
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'state-change-reason', component: StateChangeReasonListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'State Change Reasons',
+                  permissions: ['persistence-lead-state_change_reason']
+                },
+                canActivate: [AuthGuard]
+              }
+            ]
+          }
+        ]
+      },
       {
         path: '', component: HomeComponent,
         data: {
@@ -197,51 +364,51 @@ const routes: Routes = [
       },
 
       // TODO: review sidebar
-      // {
-      //   path: 'assessment',
-      //   data: {
-      //     nav: {show: true, group: 'Residents'},
-      //     title: 'Assessment'
-      //   },
-      //   children: [
-      //     {
-      //       path: 'categories', component: AssessmentCategoryListComponent,
-      //       data: {
-      //         nav: {show: true, group: 'Residents'},
-      //         title: 'Categories',
-      //         permissions: ['persistence-assessment-category']
-      //       },
-      //       canActivate: [AuthGuard]
-      //     },
-      //     {
-      //       path: 'forms', component: AssessmentFormListComponent,
-      //       data: {
-      //         nav: {show: true, group: 'Residents'},
-      //         title: 'Forms',
-      //         permissions: ['persistence-assessment-form']
-      //       },
-      //       canActivate: [AuthGuard]
-      //     },
-      //     {
-      //       path: 'care-levels', component: AssessmentCareLevelListComponent,
-      //       data: {
-      //         nav: {show: true, group: 'Residents'},
-      //         title: 'Care Levels',
-      //         permissions: ['persistence-assessment-care_level']
-      //       },
-      //       canActivate: [AuthGuard]
-      //     },
-      //     {
-      //       path: 'care-level-groups', component: AssessmentCareLevelGroupListComponent,
-      //       data: {
-      //         nav: {show: true, group: 'Residents'},
-      //         title: 'Care Level Groups',
-      //         permissions: ['persistence-assessment-care_level_group']
-      //       },
-      //       canActivate: [AuthGuard]
-      //     }
-      //   ]
-      // },
+      {
+        path: 'assessment',
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Assessments'
+        },
+        children: [
+          {
+            path: 'categories', component: AssessmentCategoryListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
+              title: 'Categories',
+              permissions: ['persistence-assessment-category']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'forms', component: AssessmentFormListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
+              title: 'Forms',
+              permissions: ['persistence-assessment-form']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'care-levels', component: AssessmentCareLevelListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
+              title: 'Care Levels',
+              permissions: ['persistence-assessment-care_level']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'care-level-groups', component: AssessmentCareLevelGroupListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
+              title: 'Care Level Groups',
+              permissions: ['persistence-assessment-care_level_group']
+            },
+            canActivate: [AuthGuard]
+          }
+        ]
+      },
       {
         path: 'relationships', component: RelationshipListComponent,
         data: {

@@ -1,0 +1,119 @@
+﻿<h4>Activity</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type_id" nzRequired>Activity Type</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type_id">
+        <ng-container *ngFor="let activity_type of activity_types">
+          <nz-option [nzLabel]="activity_type.title" [nzValue]="activity_type.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('type_id')">
+        <app-field-errors [errors]="fieldErrors('type_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Activity Title</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
+      <input nz-input placeholder="Title" formControlName="title">
+      <nz-form-explain *ngIf="hasErrors('title')">
+        <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('status_id').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="status_id" nzRequired>Status</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('status_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="status_id">
+        <ng-container *ngFor="let activity_status of activity_statuses">
+          <nz-option [nzLabel]="activity_status.title" [nzValue]="activity_status.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('status_id')">
+        <app-field-errors [errors]="fieldErrors('status_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+      <nz-date-picker formControlName="date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date')">
+        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('assign_to_id').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="assign_to_id" nzRequired>Assign to</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="assign_to_id">
+        <ng-container *ngFor="let user of users">
+          <nz-option [nzLabel]="user|resident" [nzValue]="user.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('assign_to_id')">
+        <app-field-errors [errors]="fieldErrors('assign_to_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('due_date').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="due_date" nzRequired>Due Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('due_date')?'error':null">
+      <nz-date-picker formControlName="due_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('due_date')">
+        <app-field-errors [errors]="fieldErrors('due_date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('reminder_date').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="reminder_date" nzRequired>Reminder Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('reminder_date')?'error':null">
+      <nz-date-picker formControlName="reminder_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('reminder_date')">
+        <app-field-errors [errors]="fieldErrors('reminder_date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('facility_id').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facility_id" nzRequired>Facility</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="facility_id">
+        <ng-container *ngFor="let facility of facilities">
+          <nz-option [nzLabel]="facility.name" [nzValue]="facility.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('facility_id')">
+        <app-field-errors [errors]="fieldErrors('facility_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.notes')?'error':null">
+      <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('referral.notes')">
+        <app-field-errors [errors]="fieldErrors('referral.notes')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

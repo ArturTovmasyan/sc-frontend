@@ -1,0 +1,185 @@
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <ng-container *ngIf="!referral">
+              Referral
+            </ng-container>
+            <ng-container *ngIf="referral">
+              <span style="font-size: 0.75rem;text-transform: uppercase;">Referral:</span> {{ referral|resident }}
+            </ng-container>
+          </div>
+          <div class="card-body">
+            <nz-empty *ngIf="!referral" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+            <div *ngIf="referral">
+              <div nz-row [nzGutter]="4" *ngIf="referral.type">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Type:</strong></div>
+                <div nz-col [nzSpan]="16">{{ referral.type.title }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="referral.organization">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Organization:</strong></div>
+                <div nz-col [nzSpan]="16">{{ referral.organization.title }}</div>
+              </div>
+              <ng-container *ngIf="referral.phones && referral.phones.length > 0">
+                <div nz-row [nzGutter]="4">
+                  <div nz-col [nzSpan]="8" class="text-right"><strong>Phone Numbers:</strong></div>
+                  <div nz-col [nzSpan]="12">&nbsp;</div>
+                </div>
+                <div nz-row [nzGutter]="4" *ngFor="let phone of referral.phones">
+                  <div nz-col [nzSpan]="8" class="text-right"><strong>{{ phone.type|phone_type }}:</strong></div>
+                  <div nz-col [nzSpan]="12">
+                    <a
+                      href="tel:{{ phone.number| mask: '(000) 000-0000' }}">{{ phone.number| mask: '(000) 000-0000' }}</a>
+                    <ng-container *ngIf="phone.extension">, ext. {{ phone.extension }}</ng-container>
+                  </div>
+                  <div *ngIf="phone.primary" nz-col [nzSpan]="2">
+                    <i class="fas fa-key" title="Primary"></i>
+                  </div>
+                  <div *ngIf="phone.sms_enabled" nz-col [nzSpan]="2">
+                    <i class="fas fa-sms" title="SMS Enabled"></i>
+                  </div>
+                </div>
+              </ng-container>
+              <div nz-row [nzGutter]="4" *ngIf="referral.emails && referral.emails.length > 0">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Email(s):</strong></div>
+                <div nz-col [nzSpan]="16">
+                  <ng-container *ngFor="let email of referral.emails; let last = last;">
+                    {{ email }}
+                    <ng-container *ngIf="!last">,</ng-container>
+                  </ng-container>
+                </div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="referral.notes">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Notes:</strong></div>
+                <div nz-col [nzSpan]="16">{{ referral.notes }}</div>
+              </div>
+
+              <nz-divider></nz-divider>
+              <div class="d-flex">
+                <nz-button-group [nzSize]="'small'" class="ml-auto">
+                  <button nz-button nzType="default"
+                          (click)="show_modal_edit('referral'); $event.preventDefault();">
+                    <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+                  </button>
+                </nz-button-group>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <ng-container *ngIf="!lead">
+              Lead
+            </ng-container>
+            <ng-container *ngIf="lead">
+              <span style="font-size: 0.75rem;text-transform: uppercase;">Lead:</span> {{ lead|resident }}
+            </ng-container>
+          </div>
+          <div class="card-body">
+            <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+            <div *ngIf="lead">
+              <div nz-row [nzGutter]="4">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Responsible:</strong></div>
+                <div nz-col
+                     [nzSpan]="16">{{ lead.responsible_person_first_name }} {{ lead.responsible_person_last_name }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_address_1">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>RP Address 1:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.responsible_person_address_1 }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_address_2">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>RP Address 2:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.responsible_person_address_2 }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_csz">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>RP CSZ:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.responsible_person_csz|csz }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_phone">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>RP Phone:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.responsible_person_phone }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_email">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>RP Email:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.responsible_person_email }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.care_type">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Care Type:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.care_type.title }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.payment_type">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Payment Type:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.payment_type.title }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.state">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>State:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.state|lead_state }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.state_change_reason">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>State Change Reason:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.state_change_reason.title }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.state_effective_date">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>State Effective Date:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.state_effective_date|date:'MM/dd/yyyy' }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.owner">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Owner:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.owner|resident }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.primary_facility">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Primary Facility:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.primary_facility.name }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.facilities && lead.facilities.length > 0">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Secondary Facilities:</strong></div>
+                <div nz-col [nzSpan]="16">
+                  <ng-container *ngFor="let facility of lead.facilities; let last = last;">
+                    {{ facility.name }}
+                    <ng-container *ngIf="!last">,</ng-container>
+                  </ng-container>
+                </div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.notes">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Notes:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.notes }}</div>
+              </div>
+
+              <nz-divider></nz-divider>
+              <div class="d-flex">
+                <nz-button-group [nzSize]="'small'" class="ml-auto">
+                  <button nz-button nzType="default"
+                          (click)="show_modal_edit('lead'); $event.preventDefault();">
+                    <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+                  </button>
+                </nz-button-group>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-8">
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <div class="card">
+          <div class="card-header">
+            Activity Log
+          </div>
+          <div class="card-body">
+            <nz-empty *ngIf="!referral" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+            <app-lead-referral-activity *ngIf="referral"
+                                        [referral_id]="referral.id"></app-lead-referral-activity>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

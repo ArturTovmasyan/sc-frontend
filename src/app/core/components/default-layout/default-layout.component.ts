@@ -60,7 +60,7 @@ export class DefaultLayoutComponent {
 
         nav_tree[v].forEach(vv => {
           if (vv.hasOwnProperty('children')) {
-            vv.children = vv.children.filter(vvv => vvv.flat.length > 0);
+            vv.children = vv.children.filter(vvv => vvv.hasOwnProperty('flat') && vvv.flat.length > 0);
             Object.keys(vv.children).forEach(vvv => vv.children[vvv] = vv.children[vvv].flat[0]);
           }
 

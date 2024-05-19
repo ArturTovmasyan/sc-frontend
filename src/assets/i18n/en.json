@@ -399,6 +399,9 @@
       "space": "Space"
     },
     "lead-referral-list": {
+      "button": {
+        "report": "Report"
+      },
       "id": "ID",
       "lead": "Lead",
       "type": "Type",
@@ -407,6 +410,9 @@
       "notes": "Notes"
     },
     "lead-lead-list": {
+      "button": {
+        "report": "Report"
+      },
       "id": "ID",
       "date": "Date",
       "full_name": "Full Name",
@@ -417,6 +423,9 @@
       "referral": "Referral"
     },
     "lead-activity-list": {
+      "button": {
+        "report": "Report"
+      },
       "id": "ID",
       "title": "Title",
       "owner_type": "Owner Type",

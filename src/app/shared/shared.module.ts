@@ -3,23 +3,29 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {FormErrorsComponent} from './components/abstract-form/form-errors/form-errors.component';
-import {FieldErrorsComponent} from './components/abstract-form/form-errors/field-errors.component';
 import {en_US, NgZorroAntdModule, NZ_I18N} from 'ng-zorro-antd';
 import {TranslateModule} from '@ngx-translate/core';
-import {StringPipe} from './pipes/string.pipe';
-import {String2JsonPipe} from './pipes/str2json.pipe';
-import {MessageComponent} from './components/grid/message.component';
+import {FormErrorsComponent} from './components/abstract-form/form-errors/form-errors.component';
+import {FieldErrorsComponent} from './components/abstract-form/form-errors/field-errors.component';
 import {InputCounterComponent} from './components/input-counter/input-counter.component';
+import {MessageComponent} from './components/grid/message.component';
+
+import {FilterPipe} from './pipes/filter.pipe';
+import {KeysPipe} from './pipes/keys.pipe';
+import {String2JsonPipe} from './pipes/str2json.pipe';
+import {StringPipe} from './pipes/string.pipe';
 
 @NgModule({
   declarations: [
     FieldErrorsComponent,
     FormErrorsComponent,
-    MessageComponent,
     InputCounterComponent,
+    MessageComponent,
+
+    FilterPipe,
+    KeysPipe,
+    String2JsonPipe,
     StringPipe,
-    String2JsonPipe
   ],
   imports: [
     CommonModule,
@@ -37,14 +43,21 @@ import {InputCounterComponent} from './components/input-counter/input-counter.co
     {provide: NZ_I18N, useValue: en_US}
   ],
   exports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     TranslateModule,
+    NgZorroAntdModule,
+
     FieldErrorsComponent,
     FormErrorsComponent,
     InputCounterComponent,
-    StringPipe,
-    String2JsonPipe
+
+    KeysPipe,
+    FilterPipe,
+    String2JsonPipe,
+    StringPipe
   ]
 })
 

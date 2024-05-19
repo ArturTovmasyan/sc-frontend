@@ -190,11 +190,39 @@ import {MinimaLight} from '@alyle/ui/themes/minima';
 import {NgHttpLoaderModule} from 'ng-http-loader';
 import {ResidentSelectorPipe} from './residents/pipes/resident-selector.pipe';
 import {NgxMaskModule} from 'ngx-mask';
-import {FilterPipe} from '../shared/pipes/filter.pipe';
-import {KeysPipe} from '../shared/pipes/keys.pipe';
 import {IconPickerModule} from 'ngx-icon-picker';
 import {AdmissionTypePipe} from './residents/pipes/admission-type.pipe';
+import {LeadStatePipe} from './leads/pipes/lead-state.pipe';
 import {InvitationComponent} from './components/account/invitation/invitation.component';
+// import {LeadModule} from './leads/lead.module';
+import {FormComponent as ActivityStatusFormComponent} from './leads/components/activity-status/form/form.component';
+import {FormComponent as ActivityTypeFormComponent} from './leads/components/activity-type/form/form.component';
+import {FormComponent as ReferrerTypeFormComponent} from './leads/components/referrer-type/form/form.component';
+import {FormComponent as CareTypeFormComponent} from './leads/components/care-type/form/form.component';
+import {FormComponent as StateChangeReasonFormComponent} from './leads/components/state-change-reason/form/form.component';
+import {FormComponent as OrganizationFormComponent} from './leads/components/organization/form/form.component';
+import {FormComponent as ReferralFormComponent} from './leads/components/referral/form/form.component';
+import {FormComponent as LeadFormComponent} from './leads/components/lead/form/form.component';
+import {FormComponent as ActivityFormComponent} from './leads/components/activity/form/form.component';
+import {FormComponent as ReferralReportFormComponent} from './leads/components/referral/report-form/form.component';
+import {FormComponent as LeadReportFormComponent} from './leads/components/lead/report-form/form.component';
+import {FormComponent as ActivityReportFormComponent} from './leads/components/activity/report-form/form.component';
+import {ListComponent as ActivityStatusListComponent} from './leads/components/activity-status/list.component';
+import {ListComponent as ActivityTypeListComponent} from './leads/components/activity-type/list.component';
+import {ListComponent as ReferrerTypeListComponent} from './leads/components/referrer-type/list.component';
+import {ListComponent as CareTypeListComponent} from './leads/components/care-type/list.component';
+import {ListComponent as StateChangeReasonListComponent} from './leads/components/state-change-reason/list.component';
+import {ListComponent as OrganizationListComponent} from './leads/components/organization/list.component';
+import {ListComponent as ReferralListComponent} from './leads/components/referral/list.component';
+import {ListComponent as LeadListComponent} from './leads/components/lead/list.component';
+import {ListComponent as ActivityListComponent} from './leads/components/activity/list.component';
+import {ViewComponent as OrganizationViewComponent} from './leads/components/organization/view/view.component';
+import {ViewComponent as ReferralViewComponent} from './leads/components/referral/view/view.component';
+import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/view.component';
+import {ListComponent as LeadActivityListComponent} from './leads/components/lead/view/activity-list.component';
+import {ListComponent as ReferralActivityListComponent} from './leads/components/referral/view/activity-list.component';
+import {ListComponent as OrganizationActivityListComponent} from './leads/components/organization/view/activity-list.component';
+import {ListComponent as OrganizationReferralListComponent} from './leads/components/organization/view/referral-list.component';
 
 // import {ListComponent as ListComponent} from './residents/components//list.component';
 // import {FormComponent as FormComponent} from './residents/components//form/form.component';
@@ -215,8 +243,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentPipe,
     ResidentSelectorPipe,
     ResponsiblePersonPipe,
-    FilterPipe,
-    KeysPipe,
+    LeadStatePipe,
 
     CoreComponent,
 
@@ -380,7 +407,45 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EventDefinitionListComponent,
     EventDefinitionFormComponent,
 
-    HomeComponent
+    HomeComponent,
+
+
+    ActivityStatusListComponent,
+    ActivityStatusFormComponent,
+    ActivityTypeListComponent,
+    ActivityTypeFormComponent,
+    ReferrerTypeListComponent,
+    ReferrerTypeFormComponent,
+    CareTypeListComponent,
+    CareTypeFormComponent,
+
+    StateChangeReasonListComponent,
+    StateChangeReasonFormComponent,
+
+    OrganizationListComponent,
+    OrganizationFormComponent,
+
+    ReferralListComponent,
+    ReferralFormComponent,
+
+    LeadFormComponent,
+    LeadListComponent,
+
+    ActivityFormComponent,
+    ActivityListComponent,
+
+    OrganizationReferralListComponent,
+    OrganizationActivityListComponent,
+    LeadActivityListComponent,
+    ReferralActivityListComponent,
+
+    ReferralReportFormComponent,
+    LeadReportFormComponent,
+    ActivityReportFormComponent,
+
+    OrganizationViewComponent,
+    ReferralViewComponent,
+    LeadViewComponent
   ],
   entryComponents: [
     UserFormComponent,
@@ -472,6 +537,20 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentMoveComponent,
 
+
+    ActivityStatusFormComponent,
+    ActivityTypeFormComponent,
+    ReferrerTypeFormComponent,
+    CareTypeFormComponent,
+    StateChangeReasonFormComponent,
+    OrganizationFormComponent,
+    ReferralFormComponent,
+    LeadFormComponent,
+    ActivityFormComponent,
+
+    ReferralReportFormComponent,
+    LeadReportFormComponent,
+    ActivityReportFormComponent
   ],
   imports: [
     CommonModule,
