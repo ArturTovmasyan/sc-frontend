@@ -17,7 +17,7 @@
      title="Health Insurance">
     <i class="seniorcare seniorcare-3x seniorcare-insurance"></i>
   </a>
-  <a *ngIf="addIfHasPermission('persistence-resident-resident_calendar')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+  <a *ngIf="addIfHasPermission('persistence-resident-resident_event')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
      [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('calendar')"
      title="Calendar">
