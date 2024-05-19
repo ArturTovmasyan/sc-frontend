@@ -287,6 +287,7 @@ import {HomeComponent} from './residents/components/home/home.component';
 import {CityStateZipPipe} from './residents/pipes/csz.pipe';
 import {PhysicianPipe} from './residents/pipes/physician.pipe';
 import {ResidentPipe} from './residents/pipes/resident.pipe';
+import {RentPipe} from './residents/pipes/rent.pipe';
 import {ResponsiblePersonPipe} from './residents/pipes/responsible-person.pipe';
 import {MomentModule} from 'ngx-moment';
 import {GenderPipe} from './residents/pipes/gender.pipe';
@@ -408,6 +409,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CityStateZipPipe,
     PhysicianPipe,
     ResidentPipe,
+    RentPipe,
     LeadPipe,
     LeadContactPipe,
     UserPipe,

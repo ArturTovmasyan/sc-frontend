@@ -15,22 +15,25 @@
                *ngIf="get_form_array('resident_private_pay_payment_received_items').controls.length > 0">
           <thead>
           <tr>
-            <th class="w-20 text-left">
+            <th class="w-15 text-left">
               <nz-form-label nzRequired>Date</nz-form-label>
             </th>
             <th class="w-15 text-left">
               <nz-form-label nzRequired>Type</nz-form-label>
             </th>
-            <th class="w-20 text-left">
+            <th class="w-15 text-left">
               <nz-form-label nzRequired>Amount</nz-form-label>
             </th>
-            <th class="w-15 text-left">
+            <th class="w-10 text-left">
               <nz-form-label nzRequired>Trans. #</nz-form-label>
             </th>
-            <th class="w-20 text-left">
+            <th class="w-15 text-left">
+              <nz-form-label nzRequired>Rent</nz-form-label>
+            </th>
+            <th class="w-15 text-left">
               <nz-form-label nzRequired>Res. Pers.</nz-form-label>
             </th>
-            <th class="w-20 text-left">
+            <th class="w-15 text-left">
               <nz-form-label>Notes</nz-form-label>
             </th>
             <th>&nbsp;</th>
@@ -83,6 +86,21 @@
                     <input nz-input placeholder="Transaction Number" formControlName="transaction_number">
                     <nz-form-explain *ngIf="hasErrors('resident_private_pay_payment_received_items.'+i+'.transaction_number')">
                       <app-field-errors [errors]="fieldErrors('resident_private_pay_payment_received_items.'+i+'.transaction_number')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td>
+                <nz-form-item>
+                  <nz-form-control [nzSm]="16" [nzXs]="24"
+                                   [nzValidateStatus]="hasErrors('resident_private_pay_payment_received_items.'+i+'.rent_id')?'error':null">
+                    <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="rent_id">
+                      <ng-container *ngFor="let rent of rents">
+                        <nz-option [nzLabel]="rent|rent" [nzValue]="rent.id"></nz-option>
+                      </ng-container>
+                    </nz-select>
+                    <nz-form-explain *ngIf="hasErrors('resident_private_pay_payment_received_items.'+i+'.rent_id')">
+                      <app-field-errors [errors]="fieldErrors('resident_private_pay_payment_received_items.'+i+'.rent_id')"></app-field-errors>
                     </nz-form-explain>
                   </nz-form-control>
                 </nz-form-item>
@@ -149,14 +167,17 @@
             <th class="w-20 text-left">
               <nz-form-label nzRequired>Date</nz-form-label>
             </th>
-            <th class="w-20 text-left">
+            <th class="w-15 text-left">
               <nz-form-label nzRequired>Type</nz-form-label>
             </th>
-            <th class="w-20 text-left">
+            <th class="w-15 text-left">
               <nz-form-label nzRequired>Amount</nz-form-label>
             </th>
-            <th class="w-20 text-left">
+            <th class="w-15 text-left">
               <nz-form-label nzRequired>Trans. #</nz-form-label>
+            </th>
+            <th class="w-15 text-left">
+              <nz-form-label nzRequired>Rent</nz-form-label>
             </th>
             <th class="w-20 text-left">
               <nz-form-label>Notes</nz-form-label>
@@ -211,6 +232,21 @@
                     <input nz-input placeholder="Transaction Number" formControlName="transaction_number">
                     <nz-form-explain *ngIf="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.transaction_number')">
                       <app-field-errors [errors]="fieldErrors('resident_not_private_pay_payment_received_items.'+i+'.transaction_number')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td>
+                <nz-form-item>
+                  <nz-form-control [nzSm]="16" [nzXs]="24"
+                                   [nzValidateStatus]="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.rent_id')?'error':null">
+                    <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="rent_id">
+                      <ng-container *ngFor="let rent of rents">
+                        <nz-option [nzLabel]="rent|rent" [nzValue]="rent.id"></nz-option>
+                      </ng-container>
+                    </nz-select>
+                    <nz-form-explain *ngIf="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.rent_id')">
+                      <app-field-errors [errors]="fieldErrors('resident_not_private_pay_payment_received_items.'+i+'.rent_id')"></app-field-errors>
                     </nz-form-explain>
                   </nz-form-control>
                 </nz-form-item>

@@ -18,6 +18,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import moment from 'moment';
 import {LatePayment} from '../../../../../models/late-payment';
 import {LatePaymentService} from '../../../../../services/late-payment.service';
+import {ResidentRent} from '../../../../../models/resident-rent';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -30,6 +31,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   sources: { id: number, amount: number }[] = [];
 
   payment_types: RpPaymentType[];
+  rents: ResidentRent[];
   responsible_persons: ResidentResponsiblePerson[];
 
   late_payments: LatePayment[];
@@ -115,6 +117,13 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
+      case 'get_rents':
+        this.$subscriptions[key] = this.ledger$.getRents(params.ledger_id).pipe(first()).subscribe(res => {
+          if (res) {
+            this.rents = res;
+          }
+        });
+        break;
       case 'list_resident_responsible_person':
         this.$subscriptions[key] = this.responsible_person$.all([{
           key: 'resident_id',
@@ -145,6 +154,10 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
+  public after_set_form_data(): void {
+    this.subscribe('get_rents', {ledger_id: this.form.get('id').value});
+  }
+
   public get_form_array_skeleton(key: string): FormGroup {
     switch (key) {
       case 'source':
@@ -160,6 +173,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           amount: [0, Validators.compose([Validators.required, Validators.min(1), CoreValidator.payment_amount])],
           date: [DateHelper.newDate(), Validators.required],
           payment_type_id: [null, Validators.required],
+          rent_id: [null, Validators.compose([Validators.required])],
           responsible_person_id: [null, Validators.required],
           ledger_id: [null]
         });
@@ -171,6 +185,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           amount: [0, Validators.compose([Validators.required, Validators.min(1), CoreValidator.payment_amount])],
           date: [DateHelper.newDate(), Validators.required],
           payment_type_id: [null, Validators.required],
+          rent_id: [null, Validators.compose([Validators.required])],
           ledger_id: [null]
         });
       default:
