@@ -18,4 +18,6 @@ export class User {
   permissions: string[];
 
   space: Space;
+
+  license_accepted: boolean;
 }

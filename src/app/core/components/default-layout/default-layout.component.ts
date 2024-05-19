@@ -17,6 +17,8 @@ export class DefaultLayoutComponent {
 
   public user: User;
 
+  public licenseVisible: boolean = false;
+
   constructor(
     private router: Router,
     private profile$: ProfileService,
@@ -32,6 +34,8 @@ export class DefaultLayoutComponent {
 
     this.profile$.get().subscribe(user => {
       this.user = user;
+
+      this.licenseVisible = this.user && this.user.license_accepted === false;
     });
 
     this.generateNavigation(router.config[0]);
@@ -126,5 +130,18 @@ export class DefaultLayoutComponent {
     }
 
     return nav_tree;
+  }
+
+  accept() {
+    this.profile$.accept().subscribe(res => {
+      this.licenseVisible = false;
+    });
+  }
+
+  decline() {
+    this.profile$.decline().subscribe(res => {
+      this.licenseVisible = false;
+      this.router.navigate(['/sign-out']);
+    });
   }
 }

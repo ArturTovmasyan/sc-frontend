@@ -34,4 +34,11 @@ export class ProfileService {
     });
   }
 
+  accept(): Observable<Message> {
+    return this.http.put<Message>(`${environment.apiUrl}/api/v1.0/profile/license/accept`, {});
+  }
+
+  decline(): Observable<Message> {
+    return this.http.put<Message>(`${environment.apiUrl}/api/v1.0/profile/license/decline`, {});
+  }
 }
