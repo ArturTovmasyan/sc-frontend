@@ -54,7 +54,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  protected onIconPickerSelect($event): void {
+  public onIconPickerSelect($event): void {
     this.form.get('icon').setValue($event);
   }
 }
