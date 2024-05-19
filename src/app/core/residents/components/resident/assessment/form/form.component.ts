@@ -29,14 +29,14 @@ export class FormComponent extends AbstractForm implements OnInit {
   private static calc_multi_item(count: number): number {
     let total = 0;
 
-    if (count < 3) {
-      total = 2 - count;
+    if (count <= 2) {
+      total = 2;
     } else if (count > 2 && count <= 4) {
-      total = 2 - count;
+      total = 2;
     } else if (count > 4 && count <= 7) {
-      total = 1 - count;
+      total = 1;
     } else if (count > 7 && count <= 10) {
-      total = 0 - count;
+      total = 0;
     }
 
     return total;
@@ -45,29 +45,22 @@ export class FormComponent extends AbstractForm implements OnInit {
   private calculate_score(rows: Array<any>) {
     const score = [];
 
-    if (rows) {
-      const category_rows = [].concat.apply(
-        [],
-        this.categories
-          .filter(c => !c.multi_item)
-          .map(c => c.rows)
-      );
-
-      rows.forEach(v => {
-        if (v) {
-          if (_.isArray(v)) {
-            score.push(FormComponent.calc_multi_item(v.length));
-          } else {
-            const row = category_rows.filter(r => r.id === v).pop();
-
-            if (row) {
-              score.push(row.score);
-            }
-          }
+    this.categories.forEach((c, idx) => {
+      if (c.multi_item) {
+        if (rows[idx] && _.isArray(rows[idx])) {
+          score.push(FormComponent.calc_multi_item(rows[idx].length));
+        } else {
+          score.push(FormComponent.calc_multi_item(0));
         }
-      });
-
-    }
+      } else {
+        if (rows[idx]) {
+          const row = c.rows.filter(r => r.id === rows[idx]).pop();
+          score.push(row.score);
+        } else {
+          score.push(0);
+        }
+      }
+    });
 
     return score.reduce((previous, value) => (previous + value), 0);
   }
@@ -164,6 +157,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (!this.edit_mode || (this.edit_mode && this.data_loaded)) {
               this.form.setControl('rows', new FormArray(rows_controls));
               this.subscribe('vc_rows');
+              this.form.get('rows').setValue(this.form.get('rows').value);
             }
 
             this.tab_data_disabled = false;
