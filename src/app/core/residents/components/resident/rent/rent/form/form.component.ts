@@ -38,7 +38,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private formBuilder: FormBuilder,
     private payment_source$: PaymentSourceService,
     private reason$: RentReasonService,
-    private residentSelector$: ResidentSelectorService,
+    public residentSelector$: ResidentSelectorService,
     private admission$: ResidentAdmissionService
   ) {
     super(modal$);
