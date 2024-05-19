@@ -11,12 +11,9 @@
     </nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       {{ get_group_title() }}
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item *ngIf="admission && residentSelector$.type.value == GROUP_TYPE.FACILITY">
-    <nz-form-label [nzSm]="8" [nzXs]="24">Base Room Rate</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
-      {{ get_base_room_rate()|currency:'USD':'symbol-narrow':'1.2-2' }}
+      <ng-container *ngIf="residentSelector$.type.value == GROUP_TYPE.FACILITY">
+        <strong>(Base Room Rate: {{ get_base_room_rate()|currency:'USD':'symbol-narrow':'1.2-2' }})</strong>
+      </ng-container>
     </nz-form-control>
   </nz-form-item>
 
