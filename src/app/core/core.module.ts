@@ -28,6 +28,7 @@ import {P500Component} from './components/error/500.component';
 import {SharedModule} from '../shared/shared.module';
 import {CoreComponent} from './core.component';
 import {DefaultLayoutComponent} from './components/default-layout/default-layout.component';
+import {ScHeaderComponent} from './components/sc-header/sc-header.component';
 import {LicenseComponent} from './components/license/license.component';
 import {UserActivityComponent} from './components/user-activity/user-activity.component';
 import {ChangePasswordComponent} from './components/profile/change-password/change-password.component';
@@ -369,6 +370,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResetPasswordComponent,
 
     DefaultLayoutComponent,
+    ScHeaderComponent,
     LicenseComponent,
     UserActivityComponent,
 
