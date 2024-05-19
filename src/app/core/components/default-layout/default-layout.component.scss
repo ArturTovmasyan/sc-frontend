@@ -28,6 +28,10 @@
 }
 
 ::ng-deep {
+  .app-sc-container {
+    margin-top: 1.5rem;
+  }
+
   .ant-list-item-meta-description {
     word-break: break-all;
   }

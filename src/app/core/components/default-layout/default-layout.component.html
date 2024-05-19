@@ -43,8 +43,8 @@
     <!--<ol class="breadcrumb">-->
     <!--<app-breadcrumb></app-breadcrumb>-->
     <!--</ol>-->
-    <app-resident-selector></app-resident-selector>
-    <div class="container-fluid">
+    <app-resident-selector *ngIf="addIfHasPermission('persistence-resident-resident')"></app-resident-selector>
+    <div class="app-sc-container container-fluid">
       <router-outlet></router-outlet>
     </div><!-- /.container-fluid -->
 
@@ -62,7 +62,7 @@
     </nz-modal>
   </main>
 
-  <app-aside [fixed]="true" [display]="true">
+  <app-aside *ngIf="addIfHasPermission('persistence-common-change_log')" [fixed]="true" [display]="true">
     <h6 style="font-size: large;text-align: center;padding-top: 1rem;margin: 0;">User Activity</h6>
     <ng-container *ngFor="let change_log of change_logs" [ngSwitch]="change_log.type">
       <nz-divider style="margin: 20px 0;"></nz-divider>

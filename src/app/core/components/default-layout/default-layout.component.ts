@@ -58,7 +58,10 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     this.initIdle();
 
     this.subscribe('get_profile');
-    this.subscribe('timer_change_log');
+
+    if (this.addIfHasPermission('persistence-common-change_log')) {
+      this.subscribe('timer_change_log');
+    }
 
     this.generateNavigation(this.router.config[0]);
   }
@@ -215,5 +218,9 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
       this.auth$.sign_out();
     });
     this.idle$.watch();
+  }
+
+  addIfHasPermission(permission: string) {
+    return this.auth_$.checkPermission([permission]);
   }
 }
