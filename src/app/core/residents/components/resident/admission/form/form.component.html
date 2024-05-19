@@ -40,17 +40,17 @@
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group" nzRequired>Group</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group')?'error':null">
           <nz-select nzShowSearch formControlName="group">
-            <nz-option-group nzLabel="FFC - Facilities">
+            <nz-option-group *ngIf="group_helper.facilities && group_helper.facilities.length > 0" nzLabel="FFC - Facilities">
               <ng-container *ngFor="let facility of group_helper.facilities">
                 <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
               </ng-container>
             </nz-option-group>
-            <nz-option-group nzLabel="IHC - Regions">
+            <nz-option-group *ngIf="group_helper.regions && group_helper.regions.length > 0" nzLabel="IHC - Regions">
               <ng-container *ngFor="let region of group_helper.regions">
                 <nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>
               </ng-container>
             </nz-option-group>
-            <nz-option-group nzLabel="IL - Apartments">
+            <nz-option-group *ngIf="group_helper.apartments && group_helper.apartments.length > 0" nzLabel="IL - Apartments">
               <ng-container *ngFor="let apartment of group_helper.apartments">
                 <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
               </ng-container>
@@ -169,8 +169,6 @@
       </nz-form-item>
     </nz-tab>
     <nz-tab *ngIf="form.get('group_type').value === GROUP_TYPE.REGION" nzTitle="IHC Region Information">
-      <input nz-input formControlName="region_id">
-
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_group" nzRequired>Care Group</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_group')?'error':null">

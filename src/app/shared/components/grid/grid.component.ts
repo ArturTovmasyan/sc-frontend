@@ -2,8 +2,8 @@ import * as _ from 'lodash';
 import {OnDestroy} from '@angular/core';
 import {KeyValue} from '@angular/common';
 import {Observable, Subscription} from 'rxjs';
-import {TitleService} from '../../../core/services/title.service';
 import {NzModalService} from 'ng-zorro-antd';
+import {TitleService} from '../../../core/services/title.service';
 import {GridService} from '../../services/grid.service';
 import {AbstractForm} from '../abstract-form/abstract-form';
 

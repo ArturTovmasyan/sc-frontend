@@ -1,5 +1,5 @@
 ﻿import {Component, ElementRef, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {GroupType} from '../../../../models/group-type.enum';
@@ -77,13 +77,24 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       group_type: [null, Validators.required],
 
-      group: [null, Validators.required]
+      group: [null, Validators.required],
+
+      apartment_bed_id: [null, [Validators.required]],
+      dining_room_id: [null, [Validators.required]],
+      facility_bed_id: [null, [Validators.required]],
+      care_group: [null, [Validators.compose([Validators.required, CoreValidator.care_group])]],
+      care_level_id: [null, [Validators.required]],
+      ambulatory: [false, [Validators.required]],
+      dnr: [false, [Validators.required]],
+      polst: [false, [Validators.required]],
+      region_id: [null, [Validators.required]],
+      address: ['', [Validators.required]],
+      csz_id: [null, [Validators.required]]
     });
 
+    this.init_subform(null);
+
     this.subscribe('rs_resident');
-    this.subscribe('list_facility');
-    this.subscribe('list_apartment');
-    this.subscribe('list_region');
     this.subscribe('vc_group');
 
     // TODO: review
@@ -113,7 +124,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             });
 
             this.group_helper.facilities = res;
-            if (this.form.get('group').value === null) {
+            if (this.form.get('group_type').value === GroupType.FACILITY && this.form.get('group').value === null) {
               this.form.get('group').setValue(this.group_helper.get_group_data(this.group_id, this.form.get('group_type').value));
             }
           }
@@ -127,7 +138,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             });
 
             this.group_helper.apartments = res;
-            if (this.form.get('group').value === null) {
+            if (this.form.get('group_type').value === GroupType.APARTMENT && this.form.get('group').value === null) {
               this.form.get('group').setValue(this.group_helper.get_group_data(this.group_id, this.form.get('group_type').value));
             }
           }
@@ -142,7 +153,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             this.group_helper.regions = res;
 
-            if (this.form.get('group').value === null) {
+            if (this.form.get('group_type').value === GroupType.REGION && this.form.get('group').value === null) {
               this.form.get('group').setValue(this.group_helper.get_group_data(this.group_id, this.form.get('group_type').value));
             }
           }
@@ -215,79 +226,67 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   public init_subform(value: any): void {
-    this.form.removeControl('apartment_bed_id');
-    this.form.removeControl('facility_bed_id');
-    this.form.removeControl('dining_room_id');
+    this.form.get('apartment_bed_id').disable();
+    this.form.get('facility_bed_id').disable();
+    this.form.get('dining_room_id').disable();
 
-    this.form.removeControl('region_id');
-    this.form.removeControl('address');
-    this.form.removeControl('csz_id');
+    this.form.get('region_id').disable();
+    this.form.get('address').disable();
+    this.form.get('csz_id').disable();
 
-    this.form.removeControl('care_group');
-    this.form.removeControl('care_level_id');
-    this.form.removeControl('ambulatory');
-    this.form.removeControl('dnr');
-    this.form.removeControl('polst');
+    this.form.get('care_group').disable();
+    this.form.get('care_level_id').disable();
+    this.form.get('ambulatory').disable();
+    this.form.get('dnr').disable();
+    this.form.get('polst').disable();
 
-    const group_id = value.id;
-    const group_type = value.type;
+    if (value !== null) {
+      const group_id = value.id;
+      const group_type = value.type;
 
-    switch (group_type) {
-      case GroupType.FACILITY:
+      switch (group_type) {
+        case GroupType.FACILITY:
+          this.form.get('dining_room_id').enable();
+          this.form.get('facility_bed_id').enable();
+          this.form.get('care_group').enable();
+          this.form.get('care_level_id').enable();
+          this.form.get('ambulatory').enable();
+          this.form.get('dnr').enable();
+          this.form.get('polst').enable();
 
+          this.subscribe('list_facility_room', {'group_id': group_id});
+          this.subscribe('list_dining_room', {'group_id': group_id});
+          this.subscribe('list_care_level');
 
-        this.form.addControl('dining_room_id', new FormControl(null, [Validators.required]));
-        this.form.addControl('facility_bed_id', new FormControl(null, [Validators.required]));
-        this.form.addControl('care_group', new FormControl(null, [Validators.compose([Validators.required, CoreValidator.care_group])]));
-        this.form.addControl('care_level_id', new FormControl(null, [Validators.required]));
-        this.form.addControl('ambulatory', new FormControl(false, [Validators.required]));
-        this.form.addControl('dnr', new FormControl(false, [Validators.required]));
-        this.form.addControl('polst', new FormControl(false, [Validators.required]));
+          break;
+        case GroupType.APARTMENT:
+          this.form.get('apartment_bed_id').enable();
+          this.subscribe('list_apartment_room', {'group_id': group_id});
+          break;
+        case GroupType.REGION:
+          this.form.get('region_id').enable();
+          this.form.get('address').enable();
+          this.form.get('csz_id').enable();
 
-        this.subscribe('list_facility_room', {'group_id': group_id});
-        this.subscribe('list_dining_room', {'group_id': group_id});
-        this.subscribe('list_care_level');
+          this.form.get('care_group').enable();
+          this.form.get('care_level_id').enable();
+          this.form.get('ambulatory').enable();
+          this.form.get('dnr').enable();
+          this.form.get('polst').enable();
 
-        break;
-      case GroupType.APARTMENT:
-        this.form.removeControl('dining_room_id');
-        this.form.removeControl('facility_bed_id');
-        this.form.removeControl('care_group');
-        this.form.removeControl('care_level_id');
-        this.form.removeControl('ambulatory');
-        this.form.removeControl('dnr');
-        this.form.removeControl('polst');
+          this.subscribe('list_city_state_zip');
+          this.subscribe('list_care_level');
 
-        this.form.addControl('apartment_bed_id', new FormControl(null, [Validators.required]));
-        this.subscribe('list_apartment_room', {'group_id': group_id});
-        break;
-      case GroupType.REGION:
-        this.form.addControl('region_id', new FormControl(null, [Validators.required]));
-        this.form.addControl('address', new FormControl('', [Validators.required]));
-        this.form.addControl('csz_id', new FormControl(null, [Validators.required]));
-
-        this.form.addControl('care_group', new FormControl(null, [Validators.compose([Validators.required, CoreValidator.care_group])]));
-        this.form.addControl('care_level_id', new FormControl(null, [Validators.required]));
-        this.form.addControl('ambulatory', new FormControl(false, [Validators.required]));
-        this.form.addControl('dnr', new FormControl(false, [Validators.required]));
-        this.form.addControl('polst', new FormControl(false, [Validators.required]));
-
-        this.subscribe('list_city_state_zip');
-        this.subscribe('list_care_level');
-
-        break;
+          break;
+      }
     }
-
-    // if (this.edit_data !== null && group_id === this.group_id) {
-    //   this.set_form_data(this, this.form, this.edit_data);
-    // }
   }
 
   before_set_form_data(data: any): void {
     if (data !== null) {
       this.edit_data = data;
 
-      this.form.get('group_type').setValue(data.type);
+      this.form.get('group_type').setValue(data.group_type);
 
       switch (this.form.get('group_type').value) {
         case GroupType.FACILITY:
@@ -299,8 +298,15 @@ export class FormComponent extends AbstractForm implements OnInit {
         case GroupType.REGION:
           this.group_id = data.region.id;
           break;
+        default:
+          this.group_id = null;
+          break;
       }
     }
+
+    this.subscribe('list_facility');
+    this.subscribe('list_apartment');
+    this.subscribe('list_region');
   }
 
 }

@@ -293,6 +293,7 @@
       "id": "ID",
       "admission_type": "Admission Type",
       "date": "Effective date",
+      "notes": "Notes",
       "info": "Info"
     },
     "resident-rent-list": {
