@@ -37,3 +37,9 @@ export class ResidentImage {
   photo_150_150: string;
   photo_300_300: string;
 }
+
+export enum ResidentState {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+  NO_ADMISSION = 'no-admission'
+}

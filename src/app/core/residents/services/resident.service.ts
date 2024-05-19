@@ -23,4 +23,8 @@ export class ResidentService extends GridService<Resident> {
     return this.http.get<ResidentAdmission>(this.SERVICE_URL_BASE + `/last/admission/${id}`);
   }
 
+  public state(resident_id: number): Observable<any> {
+    return this.http.get<any>(this.SERVICE_URL_BASE + `/state/${resident_id}`);
+  }
+
 }

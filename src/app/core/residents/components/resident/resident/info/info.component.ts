@@ -2,7 +2,7 @@ import {Router} from '@angular/router';
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {first} from 'rxjs/operators';
 import {ResidentService} from '../../../../services/resident.service';
-import {Resident} from '../../../../models/resident';
+import {Resident, ResidentState} from '../../../../models/resident';
 import {GroupType} from '../../../../models/group-type.enum';
 import {Observable} from 'rxjs';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
@@ -24,10 +24,13 @@ import {AuthGuard} from '../../../../../guards/auth.guard';
 })
 export class InfoComponent implements OnInit {
   GroupType = GroupType;
+  ResidentState = ResidentState;
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   resident: Resident;
   admission: ResidentAdmission;
+
+  state: ResidentState = null;
 
   today: Date = new Date();
 
@@ -66,6 +69,12 @@ export class InfoComponent implements OnInit {
         }, error => {
           this.loading = false;
           this.resident = null;
+        });
+
+        this.resident$.state(this.resident_id).pipe(first()).subscribe(res => {
+          if (res) {
+            this.state = res;
+          }
         });
 
         this.admission$.active(this.resident_id).pipe(first()).subscribe(res => {
