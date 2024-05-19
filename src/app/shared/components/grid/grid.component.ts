@@ -474,7 +474,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   }
 
   protected load_grid_fields() {
-    return this.service$.options();
+    return this.service$.options(this.params);
   }
 
   protected load_grid(page: number,

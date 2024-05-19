@@ -25,8 +25,10 @@ export class GridService<T extends IdInterface> {
     });
   }
 
-  public options(): Observable<any> {
-    return this.http.options(this.SERVICE_URL_BASE + '/grid');
+  public options(params?: { key: string, value: string }[]): Observable<any> {
+    return this.http.options(this.SERVICE_URL_BASE + '/grid', {
+      params: this.build_query(null, null, null, null, params)
+    });
   }
 
   public list(page: number,
@@ -84,40 +86,50 @@ export class GridService<T extends IdInterface> {
     return this.http.put<Message>(this.SERVICE_URL_BASE + `/${data.id}`, data);
   }
 
-  private build_query(page: number,
-                      per_page: number,
-                      sort: { key: string, value: string }[],
-                      filter: { [id: string]: { condition: number, value: any[] } },
+  private build_query(page?: number,
+                      per_page?: number,
+                      sort?: { key: string, value: string }[],
+                      filter?: { [id: string]: { condition: number, value: any[] } },
                       params?: { key: string, value: string }[]
   ): HttpParams {
-    let query = new HttpParams()
-      .append('page', `${page}`)
-      .append('per_page', `${per_page}`);
+    let query = new HttpParams();
 
-    sort.forEach(sort_config => {
-      query = query.append('sort[' + sort_config.key + ']', sort_config.value.replace('end', ''));
-    });
+    if (page !== null) {
+      query = query.append('page', `${page}`);
+    }
 
-    Object.entries(filter).forEach(
-      ([key, value]) => {
-        if (value.condition != null) {
-          query = query.append('filter[' + key + '][c]', `${value.condition}`);
-        }
-        if (value.value != null) {
-          value.value.forEach((v, i) => {
-            if (v != null) {
-              if (v instanceof Date) {
-                v = formatDate(v, 'yyy-MM-ddTHH:mm:ss', 'en-US');
+    if (per_page !== null) {
+      query = query.append('per_page', `${per_page}`);
+    }
+
+    if (sort !== null) {
+      sort.forEach(sort_config => {
+        query = query.append('sort[' + sort_config.key + ']', sort_config.value.replace('end', ''));
+      });
+    }
+
+    if (filter !== null) {
+      Object.entries(filter).forEach(
+        ([key, value]) => {
+          if (value.condition != null) {
+            query = query.append('filter[' + key + '][c]', `${value.condition}`);
+          }
+          if (value.value != null) {
+            value.value.forEach((v, i) => {
+              if (v != null) {
+                if (v instanceof Date) {
+                  v = formatDate(v, 'yyy-MM-ddTHH:mm:ss', 'en-US');
+                }
+
+                query = query.append('filter[' + key + '][v][' + i + ']', v);
               }
-
-              query = query.append('filter[' + key + '][v][' + i + ']', v);
-            }
-          });
+            });
+          }
         }
-      }
-    );
+      );
+    }
 
-    if (params) {
+    if (params !== null) {
       params.forEach(param => {
         query = query.append(param.key, param.value);
       });

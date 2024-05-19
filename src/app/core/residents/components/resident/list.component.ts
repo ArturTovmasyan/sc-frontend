@@ -34,8 +34,6 @@ export class ListComponent extends GridComponent<Resident, ResidentService> impl
   }
 
   ngOnInit(): void {
-    super.init();
-
     this.$subscriptions['segment'] = this.route$.url.subscribe(value => {
       if (value && value.length > 0) {
         if (value.length === 1) {
