@@ -64,7 +64,7 @@
   <div class="group-selector">
     <i class="fa fa-home"></i>
     <nz-select nzShowSearch [nzDropdownMatchSelectWidth]="false" formControlName="group">
-      <nz-option nzLabel="No Admission" [nzValue]="null"></nz-option>
+      <nz-option nzLabel="No Admission" [nzValue]="group_helper.no_admission"></nz-option>
       <nz-option-group nzLabel="FFC - Facilities">
         <ng-container *ngFor="let facility of group_helper.facilities">
           <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>

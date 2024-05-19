@@ -43,7 +43,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      group: [-1],
+      group: [null],
       active_resident_id: [null],
       inactive_resident_id: [null]
     });
@@ -74,20 +74,15 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     switch (key) {
       case 'vc_group':
         this.$subscriptions[key] = this.form.get('group').valueChanges.subscribe(next => {
-          if (next === -1) {
+          if (next === null) {
             return;
           }
 
-          if (next) {
+          if (next !== this.group_helper.no_admission) {
             this.residentSelector$.type.next(next.type);
             this.residentSelector$.group.next(next.id);
           } else {
-            this.residentAdmission$.list_by_options(false, null, null).pipe(first()).subscribe(res => {
-              if (res) {
-                this.active_residents = null;
-                this.inactive_residents = res;
-              }
-            });
+            this.subscribe('list_no_admission');
           }
         });
         break;
@@ -111,6 +106,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.residentSelector$.group.subscribe(next => {
           this.active_residents = [];
           this.inactive_residents = [];
+
           this.form.get('active_resident_id').setValue(null);
           this.form.get('inactive_resident_id').setValue(null);
 
@@ -121,6 +117,8 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
 
             this.subscribe('list_active_resident');
             this.subscribe('list_inactive_resident');
+          } else {
+            this.form.get('group').setValue(this.group_helper.no_admission);
           }
         });
         break;
@@ -144,9 +142,15 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
             if (res) {
               this.active_residents = res;
 
-              this.unsubscribe('vc_active_resident_id');
-              this.form.get('active_resident_id').setValue(this.residentSelector$.resident.value);
-              this.subscribe('vc_active_resident_id');
+              if (this.active_residents.filter(v => v.id === this.residentSelector$.resident.value).length > 0) {
+                this.unsubscribe('vc_active_resident_id');
+                this.form.get('active_resident_id').setValue(this.residentSelector$.resident.value);
+                this.subscribe('vc_active_resident_id');
+              } else {
+                this.unsubscribe('vc_active_resident_id');
+                this.form.get('active_resident_id').setValue(null);
+                this.subscribe('vc_active_resident_id');
+              }
             }
           });
         break;
@@ -157,9 +161,39 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
             if (res) {
               this.inactive_residents = res;
 
-              this.unsubscribe('vc_inactive_resident_id');
-              this.form.get('inactive_resident_id').setValue(this.residentSelector$.resident.value);
-              this.subscribe('vc_inactive_resident_id');
+              if (this.inactive_residents.filter(v => v.id === this.residentSelector$.resident.value).length > 0) {
+                this.unsubscribe('vc_inactive_resident_id');
+                this.form.get('inactive_resident_id').setValue(this.residentSelector$.resident.value);
+                this.subscribe('vc_inactive_resident_id');
+              } else {
+                this.unsubscribe('vc_inactive_resident_id');
+                this.form.get('inactive_resident_id').setValue(null);
+                this.subscribe('vc_inactive_resident_id');
+              }
+            }
+          });
+        break;
+      case 'list_no_admission':
+        this.$subscriptions[key] = this.residentAdmission$
+          .list_by_options(false, null, null)
+          .pipe(first()).subscribe(res => {
+            if (res) {
+              this.active_residents = null;
+              this.unsubscribe('vc_active_resident_id');
+              this.form.get('active_resident_id').setValue(null);
+              this.subscribe('vc_active_resident_id');
+
+              this.inactive_residents = res;
+
+              if (this.inactive_residents.filter(v => v.id === this.residentSelector$.resident.value).length > 0) {
+                this.unsubscribe('vc_inactive_resident_id');
+                this.form.get('inactive_resident_id').setValue(this.residentSelector$.resident.value);
+                this.subscribe('vc_inactive_resident_id');
+              } else {
+                this.unsubscribe('vc_inactive_resident_id');
+                this.form.get('inactive_resident_id').setValue(null);
+                this.subscribe('vc_inactive_resident_id');
+              }
             }
           });
         break;
@@ -170,6 +204,16 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
             this.group_helper.facilities.forEach((v, i) => {
               this.group_helper.facilities[i]['type'] = GroupType.FACILITY;
             });
+
+            if (this.residentSelector$.type.value === GroupType.FACILITY) {
+              const group_obj = this.group_helper.get_group_data(this.residentSelector$.group.value, this.residentSelector$.type.value);
+
+              if (group_obj !== null) {
+                this.unsubscribe('vc_group');
+                this.form.get('group').setValue(group_obj);
+                this.subscribe('vc_group');
+              }
+            }
           }
         });
         break;
@@ -180,6 +224,16 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
             this.group_helper.apartments.forEach((v, i) => {
               this.group_helper.apartments[i]['type'] = GroupType.APARTMENT;
             });
+
+            if (this.residentSelector$.type.value === GroupType.APARTMENT) {
+              const group_obj = this.group_helper.get_group_data(this.residentSelector$.group.value, this.residentSelector$.type.value);
+
+              if (group_obj !== null) {
+                this.unsubscribe('vc_group');
+                this.form.get('group').setValue(group_obj);
+                this.subscribe('vc_group');
+              }
+            }
           }
         });
         break;
@@ -190,6 +244,16 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
             this.group_helper.regions.forEach((v, i) => {
               this.group_helper.regions[i]['type'] = GroupType.REGION;
             });
+
+            if (this.residentSelector$.type.value === GroupType.REGION) {
+              const group_obj = this.group_helper.get_group_data(this.residentSelector$.group.value, this.residentSelector$.type.value);
+
+              if (group_obj !== null) {
+                this.unsubscribe('vc_group');
+                this.form.get('group').setValue(group_obj);
+                this.subscribe('vc_group');
+              }
+            }
           }
         });
         break;

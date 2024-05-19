@@ -8,6 +8,8 @@ export class GroupHelper {
   public facilities: Facility[];
   public regions: Region[];
 
+  public no_admission: any = {id: 0};
+
   get_group_data(id: number, type: GroupType) {
     let group = null;
 
