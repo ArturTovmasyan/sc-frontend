@@ -161,6 +161,11 @@
       "title": "Title",
       "space": "Space"
     },
+    "expense-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "event-definition-list": {
       "id": "ID",
       "type": "Type",
