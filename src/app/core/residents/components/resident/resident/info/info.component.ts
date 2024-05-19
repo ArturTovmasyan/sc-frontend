@@ -167,7 +167,7 @@ export class InfoComponent implements OnInit, OnDestroy {
       group,
       alias,
       'pdf',
-      {group: 1, resident_id: this.residentSelector$.resident.value, ...params},
+      {group: this.residentSelector$.type.value, resident_id: this.residentSelector$.resident.value, ...params},
       () => {
       },
       (error) => {
