@@ -196,6 +196,7 @@
       "license": "License",
       "license_capacity": "License Capacity",
       "capacity": "Capacity",
+      "number_of_floors": "Number of floors",
       "phone": "Phone",
       "fax": "Fax",
       "space": "Space",
