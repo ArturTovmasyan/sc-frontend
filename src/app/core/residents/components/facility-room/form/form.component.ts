@@ -14,12 +14,16 @@ import {GroupType} from '../../../models/group-type.enum';
 import {ResidentAdmissionService} from '../../../services/resident-admission.service';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {NzModalService} from 'ng-zorro-antd';
+import {FacilityRoomType} from '../../../models/facility-room-type';
+import {FacilityRoomTypeService} from '../../../services/facility-room-type.service';
+import {FormComponent as FacilityRoomTypeFormComponent} from '../../facility-room-type/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
   facilities: Facility[];
+  facility_room_types: FacilityRoomType[];
 
   facility: Facility = null;
   other_occupation: number;
@@ -37,11 +41,15 @@ export class FormComponent extends AbstractForm implements OnInit {
     private formBuilder: FormBuilder,
     private facility$: FacilityService,
     private facility_room$: FacilityRoomService,
+    private room_type$: FacilityRoomTypeService,
     protected resident$: ResidentService,
     protected residentAdmission$: ResidentAdmissionService,
     private nzModal$: NzModalService
   ) {
     super(modal$);
+    this.modal_map = [
+      {key: 'room_type', component: FacilityRoomTypeFormComponent}
+    ];
 
     this.room_orig_occupation = 0;
     this.room_curr_occupation = 0;
@@ -59,6 +67,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       beds: this.formBuilder.array([]),
 
+      type_id: [null, Validators.required],
       facility_id: [null, Validators.required]
     });
 
@@ -86,6 +95,22 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
+      case 'list_room_type':
+        this.$subscriptions[key] = this.room_type$.all([{
+          key: 'facility_id',
+          value: this.form.get('facility_id').value
+        }]).pipe(first()).subscribe(res => {
+          if (res) {
+            this.facility_room_types = res;
+
+            if (params && params.room_type_id) {
+              this.form.get('type_id').setValue(params.room_type_id);
+            } else {
+              this.form.get('type_id').setValue(this.form.get('type_id').value);
+            }
+          }
+        });
+        break;
       case 'vc_facility_id':
         this.$subscriptions[key] = this.form.get('facility_id').valueChanges.subscribe(next => {
           if (next) {
@@ -93,6 +118,8 @@ export class FormComponent extends AbstractForm implements OnInit {
               this.facility = this.facilities.filter(v => v.id === next).pop();
               this.other_occupation = this.facility.occupation - this.room_orig_occupation;
             }
+
+            this.subscribe('list_room_type');
           }
         });
         break;

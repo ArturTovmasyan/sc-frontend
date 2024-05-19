@@ -15,6 +15,25 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item *ngIf="form.get('type_id').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type_id" nzRequired>Room Type</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type_id">
+          <ng-container *ngFor="let type of facility_room_types">
+            <nz-option [nzLabel]="type.title" [nzValue]="type.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('room_type');">
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('type_id')">
+        <app-field-errors [errors]="fieldErrors('type_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item *ngIf="facility">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Occupation/Target</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">

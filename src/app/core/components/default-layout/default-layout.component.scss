@@ -31,11 +31,18 @@
   table-layout: fixed;
 }
 
+::ng-deep nz-table {
+  .ant-table-placeholder {
+    border: 1px solid #e8e8e8;
+  }
+}
+
 ::ng-deep table.ant-table-fixed > thead.ant-table-thead > tr:first-child > th:first-child {
-  &.sc-table-th-checkbox{
+  &.sc-table-th-checkbox {
     width: 2rem;
   }
-  &.sc-table-th-no-checkbox{
+
+  &.sc-table-th-no-checkbox {
     width: 0rem;
   }
 }
