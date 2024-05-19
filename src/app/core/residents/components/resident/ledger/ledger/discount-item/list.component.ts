@@ -3,19 +3,19 @@ import {ActivatedRoute} from '@angular/router';
 import {TitleService} from '../../../../../../services/title.service';
 import {GridComponent} from '../../../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
-import {ResidentCreditDiscountItemService} from '../../../../../services/resident-credit-discount-item.service';
-import {ResidentCreditDiscountItem} from '../../../../../models/resident-credit-discount-item';
+import {ResidentDiscountItemService} from '../../../../../services/resident-discount-item.service';
+import {ResidentDiscountItem} from '../../../../../models/resident-discount-item';
 import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
 
 @Component({
-  selector: 'app-resident-ledger-credit-discount-item',
+  selector: 'app-resident-ledger-discount-item',
   templateUrl: '../../../../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../../../../shared/components/grid/grid.component.scss'],
-  providers: [ResidentCreditDiscountItemService, ModalFormService]
+  providers: [ResidentDiscountItemService, ModalFormService]
 })
-export class ListComponent extends GridComponent<ResidentCreditDiscountItem, ResidentCreditDiscountItemService> implements OnInit {
+export class ListComponent extends GridComponent<ResidentDiscountItem, ResidentDiscountItemService> implements OnInit {
   constructor(
-    protected service$: ResidentCreditDiscountItemService,
+    protected service$: ResidentDiscountItemService,
     protected title$: TitleService,
     protected modal$: ModalFormService,
     private route$: ActivatedRoute
@@ -24,8 +24,8 @@ export class ListComponent extends GridComponent<ResidentCreditDiscountItem, Res
 
     this.card = false;
     this.component = FormComponent;
-    this.permission = 'persistence-resident-resident_credit_discount_item';
-    this.name = 'resident-credit-discount-item-list';
+    this.permission = 'persistence-resident-resident_discount_item';
+    this.name = 'resident-discount-item-list';
   }
 
   ngOnInit(): void {

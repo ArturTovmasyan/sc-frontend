@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {ResidentCreditDiscountItem} from '../models/resident-credit-discount-item';
+import {CreditItem} from '../models/credit-item';
 import {GridService} from '../../../shared/services/grid.service';
 
 @Injectable({providedIn: 'root'})
-export class ResidentCreditDiscountItemService extends GridService<ResidentCreditDiscountItem> {
+export class CreditItemService extends GridService<CreditItem> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident-credit-discount-item`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/credit-item`;
   }
 }

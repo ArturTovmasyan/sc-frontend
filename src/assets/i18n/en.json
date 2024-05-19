@@ -166,7 +166,15 @@
       "title": "Title",
       "space": "Space"
     },
-    "credit-discount-item-list": {
+    "credit-item-list": {
+      "id": "ID",
+      "title": "Title",
+      "amount": "Amount",
+      "can_be_changed": "Can Be Changed",
+      "valid_through_date": "Valid Through Date",
+      "space": "Space"
+    },
+    "discount-item-list": {
       "id": "ID",
       "title": "Title",
       "amount": "Amount",
@@ -470,9 +478,16 @@
       "amount": "Amount",
       "notes": "Notes"
     },
-    "resident-credit-discount-item-list": {
+    "resident-credit-item-list": {
       "id": "ID",
-      "credit_discount_item": "Credit/Discount Item",
+      "credit_item": "Credit Item",
+      "date": "Date",
+      "amount": "Amount",
+      "notes": "Notes"
+    },
+    "resident-discount-item-list": {
+      "id": "ID",
+      "discount_item": "Discount Item",
       "date": "Date",
       "amount": "Amount",
       "notes": "Notes"

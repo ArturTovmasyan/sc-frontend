@@ -184,8 +184,11 @@ import {FormComponent as ResidentMedicalHistoryFormComponent} from './residents/
 import {ListComponent as ResidentExpenseItemListComponent} from './residents/components/resident/ledger/ledger/expense-item/list.component';
 import {FormComponent as ResidentExpenseItemFormComponent} from './residents/components/resident/ledger/ledger/expense-item/form/form.component';
 
-import {ListComponent as ResidentCreditDiscountItemListComponent} from './residents/components/resident/ledger/ledger/credit-discount-item/list.component';
-import {FormComponent as ResidentCreditDiscountItemFormComponent} from './residents/components/resident/ledger/ledger/credit-discount-item/form/form.component';
+import {ListComponent as ResidentCreditItemListComponent} from './residents/components/resident/ledger/ledger/credit-item/list.component';
+import {FormComponent as ResidentCreditItemFormComponent} from './residents/components/resident/ledger/ledger/credit-item/form/form.component';
+
+import {ListComponent as ResidentDiscountItemListComponent} from './residents/components/resident/ledger/ledger/discount-item/list.component';
+import {FormComponent as ResidentDiscountItemFormComponent} from './residents/components/resident/ledger/ledger/discount-item/form/form.component';
 
 import {ListComponent as ResidentPaymentReceivedItemListComponent} from './residents/components/resident/ledger/ledger/payment-received-item/list.component';
 import {FormComponent as ResidentPaymentReceivedItemFormComponent} from './residents/components/resident/ledger/ledger/payment-received-item/form/form.component';
@@ -237,8 +240,11 @@ import {FormComponent as RpPaymentTypeFormComponent} from './residents/component
 import {ListComponent as ExpenseItemListComponent} from './residents/components/expense-item/list.component';
 import {FormComponent as ExpenseItemFormComponent} from './residents/components/expense-item/form/form.component';
 
-import {ListComponent as CreditDiscountItemListComponent} from './residents/components/credit-discount-item/list.component';
-import {FormComponent as CreditDiscountItemFormComponent} from './residents/components/credit-discount-item/form/form.component';
+import {ListComponent as CreditItemListComponent} from './residents/components/credit-item/list.component';
+import {FormComponent as CreditItemFormComponent} from './residents/components/credit-item/form/form.component';
+
+import {ListComponent as DiscountItemListComponent} from './residents/components/discount-item/list.component';
+import {FormComponent as DiscountItemFormComponent} from './residents/components/discount-item/form/form.component';
 
 import {ListComponent as KeyFinanceDatesListComponent} from './residents/components/key-finance-dates/list.component';
 import {FormComponent as KeyFinanceDatesFormComponent} from './residents/components/key-finance-dates/form/form.component';
@@ -608,8 +614,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentExpenseItemListComponent,
     ResidentExpenseItemFormComponent,
 
-    ResidentCreditDiscountItemListComponent,
-    ResidentCreditDiscountItemFormComponent,
+    ResidentCreditItemListComponent,
+    ResidentCreditItemFormComponent,
+
+    ResidentDiscountItemListComponent,
+    ResidentDiscountItemFormComponent,
 
     ResidentPaymentReceivedItemListComponent,
     ResidentPaymentReceivedItemFormComponent,
@@ -639,8 +648,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ExpenseItemListComponent,
     ExpenseItemFormComponent,
 
-    CreditDiscountItemListComponent,
-    CreditDiscountItemFormComponent,
+    CreditItemListComponent,
+    CreditItemFormComponent,
+
+    DiscountItemListComponent,
+    DiscountItemFormComponent,
 
     AssessmentCategoryListComponent,
     AssessmentCategoryFormComponent,
@@ -857,7 +869,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentExpenseItemFormComponent,
 
-    ResidentCreditDiscountItemFormComponent,
+    ResidentCreditItemFormComponent,
+
+    ResidentDiscountItemFormComponent,
 
     ResidentPaymentReceivedItemFormComponent,
 
@@ -872,7 +886,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RpPaymentTypeFormComponent,
     KeyFinanceDatesFormComponent,
     ExpenseItemFormComponent,
-    CreditDiscountItemFormComponent,
+    CreditItemFormComponent,
+    DiscountItemFormComponent,
 
     AssessmentCategoryFormComponent,
 

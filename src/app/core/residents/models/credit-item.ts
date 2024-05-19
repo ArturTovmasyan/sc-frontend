@@ -1,6 +1,6 @@
 import {Space} from '../../models/space';
 
-export class CreditDiscountItem implements IdInterface {
+export class CreditItem implements IdInterface {
   id: number;
 
   title: string;

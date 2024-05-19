@@ -2,12 +2,12 @@
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../../../shared/components/abstract-form/abstract-form';
-import {CreditDiscountItem} from '../../../../../../models/credit-discount-item';
-import {CreditDiscountItemService} from '../../../../../../services/credit-discount-item.service';
+import {CreditItem} from '../../../../../../models/credit-item';
+import {CreditItemService} from '../../../../../../services/credit-item.service';
 import {ResidentSelectorService} from '../../../../../../services/resident-selector.service';
 import {DateHelper} from '../../../../../../../../shared/helpers/date-helper';
 import {ModalFormService} from '../../../../../../../../shared/services/modal-form.service';
-import {FormComponent as CreditDiscountItemFormComponent} from '../../../../../credit-discount-item/form/form.component';
+import {FormComponent as CreditItemFormComponent} from '../../../../../credit-item/form/form.component';
 import {CoreValidator} from '../../../../../../../../shared/utils/core-validator';
 import {CurrencyPipe} from '@angular/common';
 
@@ -15,19 +15,19 @@ import {CurrencyPipe} from '@angular/common';
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  credit_discount_items: CreditDiscountItem[];
+  credit_items: CreditItem[];
 
   formatterDollar = (value: number) => (new CurrencyPipe('en-US')).transform(value, 'USD', 'symbol-narrow', '1.2-2');
 
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private credit_discount_item$: CreditDiscountItemService,
+    private credit_item$: CreditItemService,
     private residentSelector$: ResidentSelectorService
   ) {
     super(modal$);
     this.modal_map = [
-         {key: 'credit_discount_item', component: CreditDiscountItemFormComponent}
+         {key: 'credit_item', component: CreditItemFormComponent}
     ];
   }
 
@@ -40,24 +40,24 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       date: [DateHelper.newDate(), Validators.required],
 
-      credit_discount_item_id: [null, Validators.required],
+      credit_item_id: [null, Validators.required],
 
       ledger_id: [null, Validators.required]
     });
 
     this.subscribe('rs_ledger');
-    this.subscribe('list_credit_discount_item');
+    this.subscribe('list_credit_item');
   }
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
-      case 'list_credit_discount_item':
-        this.$subscriptions[key] = this.credit_discount_item$.all().pipe(first()).subscribe(res => {
+      case 'list_credit_item':
+        this.$subscriptions[key] = this.credit_item$.all().pipe(first()).subscribe(res => {
           if (res) {
-            this.credit_discount_items = res;
+            this.credit_items = res;
 
             if (params) {
-              this.form.get('credit_discount_item_id').setValue(params.credit_discount_item_id);
+              this.form.get('credit_item_id').setValue(params.credit_item_id);
             }
           }
         });

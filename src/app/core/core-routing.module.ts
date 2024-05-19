@@ -49,7 +49,8 @@ import {ListComponent as RegionListComponent} from './residents/components/regio
 import {ListComponent as PaymentSourceListComponent} from './residents/components/payment-source/list.component';
 import {ListComponent as RpPaymentTypeListComponent} from './residents/components/rp-payment-type/list.component';
 import {ListComponent as ExpenseItemListComponent} from './residents/components/expense-item/list.component';
-import {ListComponent as CreditDiscountItemListComponent} from './residents/components/credit-discount-item/list.component';
+import {ListComponent as CreditItemListComponent} from './residents/components/credit-item/list.component';
+import {ListComponent as DiscountItemListComponent} from './residents/components/discount-item/list.component';
 import {ListComponent as KeyFinanceDatesListComponent} from './residents/components/key-finance-dates/list.component';
 import {ListComponent as AssessmentCategoryListComponent} from './residents/components/assessment/category/list.component';
 import {ListComponent as AssessmentFormListComponent} from './residents/components/assessment/form/list.component';
@@ -645,11 +646,20 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'credit-discount-items', component: CreditDiscountItemListComponent,
+        path: 'credit-items', component: CreditItemListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
-          title: 'Credit/Discount Items',
-          permissions: ['activity-reference', 'persistence-common-credit_discount_item']
+          title: 'Credit Items',
+          permissions: ['activity-reference', 'persistence-common-credit_item']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'discount-items', component: DiscountItemListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Discount Items',
+          permissions: ['activity-reference', 'persistence-common-discount_item']
         },
         canActivate: [AuthGuard]
       },

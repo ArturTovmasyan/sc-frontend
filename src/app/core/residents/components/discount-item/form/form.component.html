@@ -1,19 +1,6 @@
-﻿<h4>Key Finance Dates</h4>
+﻿<h4>Discount Item</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
-  <nz-form-item *ngIf="!edit_mode">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type" nzRequired>Type</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="type">
-        <ng-container *ngFor="let type of types">
-          <nz-option [nzLabel]="(type.name)|translate" [nzValue]="type.id"></nz-option>
-        </ng-container>
-      </nz-select>
-      <nz-form-explain *ngIf="hasErrors('type')">
-        <app-field-errors [errors]="fieldErrors('type')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
@@ -23,21 +10,34 @@
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
-      <nz-date-picker formControlName="date" nzFormat="MM/dd/yyyy"></nz-date-picker>
-      <nz-form-explain *ngIf="hasErrors('date')">
-        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="amount">Amount</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('amount')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
+                       nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('amount')">
+        <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description">Description</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('description')?'error':null">
-      <input-counter formControlName="description" placeholder="Description" [maxlength]="256"></input-counter>
-      <nz-form-explain *ngIf="hasErrors('description')">
-        <app-field-errors [errors]="fieldErrors('description')"></app-field-errors>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="can_be_changed">Can Be Changed</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="can_be_changed"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('can_be_changed')">
+        <app-field-errors [errors]="fieldErrors('can_be_changed')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="valid_through_date" nzRequired>Valid Through Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('valid_through_date')?'error':null">
+      <nz-date-picker formControlName="valid_through_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('valid_through_date')">
+        <app-field-errors [errors]="fieldErrors('valid_through_date')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

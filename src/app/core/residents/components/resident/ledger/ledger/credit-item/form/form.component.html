@@ -1,4 +1,4 @@
-﻿<h4>Credit/Discount Item</h4>
+﻿<h4>Credit Item</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
@@ -12,20 +12,20 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="credit_discount_item_id" nzRequired>Credit/Discount Item</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('credit_discount_item_id')?'error':null">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="credit_item_id" nzRequired>Credit Item</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('credit_item_id')?'error':null">
       <div class="add-select-container">
-        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="credit_discount_item_id">
-          <ng-container *ngFor="let credit_discount_item of credit_discount_items">
-            <nz-option [nzLabel]="credit_discount_item.title" [nzValue]="credit_discount_item.id"></nz-option>
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="credit_item_id">
+          <ng-container *ngFor="let credit_item of credit_items">
+            <nz-option [nzLabel]="credit_item.title" [nzValue]="credit_item.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('credit_discount_item');">
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('credit_item');">
           <i nz-icon nzType="plus"></i>
         </button>
       </div>
-      <nz-form-explain *ngIf="hasErrors('credit_discount_item_id')">
-        <app-field-errors [errors]="fieldErrors('credit_discount_item_id')"></app-field-errors>
+      <nz-form-explain *ngIf="hasErrors('credit_item_id')">
+        <app-field-errors [errors]="fieldErrors('credit_item_id')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
