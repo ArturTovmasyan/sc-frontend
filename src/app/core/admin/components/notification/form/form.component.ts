@@ -68,6 +68,8 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.notification_types = res;
 
             this.subscribe('vc_type_id');
+
+            this.form.get('type_id').setValue(this.form.get('type_id').value);
           }
         });
         break;

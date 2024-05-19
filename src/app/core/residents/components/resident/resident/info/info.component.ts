@@ -270,7 +270,7 @@ export class InfoComponent implements OnInit {
           if (v) {
             const result_ = {
               id: this.residentSelector$.resident.value,
-              photo: this.resident.image.photo_300_300
+              photo: this.resident.image.photo
             };
 
             component.before_set_form_data(result_);
