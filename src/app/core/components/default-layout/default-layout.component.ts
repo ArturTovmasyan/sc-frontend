@@ -1,18 +1,25 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../../models/user';
 import {ProfileService} from '../../services/profile.service';
 import {Route, Router} from '@angular/router';
 import {AuthGuard} from '../../guards/auth.guard';
 import * as normalize from 'normalize-path';
-import {AutoResume, DEFAULT_INTERRUPTSOURCES, Idle} from '@ng-idle/core';
+import {DEFAULT_INTERRUPTSOURCES, Idle} from '@ng-idle/core';
 import {AuthenticationService} from '../../services/auth.service';
+import {ChangeLog} from '../../models/change-log';
+import {ChangeLogService} from '../../admin/services/change-log.service';
+import {ChangeLogType} from '../../models/change-log-type.enum';
+import {Subscription, timer} from 'rxjs';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss']
 })
-export class DefaultLayoutComponent {
+export class DefaultLayoutComponent implements OnInit, OnDestroy {
+  ChangeLogType = ChangeLogType;
+
   public navItems = [];
   public sidebarMinimized = true;
   private changes: MutationObserver;
@@ -20,15 +27,22 @@ export class DefaultLayoutComponent {
 
   public user: User;
 
+  public change_logs: ChangeLog[];
+
   public licenseVisible: boolean = false;
+
+  private $subscriptions: { [key: string]: Subscription; };
 
   constructor(
     private router: Router,
     private profile$: ProfileService,
     private auth_$: AuthGuard,
     private auth$: AuthenticationService,
+    private change_log$: ChangeLogService,
     private idle$: Idle
   ) {
+    this.$subscriptions = {};
+
     this.changes = new MutationObserver((mutations) => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
     });
@@ -36,22 +50,50 @@ export class DefaultLayoutComponent {
     this.changes.observe(<Element>this.element, {
       attributes: true
     });
+  }
 
-    this.idle$.setIdle(3600);
-    this.idle$.setTimeout(60);
-    this.idle$.setInterrupts(DEFAULT_INTERRUPTSOURCES);
-    this.idle$.onTimeout.subscribe(() => {
-      this.auth$.sign_out();
-    });
-    this.idle$.watch();
+  ngOnInit(): void {
+    this.initIdle();
 
-    this.profile$.me().subscribe(user => {
-      this.user = user;
+    this.subscribe('get_profile');
+    this.subscribe('timer_change_log');
 
-      this.licenseVisible = this.user && this.user.license_accepted === false;
-    });
+    this.generateNavigation(this.router.config[0]);
+  }
 
-    this.generateNavigation(router.config[0]);
+  ngOnDestroy(): void {
+    Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
+  }
+
+  protected subscribe(key: string) {
+    this.unsubscribe(key);
+    switch (key) {
+      case 'get_profile':
+        this.$subscriptions[key] = this.profile$.me().subscribe(user => {
+          this.user = user;
+
+          this.licenseVisible = this.user && this.user.license_accepted === false;
+        });
+        break;
+      case 'list_change_log':
+        this.$subscriptions[key] = this.change_log$.all().subscribe(res => {
+          if (res) {
+            this.change_logs = res;
+          }
+          // this.subscribe('timer_change_log');
+        });
+        break;
+      case 'timer_change_log':
+        this.$subscriptions[key] =
+          timer(5000).pipe(first()).subscribe(() => this.subscribe('list_change_log'));
+        break;
+    }
+  }
+
+  protected unsubscribe(key: string): void {
+    if (this.$subscriptions.hasOwnProperty(key)) {
+      this.$subscriptions[key].unsubscribe();
+    }
   }
 
   private generateNavigation(route: Route) {
@@ -155,5 +197,15 @@ export class DefaultLayoutComponent {
       this.licenseVisible = false;
       this.router.navigate(['/sign-out']);
     });
+  }
+
+  private initIdle() {
+    this.idle$.setIdle(3600);
+    this.idle$.setTimeout(60);
+    this.idle$.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+    this.idle$.onTimeout.subscribe(() => {
+      this.auth$.sign_out();
+    });
+    this.idle$.watch();
   }
 }

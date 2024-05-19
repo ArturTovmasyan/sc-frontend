@@ -232,6 +232,8 @@ import {FormComponent as NotificationFormComponent} from './admin/components/not
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
 import {FormComponent as NotificationTypeFormComponent} from './admin/components/notification-type/form/form.component';
 import {CronJobsModule} from '../cron-jobs/cron-jobs.module';
+import {ChangeLogPipe} from './pipes/change-log.pipe';
+import {ActivityTypePipe} from './leads/pipes/activity-type.pipe';
 
 registerLocaleData(en);
 
@@ -250,6 +252,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentSelectorPipe,
     ResponsiblePersonPipe,
     LeadStatePipe,
+    ChangeLogPipe,
+    ActivityTypePipe,
 
     CoreComponent,
 

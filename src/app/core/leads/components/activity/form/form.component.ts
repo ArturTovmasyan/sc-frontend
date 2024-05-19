@@ -63,7 +63,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_activity_status');
     this.subscribe('list_facility');
     this.subscribe('list_user');
-
   }
 
   protected subscribe(key: string, params?: any): void {

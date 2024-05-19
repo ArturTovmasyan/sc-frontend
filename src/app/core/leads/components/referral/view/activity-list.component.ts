@@ -38,6 +38,6 @@ export class ListComponent extends GridComponent<Activity, ActivityService> impl
 
   protected preset_modal_form_data(form: FormGroup) {
     form.get('owner_type').setValue(ActivityOwnerType.REFERRAL);
-    form.get('organization_id').setValue(this.referral_id);
+    form.get('referral_id').setValue(this.referral_id);
   }
 }

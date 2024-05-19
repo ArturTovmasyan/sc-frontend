@@ -9,7 +9,7 @@ import {Spinkit} from 'ng-http-loader';
   selector: 'body',
   template: `
     <router-outlet></router-outlet>
-    <ng-http-loader [spinner]="spinkit.skWave"></ng-http-loader>
+    <ng-http-loader [spinner]="spinkit.skWave" [filteredUrlPatterns]="['change-log']"></ng-http-loader>
   `
 })
 export class CoreComponent {

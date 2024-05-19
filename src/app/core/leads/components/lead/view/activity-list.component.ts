@@ -38,6 +38,6 @@ export class ListComponent extends GridComponent<Activity, ActivityService> impl
 
   protected preset_modal_form_data(form: FormGroup) {
     form.get('owner_type').setValue(ActivityOwnerType.LEAD);
-    form.get('organization_id').setValue(this.lead_id);
+    form.get('lead_id').setValue(this.lead_id);
   }
 }
