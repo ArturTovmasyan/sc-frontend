@@ -128,8 +128,6 @@ export class DashboardMonthlyComponent implements OnInit, OnDestroy {
     const fromDate = moment(this.currentDate).subtract(2, 'years').startOf('month').toDate();
     this.currentDate = moment(this.currentDate).subtract(1, 'years').endOf('month').toDate();
 
-    console.log(fromDate, this.currentDate);
-
     if (today.isSame(this.currentDate, 'month')) {
       this.currentDate = today.toDate();
     }

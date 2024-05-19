@@ -119,8 +119,6 @@ export class DashboardWeeklyComponent implements OnInit, OnDestroy {
   getCurrentMonth(facility_id: number, date: Date): void {
     this.currentDate = date;
 
-    console.log(this.currentDate);
-
     this.subscribe('list_dashboard', {facility_id: facility_id, from: this.currentDate});
   }
 
@@ -128,7 +126,6 @@ export class DashboardWeeklyComponent implements OnInit, OnDestroy {
     const today = moment(DateHelper.newDate());
     this.currentDate = moment(this.currentDate).subtract(1, 'months').startOf('month').toDate();
 
-    console.log(this.currentDate);
     if (today.isSame(this.currentDate, 'month')) {
       this.currentDate = today.toDate();
     }
@@ -140,7 +137,6 @@ export class DashboardWeeklyComponent implements OnInit, OnDestroy {
     const today = moment(DateHelper.newDate());
     this.currentDate = moment(this.currentDate).add(1, 'months').startOf('month').toDate();
 
-    console.log(this.currentDate);
     if (today.isSame(this.currentDate, 'month')) {
       this.currentDate = today.toDate();
     }
