@@ -284,6 +284,8 @@ export class FormComponent extends AbstractForm implements OnInit {
               } else {
                 this.form.get('apartment_bed_id').setValue(null);
               }
+            } else {
+                this.form.get('apartment_bed_id').setValue(null);
             }
           }
         });
@@ -317,6 +319,8 @@ export class FormComponent extends AbstractForm implements OnInit {
               } else {
                 this.form.get('facility_bed_id').setValue(null);
               }
+            } else {
+                this.form.get('facility_bed_id').setValue(null);
             }
           }
         });
