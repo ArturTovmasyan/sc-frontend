@@ -40,7 +40,7 @@ export class ListComponent implements OnDestroy, OnInit {
     private sanitizer: DomSanitizer,
     private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService,
-    private service$: ResidentRentService,
+    public service$: ResidentRentService,
     private paymentSource$: PaymentSourceService
   ) {
     this.$subscriptions = {};
