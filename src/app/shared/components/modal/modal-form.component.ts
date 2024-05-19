@@ -115,7 +115,7 @@ export class ModalFormComponent {
               res => {
                 loading = false;
 
-                this._modal_callback(res);
+                this._modal_callback(null);
 
                 modal.close();
               },

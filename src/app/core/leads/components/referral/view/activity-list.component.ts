@@ -25,7 +25,7 @@ export class ListComponent extends GridComponent<Activity, ActivityService> impl
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-activity';
     this.name = 'lead-activity-list';
   }
 

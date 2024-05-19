@@ -23,7 +23,7 @@ export class ListComponent extends GridComponent<ChangeLog, ChangeLogService> im
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-change_log';
     this.name = 'lead-change-log-list';
 
     this.grid_options_loaded.subscribe(next => {

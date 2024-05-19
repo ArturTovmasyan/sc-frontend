@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Apartment, ApartmentService> im
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-apartment';
     this.name = 'apartment-list';
   }
 

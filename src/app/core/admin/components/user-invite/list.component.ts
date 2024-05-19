@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<UserInvite, UserInviteService> 
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-security-user_invite';
     this.name = 'user-invite-list';
   }
 

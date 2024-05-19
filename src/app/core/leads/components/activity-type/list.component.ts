@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<ActivityType, ActivityTypeServi
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-activity_type';
     this.name = 'lead-activity-type-list';
   }
 

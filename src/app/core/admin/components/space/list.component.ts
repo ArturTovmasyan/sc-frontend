@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Space, SpaceService> implements
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-security-space';
     this.name = 'space-list';
   }
 

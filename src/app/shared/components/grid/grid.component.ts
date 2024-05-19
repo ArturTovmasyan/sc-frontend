@@ -52,6 +52,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected search_query: string = '';
 
+  protected permission: string = '';
   protected component: any;
 
   private filter: { [id: string]: { condition: number, value: any[] } } = {};

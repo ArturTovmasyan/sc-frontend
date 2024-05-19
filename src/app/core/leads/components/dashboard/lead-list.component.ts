@@ -23,7 +23,7 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-lead';
     this.name = 'lead-lead-list';
   }
 

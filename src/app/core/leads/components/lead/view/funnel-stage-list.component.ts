@@ -26,7 +26,7 @@ export class ListComponent extends GridComponent<LeadFunnelStage, LeadFunnelStag
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-funnel_stage';
     this.name = 'lead-lead-funnel-stage-list';
   }
 

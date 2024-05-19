@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Organization, OrganizationServi
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-organization';
     this.name = 'lead-organization-list';
   }
 

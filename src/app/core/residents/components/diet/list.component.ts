@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Diet, DietService> implements O
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-diet';
     this.name = 'diet-list';
   }
 

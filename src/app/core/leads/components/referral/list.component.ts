@@ -29,7 +29,7 @@ export class ListComponent extends GridComponent<Referral, ReferralService> impl
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-referral';
     this.name = 'lead-referral-list';
   }
 

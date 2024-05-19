@@ -24,7 +24,7 @@ export class ListComponent extends GridComponent<ResidentEvent, ResidentEventSer
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-resident-resident_event';
     this.name = 'resident-event-list';
   }
 

@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Temperature, TemperatureService
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-temperature';
     this.name = 'lead-temperature-list';
   }
 

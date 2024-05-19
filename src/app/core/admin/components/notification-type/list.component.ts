@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<NotificationType, NotificationT
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-notification_type';
     this.name = 'admin-notification-type-list';
   }
 

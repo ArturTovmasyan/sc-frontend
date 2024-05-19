@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Contact, ContactService> implem
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-contact';
     this.name = 'lead-contact-list';
   }
 

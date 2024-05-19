@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Facility, FacilityService> impl
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-facility';
     this.name = 'facility-list';
   }
 

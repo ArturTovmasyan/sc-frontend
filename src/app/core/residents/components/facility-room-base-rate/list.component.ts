@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<FacilityRoomBaseRate, FacilityR
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-facility_room_base_rate';
     this.name = 'facility-room-base-rate-list';
   }
 

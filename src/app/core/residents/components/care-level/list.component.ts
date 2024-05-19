@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<CareLevel, CareLevelService> im
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-care_level';
     this.name = 'care-level-list';
   }
 

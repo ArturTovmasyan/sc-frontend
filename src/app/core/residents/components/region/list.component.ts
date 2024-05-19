@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Region, RegionService> implemen
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-region';
     this.name = 'region-list';
   }
 

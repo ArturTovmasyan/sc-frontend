@@ -23,7 +23,7 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
 
     this.searchable = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-resident-admission';
     this.name = 'resident-admission-list';
   }
 

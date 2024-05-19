@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<StageChangeReason, StageChangeR
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-stage_change_reason';
     this.name = 'lead-stage-change-reason-list';
   }
 

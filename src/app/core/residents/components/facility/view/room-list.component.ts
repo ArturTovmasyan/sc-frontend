@@ -25,7 +25,7 @@ export class ListComponent extends GridComponent<FacilityRoom, FacilityRoomServi
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-facility_room';
     this.name = 'facility-room-list';
   }
 

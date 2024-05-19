@@ -24,7 +24,7 @@ export class ListComponent extends GridComponent<ResidentDiagnose, ResidentDiagn
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-resident-resident_diagnosis';
     this.name = 'resident-diagnoses-list';
   }
 

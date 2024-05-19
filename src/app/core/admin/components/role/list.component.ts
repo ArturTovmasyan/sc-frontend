@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Role, RoleService> implements O
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-security-role';
     this.name = 'role-list';
   }
 

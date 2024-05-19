@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Category, CategoryService> impl
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-document_category';
     this.name = 'document-category-list';
   }
 

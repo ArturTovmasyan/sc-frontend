@@ -31,7 +31,7 @@ export class ListComponent extends GridComponent<Activity, ActivityService> impl
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-activity';
     this.name = 'lead-activity-list';
 
     this.grid_options_loaded.subscribe(next => {

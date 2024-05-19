@@ -1,1 +1,7 @@
-<app-document-viewer [component]="_FormComponent" [service]="service$" [show-category]="true"></app-document-viewer>
+<app-document-viewer
+  [permission]="'persistence-common-document'"
+  [service]="service$"
+  [component]="_FormComponent"
+  [show-category]="true">
+
+</app-document-viewer>

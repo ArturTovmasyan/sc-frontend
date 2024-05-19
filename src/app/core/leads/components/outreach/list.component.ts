@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Outreach, OutreachService> impl
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-outreach';
     this.name = 'lead-outreach-list';
   }
 

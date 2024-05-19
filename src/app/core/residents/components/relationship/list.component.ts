@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Relationship, RelationshipServi
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-relationship';
     this.name = 'relationship-list';
   }
 

@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<User, UserService> implements O
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-security-user';
     this.name = 'user-list';
   }
 

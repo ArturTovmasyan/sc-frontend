@@ -29,7 +29,7 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-lead';
     this.name = 'lead-lead-list';
   }
 

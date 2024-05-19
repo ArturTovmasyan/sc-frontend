@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<FacilityRoomType, FacilityRoomT
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-facility_room_type';
     this.name = 'facility-room-type-list';
   }
 

@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<CareType, CareTypeService> impl
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-care_type';
     this.name = 'lead-care-type-list';
   }
 

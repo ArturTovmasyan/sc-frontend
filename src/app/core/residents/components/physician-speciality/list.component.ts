@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<PhysicianSpeciality, PhysicianS
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-speciality';
     this.name = 'physician-speciality-list';
   }
 

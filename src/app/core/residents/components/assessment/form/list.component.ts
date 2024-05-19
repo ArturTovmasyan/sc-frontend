@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<AssessmentForm, AssessmentFormS
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-assessment-form';
     this.name = 'assessment-form-list';
   }
 

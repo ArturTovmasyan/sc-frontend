@@ -1,5 +1,11 @@
 <app-resident-selector></app-resident-selector>
-<app-document-viewer *ngIf="residentSelector$" [component]="_FormComponent" [service]="service$"
-                     [show-category]="false"
-                     [title]="title"
-                     [resident-id]="residentSelector$.resident.value"></app-document-viewer>
+<app-document-viewer
+  *ngIf="residentSelector$"
+  [permission]="'persistence-resident-resident_document'"
+  [service]="service$"
+  [component]="_FormComponent"
+  [show-category]="false"
+  [title]="title"
+  [resident-id]="residentSelector$.resident.value">
+
+</app-document-viewer>

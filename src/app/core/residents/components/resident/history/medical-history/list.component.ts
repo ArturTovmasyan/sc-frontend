@@ -24,7 +24,7 @@ export class ListComponent extends GridComponent<ResidentMedicalHistory, Residen
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-resident-resident_medical_history_condition';
     this.name = 'resident-medical-history-list';
   }
 

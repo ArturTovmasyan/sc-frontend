@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<ResponsiblePerson, ResponsibleP
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-responsible_person';
     this.name = 'responsible-person-list';
   }
 

@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<PaymentSourceBaseRate, PaymentS
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-payment_source_base_rate';
     this.name = 'payment-source-base-rate-list';
   }
 

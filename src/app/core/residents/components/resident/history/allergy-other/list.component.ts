@@ -24,7 +24,7 @@ export class ListComponent extends GridComponent<ResidentAllergyOther, ResidentA
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-resident-resident_allergen';
     this.name = 'resident-allergy-other-list';
   }
 

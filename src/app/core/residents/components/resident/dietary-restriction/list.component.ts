@@ -22,7 +22,7 @@ export class ListComponent extends GridComponent<ResidentDiet, ResidentDietServi
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-resident-resident_diet';
     this.name = 'resident-dietary-restriction-list';
   }
 

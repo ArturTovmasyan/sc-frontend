@@ -13,14 +13,13 @@
   >
     <ng-template #item let-item>
       <nz-list-item
-        [formGroupName]="get_form_array('responsible_persons').controls.indexOf(item)"
         dnd-sortable
-        [sortableIndex]="get_form_array('responsible_persons').controls.indexOf(item)"
-
         dnd-sortable-handle
+        [formGroupName]="get_form_array('responsible_persons').controls.indexOf(item)"
+        [sortableIndex]="get_form_array('responsible_persons').controls.indexOf(item)"
       >
         <input type="hidden" formControlName="id"/>
-        <strong>{{ get_rp_by_id(item.get('id').value)|responsible_person }}</strong>
+        <strong>{{ get_by_id(item.get('id').value)|responsible_person }}</strong>
       </nz-list-item>
     </ng-template>
   </nz-list>

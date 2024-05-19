@@ -1,48 +1,54 @@
-import * as _ from 'lodash';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Observable, Subscription} from 'rxjs';
+import {first} from 'rxjs/operators';
+import {simpleEmptyImage} from 'ng-zorro-antd';
+import {AuthGuard} from '../../../../guards/auth.guard';
+import {Button, ButtonBarComponent, ButtonMode} from '../../../../../shared/components/modal/button-bar.component';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {TitleService} from '../../../../services/title.service';
-import {ResidentPhysicianService} from '../../../services/resident-physician.service';
-import {ResidentPhysician} from '../../../models/resident-physician';
 import {FormComponent} from './form/form.component';
 import {FormComponent as ReorderFormComponent} from './reorder/form.component';
 import {FormComponent as PhysicianFormComponent} from '../../physician/form/form.component';
-import {Observable, Subscription} from 'rxjs';
-import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
-import {first} from 'rxjs/operators';
-import {DomSanitizer} from '@angular/platform-browser';
 import {PhysicianService} from '../../../services/physician.service';
-import {AuthGuard} from '../../../../guards/auth.guard';
+import {ResidentPhysicianService} from '../../../services/resident-physician.service';
+import {ResidentPhysician} from '../../../models/resident-physician';
 
 @Component({
   templateUrl: './list.component.html',
   providers: [ResidentPhysicianService]
 })
 export class ListComponent implements OnInit, OnDestroy {
-  public title: string = null;
-
-  physicians: ResidentPhysician[];
-
-  selected_tab: number;
-
-  loading_edit_modal: boolean;
-  loading_p_edit_modal: boolean;
+  _FormComponent = FormComponent;
 
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
+  protected _btnBar: ButtonBarComponent;
+
+  @ViewChild(ButtonBarComponent, {static: false}) set btnBar(btnBar: ButtonBarComponent) {
+    this._btnBar = btnBar;
+  }
+
+  public title: string = null;
+
+  selected_tab: number;
+  physicians: ResidentPhysician[];
+
   private $subscriptions: { [key: string]: Subscription; };
 
+  public modal_callback: (data: any) => void = (data: any) => this.reload_data(data);
+
   constructor(
-    private service$: ResidentPhysicianService,
+    public service$: ResidentPhysicianService,
     private title$: TitleService,
-    private modal$: NzModalService,
+    private modal$: ModalFormService,
     private residentSelector$: ResidentSelectorService,
     private physician$: PhysicianService,
     private sanitizer: DomSanitizer,
     private auth_$: AuthGuard
   ) {
-    this.selected_tab = 0;
+    this.selected_tab = null;
     this.$subscriptions = {};
   }
 
@@ -61,7 +67,7 @@ export class ListComponent implements OnInit, OnDestroy {
     }
   }
 
-  subscribe(key: string) {
+  subscribe(key: string, params?: any) {
     this.unsubscribe(key);
     switch (key) {
       case 'title':
@@ -74,258 +80,93 @@ export class ListComponent implements OnInit, OnDestroy {
           }
         });
         break;
+      case 'list_resident_physician':
+        this.$subscriptions[key] = this.service$
+          .all([{key: 'resident_id', value: `${this.residentSelector$.resident.value}`}])
+          .pipe(first()).subscribe(next => {
+            if (next) {
+              this.physicians = next;
+
+              if (params) {
+                if (params.hasOwnProperty('id')) {
+                  this.selected_tab = this.physicians
+                    .findIndex(v => v === this.physicians.find(value => value.id === params.id));
+                } else if (params.hasOwnProperty('selected_tab')) {
+                  this.selected_tab = params.selected_tab;
+                } else {
+                  this.selected_tab = 0;
+                }
+              } else {
+                this.selected_tab = 0;
+              }
+
+              this._btnBar.add_button_crud(new Button(
+                'reorder',
+                'grid.reorder',
+                'default',
+                ButtonMode.FREE_SELECT,
+                'drag',
+                null,
+                true,
+                true,
+                () => this.subscribe('md_reorder')
+              ));
+            }
+          });
+        break;
+      case 'md_p_edit':
+        this.$subscriptions[key] = this.physician$.get(params.id).subscribe(
+          res => {
+            if (res) {
+              this.create_modal(PhysicianFormComponent, data => this.physician$.edit(data), res);
+            }
+          });
+        break;
+      case 'md_reorder':
+        this.$subscriptions[key] = this.service$.all([{key: 'resident_id', value: `${this.residentSelector$.resident.value}`}])
+          .pipe(first()).subscribe(next => {
+            if (next) {
+              this.create_modal(ReorderFormComponent, data => this.service$.reorder(data), {physicians: next});
+            }
+          });
+        break;
       default:
         break;
     }
   }
 
-  reload_data(id?: number) {
-    this.service$.all([{key: 'resident_id', value: `${this.residentSelector$.resident.value}`}])
-      .pipe(first()).subscribe(next => {
-      if (next) {
-        this.physicians = next;
-
-        if (id) {
-          this.selected_tab = this.physicians.findIndex(v => v === this.physicians.find(value => value.id === id));
-        }
+  reload_data(id?: number[]) {
+    if (id && id.length > 0) {
+      this.subscribe('list_resident_physician', {id: id[0]});
+    } else {
+      if (this.selected_tab !== null) {
+        this.subscribe('list_resident_physician', {selected_tab: this.selected_tab});
+      } else {
+        this.subscribe('list_resident_physician');
       }
-    });
-  }
-
-  show_modal_reorder(): void {
-    this.service$.all([{key: 'resident_id', value: `${this.residentSelector$.resident.value}`}])
-      .pipe(first()).subscribe(next => {
-      if (next) {
-        this.create_modal(ReorderFormComponent, data => this.service$.reorder(data), {
-          physicians: next
-        });
-      }
-    });
-  }
-
-  show_modal_add(): void {
-    this.create_modal(FormComponent, data => this.service$.add(data), null);
-  }
-
-  show_p_edit(id: number): void {
-    this.loading_p_edit_modal = true;
-    this.physician$.get(id).subscribe(
-      res => {
-        this.loading_p_edit_modal = false;
-
-        this.create_modal(PhysicianFormComponent, data => this.physician$.edit(data), res);
-      },
-      error => {
-        this.loading_p_edit_modal = false;
-        // console.error(error);
-      });
-  }
-
-  show_modal_edit(): void {
-    this.loading_edit_modal = true;
-    this.service$.get(this.physicians[this.selected_tab].id).subscribe(
-      res => {
-        this.loading_edit_modal = false;
-
-        this.create_modal(FormComponent, data => this.service$.edit(data), res);
-      },
-      error => {
-        this.loading_edit_modal = false;
-        // console.error(error);
-      });
-  }
-
-  show_modal_remove(): void {
-    let loading = false;
-    this.service$.relatedInfo([this.physicians[this.selected_tab].id]).subscribe(value => {
-      if (value) {
-        let modal_title = '';
-        let modal_message = '';
-
-        if (_.isArray(value) && value.length > 0) {
-          value = Object.keys(value[0])
-            .reduce((previousValue, currentValue, currentIndex) => (previousValue + value[0][currentValue].sum), 0);
-
-          if (value > 0) {
-            modal_title = 'Attention!';
-            modal_message = `This may cause other data loss from database. There are ${value} connections found in database.`;
-          }
-        }
-
-        const modal = this.modal$.create({
-          nzClosable: false,
-          nzMaskClosable: false,
-          nzTitle: null,
-          nzContent: `<p class="modal-confirm text-center">
-                    <i class="fa fa-warning text-danger"></i>
-                     Are you sure you want to <strong>delete</strong> selected record(s)?
-                     </p>`,
-          nzFooter: [
-            {
-              label: 'No',
-              onClick: () => {
-                modal.close();
-              }
-            },
-            {
-              type: 'danger',
-              label: 'Yes',
-              loading: () => loading,
-              onClick: () => {
-                loading = true;
-                this.service$.removeBulk([this.physicians[this.selected_tab].id]).subscribe(
-                  res => {
-                    loading = false;
-                    this.selected_tab = 0;
-                    this.reload_data();
-                    modal.close();
-                  },
-                  error => {
-                    loading = false;
-                    modal.close();
-
-                    this.modal$.error({
-                      nzTitle: 'Remove Error',
-                      nzContent: `${error.data.error}`
-                    });
-
-                    // console.error(error);
-                  });
-              }
-            }
-          ]
-        });
-      }
-    });
-  }
-
-  private create_modal(form_component: any, submit: (data: any) => Observable<any>, result: any) {
-    let valid = false;
-    let loading = false;
-
-    const footer = [
-      {
-        label: 'Cancel',
-        onClick: () => {
-          modal.close();
-        }
-      },
-      {
-        type: 'primary',
-        label: 'Save',
-        loading: () => loading,
-        disabled: () => !valid,
-        onClick: () => {
-          loading = true;
-
-          const component = <AbstractForm>modal.getContentComponent();
-          component.before_submit();
-          const form_data = component.formObject.value;
-
-          component.submitted = true;
-
-          submit(form_data).subscribe(
-            res => {
-              loading = false;
-
-              if (res != null && Array.isArray(res) && res.length === 1) {
-                this.reload_data(res[0]);
-              } else {
-                this.reload_data();
-              }
-
-              modal.close();
-            },
-            error => {
-              loading = false;
-
-              component.handleSubmitError(error);
-              component.postSubmit(null);
-              // console.error(error);
-            });
-        }
-      },
-    ];
-
-    if (result === null) {
-      footer.push({
-        type: 'primary',
-        label: 'Save & Add',
-        loading: () => loading,
-        disabled: () => !valid,
-        onClick: () => {
-          loading = true;
-
-          const component = <AbstractForm>modal.getContentComponent();
-          component.before_submit();
-          const form_data = component.formObject.value;
-
-          component.submitted = true;
-
-          submit(form_data).subscribe(
-            res => {
-              loading = false;
-
-              if (res != null && Array.isArray(res) && res.length === 1) {
-                this.reload_data(res[0]);
-              } else {
-                this.reload_data();
-              }
-
-              modal.close();
-
-              this.create_modal(form_component, submit, result);
-            },
-            error => {
-              loading = false;
-
-              component.handleSubmitError(error);
-              component.postSubmit(null);
-              // console.error(error);
-            });
-        }
-      });
     }
+  }
 
-    const modal = this.modal$.create({
-      nzClosable: false,
-      nzMaskClosable: false,
-      nzWidth: '45rem',
-      nzTitle: null,
-      nzContent: form_component,
-      nzFooter: footer
-    });
+  private create_modal(component: any, submit: (data: any) => Observable<any>, result: any) {
+    const modal = this.modal$.create(component);
+    modal.modal_callback = this.modal_callback;
 
-    modal.afterOpen.subscribe(() => {
-      const component = modal.getContentComponent();
-      if (component instanceof FormComponent
-        || component instanceof PhysicianFormComponent
-        || component instanceof ReorderFormComponent) {
-        const form = component.formObject;
-
-        if (component instanceof ReorderFormComponent) {
-          component.resident_physicians = this.physicians;
-        }
-
-        if (result !== null) {
-          component.loaded.subscribe(v => {
-            if (v) {
-              component.before_set_form_data(result);
-              component.set_form_data(component, form, result);
-              component.after_set_form_data();
-            }
-          });
-        }
-
-        valid = form.valid;
-        form.valueChanges.subscribe(val => {
-          valid = form.valid;
-        });
-      }
-    });
+    modal.create(data => submit(data), result);
   }
 
   addIfHasPermission(permission: string, level: number) {
     return this.auth_$.checkPermission([permission], level);
+  }
+
+  get_selected_ids() {
+    if (this.selected_tab !== null) {
+      if (this.physicians) {
+        if (this.physicians.length > this.selected_tab) {
+          return [this.physicians[this.selected_tab].id];
+        }
+      }
+    }
+
+    return [];
   }
 }

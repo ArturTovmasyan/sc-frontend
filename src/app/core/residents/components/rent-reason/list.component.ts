@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<RentReason, RentReasonService> 
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-rent_reason';
     this.name = 'rent-reason-list';
   }
 

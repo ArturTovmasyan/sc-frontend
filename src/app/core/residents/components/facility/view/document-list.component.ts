@@ -28,7 +28,7 @@ export class ListComponent extends GridComponent<FacilityDocument, FacilityDocum
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-facility_document';
     this.name = 'facility-document-list';
   }
 

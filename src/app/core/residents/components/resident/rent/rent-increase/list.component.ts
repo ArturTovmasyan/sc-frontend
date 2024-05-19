@@ -25,7 +25,7 @@ export class ListComponent extends GridComponent<ResidentRentIncrease, ResidentR
     this.card = false;
     this.searchable = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-resident-resident_rent_increase';
     this.name = 'resident-rent-increase-list';
   }
 

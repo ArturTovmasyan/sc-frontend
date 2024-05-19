@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<InsuranceCompany, InsuranceComp
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-insurance_company';
     this.name = 'insurance-company-list';
   }
 

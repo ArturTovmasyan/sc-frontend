@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<FunnelStage, FunnelStageService
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-funnel_stage';
     this.name = 'lead-funnel-stage-list';
   }
 

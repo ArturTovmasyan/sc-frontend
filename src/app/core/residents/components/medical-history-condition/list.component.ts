@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<MedicalHistoryCondition, Medica
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-medical_history_condition';
     this.name = 'medical-history-condition-list';
   }
 

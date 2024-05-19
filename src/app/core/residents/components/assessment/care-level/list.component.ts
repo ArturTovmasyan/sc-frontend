@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<AssessmentCareLevel, Assessment
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-assessment-care_level';
     this.name = 'assessment-care-level-list';
   }
 

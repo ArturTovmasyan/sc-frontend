@@ -23,7 +23,7 @@ export class ListComponent extends GridComponent<Contact, ContactService> implem
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-contact';
     this.name = 'lead-contact-list';
   }
 

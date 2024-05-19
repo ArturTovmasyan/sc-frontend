@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<EventDefinition, EventDefinitio
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-event_definition';
     this.name = 'event-definition-list';
   }
 

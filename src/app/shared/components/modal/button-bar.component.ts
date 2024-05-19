@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {FormGroup} from '@angular/forms';
 import {ModalFormService} from '../../services/modal-form.service';
 import {GridService} from '../../services/grid.service';
+import {AuthGuard} from '../../../core/guards/auth.guard';
 
 export enum ButtonMode {
   FREE_SELECT,
@@ -57,6 +58,8 @@ export class Button {
   templateUrl: './button-bar.component.html'
 })
 export class ButtonBarComponent implements OnInit {
+  @Input() permission: string;
+
   @Input() single_select: boolean;
   @Input() multi_select: boolean;
   private _ids: number[];
@@ -89,47 +92,54 @@ export class ButtonBarComponent implements OnInit {
   buttons_right: Button[] = [];
 
   constructor(
-    protected modal$: ModalFormService
+    protected modal$: ModalFormService,
+    private auth_$: AuthGuard
   ) {
 
   }
 
   ngOnInit() {
-    this.buttons_crud.push(new Button(
-      'add',
-      'grid.add',
-      'primary',
-      ButtonMode.NO_SELECT,
-      'plus',
-      null,
-      true,
-      true,
-      () => this.show_modal_add()
-    ));
+    if (this.addIfHasPermission(this.permission, 3)) {
+      this.buttons_crud.push(new Button(
+        'add',
+        'grid.add',
+        'primary',
+        ButtonMode.FREE_SELECT,
+        'plus',
+        null,
+        true,
+        true,
+        () => this.show_modal_add()
+      ));
+    }
 
-    this.buttons_crud.push(new Button(
-      'edit',
-      'grid.edit',
-      'default',
-      ButtonMode.SINGLE_SELECT,
-      'edit',
-      null,
-      true,
-      true,
-      () => this.show_modal_edit()
-    ));
+    if (this.addIfHasPermission(this.permission, 2)) {
+      this.buttons_crud.push(new Button(
+        'edit',
+        'grid.edit',
+        'default',
+        ButtonMode.SINGLE_SELECT,
+        'edit',
+        null,
+        true,
+        true,
+        () => this.show_modal_edit()
+      ));
+    }
 
-    this.buttons_crud.push(new Button(
-      'remove',
-      'grid.remove',
-      'danger',
-      ButtonMode.MULTI_SELECT,
-      'delete',
-      null,
-      true,
-      true,
-      () => this.show_modal_remove()
-    ));
+    if (this.addIfHasPermission(this.permission, 4)) {
+      this.buttons_crud.push(new Button(
+        'remove',
+        'grid.remove',
+        'danger',
+        ButtonMode.MULTI_SELECT,
+        'delete',
+        null,
+        true,
+        true,
+        () => this.show_modal_remove()
+      ));
+    }
   }
 
   check_for_disable(button: Button): boolean {
@@ -139,9 +149,9 @@ export class ButtonBarComponent implements OnInit {
       case ButtonMode.NO_SELECT:
         return this.single_select || this.multi_select;
       case ButtonMode.SINGLE_SELECT:
-        return !this.single_select || this.multi_select;
+        return (!this.single_select || this.multi_select) || this._ids.length === 0;
       case ButtonMode.MULTI_SELECT:
-        return !this.single_select && !this.multi_select;
+        return (!this.single_select && !this.multi_select) || this._ids.length === 0;
     }
   }
 
@@ -210,16 +220,20 @@ export class ButtonBarComponent implements OnInit {
     }
   }
 
+  public add_button_crud(button: Button) {
+    this.add_button(this.buttons_crud, button);
+  }
+
   public add_button_left(button: Button) {
-    this.buttons_left.push(button);
+    this.add_button(this.buttons_left, button);
   }
 
   public add_button_center(button: Button) {
-    this.buttons_center.push(button);
+    this.add_button(this.buttons_center, button);
   }
 
   public add_button_right(button: Button) {
-    this.buttons_right.push(button);
+    this.add_button(this.buttons_right, button);
   }
 
   public clear_button_left() {
@@ -234,11 +248,25 @@ export class ButtonBarComponent implements OnInit {
     this.buttons_right = [];
   }
 
+  private add_button(button_group: Button[], button: Button) {
+    const idx = button_group.findIndex(v => v.name === button.name);
+
+    if (idx !== -1) {
+      button_group.splice(idx, 1, button);
+    } else {
+      button_group.push(button);
+    }
+  }
+
   public get_button(name: string): Button {
     const buttons: Button[] = [...this.buttons_left, ...this.buttons_center, ...this.buttons_right];
     const button = buttons.filter(value => value.name === name).pop();
 
     return button;
+  }
+
+  addIfHasPermission(permission: string, level: number) {
+    return this.auth_$.checkPermission([permission], level);
   }
 
 }

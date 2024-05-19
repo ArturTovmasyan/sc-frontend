@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<Medication, MedicationService> 
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-medication';
     this.name = 'medication-list';
   }
 

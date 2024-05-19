@@ -25,7 +25,7 @@ export class ListComponent extends GridComponent<ResidentHealthInsurance, Reside
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-resident-resident_health_insurance';
     this.name = 'resident-health-insurance-list';
   }
 

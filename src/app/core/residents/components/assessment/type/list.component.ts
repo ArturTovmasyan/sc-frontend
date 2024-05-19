@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<AssessmentType, AssessmentTypeS
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-assessment-assessment_type';
     this.name = 'assessment-type-list';
   }
 

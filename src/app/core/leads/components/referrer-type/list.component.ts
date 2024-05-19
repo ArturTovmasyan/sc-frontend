@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<ReferrerType, ReferrerTypeServi
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-referrer_type';
     this.name = 'lead-referrer-type-list';
   }
 

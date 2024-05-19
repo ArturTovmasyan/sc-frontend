@@ -20,7 +20,7 @@ export class ListComponent extends GridComponent<CityStateZip, CityStateZipServi
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-
+    this.permission = 'persistence-common-city_state_zip';
     this.name = 'city-state-zip-list';
   }
 

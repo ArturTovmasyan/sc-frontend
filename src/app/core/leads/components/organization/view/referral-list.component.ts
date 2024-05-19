@@ -25,7 +25,7 @@ export class ListComponent extends GridComponent<Referral, ReferralService> impl
 
     this.card = false;
     this.component = FormComponent;
-
+    this.permission = 'persistence-lead-referral';
     this.name = 'lead-referral-list';
   }
 
