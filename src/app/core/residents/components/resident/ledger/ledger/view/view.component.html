@@ -1,14 +1,14 @@
 <div class="d-flex justify-content-between" style="margin-bottom: 1.2rem;">
   <div class="justify-content-start">
     <nz-button-group>
-      <ng-container *ngIf="rent_id !== null && isBreakdown; else elseBlockPrivatPay">
+      <ng-container *ngIf="rent_id !== null && isBreakdown; else elseBlockBack">
         <a *ngIf="ledger && ledger.resident"
            [routerLink]="['/resident', ledger.resident.id, {outlets: {'resident-details': ['rents']}}]" nzSize="small"
            nz-button nzType="default">
           <i nz-icon nzType="arrow-left" nzTheme="outline"></i> Back
         </a>
       </ng-container>
-      <ng-template #elseBlockPrivatPay>
+      <ng-template #elseBlockBack>
         <a *ngIf="ledger && ledger.resident"
            [routerLink]="['/resident', ledger.resident.id, {outlets: {'resident-details': ['ledgers']}}]" nzSize="small"
            nz-button nzType="default">
@@ -19,8 +19,22 @@
   </div>
   <div class="justify-content-center">
     <ng-container *ngIf="ledger">
-      <strong style="font-weight: bold; font-size: x-large">{{ ledger.date_created|date:'MMMM yyyy' }}<span
-        *ngIf="ledger.resident"> - {{ ledger.resident|resident }}</span></strong>
+      <strong style="font-weight: bold; font-size: x-large">{{ ledger.date_created|date:'MMMM yyyy' }}
+        <span *ngIf="ledger.resident"> -
+          <ng-container *ngIf="rent_id !== null && isBreakdown; else elseBlockBack">
+            <a *ngIf="ledger && ledger.resident"
+               [routerLink]="['/resident', ledger.resident.id, {outlets: {'resident-details': ['rents']}}]">
+              {{ ledger.resident|resident }}
+            </a>
+          </ng-container>
+          <ng-template #elseBlockBack>
+            <a *ngIf="ledger && ledger.resident"
+               [routerLink]="['/resident', ledger.resident.id, {outlets: {'resident-details': ['ledgers']}}]" >
+              {{ ledger.resident|resident }}
+            </a>
+          </ng-template>
+        </span>
+      </strong>
     </ng-container>
   </div>
   <div class="justify-content-end">
@@ -424,7 +438,8 @@
     <ng-container *ngIf="rent_id !== null && isBreakdown">
       <ng-container *ngIf="rents && rents.length > 0">
         <div class="row">
-          <div class="col-sm-12 col-md-12">
+          <div class="col-sm-3 col-md-3"></div>
+          <div class="col-sm-6 col-md-6">
             <div class="card">
               <div class="card-body">
                 <nz-empty *ngIf="!ledger" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
@@ -433,24 +448,30 @@
                     <ng-container *ngFor="let item of rents">
                       <ng-container *ngIf="item.id == rent_id">
                         <tr class="text-center">
-                          <th colspan="3" style="width: 100% !important; background-color: #e4e5e6;">
+                          <th colspan="4" style="width: 100% !important; background-color: #e4e5e6;">
                             <strong>{{ ledger.date_created|date:'MMMM yyyy' }} Rent Breakdown</strong>
                           </th>
                         </tr>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
+                          <td colspan="3" style="width: 80% !important;">
                             Room {{ item.room }} {{ item.typeShorthand }} - {{ item.roomType }} Base Rate
                           </td>
                           <td class="text-center" style="width: 20% !important;">
                             {{ item.baseRate|currency:'USD':'symbol-narrow':'1.2-2' }}
                           </td>
                         </tr>
+                        <tr class="text-center">
+                          <th colspan="4" style="width: 100% !important; background-color: #e4e5e6;">
+                            <strong>Private Pay Sources</strong>
+                          </th>
+                        </tr>
                         <ng-container *ngIf="ledger.privat_pay_source && ledger.privat_pay_source.length > 0">
                           <ng-container *ngFor="let privat_pay of ledger.privat_pay_source">
                             <ng-container *ngIf="privat_pay.rent_id == rent_id">
                               <tr class="text-left">
-                                <td colspan="2" style="width: 80% !important;">
+                                <td colspan="3" style="width: 80% !important;">
                                   {{ get_source_title(privat_pay.id) }}
+                                  - {{ get_resident_responsible_person_name(privat_pay.responsible_person_id) }}
                                 </td>
                                 <td class="text-center" style="width: 20% !important;">
                                   {{ privat_pay.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
@@ -460,72 +481,120 @@
                           </ng-container>
                         </ng-container>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
-                            Private Pay Partial Month Credit
+                          <td colspan="3" style="width: 80% !important;">
+                            Partial Month Credit - Late Move-In/Early Move-Out
                           </td>
                           <td class="text-center" style="width: 20% !important;">
                             {{ (get_days_in_month(ledger.date_created|date:'M', ledger.date_created|date:'yyyy') - get_private_pay_billable_days_for_rent(ledger.privat_pay_source, rent_id)) * get_private_pay_sum_for_rent(ledger.privat_pay_source, rent_id) * 12 / 365 |currency:'USD':'symbol-narrow':'1.2-2' }}
                           </td>
                         </tr>
-                        <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
-                            Private Pay Total Amount Due
+                        <tr class="text-right">
+                          <td colspan="3" style="width: 80% !important;">
+                            <strong>Private Pay Total Amount Due</strong>
                           </td>
                           <td class="text-center" style="width: 20% !important;">
                             <ng-container
                               *ngIf="ledger.privat_pay_source && ledger.privat_pay_source.length > 0; else elseBlockPrivatPay">
-                              {{ get_private_pay_sum_for_rent(ledger.privat_pay_source, rent_id)|currency:'USD':'symbol-narrow':'1.2-2' }}
+                              <strong>{{ get_private_pay_sum_for_rent(ledger.privat_pay_source, rent_id)|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
                             </ng-container>
                             <ng-template
-                              #elseBlockPrivatPay>{{ 0|currency:'USD':'symbol-narrow':'1.2-2' }}</ng-template>
+                              #elseBlockPrivatPay><strong>{{ 0|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
+                            </ng-template>
                           </td>
+                        </tr>
+                        <tr class="text-center">
+                          <th colspan="4" style="width: 100% !important; background-color: #e4e5e6;">
+                            <strong>3rd Party Payment Sources</strong>
+                          </th>
+                        </tr>
+                        <tr class="text-center" style="background-color: #f0f3f5;">
+                          <td style="width: 50% !important;"></td>
+                          <td style="width: 15% !important;">
+                            <strong>Billable Days</strong>
+                          </td>
+                          <td style="width: 15% !important;">
+                            <strong>Daily Rate</strong>
+                          </td>
+                          <td style="width: 20% !important;"></td>
                         </tr>
                         <ng-container *ngIf="ledger.not_privat_pay_source && ledger.not_privat_pay_source.length > 0">
                           <ng-container *ngFor="let not_privat_pay of ledger.not_privat_pay_source">
                             <ng-container *ngIf="not_privat_pay.rent_id == rent_id">
-                              <tr class="text-left">
-                                <td style="width: 60% !important;">
-                                  {{ get_source_title(not_privat_pay.id) }}
-                                </td>
-                                <td class="text-center" style="width: 20% !important;">
-                                  <ng-container *ngIf="item.sources && item.sources.length > 0">
-                                    <ng-container *ngFor="let source of item.sources;">
-                                      <ng-container *ngIf="is_source_period_daily(not_privat_pay.id) && source.id == not_privat_pay.id">
-                                        {{ source.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
+                              <ng-container
+                                *ngIf="is_source_period_daily(not_privat_pay.id); else elseBlockNotPrivatPayTitle">
+                                <tr class="text-left">
+                                  <td style="width: 50% !important;">
+                                    {{ get_source_title(not_privat_pay.id) }}
+                                    - {{ get_source_period(not_privat_pay.id)|payment_period }}
+                                  </td>
+                                  <td class="text-center" style="width: 15% !important;">
+                                    {{ get_not_private_billable_days_for_rent(ledger.not_privat_pay_source, rent_id) }}
+                                  </td>
+                                  <td class="text-center" style="width: 15% !important;">
+                                    <ng-container *ngIf="item.sources && item.sources.length > 0">
+                                      <ng-container *ngFor="let source of item.sources;">
+                                        <ng-container *ngIf="source.id == not_privat_pay.id">
+                                          {{ source.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
+                                        </ng-container>
                                       </ng-container>
                                     </ng-container>
-                                  </ng-container>
-                                </td>
-                                <td class="text-center" style="width: 20% !important;">
-                                  {{ not_privat_pay.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
-                                </td>
-                              </tr>
+                                  </td>
+                                  <td class="text-center" style="width: 20% !important;">
+                                    {{ not_privat_pay.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
+                                  </td>
+                                </tr>
+                              </ng-container>
+                              <ng-template #elseBlockNotPrivatPayTitle>
+                                <tr class="text-left">
+                                  <td colspan="3" style="width: 80% !important;">
+                                    {{ get_source_title(not_privat_pay.id) }}
+                                    - {{ get_source_period(not_privat_pay.id)|payment_period }}
+                                  </td>
+                                  <td class="text-center" style="width: 20% !important;">
+                                    {{ not_privat_pay.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
+                                  </td>
+                                </tr>
+                              </ng-template>
                             </ng-container>
                           </ng-container>
                         </ng-container>
                         <tr class="text-right">
-                          <td colspan="2" style="width: 80% !important;">
-                            <strong>Total Rent Due</strong>
+                          <td colspan="3" style="width: 80% !important;">
+                            <strong>3rd Party Sources Total Due</strong>
+                          </td>
+                          <td class="text-center" style="width: 20% !important;">
+                            <ng-container
+                              *ngIf="ledger.not_privat_pay_source && ledger.not_privat_pay_source.length > 0; else elseBlockNotPrivatPay">
+                              <strong>{{ get_not_private_pay_sum_for_rent(ledger.not_privat_pay_source, rent_id)|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
+                            </ng-container>
+                            <ng-template
+                              #elseBlockNotPrivatPay><strong>{{ 0|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
+                            </ng-template>
+                          </td>
+                        </tr>
+                        <tr class="text-right">
+                          <td colspan="3" style="width: 80% !important;">
+                            <strong>Total Rent Due (all sources)</strong>
                           </td>
                           <td class="text-center" style="width: 20% !important;">
                             <strong>{{ (get_private_pay_sum_for_rent(ledger.privat_pay_source, rent_id) + get_not_private_pay_sum_for_rent(ledger.not_privat_pay_source, rent_id))|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
                           </td>
                         </tr>
                         <tr class="text-right">
-                          <td colspan="2" style="width: 80% !important;">
-                            <strong>{{ ledger.date_created|date:'MMMM' }} Effective Discount</strong>
+                          <td colspan="3" style="width: 80% !important;">
+                            <strong>{{ ledger.date_created|date:'MMMM' }} Effective Discount to Base Rate</strong>
                           </td>
                           <td class="text-center" style="width: 20% !important;">
                             <strong>{{ get_discount_item_sum()|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
                           </td>
                         </tr>
                         <tr class="text-center">
-                          <th colspan="3" style="width: 100% !important; background-color: #e4e5e6;">
-                            <strong>Private Pay Billable Days</strong>
+                          <th colspan="4" style="width: 100% !important; background-color: #e4e5e6;">
+                            <strong>Private Pay Billable Days Details</strong>
                           </th>
                         </tr>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
+                          <td colspan="3" style="width: 80% !important;">
                             Days in month of {{ ledger.date_created|date:'MMMM' }}
                           </td>
                           <td class="text-right" style="width: 20% !important;">
@@ -533,15 +602,15 @@
                           </td>
                         </tr>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
-                            Partial Month Credit Days
+                          <td colspan="3" style="width: 80% !important;">
+                            Early Discharge/Late Admit Days
                           </td>
                           <td class="text-right" style="width: 20% !important;">
                             {{ get_days_in_month(ledger.date_created|date:'M', ledger.date_created|date:'yyyy') - get_private_pay_billable_days_for_rent(ledger.privat_pay_source, rent_id) }}
                           </td>
                         </tr>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
+                          <td colspan="3" style="width: 80% !important;">
                             Private Pay Billable Days
                           </td>
                           <td class="text-right" style="width: 20% !important;">
@@ -549,7 +618,7 @@
                           </td>
                         </tr>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
+                          <td colspan="3" style="width: 80% !important;">
                             Daily Room Rate (Private Pay Amount)
                           </td>
                           <td class="text-right" style="width: 20% !important;">
@@ -562,7 +631,7 @@
                           </td>
                         </tr>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
+                          <td colspan="3" style="width: 80% !important;">
                             Partial Month Credit
                           </td>
                           <td class="text-right" style="width: 20% !important;">
@@ -570,12 +639,12 @@
                           </td>
                         </tr>
                         <tr class="text-center">
-                          <th colspan="3" style="width: 100% !important; background-color: #e4e5e6;">
-                            <strong>3rd Party Billable Days</strong>
+                          <th colspan="4" style="width: 100% !important; background-color: #e4e5e6;">
+                            <strong>3rd Party Billable Days Details</strong>
                           </th>
                         </tr>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
+                          <td colspan="3" style="width: 80% !important;">
                             Days in month of {{ ledger.date_created|date:'MMMM' }}
                           </td>
                           <td class="text-right" style="width: 20% !important;">
@@ -583,7 +652,7 @@
                           </td>
                         </tr>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
+                          <td colspan="3" style="width: 80% !important;">
                             Resident Away Days
                           </td>
                           <td class="text-right" style="width: 20% !important;">
@@ -591,15 +660,15 @@
                           </td>
                         </tr>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
-                            Partial Month Credit Days
+                          <td colspan="3" style="width: 80% !important;">
+                            Early Discharge/Late Admit Days
                           </td>
                           <td class="text-right" style="width: 20% !important;">
                             {{ get_days_in_month(ledger.date_created|date:'M', ledger.date_created|date:'yyyy') - get_not_private_billable_days_for_rent(ledger.not_privat_pay_source, rent_id) - get_not_private_away_days_for_rent(ledger.not_privat_pay_source, rent_id) }}
                           </td>
                         </tr>
                         <tr class="text-left">
-                          <td colspan="2" style="width: 80% !important;">
+                          <td colspan="3" style="width: 80% !important;">
                             3rd Party Billable Days
                           </td>
                           <td class="text-right" style="width: 20% !important;">
@@ -613,6 +682,7 @@
               </div>
             </div>
           </div>
+          <div class="col-sm-3 col-md-3"></div>
         </div>
       </ng-container>
     </ng-container>
