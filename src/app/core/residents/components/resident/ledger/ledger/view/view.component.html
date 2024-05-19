@@ -119,7 +119,7 @@
                             <td style="width: 15% !important;">{{item.start|date:'MM/d/y'}}</td>
                             <td style="width: 19% !important;">{{item.reason}}</td>
                             <td
-                              style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                              class="text-right" style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
                             <td style="width: 17% !important; margin: 0; padding: 0;">
                               <ng-container *ngIf="item.sources && item.sources.length > 0">
                                 <ng-container *ngFor="let source of item.sources;">
@@ -146,7 +146,7 @@
                               <ng-container *ngIf="item.sources && item.sources.length > 0">
                                 <ng-container *ngFor="let source of item.sources;">
                                   <div
-                                    style="border: 1px solid #c8ced3;">{{source.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</div>
+                                    class="text-right" style="border: 1px solid #c8ced3; padding-right:5px;">{{source.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</div>
                                 </ng-container>
                               </ng-container>
                             </td>
