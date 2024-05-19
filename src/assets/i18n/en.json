@@ -590,6 +590,9 @@
       "review_type": "Reviewed Type",
       "updated_by": "Reviewed By",
       "subject": "Subject",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
       "space": "Space"
     },
     "lead-lead-list": {

@@ -50,11 +50,42 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="body">Body</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('body')?'error':null">
-      <input-counter formControlName="body" placeholder="Body" [maxlength]="2048"></input-counter>
-      <nz-form-explain *ngIf="hasErrors('body')">
-        <app-field-errors [errors]="fieldErrors('body')"></app-field-errors>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="subject">Name</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('name')?'error':null">
+      <input-counter formControlName="name" placeholder="Name" [maxlength]="120"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('name')">
+        <app-field-errors [errors]="fieldErrors('name')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">E-Mail</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email')?'error':null">
+      <input nz-input placeholder="E-Mail" formControlName="email">
+      <nz-form-explain *ngIf="hasErrors('email')">
+        <app-field-errors [errors]="fieldErrors('email')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="phone">Phone</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('phone')?'error':null">
+      <input nz-input placeholder="(000) 000-0000" formControlName="phone"
+             mask="(000) 000-0000" [showMaskTyped]="true" [dropSpecialCharacters]="false">
+      <nz-form-explain *ngIf="hasErrors('phone')">
+        <app-field-errors [errors]="fieldErrors('phone')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="message">Message</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('message')?'error':null">
+      <input-counter formControlName="message" placeholder="Message" [maxlength]="2048"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('message')">
+        <app-field-errors [errors]="fieldErrors('message')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

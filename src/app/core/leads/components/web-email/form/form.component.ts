@@ -4,6 +4,7 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {SpaceService} from '../../../../services/space.service';
 import {first} from 'rxjs/operators';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {Space} from '../../../../models/space';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
@@ -50,7 +51,10 @@ export class FormComponent extends AbstractForm implements OnInit {
       email_review_type_id: [null, Validators.compose([])],
 
       subject: ['', Validators.compose([Validators.maxLength(120)])],
-      body: ['', Validators.compose([Validators.maxLength(2048)])],
+      name: ['', Validators.compose([Validators.maxLength(120)])],
+      email: ['', Validators.compose([Validators.email])],
+      phone: ['', Validators.compose([CoreValidator.phone])],
+      message: ['', Validators.compose([Validators.maxLength(2048)])],
     });
 
     this.subscribe('list_facility');
@@ -94,4 +98,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
     }
   }
+
+    formValue(): void {
+        const value = super.formValue();
+        value.date = DateHelper.makeUTCDateOnly(value.date);
+        return value;
+    }
 }

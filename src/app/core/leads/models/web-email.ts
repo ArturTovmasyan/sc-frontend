@@ -12,7 +12,10 @@ export class WebEmail implements IdInterface {
   updated_by: User;
 
   subject: string;
-  body: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
 
   next_email_id: number;
   previous_email_id: number;
