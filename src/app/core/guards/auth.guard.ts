@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
       }));
   }
 
-  public checkPermission(expected_permissions: string[]): boolean {
+  public checkPermission(expected_permissions: string[], level: number = 0): boolean {
     if (!expected_permissions || expected_permissions.length === 0) {
       return true;
     }
@@ -38,16 +38,11 @@ export class AuthGuard implements CanActivate {
       const user_permissions = Object.keys(user_info.permissions);
       //  .filter(v => v !== 'persistence-security-user' && v !== 'persistence-security-role');
 
-      if (expected_permissions.every(v =>
-        user_permissions.includes(v) &&
-        user_info.permissions[v].enabled &&
-        user_info.permissions[v].level > 0)) {
-        return true;
-      } else {
-        // console.log(expected_permissions);
-        // console.log(Object.keys(user_info.permissions));
-        return false;
-      }
+      // TODO: review level
+      return expected_permissions.every(
+        v => user_permissions.includes(v) && user_info.permissions[v].enabled
+          && (user_info.permissions[v].hasOwnProperty('level') ? (user_info.permissions[v].level >= level) : true)
+      );
     } else {
       return false;
     }

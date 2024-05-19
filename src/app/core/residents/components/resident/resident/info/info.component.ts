@@ -15,6 +15,7 @@ import {ResidentAdmission} from '../../../../models/resident-admission';
 import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
 import {ReportService} from '../../../../services/report.service';
 import {GroupHelper} from '../../../../helper/group-helper';
+import {AuthGuard} from '../../../../../guards/auth.guard';
 
 @Component({
   selector: 'app-resident-info',
@@ -43,7 +44,8 @@ export class InfoComponent implements OnInit {
     private report$: ReportService,
     protected modal$: NzModalService,
     private router$: Router,
-    private residentSelector$: ResidentSelectorService
+    private residentSelector$: ResidentSelectorService,
+    private auth_$: AuthGuard
   ) {
   }
 
@@ -274,5 +276,9 @@ export class InfoComponent implements OnInit {
     this.report$.report(group, alias, 'pdf', {group: 1, resident_id: this.residentSelector$.resident.value, ...params}, () => {
     }, (error) => {
     });
+  }
+
+  addIfHasPermission(permission: string) {
+    return this.auth_$.checkPermission([permission]);
   }
 }

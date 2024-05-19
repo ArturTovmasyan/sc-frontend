@@ -15,7 +15,7 @@
 
           <button type="button" class="pull-right" nz-button nzSize="small" nzType="default"
                   (click)="show_p_edit(rph.physician.id); $event.preventDefault();"
-                  [nzLoading]="loading_p_edit_modal">
+                  [nzLoading]="loading_p_edit_modal" *ngIf="addIfHasPermission('persistence-common-physician', 5)">
             <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
           </button>
         </p>
@@ -82,8 +82,8 @@
 </nz-tabset>
 <nz-empty *ngIf="!(physicians && physicians.length > 0)" class="ant-empty-normal"
           [nzNotFoundImage]="defaultSvg"></nz-empty>
-<nz-divider></nz-divider>
-<div class="d-flex">
+<nz-divider *ngIf="addIfHasPermission('persistence-resident-resident_physician', 5)"></nz-divider>
+<div class="d-flex" *ngIf="addIfHasPermission('persistence-resident-resident_physician', 5)">
   <nz-button-group [nzSize]="'small'" class="ml-auto">
     <button type="button" nz-button nzType="primary" (click)="show_modal_add(); $event.preventDefault();">
       <i nz-icon type="plus"></i> {{ "grid.add"|translate }}

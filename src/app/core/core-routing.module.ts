@@ -52,6 +52,7 @@ import {ListComponent as AssessmentCareLevelGroupListComponent} from './resident
 import {ListComponent as ResidentListComponent} from './residents/components/resident/list.component';
 import {ViewComponent as ResidentViewComponent} from './residents/components/resident/resident/view/view.component';
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
+import {ListComponent as ResidentHealthInsuranceListComponent} from './residents/components/resident/health-insurance/list.component';
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
 import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
@@ -80,6 +81,7 @@ import {ViewComponent as ReferralViewComponent} from './leads/components/referra
 import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/view.component';
 import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
+import {ListComponent as InsuranceCompanyListComponent} from './residents/components/insurance-company/list.component';
 
 const routes: Routes = [
   {
@@ -494,6 +496,18 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
+
+
+      {
+        path: 'insurance-companies', component: InsuranceCompanyListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Insurance Companies',
+          permissions: ['persistence-common-insurance_company']
+        },
+        canActivate: [AuthGuard]
+      },
+
       {
         path: 'medications', component: MedicationListComponent,
         data: {
@@ -585,6 +599,17 @@ const routes: Routes = [
             data: {
               title: 'Responsible Persons',
               permissions: ['persistence-resident-resident_responsible_person']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'health-insurance',
+            component: ResidentHealthInsuranceListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Health Insurance',
+              permissions: ['persistence-resident-health_insurance']
             },
             canActivate: [AuthGuard]
           },

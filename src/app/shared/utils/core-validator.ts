@@ -12,6 +12,7 @@ export class CoreValidator {
     NUMBER_OF_FLOORS: /^[1-4]$/,
 
     PAYMENT_AMOUNT: /(^0$)|(^[1-9][0-9]*$)|(^[0-9]+(\.[0-9]{1,2})$)/,
+    INSURANCE_NUMBER: /^[A-Za-z0-9]+$/,
 
     GROUP_CAPACITY: /(^[1-9][0-9]*$)/,
     CARE_GROUP: /(^[1-9][0-9]*$)/,
@@ -49,6 +50,10 @@ export class CoreValidator {
   public static room: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.ROOM,
     {pattern_validator_room: 'The value should be alphanumeric.'}
+  );
+  public static insurance_number: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.INSURANCE_NUMBER,
+    {pattern_validator_insurance_number: 'The value should be alphanumeric.'}
   );
   public static payment_amount: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.PAYMENT_AMOUNT,

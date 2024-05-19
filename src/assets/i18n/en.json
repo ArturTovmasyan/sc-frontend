@@ -448,9 +448,9 @@
     "admin-notification-list": {
       "id": "ID",
       "type": "Type",
-      "enabled":"Enabled",
+      "enabled": "Enabled",
       "schedule": "Schedule",
-      "emails":"Emails"
+      "emails": "Emails"
     },
     "admin-notification-type-list": {
       "id": "ID",
@@ -462,6 +462,18 @@
       "region": "Region",
       "apartment": "Apartment",
       "space": "Space"
+    },
+    "insurance-company-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
+    "resident-health-insurance-list": {
+      "id": "ID",
+      "insurance_company":  "Insurance Company",
+      "medical_record_number": "Medical Record Number",
+      "group_number":  "Group Number",
+      "notes": "Notes"
     }
   }
 }

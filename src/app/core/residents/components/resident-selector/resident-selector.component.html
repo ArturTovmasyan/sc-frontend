@@ -5,6 +5,12 @@
      title="Responsible Persons">
     <i class="seniorcare seniorcare-3x seniorcare-resident"></i>
   </a>
+  <a *ngIf="addIfHasPermission('persistence-resident-health_insurance')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
+     [routerLink]="routeInfo('health-insurance')"
+     title="Health Insurance">
+    <i class="seniorcare seniorcare-3x seniorcare-insurance"></i>
+  </a>
   <a *ngIf="addIfHasPermission('persistence-resident-resident_event')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
      [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('events')"

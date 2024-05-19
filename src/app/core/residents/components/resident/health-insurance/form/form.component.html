@@ -1,0 +1,63 @@
+﻿<h4>Health Insurance</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="company_id" nzRequired>Category</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('company_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="company_id">
+          <ng-container *ngFor="let company of companies">
+            <nz-option [nzLabel]="company.title" [nzValue]="company.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('insurance_company');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('company_id')">
+        <app-field-errors [errors]="fieldErrors('company_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="medical_record_number" nzRequired>Medical Record Number</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('medical_record_number')?'error':null">
+      <input nz-input placeholder="First Name" formControlName="medical_record_number">
+      <nz-form-explain *ngIf="hasErrors('medical_record_number')">
+        <app-field-errors [errors]="fieldErrors('medical_record_number')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group_number" nzRequired>Group Number</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group_number')?'error':null">
+      <input nz-input placeholder="First Name" formControlName="group_number">
+      <nz-form-explain *ngIf="hasErrors('group_number')">
+        <app-field-errors [errors]="fieldErrors('group_number')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
+      <input-counter formControlName="notes" placeholder="Description" [maxlength]="255"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('notes')">
+        <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

@@ -13,6 +13,7 @@ import {ResidentSelectorService} from '../../../services/resident-selector.servi
 import {first} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ResponsiblePersonService} from '../../../services/responsible-person.service';
+import {AuthGuard} from '../../../../guards/auth.guard';
 
 @Component({
   templateUrl: './list.component.html',
@@ -37,6 +38,7 @@ export class ListComponent implements OnInit, OnDestroy {
     private residentSelector$: ResidentSelectorService,
     private responsiblePerson$: ResponsiblePersonService,
     private sanitizer: DomSanitizer,
+    private auth_$: AuthGuard
   ) {
     this.selected_tab = 0;
     this.$subscriptions = {};
@@ -315,5 +317,9 @@ export class ListComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  addIfHasPermission(permission: string, level: number) {
+    return this.auth_$.checkPermission([permission], level, true);
   }
 }

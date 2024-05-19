@@ -173,6 +173,13 @@ import {FormComponent as AssessmentCareLevelFormComponent} from './residents/com
 import {ListComponent as AssessmentCareLevelGroupListComponent} from './residents/components/assessment/care-level-group/list.component';
 import {FormComponent as AssessmentCareLevelGroupFormComponent} from './residents/components/assessment/care-level-group/form/form.component';
 
+import {ListComponent as InsuranceCompanyListComponent} from './residents/components/insurance-company/list.component';
+import {FormComponent as InsuranceCompanyFormComponent} from './residents/components/insurance-company/form/form.component';
+
+import {ListComponent as ResidentHealthInsuranceListComponent} from './residents/components/resident/health-insurance/list.component';
+import {FormComponent as ResidentHealthInsuranceFormComponent} from './residents/components/resident/health-insurance/form/form.component';
+
+
 import {HomeComponent} from './residents/components/home/home.component';
 
 import {CityStateZipPipe} from './residents/pipes/csz.pipe';
@@ -460,7 +467,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NotificationListComponent,
     NotificationFormComponent,
     NotificationTypeListComponent,
-    NotificationTypeFormComponent
+    NotificationTypeFormComponent,
+
+
+    InsuranceCompanyListComponent,
+    InsuranceCompanyFormComponent,
+    ResidentHealthInsuranceListComponent,
+    ResidentHealthInsuranceFormComponent
   ],
   entryComponents: [
     UserFormComponent,
@@ -570,7 +583,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ActivityReportFormComponent,
 
     NotificationFormComponent,
-    NotificationTypeFormComponent
+    NotificationTypeFormComponent,
+
+    InsuranceCompanyFormComponent,
+    ResidentHealthInsuranceFormComponent
 
   ],
   imports: [
