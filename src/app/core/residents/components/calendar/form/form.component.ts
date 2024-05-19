@@ -452,4 +452,12 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
+  after_set_form_data(): void {
+    if (this.edit_mode) {
+      if (this.form.get('facilities').value === null || this.form.get('facilities').value.length === 0) {
+        this.form.get('facilities_all').setValue(true);
+      }
+    }
+  }
+
 }
