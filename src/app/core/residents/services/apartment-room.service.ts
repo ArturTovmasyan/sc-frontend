@@ -13,6 +13,6 @@ export class ApartmentRoomService extends GridService<ApartmentRoom> {
   }
 
   last_number(apartment_id: number) {
-    return  this.http.get(this.SEVICE_URL_BASE + `/${apartment_id}/last`);
+    return this.http.get(this.SEVICE_URL_BASE + `/${apartment_id}/last`);
   }
 }

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TitleService} from '../../../../services/title.service';
+import {TitleService} from '../../../../../services/title.service';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -37,6 +37,5 @@ export class ViewComponent implements OnInit, OnDestroy {
       this.$subscriptions[key].unsubscribe();
     }
   }
-
 
 }

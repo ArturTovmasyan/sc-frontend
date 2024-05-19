@@ -100,15 +100,15 @@ import {FormComponent as RegionFormComponent} from './residents/components/regio
 
 import {ResidentSelectorComponent} from './residents/components/resident-selector/resident-selector.component';
 
-import {ListComponent        as ResidentListComponent} from './residents/components/resident/list.component';
-import {FormComponent        as ResidentFormComponent} from './residents/components/resident/form/form.component';
-import {ViewComponent        as ResidentViewComponent} from './residents/components/resident/view/view.component';
-import {InfoComponent        as ResidentInfoComponent} from './residents/components/resident/info/info.component';
-import {FormComponent        as ResidentMoveComponent} from './residents/components/resident/move/form.component';
+import {ListComponent as ResidentListComponent} from './residents/components/resident/list.component';
+import {FormComponent as ResidentFormComponent} from './residents/components/resident/resident/form/form.component';
+import {ViewComponent as ResidentViewComponent} from './residents/components/resident/resident/view/view.component';
+import {InfoComponent as ResidentInfoComponent} from './residents/components/resident/resident/info/info.component';
+import {FormComponent as ResidentMoveComponent} from './residents/components/resident/resident/move/form.component';
 import {
   ImageEditorComponent,
   ImageEditorComponent as ResidentImageEditorComponent
-} from './residents/components/resident/info/img-editor/image-editor.component';
+} from './residents/components/resident/resident/info/img-editor/image-editor.component';
 
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
 import {FormComponent as ResidentResponsiblePersonFormComponent} from './residents/components/resident/responsible-person/form/form.component';
@@ -168,11 +168,6 @@ import {ListComponent as AssessmentCareLevelListComponent} from './residents/com
 import {FormComponent as AssessmentCareLevelFormComponent} from './residents/components/assessment/care-level/form/form.component';
 import {ListComponent as AssessmentCareLevelGroupListComponent} from './residents/components/assessment/care-level-group/list.component';
 import {FormComponent as AssessmentCareLevelGroupFormComponent} from './residents/components/assessment/care-level-group/form/form.component';
-
-// import {ListComponent as ListComponent} from './residents/components//list.component';
-// import {FormComponent as FormComponent} from './residents/components//form/form.component';
-
-
 import {CityStateZipPipe} from './residents/pipes/csz.pipe';
 import {PhysicianPipe} from './residents/pipes/physician.pipe';
 import {ResidentPipe} from './residents/pipes/resident.pipe';
@@ -191,6 +186,9 @@ import {ResidentSelectorPipe} from './residents/pipes/resident-selector.pipe';
 import {NgxMaskModule} from 'ngx-mask';
 import {FilterPipe} from '../shared/pipes/filter.pipe';
 import {KeysPipe} from '../shared/pipes/keys.pipe';
+
+// import {ListComponent as ListComponent} from './residents/components//list.component';
+// import {FormComponent as FormComponent} from './residents/components//form/form.component';
 
 registerLocaleData(en);
 

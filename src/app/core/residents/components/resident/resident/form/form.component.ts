@@ -1,15 +1,15 @@
 ﻿import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
-import {Gender} from '../../../models/gender.enum';
-import {PhoneType} from '../../../../models/phone-type.enum';
-import {Space} from '../../../../models/space';
-import {Salutation} from '../../../models/salutation';
-import {SpaceService} from '../../../../services/space.service';
-import {SalutationService} from '../../../services/salutation.service';
+import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
+import {Gender} from '../../../../models/gender.enum';
+import {PhoneType} from '../../../../../models/phone-type.enum';
+import {Space} from '../../../../../models/space';
+import {Salutation} from '../../../../models/salutation';
+import {SpaceService} from '../../../../../services/space.service';
+import {SalutationService} from '../../../../services/salutation.service';
 import * as differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
-import {FormComponent as SalutationFormComponent} from '../../salutation/form/form.component';
+import {FormComponent as SalutationFormComponent} from '../../../salutation/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
 
 @Component({

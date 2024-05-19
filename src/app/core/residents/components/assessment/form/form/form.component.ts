@@ -35,7 +35,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       care_level_groups: [null, Validators.required],
 
-      categories:  this.formBuilder.array([]),
+      categories: this.formBuilder.array([]),
     });
 
     this.subscribe('list_category');
@@ -115,7 +115,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public get_form_array_skeleton(key: string): FormGroup| FormControl {
+  public get_form_array_skeleton(key: string): FormGroup | FormControl {
     switch (key) {
       case 'categories':
         return new FormControl();

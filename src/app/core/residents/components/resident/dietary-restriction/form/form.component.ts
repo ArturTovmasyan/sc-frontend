@@ -4,37 +4,35 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {Diet} from '../../../../models/diet';
 import {DietService} from '../../../../services/diet.service';
-import {ActivatedRoute} from '@angular/router';
 import {FormComponent as DietFormComponent} from '../../../diet/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
   diets: Diet[];
-  resident_id: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private diet$: DietService,
-    private route$: ActivatedRoute,
-    private modal$: NzModalService
+    private modal$: NzModalService,
+    private residentSelector$: ResidentSelectorService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-
     this.form = this.formBuilder.group({
       id: [''],
       description: ['', Validators.compose([Validators.required, Validators.maxLength(512)])],
       diet_id: [null, Validators.required],
 
-      resident_id: [this.resident_id, Validators.required]
+      resident_id: [null, Validators.required]
     });
 
+    this.subscribe('rs_resident');
     this.subscribe('list_diet');
   }
 
@@ -48,6 +46,13 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('diet_id').setValue(params.diet_id);
             }
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;

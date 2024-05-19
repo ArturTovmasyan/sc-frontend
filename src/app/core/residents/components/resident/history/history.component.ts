@@ -1,7 +1,4 @@
-import {ActivatedRoute} from '@angular/router';
-import {Component, ElementRef, OnInit} from '@angular/core';
-import {ResidentService} from '../../../services/resident.service';
-import {Resident} from '../../../models/resident';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-resident-history',

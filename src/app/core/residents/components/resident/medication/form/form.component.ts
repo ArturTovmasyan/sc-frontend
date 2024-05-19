@@ -4,7 +4,6 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {Medication} from '../../../../models/medication';
 import {MedicationService} from '../../../../services/medication.service';
-import {ActivatedRoute} from '@angular/router';
 import {MedicationFormFactor} from '../../../../models/medication-form-factor';
 import {Physician} from '../../../../models/physician';
 import {PhysicianService} from '../../../../services/physician.service';
@@ -14,6 +13,7 @@ import {FormComponent as MedicationFormComponent} from '../../../medication/form
 import {FormComponent as MedicationFormFactorFormComponent} from '../../../medication-form-factor/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as PhysicianFormComponent} from '../../../physician/form/form.component';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -22,24 +22,21 @@ export class FormComponent extends AbstractForm implements OnInit {
   form_factors: MedicationFormFactor[];
   medications: Medication[];
   physicians: Physician[];
-  resident_id: number;
   selectedTab: number;
 
   constructor(
     private formBuilder: FormBuilder,
+    private _el: ElementRef,
     private medication$: MedicationService,
     private form_factor$: MedicationFormFactorService,
     private physician$: PhysicianService,
     private modal$: NzModalService,
-    private route$: ActivatedRoute,
-    private _el: ElementRef
+    private residentSelector$: ResidentSelectorService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-
     this.selectedTab = 0;
 
     this.form = this.formBuilder.group({
@@ -70,7 +67,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       discontinued: [false, Validators.required],
       treatment: [false, Validators.required],
 
-      resident_id: [this.resident_id, Validators.required]
+      resident_id: [null, Validators.required]
     });
 
     this.postSubmit = (data: any) => {
@@ -81,6 +78,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
     };
 
+    this.subscribe('rs_resident');
     this.subscribe('list_medication');
     this.subscribe('list_form_factor');
     this.subscribe('list_physician');
@@ -118,6 +116,13 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('physician_id').setValue(params.physician_id);
             }
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;

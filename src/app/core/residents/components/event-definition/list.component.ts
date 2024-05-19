@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../services/title.service';
 import {EventDefinitionService} from '../../services/event-definition.service';
@@ -13,7 +12,11 @@ import {EventDefinition} from '../../models/event-definition';
   providers: [EventDefinitionService]
 })
 export class ListComponent extends GridComponent<EventDefinition, EventDefinitionService> implements OnInit {
-  constructor(service$: EventDefinitionService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute) {
+  constructor(
+    protected service$: EventDefinitionService,
+    protected title$: TitleService,
+    protected modal$: NzModalService
+  ) {
     super(service$, title$, modal$);
 
     this.component = FormComponent;

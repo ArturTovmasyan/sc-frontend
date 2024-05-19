@@ -5,8 +5,8 @@ import {GridComponent} from '../../../../../shared/components/grid/grid.componen
 import {FormComponent} from './form/form.component';
 import {ResidentAssessmentService} from '../../../services/resident-assessment.service';
 import {ResidentAssessment} from '../../../models/resident-assessment';
-import {ActivatedRoute} from '@angular/router';
 import {ReportService} from '../../../services/report.service';
+import {ResidentSelectorService} from '../../../services/resident-selector.service';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
@@ -14,7 +14,13 @@ import {ReportService} from '../../../services/report.service';
   providers: [ResidentAssessmentService]
 })
 export class ListComponent extends GridComponent<ResidentAssessment, ResidentAssessmentService> implements OnInit {
-  constructor(service$: ResidentAssessmentService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute, private report$: ReportService) {
+  constructor(
+    protected service$: ResidentAssessmentService,
+    protected title$: TitleService,
+    protected modal$: NzModalService,
+    private residentSelector$: ResidentSelectorService,
+    private report$: ReportService
+  ) {
     super(service$, title$, modal$);
 
     this.card = false;
@@ -24,11 +30,6 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
   }
 
   ngOnInit(): void {
-    const resident_id = this.route$.snapshot.parent.params['id'];
-    this.params.push({key: 'resident_id', value: resident_id});
-
-    super.init();
-
     this.buttons.push(
       {
         name: 'blank',
@@ -62,5 +63,25 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
         }
       }
     );
+
+    this.subscribe('rs_resident');
   }
+
+  protected subscribe(key: string, params?: any): void {
+    switch (key) {
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            if (this.params.filter(v => v.key === 'resident_id').length === 0) {
+              this.params.push({key: 'resident_id', value: next.toString()});
+              super.init();
+            }
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
 }

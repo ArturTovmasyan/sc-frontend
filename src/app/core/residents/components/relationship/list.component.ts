@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../services/title.service';
 import {RelationshipService} from '../../services/relationship.service';
@@ -13,7 +12,11 @@ import {Relationship} from '../../models/relationship';
   providers: [RelationshipService]
 })
 export class ListComponent extends GridComponent<Relationship, RelationshipService> implements OnInit {
-  constructor(service$: RelationshipService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute) {
+  constructor(
+    protected service$: RelationshipService,
+    protected title$: TitleService,
+    protected modal$: NzModalService
+  ) {
     super(service$, title$, modal$);
 
     this.component = FormComponent;

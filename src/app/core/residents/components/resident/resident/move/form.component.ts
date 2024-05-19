@@ -1,21 +1,20 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
-import {FacilityService} from '../../../services/facility.service';
-import {Facility} from '../../../models/facility';
-import {FacilityBed, FacilityRoom} from '../../../models/facility-room';
-import {FacilityRoomService} from '../../../services/facility-room.service';
-import {ResidentService} from '../../../services/resident.service';
-import {Resident} from '../../../models/resident';
-import {Apartment} from '../../../models/apartment';
-import {Region} from '../../../models/region';
-import {ApartmentBed, ApartmentRoom} from '../../../models/apartment-room';
-import {ApartmentService} from '../../../services/apartment.service';
-import {RegionService} from '../../../services/region.service';
-import {GroupType} from '../../../models/group-type.enum';
-import {ApartmentRoomService} from '../../../services/apartment-room.service';
-import {GridService} from '../../../../../shared/services/grid.service';
+import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
+import {FacilityService} from '../../../../services/facility.service';
+import {Facility} from '../../../../models/facility';
+import {FacilityBed, FacilityRoom} from '../../../../models/facility-room';
+import {FacilityRoomService} from '../../../../services/facility-room.service';
+import {ResidentService} from '../../../../services/resident.service';
+import {Resident} from '../../../../models/resident';
+import {Apartment} from '../../../../models/apartment';
+import {Region} from '../../../../models/region';
+import {ApartmentBed, ApartmentRoom} from '../../../../models/apartment-room';
+import {ApartmentService} from '../../../../services/apartment.service';
+import {RegionService} from '../../../../services/region.service';
+import {GroupType} from '../../../../models/group-type.enum';
+import {ApartmentRoomService} from '../../../../services/apartment-room.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -32,7 +31,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   private _show_group: boolean = false;
   private _show_bed: boolean = false;
 
-  private _current_room: { id: number, number: string, beds: ApartmentBed[]|FacilityBed[] };
+  private _current_room: { id: number, number: string, beds: ApartmentBed[] | FacilityBed[] };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,11 +53,11 @@ export class FormComponent extends AbstractForm implements OnInit {
     this._resident = value;
   }
 
-  get current_room(): { id: number, number: string, beds: ApartmentBed[]|FacilityBed[] } {
+  get current_room(): { id: number, number: string, beds: ApartmentBed[] | FacilityBed[] } {
     return this._current_room;
   }
 
-  set current_room(value: { id: number, number: string, beds: ApartmentBed[]|FacilityBed[] }) {
+  set current_room(value: { id: number, number: string, beds: ApartmentBed[] | FacilityBed[] }) {
     this._current_room = value;
   }
 

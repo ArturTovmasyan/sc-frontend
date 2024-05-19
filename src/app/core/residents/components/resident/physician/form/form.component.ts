@@ -4,40 +4,38 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {Physician} from '../../../../models/physician';
 import {PhysicianService} from '../../../../services/physician.service';
-import {ActivatedRoute} from '@angular/router';
 import {ResidentPhysicianService} from '../../../../services/resident-physician.service';
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as PhysicianFormComponent} from '../../../physician/form/form.component';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
   physicians: Physician[];
-  resident_id: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private physician$: PhysicianService,
     private resident_physician$: ResidentPhysicianService,
     private modal$: NzModalService,
-    private route$: ActivatedRoute
+    private residentSelector$: ResidentSelectorService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-
     this.form = this.formBuilder.group({
       id: [''],
 
       physician_id: [null, Validators.required],
       primary: [false, Validators.required],
 
-      resident_id: [this.resident_id, Validators.required]
+      resident_id: [null, Validators.required]
     });
 
+    this.subscribe('rs_resident');
     this.subscribe('list_physician');
     this.subscribe('vc_primary');
   }
@@ -46,7 +44,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     switch (key) {
       case 'vc_primary':
         this.$subscriptions[key] = this.form.get('primary').valueChanges.subscribe(next => {
-          this.resident_physician$.get_primary(this.resident_id).subscribe(res => {
+          this.resident_physician$.get_primary(this.form.get('physician_id').value).subscribe(res => {
             if (res) {
               if (res.id !== this.form.get('id').value && next) {
                 this.show_modal_confirm(next,
@@ -71,6 +69,13 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('physician_id').setValue(params.physician_id);
             }
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;

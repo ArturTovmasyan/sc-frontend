@@ -41,17 +41,17 @@
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group')?'error':null">
           <nz-select nzShowSearch formControlName="group">
             <nz-option-group nzLabel="FFC - Facilities">
-              <ng-container *ngFor="let facility of facilities">
+              <ng-container *ngFor="let facility of group_helper.facilities">
                 <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
               </ng-container>
             </nz-option-group>
             <nz-option-group nzLabel="IHC - Regions">
-              <ng-container *ngFor="let region of regions">
+              <ng-container *ngFor="let region of group_helper.regions">
                 <nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>
               </ng-container>
             </nz-option-group>
             <nz-option-group nzLabel="IL - Apartments">
-              <ng-container *ngFor="let apartment of apartments">
+              <ng-container *ngFor="let apartment of group_helper.apartments">
                 <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
               </ng-container>
             </nz-option-group>

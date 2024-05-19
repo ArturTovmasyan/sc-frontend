@@ -19,11 +19,13 @@ export class CoreValidator {
 
   public static password: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.PASSWORD,
-    {pattern_validator_password: 'The password must be at least 8 characters long and ' +
+    {
+      pattern_validator_password: 'The password must be at least 8 characters long and ' +
         'contain at least one lowercase letter, ' +
         'one uppercase letter, ' +
         'one number and ' +
-        'one special character (non-word characters).'}
+        'one special character (non-word characters).'
+    }
   );
   public static phone: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.PHONE,

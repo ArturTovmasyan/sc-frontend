@@ -1,18 +1,24 @@
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {first} from 'rxjs/operators';
-import {ResidentService} from '../../../services/resident.service';
-import {Resident} from '../../../models/resident';
-import {GroupType} from '../../../models/group-type.enum';
+import {ResidentService} from '../../../../services/resident.service';
+import {Resident} from '../../../../models/resident';
+import {GroupType} from '../../../../models/group-type.enum';
 import {Observable} from 'rxjs';
-import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
+import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {FormComponent} from '../form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
+import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {ImageEditorComponent} from './img-editor/image-editor.component';
-import {ResidentContractService} from '../../../services/resident-contract.service';
-import {ContractOptionApartment, ContractOptionFacility, ContractOptionRegion, ResidentContract} from '../../../models/resident-contract';
+import {ResidentContractService} from '../../../../services/resident-contract.service';
+import {
+  ContractOptionApartment,
+  ContractOptionFacility,
+  ContractOptionRegion,
+  ResidentContract
+} from '../../../../models/resident-contract';
 import {FormComponent as ResidentMoveComponent} from '../move/form.component';
-import {ResidentSelectorService} from '../../../services/resident-selector.service';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-resident-info',
@@ -21,6 +27,7 @@ import {ResidentSelectorService} from '../../../services/resident-selector.servi
 })
 export class InfoComponent implements OnInit {
   GroupType = GroupType;
+  defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   resident: Resident;
   contract: ResidentContract;
@@ -34,11 +41,11 @@ export class InfoComponent implements OnInit {
 
   constructor(
     private el: ElementRef,
+    private sanitizer: DomSanitizer,
     private resident$: ResidentService,
     private contract$: ResidentContractService,
     protected modal$: NzModalService,
     private router$: Router,
-    private route$: ActivatedRoute,
     private residentSelector$: ResidentSelectorService
   ) {
   }
@@ -46,48 +53,52 @@ export class InfoComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
 
-    this.route$.params.subscribe(params => {
-      this.resident_id = +params['id'];
+    this.residentSelector$.resident.subscribe(next => {
+      if (next) {
+        this.resident_id = next;
 
-      this.resident$.get(this.resident_id).pipe(first()).subscribe(res => {
-        this.loading = false;
-        if (res) {
-          this.resident = res;
-          this.residentSelector$.resident.next(this.resident.id);
-        }
-      });
-
-      this.contract$.active(this.resident_id).pipe(first()).subscribe(res => {
-        if (res != null && !Array.isArray(res)) {
-          this.contract = res;
-
-          this.residentSelector$.type.next(this.contract.type);
-
-          let group_id = null;
-          if (this.contract.option) {
-            switch (this.contract.type) {
-              case GroupType.FACILITY:
-                group_id = (<ContractOptionFacility>this.contract.option).bed.room.facility.id;
-                break;
-              case GroupType.REGION:
-                group_id = (<ContractOptionRegion>this.contract.option).region.id;
-                break;
-              case GroupType.APARTMENT:
-                group_id = (<ContractOptionApartment>this.contract.option).bed.room.apartment.id;
-                break;
-            }
+        this.resident$.get(this.resident_id).pipe(first()).subscribe(res => {
+          this.loading = false;
+          if (res) {
+            this.resident = res;
+          } else {
+            this.resident = null;
           }
+        }, error => {
+          this.loading = false;
+          this.resident = null;
+        });
 
-          this.residentSelector$.type.next(this.contract.type);
-          this.residentSelector$.group.next(group_id);
-        } else {
+        this.contract$.active(this.resident_id).pipe(first()).subscribe(res => {
+          if (res != null && !Array.isArray(res)) {
+            this.contract = res;
+
+            let group_id = null;
+            if (this.contract.option) {
+              switch (this.contract.type) {
+                case GroupType.FACILITY:
+                  group_id = (<ContractOptionFacility>this.contract.option).bed.room.facility.id;
+                  break;
+                case GroupType.REGION:
+                  group_id = (<ContractOptionRegion>this.contract.option).region.id;
+                  break;
+                case GroupType.APARTMENT:
+                  group_id = (<ContractOptionApartment>this.contract.option).bed.room.apartment.id;
+                  break;
+              }
+            }
+
+            this.residentSelector$.type.next(this.contract.type);
+            this.residentSelector$.group.next(group_id);
+          } else {
+            this.contract = null;
+            this.residentSelector$.type.next(null);
+            this.residentSelector$.group.next(null);
+          }
+        }, error => {
           this.contract = null;
-          this.residentSelector$.type.next(null);
-          this.residentSelector$.group.next(null);
-        }
-      }, error => {
-        this.contract = null;
-      });
+        });
+      }
     });
   }
 

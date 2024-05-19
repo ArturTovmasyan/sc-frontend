@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {ResidentAdmissionService} from '../../../services/resident-admission.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {ResidentAdmission} from '../../../models/resident-admission';
+import {ResidentSelectorService} from '../../../services/resident-selector.service';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
@@ -13,7 +13,12 @@ import {ResidentAdmission} from '../../../models/resident-admission';
   providers: [ResidentAdmissionService]
 })
 export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmissionService> implements OnInit {
-  constructor(service$: ResidentAdmissionService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute) {
+  constructor(
+    protected service$: ResidentAdmissionService,
+    protected title$: TitleService,
+    protected modal$: NzModalService,
+    private residentSelector$: ResidentSelectorService
+  ) {
     super(service$, title$, modal$);
 
     this.card = false;
@@ -23,9 +28,24 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
   }
 
   ngOnInit(): void {
-    const resident_id = this.route$.snapshot.parent.params['id'];
-    this.params.push({key: 'resident_id', value: resident_id});
-
-    super.init();
+    this.subscribe('rs_resident');
   }
+
+  protected subscribe(key: string, params?: any): void {
+    switch (key) {
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            if (this.params.filter(v => v.key === 'resident_id').length === 0) {
+              this.params.push({key: 'resident_id', value: next.toString()});
+              super.init();
+            }
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
 }

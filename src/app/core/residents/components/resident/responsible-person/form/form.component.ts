@@ -6,13 +6,13 @@ import {Relationship} from '../../../../models/relationship';
 import {ResponsiblePerson} from '../../../../models/responsible-person';
 import {ResponsiblePersonService} from '../../../../services/responsible-person.service';
 import {RelationshipService} from '../../../../services/relationship.service';
-import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as RelationshipFormComponent} from '../../../relationship/form/form.component';
 import {FormComponent as ResponsiblePersonFormComponent} from '../../../responsible-person/form/form.component';
 import {FormComponent as ResponsiblePersonRoleFormComponent} from '../../../responsible-person-role/form/form.component';
 import {ResponsiblePersonRole} from '../../../../models/responsible-person-role';
 import {ResponsiblePersonRoleService} from '../../../../services/responsible-person-role.service';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -29,14 +29,12 @@ export class FormComponent extends AbstractForm implements OnInit {
     private responsible_person_role$: ResponsiblePersonRoleService,
     private responsible_person$: ResponsiblePersonService,
     private modal$: NzModalService,
-    private route$: ActivatedRoute
+    private residentSelector$: ResidentSelectorService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-
     this.form = this.formBuilder.group({
       id: [''],
 
@@ -44,9 +42,10 @@ export class FormComponent extends AbstractForm implements OnInit {
       relationship_id: [null, Validators.required],
       role_id: [null],
 
-      resident_id: [this.resident_id, Validators.required]
+      resident_id: [null, Validators.required]
     });
 
+    this.subscribe('rs_resident');
     this.subscribe('list_relationship');
     this.subscribe('list_role');
     this.subscribe('list_responsible_person');
@@ -84,6 +83,13 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('responsible_person_id').setValue(params.responsible_person_id);
             }
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;

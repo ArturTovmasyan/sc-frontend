@@ -2,7 +2,6 @@
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
-import {ActivatedRoute} from '@angular/router';
 import {GroupType} from '../../../../models/group-type.enum';
 import {FacilityDiningRoomService} from '../../../../services/facility-dining-room.service';
 import {FacilityRoomService} from '../../../../services/facility-room.service';
@@ -14,14 +13,13 @@ import {CareLevel} from '../../../../models/care-level';
 import {FacilityDiningRoom} from '../../../../models/facility-dining-room';
 import {FacilityRoom} from '../../../../models/facility-room';
 import {ApartmentRoom} from '../../../../models/apartment-room';
-import {Apartment} from '../../../../models/apartment';
-import {Facility} from '../../../../models/facility';
-import {Region} from '../../../../models/region';
 import {FacilityService} from '../../../../services/facility.service';
 import {ApartmentService} from '../../../../services/apartment.service';
 import {RegionService} from '../../../../services/region.service';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
-import {ResidentAdmission, AdmissionType} from '../../../../models/resident-admission';
+import {AdmissionType, ResidentAdmission} from '../../../../models/resident-admission';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {GroupHelper} from '../../../../helper/group-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -31,9 +29,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   selectedTab: number;
 
-  apartments: Apartment[];
-  facilities: Facility[];
-  regions: Region[];
+  protected group_helper: GroupHelper;
 
   city_state_zips: CityStateZip[];
   care_levels: CareLevel[];
@@ -45,8 +41,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   group_id: any;
   edit_data: ResidentAdmission;
   /** TODO: review **/
-
-  resident_id: number;
 
   admission_types: { id: AdmissionType, name: string }[];
 
@@ -60,16 +54,17 @@ export class FormComponent extends AbstractForm implements OnInit {
     private apartment_room$: ApartmentRoomService,
     private care_level$: CareLevelService,
     private city_state_zip$: CityStateZipService,
-    private route$: ActivatedRoute,
-    private _el: ElementRef) {
+    private residentSelector$: ResidentSelectorService,
+    private _el: ElementRef
+  ) {
     super();
+
+    this.group_helper = new GroupHelper();
 
     this.selectedTab = 0;
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-
     this.form = this.formBuilder.group({
       id: [''],
 
@@ -78,13 +73,14 @@ export class FormComponent extends AbstractForm implements OnInit {
       date: [new Date(), Validators.required],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
-      resident_id: [this.resident_id, Validators.required],
+      resident_id: [null, Validators.required],
 
       group_type: [null, Validators.required],
 
       group: [null, Validators.required]
     });
 
+    this.subscribe('rs_resident');
     this.subscribe('list_facility');
     this.subscribe('list_apartment');
     this.subscribe('list_region');
@@ -116,9 +112,9 @@ export class FormComponent extends AbstractForm implements OnInit {
               res[i]['type'] = GroupType.FACILITY;
             });
 
-            this.facilities = res;
+            this.group_helper.facilities = res;
             if (this.form.get('group').value === null) {
-              this.form.get('group').setValue(this.get_group_data(this.group_id));
+              this.form.get('group').setValue(this.group_helper.get_group_data(this.group_id, this.form.get('group_type').value));
             }
           }
         });
@@ -130,9 +126,9 @@ export class FormComponent extends AbstractForm implements OnInit {
               res[i]['type'] = GroupType.APARTMENT;
             });
 
-            this.apartments = res;
+            this.group_helper.apartments = res;
             if (this.form.get('group').value === null) {
-              this.form.get('group').setValue(this.get_group_data(this.group_id));
+              this.form.get('group').setValue(this.group_helper.get_group_data(this.group_id, this.form.get('group_type').value));
             }
           }
         });
@@ -144,10 +140,10 @@ export class FormComponent extends AbstractForm implements OnInit {
               res[i]['type'] = GroupType.REGION;
             });
 
-            this.regions = res;
+            this.group_helper.regions = res;
 
             if (this.form.get('group').value === null) {
-              this.form.get('group').setValue(this.get_group_data(this.group_id));
+              this.form.get('group').setValue(this.group_helper.get_group_data(this.group_id, this.form.get('group_type').value));
             }
           }
         });
@@ -203,6 +199,13 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.city_state_zip$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.city_state_zips = res;
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;
@@ -298,31 +301,6 @@ export class FormComponent extends AbstractForm implements OnInit {
           break;
       }
     }
-  }
-
-  get_group_data(id: number) {
-    let group = null;
-
-    switch (this.form.get('group_type').value) {
-      case GroupType.FACILITY:
-        if (this.facilities) {
-          group = this.facilities.filter(v => v.id === id).pop();
-        }
-        break;
-      case GroupType.REGION:
-        if (this.regions) {
-          group = this.regions.filter(v => v.id === id).pop();
-        }
-        break;
-      case GroupType.APARTMENT:
-        if (this.apartments) {
-          group = this.apartments.filter(v => v.id === id).pop();
-        }
-        break;
-      default:
-        break;
-    }
-    return group;
   }
 
 }

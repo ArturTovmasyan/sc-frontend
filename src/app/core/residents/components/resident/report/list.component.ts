@@ -1,5 +1,4 @@
-import {ActivatedRoute} from '@angular/router';
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ReportService} from '../../../services/report.service';
 import {TitleService} from '../../../../services/title.service';
 import {KeyValue} from '@angular/common';
@@ -7,38 +6,55 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {ModalButtonOptions, NzModalService} from 'ng-zorro-antd';
 import {FormComponent} from './form/form.component';
 import {first} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 @Component({
   templateUrl: './list.component.html'
 })
-export class ListComponent implements OnInit {
-  public title: string = null;
-
-  resident_id: number;
-
-  reports = null;
+export class ListComponent implements OnInit, OnDestroy {
+  protected title: string = null;
+  protected reports = null;
+  protected $subscriptions: { [key: string]: Subscription; };
 
   constructor(
-    private el: ElementRef,
     private report$: ReportService,
     private title$: TitleService,
-    protected modal$: NzModalService,
-    private route$: ActivatedRoute
+    protected modal$: NzModalService
   ) {
-    title$.getTitle().subscribe(v => this.title = v);
+    this.title$.getTitle().subscribe(v => this.title = v);
+
+    this.$subscriptions = {};
   }
 
   ngOnInit(): void {
-    this.resident_id = this.route$.snapshot.parent.params['id'];
-
-    this.report$.list().pipe(first()).subscribe(res => {
-      if (res) {
-        this.reports = res;
-      }
-    });
+    this.subscribe('list_report');
   }
 
-  no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {
+  ngOnDestroy(): void {
+    Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
+  }
+
+  protected subscribe(key: string, params?: any): void {
+    switch (key) {
+      case 'list_report':
+        this.$subscriptions[key] = this.report$.list().pipe(first()).subscribe(res => {
+          if (res) {
+            this.reports = res;
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  protected unsubscribe(key: string): void {
+    if (this.$subscriptions.hasOwnProperty(key)) {
+      this.$subscriptions[key].unsubscribe();
+    }
+  }
+
+  protected no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {
     return 0;
   }
 

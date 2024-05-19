@@ -40,7 +40,8 @@
           <nz-form-label>Category</nz-form-label>
         </td>
         <td class="w-50">
-          <nz-select nzShowSearch nzSize="small" nzMode="default" nzPlaceHolder="Select category" [(ngModel)]="category_selector"
+          <nz-select nzShowSearch nzSize="small" nzMode="default" nzPlaceHolder="Select category"
+                     [(ngModel)]="category_selector"
                      [ngModelOptions]="{standalone: true}">
             <nz-option *ngFor="let category of categories"
                        [nzLabel]="category.title"
@@ -56,7 +57,8 @@
           </button>
         </td>
       </tr>
-      <tr  *ngFor="let item of get_form_array('categories').controls;let i = index" [formGroupName]="i" dnd-sortable [sortableIndex]="i">
+      <tr *ngFor="let item of get_form_array('categories').controls;let i = index" [formGroupName]="i" dnd-sortable
+          [sortableIndex]="i">
         <td>
           <i nz-icon type="drag" theme="outline" dnd-sortable-handle></i>
         </td>

@@ -13,7 +13,8 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="level_low" nzRequired>Level Low</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('level_low')?'error':null">
-      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" placeholder="Level Low" formControlName="level_low"></nz-input-number>
+      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" placeholder="Level Low"
+                       formControlName="level_low"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('level_low')">
         <app-field-errors [errors]="fieldErrors('level_low')"></app-field-errors>
       </nz-form-explain>
@@ -22,7 +23,8 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="level_high">Level High</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('level_high')?'error':null">
-      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" placeholder="Level High" formControlName="level_high"></nz-input-number>
+      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" placeholder="Level High"
+                       formControlName="level_high"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('level_high')">
         <app-field-errors [errors]="fieldErrors('level_high')"></app-field-errors>
       </nz-form-explain>
@@ -38,7 +40,8 @@
             <nz-option [nzLabel]="care_level_group.title" [nzValue]="care_level_group.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('care_level_group');">
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle"
+                (click)="open_sub_modal('care_level_group');">
           <i nz-icon type="plus"></i>
         </button>
       </div>

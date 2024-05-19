@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {ResidentMedicationService} from '../../../services/resident-medication.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {ResidentMedication} from '../../../models/resident-medication';
+import {ResidentSelectorService} from '../../../services/resident-selector.service';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
@@ -13,7 +13,12 @@ import {ResidentMedication} from '../../../models/resident-medication';
   providers: [ResidentMedicationService]
 })
 export class ListComponent extends GridComponent<ResidentMedication, ResidentMedicationService> implements OnInit {
-  constructor(service$: ResidentMedicationService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute) {
+  constructor(
+    protected service$: ResidentMedicationService,
+    protected title$: TitleService,
+    protected modal$: NzModalService,
+    private residentSelector$: ResidentSelectorService
+  ) {
     super(service$, title$, modal$);
 
     this.card = false;
@@ -23,9 +28,23 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
   }
 
   ngOnInit(): void {
-    const resident_id = this.route$.snapshot.parent.params['id'];
-    this.params.push({key: 'resident_id', value: resident_id});
+    this.subscribe('rs_resident');
+  }
 
-    super.init();
+  protected subscribe(key: string, params?: any): void {
+    switch (key) {
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            if (this.params.filter(v => v.key === 'resident_id').length === 0) {
+              this.params.push({key: 'resident_id', value: next.toString()});
+              super.init();
+            }
+          }
+        });
+        break;
+      default:
+        break;
+    }
   }
 }

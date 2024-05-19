@@ -75,7 +75,8 @@
                     </td>
                     <td>
                       <nz-form-item>
-                        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('phones.'+i+'.type')?'error':null">
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                                         [nzValidateStatus]="hasErrors('phones.'+i+'.type')?'error':null">
                           <nz-select nzSize="small" nzMode="default" nzPlaceHolder="Select Type" formControlName="type">
                             <ng-container *ngFor="let type of phone_types">
                               <nz-option [nzLabel]="(type.name)|translate" [nzValue]="type.id"></nz-option>
@@ -100,7 +101,8 @@
                       </nz-form-item>
                     </td>
                     <td class="text-center">
-                      <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_field('phones', i);">
+                      <button nz-button nzType="danger" nzSize="small" nzShape="circle"
+                              (click)="remove_field('phones', i);">
                         <i nz-icon type="minus"></i>
                       </button>
                     </td>
@@ -146,7 +148,8 @@
             </nz-form-item>
           </div>
           <div class="card-footer text-right">
-            <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="form.invalid" type="submit" class="btn btn-primary">
+            <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="form.invalid" type="submit"
+                    class="btn btn-primary">
               Save
             </button>
           </div>

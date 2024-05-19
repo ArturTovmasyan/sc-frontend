@@ -3,7 +3,7 @@ import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../services/title.service';
 import {ResidentService} from '../../services/resident.service';
 import {GridComponent} from '../../../../shared/components/grid/grid.component';
-import {FormComponent} from './form/form.component';
+import {FormComponent} from './resident/form/form.component';
 import {Resident} from '../../models/resident';
 
 @Component({
@@ -12,7 +12,11 @@ import {Resident} from '../../models/resident';
   providers: [ResidentService]
 })
 export class ListComponent extends GridComponent<Resident, ResidentService> implements OnInit {
-  constructor(service$: ResidentService, title$: TitleService, modal$: NzModalService) {
+  constructor(
+    protected service$: ResidentService,
+    protected title$: TitleService,
+    protected modal$: NzModalService
+  ) {
     super(service$, title$, modal$);
 
     this.component = FormComponent;

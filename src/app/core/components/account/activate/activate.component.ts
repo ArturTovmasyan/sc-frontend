@@ -4,7 +4,6 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {AccountService} from '../../../services/account.service';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {Message} from '../../../models/message';
-import {CoreValidator} from '../../../../shared/utils/core-validator';
 
 @Component({
   selector: 'app-dashboard',

@@ -4,9 +4,9 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {MedicalHistoryCondition} from '../../../../../models/medical-history-condition';
 import {MedicalHistoryConditionService} from '../../../../../services/medical-history-condition.service';
-import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as MedicationHistoryConditionFormComponent} from '../../../../medical-history-condition/form/form.component';
+import {ResidentSelectorService} from '../../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -18,15 +18,13 @@ export class FormComponent extends AbstractForm implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private condition$: MedicalHistoryConditionService,
-    private route$: ActivatedRoute,
-    private modal$: NzModalService
+    private modal$: NzModalService,
+    private residentSelector$: ResidentSelectorService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-
     this.form = this.formBuilder.group({
       id: [''],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
@@ -35,9 +33,10 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       condition_id: [null, Validators.required],
 
-      resident_id: [this.resident_id, Validators.required]
+      resident_id: [null, Validators.required]
     });
 
+    this.subscribe('rs_resident');
     this.subscribe('list_condition');
   }
 
@@ -51,6 +50,13 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('condition_id').setValue(params.condition_id);
             }
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;

@@ -4,8 +4,8 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {AssessmentForm} from '../../../../models/assessment-form';
 import {AssessmentFormService} from '../../../../services/assessment-form.service';
-import {ActivatedRoute} from '@angular/router';
 import {AssessmentCategory} from '../../../../models/assessment-category';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html',
@@ -13,8 +13,6 @@ import {AssessmentCategory} from '../../../../models/assessment-category';
 })
 export class FormComponent extends AbstractForm implements OnInit {
   assessment_forms: AssessmentForm[];
-
-  resident_id: number;
 
   tab_selected: number;
   tab_data_disabled: boolean;
@@ -43,7 +41,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private assessment_form$: AssessmentFormService,
-              private route$: ActivatedRoute,
+              private residentSelector$: ResidentSelectorService,
               private _el: ElementRef) {
     super();
 
@@ -51,7 +49,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
     this.tab_selected = 0;
     this.tab_data_disabled = true;
 
@@ -74,7 +71,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       rows: this.formBuilder.array([], Validators.required),
 
-      resident_id: [this.resident_id, Validators.required]
+      resident_id: [null, Validators.required]
     });
 
     this.postSubmit = (data: any) => {
@@ -85,6 +82,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
     };
 
+    this.subscribe('rs_resident');
     this.subscribe('list_assessment_form');
   }
 
@@ -126,6 +124,13 @@ export class FormComponent extends AbstractForm implements OnInit {
                 category.row = 0;
               }
             });
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;

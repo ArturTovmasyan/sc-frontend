@@ -13,6 +13,6 @@ export class FacilityRoomService extends GridService<FacilityRoom> {
   }
 
   last_number(facility_id: number) {
-    return  this.http.get(this.SEVICE_URL_BASE + `/${facility_id}/last`);
+    return this.http.get(this.SEVICE_URL_BASE + `/${facility_id}/last`);
   }
 }

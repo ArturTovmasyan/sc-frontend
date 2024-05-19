@@ -4,9 +4,9 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {PaymentSource} from '../../../../models/payment-source';
 import {PaymentSourceService} from '../../../../services/payment-source.service';
-import {ActivatedRoute} from '@angular/router';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 import {PaymentPeriod} from '../../../../models/payment-period.enum';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -20,13 +20,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   sources: { id: number, amount: number }[] = [];
   periods: { id: PaymentPeriod, name: string }[];
 
-  constructor(private formBuilder: FormBuilder, private payment_source$: PaymentSourceService, private route$: ActivatedRoute) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private payment_source$: PaymentSourceService,
+    private residentSelector$: ResidentSelectorService
+  ) {
     super();
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-
     this.form = this.formBuilder.group({
       id: [''],
 
@@ -40,9 +42,10 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       source: this.formBuilder.array([]),
 
-      resident_id: [this.resident_id, Validators.required]
+      resident_id: [null, Validators.required]
     });
 
+    this.subscribe('rs_resident');
     this.subscribe('list_payment_source');
 
     /// TODO: review
@@ -64,6 +67,13 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.payment_sources.forEach(v => v.disabled = false);
 
             this.after_set_form_data();
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;

@@ -4,9 +4,9 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {Allergen} from '../../../../../models/allergen';
 import {AllergenService} from '../../../../../services/allergen.service';
-import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as AllergenFormComponent} from '../../../../allergen/form/form.component';
+import {ResidentSelectorService} from '../../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -18,24 +18,23 @@ export class FormComponent extends AbstractForm implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private allergen$: AllergenService,
-    private route$: ActivatedRoute,
-    private modal$: NzModalService
+    private modal$: NzModalService,
+    private residentSelector$: ResidentSelectorService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-
     this.form = this.formBuilder.group({
       id: [''],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
       allergen_id: [null, Validators.required],
 
-      resident_id: [this.resident_id, Validators.required]
+      resident_id: [null, Validators.required]
     });
 
+    this.subscribe('rs_resident');
     this.subscribe('list_allergen');
   }
 
@@ -49,6 +48,13 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('allergen_id').setValue(params.allergen_id);
             }
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;

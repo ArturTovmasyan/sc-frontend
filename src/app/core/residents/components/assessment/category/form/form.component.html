@@ -22,11 +22,13 @@
   <fieldset formArrayName="rows">
     <legend class="senior-care-legend">
       Row(s)
-      <button [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="add_field('rows');">
+      <button [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
+              (click)="add_field('rows');">
         <i nz-icon type="plus"></i>
       </button>
     </legend>
-    <table class="senior-care-form-table table table-hover table-bordered table-sm" *ngIf="get_form_array('rows').controls.length > 0">
+    <table class="senior-care-form-table table table-hover table-bordered table-sm"
+           *ngIf="get_form_array('rows').controls.length > 0">
       <thead>
       <tr>
         <th>&nbsp;</th>
@@ -59,7 +61,8 @@
           <td>
             <nz-form-item>
               <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('rows.'+i+'.score')?'error':null">
-                <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="0.1" nzSize="small" placeholder="Score" formControlName="score"></nz-input-number>
+                <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="0.1" nzSize="small" placeholder="Score"
+                                 formControlName="score"></nz-input-number>
                 <nz-form-explain *ngIf="hasErrors('rows.'+i+'.score')">
                   <app-field-errors [errors]="fieldErrors('rows.'+i+'.score')"></app-field-errors>
                 </nz-form-explain>

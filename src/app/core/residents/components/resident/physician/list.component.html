@@ -76,7 +76,8 @@
 
   </nz-tab>
 </nz-tabset>
-<nz-empty *ngIf="!(physicians && physicians.length > 0)" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+<nz-empty *ngIf="!(physicians && physicians.length > 0)" class="ant-empty-normal"
+          [nzNotFoundImage]="defaultSvg"></nz-empty>
 <nz-divider></nz-divider>
 <div class="d-flex">
   <nz-button-group [nzSize]="'small'" class="ml-auto">

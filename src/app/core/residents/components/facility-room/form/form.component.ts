@@ -6,7 +6,7 @@ import {FacilityService} from '../../../services/facility.service';
 import {Facility} from '../../../models/facility';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {NzModalService} from 'ng-zorro-antd';
-import {FormComponent as ResidentMoveComponent} from '../../resident/move/form.component';
+import {FormComponent as ResidentMoveComponent} from '../../resident/resident/move/form.component';
 import {ResidentService} from '../../../services/resident.service';
 import {Resident} from '../../../models/resident';
 import {FacilityRoom} from '../../../models/facility-room';

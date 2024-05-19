@@ -48,7 +48,7 @@ import {ListComponent as AssessmentCareLevelListComponent} from './residents/com
 import {ListComponent as AssessmentCareLevelGroupListComponent} from './residents/components/assessment/care-level-group/list.component';
 
 import {ListComponent as ResidentListComponent} from './residents/components/resident/list.component';
-import {ViewComponent as ResidentViewComponent} from './residents/components/resident/view/view.component';
+import {ViewComponent as ResidentViewComponent} from './residents/components/resident/resident/view/view.component';
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
@@ -401,8 +401,7 @@ const routes: Routes = [
               roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
             },
             canActivate: [AuthGuard],
-            children: [
-            ]
+            children: []
           },
           {
             path: 'diets',

@@ -3,7 +3,6 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {MedicationService} from '../../../../services/medication.service';
-import {ActivatedRoute} from '@angular/router';
 import {Physician} from '../../../../models/physician';
 import {PhysicianService} from '../../../../services/physician.service';
 import {MedicationFormFactorService} from '../../../../services/medication-form-factor.service';
@@ -13,6 +12,7 @@ import {EventDefinition} from '../../../../models/event-definition';
 import {ResponsiblePerson} from '../../../../models/responsible-person';
 import {FormComponent as EventDefinitionFormComponent} from '../../../event-definition/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -33,14 +33,13 @@ export class FormComponent extends AbstractForm implements OnInit {
     private definition$: EventDefinitionService,
     private responsible_person$: ResponsiblePersonService,
     private physician$: PhysicianService,
-    private route$: ActivatedRoute,
-    private modal$: NzModalService) {
+    private modal$: NzModalService,
+    private residentSelector$: ResidentSelectorService
+  ) {
     super();
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-
     this.form = this.formBuilder.group({
       id: [''],
 
@@ -54,9 +53,10 @@ export class FormComponent extends AbstractForm implements OnInit {
       physician_id: [null, Validators.required],
       responsible_person_id: [null, Validators.required],
 
-      resident_id: [this.resident_id, Validators.required]
+      resident_id: [null, Validators.required]
     });
 
+    this.subscribe('rs_resident');
     this.subscribe('list_definition');
     this.subscribe('list_physician');
     this.subscribe('list_responsible_person');
@@ -104,6 +104,13 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.show.date ? this.form.get('additional_date').enable() : this.form.get('additional_date').disable();
             this.show.responsible_person ? this.form.get('responsible_person_id').enable() : this.form.get('responsible_person_id').disable();
             this.show.physician ? this.form.get('physician_id').enable() : this.form.get('physician_id').disable();
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;

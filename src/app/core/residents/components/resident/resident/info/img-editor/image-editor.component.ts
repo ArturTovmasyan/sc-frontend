@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ImgCropperConfig, ImgCropperEvent, LyResizingCroppingImages} from '@alyle/ui/resizing-cropping-images';
 import {LyTheme2, ThemeVariables} from '@alyle/ui';
-import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
+import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {FormBuilder, Validators} from '@angular/forms';
 
 @Component({

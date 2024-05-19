@@ -6,7 +6,8 @@
     <ul class="reports-list">
       <ng-container *ngFor="let report of group.value['reports']|keyvalue:no_sort_order">
         <li *ngIf="report.value['show_in_list']">
-          <a [routerLink]="" (click)="show_modal_report(group.key, report.key, report.value)"><i class="fas fa-file-download"></i> {{ report.value['title'] }}</a>
+          <a [routerLink]="" (click)="show_modal_report(group.key, report.key, report.value)"><i
+            class="fas fa-file-download"></i> {{ report.value['title'] }}</a>
         </li>
       </ng-container>
     </ul>

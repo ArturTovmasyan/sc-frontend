@@ -4,7 +4,7 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {filter, map, mergeMap} from 'rxjs/operators';
 import {TitleService} from './services/title.service';
 import {TranslateService} from '@ngx-translate/core';
-import { Spinkit } from 'ng-http-loader';
+import {Spinkit} from 'ng-http-loader';
 
 @Component({
   selector: 'body',
@@ -42,7 +42,7 @@ export class CoreComponent {
         }
         return route;
       }))
-      .pipe(filter((route) => route.outlet === 'primary' || route.outlet === 'resident-details' )) // TODO(haykg): review
+      .pipe(filter((route) => route.outlet === 'primary' || route.outlet === 'resident-details')) // TODO(haykg): review
       .pipe(mergeMap((route) => route.data))
       .subscribe((event) => this.title$.setTitle(event['title']));
 

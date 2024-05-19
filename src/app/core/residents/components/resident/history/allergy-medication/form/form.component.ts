@@ -4,38 +4,36 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {Medication} from '../../../../../models/medication';
 import {MedicationService} from '../../../../../services/medication.service';
-import {ActivatedRoute} from '@angular/router';
 import {FormComponent as MedicationFormComponent} from '../../../../medication/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
+import {ResidentSelectorService} from '../../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
   medications: Medication[];
-  resident_id: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private medication$: MedicationService,
-    private route$: ActivatedRoute,
-    private modal$: NzModalService
+    private modal$: NzModalService,
+    private residentSelector$: ResidentSelectorService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-
     this.form = this.formBuilder.group({
       id: [''],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
       medication_id: [null, Validators.required],
 
-      resident_id: [this.resident_id, Validators.required]
+      resident_id: [null, Validators.required]
     });
 
+    this.subscribe('rs_resident');
     this.subscribe('list_medication');
   }
 
@@ -49,6 +47,13 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('medication_id').setValue(params.medication_id);
             }
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
           }
         });
         break;

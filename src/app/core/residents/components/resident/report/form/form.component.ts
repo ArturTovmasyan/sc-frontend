@@ -2,17 +2,14 @@
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
-import {ActivatedRoute} from '@angular/router';
 import {FacilityService} from '../../../../services/facility.service';
 import {ApartmentService} from '../../../../services/apartment.service';
 import {RegionService} from '../../../../services/region.service';
 import {ResidentService} from '../../../../services/resident.service';
 import {GroupType} from '../../../../models/group-type.enum';
-import {Apartment} from '../../../../models/apartment';
-import {Facility} from '../../../../models/facility';
-import {Region} from '../../../../models/region';
 import {Resident} from '../../../../models/resident';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {GroupHelper} from '../../../../helper/group-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -20,9 +17,8 @@ import {ResidentSelectorService} from '../../../../services/resident-selector.se
 export class FormComponent extends AbstractForm implements OnInit {
   GroupType = GroupType;
 
-  apartments: Apartment[];
-  facilities: Facility[];
-  regions: Region[];
+  protected group_helper: GroupHelper;
+
   residents: Resident[];
 
   format_date: string = 'MM/dd/yyyy';
@@ -62,14 +58,13 @@ export class FormComponent extends AbstractForm implements OnInit {
     private region$: RegionService,
     private resident$: ResidentService,
     private residentSelector$: ResidentSelectorService,
-    private route$: ActivatedRoute
   ) {
     super();
+
+    this.group_helper = new GroupHelper();
   }
 
   ngOnInit(): void {
-    // this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
-    // this.resident_id = +this.route$.snapshot.firstChild.firstChild.params['id']; // TODO: review
     this.form = this.formBuilder.group({
       group_list: [null, Validators.required],
       group: [null, Validators.required],
@@ -97,15 +92,15 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.residentSelector$.group.subscribe(next => {
       if (next) {
         this.form.get('group_id').setValue(next);
-        this.form.get('group_list').setValue(this.get_group_data(next));
+        this.form.get('group_list').setValue(this.group_helper.get_group_data(next, this.form.get('group').value));
       }
     });
 
     this.facility$.all().pipe(first()).subscribe(res => {
       if (res) {
-        this.facilities = res;
-        this.facilities.forEach((v, i) => {
-          this.facilities[i]['type'] = GroupType.FACILITY;
+        this.group_helper.facilities = res;
+        this.group_helper.facilities.forEach((v, i) => {
+          this.group_helper.facilities[i]['type'] = GroupType.FACILITY;
         });
 
         this.residentSelector$.group.next(this.residentSelector$.group.value);
@@ -113,9 +108,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     });
     this.apartment$.all().pipe(first()).subscribe(res => {
       if (res) {
-        this.apartments = res;
-        this.apartments.forEach((v, i) => {
-          this.apartments[i]['type'] = GroupType.APARTMENT;
+        this.group_helper.apartments = res;
+        this.group_helper.apartments.forEach((v, i) => {
+          this.group_helper.apartments[i]['type'] = GroupType.APARTMENT;
         });
 
         this.residentSelector$.group.next(this.residentSelector$.group.value);
@@ -123,9 +118,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     });
     this.region$.all().pipe(first()).subscribe(res => {
       if (res) {
-        this.regions = res;
-        this.regions.forEach((v, i) => {
-          this.regions[i]['type'] = GroupType.REGION;
+        this.group_helper.regions = res;
+        this.group_helper.regions.forEach((v, i) => {
+          this.group_helper.regions[i]['type'] = GroupType.REGION;
         });
 
         this.residentSelector$.group.next(this.residentSelector$.group.value);
@@ -162,6 +157,21 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.form.get('group_id').setValue(next.id);
       }
     });
+
+  }
+
+  protected subscribe(key: string, params?: any): void {
+    switch (key) {
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.form.get('resident_id').setValue(next);
+          }
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   public init_report_parameters(parameters: any) {
@@ -183,7 +193,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       this.form.get('group_list').enable();
 
       this.form.get('group_id').setValue(this.residentSelector$.group.value);
-      this.form.get('group_list').setValue(this.get_group_data(this.residentSelector$.group.value));
+      this.form.get('group_list').setValue(this.group_helper.get_group_data(this.residentSelector$.group.value, this.form.get('group').value));
 
       if (parameter_config.select_all) {
         this.show.group_all = true;
@@ -211,31 +221,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       this.form.get('date_to').enable();
       this.format_date_to = FormComponent.php2js_date_format(parameter_config);
     }
-  }
-
-  get_group_data(id: number) {
-    let group = null;
-
-    switch (this.form.get('group').value) {
-      case GroupType.FACILITY:
-        if (this.facilities) {
-          group = this.facilities.filter(v => v.id === id).pop();
-        }
-        break;
-      case GroupType.REGION:
-        if (this.regions) {
-          group = this.regions.filter(v => v.id === id).pop();
-        }
-        break;
-      case GroupType.APARTMENT:
-        if (this.apartments) {
-          group = this.apartments.filter(v => v.id === id).pop();
-        }
-        break;
-      default:
-        break;
-    }
-    return group;
   }
 
 }

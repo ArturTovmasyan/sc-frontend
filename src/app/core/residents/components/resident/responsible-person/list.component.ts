@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {ResidentResponsiblePersonService} from '../../../services/resident-responsible-person.service';
 import {ResidentResponsiblePerson} from '../../../models/resident-responsible-person';
 import {FormComponent} from './form/form.component';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {first} from 'rxjs/operators';
@@ -15,7 +14,7 @@ import {DomSanitizer} from '@angular/platform-browser';
   templateUrl: './list.component.html',
   providers: [ResidentResponsiblePersonService]
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
   responsible_persons: ResidentResponsiblePerson[];
 
   selected_tab: number;
@@ -23,21 +22,46 @@ export class ListComponent implements OnInit {
   loading_edit_modal: boolean;
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
+  private $subscriptions: { [key: string]: Subscription; };
+
   constructor(
     private service$: ResidentResponsiblePersonService,
     private title$: TitleService,
     private modal$: NzModalService,
-    private route$: ActivatedRoute,
     private residentSelector$: ResidentSelectorService,
     private sanitizer: DomSanitizer,
   ) {
     this.selected_tab = 0;
+    this.$subscriptions = {};
   }
 
   ngOnInit(): void {
-    this.residentSelector$.resident.subscribe(next => {
-      this.reload_data();
-    });
+    this.subscribe('resident_id');
+  }
+
+  ngOnDestroy(): void {
+    Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
+  }
+
+  unsubscribe(key: string): void {
+    if (this.$subscriptions.hasOwnProperty(key)) {
+      this.$subscriptions[key].unsubscribe();
+    }
+  }
+
+  subscribe(key: string) {
+    this.unsubscribe(key);
+    switch (key) {
+      case 'resident_id':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.reload_data();
+          }
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   reload_data(id?: number) {

@@ -1,55 +1,66 @@
 <nz-button-group [nzSize]="'large'" class="resident-pages" *ngIf="residentSelector$.resident.value !== null">
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('responsible-persons')"
      title="Responsible Persons">
     <i class="seniorcare seniorcare-3x seniorcare-resident"></i>
   </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('events')"
      title="Events">
     <i class="seniorcare seniorcare-3x seniorcare-events"></i>
   </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('admissions')"
      title="Admissions">
     <i class="seniorcare seniorcare-3x seniorcare-contracts"></i>
   </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('contracts')"
      title="Contracts">
     <i class="seniorcare seniorcare-3x seniorcare-contracts"></i>
   </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('rents')"
      title="Rents">
     <i class="seniorcare seniorcare-3x seniorcare-rents"></i>
   </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('physicians')"
      title="Physicians">
     <i class="seniorcare seniorcare-3x seniorcare-physicians"></i>
   </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('medications')"
      title="Medications">
     <i class="seniorcare seniorcare-3x seniorcare-medications"></i>
   </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('history')"
      title="History">
     <i class="seniorcare seniorcare-3x seniorcare-medical-history"></i>
   </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('diets')"
      title="Dietary Restrictions">
     <i class="seniorcare seniorcare-3x seniorcare-dietary"></i>
   </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('assessments')"
      title="Assessments">
     <i class="seniorcare seniorcare-3x seniorcare-assessments"></i>
   </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }" [routerLinkActive]="['active-link']"
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('reports')" *ngIf="residentSelector$.group.value !== null"
      title="Reports">
     <i class="seniorcare seniorcare-3x seniorcare-reports"></i>
@@ -61,24 +72,24 @@
     <nz-select nzShowSearch [nzDropdownMatchSelectWidth]="false" formControlName="group">
       <nz-option nzLabel="No Contract" [nzValue]="null"></nz-option>
       <nz-option-group nzLabel="FFC - Facilities">
-        <ng-container *ngFor="let facility of facilities">
+        <ng-container *ngFor="let facility of group_helper.facilities">
           <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
         </ng-container>
       </nz-option-group>
       <nz-option-group nzLabel="IHC - Regions">
-        <ng-container *ngFor="let region of regions">
+        <ng-container *ngFor="let region of group_helper.regions">
           <nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>
         </ng-container>
       </nz-option-group>
       <nz-option-group nzLabel="IL - Apartments">
-        <ng-container *ngFor="let apartment of apartments">
+        <ng-container *ngFor="let apartment of group_helper.apartments">
           <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
         </ng-container>
       </nz-option-group>
     </nz-select>
     <i class="fa fa-users"></i>
     <nz-select nzShowSearch [nzDropdownMatchSelectWidth]="false" formControlName="active_resident_id"
-               [nzDisabled]="residentSelector$.group.value === null || active_residents === null || active_residents.length === 0">
+               [nzDisabled]="residentSelector$.group.value === null || active_residents === null || (active_residents !== null && active_residents.length === 0)">
       <ng-container *ngFor="let resident of active_residents">
         <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
       </ng-container>

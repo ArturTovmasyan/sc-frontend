@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../services/title.service';
 import {PaymentSourceService} from '../../services/payment-source.service';
@@ -13,7 +12,11 @@ import {PaymentSource} from '../../models/payment-source';
   providers: [PaymentSourceService]
 })
 export class ListComponent extends GridComponent<PaymentSource, PaymentSourceService> implements OnInit {
-  constructor(service$: PaymentSourceService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute) {
+  constructor(
+    protected service$: PaymentSourceService,
+    protected title$: TitleService,
+    protected modal$: NzModalService
+  ) {
     super(service$, title$, modal$);
 
     this.component = FormComponent;
