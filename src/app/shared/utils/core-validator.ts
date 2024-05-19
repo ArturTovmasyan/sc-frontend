@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {DateHelper} from '../helpers/date-helper';
 
 export class CoreValidator {
@@ -85,6 +85,28 @@ export class CoreValidator {
     CoreValidator.Patterns.ZIP_MAIN,
     {pattern_validator_zip_main: 'Invalid ZIP code.'}
   );
+
+  public static notNullOneOf(fields: string[], message: string) {
+    return function (control: FormControl) {
+      if (!control.parent) {
+        return null;
+      }
+
+      const fg: FormGroup = control.parent as FormGroup;
+      const fcs = fields.map(key => fg.contains(key) ? fg.get(key) : null);
+      const isNull = fcs.every(fc => fc !== null ? fc.value === null : null);
+
+      if (!isNull) {
+        fcs.forEach(fc => {
+          if (fc !== null && fc !== control && fc.value === null) {
+            fc.updateValueAndValidity();
+          }
+        });
+      }
+
+      return !isNull ? null : {not_null_array: message};
+    };
+  }
 
   public static match_other(otherName: string, label: string) {
     let me: FormControl;

@@ -1,5 +1,5 @@
 ﻿import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {FacilityService} from '../../../services/facility.service';
@@ -23,7 +23,8 @@ import {FormComponent as FacilityRoomTypeFormComponent} from '../../facility-roo
 })
 export class FormComponent extends AbstractForm implements OnInit {
   facilities: Facility[];
-  facility_room_types: FacilityRoomType[];
+  facility_room_private_types: FacilityRoomType[];
+  facility_room_shared_types: FacilityRoomType[];
 
   facility: Facility = null;
   other_occupation: number;
@@ -67,9 +68,13 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       beds: this.formBuilder.array([]),
 
-      type_id: [null, Validators.required],
+      private_type_id: [null, CoreValidator.notNullOneOf(['private_type_id', 'shared_type_id'], 'Please select at least one of the room types.')],
+      shared_type_id: [null, CoreValidator.notNullOneOf(['private_type_id', 'shared_type_id'], 'Please select at least one of the room types.')],
       facility_id: [null, Validators.required]
     });
+
+    this.form.get('private_type_id').disable();
+    this.form.get('shared_type_id').disable();
 
     this.subscribe('vc_beds');
     this.subscribe('vc_facility_id');
@@ -101,13 +106,29 @@ export class FormComponent extends AbstractForm implements OnInit {
           value: this.form.get('facility_id').value
         }]).pipe(first()).subscribe(res => {
           if (res) {
-            this.facility_room_types = res;
+            this.facility_room_private_types = res.filter(value => value.private === true);
+            this.facility_room_shared_types = res.filter(value => value.private === false);
+
+            this.form.get('private_type_id').enable();
+            this.form.get('shared_type_id').enable();
 
             if (params && params.room_type_id) {
-              this.form.get('type_id').setValue(params.room_type_id);
+              const room_type = res.filter(value => value.id === params.room_type_id).pop();
+
+              if (room_type) {
+                if (room_type.private === true) {
+                  this.form.get('private_type_id').setValue(params.room_type_id);
+                } else if (room_type.private === false) {
+                  this.form.get('shared_type_id').setValue(params.room_type_id);
+                }
+              }
             } else {
-              this.form.get('type_id').setValue(this.form.get('type_id').value);
+              this.form.get('private_type_id').setValue(this.form.get('private_type_id').value);
+              this.form.get('shared_type_id').setValue(this.form.get('shared_type_id').value);
             }
+
+            this.form.get('private_type_id').markAsTouched();
+            this.form.get('private_type_id').updateValueAndValidity();
           }
         });
         break;

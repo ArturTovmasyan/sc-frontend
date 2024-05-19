@@ -43,7 +43,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     });
 
     this.subscribe('list_payment_source');
-    this.subscribe('list_care_level');
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -56,6 +55,8 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('payment_source_id').setValue(params.payment_source_id);
             }
+
+            this.subscribe('vc_payment_source');
           }
         });
         break;
@@ -81,6 +82,19 @@ export class FormComponent extends AbstractForm implements OnInit {
                     this.add_field('levels', {care_level_id: value.id, amount: 0});
                   });
                 }
+              }
+            }
+          }
+        });
+        break;
+      case 'vc_payment_source':
+        this.$subscriptions[key] = this.form.get('payment_source_id').valueChanges.subscribe(next => {
+          if (next) {
+            const payment_source = this.payment_sources.filter(value => value.id === next).pop();
+
+            if (payment_source) {
+              if (payment_source.care_level_adjustment) {
+                this.subscribe('list_care_level');
               }
             }
           }

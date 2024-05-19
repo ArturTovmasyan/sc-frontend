@@ -15,10 +15,10 @@ import {FormError} from '../../../models/form-error';
       <span *ngSwitchCase="'not_empty'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'less_than'">This value must be less than {{ e.params.value }}.</span>
       <span *ngSwitchCase="'greater_than'">This value must be greater than {{ e.params.value }}.</span>
-        <span *ngSwitchCase="'earlier_than'">This value must be earlier than {{ e.params.value|date:(e.params.datetime?'MM/dd/yyyy hh:mm aaa':'MM/dd/yyyy') }}.</span>
-        <span *ngSwitchCase="'later_than'">This value must be later than {{ e.params.value|date:(e.params.datetime?'MM/dd/yyyy hh:mm aaa':'MM/dd/yyyy') }}.</span>
-        <span *ngSwitchCase="'earlier_than_equal'">This value must be earlier than or equal to {{ e.params.value|date:(e.params.datetime?'MM/dd/yyyy hh:mm aaa':'MM/dd/yyyy') }}.</span>
-        <span *ngSwitchCase="'later_than_equal'">This value must be later than or equal to {{ e.params.value|date:(e.params.datetime?'MM/dd/yyyy hh:mm aaa':'MM/dd/yyyy') }}.</span>
+      <span *ngSwitchCase="'earlier_than'">This value must be earlier than {{ e.params.value|date:(e.params.datetime?'MM/dd/yyyy hh:mm aaa':'MM/dd/yyyy') }}.</span>
+      <span *ngSwitchCase="'later_than'">This value must be later than {{ e.params.value|date:(e.params.datetime?'MM/dd/yyyy hh:mm aaa':'MM/dd/yyyy') }}.</span>
+      <span *ngSwitchCase="'earlier_than_equal'">This value must be earlier than or equal to {{ e.params.value|date:(e.params.datetime?'MM/dd/yyyy hh:mm aaa':'MM/dd/yyyy') }}.</span>
+      <span *ngSwitchCase="'later_than_equal'">This value must be later than or equal to {{ e.params.value|date:(e.params.datetime?'MM/dd/yyyy hh:mm aaa':'MM/dd/yyyy') }}.</span>
       <span *ngSwitchCase="'pattern_validator_match_another'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_password'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_phone'">{{ e.params }}&nbsp;</span>
@@ -34,7 +34,8 @@ import {FormError} from '../../../models/form-error';
       <span *ngSwitchCase="'pattern_validator_care_group'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_state_abbr'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_zip_main'">{{ e.params }}&nbsp;</span>
-      <!--<span *ngSwitchDefault>{{ e|json }}</span>-->
+      <span *ngSwitchCase="'not_null_array'">{{ e.params }}&nbsp;</span>
+<!--      <span *ngSwitchDefault>{{ e|json }}</span>-->
     </ng-container>
   `
 })
