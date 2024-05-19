@@ -33,14 +33,10 @@ export class DefaultLayoutComponent {
     this.profile$.get().subscribe(user => this.user = user);
 
     this.generateNavigation(router.config[0]);
-    console.log(this.navItems);
   }
 
   private generateNavigation(route: Route) {
     const nav_tree: any = this.collectRoutes(route, {}, false);
-
-    console.log(nav_tree);
-
     const nav_flat: any[] = [
       {
         divider: true

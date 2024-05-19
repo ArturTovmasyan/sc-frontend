@@ -195,7 +195,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       nzClosable: false,
       nzMaskClosable: false,
       nzTitle: null,
-      nzContent: `<p class="modal-confirm"><i class="fa fa-info text-info"></i> This medication already added for this resident.<br/>Are you sure to add one more?</p>`,
+      nzContent: `<p class="modal-confirm text-center">
+      <i class="fa fa-info text-info"></i> This medication already added for this resident.<br/>
+      Are you sure to add one more?</p>`,
       nzFooter: [
         {
           label: 'No',

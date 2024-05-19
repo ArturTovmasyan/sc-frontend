@@ -24,6 +24,12 @@
 }
 
 ::ng-deep {
+  .modal-confirm {
+    i {
+      padding: 1rem;
+    }
+  }
+
   .card-header {
     font-size: x-large;
     font-weight: 700;

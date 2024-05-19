@@ -250,7 +250,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
         nzClosable: false,
         nzMaskClosable: false,
         nzTitle: null,
-        nzContent: `<p class="modal-confirm">
+        nzContent: `<p class="modal-confirm text-center">
                     <i class="fa fa-warning text-danger"></i>
                      Are you sure you want to <strong>delete</strong> selected record(s)?
                      </p>`,

@@ -1,4 +1,5 @@
-﻿import {Component, OnInit} from '@angular/core';
+﻿import * as _ from 'lodash';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
@@ -44,18 +45,20 @@ export class FormComponent extends AbstractForm implements OnInit {
     switch (key) {
       case 'vc_primary':
         this.$subscriptions[key] = this.form.get('primary').valueChanges.subscribe(next => {
-          this.resident_physician$.get_primary(this.form.get('physician_id').value).subscribe(res => {
+          this.resident_physician$.get_primary(this.form.get('resident_id').value).subscribe(res => {
             if (res) {
-              if (res.id !== this.form.get('id').value && next) {
-                this.show_modal_confirm(next,
-                  '<i class="fa fa-info text-info"></i>' +
-                  'A Primary Physician was already assigned.<br/>' +
-                  'Would you like to change the Primary role to this Physician?');
-              } else if (res.id === this.form.get('id').value && !next) {
-                this.show_modal_confirm(next,
-                  '<i class="fa fa-warning text-warning"></i>' +
-                  'This Physician was assigned as Primary.<br/>' +
-                  'Would you like to change the Primary role of this Physician?');
+              if (!(_.isArray(res) && _.size(res) === 0)) {
+                if (res.id !== this.form.get('id').value && next) {
+                  this.show_modal_confirm(next,
+                    `<i class="fa fa-info text-info"></i>
+                    Another Physician was assigned as Primary.<br/>
+                    Would you like to change the Primary role to this Physician?`);
+                } else if (res.id === this.form.get('id').value && !next) {
+                  this.show_modal_confirm(next,
+                    `<i class="fa fa-warning text-warning"></i>
+                    This Physician was assigned as Primary.<br/>
+                    Would you like to change the Primary role of this Physician?`);
+                }
               }
             }
           });
@@ -106,7 +109,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       nzClosable: false,
       nzMaskClosable: false,
       nzTitle: null,
-      nzContent: `<p class="modal-confirm">${message}</p>`,
+      nzContent: `<p class="modal-confirm text-center">${message}</p>`,
       nzFooter: [
         {
           label: 'No',
