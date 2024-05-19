@@ -9,7 +9,7 @@ export class ViewComponent {
   _FormComponent = FormComponent;
 
   constructor(
-    protected service$: FacilityDocumentService,
+    public service$: FacilityDocumentService,
   ) {
   }
 
