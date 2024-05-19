@@ -46,6 +46,11 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       amount: [null, Validators.compose([Validators.required])],
 
+      resident_name: [false, Validators.required],
+      date_of_birth: [false, Validators.required],
+      field_name: ['', Validators.compose([Validators.maxLength(32)])],
+      field_text: ['', Validators.compose([Validators.maxLength(32)])],
+      reduce_for_away_days: [false, Validators.required],
     });
 
     this.periods = [

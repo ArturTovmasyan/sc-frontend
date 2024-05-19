@@ -56,6 +56,64 @@
     </nz-form-control>
   </nz-form-item>
 
+  <div style="text-align: center">
+    <strong>Include in Invoice</strong>
+  </div>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="resident_name">Resident Name</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="resident_name"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('resident_name')">
+        <app-field-errors [errors]="fieldErrors('resident_name')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date_of_birth">Date of Birth</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="date_of_birth"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('date_of_birth')">
+        <app-field-errors [errors]="fieldErrors('date_of_birth')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div style="text-align: center">
+    <strong>Additional Fields</strong>
+  </div>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="field_name">Field Name</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('field_name')?'error':null">
+      <input nz-input placeholder="Field Name" formControlName="field_name">
+      <nz-form-explain *ngIf="hasErrors('field_name')">
+        <app-field-errors [errors]="fieldErrors('field_name')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="field_text">Field Text</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('field_text')?'error':null">
+      <input nz-input placeholder="Field Text" formControlName="field_text">
+      <nz-form-explain *ngIf="hasErrors('field_text')">
+        <app-field-errors [errors]="fieldErrors('field_text')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div style="text-align: center">
+    <strong>Away Reduction</strong>
+  </div>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="reduce_for_away_days">Reduce for Away Days?</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="reduce_for_away_days"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('reduce_for_away_days')">
+        <app-field-errors [errors]="fieldErrors('reduce_for_away_days')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item *ngIf="form.get('space_id')">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">

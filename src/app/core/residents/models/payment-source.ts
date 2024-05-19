@@ -19,6 +19,12 @@ export class PaymentSource implements IdInterface {
   amount: number;
   levels: any[];
 
+  resident_name: boolean;
+  date_of_birth: boolean;
+  field_name: string;
+  field_text: string;
+  reduce_for_away_days: boolean;
+
   public get_amount(care_level: CareLevel): number {
     let amount: number = 0;
     if (this.care_level_adjustment) {

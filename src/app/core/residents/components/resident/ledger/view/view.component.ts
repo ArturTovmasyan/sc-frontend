@@ -65,7 +65,6 @@ export class ViewComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.ledger$.get(params.ledger_id, this.query_params).pipe(first()).subscribe(res => {
           if (res) {
             this.ledger = res;
-              console.log(this.ledger);
           }
         });
         break;
