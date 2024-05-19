@@ -10,196 +10,213 @@
   <div class="col-sm-6 col-md-4">
     <div class="row">
       <div class="col-sm-12 col-md-12">
-        <div class="card">
+        <ng-template #leadTitle>
           <div class="card-header">
             <ng-container *ngIf="!lead">
               Lead
             </ng-container>
             <ng-container *ngIf="lead">
-              <span style="font-size: 0.75rem;text-transform: uppercase;">Lead:</span> {{ lead|lead }}
+              Lead: {{ lead|lead }}
             </ng-container>
           </div>
-          <div class="card-body">
-            <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
-            <div *ngIf="lead">
-              <div nz-row [nzGutter]="4"
-                   *ngIf="lead.responsible_person_first_name || lead.responsible_person_last_name">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Responsible:</strong></div>
-                <div nz-col
-                     [nzSpan]="16">{{ lead.responsible_person_first_name }} {{ lead.responsible_person_last_name }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_address_1">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>RP Address 1:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.responsible_person_address_1 }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_address_2">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>RP Address 2:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.responsible_person_address_2 }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_csz">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>RP City State Zip:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.responsible_person_csz|csz }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_phone">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>RP Phone:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.responsible_person_phone }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_email">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>RP Email:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.responsible_person_email }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.care_type">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Care Type:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.care_type.title }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.payment_type">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Payment Type:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.payment_type.title }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.state">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Status:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.state|lead_state }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.owner">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Owner:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.owner|user }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.birthday">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Birthday:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.birthday|date:'MMM d, y' }}
-                  ({{ today | amDifference: lead.birthday :'years' : false }} years)
-                </div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.spouse_name">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Spouse's Name:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.spouse_name }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.current_residence">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Current Residence:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.current_residence.title }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.primary_facility">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Primary Facility:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.primary_facility.name }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="lead.facilities && lead.facilities.length > 0">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Secondary Facilities:</strong></div>
-                <div nz-col [nzSpan]="16">
-                  <ng-container *ngFor="let facility of lead.facilities; let last = last;">
-                    {{ facility.name }}
-                    <ng-container *ngIf="!last">,</ng-container>
-                  </ng-container>
-                </div>
-              </div>
+        </ng-template>
 
-              <nz-divider></nz-divider>
-              <div class="d-flex">
-                <nz-button-group [nzSize]="'small'" class="ml-auto">
-                  <button type="button" nz-button nzType="default"
-                          (click)="show_modal_edit('lead')">
-                    <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
-                  </button>
-                  <ng-container *ngIf="lead.web_lead">
-                    <button *ngIf="!lead.spam" type="button" nz-button nzType="default"
-                            (click)="mark_spam(true)">
-                      <i nz-icon nzType="file-exclamation"></i> {{ "grid.mark_spam"|translate }}
-                    </button>
-                    <button *ngIf="lead.spam" type="button" nz-button nzType="default"
-                            (click)="mark_spam(false)">
-                      <i nz-icon nzType="file-done"></i> {{ "grid.unmark_spam"|translate }}
-                    </button>
-                  </ng-container>
-                </nz-button-group>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-12">
-        <template [ngTemplateOutlet]="referralBody" ></template>
-
-        <ng-template #referralBody>
+        <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="lead.contact" class="card-header" style="padding: 0;">
-              <div class="card">
-                <div class="card-body" style="font-size: 14px; font-weight: 500; text-align: left;">
-                  <nz-empty *ngIf="!referral" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
-                  <ng-container *ngIf="referral">
-                    <div nz-row [nzGutter]="4" *ngIf="referral.type">
-                      <div nz-col [nzSpan]="8" class="text-right"><strong>Type:</strong></div>
-                      <div nz-col [nzSpan]="16">{{ referral.type.title }}</div>
+            <nz-collapse-panel [nzHeader]="leadTitle" nzActive="true">
+              <div class="card-body" style="font-size: 14px; font-weight: 500; text-align: left;">
+                <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+                <div *ngIf="lead">
+                  <div nz-row [nzGutter]="4"
+                       *ngIf="lead.responsible_person_first_name || lead.responsible_person_last_name">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Responsible:</strong></div>
+                    <div nz-col
+                         [nzSpan]="16">{{ lead.responsible_person_first_name }} {{ lead.responsible_person_last_name }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_address_1">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>RP Address 1:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.responsible_person_address_1 }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_address_2">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>RP Address 2:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.responsible_person_address_2 }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_csz">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>RP City State Zip:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.responsible_person_csz|csz }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_phone">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>RP Phone:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.responsible_person_phone }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_email">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>RP Email:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.responsible_person_email }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.care_type">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Care Type:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.care_type.title }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.payment_type">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Payment Type:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.payment_type.title }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.state">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Status:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.state|lead_state }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.owner">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Owner:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.owner|user }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.birthday">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Birthday:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.birthday|date:'MMM d, y' }}
+                      ({{ today | amDifference: lead.birthday :'years' : false }} years)
                     </div>
-                    <div nz-row [nzGutter]="4" *ngIf="referral.organization">
-                      <div nz-col [nzSpan]="8" class="text-right"><strong>Organization:</strong></div>
-                      <div nz-col [nzSpan]="16">{{ referral.organization.name }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.spouse_name">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Spouse's Name:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.spouse_name }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.current_residence">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Current Residence:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.current_residence.title }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.primary_facility">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Primary Facility:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.primary_facility.name }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.facilities && lead.facilities.length > 0">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Secondary Facilities:</strong></div>
+                    <div nz-col [nzSpan]="16">
+                      <ng-container *ngFor="let facility of lead.facilities; let last = last;">
+                        {{ facility.name }}
+                        <ng-container *ngIf="!last">,</ng-container>
+                      </ng-container>
                     </div>
-                    <ng-container *ngIf="referral.contact && referral.contact.phones && referral.contact.phones.length > 0">
-                      <div nz-row [nzGutter]="4">
-                        <div nz-col [nzSpan]="8" class="text-right"><strong>Phone Numbers:</strong></div>
-                        <div nz-col [nzSpan]="12">&nbsp;</div>
-                      </div>
-                      <div nz-row [nzGutter]="4" *ngFor="let phone of referral.contact.phones">
-                        <div nz-col [nzSpan]="8" class="text-right"><strong>{{ phone.type|phone_type }}:</strong></div>
-                        <div nz-col [nzSpan]="12">
-                          <a
-                                  href="tel:{{ phone.number| mask: '(000) 000-0000' }}">{{ phone.number| mask: '(000) 000-0000' }}</a>
-                          <ng-container *ngIf="phone.extension">, ext. {{ phone.extension }}</ng-container>
-                        </div>
-                        <div *ngIf="phone.primary" nz-col [nzSpan]="2">
-                          <i class="fas fa-key" title="Primary"></i>
-                        </div>
-                        <div *ngIf="phone.sms_enabled" nz-col [nzSpan]="2">
-                          <i class="fas fa-sms" title="SMS Enabled"></i>
-                        </div>
-                      </div>
-                    </ng-container>
-                    <div nz-row [nzGutter]="4"
-                         *ngIf="referral.contact && referral.contact.emails && referral.contact.emails.length > 0">
-                      <div nz-col [nzSpan]="8" class="text-right"><strong>Email(s):</strong></div>
-                      <div nz-col [nzSpan]="16">
-                        <ng-container *ngFor="let email of referral.contact.emails; let last = last;">
-                          {{ email }}
-                          <ng-container *ngIf="!last">,</ng-container>
-                        </ng-container>
-                      </div>
-                    </div>
-                    <div nz-row [nzGutter]="4" *ngIf="referral.notes">
-                      <div nz-col [nzSpan]="8" class="text-right"><strong>Notes:</strong></div>
-                      <div nz-col [nzSpan]="16">{{ referral.notes }}</div>
-                    </div>
-                  </ng-container>
+                  </div>
 
                   <nz-divider></nz-divider>
                   <div class="d-flex">
                     <nz-button-group [nzSize]="'small'" class="ml-auto">
-                      <button *ngIf="referral" type="button" nz-button nzType="default"
-                              (click)="show_modal_edit('referral'); $event.preventDefault();">
+                      <button type="button" nz-button nzType="default"
+                              (click)="show_modal_edit('lead')">
                         <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
                       </button>
-                      <button *ngIf="!referral" type="button" nz-button nzType="default"
-                              (click)="show_modal_add('referral'); $event.preventDefault();">
-                        <i nz-icon nzType="plus"></i> {{ "grid.add"|translate }}
-                      </button>
+                      <ng-container *ngIf="lead.web_lead">
+                        <button *ngIf="!lead.spam" type="button" nz-button nzType="default"
+                                (click)="mark_spam(true)">
+                          <i nz-icon nzType="file-exclamation"></i> {{ "grid.mark_spam"|translate }}
+                        </button>
+                        <button *ngIf="lead.spam" type="button" nz-button nzType="default"
+                                (click)="mark_spam(false)">
+                          <i nz-icon nzType="file-done"></i> {{ "grid.unmark_spam"|translate }}
+                        </button>
+                      </ng-container>
                     </nz-button-group>
                   </div>
                 </div>
               </div>
             </nz-collapse-panel>
           </nz-collapse>
-        </ng-template>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-12">
-        <template [ngTemplateOutlet]="hobbyBody" ></template>
+        <ng-template #referralTitle>
+          <div class="card-header">
+            <ng-container *ngIf="!(referral && referral.contact)">
+              Referral
+            </ng-container>
+            <ng-container *ngIf="referral && referral.contact">
+              Referral: {{ referral.contact|lead_contact }}
+            </ng-container>
+          </div>
+        </ng-template>
 
-        <ng-template #hobbyBody>
+        <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="hobby_section_title" class="card-header" style="padding: 0;">
-              <div class="card">
-                <div class="card-body" style="font-size: 14px; font-weight: 500; text-align: left;">
+          <nz-collapse-panel [nzHeader]="referralTitle">
+            <div class="card-body" style="font-size: 14px; font-weight: 500; text-align: left;">
+                <nz-empty *ngIf="!referral" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+                <ng-container *ngIf="referral">
+                  <div nz-row [nzGutter]="4" *ngIf="referral.type">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Type:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ referral.type.title }}</div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="referral.organization">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Organization:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ referral.organization.name }}</div>
+                  </div>
+                  <ng-container *ngIf="referral.contact && referral.contact.phones && referral.contact.phones.length > 0">
+                    <div nz-row [nzGutter]="4">
+                      <div nz-col [nzSpan]="8" class="text-right"><strong>Phone Numbers:</strong></div>
+                      <div nz-col [nzSpan]="12">&nbsp;</div>
+                    </div>
+                    <div nz-row [nzGutter]="4" *ngFor="let phone of referral.contact.phones">
+                      <div nz-col [nzSpan]="8" class="text-right"><strong>{{ phone.type|phone_type }}:</strong></div>
+                      <div nz-col [nzSpan]="12">
+                        <a
+                                href="tel:{{ phone.number| mask: '(000) 000-0000' }}">{{ phone.number| mask: '(000) 000-0000' }}</a>
+                        <ng-container *ngIf="phone.extension">, ext. {{ phone.extension }}</ng-container>
+                      </div>
+                      <div *ngIf="phone.primary" nz-col [nzSpan]="2">
+                        <i class="fas fa-key" title="Primary"></i>
+                      </div>
+                      <div *ngIf="phone.sms_enabled" nz-col [nzSpan]="2">
+                        <i class="fas fa-sms" title="SMS Enabled"></i>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div nz-row [nzGutter]="4"
+                       *ngIf="referral.contact && referral.contact.emails && referral.contact.emails.length > 0">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Email(s):</strong></div>
+                    <div nz-col [nzSpan]="16">
+                      <ng-container *ngFor="let email of referral.contact.emails; let last = last;">
+                        {{ email }}
+                        <ng-container *ngIf="!last">,</ng-container>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div nz-row [nzGutter]="4" *ngIf="referral.notes">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Notes:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ referral.notes }}</div>
+                  </div>
+                </ng-container>
+
+                <nz-divider></nz-divider>
+                <div class="d-flex">
+                  <nz-button-group [nzSize]="'small'" class="ml-auto">
+                    <button *ngIf="referral" type="button" nz-button nzType="default"
+                            (click)="show_modal_edit('referral'); $event.preventDefault();">
+                      <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
+                    </button>
+                    <button *ngIf="!referral" type="button" nz-button nzType="default"
+                            (click)="show_modal_add('referral'); $event.preventDefault();">
+                      <i nz-icon nzType="plus"></i> {{ "grid.add"|translate }}
+                    </button>
+                  </nz-button-group>
+                </div>
+              </div>
+          </nz-collapse-panel>
+        </nz-collapse>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <ng-template #hobbyTitle>
+          <div class="card-header">
+            Hobbies & Interests
+          </div>
+        </ng-template>
+
+        <div class="card">
+          <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
+            <nz-collapse-panel [nzHeader]="hobbyTitle">
+              <div class="card-body" style="font-size: 14px; font-weight: 500; text-align: left;">
                   <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
                   <div *ngIf="lead">
                     <div nz-row [nzGutter]="4" *ngIf="lead.hobbies && lead.hobbies.length > 0">
@@ -215,86 +232,112 @@
                       <div nz-col [nzSpan]="8" class="text-right"><strong>Personal Interests Notes:</strong></div>
                       <div nz-col [nzSpan]="16">{{ lead.notes }}</div>
                     </div>
+
+                    <div class="d-flex">
+                      <nz-button-group [nzSize]="'small'" class="ml-auto">
+                        <button type="button" nz-button nzType="default"
+                                (click)="show_modal_edit('interest')">
+                          <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
+                        </button>
+                      </nz-button-group>
+                    </div>
                   </div>
                 </div>
-              </div>
             </nz-collapse-panel>
           </nz-collapse>
-        </ng-template>
+        </div>
       </div>
     </div>
   </div>
   <div class="col-sm-6 col-md-8">
     <div class="row">
       <div *ngIf="checkPermission(['persistence-lead-lead_funnel_stage'])" class="col-sm-12 col-md-12">
-        <template [ngTemplateOutlet]="funnelStageBody" ></template>
-
-        <ng-template #funnelStageBody>
-          <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="lead.funnel_stage" class="card-header" style="padding: 0;">
-              <div class="card">
-                <div class="card-body">
-                  <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
-                  <app-lead-lead-funnel-stage *ngIf="lead"
-                                              [lead_id]="lead.id"
-                                              (reload)="broadcast_reload_event($event)"></app-lead-lead-funnel-stage>
-                </div>
-              </div>
-            </nz-collapse-panel>
-          </nz-collapse>
+        <ng-template #funnelsStage>
+          <div class="card-header">
+            <ng-container *ngIf="!lead">
+              Funnel Stage History
+            </ng-container>
+            <ng-container *ngIf="lead">
+              Funnel Stage: {{ lead.funnel_stage }}
+            </ng-container>
+          </div>
         </ng-template>
+
+        <div class="card">
+          <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
+          <nz-collapse-panel [nzHeader]="funnelsStage">
+            <div class="card-body">
+              <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+              <app-lead-lead-funnel-stage *ngIf="lead"
+                                          [lead_id]="lead.id"
+                                          (reload)="broadcast_reload_event($event)"></app-lead-lead-funnel-stage>
+            </div>
+          </nz-collapse-panel>
+        </nz-collapse>
+        </div>
       </div>
       <div *ngIf="checkPermission(['persistence-lead-lead_temperature'])" class="col-sm-12 col-md-12">
-        <template [ngTemplateOutlet]="temperatureBody" ></template>
+        <ng-template #temperature>
+          <div class="card-header">
+            <ng-container *ngIf="!lead">
+              Temperature History
+            </ng-container>
+            <ng-container *ngIf="lead">
+              Temperature: {{ lead.temperature }}
+            </ng-container>
+          </div>
+        </ng-template>
 
-        <ng-template #temperatureBody>
+        <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="lead.temperature" class="card-header" style="padding: 0;">
-              <div class="card">
+            <nz-collapse-panel [nzHeader]="temperature">
                 <div class="card-body">
                   <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
                   <app-lead-lead-temperature *ngIf="lead"
                                              [lead_id]="lead.id"
                                              (reload)="broadcast_reload_event($event)"></app-lead-lead-temperature>
                 </div>
-              </div>
             </nz-collapse-panel>
           </nz-collapse>
-        </ng-template>
+        </div>
       </div>
       <div *ngIf="checkPermission(['persistence-lead-assessment-assessment'])" class="col-sm-12 col-md-12">
-        <template [ngTemplateOutlet]="assessmentBody" ></template>
+        <ng-template #assessment>
+          <div class="card-header">
+            Assessments
+          </div>
+        </ng-template>
 
-        <ng-template #assessmentBody>
+        <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="assessment_section_title" class="card-header" style="padding: 0;">
-              <div class="card">
-                <div class="card-body">
-                  <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
-                  <app-lead-lead-assessment *ngIf="lead"
-                                            [lead_id]="lead.id"></app-lead-lead-assessment>
-                </div>
+            <nz-collapse-panel [nzHeader]="assessment">
+              <div class="card-body">
+                <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+                <app-lead-lead-assessment *ngIf="lead"
+                                          [lead_id]="lead.id"></app-lead-lead-assessment>
               </div>
             </nz-collapse-panel>
           </nz-collapse>
-        </ng-template>
+        </div>
       </div>
       <div *ngIf="checkPermission(['persistence-lead-activity'])" class="col-sm-12 col-md-12">
-        <template [ngTemplateOutlet]="activityBody" ></template>
+        <ng-template #activity>
+          <div class="card-header">
+            Activity Log
+          </div>
+        </ng-template>
 
-        <ng-template #activityBody>
+        <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="activity_log_section_title" class="card-header" style="padding: 0;">
-              <div class="card">
-                <div class="card-body">
-                  <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
-                  <app-lead-lead-activity *ngIf="lead"
-                                          [lead_id]="lead.id" [reload]="broadcast_reload"></app-lead-lead-activity>
-                </div>
+            <nz-collapse-panel [nzHeader]="activity">
+              <div class="card-body">
+                <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+                <app-lead-lead-activity *ngIf="lead"
+                                        [lead_id]="lead.id" [reload]="broadcast_reload"></app-lead-lead-activity>
               </div>
             </nz-collapse-panel>
           </nz-collapse>
-        </ng-template>
+        </div>
       </div>
     </div>
   </div>

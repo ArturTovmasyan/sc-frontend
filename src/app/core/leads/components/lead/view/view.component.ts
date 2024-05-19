@@ -11,6 +11,7 @@ import {ReferralService} from '../../../services/referral.service';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {FormComponent as LeadFormComponent} from '../form/form.component';
 import {FormComponent as ReferralFormComponent} from '../../referral/form/form.component';
+import {FormComponent as InterestFormComponent} from '../interest-form/form.component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ActivityOwnerType} from '../../../models/activity';
 import {AuthGuard} from '../../../../guards/auth.guard';
@@ -20,10 +21,6 @@ import {AuthGuard} from '../../../../guards/auth.guard';
 })
 export class ViewComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
-
-  activity_log_section_title = 'Activity Log';
-  assessment_section_title = 'Assessments';
-  hobby_section_title = 'Hobbies & Interests';
 
   broadcast_reload: number;
 
@@ -139,6 +136,14 @@ export class ViewComponent implements OnInit, OnDestroy {
           error => {
           });
         break;
+      case 'interest':
+          this.lead$.get(this.lead.id).subscribe(
+              res => {
+                  this.create_modal(InterestFormComponent, data => this.lead$.interest(data), res);
+              },
+              error => {
+              });
+          break;
       default:
         break;
     }

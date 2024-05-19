@@ -48,7 +48,6 @@ export class Lead implements IdInterface {
 
   funnel_stage: string;
   temperature: string;
-  contact: string;
 }
 
 export enum LeadState {

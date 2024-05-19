@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {Lead} from '../models/lead';
 import {GridService} from '../../../shared/services/grid.service';
+import {Message} from "../../models/message";
 
 @Injectable({providedIn: 'root'})
 export class LeadService extends GridService<Lead> {
@@ -14,5 +15,9 @@ export class LeadService extends GridService<Lead> {
 
   public spam(ids: number[], state: boolean) {
     return this.http.put<any>(this.SERVICE_URL_BASE + `/spam`, {ids: ids, spam: state});
+  }
+
+  public interest(data) {
+      return this.http.put<Message>(this.SERVICE_URL_BASE + `/${data.id}/interest`, data);
   }
 }

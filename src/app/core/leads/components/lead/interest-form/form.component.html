@@ -1,0 +1,43 @@
+﻿<h4>Hobbies/Interests</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="hobbies">Hobby(s)</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('hobbies')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="hobbies">
+          <ng-container *ngFor="let hobby of hobbies">
+            <nz-option [nzLabel]="hobby.title" [nzValue]="hobby.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('hobby');">
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('hobbies')">
+        <app-field-errors [errors]="fieldErrors('hobbies')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
+      <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('notes')">
+        <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
