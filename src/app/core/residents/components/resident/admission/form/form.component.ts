@@ -432,6 +432,10 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     this.subscribe('list_region');
   }
 
+  before_submit(): void {
+    this.form.get('date').setValue(DateHelper.magicDate(this.form.get('date').value));
+  }
+
   after_submit(): void {
     const rval = this.residentSelector$.resident.value;
     this.residentSelector$.resident.next(null);
