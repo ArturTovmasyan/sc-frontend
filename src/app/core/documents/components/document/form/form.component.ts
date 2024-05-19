@@ -56,6 +56,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       file: [null],
 
+      file_name: [''],
+
       notification: [false, Validators.compose([Validators.required])],
       emails: [[]],
 
@@ -124,6 +126,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     if ($event.target.files && $event.target.files.length > 0) {
       const file = $event.target.files[0];
       model.file_name = StringUtil.truncate(file.name, 25);
+      this.form.get('file_name').setValue(file.name);
       reader.readAsDataURL(file);
       reader.onload = () => {
         if (reader.result) {

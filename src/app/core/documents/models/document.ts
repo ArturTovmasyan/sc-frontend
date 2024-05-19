@@ -10,6 +10,7 @@ export class Document implements IdInterface {
 
   file: any; // PDF blob separate
   extension?: any;
+  file_name: string;
 
   date_uploaded: Date;
 }
