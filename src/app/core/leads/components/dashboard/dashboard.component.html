@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-header">
+    {{ title }}
+  </div>
+  <div class="card-body">
+    <nz-collapse [nzNoAnimation]="true">
+      <nz-collapse-panel [nzHeader]="'Leads'">
+        <app-dashboard-lead></app-dashboard-lead>
+      </nz-collapse-panel>
+      <nz-collapse-panel [nzHeader]="'Contacts'">
+      </nz-collapse-panel>
+      <nz-collapse-panel [nzHeader]="'My Task Activity Log'">
+        <app-dashboard-activity></app-dashboard-activity>
+      </nz-collapse-panel>
+      <nz-collapse-panel [nzHeader]="'Change Log'">
+        <app-dashboard-change-log></app-dashboard-change-log>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
+</div>

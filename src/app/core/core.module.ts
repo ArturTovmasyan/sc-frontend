@@ -214,6 +214,13 @@ import {AdmissionTypePipe} from './residents/pipes/admission-type.pipe';
 import {LeadStatePipe} from './leads/pipes/lead-state.pipe';
 import {InvitationComponent} from './components/account/invitation/invitation.component';
 // import {LeadModule} from './leads/lead.module';
+import {DashboardComponent as LeadDashboardComponent} from './leads/components/dashboard/dashboard.component';
+import {ListComponent as DashboardActivityListComponent} from './leads/components/dashboard/activity-list.component';
+import {ListComponent as DashboardLeadListComponent} from './leads/components/dashboard/lead-list.component';
+import {ListComponent as DashboardContactListComponent} from './leads/components/dashboard/contact-list.component';
+import {ListComponent as DashboardChangeLogListComponent} from './leads/components/dashboard/change-log-list.component';
+import {ListComponent as LeadContactListComponent} from './leads/components/contact/list.component';
+import {FormComponent as LeadContactFormComponent} from './leads/components/contact/form/form.component';
 import {FormComponent as ActivityStatusFormComponent} from './leads/components/activity-status/form/form.component';
 import {FormComponent as ActivityTypeFormComponent} from './leads/components/activity-type/form/form.component';
 import {FormComponent as ReferrerTypeFormComponent} from './leads/components/referrer-type/form/form.component';
@@ -444,6 +451,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HelpComponent,
     HomeComponent,
 
+    LeadDashboardComponent,
+    DashboardActivityListComponent,
+    DashboardLeadListComponent,
+    DashboardContactListComponent,
+    DashboardChangeLogListComponent,
     ActivityStatusListComponent,
     ActivityStatusFormComponent,
     ActivityTypeListComponent,
@@ -452,6 +464,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReferrerTypeFormComponent,
     CareTypeListComponent,
     CareTypeFormComponent,
+
+    LeadContactListComponent,
+    LeadContactFormComponent,
 
     StateChangeReasonListComponent,
     StateChangeReasonFormComponent,
@@ -600,6 +615,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReferralFormComponent,
     LeadFormComponent,
     ActivityFormComponent,
+
+    LeadContactFormComponent,
 
     ReferralReportFormComponent,
     LeadReportFormComponent,
