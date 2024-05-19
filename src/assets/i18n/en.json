@@ -156,7 +156,7 @@
       "date": "Effective Date",
       "base_rates": "Base Rates"
     },
-    "payment-type-list": {
+    "rp-payment-type-list": {
       "id": "ID",
       "title": "Title",
       "space": "Space"

@@ -211,8 +211,8 @@ import {FormComponent as PaymentSourceFormComponent} from './residents/component
 import {ListComponent as PaymentSourceBaseRateListComponent} from './residents/components/payment-source-base-rate/list.component';
 import {FormComponent as PaymentSourceBaseRateFormComponent} from './residents/components/payment-source-base-rate/form/form.component';
 
-import {ListComponent as PaymentTypeListComponent} from './residents/components/payment-type/list.component';
-import {FormComponent as PaymentTypeFormComponent} from './residents/components/payment-type/form/form.component';
+import {ListComponent as RpPaymentTypeListComponent} from './residents/components/rp-payment-type/list.component';
+import {FormComponent as RpPaymentTypeFormComponent} from './residents/components/rp-payment-type/form/form.component';
 
 import {ListComponent as ExpenseListComponent} from './residents/components/expense/list.component';
 import {FormComponent as ExpenseFormComponent} from './residents/components/expense/form/form.component';
@@ -585,8 +585,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PaymentSourceBaseRateListComponent,
     PaymentSourceBaseRateFormComponent,
 
-    PaymentTypeListComponent,
-    PaymentTypeFormComponent,
+    RpPaymentTypeListComponent,
+    RpPaymentTypeFormComponent,
 
     ExpenseListComponent,
     ExpenseFormComponent,
@@ -805,7 +805,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     PaymentSourceFormComponent,
     PaymentSourceBaseRateFormComponent,
-    PaymentTypeFormComponent,
+    RpPaymentTypeFormComponent,
     ExpenseFormComponent,
     CreditFormComponent,
     DiscountFormComponent,

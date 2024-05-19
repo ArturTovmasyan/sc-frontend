@@ -47,7 +47,7 @@ import {ListComponent as FacilityDiningRoomListComponent} from './residents/comp
 import {ListComponent as RegionListComponent} from './residents/components/region/list.component';
 
 import {ListComponent as PaymentSourceListComponent} from './residents/components/payment-source/list.component';
-import {ListComponent as PaymentTypeListComponent} from './residents/components/payment-type/list.component';
+import {ListComponent as RpPaymentTypeListComponent} from './residents/components/rp-payment-type/list.component';
 import {ListComponent as ExpenseListComponent} from './residents/components/expense/list.component';
 import {ListComponent as DiscountListComponent} from './residents/components/discount/list.component';
 import {ListComponent as CreditListComponent} from './residents/components/credit/list.component';
@@ -603,11 +603,11 @@ const routes: Routes = [
       },
 
       {
-        path: 'payment-types', component: PaymentTypeListComponent,
+        path: 'rp-payment-types', component: RpPaymentTypeListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
-          title: 'Payment Types',
-          permissions: ['activity-reference', 'persistence-common-payment_type']
+          title: 'RP Payment Types',
+          permissions: ['activity-reference', 'persistence-common-rp_payment_type']
         },
         canActivate: [AuthGuard]
       },
