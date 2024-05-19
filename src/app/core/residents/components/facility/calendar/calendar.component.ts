@@ -22,6 +22,8 @@ import {ViewComponent as ResidentEventViewComponent} from '../../resident/event/
 import {ViewComponent as ResidentRentViewComponent} from '../../resident/rent/rent/view/view.component';
 import {ViewComponent as ResidentRentIncreaseViewComponent} from '../../resident/rent/rent-increase/view/view.component';
 import {ResidentEventService} from '../../../services/resident-event.service';
+import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
+import {ResidentRentService} from '../../../services/resident-rent.service';
 
 @Component({
   selector: 'app-facility-calendar',
@@ -59,6 +61,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private facility$: FacilityService,
     private facilityEvent$: FacilityEventService,
     private residentEvent$: ResidentEventService,
+    private residentRent$: ResidentRentService,
+    private residentRentIncrease$: ResidentRentIncreaseService,
     private eventDefinition$: EventDefinitionService,
     private auth_$: AuthGuard
   ) {
@@ -206,8 +210,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     });
   }
 
-  show_modal_view(id: number, component: any): void {
-    this.residentEvent$.get(id).pipe(first()).subscribe(res => {
+  show_modal_view(id: number, service$: any, component: any): void {
+    service$.get(id).pipe(first()).subscribe(res => {
       if (res) {
         this.create_modal_view(component, res);
       }
@@ -361,13 +365,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.show_modal_edit($event.event.id);
         break;
       case CalendarEventType.RESIDENT:
-        this.show_modal_view($event.event.id, ResidentEventViewComponent);
+        this.show_modal_view($event.event.id, this.residentEvent$, ResidentEventViewComponent);
         break;
       case CalendarEventType.RENT:
-        this.show_modal_view($event.event.id, ResidentRentViewComponent);
+        this.show_modal_view($event.event.id, this.residentRent$, ResidentRentViewComponent);
         break;
       case CalendarEventType.RENT_INCREASE:
-        this.show_modal_view($event.event.id, ResidentRentIncreaseViewComponent);
+        this.show_modal_view($event.event.id, this.residentRentIncrease$, ResidentRentIncreaseViewComponent);
         break;
       default:
         break;
