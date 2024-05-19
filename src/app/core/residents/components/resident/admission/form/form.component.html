@@ -6,7 +6,8 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="admission_type" nzRequired>Type</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('admission_type')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="admission_type">
+          <ng-container *ngIf="edit_mode">{{ get_admission_type() }}</ng-container>
+          <nz-select *ngIf="!edit_mode" nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="admission_type">
             <ng-container *ngFor="let admission_type of admission_types">
               <nz-option [nzLabel]="(admission_type.name)|translate" [nzValue]="admission_type.id"></nz-option>
             </ng-container>

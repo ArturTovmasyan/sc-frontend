@@ -11,8 +11,12 @@ export class ProfileService {
   constructor(private http: HttpClient) {
   }
 
-  get(): Observable<User> {
+  me(): Observable<User> {
     return this.http.get<User>(`${environment.apiUrl}/api/v1.0/profile/me`);
+  }
+
+  get(): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}/api/v1.0/profile/view`);
   }
 
   edit(data: any): Observable<Message> {

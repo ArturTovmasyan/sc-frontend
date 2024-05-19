@@ -39,10 +39,10 @@
       <div class="col-lg-2 col-md-4" *ngFor="let resident of data.residents">
         <div class="row">
           <div class="col-12 text-center">
-            <img *ngIf="!resident.photo" src="/assets/img/person_placeholder.png" class="img-thumbnail"
+            <img *ngIf="!resident.image || !resident.image.photo_150_150" src="/assets/img/person_placeholder.png" class="img-thumbnail"
                  style="max-height: 150px"
                  alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
-            <img *ngIf="resident.photo" src="{{ resident.photo }}" class="img-thumbnail"
+            <img *ngIf="resident.image && resident.image.photo_150_150" src="{{ resident.image.photo_150_150 }}" class="img-thumbnail"
                  style="max-height: 150px"
                  alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
           </div>

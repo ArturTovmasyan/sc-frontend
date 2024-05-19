@@ -33,7 +33,7 @@ export class DefaultLayoutComponent {
       attributes: true
     });
 
-    this.profile$.get().subscribe(user => {
+    this.profile$.me().subscribe(user => {
       this.user = user;
 
       this.licenseVisible = this.user && this.user.license_accepted === false;
@@ -53,19 +53,27 @@ export class DefaultLayoutComponent {
     // TODO: recurse if nested level > 2
     Object.keys(nav_tree).forEach(v => {
       if (nav_tree[v].length > 0) {
-        nav_flat.push({
-          title: true,
-          name: v
-        });
-
+        const temp_flat = [];
         nav_tree[v].forEach(vv => {
           if (vv.hasOwnProperty('children')) {
             vv.children = vv.children.filter(vvv => vvv.hasOwnProperty('flat') && vvv.flat.length > 0);
             Object.keys(vv.children).forEach(vvv => vv.children[vvv] = vv.children[vvv].flat[0]);
-          }
 
-          nav_flat.push(vv);
+            if (vv.children.length > 0) {
+              temp_flat.push(vv);
+            }
+          } else {
+            temp_flat.push(vv);
+          }
         });
+
+        if (temp_flat.length > 0) {
+          nav_flat.push({
+            title: true,
+            name: v
+          });
+          nav_flat.push(...temp_flat);
+        }
       }
     });
 

@@ -331,4 +331,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_region');
   }
 
+  get_admission_type() {
+    const type = this.admission_types.filter(v => v.id === this.form.get('admission_type').value).pop();
+    return type ? type.name : null;
+  }
 }

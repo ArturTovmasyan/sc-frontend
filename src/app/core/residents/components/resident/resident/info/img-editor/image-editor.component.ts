@@ -15,13 +15,13 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
   classes = this.theme.addStyleSheet((theme: ThemeVariables) => ({
     cropping: {
       maxWidth: '400px',
-      height: '300px'
+      height: '400px'
     }
   }));
   cropper_config: ImgCropperConfig = {
     autoCrop: true,
-    width: 150, // Default `250`
-    height: 150, // Default `200`
+    width: 300, // Default `250`
+    height: 300, // Default `200`
   };
 
   constructor(private formBuilder: FormBuilder, private theme: LyTheme2) {

@@ -5,6 +5,7 @@ import {AuthenticationService} from '../../../services/auth.service';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {Message} from '../../../models/message';
 import {ProfileService} from '../../../services/profile.service';
+import {UserImage} from '../../../models/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,8 +28,7 @@ export class SignInComponent extends AbstractForm implements OnInit {
     };
 
     this.postSubmit = (data: Message) => {
-      profile$.get().subscribe(user => {
-          user.avatar = null; // TODO: review when imagine ready
+      profile$.me().subscribe(user => {
           localStorage.setItem('user', btoa(JSON.stringify(user)));
           this.router.navigate([this.returnUrl]);
         }

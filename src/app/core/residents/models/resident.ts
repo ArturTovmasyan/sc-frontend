@@ -14,7 +14,7 @@ export class Resident implements IdInterface {
   last_name: string;
   birthday: Date;
 
-  photo: string;
+  image: ResidentImage;
   gender: Gender;
 
   phones: Phone[];
@@ -24,4 +24,13 @@ export class Resident implements IdInterface {
 
   room_number?: string;
   bed_number?: string;
+}
+
+export class ResidentImage {
+  id: number;
+
+  photo: string;
+  photo_35_35: string;
+  photo_150_150: string;
+  photo_300_300: string;
 }

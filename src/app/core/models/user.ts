@@ -12,7 +12,7 @@ export class User {
   completed: boolean;
   last_activity_at: Date;
 
-  avatar: string;
+  image: UserImage;
   phones: Phone[];
 
   permissions: string[];
@@ -20,4 +20,13 @@ export class User {
   space: Space;
 
   license_accepted: boolean;
+}
+
+export class UserImage {
+  id: number;
+
+  photo: string;
+  photo_35_35: string;
+  photo_150_150: string;
+  photo_300_300: string;
 }

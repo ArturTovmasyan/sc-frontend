@@ -420,7 +420,8 @@
       "state": "State",
       "state_change_reason": "State Change Reason",
       "effective_date": "Effective Date",
-      "referral": "Referral"
+      "referral": "Referral",
+      "primary_facility": "Primary Facility"
     },
     "lead-activity-list": {
       "button": {
