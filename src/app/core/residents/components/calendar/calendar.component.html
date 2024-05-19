@@ -11,6 +11,7 @@
       [views]="calendarViews"
       [plugins]="calendarPlugins"
       [events]="calendarEvents"
+      (datesRender)="datesRender($event)"
       (eventClick)="eventMouseEnter($event)"
     ></full-calendar>
   </div>

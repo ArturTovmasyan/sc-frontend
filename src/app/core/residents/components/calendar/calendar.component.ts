@@ -1,5 +1,5 @@
 import dayGridPlugin from '@fullcalendar/daygrid';
-import listPlugin from '@fullcalendar/list';
+import listPlugin, {ListView} from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NzModalService} from 'ng-zorro-antd';
@@ -92,7 +92,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 id: event.id,
                 event_type: CalendarEventType.CORPORATE,
                 start: event.all_day ? DateHelper.formatMoment(event.start, 'YYYY-MM-DD', true) : DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
-                end:  event.all_day ? null : DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
+                end: event.all_day ? null : DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
                 title: event.title
               });
             });
@@ -248,6 +248,33 @@ export class CalendarComponent implements OnInit, OnDestroy {
           this.show_modal_edit($event.event.id);
         }
       });
+    }
+  }
+
+  datesRender($event: any) {
+    if ($event.view instanceof ListView) {
+      let list = $event.el.querySelectorAll('.fc-list-table tbody');
+      if (list.length > 0) {
+        list = list[0];
+
+        const renderedEvents = list.querySelectorAll('.fc-list-table  tr');
+        const reorderedEvents = [];
+
+        let blockEvents = null;
+
+        renderedEvents.forEach(tr_element => {
+          if (tr_element.className === 'fc-list-heading') {
+            if (blockEvents) {
+              reorderedEvents.unshift(...([].slice.call(blockEvents.children)));
+            }
+            blockEvents = document.createElement('tbody');
+          }
+          blockEvents.append(tr_element);
+        });
+        reorderedEvents.unshift(...([].slice.call(blockEvents.children)));
+        list.innerHTML = '';
+        reorderedEvents.forEach(tr_element => list.append(tr_element));
+      }
     }
   }
 }

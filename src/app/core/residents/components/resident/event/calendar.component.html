@@ -6,6 +6,7 @@
   [views]="calendarViews"
   [plugins]="calendarPlugins"
   [events]="calendarEvents"
+  (datesRender)="datesRender($event)"
   (eventClick)="eventMouseEnter($event)"
 ></full-calendar>
 <div class="d-flex justify-content-between" style="margin-top: 1rem;">
