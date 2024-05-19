@@ -276,7 +276,7 @@ const routes: Routes = [
             data: {
               nav: {show: true, group: 'Leads'},
               title: 'Admin Items',
-              permissions: []
+              permissions: ['activity-lead_admin']
             },
             children: [
               {
@@ -284,7 +284,7 @@ const routes: Routes = [
                 data: {
                   nav: {show: true, group: 'Leads'},
                   title: 'Funnel Stage',
-                  permissions: ['persistence-lead-funnel_stage']
+                  permissions: ['activity-lead_admin', 'persistence-lead-funnel_stage']
                 },
                 canActivate: [AuthGuard]
               },
@@ -293,7 +293,7 @@ const routes: Routes = [
                 data: {
                   nav: {show: true, group: 'Leads'},
                   title: 'Temperature',
-                  permissions: ['persistence-lead-temperature']
+                  permissions: ['activity-lead_admin', 'persistence-lead-temperature']
                 },
                 canActivate: [AuthGuard]
               },
@@ -302,7 +302,7 @@ const routes: Routes = [
                 data: {
                   nav: {show: true, group: 'Leads'},
                   title: 'Stage Change Reasons',
-                  permissions: ['persistence-lead-stage_change_reason']
+                  permissions: ['activity-lead_admin', 'persistence-lead-stage_change_reason']
                 },
                 canActivate: [AuthGuard]
               },
@@ -311,7 +311,7 @@ const routes: Routes = [
                 data: {
                   nav: {show: true, group: 'Leads'},
                   title: 'Activity Statuses',
-                  permissions: ['persistence-lead-activity_status']
+                  permissions: ['activity-lead_admin', 'persistence-lead-activity_status']
                 },
                 canActivate: [AuthGuard]
               },
@@ -320,7 +320,7 @@ const routes: Routes = [
                 data: {
                   nav: {show: true, group: 'Leads'},
                   title: 'Outreach Types',
-                  permissions: ['persistence-lead-outreach_type']
+                  permissions: ['activity-lead_admin', 'persistence-lead-outreach_type']
                 },
                 canActivate: [AuthGuard]
               },
@@ -329,7 +329,7 @@ const routes: Routes = [
                 data: {
                   nav: {show: true, group: 'Leads'},
                   title: 'Activity Types',
-                  permissions: ['persistence-lead-activity_type']
+                  permissions: ['activity-lead_admin', 'persistence-lead-activity_type']
                 },
                 canActivate: [AuthGuard]
               },
@@ -338,7 +338,7 @@ const routes: Routes = [
                 data: {
                   nav: {show: true, group: 'Leads'},
                   title: 'Care Types',
-                  permissions: ['persistence-lead-care_type']
+                  permissions: ['activity-lead_admin', 'persistence-lead-care_type']
                 },
                 canActivate: [AuthGuard]
               }
