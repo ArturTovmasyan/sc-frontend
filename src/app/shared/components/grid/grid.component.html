@@ -195,11 +195,15 @@
         <ng-container *ngSwitchDefault>
           <ng-container *ngIf="field.link">
             <ng-container [ngSwitch]="field.link">
-              <a *ngSwitchCase="':edit'" href="javascript:void(0);"
-                 (click)="open_edit_modal(row.id)">
-                {{ row[field.id] }}
-                <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i>
-              </a>
+              <ng-container *ngSwitchCase="':edit'">
+                <a *ngIf="button_shows.edit === true" href="javascript:void(0);" (click)="open_edit_modal(row.id)">
+                  {{ row[field.id] }}
+                  <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i>
+                </a>
+                <ng-container *ngIf="button_shows.edit === false">
+                  {{ row[field.id] }}
+                </ng-container>
+              </ng-container>
               <a *ngSwitchDefault [routerLink]="routeInfo(field.link, row.id)">
                 {{ row[field.id] }}
                 <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i>
