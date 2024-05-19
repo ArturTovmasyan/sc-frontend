@@ -96,8 +96,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       csz_id: [null, [Validators.required]]
     });
 
-    this.form.get('group').disable();
-    this.form.get('group_type').disable();
     this.init_subform(null);
 
     this.subscribe('rs_resident');
@@ -122,7 +120,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: AdmissionType.DISCHARGE, name: 'Move Out'}
     ];
 
-    this.admission_types = this.facility_admission_types;
+    this.admission_types = [];
 
     this.postSubmit = (data: any) => {
       const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
