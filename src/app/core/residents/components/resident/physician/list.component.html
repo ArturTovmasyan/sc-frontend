@@ -14,7 +14,7 @@
             style="font-size: large;">{{ rph.physician|physician }}</strong>
 
           <button class="pull-right" nz-button nzSize="small" nzType="default"
-                  (click)="show_rp_edit(rp.physician.id); $event.preventDefault();"
+                  (click)="show_p_edit(rph.physician.id); $event.preventDefault();"
                   [nzLoading]="loading_p_edit_modal">
             <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
           </button>
