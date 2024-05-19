@@ -1,4 +1,5 @@
-﻿import {Component, OnInit} from '@angular/core';
+﻿import * as _ from 'lodash';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {first} from 'rxjs/operators';
@@ -10,6 +11,8 @@ import {Lead} from '../../../models/lead';
 import {Organization} from '../../../models/organization';
 import {LeadService} from '../../../services/lead.service';
 import {OrganizationService} from '../../../services/organization.service';
+import {Referral} from '../../../models/referral';
+import {FacilityRoom} from '../../../../residents/models/facility-room';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -23,6 +26,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   phone_types: { id: PhoneType, name: string }[];
 
   private _show_lead: boolean = true;
+
+  edit_data: Referral;
 
   get show_lead(): boolean {
     return this._show_lead;
@@ -115,9 +120,17 @@ export class FormComponent extends AbstractForm implements OnInit {
         });
         break;
       case 'list_lead':
-        this.$subscriptions[key] = this.lead$.all().pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.lead$.all([{key: 'free', value: '1'}]).pipe(first()).subscribe(res => {
           if (res) {
             this.leads = res;
+
+            if (this.edit_mode && this.edit_data.lead !== null) {
+              const leads = this.leads.filter(v => v.id === this.edit_data.lead.id);
+
+              if (leads.length === 0) {
+                this.leads.push(this.edit_data.lead);
+              }
+            }
 
             if (params) {
               this.form.get('lead_id').setValue(params.lead_id);
@@ -175,6 +188,13 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
       default:
         break;
+    }
+  }
+
+
+  before_set_form_data(data: any): void {
+    if (data !== null) {
+      this.edit_data = _.cloneDeep(data);
     }
   }
 }

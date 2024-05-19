@@ -1,4 +1,5 @@
-﻿import {Component, ElementRef, OnInit} from '@angular/core';
+﻿import * as _ from 'lodash';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
@@ -151,6 +152,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
               this.before_set_form_data(res);
               this.set_form_data(this, this.form, res);
+              this.form.get('facility_bed_id').setValue(null);
+              this.form.get('apartment_bed_id').setValue(null);
             }
         });
         break;
@@ -200,7 +203,6 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.form.get('group').valueChanges.subscribe(next => {
           if (next) {
             this.form.get('group_type').setValue(next.type);
-            this.form.get('dining_room_id').setValue(null);
 
             this.init_subform(next);
 
@@ -217,6 +219,23 @@ export class FormComponent extends AbstractForm implements OnInit {
         }]).pipe(first()).subscribe(res => {
           if (res) {
             this.apartment_rooms = res;
+
+            if (this.edit_mode && this.edit_data.apartment_bed !== null) {
+              const rooms = this.apartment_rooms.filter(v => v.id === this.edit_data.apartment_bed.room.id);
+
+              let room;
+              if (rooms.length === 0) {
+                room = new FacilityRoom();
+                this.apartment_rooms.push(room);
+
+                room.id = this.edit_data.apartment_bed.room.id;
+                room.number = this.edit_data.apartment_bed.room.number;
+                room.beds = [this.edit_data.apartment_bed];
+              } else {
+                room = rooms[0];
+                room.beds.push(this.edit_data.apartment_bed);
+              }
+            }
           }
         });
         break;
@@ -227,6 +246,23 @@ export class FormComponent extends AbstractForm implements OnInit {
         }]).pipe(first()).subscribe(res => {
           if (res) {
             this.facility_rooms = res;
+
+            if (this.edit_mode && this.edit_data.facility_bed !== null) {
+              const rooms = this.facility_rooms.filter(v => v.id === this.edit_data.facility_bed.room.id);
+
+              let room;
+              if (rooms.length === 0) {
+                room = new FacilityRoom();
+                this.facility_rooms.push(room);
+
+                room.id = this.edit_data.facility_bed.room.id;
+                room.number = this.edit_data.facility_bed.room.number;
+                room.beds = [this.edit_data.facility_bed];
+              } else {
+                room = rooms[0];
+                room.beds.push(this.edit_data.facility_bed);
+              }
+            }
           }
         });
         break;
@@ -235,6 +271,10 @@ export class FormComponent extends AbstractForm implements OnInit {
           .pipe(first()).subscribe(res => {
             if (res) {
               this.dining_rooms = res;
+
+              if (!this.edit_mode && this.dining_rooms.filter(v => v.id === this.form.get('dining_room_id').value).length === 0) {
+                this.form.get('dining_room_id').setValue(null);
+              }
             }
           });
         break;
@@ -323,7 +363,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   before_set_form_data(data: any): void {
     if (data !== null) {
-      this.edit_data = data;
+      this.edit_data = _.cloneDeep(data);
 
       this.form.get('group_type').setValue(data.group_type);
       this.form.get('group').setValue(null);
