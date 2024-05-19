@@ -69,12 +69,11 @@ export class IndexComponent implements OnInit, OnDestroy {
       case 'segment':
         this.$subscriptions[key] = this.route$.url.subscribe(value => {
           if (value && value.length > 0) {
-            if (value.length === 1) {
-              this.options.state = value[0].path;
-            } else if (value.length === 2) {
-              this.options.type = parseInt(value[0].path, 10);
-              this.options.type_id = parseInt(value[1].path, 10);
-
+            if (value.length === 2) {
+              this.options.state = value[1].path;
+            } else if (value.length === 3) {
+              this.options.type = parseInt(value[1].path, 10);
+              this.options.type_id = parseInt(value[2].path, 10);
               this.subscribe('get_title');
             }
 

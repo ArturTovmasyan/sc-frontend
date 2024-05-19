@@ -287,148 +287,75 @@ const routes: Routes = [
               }
             ]
           },
-          {
-            path: 'admin',
-            data: {
-              nav: {show: true, group: 'Leads'},
-              title: 'Admin Items',
-              permissions: ['activity-lead_admin']
-            },
-            children: [
-              {
-                path: 'funnel-stage', component: FunnelStageListComponent,
-                data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Funnel Stage',
-                  permissions: ['activity-lead_admin', 'persistence-lead-funnel_stage']
-                },
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'temperature', component: TemperatureListComponent,
-                data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Temperature',
-                  permissions: ['activity-lead_admin', 'persistence-lead-temperature']
-                },
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'stage-change-reason', component: StageChangeReasonListComponent,
-                data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Stage Change Reasons',
-                  permissions: ['activity-lead_admin', 'persistence-lead-stage_change_reason']
-                },
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'activity-status', component: ActivityStatusListComponent,
-                data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Activity Statuses',
-                  permissions: ['activity-lead_admin', 'persistence-lead-activity_status']
-                },
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'outreach-type', component: OutreachTypeListComponent,
-                data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Outreach Types',
-                  permissions: ['activity-lead_admin', 'persistence-lead-outreach_type']
-                },
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'activity-type', component: ActivityTypeListComponent,
-                data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Activity Types',
-                  permissions: ['activity-lead_admin', 'persistence-lead-activity_type']
-                },
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'care-type', component: CareTypeListComponent,
-                data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Care Types',
-                  permissions: ['activity-lead_admin', 'persistence-lead-care_type']
-                },
-                canActivate: [AuthGuard]
-              }
-            ]
-          }
+
         ]
       },
       {
-        path: 'dashboard',
-        children: [
-          {
-            path: '',
-            component: CorporateDashboardComponent,
-            data: {
-              nav: {show: true, group: 'Corporate'},
-              title: 'Dashboard',
-              permissions: ['activity-corporate-dashboard']
-            }
-          },
-          {
-            path: ':id/monthly',
-            component: CorporateDashboardMonthlyComponent,
-            data: {
-              nav: {show: false, group: 'Corporate'},
-              title: 'Dashboard Montly',
-              permissions: ['activity-corporate-dashboard']
-            },
-          },
-          {
-            path: ':id/weekly/:key',
-            component: CorporateDashboardWeeklyComponent,
-            data: {
-              nav: {show: false, group: 'Corporate'},
-              title: 'Dashboard Weekly',
-              permissions: ['activity-corporate-dashboard']
-            }
-          },
-          {
-            path: ':id/hot-leads/:key',
-            component: CorporateDashboardHotLeadsComponent,
-            data: {
-              nav: {show: false, group: 'Corporate'},
-              title: 'Dashboard Hot Leads',
-              permissions: ['activity-corporate-dashboard']
-            },
-          },
-          {
-            path: ':id/room-summary/:key',
-            component: CorporateDashboardRoomSummaryComponent,
-            data: {
-              nav: {show: false, group: 'Corporate'},
-              title: 'Dashboard Room Summary',
-              permissions: ['activity-corporate-dashboard']
-            },
-          },
-        ]
-      },
-      {
-        path: 'calendar',
-        component: CorporateCalendarComponent,
+        path: 'residents/active', component: ResidentIndexComponent,
         data: {
-          nav: {show: true, group: 'Corporate'},
-          title: 'Calendar',
-          permissions: ['activity-corporate-calendar']
+          nav: {show: true, group: 'Residents'},
+          title: 'Current',
+          permissions: ['persistence-resident-resident']
         }
       },
       {
-        path: 'documents', component: DocumentViewComponent,
+        path: 'residents/inactive', component: ResidentIndexComponent,
         data: {
-          nav: {show: true, group: 'Corporate'},
-          title: 'Documents',
-          permissions: ['persistence-common-document']
+          nav: {show: true, group: 'Residents'},
+          title: 'Move Out',
+          permissions: ['persistence-resident-resident']
+        }
+      },
+      {
+        path: 'residents/no-admission', component: ResidentIndexComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Moving In',
+          permissions: ['persistence-resident-resident']
+        }
+      },
+      {
+        path: 'residents/:type/:group', component: ResidentIndexComponent,
+        data: {
+          title: 'Residents',
+          permissions: ['persistence-resident-resident']
         },
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'responsible-persons', component: ResponsiblePersonListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Responsible Persons',
+          permissions: ['persistence-common-responsible_person']
+        },
+        canActivate: [AuthGuard]
+      },
+
+      {
+        path: 'physicians', component: PhysicianListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Physicians',
+          permissions: ['persistence-common-physician']
+        },
+        canActivate: [AuthGuard]
+      },
+
+      {
+        path: 'reports', component: ReportListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Reports',
+          permissions: ['report-group']
+        }
+      },
+      {
+        path: 'report-csv', component: ReportCSVComponent,
+        data: {
+          title: 'Report - CSV',
+          permissions: ['report-group']
+        }
       },
       {
         path: 'facility/list', component: FacilityListComponent,
@@ -548,147 +475,6 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'residents',
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Residents',
-          permissions: ['persistence-resident-resident']
-        },
-        canActivate: [AuthGuard],
-        children: [
-          {
-            path: ':type/:group', component: ResidentIndexComponent,
-            data: {
-              title: 'Residents',
-              permissions: ['persistence-resident-resident']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'active', component: ResidentIndexComponent,
-            data: {
-              nav: {show: true, group: 'Active'},
-              title: 'Active',
-              permissions: ['persistence-resident-resident']
-            }
-          },
-          {
-            path: 'inactive', component: ResidentIndexComponent,
-            data: {
-              nav: {show: true, group: 'Inactive'},
-              title: 'Inactive',
-              permissions: ['persistence-resident-resident']
-            }
-          },
-          {
-            path: 'no-admission', component: ResidentIndexComponent,
-            data: {
-              nav: {show: true, group: 'Pre-Admit'},
-              title: 'Pre-Admit',
-              permissions: ['persistence-resident-resident']
-            }
-          }
-        ]
-      },
-      {
-        path: 'responsible-persons', component: ResponsiblePersonListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Responsible Persons',
-          permissions: ['persistence-common-responsible_person']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'physicians', component: PhysicianListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Physicians',
-          permissions: ['persistence-common-physician']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'assessment',
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Assessments'
-        },
-        children: [
-          {
-            path: 'types', component: AssessmentTypeListComponent,
-            data: {
-              nav: {show: true, group: 'Residents'},
-              title: 'Types',
-              permissions: ['persistence-assessment-assessment_type']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'categories', component: AssessmentCategoryListComponent,
-            data: {
-              nav: {show: true, group: 'Residents'},
-              title: 'Categories',
-              permissions: ['persistence-assessment-category']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'forms', component: AssessmentFormListComponent,
-            data: {
-              nav: {show: true, group: 'Residents'},
-              title: 'Forms',
-              permissions: ['persistence-assessment-form']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'care-levels', component: AssessmentCareLevelListComponent,
-            data: {
-              nav: {show: true, group: 'Residents'},
-              title: 'Care Levels',
-              permissions: ['persistence-assessment-care_level']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'care-level-groups', component: AssessmentCareLevelGroupListComponent,
-            data: {
-              nav: {show: true, group: 'Residents'},
-              title: 'Care Level Groups',
-              permissions: ['persistence-assessment-care_level_group']
-            },
-            canActivate: [AuthGuard]
-          }
-        ]
-      },
-      {
-        path: 'reports', component: ReportListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Reports',
-          permissions: ['report-group']
-        }
-      },
-      {
-        path: 'report-csv', component: ReportCSVComponent,
-        data: {
-          title: 'Report - CSV',
-          permissions: ['report-group']
-        }
-      },
-      {
-        path: 'document-categories', component: DocumentCategoryListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Document Categories',
-          permissions: ['persistence-common-document_category']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
         path: 'relationships', component: RelationshipListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
@@ -698,21 +484,79 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'dashboard',
+        children: [
+          {
+            path: '',
+            component: CorporateDashboardComponent,
+            data: {
+              nav: {show: true, group: 'Corporate'},
+              title: 'Dashboard',
+              permissions: ['activity-corporate-dashboard']
+            }
+          },
+          {
+            path: ':id/monthly',
+            component: CorporateDashboardMonthlyComponent,
+            data: {
+              nav: {show: false, group: 'Corporate'},
+              title: 'Dashboard Montly',
+              permissions: ['activity-corporate-dashboard']
+            },
+          },
+          {
+            path: ':id/weekly/:key',
+            component: CorporateDashboardWeeklyComponent,
+            data: {
+              nav: {show: false, group: 'Corporate'},
+              title: 'Dashboard Weekly',
+              permissions: ['activity-corporate-dashboard']
+            }
+          },
+          {
+            path: ':id/hot-leads/:key',
+            component: CorporateDashboardHotLeadsComponent,
+            data: {
+              nav: {show: false, group: 'Corporate'},
+              title: 'Dashboard Hot Leads',
+              permissions: ['activity-corporate-dashboard']
+            },
+          },
+          {
+            path: ':id/room-summary/:key',
+            component: CorporateDashboardRoomSummaryComponent,
+            data: {
+              nav: {show: false, group: 'Corporate'},
+              title: 'Dashboard Room Summary',
+              permissions: ['activity-corporate-dashboard']
+            },
+          },
+        ]
+      },
+      {
+        path: 'calendar',
+        component: CorporateCalendarComponent,
+        data: {
+          nav: {show: true, group: 'Corporate'},
+          title: 'Calendar',
+          permissions: ['activity-corporate-calendar']
+        }
+      },
+      {
+        path: 'documents', component: DocumentViewComponent,
+        data: {
+          nav: {show: true, group: 'Corporate'},
+          title: 'Documents',
+          permissions: ['persistence-common-document']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'care-levels', component: CareLevelListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Care Levels',
           permissions: ['activity-reference', 'persistence-common-care_level']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'event-types', component: EventDefinitionListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Event Types',
-          permissions: ['activity-reference', 'activity-event_definition', 'persistence-common-event_definition']
         },
         canActivate: [AuthGuard]
       },
@@ -981,6 +825,152 @@ const routes: Routes = [
             canActivate: [AuthGuard]
           },
 
+        ]
+      },
+
+      {
+        path: 'assessment',
+        data: {
+          nav: {show: true, group: 'Configurations'},
+          title: 'Assessments'
+        },
+        children: [
+          {
+            path: 'types', component: AssessmentTypeListComponent,
+            data: {
+              nav: {show: true, group: 'Configurations'},
+              title: 'Types',
+              permissions: ['persistence-assessment-assessment_type']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'categories', component: AssessmentCategoryListComponent,
+            data: {
+              nav: {show: true, group: 'Configurations'},
+              title: 'Categories',
+              permissions: ['persistence-assessment-category']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'forms', component: AssessmentFormListComponent,
+            data: {
+              nav: {show: true, group: 'Configurations'},
+              title: 'Forms',
+              permissions: ['persistence-assessment-form']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'care-levels', component: AssessmentCareLevelListComponent,
+            data: {
+              nav: {show: true, group: 'Configurations'},
+              title: 'Care Levels',
+              permissions: ['persistence-assessment-care_level']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'care-level-groups', component: AssessmentCareLevelGroupListComponent,
+            data: {
+              nav: {show: true, group: 'Configurations'},
+              title: 'Care Level Groups',
+              permissions: ['persistence-assessment-care_level_group']
+            },
+            canActivate: [AuthGuard]
+          }
+        ]
+      },
+      {
+        path: 'document-categories', component: DocumentCategoryListComponent,
+        data: {
+          nav: {show: true, group: 'Configurations'},
+          title: 'Document Categories',
+          permissions: ['persistence-common-document_category']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'event-types', component: EventDefinitionListComponent,
+        data: {
+          nav: {show: true, group: 'Configurations'},
+          title: 'Event Types',
+          permissions: ['activity-reference', 'activity-event_definition', 'persistence-common-event_definition']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'lead/admin',
+        data: {
+          nav: {show: true, group: 'Configurations'},
+          title: 'Lead Admin Items',
+          permissions: ['activity-lead_admin']
+        },
+        children: [
+          {
+            path: 'funnel-stage', component: FunnelStageListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Funnel Stage',
+              permissions: ['activity-lead_admin', 'persistence-lead-funnel_stage']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'temperature', component: TemperatureListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Temperature',
+              permissions: ['activity-lead_admin', 'persistence-lead-temperature']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'stage-change-reason', component: StageChangeReasonListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Stage Change Reasons',
+              permissions: ['activity-lead_admin', 'persistence-lead-stage_change_reason']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'activity-status', component: ActivityStatusListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Activity Statuses',
+              permissions: ['activity-lead_admin', 'persistence-lead-activity_status']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'outreach-type', component: OutreachTypeListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Outreach Types',
+              permissions: ['activity-lead_admin', 'persistence-lead-outreach_type']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'activity-type', component: ActivityTypeListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Activity Types',
+              permissions: ['activity-lead_admin', 'persistence-lead-activity_type']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'care-type', component: CareTypeListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Care Types',
+              permissions: ['activity-lead_admin', 'persistence-lead-care_type']
+            },
+            canActivate: [AuthGuard]
+          }
         ]
       },
 
