@@ -51,7 +51,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       red_flag: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
     });
 
-    this.subscribe('vc_beds_license');
+    this.subscribe('vc_beds_licensed');
     this.subscribe('list_csz');
 
     this.add_space();
@@ -85,8 +85,8 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
-      case 'vc_beds_license':
-        this.$subscriptions[key] = this.form.get('beds_license').valueChanges.subscribe(next => {
+      case 'vc_beds_licensed':
+        this.$subscriptions[key] = this.form.get('beds_licensed').valueChanges.subscribe(next => {
           this.form.get('beds_target').setValue(this.form.get('beds_target').value);
         });
         break;
