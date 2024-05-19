@@ -40,8 +40,8 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="amount" nzRequired>Amount</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('amount')?'error':null">
-      <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" nzPlaceHolder="Amount"
-                       formControlName="amount"></nz-input-number>
+      <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
+                       nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('amount')">
         <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
       </nz-form-explain>
@@ -89,7 +89,7 @@
 
 
   <fieldset formArrayName="source">
-    <table class="senior-care-form-table table table-hover table-bordered table-sm">
+    <table class="table table-hover table-bordered table-sm">
       <thead>
       <tr>
         <th class="w-50">
@@ -104,7 +104,7 @@
       <tbody>
       <tr>
         <td>
-          <nz-form-label>Source(s)</nz-form-label>
+          Source(s)
         </td>
         <td>
           <nz-select nzSize="small" nzMode="default" nzPlaceHolder="Select source" [(ngModel)]="source_selector"
@@ -129,8 +129,8 @@
           {{ get_title(i) }}
         </td>
         <td>
-          <nz-input-number [nzMin]="0" [nzStep]="0.01" nzSize="small" nzPlaceHolder="Amount"
-                           formControlName="amount"></nz-input-number>
+            <nz-input-number [nzMin]="0" [nzStep]="0.01" [nzFormatter]="formatterDollar"
+                             nzSize="small" nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
         </td>
         <td class="text-center">
           <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_source(i);">

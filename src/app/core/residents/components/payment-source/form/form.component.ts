@@ -10,6 +10,7 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
 import {CareLevel} from '../../../models/care-level';
 import {CareLevelService} from '../../../services/care-level.service';
 import {PaymentPeriod} from '../../../models/payment-period.enum';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -19,6 +20,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   spaces: Space[];
 
   periods: { id: PaymentPeriod, name: string }[];
+
+  formatterDollar = (value: number) => (new CurrencyPipe('en-US')).transform(value, 'USD', 'symbol-narrow', '1.2-2');
 
   constructor(
     protected modal$: ModalFormService,

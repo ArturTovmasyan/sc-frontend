@@ -13,6 +13,7 @@ import {RentReason} from '../../../../../models/rent-reason';
 import {ResidentAdmission} from '../../../../../models/resident-admission';
 import {FormComponent as RentReasonFormComponent} from '../../../../rent-reason/form/form.component';
 import {FacilityRoomType} from '../../../../../models/facility-room-type';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -22,6 +23,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   admission: ResidentAdmission;
   reasons: RentReason[];
+
+  formatterDollar = (value: number) => (new CurrencyPipe('en-US')).transform(value, 'USD', 'symbol-narrow', '1.2-2');
 
   constructor(
     protected modal$: ModalFormService,

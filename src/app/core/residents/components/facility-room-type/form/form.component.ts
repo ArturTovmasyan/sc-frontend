@@ -8,6 +8,7 @@ import {Facility} from '../../../models/facility';
 import {FacilityService} from '../../../services/facility.service';
 import {CareLevel} from '../../../models/care-level';
 import {CareLevelService} from '../../../services/care-level.service';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -15,6 +16,8 @@ import {CareLevelService} from '../../../services/care-level.service';
 export class FormComponent extends AbstractForm implements OnInit {
   facilities: Facility[];
   care_levels: CareLevel[];
+
+  formatterDollar = (value: number) => (new CurrencyPipe('en-US')).transform(value, 'USD', 'symbol-narrow', '1.2-2');
 
   constructor(
     protected modal$: ModalFormService,

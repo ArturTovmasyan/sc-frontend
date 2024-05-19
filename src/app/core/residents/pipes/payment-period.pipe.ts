@@ -5,8 +5,6 @@ import {PaymentPeriod} from '../models/payment-period.enum';
 export class PaymentPeriodPipe implements PipeTransform {
   transform(value: PaymentPeriod) {
     switch (value) {
-      case PaymentPeriod.HOURLY:
-        return 'Hourly';
       case PaymentPeriod.DAILY:
         return 'Daily';
       case  PaymentPeriod.MONTHLY:
