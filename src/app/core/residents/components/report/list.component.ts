@@ -96,6 +96,10 @@ export class ListComponent implements OnInit, OnDestroy {
     });
 
     result.formats.forEach((format, idx) => {
+      if (format === 'xls') {
+        return;
+      }
+
       loading[idx] = false;
       footer_config.push({
         type: 'primary',

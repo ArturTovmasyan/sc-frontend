@@ -4,7 +4,6 @@ import {TitleService} from '../../../services/title.service';
 import {first} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {KeyValue} from '@angular/common';
 import {Papa} from 'ngx-papaparse';
 import {DomSanitizer} from '@angular/platform-browser';
 import {simpleEmptyImage} from 'ng-zorro-antd';
@@ -16,9 +15,7 @@ export class CSVComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   title: string = null;
-  data: string[][];
-
-  url = null;
+  url: any = null;
 
   protected $subscriptions: { [key: string]: Subscription; };
 
@@ -32,8 +29,6 @@ export class CSVComponent implements OnInit, OnDestroy {
     this.title$.getTitle().subscribe(v => this.title = v);
 
     this.$subscriptions = {};
-
-    this.data = [];
   }
 
   ngOnInit(): void {
@@ -75,18 +70,11 @@ export class CSVComponent implements OnInit, OnDestroy {
         break;
       case 'get_report':
         this.$subscriptions[key] = this.report$
-          .reportAsObservable(params.config.group_alias, params.config.report_alias, 'csv', params.params)
+          .reportAsObservable(params.config.group_alias, params.config.report_alias, 'csv', params.params, true)
           .pipe(first()).subscribe(res => {
-            if (res) {
-              const reader: FileReader = new FileReader();
-              reader.onloadend = (file) => {
-                this.papa$.parse(reader.result as string, {
-                  complete: (result) => {
-                    this.data = result.data;
-                  }
-                });
-              };
-              reader.readAsText(res.body);
+            if (res != null && Array.isArray(res) && res.length === 1) {
+              const report_url = this.report$.reportURLbyHash(res[0]);
+              this.url = this.sanitizer.bypassSecurityTrustResourceUrl(`https://view.officeapps.live.com/op/embed.aspx?src=${report_url}`);
             }
           });
         break;
@@ -99,9 +87,5 @@ export class CSVComponent implements OnInit, OnDestroy {
     if (this.$subscriptions.hasOwnProperty(key)) {
       this.$subscriptions[key].unsubscribe();
     }
-  }
-
-  public no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {
-    return 0;
   }
 }

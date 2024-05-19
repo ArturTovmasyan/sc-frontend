@@ -48,6 +48,10 @@ export class ReportService {
     return this.http.get<any>(this.SERVICE_URL_BASE + `/${group_alias}/${report_alias}`, options);
   }
 
+  public reportURLbyHash(hash: string) {
+      return `${environment.apiUrl}/api/v1.0/report/csv-view/${hash}`;
+  }
+
   public reportURL(group_alias, report_alias, format, params) {
     const request_params = this.create_request_params(format, params);
 
