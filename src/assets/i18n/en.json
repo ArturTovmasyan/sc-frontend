@@ -5,6 +5,8 @@
     "remove": "Remove",
     "move": "Move/Transfer",
     "reorder": "Reorder",
+    "mark_spam": "Mark as Spam",
+    "unmark_spam": "Unmark as Spam",
     "pdf": "PDF",
     "user-list": {
       "id": "ID",
@@ -550,6 +552,7 @@
       "full_name": "Full Name",
       "owner": "Owner",
       "state": "Status",
+      "spam": "Spam",
       "funnel_stage": "Funnel Stage",
       "funnel_date": "Funnel Date",
       "temperature": "Temperature",

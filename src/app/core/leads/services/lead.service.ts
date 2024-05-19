@@ -11,4 +11,8 @@ export class LeadService extends GridService<Lead> {
 
     this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/lead/lead`;
   }
+
+  public spam(ids: number[], state: boolean) {
+    return this.http.put<any>(this.SERVICE_URL_BASE + `/spam`, {ids: ids, spam: state});
+  }
 }
