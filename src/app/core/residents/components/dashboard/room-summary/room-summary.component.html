@@ -19,7 +19,7 @@
             <th class="text-center">Facility</th>
             <th class="text-center">Room Type</th>
             <th class="text-center">Private</th>
-            <th class="text-center">Rooms Count</th>
+            <th class="text-center">Resident Count</th>
           </tr>
           </thead>
           <tbody>
@@ -28,7 +28,7 @@
               <td>{{ item.facility ? item.facility.name : '-' }}</td>
               <td>{{ item.title }}</td>
               <td class="text-right">{{ item.private ? 'Yes' : 'No' }}</td>
-              <td class="text-right">{{ item.count_rooms }}</td>
+              <td class="text-right">{{ item.count }}</td>
             </tr>
           </ng-container>
           <tr *ngIf="total !== null">

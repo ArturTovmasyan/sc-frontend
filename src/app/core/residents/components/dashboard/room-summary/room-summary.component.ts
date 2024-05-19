@@ -74,7 +74,7 @@ export class RoomSummaryComponent implements OnInit, OnDestroy {
           if (res) {
             this.dashboardData = res;
 
-            this.total = this.dashboardData.reduce((total, val) => total + val.count_rooms, 0);
+            this.total = this.dashboardData.reduce((total, val) => total + val.count, 0);
           }
         });
         break;
