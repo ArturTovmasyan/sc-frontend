@@ -1,5 +1,5 @@
 import * as PDFObject from 'pdfobject';
-import {DomSanitizer} from '@angular/platform-browser';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {Component, Input, OnDestroy, OnInit, Type} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
@@ -56,6 +56,8 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
 
   loading: boolean;
   loading_edit_modal: boolean;
+
+  url: SafeResourceUrl;
 
   protected $subscriptions: { [key: string]: Subscription; };
 
@@ -163,6 +165,7 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
     this.document = document;
 
     if (this.document) {
+      this.url = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.document.file}&embedded=true`);
       // setTimeout(() => PDFObject.embed(this.document.file, '#documentsPDFViewer'), 250);
     }
   }

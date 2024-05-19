@@ -65,8 +65,8 @@
       </div>
       <div class="card-body">
         <nz-empty *ngIf="!document" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
-        <iframe *ngIf="!(!document)" src="https://docs.google.com/gview?url={{this.document.file}}&embedded=true"
-                style="width:100%;height:80vh">
+        <iframe *ngIf="!(!document)" [src]="this.url"
+                style="width:100%;height:80vh;border: none;">
           <p>Your browser does not support iframes.</p>
         </iframe>
 <!--        <div id="documentsPDFViewer" *ngIf="!(!document)" style="width:100%;height:80vh"></div>-->
