@@ -53,8 +53,9 @@
     (nzPageSizeChange)="reload_data(true)">
     <thead (nzSortChange)="update_sort($event)">
     <tr>
-      <th nzShowCheckbox [(nzChecked)]="checkbox_config.all" [nzIndeterminate]="checkbox_config.indeterminate"
+      <th *ngIf="showCheckboxes()" nzShowCheckbox [(nzChecked)]="checkbox_config.all" [nzIndeterminate]="checkbox_config.indeterminate"
           (nzCheckedChange)="checkbox_all($event)"></th>
+      <th *ngIf="!showCheckboxes()">&nbsp;</th>
       <ng-template ngFor let-field [ngForOf]="fields" let-first="first">
         <th *ngIf="!field.hidden && field.sortable && !field.filterable" [nzShowSort]="field.sortable"
             [nzSortKey]="field.id">
@@ -109,7 +110,8 @@
     </thead>
     <tbody>
     <tr *ngFor="let row of data" [style.backgroundColor]="get_background_color(row)">
-      <td nzShowCheckbox [(nzChecked)]="row.checked" (nzCheckedChange)="checkbox_refresh()"></td>
+      <td *ngIf="showCheckboxes()" nzShowCheckbox [(nzChecked)]="row.checked" (nzCheckedChange)="checkbox_refresh()"></td>
+      <td *ngIf="!showCheckboxes()">&nbsp;</td>
       <td *ngFor="let field of fields| filter: 'hidden' : false" [ngSwitch]="field.type">
         <ng-container *ngSwitchCase="'id'">
           <span style="font-size: smaller;">{{ row[field.id] }}</span>
