@@ -224,4 +224,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     return controls && controls.length === this.categories.length ? controls : [];
   }
 
+  public is_valid_row() {
+    return (<FormArray>this.form.get('rows')).controls[this.category_selected].valid;
+  }
+
 }
