@@ -129,7 +129,7 @@
     <tr *ngFor="let row of data" [style.backgroundColor]="get_background_color(row)">
       <td [nzShowCheckbox]="showCheckboxes()" [(nzChecked)]="row.checked"
           (nzCheckedChange)="checkbox_refresh()"></td>
-      <td *ngFor="let field of fields| filter: 'hidden' : false" [ngSwitch]="field.type">
+      <td *ngFor="let field of fields| filter: 'hidden' : false" [ngSwitch]="field.type" [style.padding]="field.type==='json_sorted_horizontal'?'0':'12px 8px'">
         <ng-container *ngSwitchCase="'id'">
           <span style="font-size: smaller;">{{ row[field.id] }}</span>
         </ng-container>
@@ -158,6 +158,14 @@
         <ng-container *ngSwitchCase="'json_sorted'">
           <template [ngTemplateOutletContext]="{ data: row[field.id], sorted: true }"
                     [ngTemplateOutlet]="json_field"></template>
+        </ng-container>
+        <ng-container *ngSwitchCase="'json_horizontal'">
+          <template [ngTemplateOutletContext]="{ data: row[field.id], sorted: false }"
+                    [ngTemplateOutlet]="json_horizontal_field"></template>
+        </ng-container>
+        <ng-container *ngSwitchCase="'json_sorted_horizontal'">
+          <template [ngTemplateOutletContext]="{ data: row[field.id], sorted: true }"
+                    [ngTemplateOutlet]="json_horizontal_field"></template>
         </ng-container>
         <ng-container *ngSwitchCase="'icon'">
           <i [attr.class]="row[field.id]" style="font-size: 24px;"></i>
@@ -353,7 +361,8 @@
     <ng-container *ngFor="let item of data|str2json:true|keyvalue:sort_order_func(sorted)">
       <tr *ngIf="check_empty(item.value)">
         <th style="width:50%;word-break: break-all;padding-right: 0.5rem;" class="text-right">{{ item.key }}:</th>
-        <td style="width:50%;word-break: break-all;" *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</td>
+        <td style="width:50%;word-break: break-all;"
+            *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</td>
         <td style="width:50%;word-break: break-all;" *ngIf="_.isArray(item.value)">
           <ng-container *ngFor="let iv of item.value; let last=last">
             {{ iv }} <br *ngIf="!last"/>
@@ -361,5 +370,27 @@
         </td>
       </tr>
     </ng-container>
+  </table>
+</ng-template>
+
+<ng-template #json_horizontal_field let-data="data" let-sorted="sorted">
+  <table style="margin: 0; border-radius: 0; border-collapse: collapse;border:none;">
+    <tr>
+      <ng-container *ngFor="let item of data|str2json:true|keyvalue:sort_order_func(sorted); let last=last">
+        <th *ngIf="check_empty(item.value)" class="text-center" [style.border-right]="last? 'none': '1px solid #e8e8e8'" [style.borderBottom]="'1px solid #e8e8e8'">{{ item.key }}</th>
+      </ng-container>
+    </tr>
+    <tr>
+    <ng-container *ngFor="let item of data|str2json:true|keyvalue:sort_order_func(sorted); let last=last">
+      <ng-container *ngIf="check_empty(item.value)">
+        <td *ngIf="!_.isArray(item.value)" class="text-center" [style.border-right]="last? 'none': '1px solid #e8e8e8'">{{ replace_known_value(item.value) }}</td>
+        <td *ngIf="_.isArray(item.value)" class="text-center" [style.border-right]="last? 'none': '1px solid #e8e8e8'">
+          <ng-container *ngFor="let iv of item.value; let last=last">
+            {{ iv }} <br *ngIf="!last"/>
+          </ng-container>
+        </td>
+      </ng-container>
+    </ng-container>
+    </tr>
   </table>
 </ng-template>
