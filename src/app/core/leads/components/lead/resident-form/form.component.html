@@ -1,0 +1,86 @@
+﻿<h4>Resident</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <ng-template #frmPersonal>
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="salutation_id" nzRequired>Salutation</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('salutation_id')?'error':null">
+        <div class="add-select-container">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="salutation_id">
+            <ng-container *ngFor="let salutation of salutations">
+              <nz-option [nzLabel]="salutation.title" [nzValue]="salutation.id"></nz-option>
+            </ng-container>
+          </nz-select>
+          <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('category');">
+            <i nz-icon nzType="plus"></i>
+          </button>
+        </div>
+        <nz-form-explain *ngIf="hasErrors('salutation_id')">
+          <app-field-errors [errors]="fieldErrors('salutation_id')"></app-field-errors>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('first_name')?'error':null">
+        <input nz-input placeholder="First Name" formControlName="first_name">
+        <nz-form-explain *ngIf="hasErrors('first_name')">
+          <app-field-errors [errors]="fieldErrors('first_name')"></app-field-errors>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="last_name" nzRequired>Last Name</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('last_name')?'error':null">
+        <input nz-input placeholder="Last Name" formControlName="last_name">
+        <nz-form-explain *ngIf="hasErrors('last_name')">
+          <app-field-errors [errors]="fieldErrors('last_name')"></app-field-errors>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="birthday" nzRequired>Birthday</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('birthday')?'error':null">
+        <nz-date-picker formControlName="birthday" [nzDisabledDate]="disabledDate" nzFormat="MM/dd/yyyy"></nz-date-picker>
+        <nz-form-explain *ngIf="hasErrors('birthday')">
+          <app-field-errors [errors]="fieldErrors('birthday')"></app-field-errors>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="gender" nzRequired>Gender</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('gender')?'error':null">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="gender">
+          <ng-container *ngFor="let gender of genders">
+            <nz-option [nzLabel]="(gender.name)|translate" [nzValue]="gender.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <nz-form-explain *ngIf="hasErrors('gender')">
+          <app-field-errors [errors]="fieldErrors('gender')"></app-field-errors>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+  </ng-template>
+  <nz-tabset *ngIf="edit_mode">
+    <nz-tab nzTitle="Personal Information">
+      <template [ngTemplateOutlet]="frmPersonal"></template>
+    </nz-tab>
+  </nz-tabset>
+
+  <template *ngIf="!edit_mode" [ngTemplateOutlet]="frmPersonal"></template>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

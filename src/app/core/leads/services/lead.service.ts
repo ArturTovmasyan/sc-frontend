@@ -28,4 +28,12 @@ export class LeadService extends GridService<Lead> {
     public getExpand() {
         return this.http.get<any>(this.SERVICE_URL_BASE + `/expand`, {});
     }
+
+    public resident(data) {
+        return this.http.post<Message>(this.SERVICE_URL_BASE + `/${data.id}/resident`, data);
+    }
+
+    public admission(data) {
+        return this.http.post<Message>(this.SERVICE_URL_BASE + `/${data.id}/admission`, data);
+    }
 }

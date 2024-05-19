@@ -12,6 +12,8 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {FormComponent as LeadFormComponent} from '../form/form.component';
 import {FormComponent as ReferralFormComponent} from '../../referral/form/form.component';
 import {FormComponent as InterestFormComponent} from '../interest-form/form.component';
+import {FormComponent as ResidentFormComponent} from '../resident-form/form.component';
+import {FormComponent as ResidentAdmissionFormComponent} from '../admission-form/form.component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ActivityOwnerType} from '../../../models/activity';
 import {AuthGuard} from '../../../../guards/auth.guard';
@@ -125,6 +127,22 @@ export class ViewComponent implements OnInit, OnDestroy {
           lead_id: this.lead.id
         });
         break;
+      case 'resident':
+        this.lead$.get(this.lead.id).subscribe(
+          res => {
+              this.create_modal(ResidentFormComponent, data => this.lead$.resident(data), res);
+          },
+          error => {
+          });
+        break;
+      case 'admission':
+        this.lead$.get(this.lead.id).subscribe(
+          res => {
+              this.create_modal(ResidentAdmissionFormComponent, data => this.lead$.admission(data), res);
+          },
+          error => {
+          });
+        break;
       default:
         break;
     }
@@ -149,13 +167,13 @@ export class ViewComponent implements OnInit, OnDestroy {
           });
         break;
       case 'interest':
-          this.lead$.get(this.lead.id).subscribe(
-              res => {
-                  this.create_modal(InterestFormComponent, data => this.lead$.interest(data), res);
-              },
-              error => {
-              });
-          break;
+        this.lead$.get(this.lead.id).subscribe(
+          res => {
+              this.create_modal(InterestFormComponent, data => this.lead$.interest(data), res);
+          },
+          error => {
+          });
+        break;
       default:
         break;
     }

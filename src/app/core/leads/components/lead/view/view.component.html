@@ -1,19 +1,30 @@
 <div class="d-flex justify-content-between" style="margin-bottom: 1.2rem;">
   <div class="d-flex justify-content-start">
-    <button *ngIf="!all_section_expand" nzSize="small" nz-button nzType="default"
-            (click)="expand_all()"><i nz-icon nzType="arrows-alt" nzTheme="outline"></i> Expand All
-    </button>
-    <button *ngIf="all_section_expand" nzSize="small" nz-button nzType="default"
-            (click)="collapse_all()"><i nz-icon nzType="shrink" nzTheme="outline"></i> Collapse All
-    </button>
+    <nz-button-group>
+      <button *ngIf="!all_section_expand" nzSize="small" nz-button nzType="default"
+              (click)="expand_all()"><i nz-icon nzType="arrows-alt" nzTheme="outline"></i> Expand All
+      </button>
+      <button *ngIf="all_section_expand" nzSize="small" nz-button nzType="default"
+              (click)="collapse_all()"><i nz-icon nzType="shrink" nzTheme="outline"></i> Collapse All
+      </button>
+      <button *ngIf="lead" nzSize="small" nz-button nzType="default"
+              (click)="show_modal_add('resident')"><i nz-icon nzType="plus" nzTheme="outline"></i> Add to Moving-In List
+      </button>
+      <button *ngIf="lead" nzSize="small" nz-button nzType="default"
+              (click)="show_modal_add('admission')"><i nz-icon nzType="plus" nzTheme="outline"></i> Admit to Facility
+      </button>
+    </nz-button-group>
   </div>
   <div class="justify-content-end">
-    <button *ngIf="lead" nzSize="small" nz-button nzType="default" [disabled]="show('previous')"
-            (click)="getPreviousLead()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous
-    </button>
-    <button *ngIf="lead" nzSize="small" nz-button nzType="default" [disabled]="show('next')"
-            (click)="getNextLead()">
-      Next <i nz-icon nzType="arrow-right" nzTheme="outline"></i></button>
+    <nz-button-group>
+      <button *ngIf="lead" nzSize="small" nz-button nzType="default" [disabled]="show('previous')"
+              (click)="getPreviousLead()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous
+      </button>
+      <button *ngIf="lead" nzSize="small" nz-button nzType="default" [disabled]="show('next')"
+              (click)="getNextLead()">
+        Next <i nz-icon nzType="arrow-right" nzTheme="outline"></i>
+      </button>
+    </nz-button-group>
   </div>
 </div>
 <div class="row">
