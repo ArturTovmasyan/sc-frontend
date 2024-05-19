@@ -140,6 +140,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
             });
 
             res.rents.forEach(rent => {
+              if (rent.end) {
+                rent.end.setTime(rent.end.getTime() + 24 * 60 * 60 * 1000);
+              }
+
               this.calendarEvents.push({
                 borderColor: 'transparent',
                 backgroundColor: '#009da1',
@@ -153,6 +157,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
             });
 
             res.rent_increases.forEach(rent_increase => {
+              if (rent_increase.end) {
+                rent_increase.end.setTime(rent_increase.end.getTime() + 24 * 60 * 60 * 1000);
+              }
+
               this.calendarEvents.push({
                 borderColor: 'transparent',
                 backgroundColor: '#603e95',

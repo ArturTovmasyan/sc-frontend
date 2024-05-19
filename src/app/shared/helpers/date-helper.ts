@@ -52,7 +52,7 @@ export class DateHelper {
   }
 
   public static formatMoment(date: Date, format: string, utc: boolean = false): string {
-    return date ? (utc ? moment.utc(date).format(format) : moment(date).format(format) ) : null;
+    return date ? (utc ? moment(date).utc().format(format) : moment(date).format(format) ) : null;
   }
 
   // public static convertToUTC(date: string | Date) {
