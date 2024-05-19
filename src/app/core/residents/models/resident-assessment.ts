@@ -1,5 +1,6 @@
 import {Resident} from './resident';
 import {AssessmentForm} from './assessment-form';
+import {AssessmentType} from './assessment-type';
 
 export class ResidentAssessment implements IdInterface {
   id: number;
@@ -7,6 +8,8 @@ export class ResidentAssessment implements IdInterface {
   resident: Resident;
 
   form: AssessmentForm;
+
+  type: AssessmentType;
 }
 
 export enum AssessmentReportType {

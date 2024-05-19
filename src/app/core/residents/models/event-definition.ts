@@ -41,7 +41,8 @@ export enum EventDefinitionView {
 
 export enum EventDefinitionType {
   NONE = 1,
-  ABSENCE = 2
+  ABSENCE = 2,
+  ASSESSMENT = 3
 }
 
 export enum RepeatType {

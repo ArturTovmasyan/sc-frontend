@@ -4,6 +4,20 @@
   <nz-tabset [nzSelectedIndex]="tabSelected.value" (nzSelectedIndexChange)="tabChanged($event);">
     <nz-tab nzTitle="Assessment Information">
       <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type_id" nzRequired>Type</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type_id')?'error':null">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type_id">
+            <ng-container *ngFor="let assessment_type of assessment_types">
+              <nz-option [nzLabel]="assessment_type.title" [nzValue]="assessment_type.id"></nz-option>
+            </ng-container>
+          </nz-select>
+          <nz-form-explain *ngIf="hasErrors('type_id')">
+            <app-field-errors [errors]="fieldErrors('type_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="form_id" nzRequired>Assessment Form</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('form_id')?'error':null">
           <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="form_id">

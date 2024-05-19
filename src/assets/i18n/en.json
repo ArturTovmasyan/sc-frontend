@@ -380,6 +380,7 @@
     },
     "resident-assessment-list": {
       "id": "ID",
+      "type": "Type",
       "form": "Form",
       "date": "Date",
       "performed_by": "Performed By",

@@ -99,6 +99,7 @@ import {DashboardComponent as ResidentDashboardComponent} from './residents/comp
 import {DashboardDetailComponent as ResidentDashboardDetailComponent} from './residents/components/dashboard/dashboard-detail.component';
 import {ListComponent as FacilityDocumentListComponent} from './residents/components/facility-document/list.component';
 import {CalendarComponent as CorporateCalendarComponent} from './residents/components/calendar/calendar.component';
+import {ListComponent as AssessmentTypeListComponent} from './residents/components/assessment/type/list.component';
 
 const routes: Routes = [
   {
@@ -549,6 +550,15 @@ const routes: Routes = [
           title: 'Assessments'
         },
         children: [
+          {
+            path: 'types', component: AssessmentTypeListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
+              title: 'Types',
+              permissions: ['persistence-assessment-type']
+            },
+            canActivate: [AuthGuard]
+          },
           {
             path: 'categories', component: AssessmentCategoryListComponent,
             data: {

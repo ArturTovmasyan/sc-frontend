@@ -9,12 +9,15 @@ import {AssessmentCategory} from '../../../../models/assessment-category';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {DateHelper} from '../../../../../../shared/helpers/date-helper';
 import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {AssessmentTypeService} from '../../../../services/assessment-type.service';
+import {AssessmentType} from '../../../../models/assessment-type';
 
 @Component({
   templateUrl: 'form.component.html',
   styleUrls: ['form.component.scss']
 })
 export class FormComponent extends AbstractForm implements OnInit {
+  assessment_types: AssessmentType[];
   assessment_forms: AssessmentForm[];
   categories: AssessmentCategory[];
 
@@ -64,6 +67,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
+    private assessment_type$: AssessmentTypeService,
     private assessment_form$: AssessmentFormService,
     private residentSelector$: ResidentSelectorService,
     private _el: ElementRef
@@ -84,6 +88,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       resident_id: [null, Validators.required],
 
       // Tab 1
+      type_id: [null, Validators.required],
       form_id: [null, Validators.required],
       date: [new Date(), Validators.required],
       performed_by: ['', Validators.required],
@@ -105,6 +110,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     };
 
     this.subscribe('rs_resident');
+    this.subscribe('list_assessment_type');
     this.subscribe('list_assessment_form');
   }
 
@@ -114,6 +120,13 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'list_assessment_type':
+        this.$subscriptions[key] = this.assessment_type$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.assessment_types = res;
+          }
+        });
+        break;
       case 'list_assessment_form':
         this.$subscriptions[key] = this.assessment_form$.all().pipe(first()).subscribe(res => {
           if (res) {
