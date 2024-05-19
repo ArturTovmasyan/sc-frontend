@@ -63,7 +63,7 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
     if (this.residentSelector$.resident.value !== null && this.residentSelector$.type.value !== null) {
       const param_resident = this.params.filter(v => v.key === 'resident_id').pop();
 
-      if (param_resident === null) {
+      if (param_resident) {
         this.params.push({key: 'resident_id', value: this.residentSelector$.resident.value.toString()});
       } else {
         param_resident.value = this.residentSelector$.resident.value.toString();
