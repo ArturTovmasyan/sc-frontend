@@ -48,8 +48,6 @@ export class CSVComponent implements OnInit, OnDestroy {
     switch (key) {
       case 'param':
         this.route$.queryParams.subscribe(query => {
-          console.log(query);
-
           this.subscribe('get_report', {
             config: {
               group_alias: query['g'],
