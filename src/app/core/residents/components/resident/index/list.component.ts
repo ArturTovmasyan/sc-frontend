@@ -54,9 +54,9 @@ export class ListComponent extends GridComponent<Resident, ResidentService> impl
   ) {
     super(service$, title$, modal$);
 
-    this.component = FormComponent;
-
     this.card = false;
+    this.component = FormComponent;
+    this.permission = 'persistence-resident-resident';
     this.name = 'resident-list';
   }
 

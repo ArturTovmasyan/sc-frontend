@@ -28,9 +28,9 @@ export class ListComponent extends GridComponent<LeadAssessment, LeadAssessmentS
 
     this.card = false;
     this.component = FormComponent;
-    this.modal$.without_save_and_add = true;
-
+    this.permission = 'persistence-resident-assessment-assessment';
     this.name = 'resident-assessment-list';
+    this.modal$.without_save_and_add = true;
   }
 
   ngOnInit(): void {
