@@ -13,7 +13,6 @@ import {ResidentSelectorService} from '../../../../../services/resident-selector
 })
 export class FormComponent extends AbstractForm implements OnInit {
   allergens: Allergen[];
-  resident_id: number;
 
   constructor(
     private formBuilder: FormBuilder,

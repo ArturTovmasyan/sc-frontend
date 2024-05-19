@@ -21,7 +21,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   relationships: Relationship[];
   roles: ResponsiblePersonRole[];
   responsible_persons: ResponsiblePerson[];
-  resident_id: number;
 
   constructor(
     private formBuilder: FormBuilder,

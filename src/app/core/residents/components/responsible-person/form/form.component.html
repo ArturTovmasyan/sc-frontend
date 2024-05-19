@@ -126,19 +126,19 @@
            *ngIf="get_form_array('phones').controls.length > 0">
       <thead>
       <tr>
-        <th class="w-25 text-center">
+        <th style="width:20%;">
           <nz-form-label>Primary</nz-form-label>
         </th>
-        <th class="w-25">
+        <th style="width:32%;">
           <nz-form-label nzRequired>Type</nz-form-label>
         </th>
-        <th class="w-25">
+        <th style="width:30%;">
           <nz-form-label nzRequired>Number</nz-form-label>
         </th>
-        <th class="w-25">
-          <nz-form-label>Extension</nz-form-label>
+        <th style="width:15%;">
+          <nz-form-label>Ext.</nz-form-label>
         </th>
-        <th>&nbsp;</th>
+        <th style="width:3%;">&nbsp;</th>
       </tr>
       </thead>
       <tbody>
@@ -177,7 +177,7 @@
             <nz-form-item>
               <nz-form-control [nzSm]="16" [nzXs]="24"
                                [nzValidateStatus]="hasErrors('phones.'+i+'.extension')?'error':null">
-                <input nz-input nzSize="small" placeholder="Extension" formControlName="extension">
+                <input nz-input nzSize="small" placeholder="Ext." formControlName="extension">
                 <nz-form-explain *ngIf="hasErrors('phones.'+i+'.extension')">
                   <app-field-errors [errors]="fieldErrors('phones.'+i+'.extension')"></app-field-errors>
                 </nz-form-explain>
