@@ -23,10 +23,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   city_state_zips: CityStateZip[];
   spaces: Space[];
 
-  private _loaded_city_state_zips: boolean;
-  private _loaded_salutations: boolean;
-  private _loaded_spaces: boolean;
-
   phone_types: { id: PhoneType, name: string }[];
 
   constructor(
@@ -38,7 +34,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     private auth_$: AuthGuard
   ) {
     super();
-    this.loaded.next(false);
   }
 
   ngOnInit(): void {
@@ -88,8 +83,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             res.sort((a, b) => a.name.localeCompare(b.name));
             this.spaces = res;
           }
-          this._loaded_spaces = true;
-          this.loaded.next(this._loaded_city_state_zips && this._loaded_salutations && this._loaded_spaces);
         });
         break;
       case 'list_csz':
@@ -101,8 +94,6 @@ export class FormComponent extends AbstractForm implements OnInit {
               this.form.get('csz_id').setValue(params.csz_id);
             }
           }
-          this._loaded_city_state_zips = true;
-          this.loaded.next(this._loaded_city_state_zips && this._loaded_salutations && this._loaded_spaces);
         });
         break;
       case 'list_salutation':
@@ -114,8 +105,6 @@ export class FormComponent extends AbstractForm implements OnInit {
               this.form.get('salutation_id').setValue(params.salutation_id);
             }
           }
-          this._loaded_salutations = true;
-          this.loaded.next(this._loaded_city_state_zips && this._loaded_salutations && this._loaded_spaces);
         });
         break;
       default:
