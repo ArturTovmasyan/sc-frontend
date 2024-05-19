@@ -41,9 +41,11 @@ export class ListComponent extends GridComponent<FacilityDocument, FacilityDocum
       'far fa-file',
       false,
       true,
-      () => {
+      (params?: any[]) => {
+        const param = params && params.length > 0 && params[0] !== null ? params[0] : this.checkbox_config.ids[0];
+
         this.loading = true;
-        this.service$.download(this.checkbox_config.ids[0], () => {
+        this.service$.download(param, () => {
           this.loading = false;
         }, (error) => {
           this.loading = false;

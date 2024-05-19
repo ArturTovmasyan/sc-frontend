@@ -172,6 +172,11 @@
                   <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i>
                 </a>
               </ng-container>
+              <ng-container *ngSwitchCase="':download'">
+                <a href="javascript:void(0);" (click)="button_action(field.link, row.id)">
+                  {{ row[field.id] }}
+                </a>
+              </ng-container>
               <ng-container *ngIf="routeInfo(field.link, row) !== null">
                 <a *ngSwitchDefault [routerLink]="routeInfo(field.link, row)">
                   {{ row[field.id] }}

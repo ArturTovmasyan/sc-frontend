@@ -415,4 +415,13 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     return this.component || this._btnBar.buttons_left.length > 0 || this._btnBar.buttons_center.length > 0 || this._btnBar.buttons_right.length > 0;
   }
 
+  button_action(action: string, id: any) {
+    const button_name = action.replace(':', '');
+    const button: Button = this._btnBar.get_button(button_name);
+
+    if (button !== null) {
+      button.click([id]);
+    }
+  }
+
 }

@@ -25,7 +25,7 @@ export class Button {
   override: boolean;
   show: boolean;
 
-  click: () => void;
+  click: (params?: any[]) => void;
 
 
   constructor(
@@ -233,4 +233,12 @@ export class ButtonBarComponent implements OnInit {
   public clear_button_right() {
     this.buttons_right = [];
   }
+
+  public get_button(name: string): Button {
+    const buttons: Button[] = [...this.buttons_left, ...this.buttons_center, ...this.buttons_right];
+    const button = buttons.filter(value => value.name === name).pop();
+
+    return button;
+  }
+
 }
