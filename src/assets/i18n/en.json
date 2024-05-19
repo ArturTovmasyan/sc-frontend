@@ -429,7 +429,8 @@
       "effective_date": "Effective Date",
       "notification_date": "Notification Date",
       "reason": "Reason",
-      "amount": "Amount"
+      "amount": "Amount",
+      "done": "Done"
     },
     "resident-event-list": {
       "id": "ID",
