@@ -1,33 +1,81 @@
 <div class="card">
   <div class="card-header">
-    {{ title }}
-
-    <div class="card-header-actions">
-      <nz-select *ngIf="options.state !== null && options.state !== undefined && options.state !== 'no-admission'" class="card-header-action" style="width: 250px;font-weight: normal;"
-                 nzShowSearch [nzAllowClear]="true" nzSize="small" nzPlaceHolder="Please select facility"
-                 [(ngModel)]="group" (ngModelChange)="group_changes($event)"
-      >
-        <nz-option-group *ngIf="group_helper.facilities" nzLabel="FFC - Facilities">
-          <ng-container *ngFor="let facility of group_helper.facilities">
-            <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
+    <div class="d-flex justify-content-between">
+      <div *ngIf="!mode" class="sc-sort-placeholder">&nbsp;</div>
+      <div *ngIf="mode">
+        <span style="font-size: small;margin-right: 0.5rem;">Sort by:</span>
+        <nz-button-group [nzSize]="'small'" class="ml-auto">
+          <a nz-button nzSize="small" nzType="default" (click)="sort('resident')">
+            <i *ngIf="options.sort_resident === true" nz-icon nzType="caret-up" nzTheme="outline"></i>
+            <i *ngIf="options.sort_resident === false" nz-icon nzType="caret-down" nzTheme="outline"></i>
+            Resident
+          </a>
+          <a *ngIf="show_room_sort()" nz-button nzSize="small" nzType="default" (click)="sort('room')">
+            <i *ngIf="options.sort_room === true" nz-icon nzType="caret-up" nzTheme="outline"></i>
+            <i *ngIf="options.sort_room === false" nz-icon nzType="caret-down" nzTheme="outline"></i>
+            Room
+          </a>
+        </nz-button-group>
+      </div>
+      <div *ngIf="show_title()">{{ title }}</div>
+      <div *ngIf="options.state !== null && options.state !== undefined && options.state !== 'no-admission'">
+        <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+          {{ type_name ? (type_name + ' - ' + title) : title }}
+          <i nz-icon nzType="down" class="title-caret"></i>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li *ngIf="group_helper.facilities && group_helper.facilities.length > 0" nz-menu-group
+                nzTitle="FFC- Facilities">
+              <ul class="sc-dd-ul">
+                <ng-container *ngFor="let facility of group_helper.facilities">
+                  <li *ngIf="type_name === facility.name" nz-menu-item
+                      (click)="select_group(GroupType.FACILITY, facility.id, facility.name)">
+                    <strong>{{ facility.name }}</strong></li>
+                  <li *ngIf="type_name !== facility.name" nz-menu-item
+                      (click)="select_group(GroupType.FACILITY, facility.id, facility.name)">{{ facility.name }}</li>
+                </ng-container>
+              </ul>
+            </li>
+            <li *ngIf="group_helper.regions && group_helper.regions.length > 0" nz-menu-group nzTitle="IHC - Regions">
+              <ul class="sc-dd-ul">
+                <ng-container *ngFor="let region of group_helper.regions">
+                  <li *ngIf="type_name === region.name" nz-menu-item
+                      (click)="select_group(GroupType.REGION, region.id, region.name)">
+                    <strong>{{ region.name }}</strong></li>
+                  <li *ngIf="type_name !== region.name" nz-menu-item
+                      (click)="select_group(GroupType.REGION, region.id, region.name)">{{ region.name }}</li>
+                </ng-container>
+              </ul>
+            </li>
+            <li *ngIf="group_helper.apartments && group_helper.apartments.length > 0" nz-menu-group
+                nzTitle="IL - Apartments">
+              <ul class="sc-dd-ul">
+                <ng-container *ngFor="let apartment of group_helper.apartments">
+                  <li *ngIf="type_name === apartment.name" nz-menu-item
+                      (click)="select_group(GroupType.APARTMENT, apartment.id, apartment.name)">
+                    <strong>{{ apartment.name }}</strong></li>
+                  <li *ngIf="type_name !== apartment.name" nz-menu-item
+                      (click)="select_group(GroupType.APARTMENT, apartment.id, apartment.name)">{{ apartment.name }}</li>
+                </ng-container>
+              </ul>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+      <div>
+        <div *ngIf="!mode || !residents" class="sc-residents-placeholder">&nbsp;</div>
+        <nz-select *ngIf="mode && residents" nzShowSearch nzSize="small" [nzDropdownMatchSelectWidth]="false"
+                   nzPlaceHolder="Select Resident" [(ngModel)]="resident_id" (ngModelChange)="resident_changed()">
+          <ng-container *ngFor="let resident of residents">
+            <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
           </ng-container>
-        </nz-option-group>
-        <!--<nz-option-group *ngIf="group_helper.regions" nzLabel="IHC - Regions">-->
-        <!--<ng-container *ngFor="let region of group_helper.regions">-->
-        <!--<nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>-->
-        <!--</ng-container>-->
-        <!--</nz-option-group>-->
-        <!--<nz-option-group *ngIf="group_helper.apartments" nzLabel="IL - Apartments">-->
-        <!--<ng-container *ngFor="let apartment of group_helper.apartments">-->
-        <!--<nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>-->
-        <!--</ng-container>-->
-        <!--</nz-option-group>-->
-      </nz-select>
-
-      <span class="card-header-action" (click)="mode_changed()">
-        <i *ngIf="!mode" style="vertical-align: baseline;" nz-icon nzType="appstore"></i>
-        <i *ngIf="mode"  style="vertical-align: baseline;" nz-icon nzType="unordered-list"></i>
-      </span>
+        </nz-select>
+        <span class="card-header-action" (click)="mode_changed()">
+          <i *ngIf="!mode" style="vertical-align: baseline;" nz-icon nzType="appstore"></i>
+          <i *ngIf="mode" style="vertical-align: baseline;" nz-icon nzType="unordered-list"></i>
+        </span>
+      </div>
     </div>
   </div>
   <div class="card-body">

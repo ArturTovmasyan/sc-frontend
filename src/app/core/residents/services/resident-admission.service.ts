@@ -63,17 +63,31 @@ export class ResidentAdmissionService extends GridService<ResidentAdmission> {
     const type = query.get('type');
     const type_id = query.get('type_id');
 
+    const room = query.get('room');
+    const resident = query.get('resident');
+
     if (state === null || state === undefined) {
       state = 'active';
     }
 
-    let url_segment = `${state}/${page}/${per_page}`;
+    let url_segment = ``;
 
     if (type !== null && type_id !== null && type !== undefined && type_id !== undefined) {
-      url_segment += `?type=${type}&type_id=${type_id}`;
+      url_segment += url_segment === '' ? '?' : '&';
+      url_segment += `type=${type}&type_id=${type_id}`;
     }
 
-    return this.http.get<PagedResponse<Resident>>(`${this.SERVICE_URL_BASE}/paged/${url_segment}`);
+    if (resident !== null && resident !== undefined) {
+      url_segment += url_segment === '' ? '?' : '&';
+      url_segment += `resident=${resident}`;
+    }
+
+    if (room !== null && room !== undefined) {
+      url_segment += url_segment === '' ? '?' : '&';
+      url_segment += `room=${room}`;
+    }
+
+    return this.http.get<PagedResponse<Resident>>(`${this.SERVICE_URL_BASE}/paged/${state}/${page}/${per_page}${url_segment}`);
   }
 
   public move(data: any): Observable<any> { // TODO(haykg): review when backend will be ready

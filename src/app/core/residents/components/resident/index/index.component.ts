@@ -8,22 +8,34 @@ import {RegionService} from '../../../services/region.service';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {first} from 'rxjs/operators';
 import {GroupType} from '../../../models/group-type.enum';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ResidentAdmissionService} from '../../../services/resident-admission.service';
 
 @Component({
   templateUrl: './index.component.html',
+  styleUrls: ['./index.component.scss'],
   providers: []
 })
 export class IndexComponent implements OnInit, OnDestroy {
+  GroupType = GroupType;
+
   title: string;
 
   mode: boolean = false; // true - thumbnail, false - list
 
   group: any;
 
-  options: {state?: string, type?: number, type_id?: number} = {};
+  options: { state?: string, type?: number, type_id?: number, sort_resident?: boolean, sort_room?: boolean } = {
+    sort_resident: null,
+    sort_room: null,
+  };
 
   group_helper: GroupHelper;
+
+  resident_id: number;
+  residents: any;
+
+  type_name: string;
 
   private $subscriptions: { [key: string]: Subscription; };
 
@@ -32,12 +44,14 @@ export class IndexComponent implements OnInit, OnDestroy {
     private facility$: FacilityService,
     private apartment$: ApartmentService,
     private region$: RegionService,
+    private residentAdmission$: ResidentAdmissionService,
+    private router$: Router,
     protected route$: ActivatedRoute,
     private auth_$: AuthGuard,
   ) {
     this.title$.getTitle().subscribe(v => this.title = v);
-
     this.group_helper = new GroupHelper();
+
     this.$subscriptions = {};
   }
 
@@ -104,6 +118,7 @@ export class IndexComponent implements OnInit, OnDestroy {
           this.$subscriptions[key] = params.service.get(params.id).pipe(first()).subscribe(res => {
             if (res) {
               this.title$.setTitle(res.name);
+              this.select_group(this.options.type, this.options.type_id, null);
             }
           });
         } else {
@@ -156,20 +171,80 @@ export class IndexComponent implements OnInit, OnDestroy {
           }
         });
         break;
+      case 'list_residents':
+        this.$subscriptions[key] = this.residentAdmission$
+          .list_by_state('active', params.type, params.type_id)
+          .pipe(first()).subscribe(res => {
+            if (res) {
+              this.residents = res;
+            }
+          });
+        break;
       default:
         break;
     }
   }
 
-  group_changes($event: any) {
-    this.options.type = this.group !== null ? this.group.type : null;
-    this.options.type_id = this.group !== null ? this.group.id : null;
-
-    this.subscribe('get_title');
-    this.options = Object.assign({}, this.options);
-  }
-
   mode_changed() {
     this.mode = !this.mode;
+  }
+
+  sort(sort_column: string) {
+    switch (sort_column) {
+      case 'resident':
+        this.options.sort_resident = this.tristate(this.options.sort_resident);
+        this.options.sort_room = null;
+
+        this.options = Object.assign({}, this.options);
+        break;
+      case 'room':
+        this.options.sort_resident = null;
+        this.options.sort_room = this.tristate(this.options.sort_room);
+
+        this.options = Object.assign({}, this.options);
+        break;
+    }
+
+    // this.subscribe('list_active_first', {type: GroupType.FACILITY, type_id: this.type_id});
+  }
+
+  tristate(state: boolean) {
+    if (state === null) {
+      return true;
+    } else if (state === true) {
+      return false;
+    } else {
+      return null;
+    }
+  }
+
+  select_group(type: number, id: number, name: string) {
+    this.type_name = name;
+    this.resident_id = null;
+
+    this.subscribe('list_residents', {type: type, type_id: id});
+
+    this.options.type = type;
+    this.options.type_id = id;
+    this.options = Object.assign({}, this.options);
+
+  }
+
+  resident_changed() {
+    if (this.resident_id !== null) {
+      this.router$.navigate(
+        ['/resident', this.resident_id, {outlets: {'primary': null, 'resident-details': ['responsible-persons']}}]
+      );
+    }
+  }
+
+  show_room_sort(): boolean {
+    return (this.options.state !== null && this.options.state !== undefined && this.options.state !== 'no-admission') ||
+      ((this.options.state === null || this.options.state === undefined) && (this.options.type !== null && this.options.type !== undefined
+        && this.options.type_id !== null && this.options.type_id !== undefined));
+  }
+
+  show_title() {
+    return (this.options.state === null || this.options.state === undefined) || (this.options.state === 'no-admission');
   }
 }

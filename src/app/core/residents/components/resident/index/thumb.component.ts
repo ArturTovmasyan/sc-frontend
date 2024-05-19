@@ -14,11 +14,13 @@ import {ResidentAdmissionService} from '../../../services/resident-admission.ser
   providers: []
 })
 export class ThumbComponent implements OnInit, OnDestroy {
-  @Input('options') set options(options: {state?: string, type?: number, type_id?: number}) {
+  @Input('options') set options(options: {state?: string, type?: number, type_id?: number, sort_resident?: boolean, sort_room?: boolean}) {
     this.route_options.page = 1;
     this.route_options.state = options.state;
     this.route_options.type = options.type;
     this.route_options.type_id = options.type_id;
+    this.route_options.sort_resident = options.sort_resident;
+    this.route_options.sort_room = options.sort_room;
     this.reload_residents();
   }
 
@@ -33,14 +35,18 @@ export class ThumbComponent implements OnInit, OnDestroy {
     total: number,
     state?: string,
     type?: number,
-    type_id?: number
+    type_id?: number,
+    sort_resident?: boolean,
+    sort_room?: boolean
   } = {
     page: 1,
-    per_page: 10,
+    per_page: 30,
     total: null,
     state: null,
     type: null,
-    type_id: null
+    type_id: null,
+    sort_resident: null,
+    sort_room: null
   };
 
   protected $subscriptions: { [key: string]: Subscription; };
@@ -91,7 +97,9 @@ export class ThumbComponent implements OnInit, OnDestroy {
       {key: 'per_page', value: this.route_options.per_page},
       {key: 'state', value: this.route_options.state},
       {key: 'type', value: this.route_options.type},
-      {key: 'type_id', value: this.route_options.type_id}
+      {key: 'type_id', value: this.route_options.type_id},
+      {key: 'resident', value: this.route_options.sort_resident},
+      {key: 'room', value: this.route_options.sort_room}
     ]);
   }
 
