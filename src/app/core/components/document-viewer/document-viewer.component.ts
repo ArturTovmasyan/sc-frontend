@@ -26,11 +26,17 @@ import {FormComponent as ResidentDocumentFormComponent} from '../../residents/co
 export class DocumentViewerComponent implements OnInit, OnDestroy {
   private _service$: GridService<any>;
 
-  @Input() component: Type<any>;
+  @Input('component') component: Type<any>;
 
-  @Input() set service(value: GridService<any>) {
+  @Input('show-category') show_category: boolean;
+
+  @Input('service') set service(value: GridService<any>) {
     this._service$ = value;
   }
+
+  @Input('resident-id') resident_id: number;
+
+  @Input('title') title: string;
 
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
@@ -42,8 +48,6 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
 
   loading: boolean;
   loading_edit_modal: boolean;
-
-  public title: string = null;
 
   protected $subscriptions: { [key: string]: Subscription; };
 
@@ -59,12 +63,19 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
 
     this.document = null;
     this.category = null;
+
+    this.show_category = true;
+    this.resident_id = null;
+    this.title = null;
   }
 
   ngOnInit(): void {
     this.subscribe('title');
     this.subscribe('param_id');
-    this.subscribe('list_category');
+
+    if (this.show_category) {
+      this.subscribe('list_category');
+    }
   }
 
   ngOnDestroy(): void {
@@ -74,7 +85,11 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
   protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'title':
-        this.$subscriptions[key] = this.title$.getTitle().subscribe(v => this.title = v);
+        this.$subscriptions[key] = this.title$.getTitle().subscribe(v => {
+          if (this.title === null) {
+            this.title = v;
+          }
+        });
         break;
       case 'param_id':
         this.$subscriptions[key] = this.route$.queryParamMap.subscribe(route_params => {
@@ -95,10 +110,20 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
       case 'list_document':
         this.document = null;
         this.loading = true;
-        this.$subscriptions[key] = this._service$
-          .all((params && params.hasOwnProperty('category_id')) && params.category_id
-            ? [{key: 'category_id', value: params.category_id}] : [])
-          .subscribe(res => {
+
+        const list_params = [];
+
+        if (this.resident_id !== null) {
+          list_params.push({key: 'resident_id', value: this.resident_id});
+        }
+
+        if (params) {
+          if (params.hasOwnProperty('category_id')) {
+            list_params.push({key: 'category_id', value: params.category_id});
+          }
+        }
+
+        this.$subscriptions[key] = this._service$.all(list_params).subscribe(res => {
             if (res) {
               this.loading = false;
               this.documents = res;

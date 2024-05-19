@@ -1,0 +1,5 @@
+<app-resident-selector></app-resident-selector>
+<app-document-viewer *ngIf="residentSelector$" [component]="_FormComponent" [service]="service$"
+                     [show-category]="false"
+                     [title]="title"
+                     [resident-id]="residentSelector$.resident.value"></app-document-viewer>

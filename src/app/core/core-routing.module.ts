@@ -56,7 +56,7 @@ import {IndexComponent as ResidentIndexComponent} from './residents/components/r
 import {ViewComponent as ResidentViewComponent} from './residents/components/resident/resident/view/view.component';
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
 import {ListComponent as ResidentHealthInsuranceListComponent} from './residents/components/resident/health-insurance/list.component';
-import {ListComponent as ResidentDocumentListComponent} from './residents/components/resident/document/list.component';
+import {ViewComponent as ResidentDocumentViewComponent} from './residents/components/resident/document/view/view.component';
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {EventComponent as ResidentEventComponent} from './residents/components/resident/event/event.component';
 import {RentComponent as ResidentRentComponent} from './residents/components/resident/rent/rent.component';
@@ -801,6 +801,17 @@ const routes: Routes = [
       },
 
       {
+        path: 'resident/:id/documents',
+        component: ResidentDocumentViewComponent,
+        pathMatch: 'full',
+        data: {
+          title: 'Documents',
+          permissions: ['persistence-resident-resident_document']
+        },
+        canActivate: [AuthGuard]
+      },
+
+      {
         path: 'resident/:id',
         component: ResidentViewComponent,
         canActivate: [AuthGuard],
@@ -828,17 +839,6 @@ const routes: Routes = [
             data: {
               title: 'Health Insurance',
               permissions: ['persistence-resident-resident_health_insurance']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'documents',
-            component: ResidentDocumentListComponent,
-            outlet: 'resident-details',
-            pathMatch: 'full',
-            data: {
-              title: 'Documents',
-              permissions: ['persistence-resident-resident_document']
             },
             canActivate: [AuthGuard]
           },

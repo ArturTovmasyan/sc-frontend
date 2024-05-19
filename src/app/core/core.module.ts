@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule, registerLocaleData} from '@angular/common';
-import {RouterModule} from '@angular/router';
+import {RouterModule, UrlSerializer} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -11,7 +11,7 @@ import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfe
 import {BsDropdownModule, TabsModule} from 'ngx-bootstrap';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {DndModule} from '@beyerleinf/ngx-dnd';
-import { NgChartjsModule } from 'ng-chartjs';
+import {NgChartjsModule} from 'ng-chartjs';
 
 import {CoreRoutingModule} from './core-routing.module';
 // import {SignUpComponent} from './components/account/sign-up/sign-up.component';
@@ -228,9 +228,8 @@ import {FormComponent as InsuranceCompanyFormComponent} from './residents/compon
 import {ListComponent as ResidentHealthInsuranceListComponent} from './residents/components/resident/health-insurance/list.component';
 import {FormComponent as ResidentHealthInsuranceFormComponent} from './residents/components/resident/health-insurance/form/form.component';
 
-import {ListComponent as ResidentDocumentListComponent} from './residents/components/resident/document/list.component';
+import {ViewComponent as ResidentDocumentViewComponent} from './residents/components/resident/document/view/view.component';
 import {FormComponent as ResidentDocumentFormComponent} from './residents/components/resident/document/form/form.component';
-
 
 
 import {ViewComponent as DocumentViewComponent} from './documents/components/document/view/view.component';
@@ -336,6 +335,7 @@ import {ViewComponent as ResidentRentViewComponent} from './residents/components
 import {ViewComponent as ResidentRentIncreaseViewComponent} from './residents/components/resident/rent/rent-increase/view/view.component';
 import {EventRepeatPipe} from './residents/pipes/event-repeat.pipe';
 import {DateInterceptor} from './interceptors/date.interceptor';
+import {CustomUrlSerializer} from './interceptors/url-serializer';
 
 registerLocaleData(en);
 
@@ -654,7 +654,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentHealthInsuranceListComponent,
     ResidentHealthInsuranceFormComponent,
 
-    ResidentDocumentListComponent,
+    ResidentDocumentViewComponent,
     ResidentDocumentFormComponent,
 
     DocumentViewComponent,

@@ -9,6 +9,7 @@ import {first} from 'rxjs/operators';
 import {ResidentAdmissionService} from '../../services/resident-admission.service';
 import {FormComponent as ResidentSwapFormComponent} from '../resident/swap-form/form.component';
 import {ModalFormService} from '../../../../shared/services/modal-form.service';
+import {GroupHelper} from '../../helper/group-helper';
 
 @Component({
   selector: 'app-resident-selector',
@@ -50,6 +51,14 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
 
   subscribe(key: string, params?: any) {
     switch (key) {
+      case 'get_admission':
+        this.$subscriptions[key] = this.residentAdmission$.active(this.resident_id).pipe(first()).subscribe(res => {
+          if (res != null && !Array.isArray(res)) {
+            this.residentSelector$.type.next(res.group_type);
+            this.residentSelector$.group.next(GroupHelper.get_group_id(res));
+          }
+        });
+        break;
       case 'list_resident':
         this.$subscriptions[key] = this.residentAdmission$
           .list_by_state('active', this.residentSelector$.type.value, this.residentSelector$.group.value)
@@ -74,6 +83,10 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
           } else {
             this.resident_id = next;
           }
+
+          if (this.resident_id && (this.residentSelector$.type.value === null || this.residentSelector$.group.value === null)) {
+            this.subscribe('get_admission');
+          }
         });
         break;
       default:
@@ -81,10 +94,16 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     }
   }
 
-  routeInfo(route_name: string) {
+  routeInfo(route_name: string, without_outlet: boolean = false) {
     const resident_id = this.residentSelector$.resident.value;
 
-    return ['/resident', resident_id, {outlets: {'resident-details': [route_name]}}];
+    return ['/resident', resident_id, {outlets: {'primary': null, 'resident-details': [route_name]}}];
+  }
+
+  navigate(route_name: string) {
+    const resident_id = this.residentSelector$.resident.value;
+
+    this.router$.navigateByUrl('/resident/' + resident_id + '/' + route_name);
   }
 
   addIfHasPermission(permission: string) {
