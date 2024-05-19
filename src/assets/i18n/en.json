@@ -511,6 +511,7 @@
       "id": "ID",
       "start": "1st Day Away",
       "end": "Last Day Away",
+      "total_days": "Total Days",
       "reason": "Reason"
     },
     "resident-rent-increase-list": {

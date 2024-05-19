@@ -23,6 +23,7 @@ export class ResidentLedger implements IdInterface {
   source: { key: PaymentSource, value: number } [];
   privat_pay_source: { key: PaymentSource, value: number } [];
   not_privat_pay_source: { key: PaymentSource, value: number } [];
+  away_days: { key: string, value: number } [];
 
   resident_expense_items: ResidentExpenseItem[];
   resident_credit_items: ResidentCreditItem[];

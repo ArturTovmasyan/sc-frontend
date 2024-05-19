@@ -5,6 +5,7 @@ import {ResidentSelectorService} from '../../../../../services/resident-selector
 import {DateHelper} from '../../../../../../../shared/helpers/date-helper';
 import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
 import {CoreValidator} from '../../../../../../../shared/utils/core-validator';
+import moment from 'moment';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -53,5 +54,15 @@ export class FormComponent extends AbstractForm implements OnInit {
     value.start = DateHelper.makeUTCDateOnly(value.start);
     value.end = DateHelper.makeUTCDateOnly(value.end);
     return value;
+  }
+
+  public dateDiff(startDate, endDate) {
+    let result = 0;
+    if (startDate && endDate) {
+      const start = moment(DateHelper.makeUTCDateOnly(startDate));
+      const end = moment(DateHelper.makeUTCDateOnly(endDate));
+      result = Math.ceil(end.diff(start, 'days', true) + 1);
+    }
+    return result;
   }
 }

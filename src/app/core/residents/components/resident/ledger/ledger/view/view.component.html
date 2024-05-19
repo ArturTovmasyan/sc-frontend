@@ -357,6 +357,18 @@
                           </tr>
                         </ng-container>
                       </ng-container>
+                      <ng-container *ngIf="ledger.away_days && ledger.away_days.length > 0">
+                        <ng-container *ngFor="let item of ledger.away_days">
+                          <tr class="text-center">
+                            <td style="width: 15% !important;">{{ item.date }}</td>
+                            <td style="width: 20% !important;">Resident Away Days</td>
+                            <td style="width: 15% !important;">{{ item.days }}</td>
+                            <td style="width: 15% !important;"></td>
+                            <td style="width: 20% !important;"></td>
+                            <td style="width: 15% !important; color:#FF0000"></td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
                       <tr class="text-center">
                         <td style="width: 15% !important;"></td>
                         <td style="width: 20% !important;"></td>
