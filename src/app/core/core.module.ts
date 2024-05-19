@@ -191,7 +191,7 @@ import {ListComponent as ResidentAdmissionListComponent} from './residents/compo
 import {FormComponent as ResidentAdmissionFormComponent} from './residents/components/resident/admission/form/form.component';
 
 import {RentComponent as ResidentRentComponent} from './residents/components/resident/rent/rent.component';
-import {ListComponent as ResidentRentRoomListComponent} from './residents/components/resident/rent/rent/list.component';
+import {ListComponent as ResidentRentRoomListComponent} from './residents/components/resident/rent/rent/list/list.component';
 import {FormComponent as ResidentRentRoomFormComponent} from './residents/components/resident/rent/rent/form/form.component';
 import {ListComponent as ResidentRentIncreaseListComponent} from './residents/components/resident/rent/rent-increase/list.component';
 import {FormComponent as ResidentRentIncreaseFormComponent} from './residents/components/resident/rent/rent-increase/form/form.component';

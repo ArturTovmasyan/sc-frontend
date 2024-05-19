@@ -1,0 +1,92 @@
+<app-button-bar #btnBar
+  [service]="service$"
+  [component]="_ResidentRentFormComponent"
+  [modal_callback]="modal_callback"
+  [ids]="checkbox_config.ids"
+  [single_select]="checkbox_config.ids.length === 1"
+  [multi_select]="checkbox_config.ids.length > 1"
+></app-button-bar>
+<nz-table
+  class="sc-table"
+  nzBordered
+  [nzData]="resident_rents"
+  [nzScroll]="{x:'100%'}"
+  [nzSize]="'middle'"
+  [nzShowPagination]="false"
+  (nzCurrentPageDataChange)="current_page_data_change($event)"
+>
+  <thead>
+  <tr>
+    <th [nzShowCheckbox]="true"
+        [(nzChecked)]="checkbox_config.all"
+        [nzIndeterminate]="checkbox_config.indeterminate"
+        (nzCheckedChange)="checkbox_all($event)"
+        class="sc-table-th-checkbox">&nbsp;</th>
+    <th>{{ ('grid.resident-rent-list.start')|translate }}</th>
+    <th>{{ ('grid.resident-rent-list.end')|translate }}</th>
+    <th>{{ ('grid.resident-rent-list.amount')|translate }}</th>
+    <th>{{ ('grid.resident-rent-list.reason')|translate }}</th>
+    <th colspan="2">{{ ('grid.resident-rent-list.sources')|translate }}</th>
+    <th>{{ ('grid.resident-rent-list.notes')|translate }}</th>
+  </tr>
+  </thead>
+  <tbody *ngFor="let resident_rent of resident_rents">
+  <ng-container *ngIf="resident_rents && resident_rents.length > 0">
+    <ng-container *ngIf="!resident_rent.source || resident_rent.source.length === 0">
+      <tr>
+        <td [nzShowCheckbox]="true"
+            [(nzChecked)]="resident_rent.checked"
+            (nzCheckedChange)="checkbox_refresh()">&nbsp;</td>
+        <td>{{ resident_rent.start|date:'MM/dd/yyyy' }}</td>
+        <td>{{ resident_rent.end|date:'MM/dd/yyyy' }}</td>
+        <td class="text-right">{{ resident_rent.amount|currency:'USD':'symbol-narrow':'1.2-2' }}</td>
+        <td>{{ resident_rent.reason ? resident_rent.reason.title : '' }}</td>
+        <td colspan="2">&nbsp;</td>
+        <td>{{ resident_rent.notes }}</td>
+      </tr>
+    </ng-container>
+    <ng-container *ngIf="resident_rent.source && resident_rent.source.length > 0">
+      <ng-container *ngFor="let source of resident_rent.source;  let first = first">
+        <tr *ngIf="first">
+          <td [nzShowCheckbox]="true"
+              [(nzChecked)]="resident_rent.checked"
+              (nzCheckedChange)="checkbox_refresh()"
+              [attr.rowSpan]="resident_rent.source.length > 1 ? resident_rent.source.length : null">
+            &nbsp;
+          </td>
+          <td [attr.rowSpan]="resident_rent.source.length > 1 ? resident_rent.source.length : null">
+            {{ resident_rent.start|date:'MM/dd/yyyy' }}
+          </td>
+          <td [attr.rowSpan]="resident_rent.source.length > 1 ? resident_rent.source.length : null">
+            {{ resident_rent.end|date:'MM/dd/yyyy' }}
+          </td>
+          <td class="text-right" [attr.rowSpan]="resident_rent.source.length > 1 ? resident_rent.source.length : null">
+            {{ resident_rent.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
+          </td>
+          <td [attr.rowSpan]="resident_rent.source.length > 1 ? resident_rent.source.length : null">
+            {{ resident_rent.reason ? resident_rent.reason.title : '' }}
+          </td>
+          <td class="text-right">
+            <strong>{{get_source_title(source.id) }}:</strong>
+          </td>
+          <td>
+            {{source.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
+          </td>
+          <td
+            [attr.rowSpan]="resident_rent.source.length > 1 ? resident_rent.source.length : null">
+            {{ resident_rent.notes }}
+          </td>
+        </tr>
+        <tr *ngIf="!first">
+          <td class="text-right">
+            <strong>{{get_source_title(source.id) }}:</strong>
+          </td>
+          <td>
+            {{source.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  </tbody>
+</nz-table>

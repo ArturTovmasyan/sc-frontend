@@ -51,7 +51,12 @@
   th {
     text-align: center;
   }
+}
 
+::ng-deep nz-table.sc-table {
+  .ant-checkbox {
+    top: 0.6rem;
+  }
 }
 
 ::ng-deep {

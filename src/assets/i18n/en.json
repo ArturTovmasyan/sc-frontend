@@ -418,7 +418,7 @@
       "period": "Period",
       "amount": "Amount",
       "notes": "Notes",
-      "info": "Sources",
+      "sources": "Sources",
       "reason": "Reason",
       "space": "Space"
     },
