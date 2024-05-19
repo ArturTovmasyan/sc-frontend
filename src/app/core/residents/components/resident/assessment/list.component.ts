@@ -35,6 +35,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
         name: 'blank',
         type: 'default',
         multiselect: false,
+        free: false,
         nzIcon: null,
         faIcon: 'far fa-file',
         click: (ids: number[]) => {
@@ -52,6 +53,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
         name: 'filled',
         type: 'default',
         multiselect: false,
+        free: false,
         nzIcon: null,
         faIcon: 'far fa-file-alt',
         click: (ids: number[]) => {

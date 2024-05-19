@@ -29,6 +29,8 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
 
   ngOnInit(): void {
     this.subscribe('rs_resident');
+
+    this.buttons.push(this.get_show_hide_button());
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -46,5 +48,42 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
       default:
         break;
     }
+  }
+
+  get_show_hide_button() {
+    let label = '';
+    let value = '';
+
+    const param = this.params.filter(v => v.key === 'discontinued').pop();
+
+    if (param) {
+      value = param.value === '1' ? '0' : '1';
+    } else {
+      value = '1';
+    }
+
+    if (value === '1') {
+      label = 'unhide';
+    } else {
+      label = 'hide';
+    }
+
+    return {
+      name: label,
+      type: 'default',
+      multiselect: false,
+      free: true,
+      nzIcon: null,
+      faIcon: 'fas fa-medkit',
+      click: (ids: number[]) => {
+        this.loading = true;
+        this.params = this.params.filter(v => v.key !== 'discontinued');
+        this.params.push({key: 'discontinued', value: value});
+        super.init();
+
+        this.buttons = [];
+        this.buttons.push(this.get_show_hide_button());
+      }
+    };
   }
 }

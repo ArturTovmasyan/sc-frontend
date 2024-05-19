@@ -42,7 +42,7 @@
     <nz-button-group *ngIf="buttons" [nzSize]="'small'" class="ml-auto">
       <ng-container *ngFor="let button of buttons">
         <button nz-button [nzType]="button.type" (click)="button_action(button)"
-                [disabled]="(button.multiselect == false && checkbox_config.ids.length != 1)
+                [disabled]="button.free === false && (button.multiselect == false && checkbox_config.ids.length != 1)
                  || (button.multiselect == true && checkbox_config.ids.length == 0)">
           <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
           <i *ngIf="button.faIcon" [class]="button.faIcon"></i>
@@ -131,7 +131,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let row of data">
+    <tr *ngFor="let row of data" [style.backgroundColor]="get_background_color(row)">
       <td nzShowCheckbox [(nzChecked)]="row.checked" (nzCheckedChange)="checkbox_refresh()"></td>
       <td *ngFor="let field of fields| filter: 'hidden' : false" [ngSwitch]="field.type">
         <ng-container *ngSwitchCase="'id'">

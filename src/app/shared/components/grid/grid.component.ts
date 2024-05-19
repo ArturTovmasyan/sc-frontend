@@ -45,6 +45,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     name: string,
     type: string,
     multiselect: boolean,
+    free: boolean,
     nzIcon: string,
     faIcon: string,
     click: (ids: number[]) => void
@@ -508,5 +509,15 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {
     return 0;
+  }
+
+  protected get_background_color(row: any) {
+    const color_row_field = this.fields.filter(v => v.type === 'color_row' && v.hidden === true).pop();
+
+    if (color_row_field) {
+      return row[color_row_field.id] === true ? '#d0ffff' : 'inherit';
+    }
+
+    return 'inherit';
   }
 }

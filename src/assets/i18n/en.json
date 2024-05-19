@@ -255,7 +255,11 @@
       "discontinued": "DC",
       "treatment": "TR",
       "notes": "Instructions",
-      "prescription_number": "Prescription #"
+      "prescription_number": "Prescription #",
+      "button": {
+        "hide": "Hide",
+        "unhide": "Unhide"
+      }
     },
     "responsible-person-list": {
       "id": "ID",
