@@ -46,16 +46,16 @@
                 <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
               </ng-container>
             </nz-option-group>
-            <nz-option-group *ngIf="group_helper.regions && group_helper.regions.length > 0" nzLabel="IHC - Regions">
-              <ng-container *ngFor="let region of group_helper.regions">
-                <nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>
-              </ng-container>
-            </nz-option-group>
-            <nz-option-group *ngIf="group_helper.apartments && group_helper.apartments.length > 0" nzLabel="IL - Apartments">
-              <ng-container *ngFor="let apartment of group_helper.apartments">
-                <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
-              </ng-container>
-            </nz-option-group>
+            <!--<nz-option-group *ngIf="group_helper.regions && group_helper.regions.length > 0" nzLabel="IHC - Regions">-->
+              <!--<ng-container *ngFor="let region of group_helper.regions">-->
+                <!--<nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>-->
+              <!--</ng-container>-->
+            <!--</nz-option-group>-->
+            <!--<nz-option-group *ngIf="group_helper.apartments && group_helper.apartments.length > 0" nzLabel="IL - Apartments">-->
+              <!--<ng-container *ngFor="let apartment of group_helper.apartments">-->
+                <!--<nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>-->
+              <!--</ng-container>-->
+            <!--</nz-option-group>-->
           </nz-select>
           <nz-form-explain *ngIf="hasErrors('group')">
             <app-field-errors [errors]="fieldErrors('group')"></app-field-errors>

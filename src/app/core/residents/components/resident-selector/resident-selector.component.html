@@ -70,16 +70,16 @@
           <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
         </ng-container>
       </nz-option-group>
-      <nz-option-group nzLabel="IHC - Regions">
-        <ng-container *ngFor="let region of group_helper.regions">
-          <nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>
-        </ng-container>
-      </nz-option-group>
-      <nz-option-group nzLabel="IL - Apartments">
-        <ng-container *ngFor="let apartment of group_helper.apartments">
-          <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
-        </ng-container>
-      </nz-option-group>
+      <!--<nz-option-group nzLabel="IHC - Regions">-->
+        <!--<ng-container *ngFor="let region of group_helper.regions">-->
+          <!--<nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>-->
+        <!--</ng-container>-->
+      <!--</nz-option-group>-->
+      <!--<nz-option-group nzLabel="IL - Apartments">-->
+        <!--<ng-container *ngFor="let apartment of group_helper.apartments">-->
+          <!--<nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>-->
+        <!--</ng-container>-->
+      <!--</nz-option-group>-->
     </nz-select>
     <i class="fa fa-users"></i>
     <nz-select nzShowSearch [nzDropdownMatchSelectWidth]="false" formControlName="active_resident_id"

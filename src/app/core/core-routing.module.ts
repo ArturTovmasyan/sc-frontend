@@ -245,7 +245,7 @@ const routes: Routes = [
       {
         path: 'relationships', component: RelationshipListComponent,
         data: {
-          nav: {show: true, group: 'Residents'},
+          nav: {show: true, group: 'Reference'},
           title: 'Relationships',
           permissions: ['persistence-common-relationship']
         },
@@ -254,21 +254,22 @@ const routes: Routes = [
       {
         path: 'care-levels', component: CareLevelListComponent,
         data: {
-          nav: {show: true, group: 'Residents'},
+          nav: {show: true, group: 'Reference'},
           title: 'Care Levels',
           permissions: ['persistence-common-care_level']
         },
         canActivate: [AuthGuard]
       },
-      {
-        path: 'event-types', component: EventDefinitionListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Event Types',
-          permissions: ['persistence-common-event_definition']
-        },
-        canActivate: [AuthGuard]
-      },
+      // TODO: review roles
+      // {
+      //   path: 'event-types', component: EventDefinitionListComponent,
+      //   data: {
+      //     nav: {show: true, group: 'Reference'},
+      //     title: 'Event Types',
+      //     permissions: ['persistence-common-event_definition']
+      //   },
+      //   canActivate: [AuthGuard]
+      // },
 
 
       {
@@ -516,25 +517,25 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
 
-
-      {
-        path: 'spaces', component: SpaceListComponent,
-        data: {
-          nav: {show: true, group: 'Administration'},
-          title: 'Spaces',
-          permissions: ['persistence-security-space']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'roles', component: RoleListComponent,
-        data: {
-          nav: {show: true, group: 'Administration'},
-          title: 'Roles',
-          permissions: ['persistence-security-role']
-        },
-        canActivate: [AuthGuard]
-      },
+      // TODO: review roles
+      // {
+      //   path: 'spaces', component: SpaceListComponent,
+      //   data: {
+      //     nav: {show: true, group: 'Administration'},
+      //     title: 'Spaces',
+      //     permissions: ['persistence-security-space']
+      //   },
+      //   canActivate: [AuthGuard]
+      // },
+      // {
+      //   path: 'roles', component: RoleListComponent,
+      //   data: {
+      //     nav: {show: true, group: 'Administration'},
+      //     title: 'Roles',
+      //     permissions: ['persistence-security-role']
+      //   },
+      //   canActivate: [AuthGuard]
+      // },
 
       {
         path: 'profile',
