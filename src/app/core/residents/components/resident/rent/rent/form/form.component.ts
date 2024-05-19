@@ -109,7 +109,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
       case 'list_resident_responsible_person':
         this.$subscriptions[key] = this.residentResponsiblePerson$
-          .all([{key: 'resident_id', value: params.resident_id}]).subscribe(res => {
+          .all([{key: 'resident_id', value: params.resident_id}, {key: 'financially', value: true}]).subscribe(res => {
             if (res) {
               this.residentResponsiblePersons = res;
             }
