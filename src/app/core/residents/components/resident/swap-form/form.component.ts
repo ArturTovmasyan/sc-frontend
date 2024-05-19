@@ -26,7 +26,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      date: [DateHelper.convertUTC(new Date()), Validators.required],
+      date: [new Date(), Validators.required],
 
       first_id: [null, Validators.required],
       second_id: [null, Validators.required],

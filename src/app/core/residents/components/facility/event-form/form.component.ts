@@ -101,7 +101,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
-      date: [DateHelper.convertUTC(new Date()), Validators.required],
+      date: [new Date(), Validators.required],
       additional_date: [new Date(), Validators.required],
 
       physician_id: [null],
@@ -112,12 +112,12 @@ export class FormComponent extends AbstractForm implements OnInit {
       users: [[], Validators.required],
       rsvp: [false, Validators.required],
 
-      start: [DateHelper.convertUTC(new Date()), Validators.required],
-      end: [DateHelper.convertUTC(new Date()), Validators.compose([Validators.required, CoreValidator.laterThan('start')])],
+      start: [new Date(), Validators.required],
+      end: [new Date(), Validators.compose([Validators.required, CoreValidator.laterThan('start')])],
       all_day: [true, Validators.required],
 
       repeat: [null, Validators.required],
-      repeat_end: [DateHelper.convertUTC(new Date())],
+      repeat_end: [new Date()],
       no_repeat_end: [true, Validators.required],
     });
 
