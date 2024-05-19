@@ -608,7 +608,9 @@
     "notification_category": {
       "SIXTY_DAYS_REPORT": "Sixty Days Report",
       "LEAD_ACTIVITY": "Lead Activity",
-      "LEAD_CHANGE_LOG": "Lead Change Log"
+      "LEAD_CHANGE_LOG": "Lead Change Log",
+      "FACILITY_ACTIVITY": "Facility Activity",
+      "CORPORATE_ACTIVITY": "Corporate Activity"
     },
     "grant_level": {
       "NONE":"None",
