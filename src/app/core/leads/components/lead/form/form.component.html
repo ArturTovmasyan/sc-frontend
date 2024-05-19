@@ -52,7 +52,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="owner_id">Owner</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="owner_id" nzRequired>Owner</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('owner_id')?'error':null">
           <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="owner_id">
             <ng-container *ngFor="let user of users">
