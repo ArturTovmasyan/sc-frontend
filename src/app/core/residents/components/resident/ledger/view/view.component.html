@@ -311,7 +311,7 @@
                         </th>
                       </tr>
                       <ng-container
-                        *ngIf="ledger.prior_private_pay_balance_due && ledger.prior_private_pay_balance_due > 0">
+                        *ngIf="ledger.prior_not_private_pay_balance_due && ledger.prior_not_private_pay_balance_due > 0">
                         <tr class="text-center">
                           <td style="width: 15% !important;">{{ ledger.date_created|date:'MM/01/y' }}</td>
                           <td style="width: 20% !important;">Prior Balance</td>
@@ -319,7 +319,7 @@
                           <td style="width: 15% !important;"></td>
                           <td style="width: 20% !important;"></td>
                           <td style="width: 15% !important; color:#FF0000">
-                            ({{ledger.prior_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}})
+                            ({{ledger.prior_not_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}})
                           </td>
                         </tr>
                       </ng-container>

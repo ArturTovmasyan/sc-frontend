@@ -19,6 +19,7 @@ export class ResidentLedger implements IdInterface {
   private_pay_balance_due: number;
   not_private_pay_balance_due: number;
   prior_private_pay_balance_due: number;
+  prior_not_private_pay_balance_due: number;
 
   source: { key: PaymentSource, value: number } [];
   privat_pay_source: { key: PaymentSource, value: number } [];
