@@ -462,4 +462,12 @@ export class FormComponent extends AbstractForm implements OnInit {
       this.subscribe('list_temperature');
     }
   }
+
+  formValue(): void {
+      const value = super.formValue();
+      if (value.birthday !== null) {
+          value.birthday = DateHelper.makeUTCDateOnly(value.birthday);
+      }
+      return value;
+  }
 }
