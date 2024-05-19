@@ -11,7 +11,7 @@ import {ModalFormService} from '../../../../../../../shared/services/modal-form.
   styleUrls: ['./image-editor.component.scss']
 })
 export class ImageEditorComponent extends AbstractForm implements OnInit {
-  @ViewChild('cropping') cropping: ElementRef<LyResizingCroppingImages>;
+  @ViewChild('cropping', {static: false}) cropping: ElementRef<LyResizingCroppingImages>;
 
   classes = this.theme.addStyleSheet((theme: ThemeVariables) => ({
     cropping: {

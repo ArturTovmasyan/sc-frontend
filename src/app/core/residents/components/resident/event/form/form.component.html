@@ -7,7 +7,7 @@
       <!--<div class="add-select-container">-->
         <!---->
         <!--<button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('definition');">-->
-          <!--<i nz-icon type="plus"></i>-->
+          <!--<i nz-icon nzType="plus"></i>-->
         <!--</button>-->
       <!--</div>-->
       <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="definition_id">
@@ -53,7 +53,7 @@
         </nz-select>
         <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
                 (click)="open_sub_modal('resident_physician');">
-          <i nz-icon type="plus"></i>
+          <i nz-icon nzType="plus"></i>
         </button>
       </div>
       <nz-form-explain *ngIf="hasErrors('physician_id')">
@@ -77,7 +77,7 @@
         </nz-select>
         <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
                 (click)="open_sub_modal('resident_responsible_person');">
-          <i nz-icon type="plus"></i>
+          <i nz-icon nzType="plus"></i>
         </button>
       </div>
       <nz-form-explain *ngIf="hasErrors('responsible_persons')">

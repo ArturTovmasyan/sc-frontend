@@ -79,7 +79,7 @@
                 <nz-button-group [nzSize]="'small'" class="ml-auto">
                   <button type="button" nz-button nzType="default"
                           (click)="show_modal_edit('lead'); $event.preventDefault();">
-                    <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+                    <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
                   </button>
                 </nz-button-group>
               </div>
@@ -152,11 +152,11 @@
               <nz-button-group [nzSize]="'small'" class="ml-auto">
                 <button *ngIf="referral" type="button" nz-button nzType="default"
                         (click)="show_modal_edit('referral'); $event.preventDefault();">
-                  <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+                  <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
                 </button>
                 <button *ngIf="!referral" type="button" nz-button nzType="default"
                         (click)="show_modal_add('referral'); $event.preventDefault();">
-                  <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
+                  <i nz-icon nzType="plus"></i> {{ "grid.add"|translate }}
                 </button>
               </nz-button-group>
             </div>

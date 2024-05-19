@@ -40,7 +40,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   phone_types: { id: PhoneType, name: string }[];
 
-  @ViewChild('photo_file') photo_file: ElementRef;
+  @ViewChild('photo_file', {static: false}) photo_file: ElementRef;
 
   photo_file_name: string;
   photo_size_exceed: boolean;

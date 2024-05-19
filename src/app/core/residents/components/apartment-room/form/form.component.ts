@@ -28,7 +28,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   button_loading: Array<boolean>;
 
-  @ViewChild('addBed') btn_add_bed;
+  @ViewChild('addBed', {static: false}) btn_add_bed;
 
   constructor(
     protected modal$: ModalFormService,

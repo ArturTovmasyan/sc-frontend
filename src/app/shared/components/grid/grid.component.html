@@ -28,7 +28,7 @@
       </nz-input-group>
       <ng-template #suffixIconButton>
         <button type="button" nz-button [nzSize]="'small'" nzType="primary" nzSearch (click)="search();">
-          <i nz-icon type="search"></i>
+          <i nz-icon nzType="search"></i>
         </button>
       </ng-template>
     </ng-container>
@@ -169,7 +169,7 @@
 
 <ng-template #filterEnum let-field="field" let-first="first">
   <nz-dropdown [nzPlacement]="first ? 'bottomLeft' : 'bottomRight'" nzTrigger="click" [nzClickHide]="false">
-    <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+    <i nz-icon nzType="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
     <div class="custom-filter-dropdown">
       <div class="custom-filter-dropdown-header">
         <nz-checkbox-group [(ngModel)]="field.enum"></nz-checkbox-group>
@@ -183,7 +183,7 @@
 </ng-template>
 <ng-template #filterString let-field="field" let-first="first">
   <nz-dropdown [nzPlacement]="first ? 'bottomLeft' : 'bottomRight'" nzTrigger="click" [nzClickHide]="false">
-    <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+    <i nz-icon nzType="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
     <div class="custom-filter-dropdown">
       <div class="custom-filter-dropdown-header">
         <div nz-row [nzGutter]="8">
@@ -216,7 +216,7 @@
 </ng-template>
 <ng-template #filterNumber let-field="field" let-first="first">
   <nz-dropdown [nzPlacement]="first ? 'bottomLeft' : 'bottomRight'" nzTrigger="click" [nzClickHide]="false">
-    <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+    <i nz-icon nzType="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
     <div class="custom-filter-dropdown">
       <div class="custom-filter-dropdown-header">
         <div nz-row [nzGutter]="8">
@@ -268,7 +268,7 @@
 </ng-template>
 <ng-template #filterDate let-field="field" let-first="first">
   <nz-dropdown [nzPlacement]="first ? 'bottomLeft' : 'bottomRight'" nzTrigger="click" [nzClickHide]="false">
-    <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+    <i nz-icon nzType="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
     <div class="custom-filter-dropdown">
       <div class="custom-filter-dropdown-header">
         <div nz-row [nzGutter]="8">

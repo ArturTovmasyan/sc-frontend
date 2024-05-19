@@ -39,7 +39,7 @@
           {{ 'form.admin.user.phones'|translate }}
           <button type="button" [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
                   (click)="add_field('phones');">
-            <i nz-icon type="plus"></i>
+            <i nz-icon nzType="plus"></i>
           </button>
         </legend>
         <table class="senior-care-form-table table table-hover table-bordered table-sm"
@@ -99,7 +99,7 @@
               </td>
               <td class="text-center">
                 <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_field('phones', i);">
-                  <i nz-icon type="minus"></i>
+                  <i nz-icon nzType="minus"></i>
                 </button>
               </td>
             </tr>

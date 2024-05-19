@@ -79,11 +79,11 @@
         </ng-container>
         <nz-button-group nzSize="small">
           <button type="button" class="btn-prev" nz-button nzType="default" (click)="pre()" *ngIf="category_selected > 0">
-            <i nz-icon type="left"></i> Previous
+            <i nz-icon nzType="left"></i> Previous
           </button>
           <button type="button" class="btn-next" nz-button nzType="default" [disabled]="!is_valid_row()"  (click)="next()"
                   *ngIf="category_selected < (categories.length - 1)">
-            Next <i nz-icon type="right"></i></button>
+            Next <i nz-icon nzType="right"></i></button>
         </nz-button-group>
       </div>
     </nz-tab>

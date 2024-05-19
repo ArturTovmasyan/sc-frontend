@@ -42,7 +42,7 @@ export class ScSelectTopControlComponent implements OnInit, OnDestroy {
   inputValue: string;
   isComposing = false;
   private destroy$ = new Subject();
-  @ViewChild('inputElement') inputElement: ElementRef;
+  @ViewChild('inputElement', {static: false}) inputElement: ElementRef;
   @Input() scShowSearch = false;
   @Input() scPlaceHolder: string;
   @Input() scOpen = false;

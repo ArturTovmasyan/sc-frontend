@@ -10,7 +10,7 @@ import {ModalFormService} from '../../../../../../shared/services/modal-form.ser
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  @ViewChild('file') el_file: ElementRef;
+  @ViewChild('file', {static: false}) el_file: ElementRef;
 
   files: FileModel[];
 

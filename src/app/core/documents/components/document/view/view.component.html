@@ -42,18 +42,18 @@
           <nz-button-group [nzSize]="'small'" class="ml-auto">
             <button *ngIf="addIfHasPermission('persistence-common-document', 3)" type="button"
                     nz-button nzType="primary" (click)="show_modal_add(); $event.preventDefault();">
-              <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
+              <i nz-icon nzType="plus"></i> {{ "grid.add"|translate }}
             </button>
             <button *ngIf="addIfHasPermission('persistence-common-document', 2) && document"
                     type="button"
                     nz-button nzType="default" (click)="show_modal_edit(); $event.preventDefault();"
                     [nzLoading]="loading_edit_modal">
-              <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+              <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
             </button>
             <button *ngIf="addIfHasPermission('persistence-common-document', 4) && document"
                     type="button"
                     nz-button nzType="danger" (click)="show_modal_remove(); $event.preventDefault();">
-              <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
+              <i nz-icon nzType="delete"></i> {{ "grid.remove"|translate }}
             </button>
           </nz-button-group>
         </div>

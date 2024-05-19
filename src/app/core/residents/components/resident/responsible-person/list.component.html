@@ -19,7 +19,7 @@
           <button type="button" class="pull-right" nz-button nzSize="small" nzType="default"
                   (click)="show_rp_edit(rrp.responsible_person.id); $event.preventDefault();"
                   [nzLoading]="loading_rp_edit_modal" *ngIf="addIfHasPermission('persistence-common-responsible_person', 5)">
-            <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+            <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
           </button>
         </p>
       </div>
@@ -83,20 +83,20 @@
 <div class="d-flex" *ngIf="addIfHasPermission('persistence-resident-resident_responsible_person', 5)">
   <nz-button-group [nzSize]="'small'" class="ml-auto">
     <button type="button" nz-button nzType="primary" (click)="show_modal_add(); $event.preventDefault();">
-      <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
+      <i nz-icon nzType="plus"></i> {{ "grid.add"|translate }}
     </button>
     <button type="button" *ngIf="(responsible_persons && responsible_persons.length > 0)"
             nz-button nzType="default" (click)="show_modal_edit(); $event.preventDefault();"
             [nzLoading]="loading_edit_modal">
-      <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+      <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
     </button>
     <button type="button" *ngIf="(responsible_persons && responsible_persons.length > 0)"
             nz-button nzType="danger" (click)="show_modal_remove(); $event.preventDefault();">
-      <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
+      <i nz-icon nzType="delete"></i> {{ "grid.remove"|translate }}
     </button>
     <button type="button" *ngIf="(responsible_persons && responsible_persons.length > 1)"
             nz-button nzType="default" (click)="show_modal_reorder(); $event.preventDefault();">
-      <i nz-icon type="drag"></i> Reorder
+      <i nz-icon nzType="drag"></i> Reorder
     </button>
   </nz-button-group>
 </div>

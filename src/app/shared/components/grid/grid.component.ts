@@ -12,7 +12,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected _btnBar: ButtonBarComponent;
 
-  @ViewChild(ButtonBarComponent) set btnBar (btnBar: ButtonBarComponent) {
+  @ViewChild(ButtonBarComponent, {static: false}) set btnBar (btnBar: ButtonBarComponent) {
     this._btnBar = btnBar;
   }
 

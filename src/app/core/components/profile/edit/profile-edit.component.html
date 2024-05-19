@@ -42,7 +42,7 @@
                 Phone Number(s)
                 <button type="button" [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
                         (click)="add_field('phones');">
-                  <i nz-icon type="plus"></i>
+                  <i nz-icon nzType="plus"></i>
                 </button>
               </legend>
               <table class="senior-care-form-table table table-hover table-bordered table-sm"
@@ -103,7 +103,7 @@
                     <td class="text-center">
                       <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle"
                               (click)="remove_field('phones', i);">
-                        <i nz-icon type="minus"></i>
+                        <i nz-icon nzType="minus"></i>
                       </button>
                     </td>
                   </tr>
@@ -118,10 +118,10 @@
                 <input type="file" #avatar_file (change)="onFileChange($event)"
                        accept="image/*" style="display: none;">
                 <button type="button" nz-button nzSize="small" *ngIf="!(photo_file_name && photo_file_name !== '')" (click)="select_file();">
-                  <i nz-icon type="upload"></i><span>Select file...</span>
+                  <i nz-icon nzType="upload"></i><span>Select file...</span>
                 </button>
                 <button type="button" nz-button nzSize="small" nzType="danger" *ngIf="photo_file_name && photo_file_name !== ''" (click)="clear_file();">
-                  <i nz-icon type="close"></i>
+                  <i nz-icon nzType="close"></i>
                   {{ photo_file_name }}
                 </button>
                 <p style="font-size: smaller;line-height: 0.5;" [style.color]="photo_size_exceed?'red':'inherit'">(Maximum file size is 10 MB.)</p>

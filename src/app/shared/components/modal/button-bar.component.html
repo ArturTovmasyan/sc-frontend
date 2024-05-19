@@ -20,7 +20,7 @@
               [disabled]="check_for_disable(button)"
               (click)="button.click()"
       >
-        <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
+        <i *ngIf="button.nzIcon" nz-icon [nzType]="button.nzIcon"></i>
         <i *ngIf="button.faIcon" [class]="button.faIcon"></i>
         {{ button.title|translate }}
       </button>

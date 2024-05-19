@@ -13,7 +13,7 @@ import {ModalFormService} from '../../../../shared/services/modal-form.service';
   templateUrl: './profile-edit.component.html'
 })
 export class ProfileEditComponent extends AbstractForm implements OnInit {
-  @ViewChild('avatar_file') avatar_file: ElementRef;
+  @ViewChild('avatar_file', {static: false}) avatar_file: ElementRef;
 
   photo_file_name: string;
   photo_size_exceed: boolean;

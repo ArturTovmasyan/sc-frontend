@@ -42,7 +42,7 @@ export class ScOptionContainerComponent implements OnDestroy, OnInit {
   private destroy$ = new Subject();
   private lastScrollTop = 0;
   @ViewChildren(ScOptionLiComponent) listOfScOptionLiComponent: QueryList<ScOptionLiComponent>;
-  @ViewChild('dropdownUl') dropdownUl: ElementRef<HTMLUListElement>;
+  @ViewChild('dropdownUl', {static: false}) dropdownUl: ElementRef<HTMLUListElement>;
   @Input() scNotFoundContent: string;
   @Input() scMenuItemSelectedIcon: TemplateRef<void>;
   @Output() readonly scScrollToBottom = new EventEmitter<void>();

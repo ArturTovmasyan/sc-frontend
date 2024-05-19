@@ -11,6 +11,7 @@ import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfe
 import {BsDropdownModule, TabsModule} from 'ngx-bootstrap';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {DndModule} from '@beyerleinf/ngx-dnd';
+import { NgChartjsModule } from 'ng-chartjs';
 
 import {CoreRoutingModule} from './core-routing.module';
 // import {SignUpComponent} from './components/account/sign-up/sign-up.component';
@@ -108,6 +109,8 @@ import {FormComponent as RegionFormComponent} from './residents/components/regio
 import {ResidentSelectorComponent} from './residents/components/resident-selector/resident-selector.component';
 
 import {IndexComponent as ResidentIndexComponent} from './residents/components/resident/index/index.component';
+import {DashboardComponent as ResidentDashboardComponent} from './residents/components/dashboard/dashboard.component';
+import {DashboardDetailComponent as ResidentDashboardDetailComponent} from './residents/components/dashboard/dashboard-detail.component';
 import {ListComponent as ResidentListComponent} from './residents/components/resident/index/list.component';
 import {ThumbComponent as ResidentThumbComponent} from './residents/components/resident/index/thumb.component';
 import {FormComponent as ResidentFormComponent} from './residents/components/resident/resident/form/form.component';
@@ -404,6 +407,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RegionFormComponent,
 
     ResidentSelectorComponent,
+
+    ResidentDashboardComponent,
+    ResidentDashboardDetailComponent,
 
     ResidentIndexComponent,
     ResidentListComponent,
@@ -723,7 +729,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    EmbedVideo.forRoot()
+    EmbedVideo.forRoot(),
+    NgChartjsModule.registerPlugin([])
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true},

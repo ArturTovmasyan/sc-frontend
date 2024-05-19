@@ -94,9 +94,9 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
   private _autoFocus = false;
   private isInit = false;
   private destroy$ = new Subject();
-  @ViewChild(CdkOverlayOrigin) cdkOverlayOrigin: CdkOverlayOrigin;
-  @ViewChild(CdkConnectedOverlay) cdkConnectedOverlay: CdkConnectedOverlay;
-  @ViewChild(ScSelectTopControlComponent) scSelectTopControlComponent: ScSelectTopControlComponent;
+  @ViewChild(CdkOverlayOrigin, {static: false}) cdkOverlayOrigin: CdkOverlayOrigin;
+  @ViewChild(CdkConnectedOverlay, {static: false}) cdkConnectedOverlay: CdkConnectedOverlay;
+  @ViewChild(ScSelectTopControlComponent, {static: false}) scSelectTopControlComponent: ScSelectTopControlComponent;
   /** should move to sc-option-container when https://github.com/angular/angular/issues/20810 resolved **/
   @ContentChildren(ScOptionComponent) listOfScOptionComponent: QueryList<ScOptionComponent>;
   @ContentChildren(ScOptionGroupComponent) listOfScOptionGroupComponent: QueryList<ScOptionGroupComponent>;

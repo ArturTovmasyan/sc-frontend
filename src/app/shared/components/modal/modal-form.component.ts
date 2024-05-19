@@ -12,7 +12,7 @@ export class ModalFormComponent {
   private loading: boolean;
   private valid: boolean;
 
-  @ViewChild('modalFooter') modalFooter: TemplateRef<any>;
+  @ViewChild('modalFooter', {static: false}) modalFooter: TemplateRef<any>;
   private _component: Type<any>;
 
   private _preset_modal_form_data: (form: FormGroup) => void;
