@@ -62,6 +62,7 @@ import {ListComponent as ResidentAssessmentListComponent} from './residents/comp
 import {ListComponent as ResidentReportListComponent} from './residents/components/resident/report/list.component';
 import {HistoryComponent as ResidentHistoryComponent} from './residents/components/resident/history/history.component';
 import {HomeComponent} from './residents/components/home/home.component';
+import {InvitationComponent} from './components/account/invitation/invitation.component';
 
 
 const routes: Routes = [
@@ -570,6 +571,7 @@ const routes: Routes = [
 
   {path: 'sign-up', component: SignUpComponent, data: {title: 'Sign Up'}},
   {path: 'activate', component: ActivateComponent, data: {title: 'Account Activation'}},
+  {path: 'accept', component: InvitationComponent, data: {title: 'Accept Invitation'}},
   {path: 'forgot-password', component: ForgotPasswordComponent, data: {title: 'Forgot password'}},
   {path: 'reset-password', component: ResetPasswordComponent, data: {title: 'Reset password'}},
   {path: 'sign-in', component: SignInComponent, data: {title: 'Sign In'}},

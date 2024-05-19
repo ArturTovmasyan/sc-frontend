@@ -194,6 +194,7 @@ import {FilterPipe} from '../shared/pipes/filter.pipe';
 import {KeysPipe} from '../shared/pipes/keys.pipe';
 import {IconPickerModule} from 'ngx-icon-picker';
 import {AdmissionTypePipe} from './residents/pipes/admission-type.pipe';
+import {InvitationComponent} from './components/account/invitation/invitation.component';
 
 // import {ListComponent as ListComponent} from './residents/components//list.component';
 // import {FormComponent as FormComponent} from './residents/components//form/form.component';
@@ -227,6 +228,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     SignUpComponent,
     ActivateComponent,
+    InvitationComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
 

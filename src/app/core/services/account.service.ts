@@ -13,6 +13,10 @@ export class AccountService {
     return this.http.post<Message>(`${environment.apiUrl}/api/v1.0/account/signup`, data);
   }
 
+  accept(data: any): Observable<any> {
+    return this.http.post<Message>(`${environment.apiUrl}/api/v1.0/account/accept`, data);
+  }
+
   forgotPassword(data: any): Observable<any> {
     return this.http.post<Message>(`${environment.apiUrl}/api/v1.0/account/forgot-password`, data);
   }

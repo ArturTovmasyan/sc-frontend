@@ -1,0 +1,98 @@
+<div class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card mx-4">
+            <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+              <div class="card-body p-4">
+                <h1>Accept Invitation</h1>
+                <p class="text-muted">Please fill following form to create your account.</p>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('first_name')?'error':null">
+                    <input nz-input placeholder="First Name" formControlName="first_name">
+                    <nz-form-explain *ngIf="hasErrors('first_name')">
+                      <app-field-errors [errors]="fieldErrors('first_name')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="last_name" nzRequired>Last Name</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('last_name')?'error':null">
+                    <input nz-input placeholder="Last Name" formControlName="last_name">
+                    <nz-form-explain *ngIf="hasErrors('last_name')">
+                      <app-field-errors [errors]="fieldErrors('last_name')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="phone" nzRequired>Phone</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('phone')?'error':null">
+                    <input nz-input placeholder="(000) 000-0000" formControlName="phone"
+                           mask="(000) 000-0000" [showMaskTyped]="true" [dropSpecialCharacters]="false">
+                    <nz-form-explain *ngIf="hasErrors('phone')">
+                      <app-field-errors [errors]="fieldErrors('phone')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('password')?'error':null">
+                    <input nz-input type="password" id="password" formControlName="password">
+                    <nz-form-explain *ngIf="hasErrors('password')">
+                      <app-field-errors [errors]="fieldErrors('password')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="re_password" nzRequired>Repeat Password</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('re_password')?'error':null">
+                    <input nz-input type="password" id="re_password" formControlName="re_password">
+                    <nz-form-explain *ngIf="hasErrors('re_password')">
+                      <app-field-errors [errors]="fieldErrors('re_password')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="formErrors()">
+                  <nz-form-control [nzSm]="24" [nzXs]="24">
+                    <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="message">
+                  <nz-form-control [nzSm]="24" [nzXs]="24">
+                    <nz-alert nzShowIcon nzType="success" [nzMessage]="message"></nz-alert>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div class="card-footer">
+                <div class="row">
+                  <div class="col-6">
+                    <a routerLink="/sign-in" class="btn btn-link px-0">Have account?</a>
+                  </div>
+                  <div class="col-6 text-right">
+                    <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="form.invalid || disabled"
+                            type="submit"
+                            class="btn btn-primary">
+                      Accept
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
