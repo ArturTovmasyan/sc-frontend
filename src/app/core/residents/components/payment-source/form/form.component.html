@@ -39,6 +39,13 @@
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_level_adjustment">Care Level Adjustment</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="care_level_adjustment"></nz-switch>
+      <i *ngIf="!this.edit_mode && form.get('care_level_adjustment').value == true" class="far fa-lg fa-question-circle"
+         nz-popover [nzTitle]="'Important Notice'" [nzContent]="tplAdjustment"
+         nzTrigger="click" nzPlacement="topLeft">
+        <ng-template #tplAdjustment>
+          <p>For Care Level Adjustment Payment Source should have Base Rate.</p>
+        </ng-template>
+      </i>
       <nz-form-explain *ngIf="hasErrors('care_level_adjustment')">
         <app-field-errors [errors]="fieldErrors('care_level_adjustment')"></app-field-errors>
       </nz-form-explain>

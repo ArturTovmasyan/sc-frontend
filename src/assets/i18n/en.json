@@ -193,7 +193,7 @@
     "late-payment-list": {
       "id": "ID",
       "title": "Title",
-      "day": "Day of the Month",
+      "day": "Day Count",
       "description": "Description",
       "space": "Space"
     },
