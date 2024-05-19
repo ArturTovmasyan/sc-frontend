@@ -756,7 +756,8 @@
       "CORPORATE_ACTIVITY": "Corporate Activity",
       "RESIDENT_RENT_INCREASE": "Resident Rent Increase",
       "DATABASE_USER_LOGIN_ACTIVITY": "Database User Login Activity",
-      "LEAD_WEB_EMAIL": "Lead Web Email"
+      "LEAD_WEB_EMAIL": "Lead Web Email",
+      "WEB_FROM_ALERT": "Web Form Alert"
     },
     "grant_level": {
       "NONE":"None",
