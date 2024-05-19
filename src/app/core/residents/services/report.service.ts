@@ -22,7 +22,7 @@ export class ReportService {
   }
 
   public report(group_alias, report_alias, format, params, callback: any, error_callback: any) {
-    return this.reportAsObservable(group_alias, report_alias, format, params)
+    return this.reportAsObservable(group_alias, report_alias, format, params, false)
       .pipe(first())
       .subscribe(response => {
           saveFile(response);
@@ -33,18 +33,22 @@ export class ReportService {
         });
   }
 
-  public reportAsObservable(group_alias, report_alias, format, params) {
-    const request_params = this.create_request_params(format, params);
+  public reportAsObservable(group_alias, report_alias, format, params, hash: boolean = false) {
+    const request_params = this.create_request_params(format, params, hash);
 
-    return this.http
-      .get(this.SERVICE_URL_BASE + `/${group_alias}/${report_alias}`, {
-        responseType: 'blob',
-        observe: 'response',
-        params: request_params
-      });
+    const options = {
+      params: request_params
+    };
+
+    if (hash === false) {
+      options['responseType'] = 'blob';
+      options['observe'] = 'response';
+    }
+
+    return this.http.get<any>(this.SERVICE_URL_BASE + `/${group_alias}/${report_alias}`, options);
   }
 
-  private create_request_params(format, params): HttpParams {
+  private create_request_params(format, params, hash: boolean = false): HttpParams {
     let request_params = new HttpParams().append('format', format);
 
     if (!_.isNil(params.group)) {
@@ -83,6 +87,10 @@ export class ReportService {
 
     if (!_.isNil(params.discontinued) && (params.discontinued === true || params.discontinued === 'true')) {
       request_params = request_params.append('discontinued', '1');
+    }
+
+    if (hash) {
+      request_params = request_params.append('hash', '1');
     }
 
     return request_params;

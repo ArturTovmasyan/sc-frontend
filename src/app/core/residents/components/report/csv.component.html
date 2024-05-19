@@ -4,16 +4,8 @@
       {{ title }}
     </div>
     <div class="card-body">
-      <table class="table table-bordered" style="table-layout: fixed;">
-        <ng-container *ngFor="let row of data; let first = first">
-          <tr>
-            <ng-container *ngFor="let col of row">
-              <th *ngIf="first">{{col}}</th>
-              <td *ngIf="!first">{{col}}</td>
-            </ng-container>
-          </tr>
-        </ng-container>
-      </table>
+      <nz-empty *ngIf="!this.url" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+      <iframe *ngIf="this.url" [src]="this.url" frameborder="0" style="width: 100%;height: 100vh;"></iframe>
     </div>
   </div>
 </ng-container>

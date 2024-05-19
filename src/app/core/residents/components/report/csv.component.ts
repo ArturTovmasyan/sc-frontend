@@ -1,26 +1,32 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, SecurityContext} from '@angular/core';
 import {ReportService} from '../../services/report.service';
 import {TitleService} from '../../../services/title.service';
 import {first} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {KeyValue} from '@angular/common';
-import {Papa} from 'ngx-papaparse';
+import {DomSanitizer} from '@angular/platform-browser';
+import {simpleEmptyImage} from 'ng-zorro-antd';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   templateUrl: './csv.component.html'
 })
 export class CSVComponent implements OnInit, OnDestroy {
+  defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
+
   title: string = null;
   data: string[][];
+
+  url = null;
 
   protected $subscriptions: { [key: string]: Subscription; };
 
   constructor(
+    private sanitizer: DomSanitizer,
     private report$: ReportService,
     private title$: TitleService,
-    private route$: ActivatedRoute,
-    private papa$: Papa
+    private route$: ActivatedRoute
   ) {
     this.title$.getTitle().subscribe(v => this.title = v);
 
@@ -66,19 +72,16 @@ export class CSVComponent implements OnInit, OnDestroy {
         });
         break;
       case 'get_report':
-        this.$subscriptions[key] = this.report$
-          .reportAsObservable(params.config.group_alias, params.config.report_alias, 'csv', params.params)
-          .pipe(first()).subscribe(res => {
-            if (res) {
-              const reader: FileReader = new FileReader();
-              reader.onloadend = (file) => {
-                this.papa$.parse(reader.result as string, {
-                  complete: (result) => {
-                     this.data = result.data;
-                  }
-                });
-              };
-              reader.readAsText(res.body);
+          this.$subscriptions[key] = this.report$
+            .reportAsObservable(params.config.group_alias, params.config.report_alias, 'csv', params.params, true)
+            .pipe(first()).subscribe(res => {
+            if (res != null && Array.isArray(res) && res.length === 1) {
+              const url = 'https://sheet.zoho.com/sheet/importview.do?url='
+                + `${environment.apiUrl}/api/v1.0/report/csv-view/` + res[0];
+
+              console.log(url);
+
+              this.url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
             }
           });
         break;
