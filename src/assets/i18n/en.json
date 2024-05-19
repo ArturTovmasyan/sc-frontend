@@ -166,6 +166,11 @@
       "title": "Title",
       "space": "Space"
     },
+    "credit-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "event-definition-list": {
       "id": "ID",
       "type": "Type",

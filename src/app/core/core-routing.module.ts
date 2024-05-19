@@ -49,6 +49,7 @@ import {ListComponent as RegionListComponent} from './residents/components/regio
 import {ListComponent as PaymentSourceListComponent} from './residents/components/payment-source/list.component';
 import {ListComponent as PaymentTypeListComponent} from './residents/components/payment-type/list.component';
 import {ListComponent as ExpenseListComponent} from './residents/components/expense/list.component';
+import {ListComponent as CreditListComponent} from './residents/components/credit/list.component';
 import {ListComponent as AssessmentCategoryListComponent} from './residents/components/assessment/category/list.component';
 import {ListComponent as AssessmentFormListComponent} from './residents/components/assessment/form/list.component';
 import {ListComponent as AssessmentCareLevelListComponent} from './residents/components/assessment/care-level/list.component';
@@ -615,6 +616,15 @@ const routes: Routes = [
           nav: {show: true, group: 'Reference'},
           title: 'Expenses',
           permissions: ['activity-reference', 'persistence-common-expense']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'credits', component: CreditListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Credits',
+          permissions: ['activity-reference', 'persistence-common-credit']
         },
         canActivate: [AuthGuard]
       },
