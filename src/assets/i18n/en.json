@@ -106,6 +106,7 @@
     },
     "facility-room-base-rate-list": {
       "id": "ID",
+      "facility": "Facility",
       "room_type": "Room Type",
       "date": "Effective Date",
       "base_rates": "Base Rates"
