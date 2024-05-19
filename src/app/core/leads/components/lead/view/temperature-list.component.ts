@@ -31,19 +31,19 @@ export class ListComponent extends GridComponent<LeadTemperature, LeadTemperatur
     this.button_shows = {
       override: false,
       add: true,
-      edit: false,
+      edit: true,
       remove: false,
     };
 
     this.button_labels = {
       add: 'Change',
-      edit: '',
+      edit: 'Edit',
       remove: '',
     };
 
     this.button_icons = {
-      add: 'edit',
-      edit: '',
+      add: 'add',
+      edit: 'edit',
       remove: ''
     };
 
