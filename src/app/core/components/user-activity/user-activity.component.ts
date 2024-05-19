@@ -24,7 +24,7 @@ export class UserActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.subscribe('timer_change_log');
+    this.subscribe('timer_change_log');
   }
 
   protected subscribe(key: string) {
