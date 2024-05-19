@@ -186,7 +186,7 @@
     "key-finance-dates-list": {
       "id": "ID",
       "title": "Title",
-      "date": "Date",
+      "day": "Day of the Month",
       "description": "Description",
       "space": "Space"
     },

@@ -21,6 +21,8 @@ export class CoreValidator {
     ZIP_MAIN: /^[0-9]{5}([- ]?[0-9]{4})?$/,
     PHONE: /^\([0-9]{3}\)\s?[0-9]{3}-[0-9]{4}$/,
     SSN: /^[\dX]{3}-?[\dX]{2}-?[\dX]{4}$/,
+
+    KEY_FINANCE_DAY: /^([1-9]|[1]\d|2[0-8])$/,
   };
 
   public static password: ValidatorFn = CoreValidator.patternValidate(
@@ -84,6 +86,10 @@ export class CoreValidator {
   public static zip_main: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.ZIP_MAIN,
     {pattern_validator_zip_main: 'Invalid ZIP code.'}
+  );
+  public static key_finance_day: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.KEY_FINANCE_DAY,
+    {pattern_validator_key_finance_day: 'The value should be in range 1-28.'}
   );
 
   public static notNullOneOf(fields: string[], message: string) {

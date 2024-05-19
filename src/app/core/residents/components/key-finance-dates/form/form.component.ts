@@ -8,7 +8,6 @@ import {AuthGuard} from '../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {KeyFinanceCategory} from '../../../../models/key-finance-category.enum';
-import {DateHelper} from '../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -32,7 +31,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
       type: [null, Validators.required],
       title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(255)])],
-      date: [DateHelper.newDate(), Validators.required],
+      day: ['', Validators.compose([Validators.required, CoreValidator.key_finance_day])],
       description: ['', Validators.compose([Validators.maxLength(256)])],
     });
 
@@ -66,11 +65,5 @@ export class FormComponent extends AbstractForm implements OnInit {
       default:
         break;
     }
-  }
-
-  formValue(): void {
-    const value = super.formValue();
-    value.date = DateHelper.makeUTCDateOnly(value.date);
-    return value;
   }
 }

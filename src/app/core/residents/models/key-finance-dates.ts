@@ -7,7 +7,7 @@ export class KeyFinanceDates implements IdInterface {
 
   title: string;
 
-  date: Date;
+  day: number;
 
   description: string;
 }
