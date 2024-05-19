@@ -171,7 +171,7 @@
     }
   }
 
-  .senior-care-form-table, .add-select-container {
+  .senior-care-form-table {
     button {
       float: right;
       line-height: 0;
@@ -180,6 +180,22 @@
 
     nz-select {
       width: 90%;
+    }
+  }
+
+  .add-select-container {
+    button {
+      float: right;
+      line-height: 0;
+      margin-top: 0.5rem;
+    }
+
+    nz-select {
+      width: 90%;
+    }
+
+    nz-select:last-child {
+      width: 100%;
     }
   }
 

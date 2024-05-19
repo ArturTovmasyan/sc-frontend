@@ -57,7 +57,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: PhoneType.ROOM, name: 'ROOM'}
     ];
 
-    this.subscribe('list_referrer_types');
+    this.subscribe('list_referrer_type');
     this.subscribe('list_csz');
   }
 
@@ -78,7 +78,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
-      case 'list_referrer_types':
+      case 'list_referrer_type':
         this.$subscriptions[key] = this.referrer_type$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.referrer_types = res;
@@ -121,9 +121,9 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.create_modal(
           this.modal$,
           ReferrerTypeFormComponent,
-          data => this.city_state_zip$.add(data),
+          data => this.referrer_type$.add(data),
           data => {
-            this.subscribe('list_referrer_types', {category_id: data[0]});
+            this.subscribe('list_referrer_type', {category_id: data[0]});
             return null;
           });
         break;

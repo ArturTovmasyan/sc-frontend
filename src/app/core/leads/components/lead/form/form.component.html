@@ -26,11 +26,16 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_type_id">Care Type</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_type_id')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="care_type_id">
-            <ng-container *ngFor="let care_type of care_types">
-              <nz-option [nzLabel]="care_type.title" [nzValue]="care_type.id"></nz-option>
-            </ng-container>
-          </nz-select>
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="care_type_id">
+              <ng-container *ngFor="let care_type of care_types">
+                <nz-option [nzLabel]="care_type.title" [nzValue]="care_type.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('care_type');">
+              <i nz-icon type="plus"></i>
+            </button>
+          </div>
           <nz-form-explain *ngIf="hasErrors('care_type_id')">
             <app-field-errors [errors]="fieldErrors('care_type_id')"></app-field-errors>
           </nz-form-explain>
@@ -40,11 +45,16 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="payment_type_id">Payment Type</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('payment_type_id')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="payment_type_id">
-            <ng-container *ngFor="let payment_source of payment_sources">
-              <nz-option [nzLabel]="payment_source.title" [nzValue]="payment_source.id"></nz-option>
-            </ng-container>
-          </nz-select>
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="payment_type_id">
+              <ng-container *ngFor="let payment_source of payment_sources">
+                <nz-option [nzLabel]="payment_source.title" [nzValue]="payment_source.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('payment_source');">
+              <i nz-icon type="plus"></i>
+            </button>
+          </div>
           <nz-form-explain *ngIf="hasErrors('payment_type_id')">
             <app-field-errors [errors]="fieldErrors('payment_type_id')"></app-field-errors>
           </nz-form-explain>
@@ -90,12 +100,17 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state_change_reason_id">Status Change Reason</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state_change_reason_id')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select"
-                     formControlName="state_change_reason_id">
-            <ng-container *ngFor="let state_change_reason of state_change_reasons">
-              <nz-option [nzLabel]="state_change_reason.title" [nzValue]="state_change_reason.id"></nz-option>
-            </ng-container>
-          </nz-select>
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select"
+                       formControlName="state_change_reason_id">
+              <ng-container *ngFor="let state_change_reason of state_change_reasons">
+                <nz-option [nzLabel]="state_change_reason.title" [nzValue]="state_change_reason.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('state_change_reason');">
+              <i nz-icon type="plus"></i>
+            </button>
+          </div>
           <nz-form-explain *ngIf="hasErrors('state_change_reason_id')">
             <app-field-errors [errors]="fieldErrors('state_change_reason_id')"></app-field-errors>
           </nz-form-explain>
@@ -157,11 +172,16 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_person_csz_id">CSZ</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_person_csz_id')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_csz_id">
-            <ng-container *ngFor="let city_state_zip of city_state_zips">
-              <nz-option [nzLabel]="city_state_zip|csz" [nzValue]="city_state_zip.id"></nz-option>
-            </ng-container>
-          </nz-select>
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_csz_id">
+              <ng-container *ngFor="let city_state_zip of city_state_zips">
+                <nz-option [nzLabel]="city_state_zip|csz" [nzValue]="city_state_zip.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('csz');">
+              <i nz-icon type="plus"></i>
+            </button>
+          </div>
           <nz-form-explain *ngIf="hasErrors('responsible_person_csz_id')">
             <app-field-errors [errors]="fieldErrors('responsible_person_csz_id')"></app-field-errors>
           </nz-form-explain>
@@ -194,11 +214,16 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type_id" nzRequired>Type</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.type_id')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type_id">
-            <ng-container *ngFor="let referrer_type of referrer_types">
-              <nz-option [nzLabel]="referrer_type.title" [nzValue]="referrer_type.id"></nz-option>
-            </ng-container>
-          </nz-select>
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type_id">
+              <ng-container *ngFor="let referrer_type of referrer_types">
+                <nz-option [nzLabel]="referrer_type.title" [nzValue]="referrer_type.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('referral_type');">
+              <i nz-icon type="plus"></i>
+            </button>
+          </div>
           <nz-form-explain *ngIf="hasErrors('referral.type_id')">
             <app-field-errors [errors]="fieldErrors('referral.type_id')"></app-field-errors>
           </nz-form-explain>

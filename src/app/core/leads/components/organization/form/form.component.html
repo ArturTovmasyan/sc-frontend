@@ -14,11 +14,16 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="category_id" nzRequired>Category</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('category_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="category_id">
-        <ng-container *ngFor="let referrer_type of referrer_types">
-          <nz-option [nzLabel]="referrer_type.title" [nzValue]="referrer_type.id"></nz-option>
-        </ng-container>
-      </nz-select>
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="category_id">
+          <ng-container *ngFor="let referrer_type of referrer_types">
+            <nz-option [nzLabel]="referrer_type.title" [nzValue]="referrer_type.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('category');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
       <nz-form-explain *ngIf="hasErrors('category_id')">
         <app-field-errors [errors]="fieldErrors('category_id')"></app-field-errors>
       </nz-form-explain>
@@ -58,11 +63,16 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="csz_id" nzRequired>CSZ</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('csz_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="csz_id">
-        <ng-container *ngFor="let city_state_zip of city_state_zips">
-          <nz-option [nzLabel]="city_state_zip|csz" [nzValue]="city_state_zip.id"></nz-option>
-        </ng-container>
-      </nz-select>
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="csz_id">
+          <ng-container *ngFor="let city_state_zip of city_state_zips">
+            <nz-option [nzLabel]="city_state_zip|csz" [nzValue]="city_state_zip.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('csz');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
       <nz-form-explain *ngIf="hasErrors('csz_id')">
         <app-field-errors [errors]="fieldErrors('csz_id')"></app-field-errors>
       </nz-form-explain>

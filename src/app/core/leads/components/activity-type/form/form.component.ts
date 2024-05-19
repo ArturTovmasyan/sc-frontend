@@ -1,13 +1,14 @@
 ﻿import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {SpaceService} from '../../../../services/space.service';
 import {first} from 'rxjs/operators';
 import {Space} from '../../../../models/space';
-import {AuthGuard} from '../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {ActivityStatusService} from '../../../services/activity-status.service';
 import {ActivityStatus} from '../../../models/activity-status';
+import {FormComponent as ActivityStatusFormComponent} from '../../activity-status/form/form.component';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -19,8 +20,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private space$: SpaceService,
-    private activity_status$: ActivityStatusService,
-    private auth_$: AuthGuard
+    private modal$: NzModalService,
+    private activity_status$: ActivityStatusService
   ) {
     super();
   }
@@ -60,8 +61,29 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.activity_status$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.activity_statuses = res;
+
+            if (params) {
+              this.form.get('default_status_id').setValue(params.activity_status_id);
+            }
           }
         });
+        break;
+      default:
+        break;
+    }
+  }
+
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'activity_status':
+        this.create_modal(
+          this.modal$,
+          ActivityStatusFormComponent,
+          data => this.activity_status$.add(data),
+          data => {
+            this.subscribe('list_activity_status', {activity_status_id: data[0]});
+            return null;
+          });
         break;
       default:
         break;

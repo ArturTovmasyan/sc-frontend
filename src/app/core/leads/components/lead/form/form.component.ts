@@ -2,6 +2,7 @@
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {first} from 'rxjs/operators';
+import {NzModalService} from 'ng-zorro-antd';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {PhoneType} from '../../../../models/phone-type.enum';
 import {ReferrerType} from '../../../models/referrer-type';
@@ -22,7 +23,11 @@ import {PaymentSource} from '../../../../residents/models/payment-source';
 import {PaymentSourceService} from '../../../../residents/services/payment-source.service';
 import {LeadState} from '../../../models/lead';
 import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
+import {FormComponent as CareTypeFormComponent} from '../../care-type/form/form.component';
+import {FormComponent as StateChangeReasonFormComponent} from '../../state-change-reason/form/form.component';
+import {FormComponent as ReferrerTypeFormComponent} from '../../referrer-type/form/form.component';
+import {FormComponent as CSZFormComponent} from '../../../../residents/components/city-state-zip/form/form.component';
+import {FormComponent as PaymentSourceFormComponent} from '../../../../residents/components/payment-source/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -137,7 +142,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_user');
     this.subscribe('list_facility');
     this.subscribe('list_care_type');
-    this.subscribe('list_state_change_reasons');
+    this.subscribe('list_state_change_reason');
 
     this.subscribe('list_organization');
     this.subscribe('list_referrer_type');
@@ -166,7 +171,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.city_state_zips = res;
 
             if (params) {
-              this.form.get('csz_id').setValue(params.csz_id);
+              this.form.get('responsible_person_csz_id').setValue(params.csz_id);
             }
           }
         });
@@ -216,7 +221,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
-      case 'list_state_change_reasons':
+      case 'list_state_change_reason':
         this.$subscriptions[key] = this.state_change_reason$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.state_change_reasons = res;
@@ -304,6 +309,56 @@ export class FormComponent extends AbstractForm implements OnInit {
           data => this.organization$.add(data),
           data => {
             this.subscribe('list_organization', {organization_id: data[0]});
+            return null;
+          });
+        break;
+      case 'csz':
+        this.create_modal(
+          this.modal$,
+          CSZFormComponent,
+          data => this.csz$.add(data),
+          data => {
+            this.subscribe('list_csz', {csz_id: data[0]});
+            return null;
+          });
+        break;
+      case 'payment_source':
+        this.create_modal(
+          this.modal$,
+          PaymentSourceFormComponent,
+          data => this.payment_source$.add(data),
+          data => {
+            this.subscribe('list_payment_source', {payment_type_id: data[0]});
+            return null;
+          });
+        break;
+      case 'care_type':
+        this.create_modal(
+          this.modal$,
+          CareTypeFormComponent,
+          data => this.care_type$.add(data),
+          data => {
+            this.subscribe('list_care_type', {care_type_id: data[0]});
+            return null;
+          });
+        break;
+      case 'state_change_reason':
+        this.create_modal(
+          this.modal$,
+          StateChangeReasonFormComponent,
+          data => this.state_change_reason$.add(data),
+          data => {
+            this.subscribe('list_state_change_reason', {state_change_reason_id: data[0]});
+            return null;
+          });
+        break;
+      case 'referrer_type':
+        this.create_modal(
+          this.modal$,
+          ReferrerTypeFormComponent,
+          data => this.referrer_type$.add(data),
+          data => {
+            this.subscribe('list_referrer_type', {type_id: data[0]});
             return null;
           });
         break;
