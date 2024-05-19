@@ -31,7 +31,6 @@ export class DefaultLayoutComponent {
     });
 
     this.profile$.get().subscribe(user => {
-      console.log(user);
       this.user = user;
     });
 
