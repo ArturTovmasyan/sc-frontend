@@ -13,6 +13,7 @@ import {FormComponent as LeadFormComponent} from '../form/form.component';
 import {FormComponent as ReferralFormComponent} from '../../referral/form/form.component';
 import {ActivatedRoute} from '@angular/router';
 import {ActivityOwnerType} from '../../../models/activity';
+import {AuthGuard} from '../../../../guards/auth.guard';
 
 @Component({
   templateUrl: './view.component.html'
@@ -33,7 +34,8 @@ export class ViewComponent implements OnInit, OnDestroy {
     private title$: TitleService,
     private lead$: LeadService,
     private referral$: ReferralService,
-    private route$: ActivatedRoute
+    private route$: ActivatedRoute,
+    private auth_$: AuthGuard
   ) {
     this.$subscriptions = {};
   }
@@ -86,6 +88,10 @@ export class ViewComponent implements OnInit, OnDestroy {
     if (this.$subscriptions.hasOwnProperty(key)) {
       this.$subscriptions[key].unsubscribe();
     }
+  }
+
+  public checkPermission(expected_permissions: string[]): boolean {
+    return this.auth_$.checkPermission(expected_permissions);
   }
 
   show_modal_add(name: string): void {
