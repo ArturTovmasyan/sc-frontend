@@ -26,7 +26,7 @@ export class ListComponent extends GridComponent<LeadTemperature, LeadTemperatur
 
     this.card = false;
     this.component = FormComponent;
-    this.permission = 'persistence-lead-temperature';
+    this.permission = 'persistence-lead-lead_temperature';
     this.name = 'lead-lead-temperature-list';
   }
 
