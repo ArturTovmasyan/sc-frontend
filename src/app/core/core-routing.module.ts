@@ -397,7 +397,7 @@ const routes: Routes = [
             outlet: 'resident-details',
             pathMatch: 'full',
             data: {
-              title: 'Admissions',
+              title: 'Admission and Room Assignments',
               permissions: ['persistence-resident-admission']
             },
             canActivate: [AuthGuard]
