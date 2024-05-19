@@ -49,4 +49,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  public checkPermission(expected_permissions: string[]): boolean {
+    return this.auth_$.checkPermission(expected_permissions);
+  }
+
 }

@@ -4,16 +4,16 @@
   </div>
   <div class="card-body">
     <nz-collapse [nzNoAnimation]="true">
-      <nz-collapse-panel *ngIf="auth_$.checkPermission(['persistence-lead-lead'])" [nzHeader]="'Leads'">
+      <nz-collapse-panel *ngIf="checkPermission(['persistence-lead-lead'])" [nzHeader]="'Leads'">
         <app-dashboard-lead></app-dashboard-lead>
       </nz-collapse-panel>
-      <nz-collapse-panel *ngIf="auth_$.checkPermission(['persistence-lead-contact'])" [nzHeader]="'Contacts'">
+      <nz-collapse-panel *ngIf="checkPermission(['persistence-lead-contact'])" [nzHeader]="'Contacts'">
         <app-dashboard-contact></app-dashboard-contact>
       </nz-collapse-panel>
-      <nz-collapse-panel *ngIf="auth_$.checkPermission(['persistence-lead-activity'])" [nzHeader]="'My To Do Activity Log'">
+      <nz-collapse-panel *ngIf="checkPermission(['persistence-lead-activity'])" [nzHeader]="'My To Do Activity Log'">
         <app-dashboard-activity></app-dashboard-activity>
       </nz-collapse-panel>
-      <nz-collapse-panel *ngIf="auth_$.checkPermission(['persistence-common-change_log'])" [nzHeader]="'Change Log'">
+      <nz-collapse-panel *ngIf="checkPermission(['persistence-common-change_log'])" [nzHeader]="'Change Log'">
         <app-dashboard-change-log></app-dashboard-change-log>
       </nz-collapse-panel>
     </nz-collapse>
