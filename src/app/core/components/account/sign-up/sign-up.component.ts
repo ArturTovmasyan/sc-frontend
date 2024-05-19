@@ -9,7 +9,7 @@ import {CoreValidator} from '../../../../shared/utils/core-validator';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['../../default-layout/default-layout.component.scss']
 })
 export class SignUpComponent extends AbstractForm implements OnInit {
   constructor(
@@ -25,17 +25,19 @@ export class SignUpComponent extends AbstractForm implements OnInit {
 
     this.postSubmit = (data: Message) => {
       this.message = 'Your account have been successfully created. You will receive confirmation e-mail soon.';
+      this.disabled = true;
     };
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      organization: ['', Validators.required],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      phone: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.PHONE)])],
-      password: ['', Validators.required],
-      rePassword: ['', Validators.required, /** TODO: Validation service match*/]
+      phone: ['', Validators.compose([Validators.required, CoreValidator.phone])],
+      password: ['', Validators.compose([Validators.required, CoreValidator.password])],
+      re_password: ['', Validators.compose([Validators.required, CoreValidator.match_other('password', 'password')])]
     });
   }
 

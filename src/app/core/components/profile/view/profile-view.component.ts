@@ -4,8 +4,7 @@ import {ProfileService} from '../../../services/profile.service';
 import {User} from '../../../models/user';
 
 @Component({
-  templateUrl: './profile-view.component.html',
-  styleUrls: ['./profile-view.component.scss']
+  templateUrl: './profile-view.component.html'
 })
 export class ProfileViewComponent implements OnInit {
   user: User = null;

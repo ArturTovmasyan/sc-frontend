@@ -34,7 +34,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         } else {
           if (err.status === 401) {
             // auto logout if 401 response returned from api
-            this.auth$.logout();
+            this.auth$.sign_out();
             // TODO(haykg) location.reload(true);
           }
 

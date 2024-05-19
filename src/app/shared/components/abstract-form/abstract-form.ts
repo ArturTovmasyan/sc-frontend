@@ -4,6 +4,9 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 export class AbstractForm {
   public form: FormGroup;
+
+  public disabled: boolean = false;
+
   public loading: boolean = false;
   public message: string = null;
 

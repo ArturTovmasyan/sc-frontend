@@ -7,8 +7,7 @@ import {ProfileService} from '../../../services/profile.service';
 import {PhoneType} from '../../../models/phone-type.enum';
 
 @Component({
-  templateUrl: './profile-edit.component.html',
-  styleUrls: ['./profile-edit.component.scss']
+  templateUrl: './profile-edit.component.html'
 })
 export class ProfileEditComponent extends AbstractForm implements OnInit {
   @ViewChild('avatar_file') avatar_file: ElementRef;

@@ -4,10 +4,12 @@ import {AuthGuard} from './guards/auth.guard';
 import {DefaultLayoutComponent} from './components/default-layout/default-layout.component';
 import {P404Component} from './components/error/404.component';
 import {P500Component} from './components/error/500.component';
-import {LoginComponent} from './components/security/login/login.component';
-import {LogoutComponent} from './components/security/logout/logout.component';
+import {SignInComponent} from './components/security/sign-in/sign-in.component';
+import {SignOutComponent} from './components/security/sign-out/sign-out.component';
 import {SignUpComponent} from './components/account/sign-up/sign-up.component';
+import {ActivateComponent} from './components/account/activate/activate.component';
 import {ForgotPasswordComponent} from './components/account/forgot-password/forgot-password.component';
+import {ResetPasswordComponent} from './components/account/reset-password/reset-password.component';
 import {ChangePasswordComponent} from './components/profile/change-password/change-password.component';
 import {ProfileViewComponent} from './components/profile/view/profile-view.component';
 import {ProfileEditComponent} from './components/profile/edit/profile-edit.component';
@@ -421,10 +423,12 @@ const routes: Routes = [
     ]
   },
 
-  {path: 'sign-up', component: SignUpComponent, data: {title: 'Register'}},
+  {path: 'sign-up', component: SignUpComponent, data: {title: 'Sign Up'}},
+  {path: 'activate', component: ActivateComponent, data: {title: 'Account Activation'}},
   {path: 'forgot-password', component: ForgotPasswordComponent, data: {title: 'Forgot password'}},
-  {path: 'login', component: LoginComponent, data: {title: 'Login'}},
-  {path: 'logout', component: LogoutComponent, data: {title: 'Logout'}},
+  {path: 'reset-password', component: ResetPasswordComponent, data: {title: 'Reset password'}},
+  {path: 'sign-in', component: SignInComponent, data: {title: 'Sign In'}},
+  {path: 'sign-out', component: SignOutComponent, data: {title: 'Sign Out'}},
 
   {path: '404', component: P404Component, data: {title: 'Page 404'}},
   {path: '500', component: P500Component, data: {title: 'Page 500'}},

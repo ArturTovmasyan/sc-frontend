@@ -11,26 +11,19 @@ export class AccountService {
   }
 
   signup(data: any): Observable<any> {
-    return this.http.post<Message>(`${environment.apiUrl}/api/v1.0/dashboard/account/signup`, {
-      'first_name': data.firstName,
-      'last_name': data.lastName,
-      'email': data.email,
-      'phone': data.phone,
-      'password': data.password,
-      're_password': data.rePassword
-    });
+    return this.http.post<Message>(`${environment.apiUrl}/api/v1.0/dashboard/account/signup`, data);
   }
 
   forgotPassword(data: any): Observable<any> {
-    return this.http.post<Message>(`${environment.apiUrl}/api/v1.0/dashboard/account/forgot-password`, {
-      'email': data.email
-    });
+    return this.http.post<Message>(`${environment.apiUrl}/api/v1.0/dashboard/account/forgot-password`, data);
   }
 
-  confirmPassword(data: any): Observable<any> {
-    return this.http.post<Message>(`${environment.apiUrl}/api/v1.0/dashboard/account/confirm-password`, {
-      'email': data.email
-    });
+  resetPassword(data: any): Observable<any> {
+    return this.http.put<Message>(`${environment.apiUrl}/api/v1.0/dashboard/account/reset-password`, data);
+  }
+
+  activate(data: any): Observable<any> {
+    return this.http.put<Message>(`${environment.apiUrl}/api/v1.0/dashboard/account/activate`, data);
   }
 
 }

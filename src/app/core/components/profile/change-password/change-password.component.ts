@@ -7,8 +7,7 @@ import {ProfileService} from '../../../services/profile.service';
 import {CoreValidator} from '../../../../shared/utils/core-validator';
 
 @Component({
-  templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.scss']
+  templateUrl: './change-password.component.html'
 })
 export class ChangePasswordComponent extends AbstractForm implements OnInit {
   constructor(

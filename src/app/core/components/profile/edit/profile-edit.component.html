@@ -39,7 +39,7 @@
             </nz-form-item>
 
             <nz-form-item>
-              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">E-Mail</nz-form-label>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email" nzRequired>E-Mail</nz-form-label>
               <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email')?'error':null">
                 <input nz-input placeholder="E-Mail" formControlName="email">
                 <nz-form-explain *ngIf="hasErrors('email')">

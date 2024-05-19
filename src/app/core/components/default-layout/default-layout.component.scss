@@ -17,7 +17,13 @@
 
 ::ng-deep {
   .ant-form-item {
-    margin-bottom: initial;
+    margin-bottom: 0;
+
+    .ant-form-item-control {
+      &.has-error {
+        font-size: smaller;
+      }
+    }
   }
 
   .ant-form-item-label {

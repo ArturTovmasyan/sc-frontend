@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
       take(1),
       map((isLoggedIn: boolean) => {
         if (!isLoggedIn) {
-          this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
+          this.router.navigate(['/sign-in'], {queryParams: {returnUrl: state.url}});
           return false;
         } else {
           const expected_roles = route.data.roles || [];

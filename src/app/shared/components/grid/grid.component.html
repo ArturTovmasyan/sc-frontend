@@ -62,6 +62,8 @@
     [(nzPageSize)]="page_config.per_page"
     [nzTotal]="page_config.total"
 
+    [nzScroll]="{x:'100%'}"
+
     [nzData]="data"
     (nzCurrentPageDataChange)="current_page_data_change($event)"
     (nzPageIndexChange)="reload_data()"

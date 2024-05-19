@@ -17,7 +17,7 @@ export class CoreValidator {
   };
 
   public static password: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.PASSWORD, {pattern_validator_password: 'The password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character (non-word characters).'});
-  public static phone: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.PHONE, {pattern_validator_phone: ''});
+  public static phone: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.PHONE, {pattern_validator_phone: 'Invalid number format. Valid format is +XXXXXXXXXXXXX.'});
   public static dosage: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.DOSAGE, {pattern_validator_dosage: ''});
   public static dosage_unit: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.DOSAGE_UNIT, {pattern_validator_dosage_unit: ''});
   public static floor: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.FLOOR, {pattern_validator_floor: ''});

@@ -5,20 +5,8 @@
         <div class="col-md-6 mx-auto">
           <div class="card mx-4">
             <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
-              <div class="card-body p-4">
-                <h1>Forgot password?</h1>
-                <p class="text-muted"> Please enter your email address and we'll send you a recovery link.</p>
-
-                <nz-form-item>
-                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">E-Mail</nz-form-label>
-                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email')?'error':null">
-                    <input nz-input placeholder="E-Mail" formControlName="email">
-                    <nz-form-explain *ngIf="hasErrors('email')">
-                      <app-field-errors [errors]="fieldErrors('email')"></app-field-errors>
-                    </nz-form-explain>
-                  </nz-form-control>
-                </nz-form-item>
-
+              <div class="card-body">
+                <h1>Account Activation</h1>
 
                 <nz-form-item *ngIf="formErrors()">
                   <nz-form-control [nzSm]="24" [nzXs]="24">
@@ -35,13 +23,7 @@
               <div class="card-footer">
                 <div class="row">
                   <div class="col-6">
-                    <a routerLink="/sign-out" class="btn btn-link px-0">Sing In?</a>
-                  </div>
-                  <div class="col-6 text-right">
-                    <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="form.invalid || disabled" type="submit"
-                            class="btn btn-primary">
-                      Recover
-                    </button>
+                    <a routerLink="/sign-out" class="btn btn-link px-0">Sign In?</a>
                   </div>
                 </div>
               </div>

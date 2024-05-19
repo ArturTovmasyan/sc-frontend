@@ -21,14 +21,14 @@ export class AuthenticationService {
     this.loggedIn = new BehaviorSubject<boolean>(JSON.parse(localStorage.getItem('token')) != null);
   }
 
-  logout() {
-    // TODO: add logout api
+  sign_out() {
+    // TODO: add sign_out api
     localStorage.clear();
     this.loggedIn.next(false);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/sign-in']);
   }
 
-  login(data: any): Observable<any> {
+  sign_in(data: any): Observable<any> {
     return this.http.get<TokenInfo>(`${environment.apiUrl}/oauth/v2/token`, {
       params: {
         'username': data.username,

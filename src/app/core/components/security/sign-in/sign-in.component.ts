@@ -8,10 +8,10 @@ import {ProfileService} from '../../../services/profile.service';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['../../default-layout/default-layout.component.scss']
 })
-export class LoginComponent extends AbstractForm implements OnInit {
+export class SignInComponent extends AbstractForm implements OnInit {
   returnUrl: string;
 
   constructor(
@@ -23,7 +23,7 @@ export class LoginComponent extends AbstractForm implements OnInit {
     super();
 
     this.submit = (data: any) => {
-      return this.auth$.login(data);
+      return this.auth$.sign_in(data);
     };
 
     this.postSubmit = (data: Message) => {
@@ -43,8 +43,8 @@ export class LoginComponent extends AbstractForm implements OnInit {
       remember: [true]
     });
 
-    // reset login status
-    // this.auth$.logout();
+    // reset sign_in status
+    // this.auth$.sign_out();
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';

@@ -4,83 +4,102 @@
       <div class="row">
         <div class="col-md-6 mx-auto">
           <div class="card mx-4">
-            <form [formGroup]="form" (ngSubmit)="submitForm()">
+            <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
               <div class="card-body p-4">
-                <h1>Register</h1>
+                <h1>Sign Up</h1>
                 <p class="text-muted">Create your account</p>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-user"></i></span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="First Name" formControlName="firstName"
-                         [ngClass]="{'is-invalid': fieldErrors('firstName')}"/>
-                  <app-field-errors [errors]="fieldErrors('firstName')" class="invalid-feedback"></app-field-errors>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-user"></i></span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName"
-                         [ngClass]="{'is-invalid': fieldErrors('lastName')}"/>
-                  <app-field-errors [errors]="fieldErrors('lastName')" class="invalid-feedback"></app-field-errors>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i nz-icon theme="outline" type="mail"></i></span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="E-Mail" formControlName="email"
-                         [ngClass]="{'is-invalid': fieldErrors('email') }"/>
-                  <app-field-errors [errors]="fieldErrors('email')" class="invalid-feedback"></app-field-errors>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i nz-icon theme="outline" type="mail"></i></span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Phone" formControlName="phone"
-                         [ngClass]="{'is-invalid': fieldErrors('phone') }"/>
-                  <app-field-errors [errors]="fieldErrors('phone')" class="invalid-feedback"></app-field-errors>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-lock"></i></span>
-                  </div>
-                  <input type="password" class="form-control" placeholder="Password" formControlName="password"
-                         [ngClass]="{'is-invalid': fieldErrors('password')}"/>
-                  <app-field-errors [errors]="fieldErrors('password')" class="invalid-feedback"></app-field-errors>
-                </div>
-                <div class="input-group mb-4">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-lock"></i></span>
-                  </div>
-                  <input type="password" class="form-control" placeholder="Repeat password" formControlName="rePassword"
-                         [ngClass]="{'is-invalid': fieldErrors('rePassword')}"/>
-                  <app-field-errors [errors]="fieldErrors('rePassword')" class="invalid-feedback"></app-field-errors>
-                </div>
 
-                <!-- Status -->
-                <div class="row" *ngIf="formErrors()">
-                  <div class="col-12">
-                    <div class="alert alert-danger" role="alert">
-                      <app-form-errors [errors]="formErrors()"></app-form-errors>
-                    </div>
-                  </div>
-                </div>
-                <div class="row" *ngIf="message">
-                  <div class="col-12">
-                    <div class="alert alert-success" role="alert">{{ message }}</div>
-                  </div>
-                </div>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="organization" nzRequired>Organization</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('organization')?'error':null">
+                    <input nz-input placeholder="Organization" formControlName="organization">
+                    <nz-form-explain *ngIf="hasErrors('organization')">
+                      <app-field-errors [errors]="fieldErrors('organization')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('first_name')?'error':null">
+                    <input nz-input placeholder="First Name" formControlName="first_name">
+                    <nz-form-explain *ngIf="hasErrors('first_name')">
+                      <app-field-errors [errors]="fieldErrors('first_name')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="last_name" nzRequired>Last Name</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('last_name')?'error':null">
+                    <input nz-input placeholder="Last Name" formControlName="last_name">
+                    <nz-form-explain *ngIf="hasErrors('last_name')">
+                      <app-field-errors [errors]="fieldErrors('last_name')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email" nzRequired>E-Mail</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email')?'error':null">
+                    <input nz-input placeholder="E-Mail" formControlName="email">
+                    <nz-form-explain *ngIf="hasErrors('email')">
+                      <app-field-errors [errors]="fieldErrors('email')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="phone" nzRequired>Phone</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('phone')?'error':null">
+                    <input nz-input placeholder="Phone" formControlName="phone">
+                    <nz-form-explain *ngIf="hasErrors('phone')">
+                      <app-field-errors [errors]="fieldErrors('phone')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('password')?'error':null">
+                    <input nz-input type="password" id="password" formControlName="password">
+                    <nz-form-explain *ngIf="hasErrors('password')">
+                      <app-field-errors [errors]="fieldErrors('password')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="re_password" nzRequired>Repeat Password</nz-form-label>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('re_password')?'error':null">
+                    <input nz-input type="password" id="re_password" formControlName="re_password">
+                    <nz-form-explain *ngIf="hasErrors('re_password')">
+                      <app-field-errors [errors]="fieldErrors('re_password')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="formErrors()">
+                  <nz-form-control [nzSm]="24" [nzXs]="24">
+                    <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="message">
+                  <nz-form-control [nzSm]="24" [nzXs]="24">
+                    <nz-alert nzShowIcon nzType="success" [nzMessage]="message"></nz-alert>
+                  </nz-form-control>
+                </nz-form-item>
               </div>
-              <div class="card-footer p-4">
+              <div class="card-footer">
                 <div class="row">
                   <div class="col-6">
-                    <button [disabled]="loading" type="submit" class="btn btn-primary px-4">
-                      <i *ngIf="loading" nz-icon theme="outline" type="loading-3-quarters"></i>
-                      Sign Up
-                    </button>
+                    <a routerLink="/sign-in" class="btn btn-link px-0">Have account?</a>
                   </div>
                   <div class="col-6 text-right">
-                    <a routerLink="/login" class="btn btn-link px-0">Have account?</a>
+                    <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="form.invalid || disabled" type="submit"
+                            class="btn btn-primary">
+                      Sign Up
+                    </button>
                   </div>
                 </div>
               </div>
@@ -91,3 +110,7 @@
     </div>
   </main>
 </div>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

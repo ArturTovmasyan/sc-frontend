@@ -15,11 +15,13 @@ import {DndModule} from '@beyerleinf/ngx-dnd';
 import {CoreRoutingModule} from './core-routing.module';
 
 import {SignUpComponent} from './components/account/sign-up/sign-up.component';
-import {LoginComponent} from './components/security/login/login.component';
-import {LogoutComponent} from './components/security/logout/logout.component';
+import {ActivateComponent} from './components/account/activate/activate.component';
+import {SignInComponent} from './components/security/sign-in/sign-in.component';
+import {SignOutComponent} from './components/security/sign-out/sign-out.component';
 
 import {BearerInterceptor} from './interceptors/bearer.interceptor';
 import {ErrorInterceptor} from './interceptors/error.interceptor';
+import {ResetPasswordComponent} from './components/account/reset-password/reset-password.component';
 import {ForgotPasswordComponent} from './components/account/forgot-password/forgot-password.component';
 import {P404Component} from './components/error/404.component';
 import {P500Component} from './components/error/500.component';
@@ -200,11 +202,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     P404Component,
     P500Component,
 
-    LoginComponent,
-    LogoutComponent,
+    SignInComponent,
+    SignOutComponent,
 
     SignUpComponent,
+    ActivateComponent,
     ForgotPasswordComponent,
+    ResetPasswordComponent,
 
     DefaultLayoutComponent,
 
