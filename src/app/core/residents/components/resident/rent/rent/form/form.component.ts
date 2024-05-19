@@ -5,7 +5,6 @@ import {AbstractForm} from '../../../../../../../shared/components/abstract-form
 import {PaymentSource} from '../../../../../models/payment-source';
 import {PaymentSourceService} from '../../../../../services/payment-source.service';
 import {CoreValidator} from '../../../../../../../shared/utils/core-validator';
-import {PaymentPeriod} from '../../../../../models/payment-period.enum';
 import {ResidentSelectorService} from '../../../../../services/resident-selector.service';
 import {GroupType} from '../../../../../models/group-type.enum';
 import {ResidentAdmissionService} from '../../../../../services/resident-admission.service';
@@ -31,7 +30,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   admission: ResidentAdmission;
 
   sources: { id: number, amount: number }[] = [];
-  periods: { id: PaymentPeriod, name: string }[];
 
   constructor(
     protected modal$: ModalFormService,
@@ -56,8 +54,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       start: [DateHelper.newDate(), Validators.required],
       end: [null],
 
-      period: [null, Validators.required],
-
       notes: ['', Validators.compose([Validators.maxLength(512)])],
       amount: [0, Validators.compose([Validators.required, CoreValidator.payment_amount])],
 
@@ -73,14 +69,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('vc_use_base_rate');
     this.subscribe('list_reason');
     this.subscribe('list_payment_source');
-
-    /// TODO: review
-    this.periods = [
-      // {id: PaymentPeriod.HOURLY, name: 'Hourly'},
-      {id: PaymentPeriod.DAILY, name: 'Daily'},
-      {id: PaymentPeriod.WEEKLY, name: 'Weekly'},
-      {id: PaymentPeriod.MONTHLY, name: 'Monthly'},
-    ];
 
   }
 

@@ -2,27 +2,28 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin, {ListView} from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {CurrencyPipe} from '@angular/common';
 import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
+import {CurrencyPipe} from '@angular/common';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Observable, Subscription} from 'rxjs';
+import {FullCalendarComponent} from '@fullcalendar/angular';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
+import {DateHelper} from '../../../../../shared/helpers/date-helper';
+import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
+import {CalendarEventType, EventDefinition} from '../../../models/event-definition';
 import {FacilityService} from '../../../services/facility.service';
 import {FacilityEventService} from '../../../services/facility-event.service';
-import {FormComponent} from '../event-form/form.component';
-import {CalendarEventType, EventDefinition} from '../../../models/event-definition';
-import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
 import {EventDefinitionService} from '../../../services/event-definition.service';
-import {ViewComponent as ResidentEventViewComponent} from '../../resident/event/view/view.component';
-import {ViewComponent as ResidentRentViewComponent} from '../../resident/rent/rent/view/view.component';
-import {ViewComponent as ResidentRentIncreaseViewComponent} from '../../resident/rent/rent-increase/view/view.component';
 import {ResidentEventService} from '../../../services/resident-event.service';
 import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
 import {ResidentRentService} from '../../../services/resident-rent.service';
-import {DateHelper} from '../../../../../shared/helpers/date-helper';
-import {FullCalendarComponent} from '@fullcalendar/angular';
+import {FormComponent} from '../event-form/form.component';
+import {FormComponent as MonthPickerFormComponent} from '../../../../../shared/components/month-picker-form/form.component';
+import {ViewComponent as ResidentEventViewComponent} from '../../resident/event/view/view.component';
+import {ViewComponent as ResidentRentViewComponent} from '../../resident/rent/rent/view/view.component';
+import {ViewComponent as ResidentRentIncreaseViewComponent} from '../../resident/rent/rent-increase/view/view.component';
 
 @Component({
   selector: 'app-facility-calendar',
@@ -41,10 +42,19 @@ export class CalendarComponent implements OnInit, OnDestroy {
     add_event: {
       text: 'Add Event',
       click: () => this.show_modal_add()
+    },
+    choose: {
+      text: 'picker',
+      click: () => {
+        this.create_modal(MonthPickerFormComponent, data => {
+          this.calendarComponent.getApi().gotoDate(DateHelper.formatMoment(data.date, 'YYYY-MM-DD'));
+          return new BehaviorSubject<boolean>(false);
+        }, true);
+      }
     }
   };
 
-  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listAll'};
+  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'choose,dayGridMonth,dayGridWeek,dayGridDay,listAll'};
   calendarTimeFormat = {hour: 'numeric', minute: '2-digit', meridiem: 'narrow'};
   calendarViews = {
     listAll: {
@@ -59,7 +69,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
       buttonText: 'list'
     }
   };
-
   calendarEvents = [];
 
   event_definitions: EventDefinition[];
@@ -305,11 +314,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              this.subscribe('list_calendar', {
-                type: this.filter_chooser.type,
-                definition_id: this.filter_chooser.definition_id,
-                show_resident: this.show_resident
-              });
+              if (res) {
+                this.subscribe('list_calendar', {
+                  type: this.filter_chooser.type,
+                  definition_id: this.filter_chooser.definition_id,
+                  show_resident: this.show_resident
+                });
+              }
 
               modal.close();
             },
@@ -367,7 +378,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
-      nzWidth: '45rem',
+      nzWidth: result === true ? '30rem' : '45rem',
       nzTitle: null,
       nzContent: form_component,
       nzFooter: footer
@@ -375,10 +386,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
-      if (component instanceof FormComponent) {
+      if (component instanceof FormComponent || component instanceof MonthPickerFormComponent) {
         const form = component.formObject;
 
-        form.get('facility_id').setValue(this.facility_id);
+        if (component instanceof FormComponent) {
+          form.get('facility_id').setValue(this.facility_id);
+        }
 
         if (result !== null) {
           component.loaded.subscribe(v => {
@@ -471,4 +484,5 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     this.calendarLastView = $event.view;
   }
+
 }

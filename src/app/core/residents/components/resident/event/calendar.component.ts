@@ -3,28 +3,29 @@ import listPlugin, {ListView} from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NzModalService} from 'ng-zorro-antd';
+import {CurrencyPipe} from '@angular/common';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Observable, Subscription} from 'rxjs';
+import {FullCalendarComponent} from '@fullcalendar/angular';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
+import {DateHelper} from '../../../../../shared/helpers/date-helper';
+import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
+import {CalendarEventType} from '../../../models/event-definition';
+import {FacilityEventService} from '../../../services/facility-event.service';
 import {ResidentService} from '../../../services/resident.service';
 import {ResidentEventService} from '../../../services/resident-event.service';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
-import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
+import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
+import {ResidentRentService} from '../../../services/resident-rent.service';
 import {FormComponent} from './form/form.component';
+import {FormComponent as MonthPickerFormComponent} from '../../../../../shared/components/month-picker-form/form.component';
 import {FormComponent as FacilityEventFormComponent} from '../../facility/event-form/form.component';
-import {CalendarEventType} from '../../../models/event-definition';
-import {FacilityEventService} from '../../../services/facility-event.service';
 import {ViewComponent as FacilityEventViewComponent} from '../../facility/event-form/view.component';
 import {ViewComponent as ResidentEventViewComponent} from './view/view.component';
 import {ViewComponent as ResidentRentViewComponent} from '../rent/rent/view/view.component';
 import {ViewComponent as ResidentRentIncreaseViewComponent} from '../rent/rent-increase/view/view.component';
-import {ResidentRentService} from '../../../services/resident-rent.service';
-import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
-import {DateHelper} from '../../../../../shared/helpers/date-helper';
-import {CurrencyPipe} from '@angular/common';
-import {FullCalendarComponent} from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-resident-calendar',
@@ -40,10 +41,19 @@ export class CalendarComponent implements OnInit, OnDestroy {
     add_event: {
       text: 'Add Event',
       click: () => this.show_modal_add()
+    },
+    choose: {
+      text: 'picker',
+      click: () => {
+        this.create_modal(MonthPickerFormComponent, data => {
+          this.calendarComponent.getApi().gotoDate(DateHelper.formatMoment(data.date, 'YYYY-MM-DD'));
+          return new BehaviorSubject<boolean>(false);
+        }, true);
+      }
     }
   };
 
-  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listAll'};
+  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'choose,dayGridMonth,dayGridWeek,dayGridDay,listAll'};
   calendarTimeFormat = {hour: 'numeric', minute: '2-digit', meridiem: 'narrow'};
   calendarViews = {
     listAll: {
@@ -272,7 +282,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              this.subscribe('rs_resident');
+              if (res) {
+                this.subscribe('rs_resident');
+              }
 
               modal.close();
             },
@@ -326,7 +338,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
-      nzWidth: '45rem',
+      nzWidth: result === true ? '30rem' : '45rem',
       nzTitle: null,
       nzContent: form_component,
       nzFooter: footer
@@ -334,7 +346,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
-      if (component instanceof FormComponent || component instanceof FacilityEventFormComponent) {
+      if (component instanceof FormComponent || component instanceof MonthPickerFormComponent || component instanceof FacilityEventFormComponent) {
         const form = component.formObject;
 
         if (result !== null) {

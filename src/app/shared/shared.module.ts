@@ -18,6 +18,7 @@ import {CronPipe} from './pipes/cron.pipe';
 import {ScSelectModule} from './components/select/sc-select.module';
 import {ModalFormComponent} from './components/modal/modal-form.component';
 import {ButtonBarComponent} from './components/modal/button-bar.component';
+import {FormComponent as MonthPickerFormComponent} from './components/month-picker-form/form.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {ButtonBarComponent} from './components/modal/button-bar.component';
     MessageComponent,
     ModalFormComponent,
     ButtonBarComponent,
+    MonthPickerFormComponent,
 
     CronPipe,
     FilterPipe,
@@ -46,6 +48,7 @@ import {ButtonBarComponent} from './components/modal/button-bar.component';
   ],
   entryComponents: [
     MessageComponent,
+    MonthPickerFormComponent,
     ModalFormComponent
   ],
   providers: [
@@ -65,6 +68,7 @@ import {ButtonBarComponent} from './components/modal/button-bar.component';
     InputCounterComponent,
     ModalFormComponent,
     ButtonBarComponent,
+    MonthPickerFormComponent,
 
     CronPipe,
     KeysPipe,

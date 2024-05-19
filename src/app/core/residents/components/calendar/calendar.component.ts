@@ -4,17 +4,18 @@ import bootstrapPlugin from '@fullcalendar/bootstrap';
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NzModalService} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Observable, Subscription} from 'rxjs';
+import {FullCalendarComponent} from '@fullcalendar/angular';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 import {AuthGuard} from '../../../guards/auth.guard';
-import {CalendarEventType} from '../../models/event-definition';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
-import {FormComponent} from './form/form.component';
-import {UserService} from '../../../admin/services/user.service';
-import {CorporateEventService} from '../../services/corporate-event.service';
-import {TitleService} from '../../../services/title.service';
 import {DateHelper} from '../../../../shared/helpers/date-helper';
-import {FullCalendarComponent} from '@fullcalendar/angular';
+import {CalendarEventType} from '../../models/event-definition';
+import {CorporateEventService} from '../../services/corporate-event.service';
+import {UserService} from '../../../admin/services/user.service';
+import {TitleService} from '../../../services/title.service';
+import {FormComponent} from './form/form.component';
+import {FormComponent as MonthPickerFormComponent} from '../../../../shared/components/month-picker-form/form.component';
 
 @Component({
   selector: 'app-corporate-calendar',
@@ -31,10 +32,19 @@ export class CalendarComponent implements OnInit, OnDestroy {
     add_event: {
       text: 'Add Event',
       click: () => this.show_modal_add()
+    },
+    choose: {
+      text: 'picker',
+      click: () => {
+        this.create_modal(MonthPickerFormComponent, data => {
+          this.calendarComponent.getApi().gotoDate(DateHelper.formatMoment(data.date, 'YYYY-MM-DD'));
+          return new BehaviorSubject<boolean>(false);
+        }, true);
+      }
     }
   };
 
-  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listAll'};
+  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'choose,dayGridMonth,dayGridWeek,dayGridDay,listAll'};
   calendarTimeFormat = {hour: 'numeric', minute: '2-digit', meridiem: 'narrow'};
   calendarViews = {
     listAll: {
@@ -55,8 +65,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private title$: TitleService,
     private modal$: NzModalService,
+    private title$: TitleService,
     private user$: UserService,
     private corporateEvent$: CorporateEventService,
     private auth_$: AuthGuard
@@ -154,7 +164,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              this.subscribe('list_calendar');
+              if (res) {
+                this.subscribe('list_calendar');
+              }
 
               modal.close();
             },
@@ -208,7 +220,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
-      nzWidth: '45rem',
+      nzWidth: result === true ? '30rem' : '45rem',
       nzTitle: null,
       nzContent: form_component,
       nzFooter: footer
@@ -216,7 +228,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
-      if (component instanceof FormComponent) {
+      if (component instanceof FormComponent || component instanceof MonthPickerFormComponent) {
         const form = component.formObject;
 
         if (result !== null) {
