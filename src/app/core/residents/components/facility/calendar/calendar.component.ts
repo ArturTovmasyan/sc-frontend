@@ -97,19 +97,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
               });
             });
 
-            // res.admissions.forEach(admission => {
-            //   this.calendarEvents.push({
-            //     borderColor: 'transparent',
-            //     backgroundColor: '#fac22b',
-            //     textColor: '#ffffff',
-            //     id: admission.id,
-            //     event_type: CalendarEventType.ADMISSION,
-            //     start: moment.utc(admission.start).format('YYYY-MM-DD'),
-            //     end: this.formatAdmissionEnd(admission),
-            //     title: this.formatResident(CalendarEventType.ADMISSION, admission)
-            //   });
-            // });
-
             res.rents.forEach(rent => {
               this.calendarEvents.push({
                 borderColor: 'transparent',

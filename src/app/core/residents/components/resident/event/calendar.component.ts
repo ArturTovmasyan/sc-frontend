@@ -80,32 +80,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
           if (res) {
             this.calendarEvents = [];
 
-            res.admissions.forEach(admission => {
-              this.calendarEvents.push({
-                borderColor: 'transparent',
-                backgroundColor: '#fac22b',
-                textColor: '#ffffff',
-                id: admission.id,
-                event_type: CalendarEventType.ADMISSION,
-                start: moment(admission.start).format('YYYY-MM-DD'),
-                end: null,
-                title: (new AdmissionTypePipe()).transform(admission.admission_type)
-              });
-            });
-
-            res.rents.forEach(rent => {
-              this.calendarEvents.push({
-                borderColor: 'transparent',
-                backgroundColor: '#009da1',
-                textColor: '#ffffff',
-                id: rent.id,
-                event_type: CalendarEventType.RENT,
-                start: moment(rent.start).format('YYYY-MM-DD'),
-                end: rent.end ? moment(rent.end).format('YYYY-MM-DD') : null,
-                title: (new PaymentPeriodPipe()).transform(rent.period)
-              });
-            });
-
             res.facility_events.forEach(event => {
               this.calendarEvents.push({
                 borderColor: 'transparent',
@@ -139,9 +113,35 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: event.id,
                 event_type: CalendarEventType.RESIDENT,
-                start: moment(event.start).format('YYYY-MM-DD HH:mm:ss'),
-                end: event.end ? moment(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
+                start: moment.utc(event.start).format('YYYY-MM-DD HH:mm:ss'),
+                end: event.end ? moment.utc(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
                 title: event.title
+              });
+            });
+
+            res.admissions.forEach(admission => {
+              this.calendarEvents.push({
+                borderColor: 'transparent',
+                backgroundColor: '#fac22b',
+                textColor: '#ffffff',
+                id: admission.id,
+                event_type: CalendarEventType.ADMISSION,
+                start: moment.utc(admission.start).format('YYYY-MM-DD'),
+                end: null,
+                title: (new AdmissionTypePipe()).transform(admission.admission_type)
+              });
+            });
+
+            res.rents.forEach(rent => {
+              this.calendarEvents.push({
+                borderColor: 'transparent',
+                backgroundColor: '#009da1',
+                textColor: '#ffffff',
+                id: rent.id,
+                event_type: CalendarEventType.RENT,
+                start: moment.utc(rent.start).format('YYYY-MM-DD'),
+                end: rent.end ? moment.utc(rent.end).format('YYYY-MM-DD') : null,
+                title: (new PaymentPeriodPipe()).transform(rent.period)
               });
             });
 
@@ -152,8 +152,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: rent_increase.id,
                 event_type: CalendarEventType.RENT_INCREASE,
-                start: moment(rent_increase.start).format('YYYY-MM-DD'),
-                end: rent_increase.end ? moment(rent_increase.end).format('YYYY-MM-DD') : null,
+                start: moment.utc(rent_increase.start).format('YYYY-MM-DD'),
+                end: rent_increase.end ? moment.utc(rent_increase.end).format('YYYY-MM-DD') : null,
                 title: (new RentIncreaseReasonPipe()).transform(rent_increase.reason)
               });
             });
