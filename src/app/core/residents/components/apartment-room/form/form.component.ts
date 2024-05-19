@@ -162,6 +162,14 @@ export class FormComponent extends AbstractForm implements OnInit {
     } else {
       super.remove_field(key, i);
     }
+
+    const controls = this.get_form_array(key).controls;
+
+    controls.forEach(control => {
+      control.setValue(control.value);
+      control.markAllAsTouched();
+      control.updateValueAndValidity();
+    });
   }
 
 
