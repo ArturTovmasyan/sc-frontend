@@ -292,6 +292,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       return `${resident}`;
     }
 
-    return '';
+    return 'Unoccupied';
   }
 }
