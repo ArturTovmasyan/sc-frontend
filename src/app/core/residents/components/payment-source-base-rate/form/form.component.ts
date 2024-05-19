@@ -105,14 +105,20 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  after_set_form_data(): void {
-    this.old_date = this.form.get('date').value;
+  before_set_form_data(data: any, previous_data?: any): void {
+    if (data) {
+      this.old_date = data.date;
+    }
   }
 
   formValue(): void {
     const value = super.formValue();
+    console.log(this.old_date)
+    console.log(value.date);
+    console.log(DateHelper.makeUTCDateOnly(value.date));
 
     if (this.old_date === null || value.date.getTime() !== this.old_date.getTime()) {
+      console.log('true');
       value.date = DateHelper.makeUTCDateOnly(value.date);
     }
 
