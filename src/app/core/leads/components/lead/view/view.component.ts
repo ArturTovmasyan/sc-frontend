@@ -186,11 +186,14 @@ export class ViewComponent implements OnInit, OnDestroy {
         if (result !== null) {
           component.loaded.subscribe(v => {
             if (v) {
+              component.edit_mode = true;
               component.before_set_form_data(result);
               component.set_form_data(component, form, result);
               component.after_set_form_data();
             }
           });
+        } else {
+          component.edit_mode = false;
         }
 
         valid = form.valid;
