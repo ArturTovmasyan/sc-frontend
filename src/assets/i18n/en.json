@@ -274,6 +274,26 @@
       "bed_count": "Bed Count",
       "notes": "Notes"
     },
+    "facility-bed-list": {
+      "id": "ID",
+      "facility_name": "Facility",
+      "facility_shorthand": "Shorthand",
+      "floor": "Floor",
+      "room": "Room",
+      "number": "Bed",
+      "enabled": "Enabled",
+      "resident": "Occupied By"
+    },
+    "apartment-bed-list": {
+      "id": "ID",
+      "apartment_name": "Apartment",
+      "apartment_shorthand": "Shorthand",
+      "floor": "Floor",
+      "room": "Room",
+      "number": "Bed",
+      "enabled": "Enabled",
+      "resident": "Occupied By"
+    },
     "resident-dietary-restriction-list": {
       "id": "ID",
       "diet_title": "Category",

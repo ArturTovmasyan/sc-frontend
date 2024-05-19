@@ -4,18 +4,20 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {FacilityService} from '../../../../services/facility.service';
 import {Facility} from '../../../../models/facility';
-import {FacilityBed, FacilityRoom} from '../../../../models/facility-room';
+import {FacilityRoom} from '../../../../models/facility-room';
 import {FacilityRoomService} from '../../../../services/facility-room.service';
 import {ResidentService} from '../../../../services/resident.service';
 import {Resident} from '../../../../models/resident';
 import {Apartment} from '../../../../models/apartment';
 import {Region} from '../../../../models/region';
-import {ApartmentBed, ApartmentRoom} from '../../../../models/apartment-room';
+import {ApartmentRoom} from '../../../../models/apartment-room';
 import {ApartmentService} from '../../../../services/apartment.service';
 import {RegionService} from '../../../../services/region.service';
 import {GroupType} from '../../../../models/group-type.enum';
 import {ApartmentRoomService} from '../../../../services/apartment-room.service';
 import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {ApartmentBed} from '../../../../models/apartment-bed';
+import {FacilityBed} from '../../../../models/facility-bed';
 
 @Component({
   templateUrl: 'form.component.html'

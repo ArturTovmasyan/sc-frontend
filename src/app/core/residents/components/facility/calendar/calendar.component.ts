@@ -2,6 +2,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {CurrencyPipe} from '@angular/common';
 import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Observable, Subscription} from 'rxjs';
@@ -21,7 +22,6 @@ import {ResidentEventService} from '../../../services/resident-event.service';
 import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
 import {ResidentRentService} from '../../../services/resident-rent.service';
 import {DateHelper} from '../../../../../shared/helpers/date-helper';
-import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'app-facility-calendar',
@@ -61,9 +61,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   event_definitions: EventDefinition[];
 
-  definition_id: number = null;
-  show_resident_fake: boolean = true;
-  show_resident: boolean = true;
+  filter_chooser_all: any;
+  filter_chooser: any;
+  show_resident_fake: boolean;
+  show_resident: boolean;
 
   protected $subscriptions: { [key: string]: Subscription; };
 
@@ -79,11 +80,21 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private auth_$: AuthGuard
   ) {
     this.$subscriptions = {};
+
+    this.show_resident_fake = true;
+    this.show_resident = true;
+
+    this.filter_chooser_all = {type: 'all', definition_id: null};
+    this.filter_chooser = this.filter_chooser_all;
   }
 
   ngOnInit(): void {
     this.subscribe('list_event_definition');
-    this.subscribe('list_calendar', {definition_id: null, show_resident: true});
+    this.subscribe('list_calendar', {
+      type: this.filter_chooser.type,
+      definition_id: this.filter_chooser.definition_id,
+      show_resident: true
+    });
   }
 
   ngOnDestroy(): void {
@@ -120,50 +131,56 @@ export class CalendarComponent implements OnInit, OnDestroy {
                   id: event.id,
                   event_type: CalendarEventType.FACILITY,
                   start: event.all_day ? DateHelper.formatMoment(event.start, 'YYYY-MM-DD') : DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
-                  end:  event.all_day ? null : DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
+                  end: event.all_day ? null : DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
                   title: event.title
                 });
               });
 
               if (params.show_resident) {
-                res.resident_events.forEach(event => {
-                  this.calendarEvents.push({
-                    borderColor: 'transparent',
-                    backgroundColor: '#d7255d',
-                    textColor: '#ffffff',
-                    id: event.id,
-                    event_type: CalendarEventType.RESIDENT,
-                    start: DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
-                    end: DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
-                    title: this.formatResident(CalendarEventType.RESIDENT, event),
+                if (this.filter_chooser.type === 'all' || this.filter_chooser.type === 'event') {
+                  res.resident_events.forEach(event => {
+                    this.calendarEvents.push({
+                      borderColor: 'transparent',
+                      backgroundColor: '#d7255d',
+                      textColor: '#ffffff',
+                      id: event.id,
+                      event_type: CalendarEventType.RESIDENT,
+                      start: DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
+                      end: DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
+                      title: this.formatResident(CalendarEventType.RESIDENT, event),
+                    });
                   });
-                });
+                }
 
-                res.rents.forEach(rent => {
-                  this.calendarEvents.push({
-                    borderColor: 'transparent',
-                    backgroundColor: '#009da1',
-                    textColor: '#ffffff',
-                    id: rent.id,
-                    event_type: CalendarEventType.RENT,
-                    start: DateHelper.formatMoment(rent.start, 'YYYY-MM-DD'),
-                    end: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD'),
-                    title: this.formatResident(CalendarEventType.RENT, rent)
+                if (this.filter_chooser.type === 'all' || this.filter_chooser.type === 'rent') {
+                  res.rents.forEach(rent => {
+                    this.calendarEvents.push({
+                      borderColor: 'transparent',
+                      backgroundColor: '#009da1',
+                      textColor: '#ffffff',
+                      id: rent.id,
+                      event_type: CalendarEventType.RENT,
+                      start: DateHelper.formatMoment(rent.start, 'YYYY-MM-DD'),
+                      end: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD'),
+                      title: this.formatResident(CalendarEventType.RENT, rent)
+                    });
                   });
-                });
+                }
 
-                res.rent_increases.forEach(rent_increase => {
-                  this.calendarEvents.push({
-                    borderColor: 'transparent',
-                    backgroundColor: '#603e95',
-                    textColor: '#ffffff',
-                    id: rent_increase.id,
-                    event_type: CalendarEventType.RENT_INCREASE,
-                    start: DateHelper.formatMoment(rent_increase.start, 'YYYY-MM-DD'),
-                    end: DateHelper.formatMoment(rent_increase.end, 'YYYY-MM-DD'),
-                    title: this.formatResident(CalendarEventType.RENT_INCREASE, rent_increase),
+                if (this.filter_chooser.type === 'all' || this.filter_chooser.type === 'rent_increase') {
+                  res.rent_increases.forEach(rent_increase => {
+                    this.calendarEvents.push({
+                      borderColor: 'transparent',
+                      backgroundColor: '#603e95',
+                      textColor: '#ffffff',
+                      id: rent_increase.id,
+                      event_type: CalendarEventType.RENT_INCREASE,
+                      start: DateHelper.formatMoment(rent_increase.start, 'YYYY-MM-DD'),
+                      end: DateHelper.formatMoment(rent_increase.end, 'YYYY-MM-DD'),
+                      title: this.formatResident(CalendarEventType.RENT_INCREASE, rent_increase),
+                    });
                   });
-                });
+                }
               }
             }
           });
@@ -279,7 +296,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: this.show_resident});
+              this.subscribe('list_calendar', {
+                type: this.filter_chooser.type,
+                definition_id: this.filter_chooser.definition_id,
+                show_resident: this.show_resident
+              });
 
               modal.close();
             },
@@ -313,7 +334,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: this.show_resident});
+              this.subscribe('list_calendar', {
+                type: this.filter_chooser.type,
+                definition_id: this.filter_chooser.definition_id,
+                show_resident: this.show_resident
+              });
 
               modal.close();
 
@@ -385,11 +410,23 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   type_change($event: any) {
-    this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: this.show_resident});
+    if (this.filter_chooser === null) {
+      this.filter_chooser = {type: 'all', definition_id: null};
+    }
+
+    this.subscribe('list_calendar', {
+      type: this.filter_chooser.type,
+      definition_id: this.filter_chooser.definition_id,
+      show_resident: this.show_resident
+    });
   }
 
   switch_change($event: any) {
     this.show_resident = $event;
-    this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: this.show_resident});
+    this.subscribe('list_calendar', {
+      type: this.filter_chooser.type,
+      definition_id: this.filter_chooser.definition_id,
+      show_resident: this.show_resident
+    });
   }
 }

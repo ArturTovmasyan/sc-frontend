@@ -100,6 +100,8 @@ import {DashboardDetailComponent as ResidentDashboardDetailComponent} from './re
 import {ListComponent as FacilityDocumentListComponent} from './residents/components/facility-document/list.component';
 import {CalendarComponent as CorporateCalendarComponent} from './residents/components/calendar/calendar.component';
 import {ListComponent as AssessmentTypeListComponent} from './residents/components/assessment/type/list.component';
+import {ListComponent as FacilityBedListComponent} from './residents/components/facility-bed/list.component';
+import {ListComponent as ApartmentBedListComponent} from './residents/components/apartment-bed/list.component';
 
 const routes: Routes = [
   {
@@ -412,6 +414,15 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'facility/beds', component: FacilityBedListComponent,
+        data: {
+          nav: {show: true, group: 'Facility', title: 'Beds'},
+          title: 'Facility Beds',
+          permissions: ['persistence-facility', 'persistence-facility_room', 'persistence-facility_bed']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'facility/dining-rooms', component: FacilityDiningRoomListComponent,
         data: {
           nav: {show: true, group: 'Facility', title: 'Dining Rooms'},
@@ -453,6 +464,15 @@ const routes: Routes = [
           nav: {show: true, group: 'Apartment', title: 'Rooms'},
           title: 'Apartment Rooms',
           permissions: ['persistence-apartment', 'persistence-apartment_room']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'apartment/beds', component: ApartmentBedListComponent,
+        data: {
+          nav: {show: true, group: 'Apartment', title: 'Beds'},
+          title: 'Apartment Beds',
+          permissions: ['persistence-apartment', 'persistence-apartment_room', 'persistence-apartment_bed']
         },
         canActivate: [AuthGuard]
       },

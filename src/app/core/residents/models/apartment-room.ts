@@ -1,5 +1,5 @@
 import {Apartment} from './apartment';
-import {Resident} from './resident';
+import {ApartmentBed} from './apartment-bed';
 
 export class ApartmentRoom implements IdInterface {
   id: number;
@@ -16,18 +16,3 @@ export class ApartmentRoom implements IdInterface {
 
   apartment: Apartment;
 }
-
-export class ApartmentBed implements IdInterface {
-  id: number;
-
-  number: string;
-
-  disabled: boolean;
-
-  resident: Resident;
-
-  room?: ApartmentRoom;
-
-  resident_id?: number;
-}
-

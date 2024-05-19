@@ -1,5 +1,5 @@
 import {Facility} from './facility';
-import {Resident} from './resident';
+import {FacilityBed} from './facility-bed';
 
 export class FacilityRoom implements IdInterface {
   id: number;
@@ -16,18 +16,3 @@ export class FacilityRoom implements IdInterface {
 
   facility: Facility;
 }
-
-export class FacilityBed implements IdInterface {
-  id: number;
-
-  number: string;
-
-  disabled: boolean;
-
-  resident: Resident;
-
-  room?: FacilityRoom;
-
-  resident_id?: number;
-}
-

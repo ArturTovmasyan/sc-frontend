@@ -7,11 +7,18 @@
     <nz-form-label>Filter By Type</nz-form-label>
     <nz-select class="card-header-action" style="width: 250px;font-weight: normal;"
                nzShowSearch [nzAllowClear]="true" nzMode="default" nzPlaceHolder="Please select"
-               [(ngModel)]="definition_id" (ngModelChange)="type_change($event)"
+               [(ngModel)]="filter_chooser" (ngModelChange)="type_change($event)"
     >
-      <ng-container *ngFor="let definition of event_definitions">
-        <nz-option [nzLabel]="definition.title" [nzValue]="definition.id"></nz-option>
-      </ng-container>
+      <nz-option [nzLabel]="'All'" [nzValue]="filter_chooser_all"></nz-option>
+      <nz-option-group [nzLabel]="'Resident Event'">
+        <ng-container *ngFor="let definition of event_definitions">
+          <nz-option [nzLabel]="definition.title" [nzValue]="{type: 'event', definition_id: definition.id}"></nz-option>
+        </ng-container>
+      </nz-option-group>
+      <nz-option-group [nzLabel]="'Resident Room'">
+        <nz-option [nzLabel]="'Rent'" [nzValue]="{type: 'rent', definition_id: null}"></nz-option>
+        <nz-option [nzLabel]="'Rent Increase'" [nzValue]="{type: 'rent_increase', definition_id: null}"></nz-option>
+      </nz-option-group>
     </nz-select>
   </div>
 </div>
