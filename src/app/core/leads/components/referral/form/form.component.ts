@@ -117,6 +117,9 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('organization_id').setValue(params.organization_id);
             }
+
+            this.subscribe('vc_organization');
+            this.form.get('organization_id').setValue(this.form.get('organization_id').value);
           }
         });
         break;
@@ -124,18 +127,18 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.contact$
           .all(params && params.organization_id ? [{key: 'organization_id', value: params.organization_id}] : [])
           .pipe(first()).subscribe(res => {
-          if (res) {
-            this.contacts = res;
+            if (res) {
+              this.contacts = res;
 
-            this.subscribe('vc_contact');
+              this.subscribe('vc_contact');
 
-            if (params) {
-              this.form.get('contact_id').setValue(params.contact_id);
+              if (params && params.contact_id) {
+                this.form.get('contact_id').setValue(params.contact_id);
+              } else {
+                this.form.get('contact_id').setValue(this.form.get('contact_id').value);
+              }
             }
-
-            this.form.get('contact_id').setValue(this.form.get('contact_id').value);
-          }
-        });
+          });
         break;
       case 'vc_organization':
         this.$subscriptions[key] = this.form.get('organization_id').valueChanges.subscribe(next => {
@@ -156,14 +159,20 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             if (type) {
               this.contacts = [];
-              this.form.get('organization_id').setValue(null);
-              this.form.get('contact_id').setValue(null);
-              this.unsubscribe('vc_organization');
+
+              if (this.edit_mode) {
+                if (this.edit_data.type.id !== next) {
+                  this.form.get('organization_id').setValue(null);
+                  this.form.get('contact_id').setValue(null);
+                  this.edit_data.type.id = null;
+                }
+              } else {
+                this.form.get('organization_id').setValue(null);
+                this.form.get('contact_id').setValue(null);
+              }
 
               if (type.organization_required) {
                 this.form.get('organization_id').enable();
-
-                this.subscribe('vc_organization');
               } else {
                 this.form.get('organization_id').disable();
 

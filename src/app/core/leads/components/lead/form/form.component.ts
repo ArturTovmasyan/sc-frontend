@@ -1,4 +1,5 @@
-﻿import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
+﻿import * as _ from 'lodash';
+import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {first} from 'rxjs/operators';
@@ -21,7 +22,7 @@ import {UserService} from '../../../../admin/services/user.service';
 import {StateChangeReasonService} from '../../../services/state-change-reason.service';
 import {PaymentSource} from '../../../../residents/models/payment-source';
 import {PaymentSourceService} from '../../../../residents/services/payment-source.service';
-import {LeadState} from '../../../models/lead';
+import {Lead, LeadState} from '../../../models/lead';
 import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
 import {FormComponent as ContactFormComponent} from '../../contact/form/form.component';
 import {FormComponent as CareTypeFormComponent} from '../../care-type/form/form.component';
@@ -54,6 +55,8 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
   phone_types: { id: PhoneType, name: string }[];
 
   contact: Contact;
+
+  edit_data: Lead;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -257,6 +260,9 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
             if (params) {
               this.form.get('referral.organization_id').setValue(params.organization_id);
             }
+
+            this.subscribe('vc_organization');
+            this.form.get('referral.organization_id').setValue(this.form.get('referral.organization_id').value);
           }
         });
         break;
@@ -264,18 +270,18 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
         this.$subscriptions[key] = this.contact$
           .all(params && params.organization_id ? [{key: 'organization_id', value: params.organization_id}] : [])
           .pipe(first()).subscribe(res => {
-          if (res) {
-            this.contacts = res;
+            if (res) {
+              this.contacts = res;
 
-            this.subscribe('vc_contact');
+              this.subscribe('vc_contact');
 
-            if (params) {
-              this.form.get('referral.contact_id').setValue(params.contact_id);
+              if (params && params.contact_id) {
+                this.form.get('referral.contact_id').setValue(params.contact_id);
+              } else {
+                this.form.get('referral.contact_id').setValue(this.form.get('referral.contact_id').value);
+              }
             }
-
-            this.form.get('referral.contact_id').setValue(this.form.get('referral.contact_id').value);
-          }
-        });
+          });
         break;
       case 'vc_organization':
         this.$subscriptions[key] = this.form.get('referral.organization_id').valueChanges.subscribe(next => {
@@ -296,14 +302,20 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
 
             if (type) {
               this.contacts = [];
-              this.form.get('referral.organization_id').setValue(null);
-              this.form.get('referral.contact_id').setValue(null);
-              this.unsubscribe('vc_organization');
+
+              if (this.edit_mode) {
+                if (this.edit_data.referral.type.id !== next) {
+                  this.form.get('referral.organization_id').setValue(null);
+                  this.form.get('referral.contact_id').setValue(null);
+                  this.edit_data.referral.type.id = null;
+                }
+              } else {
+                this.form.get('referral.organization_id').setValue(null);
+                this.form.get('referral.contact_id').setValue(null);
+              }
 
               if (type.organization_required) {
                 this.form.get('referral.organization_id').enable();
-
-                this.subscribe('vc_organization');
               } else {
                 this.form.get('referral.organization_id').disable();
 
@@ -410,6 +422,10 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
 
   before_set_form_data(data: any, previous_data?: any): void {
     super.before_set_form_data(data, previous_data);
+
+    if (data !== null) {
+      this.edit_data = _.cloneDeep(data);
+    }
 
     if (this.edit_mode) {
       data.state_effective_date = DateHelper.convertUTC(data.state_effective_date);
