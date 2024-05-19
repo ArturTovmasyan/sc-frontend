@@ -4,6 +4,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {HomeService} from '../../services/home.service';
 import {first} from 'rxjs/operators';
 import {GroupType} from '../../models/group-type.enum';
+import {AuthGuard} from '../../../guards/auth.guard';
 
 @Component({
   templateUrl: './home.component.html',
@@ -17,7 +18,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private home$: HomeService
+    private home$: HomeService,
+    private auth_$: AuthGuard
   ) {
 
   }
@@ -30,4 +32,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  addIfHasPermission(permission: string) {
+    return this.auth_$.checkPermission([permission]);
+  }
 }

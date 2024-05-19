@@ -1,4 +1,4 @@
-<nz-empty *ngIf="!data" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+<nz-empty *ngIf="addIfHasPermission('persistence-resident-resident') && !data" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
 <ng-container *ngIf="data">
   <div *ngIf="data.facility && data.facility.length > 0" class="card">
     <div class="card-header">
