@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../services/title.service';
@@ -39,28 +38,14 @@ export class ListComponent extends GridComponent<Resident, ResidentService> impl
 
     this.$subscriptions['segment'] = this.route$.url.subscribe(value => {
       if (value && value.length > 0) {
-        console.log();
-
-        this.params.push({key: 'state', value: value[0].path});
+        if (value.length === 1) {
+          this.params.push({key: 'state', value: value[0].path});
+        } else if (value.length === 2) {
+          this.params.push({key: 'type', value: value[0].path});
+          this.params.push({key: 'type_id', value: value[1].path});
+        }
 
         this.$init.next(true);
-      }
-    });
-
-    this.$subscriptions['param'] = this.route_params.params.subscribe((params: Array<any>): void => {
-      if (params) {
-        params = params.filter(v =>
-          v.params.hasOwnProperty('type') &&
-          v.params.hasOwnProperty('group') &&
-          _.indexOf(v.url, 'residents') !== -1
-        );
-
-        if (params.length > 0) {
-          this.params.push({key: 'type', value: params[0].params.type});
-          this.params.push({key: 'type_id', value: params[0].params.group});
-
-          this.$init.next(true);
-        }
       }
     });
 

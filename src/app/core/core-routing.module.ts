@@ -260,6 +260,14 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
           {
+            path: ':type/:group', component: ResidentListComponent,
+            data: {
+              title: 'Residents',
+              permissions: ['persistence-resident-resident']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
             path: 'active', component: ResidentListComponent,
             data: {
               nav: {show: true, group: 'Active'},
@@ -284,14 +292,6 @@ const routes: Routes = [
             }
           }
         ]
-      },
-      {
-        path: 'residents/:type/:group', component: ResidentListComponent,
-        data: {
-          title: 'Residents',
-          permissions: ['persistence-resident-resident']
-        },
-        canActivate: [AuthGuard]
       },
       {
         path: 'facility',
