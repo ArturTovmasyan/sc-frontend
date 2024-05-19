@@ -8,6 +8,7 @@ import {simpleEmptyImage} from 'ng-zorro-antd';
 import {ActivatedRoute} from '@angular/router';
 import { FacilityDashboard } from '../../models/facility-dashboard';
 import {DateHelper} from '../../../../shared/helpers/date-helper';
+import * as moment from 'moment';
 
 @Component({
   templateUrl: './dashborad-detail.component.html',
@@ -55,7 +56,7 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
       case 'list_dashboard':
         this.$subscriptions[key] = this.facilityDashboard$.all([
           {key: 'facility_id', value: params.facility_id },
-          {key: 'date_from', value: params.date}
+          {key: 'date_from', value: moment(params.date).format('YYYY-MM-DD')}
         ]).pipe(first()).subscribe(res => {
           if (res) {
             this.dashboardData = res[0];
