@@ -184,6 +184,12 @@ import {FormComponent as ResidentMedicalHistoryFormComponent} from './residents/
 import {ListComponent as ResidentExpenseItemListComponent} from './residents/components/resident/ledger/expense-item/list.component';
 import {FormComponent as ResidentExpenseItemFormComponent} from './residents/components/resident/ledger/expense-item/form/form.component';
 
+import {ListComponent as ResidentCreditItemListComponent} from './residents/components/resident/ledger/credit-item/list.component';
+import {FormComponent as ResidentCreditItemFormComponent} from './residents/components/resident/ledger/credit-item/form/form.component';
+
+import {ListComponent as ResidentDiscountItemListComponent} from './residents/components/resident/ledger/discount-item/list.component';
+import {FormComponent as ResidentDiscountItemFormComponent} from './residents/components/resident/ledger/discount-item/form/form.component';
+
 import {ListComponent as ResidentAwayDaysListComponent} from './residents/components/resident/ledger/away-days/list.component';
 import {FormComponent as ResidentAwayDaysFormComponent} from './residents/components/resident/ledger/away-days/form/form.component';
 
@@ -608,6 +614,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentExpenseItemListComponent,
     ResidentExpenseItemFormComponent,
 
+    ResidentCreditItemListComponent,
+    ResidentCreditItemFormComponent,
+
+    ResidentDiscountItemListComponent,
+    ResidentDiscountItemFormComponent,
+
     ResidentAwayDaysListComponent,
     ResidentAwayDaysFormComponent,
 
@@ -856,6 +868,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentMedicalHistoryFormComponent,
 
     ResidentExpenseItemFormComponent,
+
+    ResidentCreditItemFormComponent,
+
+    ResidentDiscountItemFormComponent,
 
     ResidentAwayDaysFormComponent,
 

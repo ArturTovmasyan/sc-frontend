@@ -3,7 +3,8 @@ import {DiscountItem} from './discount-item';
 export class ResidentDiscountItem implements IdInterface {
   id: number;
 
-  date: Date;
+  start: Date;
+  end: Date;
 
   discount_item: DiscountItem;
 

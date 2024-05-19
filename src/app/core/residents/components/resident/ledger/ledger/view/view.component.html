@@ -233,7 +233,7 @@
                     <ng-container *ngIf="ledger.resident_credit_items && ledger.resident_credit_items.length > 0">
                       <ng-container *ngFor="let item of ledger.resident_credit_items">
                         <tr class="text-center">
-                          <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
+                          <td style="width: 15% !important;">{{item.start|date:'MM/d/y'}}</td>
                           <td style="width: 20% !important;">{{item.credit_item.title}}</td>
                           <td style="width: 15% !important;"></td>
                           <td style="width: 15% !important;"></td>
@@ -245,7 +245,7 @@
                     <ng-container *ngIf="ledger.resident_discount_items && ledger.resident_discount_items.length > 0">
                       <ng-container *ngFor="let item of ledger.resident_discount_items">
                         <tr class="text-center">
-                          <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
+                          <td style="width: 15% !important;">{{item.start|date:'MM/d/y'}}</td>
                           <td style="width: 20% !important;">{{item.discount_item.title}}</td>
                           <td style="width: 15% !important;"></td>
                           <td style="width: 15% !important;"></td>

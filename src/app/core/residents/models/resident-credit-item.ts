@@ -3,7 +3,8 @@ import {CreditItem} from './credit-item';
 export class ResidentCreditItem implements IdInterface {
   id: number;
 
-  date: Date;
+  start: Date;
+  end: Date;
 
   credit_item: CreditItem;
 

@@ -172,7 +172,6 @@
       "title": "Title",
       "amount": "Amount",
       "can_be_changed": "Can Be Changed",
-      "valid_through_date": "Valid Through Date",
       "space": "Space"
     },
     "discount-item-list": {
@@ -180,7 +179,6 @@
       "title": "Title",
       "amount": "Amount",
       "can_be_changed": "Can Be Changed",
-      "valid_through_date": "Valid Through Date",
       "space": "Space"
     },
     "key-finance-dates-list": {
@@ -490,14 +488,16 @@
     "resident-credit-item-list": {
       "id": "ID",
       "credit_item": "Credit Item",
-      "date": "Date",
+      "start": "Start Date",
+      "end": "End Date",
       "amount": "Amount",
       "notes": "Notes"
     },
     "resident-discount-item-list": {
       "id": "ID",
       "discount_item": "Discount Item",
-      "date": "Date",
+      "start": "Start Date",
+      "end": "End Date",
       "amount": "Amount",
       "notes": "Notes"
     },

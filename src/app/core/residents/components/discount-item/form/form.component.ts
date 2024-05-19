@@ -7,7 +7,6 @@ import {Space} from '../../../../models/space';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
-import {DateHelper} from '../../../../../shared/helpers/date-helper';
 import {CurrencyPipe, ɵNullViewportScroller} from '@angular/common';
 
 @Component({
@@ -32,8 +31,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
       title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(255)])],
       amount: [null],
-      can_be_changed: [false, Validators.required],
-      valid_through_date: [DateHelper.newDate(), Validators.required]
+      can_be_changed: [false, Validators.required]
     });
 
     this.add_space();

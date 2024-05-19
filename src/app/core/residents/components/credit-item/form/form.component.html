@@ -32,16 +32,6 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="valid_through_date" nzRequired>Valid Through Date</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('valid_through_date')?'error':null">
-      <nz-date-picker formControlName="valid_through_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
-      <nz-form-explain *ngIf="hasErrors('valid_through_date')">
-        <app-field-errors [errors]="fieldErrors('valid_through_date')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
   <nz-form-item *ngIf="form.get('space_id')">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">

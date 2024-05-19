@@ -10,6 +10,12 @@
       <nz-tab *ngIf="addIfHasPermission('persistence-resident-resident_expense_item')" nzTitle="Expense Item">
         <app-resident-ledger-expense-item (reload)="broadcast_reload_event($event)"></app-resident-ledger-expense-item>
       </nz-tab>
+      <nz-tab *ngIf="addIfHasPermission('persistence-resident-resident_credit_item')" nzTitle="Credit Item">
+        <app-resident-ledger-credit-item (reload)="broadcast_reload_event($event)"></app-resident-ledger-credit-item>
+      </nz-tab>
+      <nz-tab *ngIf="addIfHasPermission('persistence-resident-resident_discount_item')" nzTitle="Discount Item">
+        <app-resident-ledger-discount-item (reload)="broadcast_reload_event($event)"></app-resident-ledger-discount-item>
+      </nz-tab>
       <nz-tab *ngIf="addIfHasPermission('persistence-resident-resident_away_days')" nzTitle="Away Days">
         <app-resident-ledger-away-days (reload)="broadcast_reload_event($event)"></app-resident-ledger-away-days>
       </nz-tab>

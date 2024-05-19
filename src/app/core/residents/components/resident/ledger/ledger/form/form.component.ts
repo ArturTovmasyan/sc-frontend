@@ -10,11 +10,7 @@ import {first} from 'rxjs/operators';
 import {ResidentLedgerService} from '../../../../../services/resident-ledger.service';
 import {CoreValidator} from '../../../../../../../shared/utils/core-validator';
 import {DateHelper} from '../../../../../../../shared/helpers/date-helper';
-import {CreditItem} from '../../../../../models/credit-item';
-import {DiscountItem} from '../../../../../models/discount-item';
 import {RpPaymentType} from '../../../../../models/rp-payment-type';
-import {CreditItemService} from '../../../../../services/credit-item.service';
-import {DiscountItemService} from '../../../../../services/discount-item.service';
 import {RpPaymentTypeService} from '../../../../../services/rp-payment-type.service';
 import {ResidentResponsiblePerson} from '../../../../../models/resident-responsible-person';
 import {ResidentResponsiblePersonService} from '../../../../../services/resident-responsible-person.service';
@@ -33,8 +29,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   sources: { id: number, amount: number }[] = [];
 
-  credit_items: CreditItem[];
-  discount_items: DiscountItem[];
   payment_types: RpPaymentType[];
   responsible_persons: ResidentResponsiblePerson[];
 
@@ -43,15 +37,11 @@ export class FormComponent extends AbstractForm implements OnInit {
   private query_params: Params;
 
   public isThirdParty: boolean;
-  public currentDiscountItemId: number;
-  public currentCreditItemId: number;
 
   formatterDollar = (value: number) => (new CurrencyPipe('en-US')).transform(value, 'USD', 'symbol-narrow', '1.2-2');
 
   button_loading: Array<boolean>;
 
-  @ViewChild('addCreditItem', {static: false}) btn_add_credit_item;
-  @ViewChild('addDiscountItem', {static: false}) btn_add_discount_item;
   @ViewChild('addPrivatePayPaymentReceivedItem', {static: false}) btn_add_private_pay_payment_received_item;
   @ViewChild('addNotPrivatePayPaymentReceivedItem', {static: false}) btn_add_not_private_pay_payment_received_item;
 
@@ -62,8 +52,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     private route$: ActivatedRoute,
     private ledger$: ResidentLedgerService,
     private payment_source$: PaymentSourceService,
-    private credit_item$: CreditItemService,
-    private discount_item$: DiscountItemService,
     private payment_type$: RpPaymentTypeService,
     private responsible_person$: ResidentResponsiblePersonService,
     private late_payment$: LatePaymentService,
@@ -79,8 +67,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       source: this.formBuilder.array([]),
 
-      resident_credit_items: this.formBuilder.array([]),
-      resident_discount_items: this.formBuilder.array([]),
       resident_private_pay_payment_received_items: this.formBuilder.array([]),
       resident_not_private_pay_payment_received_items: this.formBuilder.array([]),
 
@@ -116,26 +102,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'query_map':
         this.$subscriptions[key] = this.route$.queryParams.subscribe(query_params => {
           this.query_params = query_params;
-        });
-        break;
-      case 'list_credit_item':
-        this.$subscriptions[key] = this.credit_item$.all([{
-          key: 'ledger_id',
-          value: params.ledger_id
-        }]).pipe(first()).subscribe(res => {
-          if (res) {
-            this.credit_items = res;
-          }
-        });
-        break;
-      case 'list_discount_item':
-        this.$subscriptions[key] = this.discount_item$.all([{
-          key: 'ledger_id',
-          value: params.ledger_id
-        }]).pipe(first()).subscribe(res => {
-          if (res) {
-            this.discount_items = res;
-          }
         });
         break;
       case 'list_payment_type':
@@ -179,35 +145,12 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public after_set_form_data(): void {
-    this.subscribe('list_credit_item', {ledger_id: this.form.get('id').value});
-    this.subscribe('list_discount_item', {ledger_id: this.form.get('id').value});
-  }
-
   public get_form_array_skeleton(key: string): FormGroup {
     switch (key) {
       case 'source':
         return this.formBuilder.group({
           id: [{value: null, disabled: true}, Validators.required],
           amount: [{value: null, disabled: true}, Validators.required],
-        });
-      case 'resident_credit_items':
-        return this.formBuilder.group({
-          id: [''],
-          notes: ['', Validators.compose([Validators.maxLength(512)])],
-          amount: [0, Validators.compose([Validators.required, Validators.min(1), CoreValidator.payment_amount])],
-          date: [DateHelper.newDate(), Validators.required],
-          credit_item_id: [null, Validators.required],
-          ledger_id: [null]
-        });
-      case 'resident_discount_items':
-        return this.formBuilder.group({
-          id: [''],
-          notes: ['', Validators.compose([Validators.maxLength(512)])],
-          amount: [0, Validators.compose([Validators.required, Validators.min(1), CoreValidator.payment_amount])],
-          date: [DateHelper.newDate(), Validators.required],
-          discount_item_id: [null, Validators.required],
-          ledger_id: [null]
         });
       case 'resident_private_pay_payment_received_items':
         return this.formBuilder.group({
@@ -249,12 +192,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   formValue(): void {
     const value = super.formValue();
-    value.resident_credit_items.forEach(credit_item => {
-      credit_item.date = DateHelper.makeUTCDateOnly(credit_item.date);
-    });
-    value.resident_discount_items.forEach(discount_item => {
-      discount_item.date = DateHelper.makeUTCDateOnly(discount_item.date);
-    });
     value.resident_private_pay_payment_received_items.forEach(private_pay_payment_received_item => {
       private_pay_payment_received_item.date = DateHelper.makeUTCDateOnly(private_pay_payment_received_item.date);
     });
@@ -274,57 +211,5 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
 
     return result;
-  }
-
-  public get_discount_amount_disable(idx: number) {
-    const control = this.get_form_array('resident_discount_items').controls[idx];
-
-    let discount_item = null;
-
-    if (control && this.discount_items) {
-      discount_item = this.discount_items.filter(item => item.id === control.get('discount_item_id').value).pop();
-    }
-
-    return discount_item ? discount_item.amount > 0 ? !discount_item.can_be_changed : false : true;
-  }
-
-  public setDiscountItemAmount(val, idx: number) {
-    this.currentDiscountItemId = val;
-
-    const control = this.get_form_array('resident_discount_items').controls[idx];
-
-    let discount_item = null;
-
-    if (control && this.discount_items) {
-      discount_item = this.discount_items.filter(item => item.id === this.currentDiscountItemId).pop();
-
-      control.get('amount').setValue(discount_item && discount_item.amount > 0 ? discount_item.amount : 0);
-    }
-  }
-
-  public get_credit_amount_disable(idx: number) {
-    const control = this.get_form_array('resident_credit_items').controls[idx];
-
-    let credit_item = null;
-
-    if (control && this.credit_items) {
-      credit_item = this.credit_items.filter(item => item.id === control.get('credit_item_id').value).pop();
-    }
-
-    return credit_item ? credit_item.amount > 0 ? !credit_item.can_be_changed : false : true;
-  }
-
-  public setCreditItemAmount(val, idx: number) {
-    this.currentCreditItemId = val;
-
-    const control = this.get_form_array('resident_credit_items').controls[idx];
-
-    let credit_item = null;
-
-    if (control && this.credit_items) {
-      credit_item = this.credit_items.filter(item => item.id === this.currentCreditItemId).pop();
-
-      control.get('amount').setValue(credit_item && credit_item.amount > 0 ? credit_item.amount : 0);
-    }
   }
 }

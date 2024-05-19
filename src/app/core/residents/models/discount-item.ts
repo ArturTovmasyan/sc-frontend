@@ -9,7 +9,5 @@ export class DiscountItem implements IdInterface {
 
   can_be_changed: boolean;
 
-  valid_through_date: Date;
-
   space: Space;
 }
