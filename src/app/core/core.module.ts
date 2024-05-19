@@ -133,7 +133,8 @@ import {ResidentSelectorComponent} from './residents/components/resident-selecto
 
 import {IndexComponent as ResidentIndexComponent} from './residents/components/resident/index/index.component';
 import {DashboardComponent as ResidentDashboardComponent} from './residents/components/dashboard/dashboard.component';
-import {DashboardDetailComponent as ResidentDashboardDetailComponent} from './residents/components/dashboard/dashboard-detail.component';
+import {DashboardMonthlyComponent as ResidentDashboardMonthlyComponent} from './residents/components/dashboard/dashboard-monthly.component';
+import {DashboardWeeklyComponent as ResidentDashboardWeeklyComponent} from './residents/components/dashboard/dashboard-weekly.component';
 import {ListComponent as ResidentListComponent} from './residents/components/resident/index/list.component';
 import {ThumbComponent as ResidentThumbComponent} from './residents/components/resident/index/thumb.component';
 import {FormComponent as ResidentFormComponent} from './residents/components/resident/resident/form/form.component';
@@ -477,7 +478,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentSelectorComponent,
 
     ResidentDashboardComponent,
-    ResidentDashboardDetailComponent,
+    ResidentDashboardMonthlyComponent,
+    ResidentDashboardWeeklyComponent,
 
     ResidentIndexComponent,
     ResidentListComponent,

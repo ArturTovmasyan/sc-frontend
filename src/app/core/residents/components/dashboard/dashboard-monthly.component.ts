@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FacilityDashboardService} from '../../services/facility-dashboard.service';
 import {Subscription} from 'rxjs';
@@ -8,13 +9,12 @@ import {simpleEmptyImage} from 'ng-zorro-antd';
 import {ActivatedRoute} from '@angular/router';
 import { FacilityDashboard } from '../../models/facility-dashboard';
 import {DateHelper} from '../../../../shared/helpers/date-helper';
-import * as moment from 'moment';
 
 @Component({
-  templateUrl: './dashborad-detail.component.html',
+  templateUrl: './dashborad-monthly.component.html',
   providers: []
 })
-export class DashboardDetailComponent implements OnInit, OnDestroy {
+export class DashboardMonthlyComponent implements OnInit, OnDestroy {
   FacilityDashboard = FacilityDashboard;
 
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
@@ -22,7 +22,8 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
   public lineChartData: Array<any>;
   public lineChartLabels: Array<any>;
 
-  public facilityName;
+  public facilityId: number;
+  public facilityName: string;
   public dashboardData: any;
 
   protected $subscriptions: { [key: string]: Subscription; };
@@ -60,6 +61,7 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
         ]).pipe(first()).subscribe(res => {
           if (res) {
             this.dashboardData = res[0];
+            this.facilityId = res[0].id;
             this.facilityName = res[0].name;
 
             this.lineChartLabels = Object.keys(this.dashboardData.data);

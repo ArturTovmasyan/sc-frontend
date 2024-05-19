@@ -20,7 +20,7 @@
           <tr>
             <th>Occupancy Tracker</th>
             <ng-container *ngFor="let facility of facilities">
-              <th class="text-center"><a [routerLink]="['/dashboard', facility.id]">{{ facility.name }}</a></th>
+              <th class="text-center"><a [routerLink]="['/dashboard', facility.id, 'monthly']">{{ facility.name }}</a></th>
             </ng-container>
           </tr>
           <tr>

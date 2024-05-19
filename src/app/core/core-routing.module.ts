@@ -98,7 +98,8 @@ import {ListComponent as OutreachTypeListComponent} from './leads/components/out
 import {ViewComponent as LeadContactViewComponent} from './leads/components/contact/view/view.component';
 import {ListComponent as DocumentCategoryListComponent} from './documents/components/category/list.component';
 import {DashboardComponent as ResidentDashboardComponent} from './residents/components/dashboard/dashboard.component';
-import {DashboardDetailComponent as ResidentDashboardDetailComponent} from './residents/components/dashboard/dashboard-detail.component';
+import {DashboardMonthlyComponent as ResidentDashboardMonthlyComponent} from './residents/components/dashboard/dashboard-monthly.component';
+import {DashboardWeeklyComponent as ResidentDashboardWeeklyComponent} from './residents/components/dashboard/dashboard-weekly.component';
 import {ViewComponent as FacilityDocumentViewComponent} from './residents/components/facility-document/view/view.component';
 import {CalendarComponent as CorporateCalendarComponent} from './residents/components/calendar/calendar.component';
 import {ListComponent as AssessmentTypeListComponent} from './residents/components/assessment/type/list.component';
@@ -371,8 +372,17 @@ const routes: Routes = [
             }
           },
           {
-            path: ':id',
-            component: ResidentDashboardDetailComponent,
+            path: ':id/monthly',
+            component: ResidentDashboardMonthlyComponent,
+            data: {
+              nav: {show: false, group: 'Corporate'},
+              title: 'Dashboard',
+              permissions: ['activity-corporate-dashboard']
+            },
+          },
+          {
+            path: ':id/weekly',
+            component: ResidentDashboardWeeklyComponent,
             data: {
               nav: {show: false, group: 'Corporate'},
               title: 'Dashboard',
