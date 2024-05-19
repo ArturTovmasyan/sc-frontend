@@ -10,11 +10,14 @@ import {StringUtil} from '../../../../../shared/utils/string-util';
 import {Category} from '../../../models/category';
 import {CategoryService} from '../../../services/category.service';
 import {FormComponent as CategoryFormComponent} from '../../category/form/form.component';
+import {Role} from '../../../../models/role';
+import {RoleService} from '../../../../admin/services/role.service';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
+  roles: Role[];
   categories: Category[];
   facilities: Facility[];
 
@@ -25,6 +28,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
+    private role$: RoleService,
     private facility$: FacilityService,
     private category$: CategoryService
   ) {
@@ -48,26 +52,31 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       file: [null],
 
-      facilities: [[], Validators.compose([Validators.required])],
+      category_id: [null, Validators.compose([Validators.required])],
 
-      category_id: [null, Validators.compose([Validators.required])]
+      facilities: [[], Validators.compose([Validators.required])],
+      roles: [[], Validators.compose([Validators.required])]
+
     });
 
     this.subscribe('list_category');
+    this.subscribe('list_role');
     this.subscribe('list_facility');
   }
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'list_role':
+        this.$subscriptions[key] = this.role$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.roles = res;
+          }
+        });
+        break;
       case 'list_facility':
         this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.facilities = res;
-
-            if (params) {
-              /// ???
-              this.form.get('facility_id').setValue(params.facility_id);
-            }
           }
         });
         break;

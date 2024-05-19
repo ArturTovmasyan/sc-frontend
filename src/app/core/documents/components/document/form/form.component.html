@@ -78,6 +78,20 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="roles" nzRequired>{{ 'form.admin.user.roles'|translate }}</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('roles')?'error':null">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="roles">
+        <ng-container *ngFor="let role of roles">
+          <nz-option [nzLabel]="role.name" [nzValue]="role.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('roles')">
+        <app-field-errors [errors]="fieldErrors('roles')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item *ngIf="formErrors()">
     <nz-form-control [nzSm]="24" [nzXs]="24">
       <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
