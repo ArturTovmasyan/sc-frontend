@@ -190,6 +190,8 @@ import {ViewComponent as DocumentViewComponent} from './documents/components/vie
 import {FormComponent as DocumentFormComponent} from './documents/components/form/form.component';
 
 import {HelpComponent} from './components/help/help.component';
+import {FeedbackComponent} from './components/feedback/feedback.component';
+import {FormComponent as FeedbackFormComponent} from './components/feedback/form/form.component';
 
 import {HomeComponent} from './residents/components/home/home.component';
 
@@ -455,6 +457,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EventDefinitionFormComponent,
 
     HelpComponent,
+
+    FeedbackComponent,
+    FeedbackFormComponent,
+
     HomeComponent,
 
     LeadDashboardComponent,
@@ -635,7 +641,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentHealthInsuranceFormComponent,
     ResidentDocumentFormComponent,
 
-    DocumentFormComponent
+    DocumentFormComponent,
+    FeedbackFormComponent
   ],
   imports: [
     CommonModule,

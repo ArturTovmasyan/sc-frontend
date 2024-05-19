@@ -1,0 +1,34 @@
+﻿<h4>Contact Us</h4>
+<nz-divider></nz-divider>
+<p class="text-center">Please fill the following for to contact us, or send e-mail directly to address <a
+  [href]="'mailto:support@seniorcaresw.com?subject='+space">support@seniorcaresw.com</a>.</p>
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="subject" nzRequired>Subject</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('subject')?'error':null">
+      <input nz-input placeholder="Subject" formControlName="subject">
+      <nz-form-explain *ngIf="hasErrors('subject')">
+        <app-field-errors [errors]="fieldErrors('subject')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="message" nzRequired>Message</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('message')?'error':null">
+      <input-counter formControlName="message" placeholder="Message" [maxlength]="1024"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('message')">
+        <app-field-errors [errors]="fieldErrors('message')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
