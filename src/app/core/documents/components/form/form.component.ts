@@ -42,7 +42,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       file: [null],
 
-      facilities: [[], Validators.compose([])],
+      facilities: [[], Validators.compose([Validators.required])],
     });
 
     this.subscribe('list_facility');

@@ -77,12 +77,15 @@ export class ViewComponent implements OnInit, OnDestroy {
             this.loading = false;
             this.documents = res;
 
+            this.documents.sort((a, b) => a.title.localeCompare(b.title));
             this.documents.forEach(v => {
               v.file = ViewComponent.b64toBlob(v.file.replace('data:application/pdf;base64,', ''), 'application/pdf');
             });
 
             if (params) {
               this.document = this.documents.filter(v => v.id = params.document_id).pop();
+            } else {
+              this.document = this.documents[0];
             }
           }
         });
@@ -259,7 +262,7 @@ export class ViewComponent implements OnInit, OnDestroy {
               if (res != null && Array.isArray(res) && res.length === 1) {
                 this.subscribe('list_document', {document_id: res[0]});
               } else {
-                this.subscribe('list_document');
+                this.subscribe('list_document', {document_id: this.document.id});
               }
 
               modal.close();
