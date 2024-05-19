@@ -43,6 +43,8 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('care_level_group_id').setValue(params.care_level_group_id);
             }
+
+            this.form.get('title').setValue(this.form.get('title').value);
           }
         });
         break;
