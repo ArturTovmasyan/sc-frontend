@@ -11,6 +11,8 @@ import {EventDefinitionService} from '../../../../services/event-definition.serv
 import {ResponsiblePersonService} from '../../../../services/responsible-person.service';
 import {EventDefinition} from '../../../../models/event-definition';
 import {ResponsiblePerson} from '../../../../models/responsible-person';
+import {FormComponent as EventDefinitionFormComponent} from '../../../event-definition/form/form.component';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -24,12 +26,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   show: { date: boolean, physician: boolean, responsible_person: boolean } = {date: false, physician: false, responsible_person: false};
 
-  list_loaded = {
-    definition: false,
-    physician: false,
-    responsible_person: false,
-  };
-
   constructor(
     private formBuilder: FormBuilder,
     private medication$: MedicationService,
@@ -37,10 +33,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     private definition$: EventDefinitionService,
     private responsible_person$: ResponsiblePersonService,
     private physician$: PhysicianService,
-    private route$: ActivatedRoute) {
+    private route$: ActivatedRoute,
+    private modal$: NzModalService) {
     super();
-
-    this.loaded.next(false);
   }
 
   ngOnInit(): void {
@@ -76,8 +71,9 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             this.subscribe('vc_definition_id');
 
-            this.list_loaded.definition = true;
-            this.loaded.next(this.list_loaded.definition && this.list_loaded.physician && this.list_loaded.responsible_person);
+            if (params) {
+              this.form.get('definition_id').setValue(params.definition_id);
+            }
           }
         });
         break;
@@ -85,9 +81,6 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.physician$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.physicians = res;
-
-            this.list_loaded.physician = true;
-            this.loaded.next(this.list_loaded.definition && this.list_loaded.physician && this.list_loaded.responsible_person);
           }
         });
         break;
@@ -95,9 +88,6 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.responsible_person$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.responsible_persons = res;
-
-            this.list_loaded.responsible_person = true;
-            this.loaded.next(this.list_loaded.definition && this.list_loaded.physician && this.list_loaded.responsible_person);
           }
         });
         break;
@@ -116,6 +106,23 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.show.physician ? this.form.get('physician_id').enable() : this.form.get('physician_id').disable();
           }
         });
+        break;
+      default:
+        break;
+    }
+  }
+
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'definition':
+        this.create_modal(
+          this.modal$,
+          EventDefinitionFormComponent,
+          data => this.definition$.add(data),
+          data => {
+            this.subscribe('list_definition', {definition_id: data[0]});
+            return null;
+          });
         break;
       default:
         break;
