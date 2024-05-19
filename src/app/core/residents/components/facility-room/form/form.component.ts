@@ -289,7 +289,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     if (bed_id !== null && this.bed_resident_map.hasOwnProperty(bed_id) && this.bed_resident_map[bed_id]) {
       const resident = this.bed_resident_map[bed_id];
-      return `${resident}`;
+      return resident !== '' ? `${resident}` : 'Unoccupied';
     }
 
     return 'Unoccupied';
