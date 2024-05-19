@@ -55,6 +55,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
               value.data = value.data[vkey];
               this.dashboardData[value.id] = value;
             });
+
+            console.log(this.dashboardData);
           }
         });
         break;
