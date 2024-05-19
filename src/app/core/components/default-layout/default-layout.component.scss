@@ -28,7 +28,9 @@
 }
 
 ::ng-deep {
-
+  .ant-list-item-meta-description {
+    word-break: break-all;
+  }
   .ant-modal {
     h4 {
       font-size: x-large;
