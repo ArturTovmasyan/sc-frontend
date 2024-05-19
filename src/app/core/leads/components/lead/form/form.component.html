@@ -66,7 +66,7 @@
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('owner_id')?'error':null">
           <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="owner_id">
             <ng-container *ngFor="let user of users">
-              <nz-option [nzLabel]="user|resident" [nzValue]="user.id"></nz-option>
+              <nz-option [nzLabel]="user|user" [nzValue]="user.id"></nz-option>
             </ng-container>
           </nz-select>
           <nz-form-explain *ngIf="hasErrors('owner_id')">
@@ -220,7 +220,7 @@
                 <nz-option [nzLabel]="referrer_type.title" [nzValue]="referrer_type.id"></nz-option>
               </ng-container>
             </nz-select>
-            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('referral_type');">
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('referrer_type');">
               <i nz-icon type="plus"></i>
             </button>
           </div>
@@ -249,120 +249,36 @@
         </nz-form-control>
       </nz-form-item>
 
-      <ng-container *ngIf="form.get('referral.first_name').enabled">
-        <nz-form-item>
-          <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>
-          <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.first_name')?'error':null">
-            <input nz-input placeholder="First Name" formControlName="first_name">
-            <nz-form-explain *ngIf="hasErrors('referral.first_name')">
-              <app-field-errors [errors]="fieldErrors('referral.first_name')"></app-field-errors>
-            </nz-form-explain>
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="last_name" nzRequired>Last Name</nz-form-label>
-          <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.last_name')?'error':null">
-            <input nz-input placeholder="Last Name" formControlName="last_name">
-            <nz-form-explain *ngIf="hasErrors('referral.last_name')">
-              <app-field-errors [errors]="fieldErrors('referral.last_name')"></app-field-errors>
-            </nz-form-explain>
-          </nz-form-control>
-        </nz-form-item>
-
-        <fieldset formArrayName="phones">
-          <legend class="senior-care-legend">
-            Phone Number(s)
-            <button type="button" [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
-                    (click)="add_field('referral.phones');">
+      <nz-form-item *ngIf="form.get('referral.contact_id').enabled">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="contact_id" nzRequired>Contact</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.contact_id')?'error':null">
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="contact_id">
+              <ng-container *ngFor="let contact of contacts">
+                <nz-option [nzLabel]="contact|lead_contact" [nzValue]="contact.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('contact');">
               <i nz-icon type="plus"></i>
             </button>
-          </legend>
-          <table class="senior-care-form-table table table-hover table-bordered table-sm"
-                 *ngIf="get_form_array('referral.phones').controls.length > 0">
-            <thead>
-            <tr>
-              <th style="width:20%;">
-                <nz-form-label>Primary</nz-form-label>
-              </th>
-              <th style="width:35%;">
-                <nz-form-label nzRequired>Type</nz-form-label>
-              </th>
-              <th style="width:35%;">
-                <nz-form-label nzRequired>Number</nz-form-label>
-              </th>
-              <th style="width:10%;">&nbsp;</th>
-            </tr>
-            </thead>
-            <tbody>
-            <ng-container *ngFor="let phone of get_form_array('referral.phones').controls;let i = index">
-              <tr [formGroupName]="i">
-                <td class="text-center">
-                  <nz-switch nzSize="small" formControlName="primary"></nz-switch>
-                </td>
-                <td>
-                  <nz-form-item>
-                    <nz-form-control [nzSm]="16" [nzXs]="24"
-                                     [nzValidateStatus]="hasErrors('referral.phones.'+i+'.type')?'error':null">
-                      <nz-select nzSize="small" nzMode="default" nzPlaceHolder="Select Type" formControlName="type">
-                        <ng-container *ngFor="let type of phone_types">
-                          <nz-option [nzLabel]="(type.name)|translate" [nzValue]="type.id"></nz-option>
-                        </ng-container>
-                      </nz-select>
-                      <nz-form-explain *ngIf="hasErrors('referral.phones.'+i+'.type')">
-                        <app-field-errors [errors]="fieldErrors('referral.phones.'+i+'.type')"></app-field-errors>
-                      </nz-form-explain>
-                    </nz-form-control>
-                  </nz-form-item>
-                </td>
-                <td>
-                  <nz-form-item>
-                    <nz-form-control [nzSm]="16" [nzXs]="24"
-                                     [nzValidateStatus]="hasErrors('referral.phones.'+i+'.number')?'error':null">
-                      <input nz-input nzSize="small" placeholder="(000) 000-0000" formControlName="number"
-                             mask="(000) 000-0000" [showMaskTyped]="true" [dropSpecialCharacters]="false">
-                      <nz-form-explain *ngIf="hasErrors('referral.phones.'+i+'.number')">
-                        <app-field-errors [errors]="fieldErrors('referral.phones.'+i+'.number')"></app-field-errors>
-                      </nz-form-explain>
-                    </nz-form-control>
-                  </nz-form-item>
-                </td>
-                <td class="text-center">
-                  <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle"
-                          (click)="remove_field('referral.phones', i);">
-                    <i nz-icon type="minus"></i>
-                  </button>
-                </td>
-              </tr>
-            </ng-container>
-            </tbody>
-          </table>
-        </fieldset>
+          </div>
+          <nz-form-explain *ngIf="hasErrors('referral.contact_id')">
+            <app-field-errors [errors]="fieldErrors('referral.contact_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
 
-        <nz-form-item>
-          <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emails" nzRequired>E-Mail(s)</nz-form-label>
-          <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.emails')?'error':null">
-            <nz-select nzShowSearch nzMode="tags" [nzTokenSeparators]="[' ', ',']" nzPlaceHolder="Please select"
-                       formControlName="emails">
-            </nz-select>
-            <nz-form-explain *ngIf="hasErrors('referral.emails')">
-              <app-field-errors [errors]="fieldErrors('referral.emails')"></app-field-errors>
-            </nz-form-explain>
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
-          <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.notes')?'error':null">
-            <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
-            <nz-form-explain *ngIf="hasErrors('referral.notes')">
-              <app-field-errors [errors]="fieldErrors('referral.notes')"></app-field-errors>
-            </nz-form-explain>
-          </nz-form-control>
-        </nz-form-item>
-        <!--Phone-->
-      </ng-container>
+      <nz-form-item *ngIf="form.get('referral.notes').enabled">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.notes')?'error':null">
+          <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
+          <nz-form-explain *ngIf="hasErrors('referral.notes')">
+            <app-field-errors [errors]="fieldErrors('referral.notes')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
     </nz-tab>
+
     <nz-tab nzTitle="Interest Info">
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="primary_facility_id">Primary Facility</nz-form-label>

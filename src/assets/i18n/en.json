@@ -423,7 +423,7 @@
       "lead": "Lead",
       "type": "Type",
       "organization": "Organization",
-      "full_name": "Full Name",
+      "contact": "Contact",
       "notes": "Notes"
     },
     "lead-lead-list": {

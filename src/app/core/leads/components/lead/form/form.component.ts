@@ -23,11 +23,14 @@ import {PaymentSource} from '../../../../residents/models/payment-source';
 import {PaymentSourceService} from '../../../../residents/services/payment-source.service';
 import {LeadState} from '../../../models/lead';
 import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
+import {FormComponent as ContactFormComponent} from '../../contact/form/form.component';
 import {FormComponent as CareTypeFormComponent} from '../../care-type/form/form.component';
 import {FormComponent as StateChangeReasonFormComponent} from '../../state-change-reason/form/form.component';
 import {FormComponent as ReferrerTypeFormComponent} from '../../referrer-type/form/form.component';
 import {FormComponent as CSZFormComponent} from '../../../../residents/components/city-state-zip/form/form.component';
 import {FormComponent as PaymentSourceFormComponent} from '../../../../residents/components/payment-source/form/form.component';
+import {Contact} from '../../../models/contact';
+import {ContactService} from '../../../services/contact.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -45,6 +48,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   facilities: Facility[];
 
   organizations: Organization[];
+  contacts: Contact[];
 
   phone_types: { id: PhoneType, name: string }[];
 
@@ -61,6 +65,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private care_type$: CareTypeService,
     private state_change_reason$: StateChangeReasonService,
     private organization$: OrganizationService,
+    private contact$: ContactService,
     private referrer_type$: ReferrerTypeService
   ) {
     super();
@@ -97,11 +102,8 @@ export class FormComponent extends AbstractForm implements OnInit {
         id: [''],
         type_id: [null, Validators.compose([Validators.required])],
         organization_id: [null, Validators.compose([Validators.required])],
-        first_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
-        last_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
+        contact_id: [null, Validators.compose([Validators.required])],
         notes: ['', Validators.compose([Validators.maxLength(512)])],
-        emails: [[], Validators.compose([Validators.required])],
-        phones: this.formBuilder.array([]),
       }),
 
       primary_facility_id: [null, Validators.compose([])],
@@ -121,11 +123,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     };
 
     this.form.get('referral.organization_id').disable();
-    this.form.get('referral.first_name').disable();
-    this.form.get('referral.last_name').disable();
+    this.form.get('referral.contact_id').disable();
     this.form.get('referral.notes').disable();
-    this.form.get('referral.emails').disable();
-    this.form.get('referral.phones').disable();
 
     this.phone_types = [
       {id: PhoneType.HOME, name: 'HOME'},
@@ -145,6 +144,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_state_change_reason');
 
     this.subscribe('list_organization');
+    this.subscribe('list_contact');
     this.subscribe('list_referrer_type');
   }
 
@@ -258,6 +258,17 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
+      case 'list_contact':
+        this.$subscriptions[key] = this.contact$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.contacts = res;
+
+            if (params) {
+              this.form.get('referral.contact_id').setValue(params.contact_id);
+            }
+          }
+        });
+        break;
       case 'vc_referrer_type':
         this.$subscriptions[key] = this.form.get('referral.type_id').valueChanges.subscribe(next => {
           if (next) {
@@ -271,26 +282,17 @@ export class FormComponent extends AbstractForm implements OnInit {
               }
 
               if (type.representative_required) {
-                this.form.get('referral.first_name').enable();
-                this.form.get('referral.last_name').enable();
+                this.form.get('referral.contact_id').enable();
                 this.form.get('referral.notes').enable();
-                this.form.get('referral.emails').enable();
-                this.form.get('referral.phones').enable();
               } else {
-                this.form.get('referral.first_name').disable();
-                this.form.get('referral.last_name').disable();
+                this.form.get('referral.contact_id').disable();
                 this.form.get('referral.notes').disable();
-                this.form.get('referral.emails').disable();
-                this.form.get('referral.phones').disable();
               }
             } else {
               this.form.get('referral.organization_id').disable();
 
-              this.form.get('referral.first_name').disable();
-              this.form.get('referral.last_name').disable();
+              this.form.get('referral.contact_id').disable();
               this.form.get('referral.notes').disable();
-              this.form.get('referral.emails').disable();
-              this.form.get('referral.phones').disable();
             }
           }
         });
@@ -309,6 +311,16 @@ export class FormComponent extends AbstractForm implements OnInit {
           data => this.organization$.add(data),
           data => {
             this.subscribe('list_organization', {organization_id: data[0]});
+            return null;
+          });
+        break;
+      case 'contact':
+        this.create_modal(
+          this.modal$,
+          ContactFormComponent,
+          data => this.contact$.add(data),
+          data => {
+            this.subscribe('list_contact', {contact_id: data[0]});
             return null;
           });
         break;

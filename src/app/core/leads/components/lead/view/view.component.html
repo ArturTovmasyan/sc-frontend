@@ -8,7 +8,7 @@
               Lead
             </ng-container>
             <ng-container *ngIf="lead">
-              <span style="font-size: 0.75rem;text-transform: uppercase;">Lead:</span> {{ lead|resident }}
+              <span style="font-size: 0.75rem;text-transform: uppercase;">Lead:</span> {{ lead|lead }}
             </ng-container>
           </div>
           <div class="card-body">
@@ -61,7 +61,7 @@
               </div>
               <div nz-row [nzGutter]="4" *ngIf="lead.owner">
                 <div nz-col [nzSpan]="8" class="text-right"><strong>Owner:</strong></div>
-                <div nz-col [nzSpan]="16">{{ lead.owner|resident }}</div>
+                <div nz-col [nzSpan]="16">{{ lead.owner|user }}</div>
               </div>
               <div nz-row [nzGutter]="4" *ngIf="lead.primary_facility">
                 <div nz-col [nzSpan]="8" class="text-right"><strong>Primary Facility:</strong></div>
@@ -99,11 +99,11 @@
       <div class="col-sm-12 col-md-12">
         <div class="card">
           <div class="card-header">
-            <ng-container *ngIf="!referral">
+            <ng-container *ngIf="!(referral && referral.contact)">
               Referral
             </ng-container>
-            <ng-container *ngIf="referral">
-              <span style="font-size: 0.75rem;text-transform: uppercase;">Referral:</span> {{ referral|resident }}
+            <ng-container *ngIf="referral && referral.contact">
+              <span style="font-size: 0.75rem;text-transform: uppercase;">Referral:</span> {{ referral.contact|lead_contact }}
             </ng-container>
           </div>
           <div class="card-body">
@@ -117,12 +117,12 @@
                 <div nz-col [nzSpan]="8" class="text-right"><strong>Organization:</strong></div>
                 <div nz-col [nzSpan]="16">{{ referral.organization.title }}</div>
               </div>
-              <ng-container *ngIf="referral.phones && referral.phones.length > 0">
+              <ng-container *ngIf="referral.contact.phones && referral.contact.phones.length > 0">
                 <div nz-row [nzGutter]="4">
                   <div nz-col [nzSpan]="8" class="text-right"><strong>Phone Numbers:</strong></div>
                   <div nz-col [nzSpan]="12">&nbsp;</div>
                 </div>
-                <div nz-row [nzGutter]="4" *ngFor="let phone of referral.phones">
+                <div nz-row [nzGutter]="4" *ngFor="let phone of referral.contact.phones">
                   <div nz-col [nzSpan]="8" class="text-right"><strong>{{ phone.type|phone_type }}:</strong></div>
                   <div nz-col [nzSpan]="12">
                     <a
@@ -137,10 +137,10 @@
                   </div>
                 </div>
               </ng-container>
-              <div nz-row [nzGutter]="4" *ngIf="referral.emails && referral.emails.length > 0">
+              <div nz-row [nzGutter]="4" *ngIf="referral.contact.emails && referral.contact.emails.length > 0">
                 <div nz-col [nzSpan]="8" class="text-right"><strong>Email(s):</strong></div>
                 <div nz-col [nzSpan]="16">
-                  <ng-container *ngFor="let email of referral.emails; let last = last;">
+                  <ng-container *ngFor="let email of referral.contact.emails; let last = last;">
                     {{ email }}
                     <ng-container *ngIf="!last">,</ng-container>
                   </ng-container>

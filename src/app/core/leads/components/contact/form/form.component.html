@@ -22,11 +22,12 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email" nzRequired>E-Mail</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email')?'error':null">
-      <input nz-input placeholder="E-Mail" formControlName="email">
-      <nz-form-explain *ngIf="hasErrors('email')">
-        <app-field-errors [errors]="fieldErrors('email')"></app-field-errors>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emails" nzRequired>E-Mail(s)</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('emails')?'error':null">
+      <nz-select nzShowSearch nzMode="tags" [nzTokenSeparators]="[' ', ',']" nzPlaceHolder="Please select" formControlName="emails">
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('emails')">
+        <app-field-errors [errors]="fieldErrors('emails')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -34,11 +35,16 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="organization_id">Organization</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('organization_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="organization_id">
-        <ng-container *ngFor="let organization of organizations">
-          <nz-option [nzLabel]="organization.title" [nzValue]="organization.id"></nz-option>
-        </ng-container>
-      </nz-select>
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="organization_id">
+          <ng-container *ngFor="let organization of organizations">
+            <nz-option [nzLabel]="organization.title" [nzValue]="organization.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('organization');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
       <nz-form-explain *ngIf="hasErrors('organization_id')">
         <app-field-errors [errors]="fieldErrors('organization_id')"></app-field-errors>
       </nz-form-explain>

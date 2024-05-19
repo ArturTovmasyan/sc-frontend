@@ -4,11 +4,16 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type_id" nzRequired>Activity Type</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type_id">
-        <ng-container *ngFor="let activity_type of activity_types">
-          <nz-option [nzLabel]="activity_type.title" [nzValue]="activity_type.id"></nz-option>
-        </ng-container>
-      </nz-select>
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type_id">
+          <ng-container *ngFor="let activity_type of activity_types">
+            <nz-option [nzLabel]="activity_type.title" [nzValue]="activity_type.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('activity_type');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
       <nz-form-explain *ngIf="hasErrors('type_id')">
         <app-field-errors [errors]="fieldErrors('type_id')"></app-field-errors>
       </nz-form-explain>
@@ -28,11 +33,16 @@
   <nz-form-item *ngIf="form.get('status_id').enabled">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="status_id" nzRequired>Status</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('status_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="status_id">
-        <ng-container *ngFor="let activity_status of activity_statuses">
-          <nz-option [nzLabel]="activity_status.title" [nzValue]="activity_status.id"></nz-option>
-        </ng-container>
-      </nz-select>
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="status_id">
+          <ng-container *ngFor="let activity_status of activity_statuses">
+            <nz-option [nzLabel]="activity_status.title" [nzValue]="activity_status.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('activity_status');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
       <nz-form-explain *ngIf="hasErrors('status_id')">
         <app-field-errors [errors]="fieldErrors('status_id')"></app-field-errors>
       </nz-form-explain>
@@ -54,7 +64,7 @@
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="assign_to_id">
         <ng-container *ngFor="let user of users">
-          <nz-option [nzLabel]="user|resident" [nzValue]="user.id"></nz-option>
+          <nz-option [nzLabel]="user|user" [nzValue]="user.id"></nz-option>
         </ng-container>
       </nz-select>
       <nz-form-explain *ngIf="hasErrors('assign_to_id')">

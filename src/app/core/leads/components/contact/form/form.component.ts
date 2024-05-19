@@ -9,6 +9,8 @@ import {Organization} from '../../../models/organization';
 import {SpaceService} from '../../../../services/space.service';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {Space} from '../../../../models/space';
+import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -21,6 +23,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private modal$: NzModalService,
     private organization$: OrganizationService,
     private space$: SpaceService,
     private auth_$: AuthGuard
@@ -35,7 +38,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       first_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
       last_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
 
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      emails: [[], Validators.compose([Validators.required])],
 
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
@@ -103,6 +106,21 @@ export class FormComponent extends AbstractForm implements OnInit {
         });
         break;
       default:
+        break;
+    }
+  }
+
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'organization':
+        this.create_modal(
+          this.modal$,
+          OrganizationFormComponent,
+          data => this.organization$.add(data),
+          data => {
+            this.subscribe('list_organization', {organization_id: data[0]});
+            return null;
+          });
         break;
     }
   }

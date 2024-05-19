@@ -11,6 +11,8 @@ import {UserService} from '../../../../admin/services/user.service';
 import {FacilityService} from '../../../../residents/services/facility.service';
 import {ActivityStatusService} from '../../../services/activity-status.service';
 import {ActivityTypeService} from '../../../services/activity-type.service';
+import {FormComponent as ActivityStatusFormComponent} from '../../activity-status/form/form.component';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -23,6 +25,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private modal$: NzModalService,
     private activity_type$: ActivityTypeService,
     private activity_status$: ActivityStatusService,
     private facility$: FacilityService,
@@ -74,7 +77,12 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.activity_types = res;
 
             this.subscribe('vc_activity_type');
-            this.form.get('type_id').setValue(this.form.get('type_id').value);
+
+            if (params) {
+              this.form.get('type_id').setValue(params.activity_type_id);
+            } else {
+              this.form.get('type_id').setValue(this.form.get('type_id').value);
+            }
           }
         });
         break;
@@ -82,6 +90,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.activity_status$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.activity_statuses = res;
+
+            if (params) {
+              this.form.get('status_id').setValue(params.activity_type_id);
+            }
           }
         });
         break;
@@ -144,6 +156,33 @@ export class FormComponent extends AbstractForm implements OnInit {
             }
           }
         });
+        break;
+      default:
+        break;
+    }
+  }
+
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'activity_status':
+        this.create_modal(
+          this.modal$,
+          ActivityStatusFormComponent,
+          data => this.activity_status$.add(data),
+          data => {
+            this.subscribe('list_activity_status', {activity_status_id: data[0]});
+            return null;
+          });
+        break;
+      case 'activity_type':
+        this.create_modal(
+          this.modal$,
+          ActivityStatusFormComponent,
+          data => this.activity_type$.add(data),
+          data => {
+            this.subscribe('list_activity_type', {activity_type_id: data[0]});
+            return null;
+          });
         break;
       default:
         break;

@@ -260,6 +260,9 @@ import {VgBufferingModule} from 'videogular2/compiled/src/buffering/buffering';
 import {VgOverlayPlayModule} from 'videogular2/compiled/src/overlay-play/overlay-play';
 import {VgControlsModule} from 'videogular2/compiled/src/controls/controls';
 import {VgCoreModule} from 'videogular2/compiled/src/core/core';
+import {UserPipe} from './residents/pipes/user.pipe';
+import {LeadContactPipe} from './residents/pipes/lead-contact.pipe';
+import {LeadPipe} from './residents/pipes/lead.pipe';
 
 registerLocaleData(en);
 
@@ -275,6 +278,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CityStateZipPipe,
     PhysicianPipe,
     ResidentPipe,
+    LeadPipe,
+    LeadContactPipe,
+    UserPipe,
     ResidentSelectorPipe,
     ResponsiblePersonPipe,
     LeadStatePipe,
