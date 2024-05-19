@@ -46,6 +46,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   event_definitions: EventDefinition[];
 
   definition_id: number = null;
+  show_resident_fake: boolean = true;
   show_resident: boolean = true;
 
   protected $subscriptions: { [key: string]: Subscription; };
@@ -267,7 +268,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              this.subscribe('list_calendar');
+              this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: this.show_resident});
 
               modal.close();
             },
@@ -301,7 +302,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              this.subscribe('list_calendar');
+              this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: this.show_resident});
 
               modal.close();
 
@@ -370,6 +371,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   switch_change($event: any) {
-    this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: $event});
+    this.show_resident = $event;
+    this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: this.show_resident});
   }
 }
