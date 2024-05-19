@@ -43,9 +43,9 @@ export class PaymentSource implements IdInterface {
         case PaymentPeriod.DAILY:
           amount *= 365 / 12;
           break;
-        case PaymentPeriod.WEEKLY:
-          amount *= 52 / 12;
-          break;
+        // case PaymentPeriod.WEEKLY:
+        //   amount *= 52 / 12;
+        //   break;
       }
     }
 

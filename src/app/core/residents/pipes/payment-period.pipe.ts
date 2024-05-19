@@ -9,8 +9,8 @@ export class PaymentPeriodPipe implements PipeTransform {
         return 'Daily';
       case  PaymentPeriod.MONTHLY:
         return 'Monthly';
-      case  PaymentPeriod.WEEKLY:
-        return 'Weekly';
+      // case  PaymentPeriod.WEEKLY:
+      //   return 'Weekly';
       default:
         return value;
     }

@@ -55,7 +55,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.periods = [
       {id: PaymentPeriod.DAILY, name: 'Daily'},
-      {id: PaymentPeriod.WEEKLY, name: 'Weekly'},
+      // {id: PaymentPeriod.WEEKLY, name: 'Weekly'},
       {id: PaymentPeriod.MONTHLY, name: 'Monthly'},
     ];
 
