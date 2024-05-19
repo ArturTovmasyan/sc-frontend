@@ -27,8 +27,10 @@
   }
 }
 
-::ng-deep .sc-resident-list > table {
-  width: 100% !important;
+::ng-deep .sc-resident-list {
+  .ant-table-bordered.ant-table-fixed-header .ant-table-body>table {
+    width: 100% !important;
+  }
 }
 
 ::ng-deep table.ant-table-fixed {
