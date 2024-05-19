@@ -1,4 +1,6 @@
-<app-button-bar #btnBar
+<app-button-bar
+  #btnBar
+  [permission]="'persistence-resident-resident_rent'"
   [service]="service$"
   [component]="_ResidentRentFormComponent"
   [modal_callback]="modal_callback"
