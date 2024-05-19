@@ -41,7 +41,7 @@ export class ListComponent extends GridComponent<LeadTemperature, LeadTemperatur
     const remove_btn = this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop();
 
     if (add_btn) {
-      this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop().title = 'Change'; // TODO: review
+      this._btnBar.buttons_crud.filter(v => v.name === 'add').pop().title = 'Change'; // TODO: review
     }
 
     if (remove_btn) {
