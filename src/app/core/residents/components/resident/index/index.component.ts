@@ -173,7 +173,7 @@ export class IndexComponent implements OnInit, OnDestroy {
         break;
       case 'list_residents':
         this.$subscriptions[key] = this.residentAdmission$
-          .list_by_state('active', params.type, params.type_id)
+          .list_by_state(this.options.state, params.type, params.type_id)
           .pipe(first()).subscribe(res => {
             if (res) {
               this.residents = res;
