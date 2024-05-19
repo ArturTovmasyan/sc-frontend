@@ -39,7 +39,14 @@
         <td [nzShowCheckbox]="true"
             [(nzChecked)]="resident_rent.checked"
             (nzCheckedChange)="checkbox_refresh()">&nbsp;</td>
-        <td>{{ resident_rent.start|date:'MM/dd/yyyy' }}</td>
+        <td>
+          <ng-container *ngIf="resident_rent.ledger_id !== null; else elseBlockLedger">
+            <a [routerLink]="['/resident/ledger', resident_rent.ledger_id]" [queryParams]="{ resident_id: resident_rent.resident.id, rent_id: resident_rent.id, breakdown: true }">
+              {{ resident_rent.start|date:'MM/dd/yyyy' }}
+            </a>
+          </ng-container>
+          <ng-template #elseBlockLedger>{{ resident_rent.start|date:'MM/dd/yyyy' }}</ng-template>
+        </td>
         <td>{{ resident_rent.end|date:'MM/dd/yyyy' }}</td>
         <td class="text-right">{{ resident_rent.amount|currency:'USD':'symbol-narrow':'1.2-2' }}</td>
         <td>{{ resident_rent.reason ? resident_rent.reason.title : '' }}</td>
@@ -57,7 +64,12 @@
             &nbsp;
           </td>
           <td [attr.rowSpan]="resident_rent.source.length > 1 ? resident_rent.source.length : null">
-            {{ resident_rent.start|date:'MM/dd/yyyy' }}
+            <ng-container *ngIf="resident_rent.ledger_id !== null; else elseBlockLedger">
+              <a [routerLink]="['/resident/ledger', resident_rent.ledger_id]" [queryParams]="{ resident_id: resident_rent.resident.id, rent_id: resident_rent.id, breakdown: true }">
+                {{ resident_rent.start|date:'MM/dd/yyyy' }}
+              </a>
+            </ng-container>
+            <ng-template #elseBlockLedger>{{ resident_rent.start|date:'MM/dd/yyyy' }}</ng-template>
           </td>
           <td [attr.rowSpan]="resident_rent.source.length > 1 ? resident_rent.source.length : null">
             {{ resident_rent.end|date:'MM/dd/yyyy' }}

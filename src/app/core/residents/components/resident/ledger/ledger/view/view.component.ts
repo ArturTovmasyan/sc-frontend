@@ -29,6 +29,9 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   rents = [];
 
+  rent_id = null;
+  isBreakdown = false;
+
   public title: string = null;
 
   protected $subscriptions: { [key: string]: Subscription; };
@@ -75,6 +78,12 @@ export class ViewComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.route$.queryParams.subscribe(query_params => {
           this.query_params = query_params;
           this.subscribe('param_id');
+          if (this.query_params.hasOwnProperty('rent_id')) {
+            this.rent_id = this.query_params['rent_id'];
+          }
+          if (this.query_params.hasOwnProperty('breakdown')) {
+            this.isBreakdown = true;
+          }
         });
         break;
       case 'get_ledger':
@@ -288,6 +297,21 @@ export class ViewComponent implements OnInit, OnDestroy {
     return result;
   }
 
+  is_source_period_daily(id: number) {
+    let result = false;
+
+    if (this.payment_sources && this.payment_sources.length > 0) {
+      const source = this.payment_sources.filter(v => v.id === id).pop();
+
+      // tslint:disable-next-line:triple-equals
+      if (source && source.period == PaymentPeriod.DAILY) {
+        result = true;
+      }
+    }
+
+    return result;
+  }
+
   get_prior_date() {
     let result = new Date();
 
@@ -295,6 +319,95 @@ export class ViewComponent implements OnInit, OnDestroy {
       result = new Date(this.ledger.date_created);
       result.setDate(1);
       result.setMonth(result.getMonth() - 1);
+    }
+
+    return result;
+  }
+
+  get_discount_item_sum() {
+    let result = 0;
+    if (this.ledger.resident_discount_items && this.ledger.resident_discount_items.length > 0) {
+      this.ledger.resident_discount_items.forEach(function (value) {
+        result += value.amount;
+      });
+    }
+
+    return result;
+  }
+
+  public get_days_in_month(month, year) {
+    let result = 0;
+    if (month && year) {
+      result = new Date(year, month, 0).getDate();
+    }
+    return result;
+  }
+
+  get_private_pay_sum_for_rent(privat_pay_source, rent_id) {
+    let result = 0;
+    if (rent_id !== null && privat_pay_source && privat_pay_source.length > 0) {
+      privat_pay_source.forEach(function (value) {
+        // tslint:disable-next-line:triple-equals
+        if (value.rent_id == rent_id) {
+          result += value.amount;
+        }
+      });
+    }
+
+    return result;
+  }
+
+  get_private_pay_billable_days_for_rent(privat_pay_source, rent_id) {
+    let result = 0;
+    if (rent_id !== null && privat_pay_source && privat_pay_source.length > 0) {
+      privat_pay_source.forEach(function (value) {
+        // tslint:disable-next-line:triple-equals
+        if (value.rent_id == rent_id) {
+          result += value.days;
+        }
+      });
+    }
+
+    return result;
+  }
+
+  get_not_private_pay_sum_for_rent(not_privat_pay_source, rent_id) {
+    let result = 0;
+    if (rent_id !== null && not_privat_pay_source && not_privat_pay_source.length > 0) {
+      not_privat_pay_source.forEach(function (value) {
+        // tslint:disable-next-line:triple-equals
+        if (value.rent_id == rent_id) {
+          result += value.amount;
+        }
+      });
+    }
+
+    return result;
+  }
+
+  get_not_private_billable_days_for_rent(not_privat_pay_source, rent_id) {
+    let result = 0;
+    if (rent_id !== null && not_privat_pay_source && not_privat_pay_source.length > 0) {
+      not_privat_pay_source.forEach(function (value) {
+        // tslint:disable-next-line:triple-equals
+        if (value.rent_id == rent_id) {
+          result += value.days;
+        }
+      });
+    }
+
+    return result;
+  }
+
+  get_not_private_away_days_for_rent(not_privat_pay_source, rent_id) {
+    let result = 0;
+    if (rent_id !== null && not_privat_pay_source && not_privat_pay_source.length > 0) {
+      not_privat_pay_source.forEach(function (value) {
+        // tslint:disable-next-line:triple-equals
+        if (value.rent_id == rent_id) {
+          result += value.absent_days;
+        }
+      });
     }
 
     return result;
