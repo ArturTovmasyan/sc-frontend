@@ -103,7 +103,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_region');
 
     this.subscribe('list_assessment');
-    this.subscribe('list_admission');
     this.subscribe('vc_resident_all');
     this.subscribe('vc_group_all');
     this.subscribe('vc_group_list');
@@ -182,6 +181,10 @@ export class FormComponent extends AbstractForm implements OnInit {
           if (next) {
             this.form.get('group_id').setValue(next);
             this.form.get('group_list').setValue(this.group_helper.get_group_data(next, this.form.get('group').value));
+          }
+
+          if (this.form.get('group').value !== null && this.form.get('group_id').value !== null) {
+            this.subscribe('list_admission');
           }
         });
         break;
