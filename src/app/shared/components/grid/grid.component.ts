@@ -338,8 +338,18 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     }
   }
 
-  protected no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {
-    return 0;
+  protected sort_order_func(sorted: boolean): (a: KeyValue<string, any>, b: KeyValue<string, any>) => number {
+    // Preserve original property order
+    const originalOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
+      return 0;
+    };
+
+    // Order by descending property key
+    const keyAscOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
+      return a.key.localeCompare(b.key);
+    };
+
+    return sorted ? keyAscOrder : originalOrder;
   }
 
   protected get_background_color(row: any) {

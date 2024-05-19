@@ -13,13 +13,13 @@
 </ng-container>
 <ng-template #table>
   <app-button-bar #btnBar
-    [service]="service$"
-    [component]="component"
-    [modal_callback]="modal_callback"
-    [ids]="checkbox_config.ids"
-    [single_select]="checkbox_config.ids.length === 1"
-    [multi_select]="checkbox_config.ids.length > 1"
-    [hidden]="fields === null"
+                  [service]="service$"
+                  [component]="component"
+                  [modal_callback]="modal_callback"
+                  [ids]="checkbox_config.ids"
+                  [single_select]="checkbox_config.ids.length === 1"
+                  [multi_select]="checkbox_config.ids.length > 1"
+                  [hidden]="fields === null"
   >
     <ng-container *ngIf="searchable">
       <nz-input-group *ngIf="fields != null" [nzSize]="'small'" nzCompact nzSearch [nzAddOnAfter]="suffixIconButton"
@@ -94,7 +94,8 @@
           <th *ngIf="!hrfield.field.hidden && hrfield.field.sortable && hrfield.field.filterable"
               [nzShowSort]="hrfield.field.sortable"
               [nzSortKey]="hrfield.field.id"
-              nzCustomFilter [ngSwitch]="hrfield.field.type" [attr.colSpan]="hrfield.colspan" [rowSpan]="hrfield.rowspan">
+              nzCustomFilter [ngSwitch]="hrfield.field.type" [attr.colSpan]="hrfield.colspan"
+              [rowSpan]="hrfield.rowspan">
             {{ ("grid." + name + "." + hrfield.field.id)|translate }}
             <template [ngTemplateOutletContext]="{ field: hrfield.field, first: first }" *ngSwitchCase="'id'"
                       [ngTemplateOutlet]="filterNumber"></template>
@@ -116,7 +117,8 @@
           </th>
           <th
             *ngIf="!hrfield.field.hidden && !hrfield.field.sortable && !hrfield.field.filterable"
-            [attr.colSpan]="hrfield.colspan" [rowSpan]="hrfield.rowspan">{{ ("grid." + name + "." + hrfield.field.id)|translate }}</th>
+            [attr.colSpan]="hrfield.colspan"
+            [rowSpan]="hrfield.rowspan">{{ ("grid." + name + "." + hrfield.field.id)|translate }}</th>
         </ng-template>
       </tr>
     </ng-container>
@@ -148,7 +150,11 @@
           {{ row[field.id]|date:'MM/dd/yyyy HH:mm:ss' }}
         </ng-container>
         <ng-container *ngSwitchCase="'json'">
-          <template [ngTemplateOutletContext]="{ data: row[field.id] }"
+          <template [ngTemplateOutletContext]="{ data: row[field.id], sorted: false }"
+                    [ngTemplateOutlet]="json_field"></template>
+        </ng-container>
+        <ng-container *ngSwitchCase="'json_sorted'">
+          <template [ngTemplateOutletContext]="{ data: row[field.id], sorted: true }"
                     [ngTemplateOutlet]="json_field"></template>
         </ng-container>
         <ng-container *ngSwitchCase="'icon'">
@@ -335,20 +341,18 @@
   </nz-dropdown>
 </ng-template>
 
-<ng-template #json_field let-data="data">
+<ng-template #json_field let-data="data" let-sorted="sorted">
   <table style="width: 100%;">
-    <ng-container *ngFor="let entry of data|str2json">
-      <ng-container *ngFor="let item of entry|str2json|keyvalue:no_sort_order">
-        <tr *ngIf="check_empty(item.value)">
-          <th width="50%" class="text-right" style="padding-right: 0.5rem;">{{ item.key }}:</th>
-          <td width="50%" *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</td>
-          <td width="50%" *ngIf="_.isArray(item.value)">
-            <ng-container *ngFor="let iv of item.value">
-              {{ iv }} <br/>
-            </ng-container>
-          </td>
-        </tr>
-      </ng-container>
+    <ng-container *ngFor="let item of data|str2json:true|keyvalue:sort_order_func(sorted)">
+      <tr *ngIf="check_empty(item.value)">
+        <th style="width:50%;padding-right: 0.5rem;" class="text-right">{{ item.key }}:</th>
+        <td style="width:50%;" *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</td>
+        <td style="width:50%;" *ngIf="_.isArray(item.value)">
+          <ng-container *ngFor="let iv of item.value; let last=last">
+            {{ iv }} <br *ngIf="!last"/>
+          </ng-container>
+        </td>
+      </tr>
     </ng-container>
   </table>
 </ng-template>
