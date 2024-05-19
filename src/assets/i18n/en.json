@@ -395,6 +395,15 @@
       "state": "State",
       "space": "Space"
     },
+    "lead-change-log-list": {
+      "id": "ID",
+      "title": "Title",
+      "success": "Success",
+      "log_time": "Log Time",
+      "updated_by": "Update By",
+      "action": "Action",
+      "info": "Info"
+    },
     "lead-organization-list": {
       "id": "ID",
       "title": "Title",
@@ -439,7 +448,7 @@
       },
       "id": "ID",
       "activity": "Activity",
-      "date_entered": "Due Entered",
+      "date_entered": "Date Entered",
       "entered_by": "Entered by",
       "task_owner": "Task Owner",
       "due_date": "Due Date",
