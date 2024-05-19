@@ -34,7 +34,7 @@ export class ListComponent extends GridComponent<Resident, ResidentService> impl
         this.add_param('compact', 'true');
       }
 
-      super.init();
+      super.init(true);
 
       this.grid_options_loaded.subscribe(next => {
         if (next) {
