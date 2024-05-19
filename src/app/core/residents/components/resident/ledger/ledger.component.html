@@ -5,13 +5,13 @@
   <div class="card-body">
     <nz-tabset nzShowPagination>
       <nz-tab *ngIf="addIfHasPermission('persistence-resident-resident_ledger')" nzTitle="Billing Statement Summary">
-        <app-resident-ledger-ledger></app-resident-ledger-ledger>
+        <app-resident-ledger-ledger [reload]="broadcast_reload_ledger"></app-resident-ledger-ledger>
       </nz-tab>
       <nz-tab *ngIf="addIfHasPermission('persistence-resident-resident_expense_item')" nzTitle="Expense Item">
-        <app-resident-ledger-expense-item></app-resident-ledger-expense-item>
+        <app-resident-ledger-expense-item (reload)="broadcast_reload_event($event)"></app-resident-ledger-expense-item>
       </nz-tab>
       <nz-tab *ngIf="addIfHasPermission('persistence-resident-resident_away_days')" nzTitle="Away Days">
-        <app-resident-ledger-away-days></app-resident-ledger-away-days>
+        <app-resident-ledger-away-days (reload)="broadcast_reload_event($event)"></app-resident-ledger-away-days>
       </nz-tab>
     </nz-tabset>
   </div>

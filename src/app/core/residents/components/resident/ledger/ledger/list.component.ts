@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TitleService} from '../../../../../services/title.service';
 import {GridComponent} from '../../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
@@ -14,6 +14,10 @@ import {ModalFormService} from '../../../../../../shared/services/modal-form.ser
     providers: [ResidentLedgerService, ModalFormService]
 })
 export class ListComponent extends GridComponent<ResidentLedger, ResidentLedgerService> implements OnInit {
+    @Input() set reload(value: number) {
+      this.reload_data();
+    }
+
     constructor(
         protected service$: ResidentLedgerService,
         protected title$: TitleService,

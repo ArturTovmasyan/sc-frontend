@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {TitleService} from '../../../../../services/title.service';
 import {GridComponent} from '../../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
@@ -14,6 +14,7 @@ import {ResidentSelectorService} from '../../../../services/resident-selector.se
   providers: [ResidentExpenseItemService, ModalFormService],
 })
 export class ListComponent extends GridComponent<ResidentExpenseItem, ResidentExpenseItemService> implements OnInit {
+  @Output() reload: EventEmitter<number> = new EventEmitter();
 
   constructor(
     protected service$: ResidentExpenseItemService,
@@ -48,5 +49,9 @@ export class ListComponent extends GridComponent<ResidentExpenseItem, ResidentEx
       default:
         break;
     }
+  }
+
+  on_reload() {
+    this.reload.emit(Math.random());
   }
 }

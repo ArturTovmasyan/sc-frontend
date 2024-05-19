@@ -8,6 +8,8 @@ import {AuthGuard} from '../../../../guards/auth.guard';
   templateUrl: './ledger.component.html'
 })
 export class LedgerComponent implements OnInit, OnDestroy {
+  broadcast_reload_ledger: number;
+
   public title: string = null;
 
   protected $subscriptions: { [key: string]: Subscription; };
@@ -47,4 +49,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
     return this.auth_$.checkPermission([permission]);
   }
 
+  broadcast_reload_event($event) {
+    this.broadcast_reload_ledger = $event;
+  }
 }
