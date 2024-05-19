@@ -9,9 +9,8 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './csv.component.html'
 })
 export class CSVComponent implements OnInit, OnDestroy {
-  protected title: string = null;
-
-  protected data: string[][];
+  title: string = null;
+  data: string[][];
 
   protected $subscriptions: { [key: string]: Subscription; };
 
