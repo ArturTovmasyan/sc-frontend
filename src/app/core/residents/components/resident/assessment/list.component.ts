@@ -27,7 +27,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
     super(service$, title$, modal$);
 
     this.component = FormComponent;
-    this.permission = 'persistence-lead-assessment-assessment';
+    this.permission = 'persistence-resident-assessment-assessment';
     this.name = 'resident-assessment-list';
     this.modal$.without_save_and_add = true;
   }
