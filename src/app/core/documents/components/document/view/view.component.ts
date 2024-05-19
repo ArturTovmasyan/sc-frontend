@@ -326,4 +326,8 @@ export class ViewComponent implements OnInit, OnDestroy {
 
     this.subscribe('list_document', params);
   }
+
+  public checkPermission(expected_permissions: string[]): boolean {
+    return this.auth_$.checkPermission(expected_permissions);
+  }
 }
