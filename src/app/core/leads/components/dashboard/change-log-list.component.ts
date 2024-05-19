@@ -28,9 +28,21 @@ export class ListComponent extends GridComponent<ChangeLog, ChangeLogService> im
 
     this.grid_options_loaded.subscribe(next => {
       if (next) {
-        this._btnBar.buttons_crud.filter(v => v.name === 'add').pop().show = false; // TODO: review
-        this._btnBar.buttons_crud.filter(v => v.name === 'edit').pop().show = false; // TODO: review
-        this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop().show = true; // TODO: review
+        const add_btn = this._btnBar.buttons_crud.filter(v => v.name === 'add').pop();
+        const edit_btn = this._btnBar.buttons_crud.filter(v => v.name === 'edit').pop();
+        const remove_btn = this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop();
+
+        if (add_btn) {
+          this._btnBar.buttons_crud.filter(v => v.name === 'add').pop().show = false; // TODO: review
+        }
+
+        if (edit_btn) {
+          this._btnBar.buttons_crud.filter(v => v.name === 'edit').pop().show = false; // TODO: review
+        }
+
+        if (remove_btn) {
+          this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop().show = true; // TODO: review
+        }
       }
     });
   }

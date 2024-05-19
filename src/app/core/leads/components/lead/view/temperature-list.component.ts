@@ -37,8 +37,17 @@ export class ListComponent extends GridComponent<LeadTemperature, LeadTemperatur
   }
 
   ngAfterViewInit(): void {
-    this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop().show = false; // TODO: review
-    this._btnBar.buttons_crud.filter(v => v.name === 'add').pop().title = 'Change'; // TODO: review
+    const add_btn = this._btnBar.buttons_crud.filter(v => v.name === 'add').pop();
+    const remove_btn = this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop();
+
+    if (add_btn) {
+      this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop().title = 'Change'; // TODO: review
+    }
+
+    if (remove_btn) {
+      this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop().show = false; // TODO: review
+    }
+
     this._btnBar.preset_modal_form_data = (form: FormGroup) => {
       form.get('lead_id').setValue(this.lead_id);
     };

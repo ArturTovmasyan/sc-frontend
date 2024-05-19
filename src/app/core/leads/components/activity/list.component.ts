@@ -36,7 +36,11 @@ export class ListComponent extends GridComponent<Activity, ActivityService> impl
 
     this.grid_options_loaded.subscribe(next => {
       if (next) {
-        this._btnBar.buttons_crud.filter(v => v.name === 'add').pop().show = false; // TODO: review
+        const btn = this._btnBar.buttons_crud.filter(v => v.name === 'add').pop();
+
+        if (btn) {
+          this._btnBar.buttons_crud.filter(v => v.name === 'add').pop().show = false; // TODO: review
+        }
       }
     });
   }
