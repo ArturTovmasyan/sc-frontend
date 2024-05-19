@@ -10,6 +10,7 @@ export class EventDefinition implements IdInterface {
   il: boolean;
   physician: boolean;
   responsible_person: boolean;
+  responsible_person_multi: boolean;
   additional_date: boolean;
 
   space: Space;

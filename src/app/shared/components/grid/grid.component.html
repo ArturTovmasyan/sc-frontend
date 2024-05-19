@@ -338,7 +338,7 @@
   <dl class="grid-definition-list">
     <ng-container *ngFor="let entry of data|str2json">
       <ng-container *ngFor="let item of entry|str2json|keyvalue:no_sort_order">
-        <ng-container *ngIf="item.value !== null">
+        <ng-container *ngIf="check_empty(item.value)">
           <dt>{{ item.key }}</dt>
           <dd>{{ replace_known_value(item.value) }}</dd>
         </ng-container>

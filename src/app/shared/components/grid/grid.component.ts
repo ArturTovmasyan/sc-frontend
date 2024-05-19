@@ -457,6 +457,10 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     return route_params;
   }
 
+  public check_empty(value: any) {
+    return !_.isEmpty(value) && !_.isEmpty(_.trim(value));
+  }
+
   protected replace_known_value(value: any) {
     if (typeof value === 'boolean') {
       return value ? 'Yes' : 'No';

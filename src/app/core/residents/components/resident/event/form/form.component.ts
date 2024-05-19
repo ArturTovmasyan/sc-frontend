@@ -24,6 +24,9 @@ export class FormComponent extends AbstractForm implements OnInit {
   resident_responsible_persons: ResidentResponsiblePerson[];
   resident_physicians: ResidentPhysician[];
 
+  Infinity = Infinity;
+  rp_single: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private medication$: MedicationService,
@@ -49,13 +52,14 @@ export class FormComponent extends AbstractForm implements OnInit {
       additional_date: [new Date(), Validators.required],
 
       physician_id: [null, Validators.required],
-      responsible_person_id: [null, Validators.required],
+
+      responsible_persons: [null, Validators.required],
 
       resident_id: [null, Validators.required]
     });
 
     this.form.get('additional_date').disable();
-    this.form.get('responsible_person_id').disable();
+    this.form.get('responsible_persons').disable();
     this.form.get('physician_id').disable();
 
     this.subscribe('rs_resident');
@@ -110,9 +114,16 @@ export class FormComponent extends AbstractForm implements OnInit {
               const id = this.resident_responsible_persons
                 .filter(v => v.id === params.resident_responsible_person_id).map(v => v.responsible_person.id).pop();
 
-              this.form.get('responsible_person_id').setValue(id);
+              if (this.rp_single) {
+                this.form.get('responsible_persons').setValue([id]);
+              } else {
+                const rps = this.form.get('responsible_persons').value;
+                rps.push(params.role_id);
+                this.form.get('responsible_persons').setValue(rps);
+              }
+
             } else {
-              this.form.get('responsible_person_id').setValue(this.form.get('responsible_person_id').value);
+              this.form.get('responsible_persons').setValue(this.form.get('responsible_persons').value);
             }
           }
         });
@@ -135,10 +146,16 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('physician_id').disable();
               }
 
-              if (definition.responsible_person) {
-                this.form.get('responsible_person_id').enable();
+              if (definition.responsible_person || definition.responsible_person_multi) {
+                this.form.get('responsible_persons').enable();
+
+                if (definition.responsible_person) {
+                  this.rp_single = true;
+                } else {
+                  this.rp_single = false;
+                }
               } else {
-                this.form.get('responsible_person_id').disable();
+                this.form.get('responsible_persons').disable();
               }
             }
           }

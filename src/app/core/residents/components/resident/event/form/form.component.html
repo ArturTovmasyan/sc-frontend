@@ -51,7 +51,8 @@
                        [nzValue]="resident_physician.physician.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('resident_physician');">
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle"
+                (click)="open_sub_modal('resident_physician');">
           <i nz-icon type="plus"></i>
         </button>
       </div>
@@ -61,22 +62,26 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item *ngIf="this.form.get('responsible_person_id').enabled">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_person_id" nzRequired>Responsible Person</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_person_id')?'error':null">
+  <nz-form-item *ngIf="this.form.get('responsible_persons').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_persons" nzRequired>{{ rp_single ? 'Responsible Person' : 'Responsible Person(s)' }}</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_persons')?'error':null">
       <div class="add-select-container">
-        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
+        <nz-select nzShowSearch
+                   [nzMode]="'multiple'"
+                   [nzMaxMultipleCount]="rp_single?1:Infinity"
+                   nzPlaceHolder="Please select" formControlName="responsible_persons">
           <ng-container *ngFor="let resident_responsible_person of resident_responsible_persons">
             <nz-option [nzLabel]="resident_responsible_person.responsible_person|responsible_person"
                        [nzValue]="resident_responsible_person.responsible_person.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('resident_responsible_person');">
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle"
+                (click)="open_sub_modal('resident_responsible_person');">
           <i nz-icon type="plus"></i>
         </button>
       </div>
-      <nz-form-explain *ngIf="hasErrors('responsible_person_id')">
-        <app-field-errors [errors]="fieldErrors('responsible_person_id')"></app-field-errors>
+      <nz-form-explain *ngIf="hasErrors('responsible_persons')">
+        <app-field-errors [errors]="fieldErrors('responsible_persons')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

@@ -122,6 +122,7 @@
       "il": "IL",
       "physician": "Physician",
       "responsible_person": "Responsible Person",
+      "responsible_person_multi": "Responsible Person Multiple",
       "additional_date": "Date Added",
       "space": "Space"
     },
@@ -313,10 +314,7 @@
       "definition": "Type",
       "notes": "Notes",
       "date": "Date",
-      "additional_date": "Date Added",
-      "amount": "Amount",
-      "physician": "Physician",
-      "responsible_person": "Responsible Person"
+      "info": "Info"
     },
     "resident-assessment-list": {
       "id": "ID",

@@ -2,8 +2,8 @@
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
       <input nz-input placeholder="Title" formControlName="title">
       <nz-form-explain *ngIf="hasErrors('title')">
         <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
@@ -12,8 +12,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="ffc" nzRequired>FFC</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="ffc" nzRequired>FFC</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="ffc"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('ffc')">
         <app-field-errors [errors]="fieldErrors('ffc')"></app-field-errors>
@@ -22,8 +22,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="ihc" nzRequired>IHC</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="ihc" nzRequired>IHC</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="ihc"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('ihc')">
         <app-field-errors [errors]="fieldErrors('ihc')"></app-field-errors>
@@ -32,8 +32,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="il" nzRequired>IL</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="il" nzRequired>IL</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="il"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('il')">
         <app-field-errors [errors]="fieldErrors('il')"></app-field-errors>
@@ -42,8 +42,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician" nzRequired>Physician</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="physician" nzRequired>Physician</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="physician"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('physician')">
         <app-field-errors [errors]="fieldErrors('physician')"></app-field-errors>
@@ -52,8 +52,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_person" nzRequired>Responsible Person</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person" nzRequired>Responsible Person</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="responsible_person"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('responsible_person')">
         <app-field-errors [errors]="fieldErrors('responsible_person')"></app-field-errors>
@@ -62,8 +62,18 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="additional_date" nzRequired>Date Added</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person_multi" nzRequired>Responsible Person Multi</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="responsible_person_multi"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('responsible_person_multi')">
+        <app-field-errors [errors]="fieldErrors('responsible_person_multi')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="additional_date" nzRequired>Date Added</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="additional_date"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('additional_date')">
         <app-field-errors [errors]="fieldErrors('additional_date')"></app-field-errors>
@@ -72,8 +82,8 @@
   </nz-form-item>
 
   <nz-form-item *ngIf="form.get('space_id')">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
       <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
         <ng-container *ngFor="let space of spaces">
           <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
