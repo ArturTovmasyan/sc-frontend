@@ -17,7 +17,9 @@ import {PaymentPeriodPipe} from '../../../pipes/payment-period.pipe';
 import {RentIncreaseReasonPipe} from '../../../pipes/rent-increase-reason.pipe';
 import {AdmissionType} from '../../../models/resident-admission';
 import {FormComponent} from '../event/form/form.component';
+import {FormComponent as FacilityEventFormComponent} from '../../facility/event-form/form.component';
 import {CalendarEventType} from '../../../models/event-definition';
+import {FacilityEventService} from '../../../services/facility-event.service';
 
 @Component({
   templateUrl: './calendar.component.html',
@@ -43,6 +45,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private modal$: NzModalService,
     private resident$: ResidentService,
     private residentEvent$: ResidentEventService,
+    private facilityEvent$: FacilityEventService,
     private residentSelector$: ResidentSelectorService,
     private auth_$: AuthGuard
   ) {
@@ -170,10 +173,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.create_modal(FormComponent, data => this.residentEvent$.add(data), null);
   }
 
-  show_modal_edit(id: number): void {
+  show_modal_edit(id: number, form_component: any): void {
     this.residentEvent$.get(id).pipe(first()).subscribe(res => {
       if (res) {
-        this.create_modal(FormComponent, data => this.residentEvent$.edit(data), res);
+        this.create_modal(form_component, data => this.residentEvent$.edit(data), res);
       }
     });
   }
@@ -292,7 +295,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   eventMouseEnter($event: any) {
     if ($event.event.extendedProps.event_type === CalendarEventType.RESIDENT) {
-      this.show_modal_edit($event.event.id);
+      this.show_modal_edit($event.event.id, FormComponent);
+    } else if ($event.event.extendedProps.event_type === CalendarEventType.FACILITY) {
+      this.facilityEvent$.isEditable($event.event.id).subscribe(res => {
+        if (res) {
+          this.show_modal_edit($event.event.id, FacilityEventFormComponent);
+        }
+      });
     }
   }
 }

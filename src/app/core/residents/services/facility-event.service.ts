@@ -11,4 +11,8 @@ export class FacilityEventService extends GridService<FacilityEvent> {
 
     this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/facility/event`;
   }
+
+  isEditable(id: number) {
+    return this.http.get<any>(this.SERVICE_URL_BASE + `/rsvp/${id}`);
+  }
 }

@@ -11,4 +11,12 @@ export class CorporateEventService extends GridService<CorporateEvent> {
 
     this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/corporate/event`;
   }
+
+  isDone(id: number) {
+    return this.http.get<any>(this.SERVICE_URL_BASE + `/done/${id}`);
+  }
+
+  setDone(id: number) {
+    return this.http.post<any>(this.SERVICE_URL_BASE + `/done/${id}`, {done: 1});
+  }
 }

@@ -235,7 +235,19 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   eventMouseEnter($event: any) {
     if ($event.event.extendedProps.event_type === CalendarEventType.CORPORATE) {
-      this.show_modal_edit($event.event.id);
+      this.corporateEvent$.isDone($event.event.id).subscribe(res => {
+        if (res) {
+          this.modal$.confirm({
+            nzTitle: `<i>Do you to set status to DONE for this event?</i>`,
+            nzOnOk: () => {
+              this.corporateEvent$.setDone($event.event.id).subscribe(s => {
+              });
+            }
+          });
+        } else {
+          this.show_modal_edit($event.event.id);
+        }
+      });
     }
   }
 }
