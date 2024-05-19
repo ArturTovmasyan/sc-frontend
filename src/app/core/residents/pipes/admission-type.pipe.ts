@@ -21,6 +21,9 @@ export class AdmissionTypePipe implements PipeTransform {
           case  AdmissionType.READMIT:
             result = 'Re-admit';
             break;
+          case  AdmissionType.ROOM_CHANGE:
+            result = 'Room Change';
+            break;
           case  AdmissionType.PENDING_DISCHARGE:
             result = 'Pending Discharge';
             break;
@@ -42,6 +45,9 @@ export class AdmissionTypePipe implements PipeTransform {
             break;
           case  AdmissionType.READMIT:
             result = 'Re-admit';
+            break;
+          case  AdmissionType.ROOM_CHANGE:
+            result = 'Room Change';
             break;
           case  AdmissionType.PENDING_DISCHARGE:
             result = 'Notice to Vacate';

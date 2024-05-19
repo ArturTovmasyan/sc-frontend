@@ -72,6 +72,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: AdmissionType.LONG_ADMIT, name: 'Long-Term Admit'},
       {id: AdmissionType.SHORT_ADMIT, name: 'Short-Term Admit'},
       {id: AdmissionType.READMIT, name: 'Re-Admit/Assign Room'},
+      {id: AdmissionType.ROOM_CHANGE, name: 'Room Change'},
       {id: AdmissionType.TEMPORARY_DISCHARGE, name: 'Temporary Discharge'},
       {id: AdmissionType.PENDING_DISCHARGE, name: 'Pending Discharge'},
       {id: AdmissionType.DISCHARGE, name: 'Discharge'}
@@ -81,6 +82,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: AdmissionType.LONG_ADMIT, name: 'Long-Term Rental'},
       {id: AdmissionType.SHORT_ADMIT, name: 'Short-Term Rental'},
       {id: AdmissionType.READMIT, name: 'Re-admit'},
+      {id: AdmissionType.ROOM_CHANGE, name: 'Room Change'},
       {id: AdmissionType.PENDING_DISCHARGE, name: 'Notice to Vacate'},
       {id: AdmissionType.DISCHARGE, name: 'Move Out'}
     ];
@@ -146,6 +148,7 @@ export class FormComponent extends AbstractForm implements OnInit {
               case AdmissionType.LONG_ADMIT:
               case AdmissionType.SHORT_ADMIT:
               case AdmissionType.READMIT:
+              case AdmissionType.ROOM_CHANGE:
                 this.form.get('group').enable();
                 this.form.get('group_type').enable();
                 break;
@@ -158,7 +161,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 break;
             }
 
-            if (this.edit_mode === false && next === AdmissionType.READMIT) {
+            if (this.edit_mode === false && (next === AdmissionType.READMIT || next === AdmissionType.ROOM_CHANGE)) {
               this.subscribe('resident_data');
             }
           }
