@@ -4,6 +4,7 @@
   ::ng-deep .nav-title {
     font-size: 1rem;
   }
+
   ::ng-deep .nav-link {
     padding: 0.25rem 0.5rem;
     font-size: 1rem;
@@ -13,9 +14,11 @@
     background-color: #2f353a;
   }
 
-  ::ng-deep .open {
-    .nav-item {
-      background-color: #3a4248;
+  ::ng-deep .nav-dropdown-items {
+    background-color: #3a4248;
+
+    .nav-link {
+      margin-left: 1.25rem;
     }
   }
 }
@@ -50,6 +53,7 @@
   .ant-dropdown:before {
     content: none;
   }
+
   .ant-form-item {
     margin-bottom: 0;
 
@@ -151,7 +155,7 @@
 
             &:before {
               display: inline-block;
-              margin-right: -2px;//4px;
+              margin-right: -2px; //4px;
               content: "*";
               font-family: SimSun;
               line-height: 1;
