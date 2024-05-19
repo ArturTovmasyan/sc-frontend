@@ -298,6 +298,7 @@ import {FormComponent as LeadAssessmentFormComponent} from './leads/components/l
 import {ListComponent as ReferralActivityListComponent} from './leads/components/referral/view/activity-list.component';
 import {ListComponent as OrganizationActivityListComponent} from './leads/components/organization/view/activity-list.component';
 import {ListComponent as OrganizationReferralListComponent} from './leads/components/organization/view/referral-list.component';
+import {ListComponent as OrganizationContactListComponent} from './leads/components/organization/view/contact-list.component';
 import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
 import {FormComponent as NotificationFormComponent} from './admin/components/notification/form/form.component';
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
@@ -643,6 +644,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ActivityListComponent,
 
     OrganizationReferralListComponent,
+    OrganizationContactListComponent,
     OrganizationActivityListComponent,
     LeadActivityListComponent,
     ReferralActivityListComponent,

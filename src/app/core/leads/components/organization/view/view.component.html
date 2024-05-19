@@ -94,6 +94,21 @@
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-12">
+
+        <div class="card">
+          <div class="card-header">
+            Contacts
+          </div>
+          <div class="card-body">
+            <nz-empty *ngIf="!organization" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+            <app-lead-organization-contact *ngIf="organization"
+                                            [organization_id]="organization.id"></app-lead-organization-contact>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
         <div class="card">
           <div class="card-header">
             Activity Log
