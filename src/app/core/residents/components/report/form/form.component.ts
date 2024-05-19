@@ -220,8 +220,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.form.get('group_list').valueChanges.subscribe(next => {
           if (next) {
             if (this.show.group_multi) {
-              this.form.get('group').setValue(next.map(v => v.type).pop()); // TODO: review
-              this.form.get('group_ids').setValue(next.map(v => v.id));
+                if (next.length > 0) {
+                    this.form.get('group').setValue(next.map(v => v.type).pop()); // TODO: review
+                    this.form.get('group_ids').setValue(next.map(v => v.id));
+                }
             } else {
               this.form.get('group').setValue(next.type);
               this.form.get('group_id').setValue(next.id);

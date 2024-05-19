@@ -60,34 +60,17 @@
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group_list')?'error':null"
                      class="sc-select-all">
       <nz-select nzShowSearch [nzMode]="show.group_multi ? 'multiple' : 'default'" formControlName="group_list">
-        <ng-container *ngIf="!form.get('group').value">
-          <nz-option-group nzLabel="AL - Facilities">
-            <ng-container *ngFor="let facility of group_helper.facilities">
-              <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
-            </ng-container>
-          </nz-option-group>
-          <!--<nz-option-group nzLabel="IHC - Regions">-->
-            <!--<ng-container *ngFor="let region of group_helper.regions">-->
-              <!--<nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>-->
-            <!--</ng-container>-->
-          <!--</nz-option-group>-->
-          <nz-option-group nzLabel="IL - Apartments">
-            <ng-container *ngFor="let apartment of group_helper.apartments">
-              <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
-            </ng-container>
-          </nz-option-group>
-        </ng-container>
-        <ng-container *ngIf="form.get('group').value == GroupType.FACILITY">
+        <ng-container *ngIf="form.get('group').value === GroupType.FACILITY">
           <ng-container *ngFor="let facility of group_helper.facilities">
             <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="form.get('group').value == GroupType.REGION">
+        <ng-container *ngIf="form.get('group').value === GroupType.REGION">
           <ng-container *ngFor="let region of group_helper.regions">
             <nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="form.get('group').value == GroupType.APARTMENT">
+        <ng-container *ngIf="form.get('group').value === GroupType.APARTMENT">
           <ng-container *ngFor="let apartment of group_helper.apartments">
             <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
           </ng-container>
