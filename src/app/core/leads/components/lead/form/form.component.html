@@ -289,6 +289,44 @@
         </nz-form-item>
       </ng-container>
     </nz-tab>
+    <nz-tab *ngIf="!edit_mode" nzTitle="Funnel">
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="funnel_stage_id">Funnel Stage</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('funnel_stage_id')?'error':null">
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="funnel_stage_id">
+              <ng-container *ngFor="let funnel_stage of funnel_stages">
+                <nz-option [nzLabel]="funnel_stage.title" [nzValue]="funnel_stage.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('funnel_stage');">
+              <i nz-icon type="plus"></i>
+            </button>
+          </div>
+          <nz-form-explain *ngIf="hasErrors('funnel_stage_id')">
+            <app-field-errors [errors]="fieldErrors('funnel_stage_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="temperature_id">Temperature</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('temperature_id')?'error':null">
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="temperature_id">
+              <ng-container *ngFor="let temperature of temperatures">
+                <nz-option [nzLabel]="temperature.title" [nzValue]="temperature.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('temperature');">
+              <i nz-icon type="plus"></i>
+            </button>
+          </div>
+          <nz-form-explain *ngIf="hasErrors('temperature_id')">
+            <app-field-errors [errors]="fieldErrors('temperature_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
 
     <nz-tab nzTitle="Interest Info">
       <nz-form-item>

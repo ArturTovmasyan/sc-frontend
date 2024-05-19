@@ -28,7 +28,7 @@ import {ModalFormService} from '../../../../../../shared/services/modal-form.ser
 @Component({
   templateUrl: 'form.component.html'
 })
-export class FormComponent extends AbstractForm implements OnInit, AfterViewInit, AfterViewChecked {
+export class FormComponent extends AbstractForm implements OnInit {
   GROUP_TYPE = GroupType;
 
   public group_helper: GroupHelper;
@@ -120,12 +120,8 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     };
   }
 
-  ngAfterViewInit(): void {
-    this.tabCountRecalculate(this._el);
-  }
-
-  ngAfterViewChecked() {
-    this.tabCountRecalculate(this._el);
+  protected refElement(): ElementRef<any> {
+    return this._el;
   }
 
   protected subscribe(key: string, params?: any): void {

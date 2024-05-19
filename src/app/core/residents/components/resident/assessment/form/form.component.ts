@@ -14,7 +14,7 @@ import {ModalFormService} from '../../../../../../shared/services/modal-form.ser
   templateUrl: 'form.component.html',
   styleUrls: ['form.component.scss']
 })
-export class FormComponent extends AbstractForm implements OnInit, AfterViewInit {
+export class FormComponent extends AbstractForm implements OnInit {
   assessment_forms: AssessmentForm[];
 
   tab_data_disabled: boolean;
@@ -114,8 +114,8 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     this.subscribe('list_assessment_form');
   }
 
-  ngAfterViewInit(): void {
-    this.tabCountRecalculate(this._el);
+  protected refElement(): ElementRef<any> {
+    return this._el;
   }
 
   protected subscribe(key: string, params?: any): void {

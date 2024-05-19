@@ -15,7 +15,7 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
 @Component({
   templateUrl: 'form.component.html'
 })
-export class FormComponent extends AbstractForm implements OnInit, AfterViewInit {
+export class FormComponent extends AbstractForm implements OnInit {
   roles: Role[];
   spaces: Space[];
 
@@ -78,8 +78,8 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     this.add_space();
   }
 
-  ngAfterViewInit(): void {
-    this.tabCountRecalculate(this._el);
+  protected refElement(): ElementRef<any> {
+    return this._el;
   }
 
   private add_space() {

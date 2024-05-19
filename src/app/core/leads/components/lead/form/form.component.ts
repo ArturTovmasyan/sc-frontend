@@ -29,13 +29,21 @@ import {FormComponent as CityStateZipFormComponent} from '../../../../residents/
 import {FormComponent as ReferrerTypeFormComponent} from '../../referrer-type/form/form.component';
 import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
 import {FormComponent as LeadContactFormComponent} from '../../contact/form/form.component';
+import {FormComponent as FunnelStageFormComponent} from '../../funnel-stage/form/form.component';
+import {FormComponent as TemperatureFormComponent} from '../../temperature/form/form.component';
+import {FunnelStage} from '../../../models/funnel-stage';
+import {Temperature} from '../../../models/temperature';
+import {FunnelStageService} from '../../../services/funnel-stage.service';
+import {TemperatureService} from '../../../services/temperature.service';
 
 @Component({
   templateUrl: 'form.component.html'
 })
-export class FormComponent extends AbstractForm implements OnInit, AfterViewInit {
+export class FormComponent extends AbstractForm implements OnInit {
   city_state_zips: CityStateZip[];
   payment_sources: PaymentSource[];
+  funnel_stages: FunnelStage[];
+  temperatures: Temperature[];
   users: User[];
 
   care_types: CareType[];
@@ -64,7 +72,9 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     private care_type$: CareTypeService,
     private organization$: OrganizationService,
     private contact$: ContactService,
-    private referrer_type$: ReferrerTypeService
+    private referrer_type$: ReferrerTypeService,
+    private funnel_stage$: FunnelStageService,
+    private temperature$: TemperatureService
   ) {
     super(modal$);
     this.modal_map = [
@@ -73,7 +83,9 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
          {key: 'csz', component: CityStateZipFormComponent},
          {key: 'referrer_type', component: ReferrerTypeFormComponent},
          {key: 'organization', component: OrganizationFormComponent},
-         {key: 'contact', component: LeadContactFormComponent}
+         {key: 'contact', component: LeadContactFormComponent},
+         {key: 'funnel_stage', component: FunnelStageFormComponent},
+         {key: 'temperature', component: TemperatureFormComponent}
     ];
   }
 
@@ -111,6 +123,8 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
       facilities: [[], Validators.compose([])],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
+      funnel_stage_id: [null, Validators.compose([Validators.required])],
+      temperature_id: [null, Validators.compose([Validators.required])],
 
       phones: this.formBuilder.array([]),
     });
@@ -147,8 +161,8 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     this.subscribe('list_referrer_type');
   }
 
-  ngAfterViewInit(): void {
-    this.tabCountRecalculate(this._el);
+  protected refElement(): ElementRef<any> {
+    return this._el;
   }
 
   public get_form_array_skeleton(key: string): FormGroup {
@@ -168,6 +182,36 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'list_funnel_stage':
+        this.$subscriptions[key] = this.funnel_stage$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.funnel_stages = res;
+
+            if (params) {
+              this.form.get('funnel_stage_id').setValue(params.funnel_stage_id);
+            } else {
+              if (!this.edit_mode) {
+                this.form.get('funnel_stage_id').setValue(this.funnel_stages[0].id);
+              }
+            }
+          }
+        });
+        break;
+      case 'list_temperature':
+        this.$subscriptions[key] = this.temperature$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.temperatures = res;
+
+            if (params) {
+              this.form.get('temperature_id').setValue(params.temperature_id);
+            } else {
+              if (!this.edit_mode) {
+                this.form.get('temperature_id').setValue(this.temperatures[0].id);
+              }
+            }
+          }
+        });
+        break;
       case 'list_csz':
         this.$subscriptions[key] = this.csz$.all().pipe(first()).subscribe(res => {
           if (res) {
@@ -339,6 +383,8 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
 
     if (this.edit_mode) {
       this.form.get('initial_contact_date').disable();
+      this.form.get('funnel_stage_id').disable();
+      this.form.get('temperature_id').disable();
 
       if (data.referral === null) {
         data.referral = {
@@ -349,9 +395,13 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
           notes: ''
         };
       }
-
     } else {
       this.form.get('initial_contact_date').enable();
+      this.form.get('funnel_stage_id').enable();
+      this.form.get('temperature_id').enable();
+
+      this.subscribe('list_funnel_stage');
+      this.subscribe('list_temperature');
     }
   }
 }

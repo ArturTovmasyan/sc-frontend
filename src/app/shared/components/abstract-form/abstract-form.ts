@@ -310,8 +310,14 @@ export class AbstractForm implements OnDestroy {
     });
   }
 
-  tabCountRecalculate(el: ElementRef) {
-    this.tabCount = el.nativeElement.querySelectorAll('.ant-tabs-tabpane').length;
+  protected refElement(): ElementRef<any> {
+    return null;
+  }
+
+  tabCountRecalculate() {
+    if (this.refElement()) {
+      this.tabCount = this.refElement().nativeElement.querySelector('.ant-tabs-tab').parentNode.children.length;
+    }
   }
 
   tabChanged($event: number) {

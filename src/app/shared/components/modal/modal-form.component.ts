@@ -72,6 +72,7 @@ export class ModalFormComponent {
       if (component instanceof AbstractForm) {
         const form = component.formObject;
 
+        component.tabCountRecalculate();
         this.form_callback(form, component, result, previous_data);
 
         this.valid = form.valid;
@@ -166,6 +167,7 @@ export class ModalFormComponent {
   show_previous(): boolean {
     const component = this.modal.getContentComponent();
     if (component instanceof AbstractForm) {
+      component.tabCountRecalculate(); // TODO: review
       return component.tabCount > 0 && component.tabSelected.value > 0;
     }
     return false;
@@ -174,6 +176,7 @@ export class ModalFormComponent {
   show_next(): boolean {
     const component = this.modal.getContentComponent();
     if (component instanceof AbstractForm) {
+      component.tabCountRecalculate(); // TODO: review
       return component.tabCount > 0 && component.tabSelected.value < (component.tabCount - 1);
     }
     return false;

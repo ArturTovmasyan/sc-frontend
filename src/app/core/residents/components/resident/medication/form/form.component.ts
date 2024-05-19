@@ -21,7 +21,7 @@ import {FormComponent as PhysicianFormComponent} from '../../../physician/form/f
 @Component({
   templateUrl: 'form.component.html'
 })
-export class FormComponent extends AbstractForm implements OnInit, AfterViewInit {
+export class FormComponent extends AbstractForm implements OnInit {
   form_factors: MedicationFormFactor[];
   medications: Medication[];
   physicians: Physician[];
@@ -92,8 +92,8 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     this.subscribe('list_physician');
   }
 
-  ngAfterViewInit(): void {
-    this.tabCountRecalculate(this._el);
+  protected refElement(): ElementRef<any> {
+    return this._el;
   }
 
   protected subscribe(key: string, params?: any): void {
