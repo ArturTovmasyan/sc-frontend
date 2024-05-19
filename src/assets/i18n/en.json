@@ -457,7 +457,9 @@
     "resident-ledger-list": {
       "id": "ID",
       "resident": "Resident",
-      "date_created": "Created At"
+      "date_created": "Created At",
+      "amount": "Amount",
+      "balance_due": "Balance Due"
     },
     "resident-expense-item-list": {
       "id": "ID",

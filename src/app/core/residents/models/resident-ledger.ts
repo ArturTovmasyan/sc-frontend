@@ -7,6 +7,10 @@ export class ResidentLedger implements IdInterface {
 
   date_created: Date;
 
+  amount: number;
+
+  balance_due: number;
+
   next_ledger_id: number;
   previous_ledger_id: number;
 }
