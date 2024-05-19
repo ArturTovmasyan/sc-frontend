@@ -104,8 +104,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'vc_facilities_all':
         this.$subscriptions[key] = this.form.get('facilities_all').valueChanges.subscribe(next => {
           if (next) {
-            this.form.get('facilities').setValue([]);
             this.form.get('facilities').clearValidators();
+            this.form.get('facilities').setValue([]);
+            this.form.get('facilities').updateValueAndValidity();
             this.show_facilities = false;
           } else {
             this.form.get('facilities').setValidators(Validators.compose([Validators.required]));
