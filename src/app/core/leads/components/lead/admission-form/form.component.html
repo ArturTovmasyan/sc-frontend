@@ -13,9 +13,9 @@
                 <nz-option [nzLabel]="salutation.title" [nzValue]="salutation.id"></nz-option>
               </ng-container>
             </nz-select>
-            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('category');">
-              <i nz-icon nzType="plus"></i>
-            </button>
+            <!--<button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('category');">-->
+              <!--<i nz-icon nzType="plus"></i>-->
+            <!--</button>-->
           </div>
           <nz-form-explain *ngIf="hasErrors('salutation_id')">
             <app-field-errors [errors]="fieldErrors('salutation_id')"></app-field-errors>
