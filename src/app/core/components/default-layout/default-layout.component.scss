@@ -368,7 +368,16 @@
 }
 
 ::ng-deep {
-  .ant-tabs-nav .ant-tabs-tab-active {
-    color: rgb(35, 40, 44);
+  @media (min-width: 1430px) {
+    .col-xxl-8 {
+      -webkit-box-flex: 0;
+      flex: 0 0 66.6666666667%;
+      max-width: 66.6666666667%;
+    }
+    .col-xxl-4 {
+      -webkit-box-flex: 0;
+      flex: 0 0 33.3333333333%;
+      max-width: 33.3333333333%;
+    }
   }
 }
