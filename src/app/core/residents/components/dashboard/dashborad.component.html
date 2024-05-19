@@ -131,6 +131,12 @@
             </ng-container>
           </tr>
           <tr>
+            <td>Resident Events</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.resident_events : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
             <td>Hospice</td>
             <ng-container *ngFor="let facility of facilities">
               <td
@@ -189,12 +195,6 @@
                 class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.outreach_per_month : '-' }}</td>
             </ng-container>
           </tr>
-          <!--          <tr>-->
-          <!--            <td>Events per month</td>-->
-          <!--            <ng-container *ngFor="let facility of facilities">-->
-          <!--              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.events_per_month : '-' }}</td>-->
-          <!--            </ng-container>-->
-          <!--          </tr>-->
           <tr>
             <td>Average Room Rent</td>
             <ng-container *ngFor="let facility of facilities">

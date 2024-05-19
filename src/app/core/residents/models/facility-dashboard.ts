@@ -43,7 +43,7 @@ class FacilityDashboardData {
   red_flag: number;
   yellow_flag: number;
   ending_occupancy: number;
-  events_per_month: number;
+  resident_events: number;
   hot_leads: number;
   move_ins_long_term: number;
   move_ins_respite: number;
