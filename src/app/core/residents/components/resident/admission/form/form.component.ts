@@ -392,7 +392,9 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     super.before_set_form_data(data, previous_data);
 
     if (data !== null) {
-      data.date = DateHelper.convertUTC(data.date);
+      if (data.date !== null && data.date !== undefined) {
+        data.date = DateHelper.convertUTC(data.date);
+      }
 
       this.edit_data = _.cloneDeep(data);
 
