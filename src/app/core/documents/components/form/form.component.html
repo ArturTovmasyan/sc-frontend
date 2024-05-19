@@ -25,7 +25,7 @@
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="file" nzRequired>File</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('file')?'error':null">
       <input type="file" #file (change)="onFileChange(files[0], $event)"
-             accept="image/*,application/pdf" style="display: none;">
+             accept="application/pdf" style="display: none;">
       <button type="button" nz-button nzSize="small"  *ngIf="!(files[0].file_name && files[0].file_name !== '')" (click)="select_file(files[0]);">
         <i nz-icon type="upload"></i>
         <span>Select file...</span>

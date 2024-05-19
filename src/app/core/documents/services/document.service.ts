@@ -9,6 +9,6 @@ export class DocumentService extends GridService<Document> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/document`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/document`;
   }
 }

@@ -3,7 +3,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {Document} from '../../models/document';
 import {TitleService} from '../../../services/title.service';
-import {DocumentService} from '../../services/activity.service';
+import {DocumentService} from '../../services/document.service';
 import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
 import {AuthGuard} from '../../../guards/auth.guard';
@@ -26,6 +26,25 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   protected $subscriptions: { [key: string]: Subscription; };
 
+  private static b64toBlob(b64Data, contentType = '', sliceSize = 512): Blob {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays, {type: contentType});
+  }
+
   constructor(
     private title$: TitleService,
     private modal$: NzModalService,
@@ -38,23 +57,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribe('title');
-
-    let document = new Document();
-
-    this.documents = [];
-
-    document.title = 'Title 1';
-    document.description = 'Description 1';
-    document.file = 'http://seniorcare.local/backend/1984.pdf';
-    this.documents.push(document);
-
-    document = new Document();
-    document.title = 'Title 2';
-    document.description = 'Description 2';
-    document.file = 'https://buildmedia.readthedocs.org/media/pdf/flask-cors/latest/flask-cors.pdf';
-    this.documents.push(document);
-
-    // this.subscribe('list_document');
+    this.subscribe('list_document');
   }
 
   ngOnDestroy(): void {
@@ -67,11 +70,18 @@ export class ViewComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.title$.getTitle().subscribe(v => this.title = v);
         break;
       case 'list_document':
+        this.document = null;
         this.loading = true;
         this.$subscriptions[key] = this.service$.all().subscribe(res => {
           if (res) {
-            this.loading = true;
+            this.loading = false;
             this.documents = res;
+
+            this.documents.forEach(v => {
+              v.file = ViewComponent.b64toBlob(v.file.replace('data:application/pdf;base64,', ''), 'application/pdf');
+            });
+
+            console.log(this.documents);
 
             if (params) {
               this.document = this.documents.filter(v => v.id = params.document_id).pop();
@@ -300,4 +310,5 @@ export class ViewComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 }
