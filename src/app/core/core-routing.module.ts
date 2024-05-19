@@ -381,7 +381,7 @@ const routes: Routes = [
             },
           },
           {
-            path: ':id/weekly',
+            path: ':id/weekly/:key',
             component: ResidentDashboardWeeklyComponent,
             data: {
               nav: {show: false, group: 'Corporate'},

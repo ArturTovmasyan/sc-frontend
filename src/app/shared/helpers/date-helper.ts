@@ -65,4 +65,9 @@ export class DateHelper {
   //   return new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60 * 1000);
   // }
 
+  static getDateForKey(key: string): Date {
+    const parts = key.split('-');
+
+    return moment().month(parts[0]).year(parseInt('20' + parts[1], 10)).toDate();
+  }
 }

@@ -49,7 +49,7 @@ export class DashboardMonthlyComponent implements OnInit, OnDestroy {
       case 'param_id':
         this.$subscriptions[key] = this.route$.paramMap.subscribe(route_params => {
           if (route_params.has('id')) {
-            const date = DateHelper.getPreviousYear().toJSON();
+            const date = DateHelper.getPreviousYear();
             this.subscribe('list_dashboard', {facility_id: route_params.get('id'), date: date});
           }
         });

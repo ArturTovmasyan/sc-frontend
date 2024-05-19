@@ -48,8 +48,8 @@ export class DashboardWeeklyComponent implements OnInit, OnDestroy {
     switch (key) {
       case 'param_id':
         this.$subscriptions[key] = this.route$.paramMap.subscribe(route_params => {
-          if (route_params.has('id')) {
-            const date = DateHelper.getPreviousYear().toJSON();
+          if (route_params.has('id') && route_params.has('key')) {
+            const date = DateHelper.getDateForKey(route_params.get('key'));
             this.subscribe('list_dashboard', {facility_id: route_params.get('id'), date: date});
           }
         });
