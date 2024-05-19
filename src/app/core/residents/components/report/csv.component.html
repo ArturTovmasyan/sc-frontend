@@ -4,7 +4,16 @@
       {{ title }}
     </div>
     <div class="card-body">
-      {{ data|json }}
+      <table class="table table-bordered table-hover table-striped">
+        <ng-container *ngFor="let row of data; let first = first">
+          <tr>
+            <ng-container *ngFor="let col of row">
+              <th *ngIf="first">{{col}}</th>
+              <td *ngIf="!first">{{col}}</td>
+            </ng-container>
+          </tr>
+        </ng-container>
+      </table>
     </div>
   </div>
 </ng-container>

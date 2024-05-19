@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
@@ -46,41 +47,41 @@ export class ReportService {
   private create_request_params(format, params): HttpParams {
     let request_params = new HttpParams().append('format', format);
 
-    if (params.group) {
+    if (!_.isNil(params.group)) {
       request_params = request_params.append('type', params.group);
     }
-    if (params.group_id) {
+    if (!_.isNil(params.group_id)) {
       request_params = request_params.append('type_id', params.group_id);
     }
-    if (params.group_all) {
+    if (!_.isNil(params.group_all) && (params.group_all === true || params.group_all === 'true')) {
       request_params = request_params.append('type_all', params.group_all);
     }
-    if (params.resident_id) {
+    if (!_.isNil(params.resident_id)) {
       request_params = request_params.append('resident_id', params.resident_id);
     }
-    if (params.resident_all) {
+    if (!_.isNil(params.resident_all) && (params.resident_all === true || params.resident_all === 'true')) {
       request_params = request_params.append('resident_all', params.resident_all);
     }
 
-    if (params.date) {
+    if (!_.isNil(params.date)) {
       request_params = request_params.append('date', params.date.toISOString());
     }
-    if (params.date_from) {
+    if (!_.isNil(params.date_from)) {
       request_params = request_params.append('date_from', params.date_from.toISOString());
     }
-    if (params.date_to) {
+    if (!_.isNil(params.date_to)) {
       request_params = request_params.append('date_to', params.date_to.toISOString());
     }
 
-    if (params.assessment_id) {
+    if (!_.isNil(params.assessment_id)) {
       request_params = request_params.append('assessment_id', params.assessment_id);
     }
 
-    if (params.assessment_form_id) {
+    if (!_.isNil(params.assessment_form_id)) {
       request_params = request_params.append('assessment_form_id', params.assessment_form_id);
     }
 
-    if (params.discontinued) {
+    if (!_.isNil(params.discontinued) && (params.discontinued === true || params.discontinued === 'true')) {
       request_params = request_params.append('discontinued', '1');
     }
 

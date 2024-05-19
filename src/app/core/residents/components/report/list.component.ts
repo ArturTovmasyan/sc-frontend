@@ -7,7 +7,7 @@ import {ModalButtonOptions, NzModalService} from 'ng-zorro-antd';
 import {FormComponent} from './form/form.component';
 import {first} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   templateUrl: './list.component.html'
@@ -26,7 +26,8 @@ export class ListComponent implements OnInit, OnDestroy {
     private report$: ReportService,
     private title$: TitleService,
     protected modal$: NzModalService,
-    private route$: ActivatedRoute
+    private route$: ActivatedRoute,
+    private router: Router
   ) {
     this.title$.getTitle().subscribe(v => this.title = v);
 
@@ -104,7 +105,7 @@ export class ListComponent implements OnInit, OnDestroy {
           loading[idx] = true;
 
           const component = <AbstractForm>modal.getContentComponent();
-          component.before_submit()
+          component.before_submit();
           const form_data = component.formObject.value;
 
           component.submitted = true;
@@ -119,6 +120,26 @@ export class ListComponent implements OnInit, OnDestroy {
           });
         }
       });
+      if (format === 'csv') {
+        footer_config.push({
+          type: 'primary',
+          label: format.toUpperCase() + ' View',
+          loading: () => loading[idx],
+          disabled: () => !valid,
+          onClick: () => {
+            loading[idx] = true;
+
+            const component = <AbstractForm>modal.getContentComponent();
+            component.before_submit();
+            const form_data = component.formObject.value;
+
+            component.submitted = true;
+
+            this.router
+              .navigate(['report-csv'], { queryParams: { g: group_alias, r: report_alias, ...form_data}});
+          }
+        });
+     }
     });
 
     const modal = this.modal$.create({
