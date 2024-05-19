@@ -105,6 +105,7 @@ import {ListComponent as AssessmentTypeListComponent} from './residents/componen
 import {ListComponent as FacilityBedListComponent} from './residents/components/facility-bed/list.component';
 import {ListComponent as ApartmentBedListComponent} from './residents/components/apartment-bed/list.component';
 import {ListComponent as FacilityRoomBaseRateListComponent} from './residents/components/facility-room-base-rate/list.component';
+import {ListComponent as PaymentSourceBaseRateListComponent} from './residents/components/payment-source-base-rate/list.component';
 
 const routes: Routes = [
   {
@@ -684,6 +685,15 @@ const routes: Routes = [
           nav: {show: true, group: 'Reference'},
           title: 'Payment Sources',
           permissions: ['activity-reference', 'persistence-common-payment_source']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'payment-source-base-rates', component: PaymentSourceBaseRateListComponent,
+        data: {
+          nav: {show: true, group: 'Reference', title: 'Payment Source Base Rates'},
+          title: 'Payment Source Base Rates',
+          permissions: ['activity-reference', 'persistence-common-payment_source_base_rate']
         },
         canActivate: [AuthGuard]
       },

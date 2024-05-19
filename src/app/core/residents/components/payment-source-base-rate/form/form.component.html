@@ -1,0 +1,77 @@
+﻿<h4>Payment Source Base Rate</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item *ngIf="form.get('payment_source_id').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="payment_source_id" nzRequired>Payment Source</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('payment_source_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="payment_source_id">
+          <ng-container *ngFor="let payment_source of payment_sources">
+            <nz-option [nzLabel]="payment_source.title" [nzValue]="payment_source.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('payment_source');">
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('payment_source_id')">
+        <app-field-errors [errors]="fieldErrors('payment_source_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Effective Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+      <nz-date-picker formControlName="date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date')">
+        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="this.care_levels && this.care_levels.length > 0 && get_form_array('base_rates').controls.length > 0">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Base Rates</nz-form-label>
+    <div nz-col [nzSpan]="16">
+      <table
+             class="senior-care-form-table table table-hover table-bordered table-sm"
+             formArrayName="base_rates">
+        <thead>
+        <tr>
+          <th style="width:50%;">Care Level</th>
+          <th style="width:50%;">Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let base_rate of get_form_array('base_rates').controls;let i = index">
+          <tr [formGroupName]="i.toString()">
+            <td>{{ this.care_levels[i].title }}</td>
+            <td>
+              <nz-form-item>
+                <nz-form-control [nzSm]="16" [nzXs]="24"
+                                 [nzValidateStatus]="hasErrors('base_rates.'+i+'.amount')?'error':null">
+                  <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
+                                   nzSize="small" nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
+                  <nz-form-explain *ngIf="hasErrors('base_rates.'+i+'.amount')">
+                    <app-field-errors [errors]="fieldErrors('base_rates.'+i+'.amount')"></app-field-errors>
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
