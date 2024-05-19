@@ -244,7 +244,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get('group_list').enable();
           }
 
-          this.form.get('group').setValue(GroupType.FACILITY); // TODO: review this when enabling apartment and region
+          // this.form.get('group').setValue(GroupType.FACILITY); // TODO: review this when enabling apartment and region
           this.form.get('group').updateValueAndValidity();
         });
         break;
