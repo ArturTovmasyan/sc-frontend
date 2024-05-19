@@ -12,11 +12,11 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="away_reduction">Away Reduction</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="private_pay">Private Pay</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
-      <nz-switch formControlName="away_reduction"></nz-switch>
-      <nz-form-explain *ngIf="hasErrors('away_reduction')">
-        <app-field-errors [errors]="fieldErrors('away_reduction')"></app-field-errors>
+      <nz-switch formControlName="private_pay"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('private_pay')">
+        <app-field-errors [errors]="fieldErrors('private_pay')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -105,11 +105,11 @@
     <strong>Away Reduction</strong>
   </div>
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="reduce_for_away_days">Reduce for Away Days?</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="only_for_occupied_days">Only For Occupied Days</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
-      <nz-switch formControlName="reduce_for_away_days"></nz-switch>
-      <nz-form-explain *ngIf="hasErrors('reduce_for_away_days')">
-        <app-field-errors [errors]="fieldErrors('reduce_for_away_days')"></app-field-errors>
+      <nz-switch formControlName="only_for_occupied_days"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('only_for_occupied_days')">
+        <app-field-errors [errors]="fieldErrors('only_for_occupied_days')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

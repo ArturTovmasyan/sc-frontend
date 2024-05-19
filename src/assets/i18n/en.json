@@ -144,10 +144,11 @@
     "payment-source-list": {
       "id": "ID",
       "title": "Title",
+      "private_pay": "Private Pay",
       "amount": "Amount",
       "period": "Period",
-      "away_reduction": "Away Reduction",
       "care_level_adjustment": "Care Level Adjustment",
+      "only_for_occupied_days": "Only For Occupied Days",
       "space": "Space"
     },
     "payment-source-base-rate-list": {

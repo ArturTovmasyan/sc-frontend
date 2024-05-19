@@ -11,7 +11,7 @@ export class PaymentSource implements IdInterface {
 
   disabled: boolean;
 
-  away_reduction: boolean;
+  private_pay: boolean;
 
   period: PaymentPeriod;
 
@@ -23,7 +23,7 @@ export class PaymentSource implements IdInterface {
   date_of_birth: boolean;
   field_name: string;
   field_text: string;
-  reduce_for_away_days: boolean;
+  only_for_occupied_days: boolean;
 
   public get_amount(care_level: CareLevel): number {
     let amount: number = 0;

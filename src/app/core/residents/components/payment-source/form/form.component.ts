@@ -38,7 +38,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
       title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(255)])],
 
-      away_reduction: [false, Validators.required],
+      private_pay: [false, Validators.required],
 
       period: [null, Validators.compose([Validators.required])],
 
@@ -50,7 +50,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       date_of_birth: [false, Validators.required],
       field_name: ['', Validators.compose([Validators.maxLength(32)])],
       field_text: ['', Validators.compose([Validators.maxLength(32)])],
-      reduce_for_away_days: [false, Validators.required],
+      only_for_occupied_days: [false, Validators.required],
     });
 
     this.periods = [
