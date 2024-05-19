@@ -11,7 +11,7 @@
     <p><strong>Owner:</strong> {{ change_log.content.owner }}</p>
     <p><strong>Primary Facility:</strong> {{change_log.content.primary_facility }}</p>
 
-    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss' }}</p>
+    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss':'UTC' }}</p>
   </div>
   <div class="log-item" *ngSwitchCase="ChangeLogType.LEAD_UPDATED">
     <p><strong><i class="fas fa-pencil-alt"></i> &nbsp; <a
@@ -25,7 +25,7 @@
     <p><strong>Owner:</strong> {{ change_log.content.owner }}</p>
     <p><strong>Primary Facility:</strong> {{change_log.content.primary_facility }}</p>
 
-    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss' }}</p>
+    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss':'UTC' }}</p>
   </div>
   <div class="log-item" *ngSwitchCase="ChangeLogType.NEW_TASK">
     <p><strong><i class="fas fa-pencil-alt"></i> &nbsp; {{ change_log.content.type|activity_type }} : <a
@@ -35,10 +35,10 @@
     <p>The user <strong>{{ change_log.content.user_name }}</strong> added new task <strong>{{ change_log.content.name}}</strong> activity.</p>
     <p><strong>Name:</strong> {{ change_log.content.name }}</p>
     <p><strong>Owner:</strong> {{ change_log.content.assign_to }}</p>
-    <p><strong>Due Date:</strong> {{ change_log.content.due_date|date:'MM/dd/yyyy'}}</p>
+    <p><strong>Due Date:</strong> {{ change_log.content.due_date|date:'MM/dd/yyyy':'UTC' }}</p>
     <p><strong>{{ change_log.content.type|activity_type }}:</strong> {{ change_log.content.owner }}</p>
 
-    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss' }}</p>
+    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss':'UTC' }}</p>
   </div>
   <div class="log-item" *ngSwitchCase="ChangeLogType.TASK_UPDATED">
     <p><strong><i class="fas fa-pencil-alt"></i> &nbsp; {{ change_log.content.type|activity_type }} : <a [routerLink]="[('/lead/' + (change_log.content.type|activity_type:true)), change_log.content.id]">{{ change_log.content.owner}}</a></strong>
@@ -47,9 +47,9 @@
     <p>The user <strong>{{ change_log.content.user_name }}</strong> changed status in <strong>{{ change_log.content.name}}</strong> from <strong>{{ change_log.content.old_status }}</strong> to <strong>{{ change_log.content.new_status }}</strong>.</p>
     <p><strong>Name:</strong> {{ change_log.content.name }}</p>
     <p><strong>Owner:</strong> {{ change_log.content.assign_to }}</p>
-    <p><strong>Due Date:</strong> {{ change_log.content.due_date|date:'MM/dd/yyyy'}}</p>
+    <p><strong>Due Date:</strong> {{ change_log.content.due_date|date:'MM/dd/yyyy':'UTC' }}</p>
     <p><strong>{{ change_log.content.type|activity_type }}:</strong> {{ change_log.content.owner }}</p>
 
-    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss' }}</p>
+    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss':'UTC' }}</p>
   </div>
 </ng-container>

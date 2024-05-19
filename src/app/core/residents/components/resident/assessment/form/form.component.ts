@@ -7,6 +7,7 @@ import {AssessmentForm} from '../../../../models/assessment-form';
 import {AssessmentFormService} from '../../../../services/assessment-form.service';
 import {AssessmentCategory} from '../../../../models/assessment-category';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {DateHelper} from '../../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html',
@@ -228,6 +229,12 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
 
   public is_valid_row() {
     return (<FormArray>this.form.get('rows')).controls[this.category_selected].valid;
+  }
+
+  before_set_form_data(data: any, previous_data?: any): void {
+    super.before_set_form_data(data, previous_data);
+
+    data.date = DateHelper.convertUTC(data.date);
   }
 
 }

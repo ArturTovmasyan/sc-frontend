@@ -9,6 +9,7 @@ import {PaymentPeriod} from '../../../../models/payment-period.enum';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {GroupType} from '../../../../models/group-type.enum';
 import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
+import {DateHelper} from '../../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -179,5 +180,12 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
 
     return source ? source.title : '';
+  }
+
+  before_set_form_data(data: any, previous_data?: any): void {
+    super.before_set_form_data(data, previous_data);
+
+    data.start = DateHelper.convertUTC(data.start);
+    data.end = DateHelper.convertUTC(data.end);
   }
 }

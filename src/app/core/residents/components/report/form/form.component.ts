@@ -10,6 +10,7 @@ import {Resident} from '../../../models/resident';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {GroupHelper} from '../../../helper/group-helper';
 import {ResidentAdmissionService} from '../../../services/resident-admission.service';
+import {DateHelper} from '../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -259,6 +260,14 @@ export class FormComponent extends AbstractForm implements OnInit {
       this.form.get('date_to').enable();
       this.format_date_to = FormComponent.php2js_date_format(parameter_config);
     }
+  }
+
+  before_set_form_data(data: any, previous_data?: any): void {
+    super.before_set_form_data(data, previous_data);
+
+    data.date = DateHelper.convertUTC(data.date);
+    data.date_from = DateHelper.convertUTC(data.date_from);
+    data.date_to = DateHelper.convertUTC(data.date_to);
   }
 
 }

@@ -22,6 +22,7 @@ import {AdmissionType, ResidentAdmission} from '../../../../models/resident-admi
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {GroupHelper} from '../../../../helper/group-helper';
 import {ResidentService} from '../../../../services/resident.service';
+import {DateHelper} from '../../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -387,8 +388,12 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     }
   }
 
-  before_set_form_data(data: any): void {
+  before_set_form_data(data: any, previous_data?: any): void {
+    super.before_set_form_data(data, previous_data);
+
     if (data !== null) {
+      data.date = DateHelper.convertUTC(data.date);
+
       this.edit_data = _.cloneDeep(data);
 
       this.form.get('group_type').setValue(data.group_type);
@@ -425,4 +430,5 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     const type = this.admission_types.filter(v => v.id === this.form.get('admission_type').value).pop();
     return type ? type.name : null;
   }
+
 }

@@ -13,6 +13,7 @@ import {FormComponent as SalutationFormComponent} from '../../../salutation/form
 import {NzModalService} from 'ng-zorro-antd';
 import {AuthGuard} from '../../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
+import {DateHelper} from '../../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -42,7 +43,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     super();
 
     this.disabledDate = (current: Date): boolean => {
-      const today = new Date();
+      const today = DateHelper.convertUTC(new Date());
       return differenceInCalendarDays(current, today) > 0;
     };
 
@@ -196,4 +197,11 @@ export class FormComponent extends AbstractForm implements OnInit {
   private static truncate(value: string, length: number): string {
     return value.length > length ? (value.slice(0, length - 3) + '...') : value;
   }
+
+  before_set_form_data(data: any, previous_data?: any): void {
+    super.before_set_form_data(data, previous_data);
+
+    data.birthday = DateHelper.convertUTC(data.birthday);
+  }
+
 }

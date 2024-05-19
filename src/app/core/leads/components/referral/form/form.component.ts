@@ -174,7 +174,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  before_set_form_data(data: any): void {
+  before_set_form_data(data: any, previous_data?: any): void {
+    super.before_set_form_data(data, previous_data);
+
     if (data !== null) {
       this.edit_data = _.cloneDeep(data);
     }

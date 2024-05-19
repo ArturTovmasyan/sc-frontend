@@ -13,6 +13,7 @@ import {ActivityStatusService} from '../../../services/activity-status.service';
 import {ActivityTypeService} from '../../../services/activity-type.service';
 import {FormComponent as ActivityStatusFormComponent} from '../../activity-status/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
+import {DateHelper} from '../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -187,5 +188,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       default:
         break;
     }
+  }
+
+  before_set_form_data(data: any, previous_data?: any): void {
+    super.before_set_form_data(data, previous_data);
+
+    data.date = DateHelper.convertUTC(data.date);
+    data.due_date = DateHelper.convertUTC(data.due_date);
+    data.reminder_date = DateHelper.convertUTC(data.reminder_date);
   }
 }

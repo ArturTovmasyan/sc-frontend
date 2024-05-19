@@ -31,6 +31,7 @@ import {FormComponent as CSZFormComponent} from '../../../../residents/component
 import {FormComponent as PaymentSourceFormComponent} from '../../../../residents/components/payment-source/form/form.component';
 import {Contact} from '../../../models/contact';
 import {ContactService} from '../../../services/contact.service';
+import {DateHelper} from '../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -388,5 +389,12 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
       default:
         break;
     }
+  }
+
+  before_set_form_data(data: any, previous_data?: any): void {
+    super.before_set_form_data(data, previous_data);
+
+    data.initial_contact_date = DateHelper.convertUTC(data.initial_contact_date);
+    data.state_effective_date = DateHelper.convertUTC(data.state_effective_date);
   }
 }

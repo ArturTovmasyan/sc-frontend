@@ -16,6 +16,7 @@ import {ResidentResponsiblePersonService} from '../../../../services/resident-re
 import {ResidentPhysicianService} from '../../../../services/resident-physician.service';
 import {ResidentResponsiblePerson} from '../../../../models/resident-responsible-person';
 import {ResidentPhysician} from '../../../../models/resident-physician';
+import {DateHelper} from '../../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -241,6 +242,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       default:
         break;
     }
+  }
+
+  before_set_form_data(data: any, previous_data?: any): void {
+    super.before_set_form_data(data, previous_data);
+
+    data.date = DateHelper.convertUTC(data.date);
+    data.additional_date = DateHelper.convertUTC(data.additional_date);
   }
 
 }

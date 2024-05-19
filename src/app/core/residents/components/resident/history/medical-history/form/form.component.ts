@@ -7,6 +7,7 @@ import {MedicalHistoryConditionService} from '../../../../../services/medical-hi
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as MedicationHistoryConditionFormComponent} from '../../../../medical-history-condition/form/form.component';
 import {ResidentSelectorService} from '../../../../../services/resident-selector.service';
+import {DateHelper} from '../../../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -79,6 +80,12 @@ export class FormComponent extends AbstractForm implements OnInit {
       default:
         break;
     }
+  }
+
+  before_set_form_data(data: any, previous_data?: any): void {
+    super.before_set_form_data(data, previous_data);
+
+    data.date = DateHelper.convertUTC(data.date);
   }
 
 }

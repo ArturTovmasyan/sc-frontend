@@ -16,6 +16,7 @@ import {ResidentAdmissionService} from '../../../../services/resident-admission.
 import {ReportService} from '../../../../services/report.service';
 import {GroupHelper} from '../../../../helper/group-helper';
 import {AuthGuard} from '../../../../../guards/auth.guard';
+import {DateHelper} from '../../../../../../shared/helpers/date-helper';
 
 @Component({
   selector: 'app-resident-info',
@@ -32,7 +33,7 @@ export class InfoComponent implements OnInit {
 
   state: ResidentState = null;
 
-  today: Date = new Date();
+  today: Date = DateHelper.convertUTC(new Date());
 
   loading: boolean;
   protected loading_edit_modal: boolean = false;
