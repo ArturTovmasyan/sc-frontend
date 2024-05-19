@@ -28,6 +28,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   contacts: Contact[];
   edit_data: Referral;
 
+  contact: Contact;
+
   private _show_lead: boolean = true;
 
   get show_lead(): boolean {
@@ -124,10 +126,19 @@ export class FormComponent extends AbstractForm implements OnInit {
           if (res) {
             this.contacts = res;
 
+            this.subscribe('vc_contact');
+
             if (params) {
               this.form.get('contact_id').setValue(params.contact_id);
             }
+
+            this.form.get('contact_id').setValue(this.form.get('contact_id').value);
           }
+        });
+        break;
+      case 'vc_contact':
+        this.$subscriptions[key] = this.form.get('contact_id').valueChanges.subscribe(next => {
+          this.contact = this.contacts.filter(v => v.id === this.form.get('contact_id').value).pop();
         });
         break;
       case 'vc_referrer_type':

@@ -53,6 +53,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   phone_types: { id: PhoneType, name: string }[];
 
   selectedTab: number;
+  contact: Contact;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -263,10 +264,19 @@ export class FormComponent extends AbstractForm implements OnInit {
           if (res) {
             this.contacts = res;
 
+            this.subscribe('vc_contact');
+
             if (params) {
               this.form.get('referral.contact_id').setValue(params.contact_id);
             }
+
+            this.form.get('referral.contact_id').setValue(this.form.get('referral.contact_id').value);
           }
+        });
+        break;
+      case 'vc_contact':
+        this.$subscriptions[key] = this.form.get('referral.contact_id').valueChanges.subscribe(next => {
+          this.contact = this.contacts.filter(v => v.id === this.form.get('referral.contact_id').value).pop();
         });
         break;
       case 'vc_referrer_type':

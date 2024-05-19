@@ -249,6 +249,16 @@
         </nz-form-control>
       </nz-form-item>
 
+      <nz-form-item *ngIf="form.get('referral.notes').enabled">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.notes')?'error':null">
+          <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
+          <nz-form-explain *ngIf="hasErrors('referral.notes')">
+            <app-field-errors [errors]="fieldErrors('referral.notes')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
       <nz-form-item *ngIf="form.get('referral.contact_id').enabled">
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="contact_id" nzRequired>Contact</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.contact_id')?'error':null">
@@ -268,15 +278,48 @@
         </nz-form-control>
       </nz-form-item>
 
-      <nz-form-item *ngIf="form.get('referral.notes').enabled">
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.notes')?'error':null">
-          <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
-          <nz-form-explain *ngIf="hasErrors('referral.notes')">
-            <app-field-errors [errors]="fieldErrors('referral.notes')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
+      <ng-container *ngIf="form.get('referral.contact_id').enabled && contact">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24">First Name</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">{{ contact.first_name}}</nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24">Last Name</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">{{ contact.first_name}}</nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="contact.organization">
+          <nz-form-label [nzSm]="8" [nzXs]="24">Organization</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">{{ contact.organization.title }}</nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="contact.emails && contact.emails.length > 0">
+          <nz-form-label [nzSm]="8" [nzXs]="24">E-Mail(s)</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            {{ contact.emails.join(', ') }}
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="contact.phones && contact.phones.length > 0">
+          <nz-form-label [nzSm]="8" [nzXs]="24">Phone(s)</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <div nz-row [nzGutter]="4" *ngFor="let phone of contact.phones">
+              <div nz-col [nzSpan]="6" class="text-right"><strong>{{ phone.type|phone_type }}:</strong></div>
+              <div nz-col [nzSpan]="12">
+                <a href="tel:{{ phone.number| mask: '(000) 000-0000' }}">{{ phone.number| mask: '(000) 000-0000' }}</a>
+                <ng-container *ngIf="phone.extension">, ext. {{ phone.extension }}</ng-container>
+              </div>
+              <div *ngIf="phone.primary" nz-col [nzSpan]="2">
+                <i class="fas fa-key" title="Primary"></i>
+              </div>
+              <div *ngIf="phone.sms_enabled" nz-col [nzSpan]="2">
+                <i class="fas fa-sms" title="SMS Enabled"></i>
+              </div>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24">Notes</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">{{ contact.first_name}}</nz-form-control>
+        </nz-form-item>
+      </ng-container>
     </nz-tab>
 
     <nz-tab nzTitle="Interest Info">
