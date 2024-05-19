@@ -84,6 +84,7 @@ import {ViewComponent as OrganizationViewComponent} from './leads/components/org
 import {ViewComponent as ReferralViewComponent} from './leads/components/referral/view/view.component';
 import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/view.component';
 import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
+import {ListComponent as EmailLogListComponent} from './admin/components/email-log/list.component';
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
 import {ListComponent as InsuranceCompanyListComponent} from './residents/components/insurance-company/list.component';
 import {ViewComponent as DocumentViewComponent} from './documents/components/document/view/view.component';
@@ -989,6 +990,15 @@ const routes: Routes = [
           nav: {show: true, group: 'Notifications'},
           title: 'Notification Types',
           permissions: ['persistence-common-notification_type']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'email-log', component: EmailLogListComponent,
+        data: {
+          nav: {show: true, group: 'Notifications'},
+          title: 'E-Mail Log',
+          permissions: ['persistence-common-email_log']
         },
         canActivate: [AuthGuard]
       },

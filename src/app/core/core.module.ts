@@ -339,6 +339,7 @@ import {ViewComponent as ResidentRentViewComponent} from './residents/components
 import {ViewComponent as ResidentRentIncreaseViewComponent} from './residents/components/resident/rent/rent-increase/view/view.component';
 import {EventRepeatPipe} from './residents/pipes/event-repeat.pipe';
 import {DateInterceptor} from './interceptors/date.interceptor';
+import {ListComponent as EmailLogListComponent} from './admin/components/email-log/list.component';
 
 registerLocaleData(en);
 
@@ -650,6 +651,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReferralViewComponent,
     LeadViewComponent,
 
+    EmailLogListComponent,
     NotificationListComponent,
     NotificationFormComponent,
     NotificationTypeListComponent,

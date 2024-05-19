@@ -601,6 +601,14 @@
       "apartment": "Apartment",
       "space": "Space"
     },
+    "admin-email-log-list": {
+      "id": "ID",
+      "space": "Space",
+      "subject": "Subject",
+      "emails": "Emails",
+      "date": "Date",
+      "success": "Success"
+    },
     "insurance-company-list": {
       "id": "ID",
       "title": "Title",
