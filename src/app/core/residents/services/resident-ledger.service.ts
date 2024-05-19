@@ -15,4 +15,8 @@ export class ResidentLedgerService extends GridService<ResidentLedger> {
   public getRents(id: number) {
     return this.http.get<any>(this.SERVICE_URL_BASE + `/${id}/rent`, {});
   }
+
+  public recalculate(id: number) {
+    return this.http.put<any>(this.SERVICE_URL_BASE + `/recalculate`, {id: id});
+  }
 }

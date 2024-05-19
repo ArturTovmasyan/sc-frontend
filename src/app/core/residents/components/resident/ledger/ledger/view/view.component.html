@@ -29,6 +29,12 @@
             <div class="card-header">
               <div class="d-flex justify-content-between">
                 <div class="justify-content-start">
+                  <nz-button-group>
+                    <button type="button" nz-button nzType="default"
+                            (click)="recalculateLedger(); $event.preventDefault();">
+                      <i nz-icon nzType="calculator"></i> Recalculate
+                    </button>
+                  </nz-button-group>
                 </div>
                 <div class="justify-content-center">
                   Rent

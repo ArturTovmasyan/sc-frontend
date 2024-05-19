@@ -226,6 +226,14 @@ export class ViewComponent implements OnInit, OnDestroy {
     return null;
   }
 
+  recalculateLedger() {
+    if (this.ledger !== null) {
+      this.ledger$.recalculate(this.ledger.id).subscribe(res => {
+        this.subscribe('get_ledger', {ledger_id: this.ledger.id});
+      });
+    }
+  }
+
   getPreviousLedger() {
       this.router$.navigate(['resident', 'ledger', this.ledger.previous_ledger_id], {queryParams: this.query_params}).then(() => {
           location.reload();
