@@ -752,7 +752,8 @@
       "FACILITY_ACTIVITY": "Facility Activity",
       "CORPORATE_ACTIVITY": "Corporate Activity",
       "RESIDENT_RENT_INCREASE": "Resident Rent Increase",
-      "DATABASE_USER_LOGIN_ACTIVITY": "Database User Login Activity"
+      "DATABASE_USER_LOGIN_ACTIVITY": "Database User Login Activity",
+      "LEAD_WEB_EMAIL": "Lead Web Email"
     },
     "grant_level": {
       "NONE":"None",
