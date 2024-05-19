@@ -136,6 +136,12 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
               <i class="fas fa-file-download"></i> Medication List (with discontinued medications)
             </a>
           </li>
+          <li *ngIf="addIfHasPermission('report-form-blood-pressure-chart')">
+            <a [routerLink]=""
+               (click)="show_report('form', 'blood-pressure-chart');">
+              <i class="fas fa-file-download"></i> Blood Pressure Chart
+            </a>
+          </li>
         </ul>
       </ng-container>
 
