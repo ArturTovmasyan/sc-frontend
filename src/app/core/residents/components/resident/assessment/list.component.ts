@@ -25,6 +25,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
 
     this.card = false;
     this.component = FormComponent;
+    this.without_save_and_add = true;
 
     this.name = 'resident-assessment-list';
   }

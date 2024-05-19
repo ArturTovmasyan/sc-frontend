@@ -85,6 +85,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected $subscriptions: { [key: string]: Subscription; };
 
+  protected without_save_and_add: boolean = false;
+
   constructor(protected service$: Service, protected title$: TitleService, protected modal$: NzModalService) {
     this.title$.getTitle().subscribe(v => this.title = v);
 
@@ -401,7 +403,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
       },
     ];
 
-    if (result === null) {
+    if (result === null && this.without_save_and_add === false) {
       footer.push({
         type: 'primary',
         label: 'Save & Add',
