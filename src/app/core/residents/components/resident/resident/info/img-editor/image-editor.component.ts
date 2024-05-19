@@ -44,6 +44,7 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
   }
 
   readyImage(event) {
+    this.angularCropper.cropper.scale(1, 1);
     this.exportImage();
   }
 
