@@ -21,7 +21,8 @@
     <div nz-row>
       <div nz-col [nzSpan]="24">
         <p class="text-center m-1">
-          <strong style="font-size: large;">{{ resident.salutation.title }} {{ resident.first_name }} {{ resident.middle_name }} {{ resident.last_name }}</strong>
+          <strong
+            style="font-size: large;">{{ resident.salutation.title }} {{ resident.first_name }} {{ resident.middle_name }} {{ resident.last_name }}</strong>
         </p>
       </div>
     </div>
@@ -63,20 +64,22 @@
         <div nz-col [nzSpan]="16">{{ contract.start|date }}</div>
       </div>
 
-      <div nz-row [nzGutter]="4">
+      <div *ngIf="contract.option" nz-row [nzGutter]="4">
         <div nz-col [nzSpan]="8" class="text-right"><strong>State:</strong></div>
         <div nz-col [nzSpan]="16">{{ contract.option.state|contract_state }}</div>
       </div>
 
-      <template *ngSwitchCase="GroupType.FACILITY"
-                [ngTemplateOutletContext]="{ option: contract.option }" [ngTemplateOutlet]="tplFacility">
-      </template>
-      <template *ngSwitchCase="GroupType.APARTMENT"
-                [ngTemplateOutletContext]="{ option: contract.option }" [ngTemplateOutlet]="tplApartment">
-      </template>
-      <template *ngSwitchCase="GroupType.REGION"
-                [ngTemplateOutletContext]="{ option: contract.option }" [ngTemplateOutlet]="tplRegion">
-      </template>
+      <ng-container *ngIf="contract.option" [ngSwitch]="contract.type">
+        <template *ngSwitchCase="GroupType.FACILITY"
+                  [ngTemplateOutletContext]="{ option: contract.option }" [ngTemplateOutlet]="tplFacility">
+        </template>
+        <template *ngSwitchCase="GroupType.APARTMENT"
+                  [ngTemplateOutletContext]="{ option: contract.option }" [ngTemplateOutlet]="tplApartment">
+        </template>
+        <template *ngSwitchCase="GroupType.REGION"
+                  [ngTemplateOutletContext]="{ option: contract.option }" [ngTemplateOutlet]="tplRegion">
+        </template>
+      </ng-container>
     </ng-container>
 
     <nz-divider></nz-divider>

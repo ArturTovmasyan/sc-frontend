@@ -64,17 +64,18 @@ export class InfoComponent implements OnInit {
           this.residentSelector$.type.next(this.contract.type);
 
           let group_id = null;
-
-          switch (this.contract.type) {
-            case GroupType.FACILITY:
-              group_id = (<ContractOptionFacility>this.contract.option).bed.room.facility.id;
-              break;
-            case GroupType.REGION:
-              group_id = (<ContractOptionRegion>this.contract.option).region.id;
-              break;
-            case GroupType.APARTMENT:
-              group_id = (<ContractOptionApartment>this.contract.option).bed.room.apartment.id;
-              break;
+          if (this.contract.option) {
+            switch (this.contract.type) {
+              case GroupType.FACILITY:
+                group_id = (<ContractOptionFacility>this.contract.option).bed.room.facility.id;
+                break;
+              case GroupType.REGION:
+                group_id = (<ContractOptionRegion>this.contract.option).region.id;
+                break;
+              case GroupType.APARTMENT:
+                group_id = (<ContractOptionApartment>this.contract.option).bed.room.apartment.id;
+                break;
+            }
           }
 
           this.residentSelector$.type.next(this.contract.type);
