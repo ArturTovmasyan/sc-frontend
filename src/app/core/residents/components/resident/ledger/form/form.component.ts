@@ -21,6 +21,7 @@ import {RpPaymentTypeService} from '../../../../services/rp-payment-type.service
 import {ResidentResponsiblePerson} from '../../../../models/resident-responsible-person';
 import {ResidentResponsiblePersonService} from '../../../../services/resident-responsible-person.service';
 import {ActivatedRoute, Params} from '@angular/router';
+import moment from 'moment';
 
 @Component({
     templateUrl: 'form.component.html'
@@ -269,5 +270,17 @@ export class FormComponent extends AbstractForm implements OnInit {
       away_day.end = DateHelper.makeUTCDateOnly(away_day.end);
     });
     return value;
+  }
+
+  public dateDiff(startDate, endDate) {
+    let result = 0;
+
+    if (startDate && endDate) {
+      const start = moment(DateHelper.makeUTCDateOnly(startDate));
+      const end = moment(DateHelper.makeUTCDateOnly(endDate));
+      result = Math.ceil(end.diff(start, 'days', true) + 1);
+    }
+
+    return result;
   }
 }

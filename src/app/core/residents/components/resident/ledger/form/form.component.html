@@ -315,22 +315,22 @@
                *ngIf="get_form_array('resident_payment_received_items').controls.length > 0">
           <thead>
           <tr>
-            <th class="w-20 text-left">
+            <th class="text-left" style="width: 27% !important;">
               <nz-form-label nzRequired>Date</nz-form-label>
             </th>
-            <th class="w-15 text-left">
+            <th class="text-left" style="width: 10% !important;">
               <nz-form-label nzRequired>Type</nz-form-label>
             </th>
-            <th class="w-20 text-left">
+            <th class="text-left" style="width: 16% !important;">
               <nz-form-label nzRequired>Amount</nz-form-label>
             </th>
-            <th class="w-20 text-left">
+            <th class="text-left" style="width: 16% !important;">
               <nz-form-label nzRequired>Trans. #</nz-form-label>
             </th>
-            <th class="w-15 text-left">
-              <nz-form-label nzRequired>Res. Person</nz-form-label>
+            <th class="text-left" style="width: 14% !important;">
+              <nz-form-label nzRequired>Resp. Person</nz-form-label>
             </th>
-            <th class="w-20 text-left">
+            <th class="text-left" style="width: 17% !important;">
               <nz-form-label>Notes</nz-form-label>
             </th>
             <th>&nbsp;</th>
@@ -446,11 +446,14 @@
                *ngIf="get_form_array('resident_away_days').controls.length > 0">
           <thead>
           <tr>
-            <th class="w-30 text-center">
+            <th class="w-20 text-center">
               <nz-form-label nzRequired>Start Date</nz-form-label>
             </th>
-            <th class="w-30 text-center">
+            <th class="w-20 text-center">
               <nz-form-label nzRequired>End Date</nz-form-label>
+            </th>
+            <th class="text-center" style="width: 15% !important;">
+              <nz-form-label>Total Days</nz-form-label>
             </th>
             <th class="w-40 text-center">
               <nz-form-label nzRequired>Reason</nz-form-label>
@@ -482,6 +485,11 @@
                     </nz-form-explain>
                   </nz-form-control>
                 </nz-form-item>
+              </td>
+              <td>
+                <nz-form-control [nzSm]="16" [nzXs]="24">
+                  {{ dateDiff(get_form_array('resident_away_days').controls[i].value.start, get_form_array('resident_away_days').controls[i].value.end) }}
+                </nz-form-control>
               </td>
               <td>
                 <nz-form-item>
