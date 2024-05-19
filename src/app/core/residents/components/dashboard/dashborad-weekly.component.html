@@ -137,6 +137,18 @@
               <td class="text-center">{{item.value.qualified_inquiries}}</td>
             </ng-container>
           </tr>
+          <tr>
+            <td>Not Sure Inquiries per month</td>
+            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
+              <td class="text-center">{{item.value.not_sure_inquiries}}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Not Qualified Inquiries per month</td>
+            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
+              <td class="text-center">{{item.value.not_qualified_inquiries}}</td>
+            </ng-container>
+          </tr>
           <tr class="table-warning">
             <td>Outreach per month</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">

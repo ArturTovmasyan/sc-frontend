@@ -53,6 +53,8 @@ class FacilityDashboardData {
   outreach_per_month: number;
   projected_near_term_occupancy: number;
   qualified_inquiries: number;
+  not_sure_inquiries: number;
+  not_qualified_inquiries: number;
   starting_occupancy: number;
   beds_licensed: number;
   beds_target: number;

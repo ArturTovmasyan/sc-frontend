@@ -161,6 +161,20 @@
                 class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.qualified_inquiries : '-' }}</td>
             </ng-container>
           </tr>
+          <tr>
+            <td>Not Sure Inquiries per month</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td
+                class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.not_sure_inquiries : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Not Qualified Inquiries per month</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td
+                      class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.not_qualified_inquiries : '-' }}</td>
+            </ng-container>
+          </tr>
           <tr class="table-warning">
             <td>Outreach per month</td>
             <ng-container *ngFor="let facility of facilities">

@@ -261,6 +261,7 @@ import {NgxMaskModule} from 'ngx-mask';
 import {IconPickerModule} from 'ngx-icon-picker';
 import {AdmissionTypePipe} from './residents/pipes/admission-type.pipe';
 import {LeadStatePipe} from './leads/pipes/lead-state.pipe';
+import {LeadQualifiedPipe} from './leads/pipes/lead-qualified.pipe';
 import {InvitationComponent} from './components/account/invitation/invitation.component';
 // import {LeadModule} from './leads/lead.module';
 import {DashboardComponent as LeadDashboardComponent} from './leads/components/dashboard/dashboard.component';
@@ -368,6 +369,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentSelectorPipe,
     ResponsiblePersonPipe,
     LeadStatePipe,
+    LeadQualifiedPipe,
     ChangeLogPipe,
     ActivityTypePipe,
     PaymentPeriodPipe,

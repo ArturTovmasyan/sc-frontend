@@ -8,6 +8,7 @@ import {User} from '../../models/user';
 import {CurrentResidence} from './current-residence';
 import {Hobby} from './hobby';
 import {CareLevel} from '../../residents/models/care-level';
+import {LeadQualificationRequirement} from './lead-qualification-requirement';
 
 export class Lead implements IdInterface {
   id: number;
@@ -50,9 +51,18 @@ export class Lead implements IdInterface {
 
   funnel_stage: string;
   temperature: string;
+
+  qualified: boolean;
+  qualifications: LeadQualificationRequirement[];
 }
 
 export enum LeadState {
   OPEN = 1,
   CLOSED = 2
+}
+
+export enum Qualified {
+    YES = 1,
+    NOT_SURE = 2,
+    NO = 3
 }

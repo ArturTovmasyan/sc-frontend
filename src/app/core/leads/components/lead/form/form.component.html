@@ -443,6 +443,59 @@
         </nz-form-control>
       </nz-form-item>
     </nz-tab>
+
+    <nz-tab nzTitle="Qualified - {{ this.getFullQualifiedValue()|lead_qualified }}">
+      <nz-form-item *ngIf="this.qualification_requirements && this.qualification_requirements.length > 0 && get_form_array('qualifications').controls.length > 0">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Qualification Requirements</nz-form-label>
+        <div nz-col [nzSpan]="16">
+          <table
+                  class="senior-care-form-table table table-hover table-bordered table-sm"
+                  formArrayName="qualifications">
+            <thead>
+            <tr>
+              <th style="width:50%;">Title</th>
+              <th style="width:50%;">Qualified - {{ this.getFullQualifiedValue()|lead_qualified }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let qualification of get_form_array('qualifications').controls;let i = index">
+              <tr [formGroupName]="i.toString()">
+                <td>{{ getQualification(i)?.title }}</td>
+                <td class="text-center" style="vertical-align: middle;">
+                  <nz-form-item>
+                    <nz-form-control [nzSm]="16" [nzXs]="24"
+                                     [nzValidateStatus]="hasErrors('qualifications.'+i+'.qualified')?'error':null">
+                      <nz-radio-group formControlName="qualified">
+                        <ng-container *ngFor="let qualified of qualifieds">
+                          <label nz-radio-button [nzValue]="qualified.id"
+                            [style.backgroundColor]="getQualifiedButtonColor(i, qualified.id)"
+                            [style.borderColor]="getQualifiedButtonBorderColor(i, qualified.id)"
+                            [style.boxShadow]="'none'"
+                          >{{ (qualified.name)|translate }}</label>
+                        </ng-container>
+                      </nz-radio-group>
+                      <nz-form-explain *ngIf="hasErrors('qualifications.'+i+'.qualified')">
+                        <app-field-errors [errors]="fieldErrors('qualifications.'+i+'.qualified')"></app-field-errors>
+                      </nz-form-explain>
+                    </nz-form-control>
+                  </nz-form-item>
+                </td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </nz-form-item>
+      <nz-form-item *ngIf="form.get('close_lead').enabled">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="close_lead">Close Lead</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+          <nz-switch formControlName="close_lead"></nz-switch>
+          <nz-form-explain *ngIf="hasErrors('close_lead')">
+            <app-field-errors [errors]="fieldErrors('close_lead')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
   </nz-tabset>
 
   <nz-form-item *ngIf="formErrors()">

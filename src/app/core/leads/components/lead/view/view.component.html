@@ -236,6 +236,40 @@
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-12">
+        <ng-template #qualifiedTitle>
+          <div class="card-header">
+            <ng-container *ngIf="!lead">
+              Qualified
+            </ng-container>
+            <ng-container *ngIf="lead">
+              Qualified: {{ lead.qualified|lead_qualified }}
+            </ng-container>
+          </div>
+        </ng-template>
+
+        <div class="card">
+          <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
+            <nz-collapse-panel [nzHeader]="qualifiedTitle" [nzActive]="all_section_expand">
+              <div class="card-body" style="font-size: 14px; font-weight: 500; text-align: left;">
+                <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+                <div *ngIf="lead">
+                  <div nz-row [nzGutter]="4" *ngIf="lead.qualifications && lead.qualifications.length > 0">
+                    <div nz-col [nzSpan]="24">
+                      <ng-container *ngFor="let qualification of lead.qualifications;">
+                        <b>{{ qualification.qualification_requirement.title }}:</b> {{ qualification.qualified|lead_qualified }}
+                        <br>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nz-collapse-panel>
+          </nz-collapse>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
         <ng-template #hobbyTitle>
           <div class="card-header">
             Hobbies & Interests
