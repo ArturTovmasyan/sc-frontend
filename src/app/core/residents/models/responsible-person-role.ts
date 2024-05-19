@@ -5,5 +5,7 @@ export class ResponsiblePersonRole implements IdInterface {
 
   title: string;
 
+  icon: string;
+
   space: Space;
 }

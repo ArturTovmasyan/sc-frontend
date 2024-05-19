@@ -3,11 +3,8 @@
   <nz-tab *ngFor="let rph of physicians" [nzTitle]="nzTabHeading">
     <ng-template #nzTabHeading>
       <div nz-row [nzGutter]="4">
-        <div nz-col
-             [nzSpan]="20">{{ rph.physician.salutation.title }} {{ rph.physician.first_name }} {{ rph.physician.middle_name }} {{ rph.physician.last_name }}</div>
-        <div *ngIf="rph.primary" nz-col [nzSpan]="2">
-          <i class="fas fa-user-md" title="Primary"></i>
-        </div>
+        {{ rph.physician.salutation.title }} {{ rph.physician.first_name }} {{ rph.physician.middle_name }} {{ rph.physician.last_name }}
+        <i class="fas fa-user-md" title="Primary" style="margin-left: 0.5rem;"></i>
       </div>
     </ng-template>
     <div nz-row>

@@ -4,14 +4,10 @@
   <nz-tab *ngFor="let rrp of responsible_persons" [nzTitle]="nzTabHeading">
     <ng-template #nzTabHeading>
       <div nz-row [nzGutter]="4">
-        <div nz-col
-             [nzSpan]="20">{{ rrp.responsible_person.salutation.title }} {{ rrp.responsible_person.first_name }} {{ rrp.responsible_person.middle_name }} {{ rrp.responsible_person.last_name }}</div>
-        <div *ngIf="rrp.responsible_person.financially" nz-col [nzSpan]="2">
-          <i class="fas fa-usd" title="Financially"></i>
-        </div>
-        <div *ngIf="rrp.responsible_person.emergency" nz-col [nzSpan]="2">
-          <i class="fas fa-phone" title="Emergency"></i>
-        </div>
+        {{ rrp.responsible_person.salutation.title }} {{ rrp.responsible_person.first_name }} {{ rrp.responsible_person.middle_name }} {{ rrp.responsible_person.last_name }}
+        <ng-container *ngFor="let role of rrp.roles">
+          <i [attr.class]="role.icon" [title]="role.title" style="margin-left: 0.5rem;"></i>
+        </ng-container>
       </div>
     </ng-template>
     <div nz-row>
@@ -38,9 +34,14 @@
       <div nz-col [nzSpan]="16">{{ rrp.relationship.title }}</div>
     </div>
 
-    <div *ngIf="rrp.role" nz-row [nzGutter]="4">
-      <div nz-col [nzSpan]="8" class="text-right"><strong>Role:</strong></div>
-      <div nz-col [nzSpan]="16">{{ rrp.role.title }}</div>
+    <div *ngIf="rrp.roles && rrp.roles.length > 0" nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Roles:</strong></div>
+      <div nz-col [nzSpan]="16">
+        <ng-container *ngFor="let role of rrp.roles; let last = last">
+          {{ role.title }}
+          <ng-container *ngIf="!last">,</ng-container>
+        </ng-container>
+      </div>
     </div>
 
     <div nz-row [nzGutter]="4">

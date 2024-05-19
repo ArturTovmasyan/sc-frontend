@@ -11,6 +11,8 @@ import {first} from 'rxjs/operators';
 export class FormComponent extends AbstractForm implements OnInit {
   spaces: Space[];
 
+  iconPicked: string = '';
+
   constructor(private formBuilder: FormBuilder, private space$: SpaceService) {
     super();
   }
@@ -19,6 +21,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       title: ['', Validators.compose([Validators.required, Validators.maxLength(255)])],
+      icon: ['', Validators.compose([Validators.maxLength(255)])],
     });
 
     this.add_space();
@@ -39,8 +42,19 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
+      case 'vc_icon':
+        this.$subscriptions[key] = this.form.get('icon').valueChanges.subscribe(next => {
+          if (next) {
+            this.iconPicked = next;
+          }
+        });
+        break;
       default:
         break;
     }
+  }
+
+  protected onIconPickerSelect($event): void {
+    this.form.get('icon').setValue($event);
   }
 }

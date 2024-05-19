@@ -8,7 +8,7 @@ export class ResidentResponsiblePerson implements IdInterface {
 
   responsible_person: ResponsiblePerson;
   relationship: Relationship;
-  role: ResponsiblePersonRole;
+  roles: ResponsiblePersonRole[];
 
   resident: Resident;
 }

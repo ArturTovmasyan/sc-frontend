@@ -40,7 +40,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       responsible_person_id: [null, Validators.required],
       relationship_id: [null, Validators.required],
-      role_id: [null],
+      roles: [null],
 
       resident_id: [null, Validators.required]
     });
@@ -70,7 +70,10 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.roles = res;
 
             if (params) {
-              this.form.get('role_id').setValue(params.role_id);
+              const roles = this.form.get('roles').value;
+              roles.push(params.role_id);
+
+              this.form.get('roles').setValue(roles);
             }
           }
         });

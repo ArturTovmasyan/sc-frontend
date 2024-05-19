@@ -186,6 +186,7 @@ import {ResidentSelectorPipe} from './residents/pipes/resident-selector.pipe';
 import {NgxMaskModule} from 'ngx-mask';
 import {FilterPipe} from '../shared/pipes/filter.pipe';
 import {KeysPipe} from '../shared/pipes/keys.pipe';
+import {IconPickerModule} from 'ngx-icon-picker';
 
 // import {ListComponent as ListComponent} from './residents/components//list.component';
 // import {FormComponent as FormComponent} from './residents/components//form/form.component';
@@ -481,6 +482,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LyIconModule,
     CoreRoutingModule,
     SharedModule,
+    IconPickerModule,
     NgxMaskModule.forRoot()
   ],
   providers: [

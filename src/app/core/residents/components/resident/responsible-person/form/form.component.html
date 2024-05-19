@@ -39,13 +39,15 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="role_id">Role</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('role_id')?'error':null">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="roles">Roles</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('roles')?'error':null">
       <div class="add-select-container">
-        <nz-select nzShowSearch nzMode="default" [nzAllowClear]="true" nzPlaceHolder="Please select"
-                   formControlName="role_id">
+        <nz-select nzShowSearch nzMode="multiple" [nzAllowClear]="true" nzPlaceHolder="Please select"
+                   formControlName="roles">
           <ng-container *ngFor="let role of roles">
-            <nz-option [nzLabel]="role.title" [nzValue]="role.id"></nz-option>
+            <nz-option nzCustomContent [nzLabel]="role.title" [nzValue]="role.id">
+              <i [attr.class]="role.icon"></i> {{ role.title }}
+            </nz-option>
           </ng-container>
         </nz-select>
         <button nz-button nzType="primary" nzSize="small" nzShape="circle"
@@ -53,8 +55,8 @@
           <i nz-icon type="plus"></i>
         </button>
       </div>
-      <nz-form-explain *ngIf="hasErrors('role_id')">
-        <app-field-errors [errors]="fieldErrors('role_id')"></app-field-errors>
+      <nz-form-explain *ngIf="hasErrors('roles')">
+        <app-field-errors [errors]="fieldErrors('roles')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

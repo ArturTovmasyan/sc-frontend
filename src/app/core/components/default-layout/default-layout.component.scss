@@ -231,3 +231,12 @@
     }
   }
 }
+
+
+::ng-deep {
+  .icon-picker {
+    span {
+      font-size: 24px !important;
+    }
+  }
+}
