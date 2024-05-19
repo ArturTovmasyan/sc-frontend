@@ -17,7 +17,10 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
     scalable: true,
     zoomable: true,
     viewMode: 2,
-    checkCrossOrigin: true
+    checkCrossOrigin: true,
+    cropend: (event) => {
+      this.exportImage();
+    }
   };
 
   @ViewChild('angularCropper', {static: false}) public angularCropper: CropperComponent;
@@ -36,30 +39,30 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
     });
   }
 
-  exportImage(event) {
-    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+  exportImage() {
+    this.form.get('photo').setValue(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
   }
 
   readyImage(event) {
-    this.move(1, 1);
+    this.exportImage();
   }
 
   rotate(turn: string): void {
     this.angularCropper.cropper.rotate(turn === 'left' ? -45 : 45);
 
-    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+    this.exportImage();
   }
 
   zoom(status: string): void {
     this.angularCropper.cropper.zoom(status === 'positive' ? 0.1 : -0.1);
 
-    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+    this.exportImage();
   }
 
   move(offsetX: number, offsetY: number): void {
     this.angularCropper.cropper.move(offsetX, offsetY);
 
-    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+    this.exportImage();
   }
 
   flip(direction: string): void {
@@ -69,17 +72,13 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
       this.angularCropper.cropper.scaleY(-1);
     }
 
-    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+    this.exportImage();
   }
 
   reset() {
     this.angularCropper.cropper.reset();
 
-    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
-  }
-
-  updateRes(data: string) {
-    this.form.get('photo').setValue(data);
+    this.exportImage();
   }
 
   after_set_form_data(): void {
