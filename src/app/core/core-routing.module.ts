@@ -265,7 +265,7 @@ const routes: Routes = [
                 path: 'contacts', component: LeadContactListComponent,
                 data: {
                   nav: {show: true, group: 'Leads'},
-                  title: 'Contacts',
+                  title: 'Professional Contacts',
                   permissions: ['persistence-lead-contact']
                 },
                 canActivate: [AuthGuard]
