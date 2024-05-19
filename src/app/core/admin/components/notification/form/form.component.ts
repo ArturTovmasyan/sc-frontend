@@ -41,7 +41,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       type_id: [null, Validators.required],
       users: [[], Validators.required],
       schedule: ['', Validators.required],
-      emails: [[], Validators.required],
+      emails: [[]],
 
       facilities: [[]],
       apartments: [[]],
