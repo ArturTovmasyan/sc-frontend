@@ -159,11 +159,11 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
         </ul>
       </ng-container>
 
-      <nz-divider *ngIf="addIfHasPermission('persistence-resident-resident_responsible_person', 2)"></nz-divider>
-      <div class="d-flex" *ngIf="addIfHasPermission('persistence-resident-resident_responsible_person', 2)">
+      <nz-divider *ngIf="addIfHasPermission('persistence-resident-resident', 2)"></nz-divider>
+      <div class="d-flex" *ngIf="addIfHasPermission('persistence-resident-resident', 2)">
         <app-button-bar
           #btnBar
-          [permission]="'persistence-resident-resident_responsible_person'"
+          [permission]="'persistence-resident-resident'"
           [service]="resident$"
           [component]="_FormComponent"
           [modal_callback]="modal_callback"

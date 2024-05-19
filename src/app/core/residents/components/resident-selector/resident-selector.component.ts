@@ -109,8 +109,8 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     this.router$.navigateByUrl('/resident/' + resident_id + '/' + route_name);
   }
 
-  addIfHasPermission(permission: string) {
-    return this.auth_$.checkPermission([permission]);
+  addIfHasPermission(permission: string, level: number = 1) {
+    return this.auth_$.checkPermission([permission], level);
   }
 
   resident_changed() {

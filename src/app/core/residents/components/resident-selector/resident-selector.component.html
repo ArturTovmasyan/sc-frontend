@@ -1,7 +1,7 @@
 <div class="row" style="width: 100%;">
   <div class="col-xxl-8 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center">
     <nz-button-group [nzSize]="'large'" class="resident-pages" *ngIf="residentSelector$.resident.value !== null">
-      <a *ngIf="addIfHasPermission('persistence-resident-resident')" nz-button
+      <a *ngIf="addIfHasPermission('persistence-resident-resident', 3)" nz-button
          (click)="show_add_modal()"
          title="Add resident">
         <i class="seniorcare seniorcare-3x seniorcare-plus"></i>
