@@ -151,6 +151,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
+      nzWidth: '45rem',
       nzTitle: null,
       nzContent: ResidentMoveComponent,
       nzFooter: [

@@ -31,8 +31,11 @@ export class FormComponent extends AbstractForm implements OnInit {
       il: [true, Validators.required],
 
       physician: [false, Validators.required],
+      physician_optional: [false, Validators.required],
       responsible_person: [false, Validators.required],
+      responsible_person_optional: [false, Validators.required],
       responsible_person_multi: [false, Validators.required],
+      responsible_person_multi_optional: [false, Validators.required],
       additional_date: [false, Validators.required],
     });
 

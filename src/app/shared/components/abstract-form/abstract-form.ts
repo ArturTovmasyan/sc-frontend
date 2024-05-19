@@ -60,6 +60,7 @@ export class AbstractForm implements OnDestroy {
     const modal = modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
+      nzWidth: '45rem',
       nzTitle: null,
       nzContent: form_component,
       nzFooter: [

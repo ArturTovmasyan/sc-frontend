@@ -42,7 +42,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="physician" nzRequired>Physician</nz-form-label>
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="physician" nzRequired>Physician (Required)</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="physician"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('physician')">
@@ -52,7 +52,17 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person" nzRequired>Responsible Person</nz-form-label>
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="physician_optional" nzRequired>Physician (Optional)</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="physician_optional"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('physician_optional')">
+        <app-field-errors [errors]="fieldErrors('physician_optional')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person" nzRequired>Responsible Person (Required)</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="responsible_person"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('responsible_person')">
@@ -62,11 +72,31 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person_multi" nzRequired>Responsible Person Multi</nz-form-label>
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person_optional" nzRequired>Responsible Person (Optional)</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="responsible_person_optional"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('responsible_person_optional')">
+        <app-field-errors [errors]="fieldErrors('responsible_person_optional')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person_multi" nzRequired>Responsible Person Multi (Required)</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="responsible_person_multi"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('responsible_person_multi')">
         <app-field-errors [errors]="fieldErrors('responsible_person_multi')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person_multi_optional" nzRequired>Responsible Person Multi (Optional)</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="responsible_person_multi_optional"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('responsible_person_multi_optional')">
+        <app-field-errors [errors]="fieldErrors('responsible_person_multi_optional')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

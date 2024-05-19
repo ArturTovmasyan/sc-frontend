@@ -106,6 +106,7 @@ export class ListComponent implements OnInit, OnDestroy {
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
+      nzWidth: '45rem',
       nzTitle: null,
       nzContent: form_component,
       nzFooter: footer_config

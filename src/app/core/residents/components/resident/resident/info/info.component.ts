@@ -174,6 +174,7 @@ export class InfoComponent implements OnInit {
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
+      nzWidth: '45rem',
       nzTitle: null,
       nzContent: form_component,
       nzFooter: [
