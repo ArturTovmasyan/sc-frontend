@@ -78,8 +78,16 @@
               <div class="d-flex">
                 <nz-button-group [nzSize]="'small'" class="ml-auto">
                   <button type="button" nz-button nzType="default"
-                          (click)="show_modal_edit('lead'); $event.preventDefault();">
+                          (click)="show_modal_edit('lead')">
                     <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
+                  </button>
+                  <button *ngIf="!lead.spam" type="button" nz-button nzType="default"
+                          (click)="mark_spam(true)">
+                    <i nz-icon nzType="file-exclamation"></i> {{ "grid.mark_spam"|translate }}
+                  </button>
+                  <button *ngIf="lead.spam" type="button" nz-button nzType="default"
+                          (click)="mark_spam(false)">
+                    <i nz-icon nzType="file-done"></i> {{ "grid.unmark_spam"|translate }}
                   </button>
                 </nz-button-group>
               </div>

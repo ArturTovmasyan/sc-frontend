@@ -42,38 +42,6 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
   }
 
   ngAfterViewInit(): void {
-    // this.add_button_left(new Button(
-    //   'mark_spam',
-    //   'grid.mark_spam',
-    //   'default',
-    //   ButtonMode.MULTI_SELECT,
-    //   'file-exclamation',
-    //   null,
-    //   true,
-    //   true,
-    //   () => {
-    //     this.service$.spam(this.checkbox_config.ids, true).subscribe(res => {
-    //       this.reload_data(true);
-    //     });
-    //   }
-    // ));
-    //
-    // this.add_button_left(new Button(
-    //   'unmark_spam',
-    //   'grid.unmark_spam',
-    //   'default',
-    //   ButtonMode.MULTI_SELECT,
-    //   'file-done',
-    //   null,
-    //   true,
-    //   true,
-    //   () => {
-    //     this.service$.spam(this.checkbox_config.ids, false).subscribe(res => {
-    //       this.reload_data(true);
-    //     });
-    //   }
-    // ));
-
     this.add_button_center(new Button(
       'report',
       'grid.lead-lead-list.button.report',
@@ -109,15 +77,39 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
       () => {
         const btn = this._btnBar.buttons_right[0];
 
-        btn.faIcon = btn.name === 'open' ? 'fas fa-star' : 'fas fa-star-half-alt';
-        btn.title = btn.name === 'open' ? 'grid.lead-lead-list.button.all' : 'grid.lead-lead-list.button.open';
-        btn.name = btn.name === 'open' ? 'all' : 'open';
-
         this.params = [{key: 'my', value: '1'}];
         if (btn.name === 'all') {
           this.params.push({key: 'all', value: '1'});
         }
         this.reload_data(true);
+
+        btn.faIcon = btn.name === 'open' ? 'fas fa-star' : 'fas fa-star-half-alt';
+        btn.title = btn.name === 'open' ? 'grid.lead-lead-list.button.all' : 'grid.lead-lead-list.button.open';
+        btn.name = btn.name === 'open' ? 'all' : 'open';
+      }));
+
+
+    this.add_button_right(new Button(
+      'spam',
+      'grid.lead-lead-list.button.spam',
+      'default',
+      ButtonMode.FREE_SELECT,
+      'file-exclamation',
+      null,
+      false,
+      true,
+      () => {
+        const btn = this._btnBar.buttons_right[1];
+
+        this.params = [{key: 'my', value: '1'}];
+        if (btn.name === 'spam') {
+          this.params.push({key: 'spam', value: '1'});
+        }
+        this.reload_data(true);
+
+        btn.name = btn.name === 'spam' ? 'not_spam' : 'spam';
+        btn.nzIcon = btn.name === 'spam' ? 'file-exclamation' : 'file-done';
+        btn.title = btn.name === 'not_spam' ? 'grid.lead-lead-list.button.not_spam' : 'grid.lead-lead-list.button.spam';
       }));
   }
 

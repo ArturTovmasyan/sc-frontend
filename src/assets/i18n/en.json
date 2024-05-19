@@ -545,7 +545,9 @@
       "button": {
         "open": "Open",
         "all": "All",
-        "report": "Report"
+        "report": "Report",
+        "spam": "Show Spam",
+        "not_spam": "Show Not Spam"
       },
       "id": "ID",
       "date": "Date",

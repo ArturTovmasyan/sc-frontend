@@ -33,6 +33,8 @@ export class Lead implements IdInterface {
   facilities: Facility[];
   notes: string;
   phones: Phone[];
+
+  spam: boolean;
 }
 
 export enum LeadState {

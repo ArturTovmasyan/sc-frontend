@@ -38,37 +38,28 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
   }
 
   ngAfterViewInit(): void {
-    // this.add_button_left(new Button(
-    //   'mark_spam',
-    //   'grid.mark_spam',
-    //   'default',
-    //   ButtonMode.MULTI_SELECT,
-    //   'file-exclamation',
-    //   null,
-    //   true,
-    //   true,
-    //   () => {
-    //     this.service$.spam(this.checkbox_config.ids, true).subscribe(res => {
-    //       this.reload_data(true);
-    //     });
-    //   }
-    // ));
-    //
-    // this.add_button_left(new Button(
-    //   'unmark_spam',
-    //   'grid.unmark_spam',
-    //   'default',
-    //   ButtonMode.MULTI_SELECT,
-    //   'file-done',
-    //   null,
-    //   true,
-    //   true,
-    //   () => {
-    //     this.service$.spam(this.checkbox_config.ids, false).subscribe(res => {
-    //       this.reload_data(true);
-    //     });
-    //   }
-    // ));
+    this.add_button_center(new Button(
+      'report',
+      'grid.lead-lead-list.button.report',
+      'default',
+      ButtonMode.FREE_SELECT,
+      null,
+      'far fa-file',
+      false,
+      true,
+      () => {
+        this.create_report_modal(ReportFormComponent, data => {
+          this.loading = true;
+          return this.report$.reportAsObservable('lead', 'lead', 'csv', {
+            assessment_id: 1,
+            date_from: data.date_from,
+            date_to: data.date_to
+          });
+        }, data => {
+          saveFile(data);
+          this.loading = false;
+        });
+      }));
 
     this.add_button_right(new Button(
       'all',
@@ -93,27 +84,27 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
         this.reload_data(true);
       }));
 
-    this.add_button_center(new Button(
-      'report',
-      'grid.lead-lead-list.button.report',
+    this.add_button_right(new Button(
+      'spam',
+      'grid.lead-lead-list.button.spam',
       'default',
       ButtonMode.FREE_SELECT,
+      'file-exclamation',
       null,
-      'far fa-file',
       false,
       true,
       () => {
-        this.create_report_modal(ReportFormComponent, data => {
-          this.loading = true;
-          return this.report$.reportAsObservable('lead', 'lead', 'csv', {
-            assessment_id: 1,
-            date_from: data.date_from,
-            date_to: data.date_to
-          });
-        }, data => {
-          saveFile(data);
-          this.loading = false;
-        });
+        const btn = this._btnBar.buttons_right[1];
+
+        this.params = [];
+        if (btn.name === 'spam') {
+          this.params.push({key: 'spam', value: '1'});
+        }
+        this.reload_data(true);
+
+        btn.name = btn.name === 'spam' ? 'not_spam' : 'spam';
+        btn.nzIcon = btn.name === 'spam' ? 'file-exclamation' : 'file-done';
+        btn.title = btn.name === 'not_spam' ? 'grid.lead-lead-list.button.not_spam' : 'grid.lead-lead-list.button.spam';
       }));
   }
 

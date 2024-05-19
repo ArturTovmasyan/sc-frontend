@@ -158,7 +158,7 @@ export class ViewComponent implements OnInit, OnDestroy {
             loading = true;
 
             const component = <AbstractForm>modal.getContentComponent();
-            component.before_submit()
+            component.before_submit();
             const form_data = component.formObject.value;
 
             component.submitted = true;
@@ -215,5 +215,13 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   broadcast_reload_event($event) {
     this.broadcast_reload = $event;
+  }
+
+  mark_spam(state: boolean) {
+    if (this.lead !== null) {
+      this.lead$.spam([this.lead.id], state).subscribe(res => {
+        this.subscribe('get_lead', {lead_id: this.lead.id});
+      });
+    }
   }
 }
