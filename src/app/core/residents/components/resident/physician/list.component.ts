@@ -5,12 +5,14 @@ import {TitleService} from '../../../../services/title.service';
 import {ResidentPhysicianService} from '../../../services/resident-physician.service';
 import {ResidentPhysician} from '../../../models/resident-physician';
 import {FormComponent} from './form/form.component';
+import {FormComponent as ReorderFormComponent} from './reorder/form.component';
+import {FormComponent as PhysicianFormComponent} from '../../physician/form/form.component';
 import {Observable, Subscription} from 'rxjs';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {first} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
-import {FormComponent as ReorderFormComponent} from './reorder/form.component';
+import {PhysicianService} from '../../../services/physician.service';
 
 @Component({
   templateUrl: './list.component.html',
@@ -22,6 +24,7 @@ export class ListComponent implements OnInit, OnDestroy {
   selected_tab: number;
 
   loading_edit_modal: boolean;
+  loading_p_edit_modal: boolean;
 
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
@@ -32,6 +35,7 @@ export class ListComponent implements OnInit, OnDestroy {
     private title$: TitleService,
     private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService,
+    private physician$: PhysicianService,
     private sanitizer: DomSanitizer,
   ) {
     this.selected_tab = 0;
@@ -93,6 +97,20 @@ export class ListComponent implements OnInit, OnDestroy {
 
   show_modal_add(): void {
     this.create_modal(FormComponent, data => this.service$.add(data), null);
+  }
+
+  show_p_edit(id: number): void {
+    this.loading_p_edit_modal = true;
+    this.physician$.get(id).subscribe(
+      res => {
+        this.loading_p_edit_modal = false;
+
+        this.create_modal(PhysicianFormComponent, data => this.physician$.edit(data), res);
+      },
+      error => {
+        this.loading_p_edit_modal = false;
+        // console.error(error);
+      });
   }
 
   show_modal_edit(): void {
@@ -272,7 +290,9 @@ export class ListComponent implements OnInit, OnDestroy {
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
-      if (component instanceof FormComponent || component instanceof ReorderFormComponent) {
+      if (component instanceof FormComponent
+        || component instanceof PhysicianFormComponent
+        || component instanceof ReorderFormComponent) {
         const form = component.formObject;
 
         if (component instanceof ReorderFormComponent) {
