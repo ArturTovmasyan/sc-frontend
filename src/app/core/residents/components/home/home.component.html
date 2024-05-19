@@ -25,9 +25,18 @@
             <i nz-icon nzType="down" class="title-caret"></i>
           </a>
           <nz-dropdown-menu #menu="nzDropdownMenu">
-            <ul nz-menu *ngFor="let facility of facilities">
-              <li *ngIf="type_name === facility.name" nz-menu-item (click)="select_facility(facility.id, facility.name)"><strong>{{ facility.name }}</strong></li>
-              <li *ngIf="type_name !== facility.name" nz-menu-item (click)="select_facility(facility.id, facility.name)">{{ facility.name }}</li>
+            <ul nz-menu>
+              <li *ngIf="facilities && facilities.length > 0" nz-menu-group
+                  nzTitle="FFC- Facilities">
+                <ul class="sc-dd-ul">
+                  <ng-container nz-menu *ngFor="let facility of facilities">
+                    <li *ngIf="type_name === facility.name" nz-menu-item
+                        (click)="select_facility(facility.id, facility.name)"><strong>{{ facility.name }}</strong></li>
+                    <li *ngIf="type_name !== facility.name" nz-menu-item
+                        (click)="select_facility(facility.id, facility.name)">{{ facility.name }}</li>
+                  </ng-container>
+                </ul>
+              </li>
             </ul>
           </nz-dropdown-menu>
         </div>
