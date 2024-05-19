@@ -1,7 +1,8 @@
+import * as PDFObject from 'pdfobject';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {TitleService} from '../../services/title.service';
-import {NzFormatEmitEvent, NzTreeNode, simpleEmptyImage} from 'ng-zorro-antd';
+import {NzFormatEmitEvent, simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HelpObject, HelpObjectType} from '../../models/help-object';
 import {HelpCategory} from '../../models/help-category';
@@ -71,5 +72,8 @@ export class HelpComponent implements OnInit, OnDestroy {
 
   openItem(data: NzFormatEmitEvent) {
     this.object = <any> data.node!.origin;
+    if (this.object.type === HelpObjectType.PDF) {
+      setTimeout(() => PDFObject.embed(this.object.url, '#helpPDFViewer'), 250);
+    }
   }
 }

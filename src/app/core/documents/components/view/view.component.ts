@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as PDFObject from 'pdfobject';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {Document} from '../../models/document';
@@ -63,9 +64,9 @@ export class ViewComponent implements OnInit, OnDestroy {
             this.documents.sort((a, b) => a.title.localeCompare(b.title));
 
             if (params) {
-              this.document = this.documents.filter(v => v.id = params.document_id).pop();
+              this.openPDF(this.documents.filter(v => v.id = params.document_id).pop());
             } else {
-              this.document = this.documents[0];
+              this.openPDF(this.documents[0]);
             }
           }
         });
@@ -83,6 +84,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   public openPDF(document: Document) {
     this.document = document;
+    setTimeout(() => PDFObject.embed(this.document.file, '#documentsPDFViewer'), 250);
   }
 
   addIfHasPermission(permission: string, level: number) {

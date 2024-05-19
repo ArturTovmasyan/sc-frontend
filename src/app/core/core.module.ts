@@ -244,7 +244,6 @@ import {FormComponent as NotificationTypeFormComponent} from './admin/components
 import {CronJobsModule} from '../cron-jobs/cron-jobs.module';
 import {ChangeLogPipe} from './pipes/change-log.pipe';
 import {ActivityTypePipe} from './leads/pipes/activity-type.pipe';
-import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer';
 import {VgBufferingModule} from 'videogular2/compiled/src/buffering/buffering';
 import {VgOverlayPlayModule} from 'videogular2/compiled/src/overlay-play/overlay-play';
 import {VgControlsModule} from 'videogular2/compiled/src/controls/controls';
@@ -636,7 +635,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CoreRoutingModule,
     SharedModule,
     IconPickerModule,
-    NgxExtendedPdfViewerModule,
     NgxMaskModule.forRoot(),
     CronJobsModule,
     VgCoreModule,

@@ -29,11 +29,6 @@
                 "glob": "**/*",
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
                 "output": "/assets/"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/ngx-extended-pdf-viewer/assets/locale",
-                "output": "/assets/locale/"
               }
             ],
             "styles": [
@@ -53,9 +48,7 @@
             },
             "scripts": [
               "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/ngx-extended-pdf-viewer/assets/pdf.js",
-              "node_modules/ngx-extended-pdf-viewer/assets/pdf.worker.js",
-              "node_modules/ngx-extended-pdf-viewer/assets/viewer.js"
+              "node_modules/pdfobject/pdfobject.js"
             ]
           },
           "configurations": {
@@ -126,9 +119,7 @@
             },
             "scripts": [
               "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/ngx-extended-pdf-viewer/assets/pdf.js",
-              "node_modules/ngx-extended-pdf-viewer/assets/pdf.worker.js",
-              "node_modules/ngx-extended-pdf-viewer/assets/viewer.js"
+              "node_modules/pdfobject/pdfobject.js"
             ],
             "assets": [
               "src/favicon.ico",
