@@ -15,10 +15,15 @@ import {ResidentSelectorService} from '../../../services/resident-selector.servi
 import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
 import {PaymentPeriodPipe} from '../../../pipes/payment-period.pipe';
 import {RentIncreaseReasonPipe} from '../../../pipes/rent-increase-reason.pipe';
-import {FormComponent} from '../event/form/form.component';
+import {FormComponent} from './form/form.component';
 import {FormComponent as FacilityEventFormComponent} from '../../facility/event-form/form.component';
 import {CalendarEventType} from '../../../models/event-definition';
 import {FacilityEventService} from '../../../services/facility-event.service';
+import {ViewComponent as ResidentEventViewComponent} from './view/view.component';
+import {ViewComponent as ResidentRentViewComponent} from '../rent/rent/view/view.component';
+import {ViewComponent as ResidentRentIncreaseViewComponent} from '../rent/rent-increase/view/view.component';
+import {ResidentRentService} from '../../../services/resident-rent.service';
+import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
 
 @Component({
   selector: 'app-resident-calendar',
@@ -45,6 +50,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private modal$: NzModalService,
     private resident$: ResidentService,
     private residentEvent$: ResidentEventService,
+    private residentRent$: ResidentRentService,
+    private residentRentIncrease$: ResidentRentIncreaseService,
     private facilityEvent$: FacilityEventService,
     private residentSelector$: ResidentSelectorService,
     private auth_$: AuthGuard
@@ -181,6 +188,48 @@ export class CalendarComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  show_modal_view(id: number, service$: any, component: any): void {
+    service$.get(id).pipe(first()).subscribe(res => {
+      if (res) {
+        this.create_modal_view(component, res);
+      }
+    });
+  }
+
+  private create_modal_view(form_component: any, result: any) {
+    const footer = [
+      {
+        label: 'Close',
+        onClick: () => {
+          modal.close();
+        }
+      },
+    ];
+
+    const modal = this.modal$.create({
+      nzClosable: false,
+      nzMaskClosable: false,
+      nzWidth: '35rem',
+      nzTitle: null,
+      nzContent: form_component,
+      nzFooter: footer
+    });
+
+    modal.afterOpen.subscribe(() => {
+      const component = modal.getContentComponent();
+      if (component instanceof ResidentEventViewComponent) {
+        component.event = result;
+      }
+      if (component instanceof ResidentRentViewComponent) {
+        component.event = result;
+      }
+      if (component instanceof ResidentRentIncreaseViewComponent) {
+        component.event = result;
+      }
+    });
+  }
+
   private create_modal(form_component: any, submit: (data: any) => Observable<any>, result: any) {
     let valid = false;
     let loading = false;
@@ -294,14 +343,25 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   eventMouseEnter($event: any) {
-    if ($event.event.extendedProps.event_type === CalendarEventType.RESIDENT) {
-      this.show_modal_edit($event.event.id, FormComponent);
-    } else if ($event.event.extendedProps.event_type === CalendarEventType.FACILITY) {
-      this.facilityEvent$.isEditable($event.event.id).subscribe(res => {
-        if (res) {
-          this.show_modal_edit($event.event.id, FacilityEventFormComponent);
-        }
-      });
+    switch ($event.event.extendedProps.event_type) {
+      case CalendarEventType.FACILITY:
+        this.facilityEvent$.isEditable($event.event.id).subscribe(res => {
+          if (res) {
+            this.show_modal_edit($event.event.id, FacilityEventFormComponent);
+          }
+        });
+        break;
+      case CalendarEventType.RESIDENT:
+        this.show_modal_edit($event.event.id, FormComponent);
+        break;
+      case CalendarEventType.RENT:
+        this.show_modal_view($event.event.id, this.residentRent$, ResidentRentViewComponent);
+        break;
+      case CalendarEventType.RENT_INCREASE:
+        this.show_modal_view($event.event.id, this.residentRentIncrease$, ResidentRentIncreaseViewComponent);
+        break;
+      default:
+        break;
     }
   }
 }
