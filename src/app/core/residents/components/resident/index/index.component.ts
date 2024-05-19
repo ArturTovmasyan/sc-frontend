@@ -109,13 +109,13 @@ export class IndexComponent implements OnInit, OnDestroy {
         } else {
           switch (this.options.state) {
             case 'active':
-              this.title$.setTitle('Active');
+              this.title$.setTitle('Current');
               break;
             case 'inactive':
-              this.title$.setTitle('Inactive');
+              this.title$.setTitle('Moved-Out');
               break;
             case 'no-admission':
-              this.title$.setTitle('Pre-Admit');
+              this.title$.setTitle('Moving In');
               break;
           }
         }
