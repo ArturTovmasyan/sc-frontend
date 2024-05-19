@@ -55,7 +55,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy, AfterViewInit 
       this.toggleRef(nav_ref);
     });
 
-    this.toggleRef(nav_ref, true);
+    setTimeout(() => this.toggleRef(nav_ref, true), 250);
   }
 
   toggleRef(nav_ref: Element, first: boolean = false) {
