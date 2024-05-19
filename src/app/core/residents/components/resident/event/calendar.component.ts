@@ -88,7 +88,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 id: admission.id,
                 event_type: CalendarEventType.ADMISSION,
                 start: moment(admission.start).format('YYYY-MM-DD'),
-                end: admission.end === null ? null : moment(admission.end).format('YYYY-MM-DD'),
+                end: null,
                 title: (new AdmissionTypePipe()).transform(admission.admission_type)
               });
             });
