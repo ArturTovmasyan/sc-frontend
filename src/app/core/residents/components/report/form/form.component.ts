@@ -198,8 +198,10 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'rs_group':
         this.$subscriptions[key] = this.residentSelector$.group.subscribe(next => {
           if (next) {
-            this.form.get('group_id').setValue(next);
-            this.form.get('group_list').setValue(this.group_helper.get_group_data(next, this.form.get('group').value));
+            if (!this.show.group_multi) {
+              this.form.get('group_id').setValue(next);
+              this.form.get('group_list').setValue(this.group_helper.get_group_data(next, this.form.get('group').value));
+            }
           }
 
           this.subscribe('rs_state');
@@ -293,9 +295,12 @@ export class FormComponent extends AbstractForm implements OnInit {
         let group_value = [];
         let group_list_value = [];
 
-        if (this.residentSelector$.group.value) {
-          group_value = [this.residentSelector$.group.value];
-          group_list_value = [this.group_helper.get_group_data(this.residentSelector$.group.value, this.form.get('group').value)];
+        const rs_gidv = this.residentSelector$.group.value;
+        const rs_gv = this.group_helper.get_group_data(this.residentSelector$.group.value, this.form.get('group').value);
+
+        if (rs_gidv !== null && rs_gv !== null) {
+          group_value = [rs_gidv];
+          group_list_value = [rs_gv];
         }
 
         this.form.get('group_ids').setValue(group_value);
