@@ -78,7 +78,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     switch (key) {
       case 'list_event_definition':
         this.$subscriptions[key] = this.eventDefinition$
-          .all([{key: 'view', value: CalendarEventType.FACILITY.toString()}]).pipe(first()).subscribe(res => {
+          .all([{key: 'view', value: CalendarEventType.RESIDENT.toString()}]).pipe(first()).subscribe(res => {
             if (res) {
               this.event_definitions = res;
             }

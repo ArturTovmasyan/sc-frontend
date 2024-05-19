@@ -166,6 +166,11 @@
       "multi_item": "Multiple choice",
       "space": "Space"
     },
+    "assessment-type-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "assessment-care-level-list": {
       "id": "ID",
       "title": "Title",

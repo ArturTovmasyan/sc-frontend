@@ -21,7 +21,7 @@ export class ListComponent extends GridComponent<AssessmentType, AssessmentTypeS
 
     this.component = FormComponent;
 
-    this.name = 'category-list';
+    this.name = 'type-list';
   }
 
   ngOnInit(): void {
