@@ -35,6 +35,7 @@
   </app-button-bar>
   <nz-table
     *ngIf="fields != null && header != null && header_helper != null"
+    #scTable
     nzShowSizeChanger
     nzShowQuickJumper
     nzHideOnSinglePage
@@ -54,7 +55,7 @@
     (nzPageSizeChange)="reload_data(true)">
     <thead (nzSortChange)="update_sort($event)">
     <ng-container *ngFor="let hrow of header;let hrowfirst=first;">
-      <tr>
+      <tr [ngStyle]="{'visibility': header_ready ? 'visible' : 'hidden'}">
         <th *ngIf="hrowfirst"
             [attr.class]="showCheckboxes()?'sc-table-th-checkbox':'sc-table-th-no-checkbox'"
             [nzShowCheckbox]="showCheckboxes()"

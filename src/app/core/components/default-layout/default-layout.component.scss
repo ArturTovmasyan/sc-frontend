@@ -37,14 +37,21 @@
   }
 }
 
-::ng-deep table.ant-table-fixed > thead.ant-table-thead > tr:first-child > th:first-child {
-  &.sc-table-th-checkbox {
-    width: 2rem;
+::ng-deep table.ant-table-fixed > thead.ant-table-thead > tr {
+  &:first-child > th:first-child {
+    &.sc-table-th-checkbox {
+      width: 2rem;
+    }
+
+    &.sc-table-th-no-checkbox {
+      width: 0rem;
+    }
   }
 
-  &.sc-table-th-no-checkbox {
-    width: 0rem;
+  th {
+    text-align: center;
   }
+
 }
 
 ::ng-deep {

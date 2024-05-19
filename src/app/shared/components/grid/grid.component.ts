@@ -6,9 +6,12 @@ import {TitleService} from '../../../core/services/title.service';
 import {GridService} from '../../services/grid.service';
 import {ModalFormService} from '../../services/modal-form.service';
 import {Button, ButtonBarComponent} from '../modal/button-bar.component';
+import {NzTableComponent} from 'ng-zorro-antd';
 
 export class GridComponent<T extends IdInterface, Service extends GridService<T>> implements OnDestroy {
   _ = _;
+
+  @ViewChild('scTable', {static: false}) scTable: NzTableComponent;
 
   protected _btnBar: ButtonBarComponent;
 
@@ -40,6 +43,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected header: any[] = null;
   protected header_helper: any[];
+  protected header_ready: boolean = false;
   protected fields: any[] = null;
   protected data = [];
 
@@ -174,7 +178,9 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
         );
 
         this.header = this.header.map(header_row => Object.values(header_row));
-        this.header_helper = new Array(this.header[0].filter(v => v.field.hasOwnProperty('hidden') && v.field.hidden === false).length);
+        this.header_helper = [0, ...(this.header[0]
+          .filter(v => v.field.hasOwnProperty('hidden') && v.field.hidden === false)
+          .map(v => v.field.hasOwnProperty('width') ? v.field.width : 0))];
 
         this.reload_data(reset);
       }
@@ -267,6 +273,16 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
       this.page_config.total = data.total;
       this.data = data.data;
       this.checkbox_refresh();
+
+      if (this.scTable) {
+        this.scTable.tableMainElement.nativeElement
+          .querySelectorAll('col[style="width: 0px; min-width: 0px;"]')
+          .forEach((element) => {
+            element.removeAttribute('style');
+          });
+
+        this.header_ready = true;
+      }
     });
 
     this.on_reload();
@@ -412,7 +428,10 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   }
 
   public showCheckboxes(): boolean {
-    return this.component || this._btnBar.buttons_left.length > 0 || this._btnBar.buttons_center.length > 0 || this._btnBar.buttons_right.length > 0;
+    return this.component
+      || this._btnBar.buttons_left.length > 0
+      || this._btnBar.buttons_center.length > 0
+      || this._btnBar.buttons_right.length > 0;
   }
 
   button_action(action: string, id: any) {
