@@ -344,12 +344,18 @@ export class ScSelectService {
         break;
       case ENTER:
         e.preventDefault();
-        if (this.open) {
-          if (this.activatedOption && !this.activatedOption.scDisabled) {
-            this.clickOption(this.activatedOption);
-          }
+        if (this.isMultipleOrTags && eventTarget.value && eventTarget.value !== ''
+          && this._tokenSeparators && this._tokenSeparators.length > 0) {
+          this.tokenSeparate(eventTarget.value + this._tokenSeparators[0], this._tokenSeparators);
+          this.setOpenState(false);
         } else {
-          this.setOpenState(true);
+          if (this.open) {
+            if (this.activatedOption && !this.activatedOption.scDisabled) {
+              this.clickOption(this.activatedOption);
+            }
+          } else {
+            this.setOpenState(true);
+          }
         }
         break;
       case BACKSPACE:
