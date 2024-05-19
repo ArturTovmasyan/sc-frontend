@@ -476,7 +476,10 @@
       "private_pay_balance_due": "Private Pay Balance Due",
       "not_private_pay_balance_due": "3rd Party Balance Due",
       "balance_due": "Balance Due",
-      "info": "Sources"
+      "info": "Sources",
+      "expense_item_sum": "Expense Item Amount",
+      "credit_item_sum": "Credit Item Amount",
+      "discount_item_sum": "Discount Item Amount"
     },
     "resident-expense-item-list": {
       "id": "ID",
