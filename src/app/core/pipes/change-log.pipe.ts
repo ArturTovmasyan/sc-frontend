@@ -10,9 +10,9 @@ export class ChangeLogPipe implements PipeTransform {
       case ChangeLogType.LEAD_UPDATED:
         return 'Lead State Changed';
       case ChangeLogType.NEW_TASK:
-        return 'New Activity Task';
+        return 'New Activity To Do';
       case ChangeLogType.TASK_UPDATED:
-        return 'Modified Activity Task Status';
+        return 'Modified Activity To Do Status';
       default:
         return value;
     }

@@ -450,7 +450,7 @@
       "activity": "Activity",
       "date_entered": "Date Entered",
       "entered_by": "Entered by",
-      "task_owner": "Task Owner",
+      "task_owner": "To Do Owner",
       "due_date": "Due Date",
       "status": "Status",
       "type_info": "Type"
