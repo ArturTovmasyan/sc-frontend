@@ -99,6 +99,7 @@ import {ListComponent as OutreachListComponent} from './leads/components/outreac
 import {ListComponent as OutreachTypeListComponent} from './leads/components/outreach-type/list.component';
 import {ListComponent as CurrentResidenceListComponent} from './leads/components/current-residence/list.component';
 import {ListComponent as HobbyListComponent} from './leads/components/hobby/list.component';
+import {ListComponent as QualificationRequirementListComponent} from './leads/components/qualification-requirement/list.component';
 import {ViewComponent as LeadContactViewComponent} from './leads/components/contact/view/view.component';
 import {ListComponent as DocumentCategoryListComponent} from './documents/components/category/list.component';
 import {DashboardComponent as CorporateDashboardComponent} from './residents/components/dashboard/dashboard.component';
@@ -1003,6 +1004,15 @@ const routes: Routes = [
                   nav: {show: true, group: 'Leads'},
                   title: 'Hobbies',
                   permissions: ['activity-lead_admin', 'persistence-lead-hobby']
+              },
+              canActivate: [AuthGuard]
+          },
+          {
+              path: 'qualification-requirement', component: QualificationRequirementListComponent,
+              data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Qualification Requirements',
+                  permissions: ['activity-lead_admin', 'persistence-lead-qualification_requirement']
               },
               canActivate: [AuthGuard]
           }

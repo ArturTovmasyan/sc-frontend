@@ -279,6 +279,7 @@ import {FormComponent as ActivityStatusFormComponent} from './leads/components/a
 import {FormComponent as ActivityTypeFormComponent} from './leads/components/activity-type/form/form.component';
 import {FormComponent as ReferrerTypeFormComponent} from './leads/components/referrer-type/form/form.component';
 import {FormComponent as CareTypeFormComponent} from './leads/components/care-type/form/form.component';
+import {FormComponent as QualificationRequirementFormComponent} from './leads/components/qualification-requirement/form/form.component';
 import {FormComponent as OrganizationFormComponent} from './leads/components/organization/form/form.component';
 import {FormComponent as ReferralFormComponent} from './leads/components/referral/form/form.component';
 import {FormComponent as LeadFormComponent} from './leads/components/lead/form/form.component';
@@ -287,6 +288,7 @@ import {ListComponent as ActivityStatusListComponent} from './leads/components/a
 import {ListComponent as ActivityTypeListComponent} from './leads/components/activity-type/list.component';
 import {ListComponent as ReferrerTypeListComponent} from './leads/components/referrer-type/list.component';
 import {ListComponent as CareTypeListComponent} from './leads/components/care-type/list.component';
+import {ListComponent as QualificationRequirementListComponent} from './leads/components/qualification-requirement/list.component';
 import {ListComponent as OrganizationListComponent} from './leads/components/organization/list.component';
 import {ListComponent as ReferralListComponent} from './leads/components/referral/list.component';
 import {ListComponent as LeadListComponent} from './leads/components/lead/list.component';
@@ -626,6 +628,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CurrentResidenceFormComponent,
     HobbyListComponent,
     HobbyFormComponent,
+    QualificationRequirementListComponent,
+    QualificationRequirementFormComponent,
 
     LeadContactListComponent,
     LeadContactFormComponent,
@@ -806,6 +810,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     OutreachTypeFormComponent,
     CurrentResidenceFormComponent,
     HobbyFormComponent,
+    QualificationRequirementFormComponent,
 
     LeadContactFormComponent,
     LeadInterestFormComponent,

@@ -552,6 +552,11 @@
       "title": "Title",
       "space": "Space"
     },
+    "lead-qualification-requirement-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "lead-lead-list": {
       "button": {
         "open": "Open",
