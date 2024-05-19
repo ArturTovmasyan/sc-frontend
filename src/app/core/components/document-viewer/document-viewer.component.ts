@@ -163,7 +163,7 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
     this.document = document;
 
     if (this.document) {
-      setTimeout(() => PDFObject.embed(this.document.file, '#documentsPDFViewer'), 250);
+      // setTimeout(() => PDFObject.embed(this.document.file, '#documentsPDFViewer'), 250);
     }
   }
 
