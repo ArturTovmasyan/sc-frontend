@@ -28,6 +28,10 @@
 }
 
 ::ng-deep {
+  .ant-message .anticon {
+    top: -3px;
+  }
+
   .app-sc-container {
     margin-top: 1.5rem;
   }

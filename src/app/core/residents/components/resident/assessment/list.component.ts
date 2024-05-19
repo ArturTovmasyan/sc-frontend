@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
@@ -19,7 +19,8 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
     protected title$: TitleService,
     protected modal$: NzModalService,
     private residentSelector$: ResidentSelectorService,
-    private report$: ReportService
+    private report$: ReportService,
+    private message$: NzMessageService
   ) {
     super(service$, title$, modal$);
 
@@ -44,6 +45,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
           this.report$.report('assessment', 'blank', 'pdf', {assessment_id: ids[0]}, () => {
             this.loading = false;
           }, (error) => {
+            this.message$.error(error.data.error, {nzDuration: 10000});
           });
         }
       }
@@ -62,6 +64,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
           this.report$.report('assessment', 'filled', 'pdf', {assessment_id: ids[0]}, () => {
             this.loading = false;
           }, (error) => {
+            this.message$.error(error.data.error, {nzDuration: 10000});
           });
         }
       }

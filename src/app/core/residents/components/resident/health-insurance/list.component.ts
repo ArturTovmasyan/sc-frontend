@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
@@ -17,7 +17,8 @@ export class ListComponent extends GridComponent<ResidentHealthInsurance, Reside
     protected service$: ResidentHealthInsuranceService,
     protected title$: TitleService,
     protected modal$: NzModalService,
-    private residentSelector$: ResidentSelectorService
+    private residentSelector$: ResidentSelectorService,
+    private message$: NzMessageService
   ) {
     super(service$, title$, modal$);
 
@@ -30,7 +31,7 @@ export class ListComponent extends GridComponent<ResidentHealthInsurance, Reside
   ngOnInit(): void {
     this.buttons_center.push(
       {
-        name: 'download',
+        name: 'download_first',
         type: 'default',
         multiselect: false,
         free: false,
@@ -38,9 +39,26 @@ export class ListComponent extends GridComponent<ResidentHealthInsurance, Reside
         faIcon: 'far fa-file',
         click: (ids: number[]) => {
           this.loading = true;
-          this.service$.download(ids[0], () => {
+          this.service$.download(ids[0], 1, () => {
             this.loading = false;
           }, (error) => {
+            this.message$.error(error.data.error, {nzDuration: 10000});
+          });
+        }
+      },
+      {
+        name: 'download_second',
+        type: 'default',
+        multiselect: false,
+        free: false,
+        nzIcon: null,
+        faIcon: 'far fa-file',
+        click: (ids: number[]) => {
+          this.loading = true;
+          this.service$.download(ids[0], 2, () => {
+            this.loading = false;
+          }, (error) => {
+            this.message$.error(error.data.error, {nzDuration: 10000});
           });
         }
       }

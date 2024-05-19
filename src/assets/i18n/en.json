@@ -475,7 +475,8 @@
       "group_number": "Group Number",
       "notes": "Notes",
       "button": {
-        "download": "Download"
+        "download_first": "Card Front",
+        "download_second": "Card Back"
       }
     },
     "resident-document-list": {

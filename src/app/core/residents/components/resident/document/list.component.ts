@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {ResidentDocumentService} from '../../../services/resident-document.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
@@ -17,7 +17,8 @@ export class ListComponent extends GridComponent<ResidentDocument, ResidentDocum
     protected service$: ResidentDocumentService,
     protected title$: TitleService,
     protected modal$: NzModalService,
-    private residentSelector$: ResidentSelectorService
+    private residentSelector$: ResidentSelectorService,
+    private message$: NzMessageService
   ) {
     super(service$, title$, modal$);
 
@@ -41,6 +42,7 @@ export class ListComponent extends GridComponent<ResidentDocument, ResidentDocum
           this.service$.download(ids[0], () => {
             this.loading = false;
           }, (error) => {
+            this.message$.error(error.data.error, {nzDuration: 10000});
           });
         }
       }

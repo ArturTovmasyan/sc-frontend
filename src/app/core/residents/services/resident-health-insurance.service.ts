@@ -14,9 +14,9 @@ export class ResidentHealthInsuranceService extends GridService<ResidentHealthIn
     this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/health/insurance`;
   }
 
-  public download(id: number, callback: any, error_callback: any) {
+  public download(id: number, seq: number, callback: any, error_callback: any) {
     return this.http
-      .get(this.SERVICE_URL_BASE + `/download/${id}`, {
+      .get(this.SERVICE_URL_BASE + `/download/${id}/${seq}`, {
         responseType: 'blob',
         observe: 'response'
       })
