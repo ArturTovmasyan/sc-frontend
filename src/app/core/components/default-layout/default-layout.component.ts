@@ -30,7 +30,10 @@ export class DefaultLayoutComponent {
       attributes: true
     });
 
-    this.profile$.get().subscribe(user => this.user = user);
+    this.profile$.get().subscribe(user => {
+      console.log(user);
+      this.user = user;
+    });
 
     this.generateNavigation(router.config[0]);
   }

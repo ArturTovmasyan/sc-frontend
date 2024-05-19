@@ -14,7 +14,7 @@ import {DndModule} from '@beyerleinf/ngx-dnd';
 
 import {CoreRoutingModule} from './core-routing.module';
 
-import {SignUpComponent} from './components/account/sign-up/sign-up.component';
+// import {SignUpComponent} from './components/account/sign-up/sign-up.component';
 import {ActivateComponent} from './components/account/activate/activate.component';
 import {SignInComponent} from './components/security/sign-in/sign-in.component';
 import {SignOutComponent} from './components/security/sign-out/sign-out.component';
@@ -226,7 +226,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SignInComponent,
     SignOutComponent,
 
-    SignUpComponent,
+    // SignUpComponent,
     ActivateComponent,
     InvitationComponent,
     ForgotPasswordComponent,

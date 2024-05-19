@@ -6,7 +6,7 @@ import {P404Component} from './components/error/404.component';
 import {P500Component} from './components/error/500.component';
 import {SignInComponent} from './components/security/sign-in/sign-in.component';
 import {SignOutComponent} from './components/security/sign-out/sign-out.component';
-import {SignUpComponent} from './components/account/sign-up/sign-up.component';
+// import {SignUpComponent} from './components/account/sign-up/sign-up.component';
 import {ActivateComponent} from './components/account/activate/activate.component';
 import {ForgotPasswordComponent} from './components/account/forgot-password/forgot-password.component';
 import {ResetPasswordComponent} from './components/account/reset-password/reset-password.component';
@@ -568,7 +568,7 @@ const routes: Routes = [
     ]
   },
 
-  {path: 'sign-up', component: SignUpComponent, data: {title: 'Sign Up'}, canActivate: [LoggedActivate]},
+  // {path: 'sign-up', component: SignUpComponent, data: {title: 'Sign Up'}, canActivate: [LoggedActivate]},
   {path: 'activate', component: ActivateComponent, data: {title: 'Account Activation'}, canActivate: [LoggedActivate]},
   {path: 'accept', component: InvitationComponent, data: {title: 'Accept Invitation'}, canActivate: [LoggedActivate]},
   {path: 'forgot-password', component: ForgotPasswordComponent, data: {title: 'Forgot password'}, canActivate: [LoggedActivate]},

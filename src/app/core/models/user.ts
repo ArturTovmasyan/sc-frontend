@@ -1,4 +1,5 @@
 import {Phone} from './phone';
+import {Space} from './space';
 
 export class User {
   id: number;
@@ -15,4 +16,6 @@ export class User {
   phones: Phone[];
 
   permissions: string[];
+
+  space: Space;
 }
