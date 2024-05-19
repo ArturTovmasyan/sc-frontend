@@ -224,15 +224,16 @@ export class ModalFormComponent {
   }
 
   protected form_callback(form: FormGroup, component: AbstractForm, result: any, previous_data ?: any): void {
+    if (this._preset_modal_form_data) {
+      this._preset_modal_form_data(form);
+    }
+
     component.edit_mode = result !== null;
     if (component.edit_mode) {
       component.before_set_form_data(result);
       component.set_form_data(component, form, result);
       component.after_set_form_data();
     } else {
-      if (this._preset_modal_form_data) {
-        this._preset_modal_form_data(form); // TODO: review
-      }
       component.before_set_form_data(null, previous_data); // TODO: review
     }
   }
