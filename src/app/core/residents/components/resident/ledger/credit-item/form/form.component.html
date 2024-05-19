@@ -31,7 +31,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="end">End Date</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="end">Valid Through Date</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('end')?'error':null">
       <nz-month-picker formControlName="end" nzFormat="MM/yyyy"></nz-month-picker>
       <nz-form-explain *ngIf="hasErrors('end')">
