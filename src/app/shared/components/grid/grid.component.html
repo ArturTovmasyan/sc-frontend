@@ -208,10 +208,12 @@
                   {{ row[field.id] }}
                 </ng-container>
               </ng-container>
-              <a *ngSwitchDefault [routerLink]="routeInfo(field.link, row.id)">
-                {{ row[field.id] }}
-                <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i>
-              </a>
+              <ng-container *ngIf="routeInfo(field.link, row) !== null">
+                <a *ngSwitchDefault [routerLink]="routeInfo(field.link, row)">
+                  {{ row[field.id] }}
+                  <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i>
+                </a>
+              </ng-container>
             </ng-container>
           </ng-container>
           <span *ngIf="!field.link">{{ row[field.id] }}</span>

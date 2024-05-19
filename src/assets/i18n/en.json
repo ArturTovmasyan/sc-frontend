@@ -403,6 +403,7 @@
       "address_2": "Address (Optional)",
       "website_url": "Website URL",
       "csz_str": "CSZ",
+      "referrals": "Referrals",
       "space": "Space"
     },
     "lead-referral-list": {
@@ -437,14 +438,13 @@
         "report": "Report"
       },
       "id": "ID",
-      "title": "Title",
-      "owner_type": "Owner Type",
+      "activity": "Activity",
+      "date_entered": "Due Entered",
       "entered_by": "Entered by",
-      "type": "Activity Type",
-      "status": "Activity Status",
-      "date": "Due Date",
-      "notes": "Notes",
-      "info": "Info"
+      "task_owner": "Task Owner",
+      "due_date": "Due Date",
+      "status": "Status",
+      "type_info": "Type"
     },
     "admin-notification-list": {
       "id": "ID",

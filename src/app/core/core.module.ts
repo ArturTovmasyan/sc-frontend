@@ -109,8 +109,8 @@ import {ResidentSelectorComponent} from './residents/components/resident-selecto
 
 import {ListComponent as ResidentListComponent} from './residents/components/resident/list.component';
 // import {ListComponent as ResidentListComponent} from './residents/components/resident/index/list.component';
-//import {IndexComponent as ResidentIndexComponent} from './residents/components/resident/index/index.component';
-//import {ThumbComponent as ResidentThumbComponent} from './residents/components/resident/index/thumb.component';
+// import {IndexComponent as ResidentIndexComponent} from './residents/components/resident/index/index.component';
+// import {ThumbComponent as ResidentThumbComponent} from './residents/components/resident/index/thumb.component';
 import {FormComponent as ResidentFormComponent} from './residents/components/resident/resident/form/form.component';
 import {ViewComponent as ResidentViewComponent} from './residents/components/resident/resident/view/view.component';
 import {InfoComponent as ResidentInfoComponent} from './residents/components/resident/resident/info/info.component';

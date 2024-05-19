@@ -515,12 +515,37 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     button.click(this.checkbox_config.ids);
   }
 
-  protected routeInfo(route: string, id: number) {
-    const route_prefix = route.replace('/:id', '');
+  protected routeInfo(route: string, row: any) {
+    const multi_pattern: any = route.match(/^([_a-z]+):<(([_a-z0-9\/]+\/:[_a-z]+\|?)+)>$/);
+    console.log(multi_pattern);
+    if (multi_pattern !== null && multi_pattern.length !== 0) {
+      if (multi_pattern.length > 3 && row.hasOwnProperty(multi_pattern[1])) {
+        const idx = row[multi_pattern[1]] - 1;
+        const routes = multi_pattern[2].split('|');
+
+        route = routes[idx];
+      } else {
+        return null;
+      }
+    }
+
+    const route_prefix = route.replace(/\/:([_a-z]+)/, '');
+    let route_suffix: any = route.match(/\/:([_a-z]+)/);
+
+
+    if (route_suffix !== null && route_suffix.length === 2) {
+      route_suffix = route_suffix[1];
+    } else  {
+      return null;
+    }
+
+    if (!row.hasOwnProperty(route_suffix) || row[route_suffix] === null) {
+      return null;
+    }
 
     const route_params = [];
     route_params.push(route_prefix);
-    route_params.push(id);
+    route_params.push(row[route_suffix]);
 
     if (route_prefix === '/resident') {
       route_params.push({outlets: {'resident-details': ['responsible-persons']}});
