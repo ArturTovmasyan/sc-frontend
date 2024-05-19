@@ -351,9 +351,9 @@
   <table style="width: 100%;">
     <ng-container *ngFor="let item of data|str2json:true|keyvalue:sort_order_func(sorted)">
       <tr *ngIf="check_empty(item.value)">
-        <th style="width:50%;padding-right: 0.5rem;" class="text-right">{{ item.key }}:</th>
-        <td style="width:50%;" *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</td>
-        <td style="width:50%;" *ngIf="_.isArray(item.value)">
+        <th style="width:50%;word-break: break-all;padding-right: 0.5rem;" class="text-right">{{ item.key }}:</th>
+        <td style="width:50%;word-break: break-all;" *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</td>
+        <td style="width:50%;word-break: break-all;" *ngIf="_.isArray(item.value)">
           <ng-container *ngFor="let iv of item.value; let last=last">
             {{ iv }} <br *ngIf="!last"/>
           </ng-container>
