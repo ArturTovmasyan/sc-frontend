@@ -190,6 +190,9 @@ import {FormComponent as ResidentCreditDiscountItemFormComponent} from './reside
 import {ListComponent as ResidentPaymentReceivedItemListComponent} from './residents/components/resident/ledger/ledger/payment-received-item/list.component';
 import {FormComponent as ResidentPaymentReceivedItemFormComponent} from './residents/components/resident/ledger/ledger/payment-received-item/form/form.component';
 
+import {ListComponent as ResidentAwayDaysListComponent} from './residents/components/resident/ledger/ledger/away-days/list.component';
+import {FormComponent as ResidentAwayDaysFormComponent} from './residents/components/resident/ledger/ledger/away-days/form/form.component';
+
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
 import {FormComponent as ResidentDietFormComponent} from './residents/components/resident/dietary-restriction/form/form.component';
 
@@ -375,6 +378,7 @@ import {FullCalendarModule} from '@fullcalendar/angular';
 import {PaymentPeriodPipe} from './residents/pipes/payment-period.pipe';
 import {ViewComponent as ResidentRentViewComponent} from './residents/components/resident/rent/rent/view/view.component';
 import {ViewComponent as ResidentRentIncreaseViewComponent} from './residents/components/resident/rent/rent-increase/view/view.component';
+import {ViewComponent as ResidentAwayDaysViewComponent} from './residents/components/resident/ledger/ledger/away-days/view/view.component';
 import {EventRepeatPipe} from './residents/pipes/event-repeat.pipe';
 import {DateInterceptor} from './interceptors/date.interceptor';
 import {ListComponent as EmailLogListComponent} from './admin/components/email-log/list.component';
@@ -571,6 +575,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentRentViewComponent,
     ResidentRentIncreaseViewComponent,
 
+    ResidentAwayDaysViewComponent,
+
     ResidentRentComponent,
     ResidentRentRoomListComponent,
     ResidentRentRoomFormComponent,
@@ -604,6 +610,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentPaymentReceivedItemListComponent,
     ResidentPaymentReceivedItemFormComponent,
+
+    ResidentAwayDaysListComponent,
+    ResidentAwayDaysFormComponent,
 
     ResidentAssessmentListComponent,
     ResidentAssessmentFormComponent,
@@ -823,6 +832,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentRentViewComponent,
     ResidentRentIncreaseViewComponent,
 
+    ResidentAwayDaysViewComponent,
+
     ResidentRentRoomFormComponent,
     ResidentRentIncreaseFormComponent,
 
@@ -843,6 +854,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentCreditDiscountItemFormComponent,
 
     ResidentPaymentReceivedItemFormComponent,
+
+    ResidentAwayDaysFormComponent,
 
     ResidentAssessmentFormComponent,
 

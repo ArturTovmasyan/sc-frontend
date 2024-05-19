@@ -350,11 +350,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     formValue(): void {
         const value = super.formValue();
         value.date = DateHelper.makeUTCDateOnly(value.date);
-        return value;
-    }
-
-    birthdayFormValue(): void {
-        const value = super.formValue();
         value.birthday = DateHelper.makeUTCDateOnly(value.birthday);
         return value;
     }

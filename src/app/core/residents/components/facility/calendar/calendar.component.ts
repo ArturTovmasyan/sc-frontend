@@ -18,12 +18,14 @@ import {FacilityEventService} from '../../../services/facility-event.service';
 import {EventDefinitionService} from '../../../services/event-definition.service';
 import {ResidentEventService} from '../../../services/resident-event.service';
 import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
+import {ResidentAwayDaysService} from '../../../services/resident-away-days.service';
 import {ResidentRentService} from '../../../services/resident-rent.service';
 import {FormComponent} from '../event-form/form.component';
 import {FormComponent as MonthPickerFormComponent} from '../../../../../shared/components/month-picker-form/form.component';
 import {ViewComponent as ResidentEventViewComponent} from '../../resident/event/view/view.component';
 import {ViewComponent as ResidentRentViewComponent} from '../../resident/rent/rent/view/view.component';
 import {ViewComponent as ResidentRentIncreaseViewComponent} from '../../resident/rent/rent-increase/view/view.component';
+import {ViewComponent as ResidentAwayDaysViewComponent} from '../../resident/ledger/ledger/away-days/view/view.component';
 
 @Component({
   selector: 'app-facility-calendar',
@@ -88,6 +90,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private residentEvent$: ResidentEventService,
     private residentRent$: ResidentRentService,
     private residentRentIncrease$: ResidentRentIncreaseService,
+    private residentAwayDays$: ResidentAwayDaysService,
     private eventDefinition$: EventDefinitionService,
     private auth_$: AuthGuard
   ) {
@@ -210,6 +213,33 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 }
               }
 
+              if (this.filter_chooser.type === 'all' || this.filter_chooser.type === 'away_day') {
+                res.away_days.forEach(away_day => {
+
+                  this.calendarEvents.push({
+                    borderColor: 'transparent',
+                    backgroundColor: '#ff00ff',
+                    textColor: '#ffffff',
+                    id: away_day.id,
+                    event_type: CalendarEventType.AWAY_DAYS,
+                    start: DateHelper.formatMoment(away_day.start, 'YYYY-MM-DD'),
+                    end: null,
+                    title: DateHelper.formatMoment(away_day.created_at, 'YYYY-MM-DD',  true)
+                  });
+
+                  this.calendarEvents.push({
+                    borderColor: 'transparent',
+                    backgroundColor: '#ff00ff',
+                    textColor: '#ffffff',
+                    id: away_day.id,
+                    event_type: CalendarEventType.AWAY_DAYS,
+                    start: DateHelper.formatMoment(away_day.end, 'YYYY-MM-DD'),
+                    end: DateHelper.formatMoment(away_day.end, 'YYYY-MM-DD'),
+                    title: DateHelper.formatMoment(away_day.created_at, 'YYYY-MM-DD',  true)
+                  });
+                });
+              }
+
               this.calendarComponent.getApi().changeView('dayGridMonth');
             }
           });
@@ -233,6 +263,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
         break;
       case CalendarEventType.RENT_INCREASE:
         subValue = (new CurrencyPipe('en-US')).transform(event.amount, 'USD', 'symbol-narrow', '1.2-2');
+        break;
+      case CalendarEventType.AWAY_DAYS:
+        subValue = event.title;
         break;
     }
 
@@ -291,6 +324,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
         component.event = result;
       }
       if (component instanceof ResidentRentIncreaseViewComponent) {
+        component.event = result;
+      }
+      if (component instanceof ResidentAwayDaysViewComponent) {
         component.event = result;
       }
     });
@@ -436,6 +472,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
         break;
       case CalendarEventType.RENT_INCREASE:
         this.show_modal_view($event.event.id, this.residentRentIncrease$, ResidentRentIncreaseViewComponent);
+        break;
+      case CalendarEventType.AWAY_DAYS:
+        this.show_modal_view($event.event.id, this.residentAwayDays$, ResidentAwayDaysViewComponent);
         break;
       default:
         break;

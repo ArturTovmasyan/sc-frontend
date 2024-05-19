@@ -19,6 +19,9 @@
         <nz-option [nzLabel]="'Rent'" [nzValue]="{type: 'rent', definition_id: null}"></nz-option>
         <nz-option [nzLabel]="'Rent Increase'" [nzValue]="{type: 'rent_increase', definition_id: null}"></nz-option>
       </nz-option-group>
+      <nz-option-group [nzLabel]="'Resident Ledger'">
+        <nz-option [nzLabel]="'Away Days'" [nzValue]="{type: 'away_day', definition_id: null}"></nz-option>
+      </nz-option-group>
     </nz-select>
   </div>
 </div>
@@ -41,4 +44,5 @@
   <!--  <div><span class="fc-event-dot" style="background-color:#fac22b"></span> - Admission</div>-->
   <div><span class="fc-event-dot" style="background-color:#009da1"></span> - Rent</div>
   <div><span class="fc-event-dot" style="background-color:#603e95"></span> - Rent Increase</div>
+  <div><span class="fc-event-dot" style="background-color:#ff00ff"></span> - Away Days</div>
 </div>

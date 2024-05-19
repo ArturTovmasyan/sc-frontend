@@ -18,6 +18,7 @@ import {ResidentService} from '../../../services/resident.service';
 import {ResidentEventService} from '../../../services/resident-event.service';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
+import {ResidentAwayDaysService} from '../../../services/resident-away-days.service';
 import {ResidentRentService} from '../../../services/resident-rent.service';
 import {FormComponent} from './form/form.component';
 import {FormComponent as MonthPickerFormComponent} from '../../../../../shared/components/month-picker-form/form.component';
@@ -26,6 +27,7 @@ import {ViewComponent as FacilityEventViewComponent} from '../../facility/event-
 import {ViewComponent as ResidentEventViewComponent} from './view/view.component';
 import {ViewComponent as ResidentRentViewComponent} from '../rent/rent/view/view.component';
 import {ViewComponent as ResidentRentIncreaseViewComponent} from '../rent/rent-increase/view/view.component';
+import {ViewComponent as ResidentAwayDaysViewComponent} from '../ledger/ledger/away-days/view/view.component';
 
 @Component({
   selector: 'app-resident-calendar',
@@ -79,6 +81,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private residentEvent$: ResidentEventService,
     private residentRent$: ResidentRentService,
     private residentRentIncrease$: ResidentRentIncreaseService,
+    private residentAwayDays$: ResidentAwayDaysService,
     private facilityEvent$: FacilityEventService,
     private residentSelector$: ResidentSelectorService,
     private auth_$: AuthGuard
@@ -195,6 +198,30 @@ export class CalendarComponent implements OnInit, OnDestroy {
               });
             });
 
+            res.away_days.forEach(away_day => {
+              this.calendarEvents.push({
+                borderColor: 'transparent',
+                backgroundColor: '#ff00ff',
+                textColor: '#ffffff',
+                id: away_day.id,
+                event_type: CalendarEventType.AWAY_DAYS,
+                start: DateHelper.formatMoment(away_day.start, 'YYYY-MM-DD'),
+                end: null,
+                title: DateHelper.formatMoment(away_day.created_at, 'YYYY-MM-DD',  true)
+              });
+
+              this.calendarEvents.push({
+                borderColor: 'transparent',
+                backgroundColor: '#ff00ff',
+                textColor: '#ffffff',
+                id: away_day.id,
+                event_type: CalendarEventType.AWAY_DAYS,
+                start: DateHelper.formatMoment(away_day.end, 'YYYY-MM-DD'),
+                end: DateHelper.formatMoment(away_day.end, 'YYYY-MM-DD'),
+                title: DateHelper.formatMoment(away_day.created_at, 'YYYY-MM-DD',  true)
+              });
+            });
+
             this.calendarComponent.getApi().changeView('dayGridMonth');
           }
         });
@@ -259,6 +286,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
         component.event = result;
       }
       if (component instanceof ResidentRentIncreaseViewComponent) {
+        component.event = result;
+      }
+
+      if (component instanceof ResidentAwayDaysViewComponent) {
         component.event = result;
       }
     });
@@ -398,6 +429,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
         break;
       case CalendarEventType.RENT_INCREASE:
         this.show_modal_view($event.event.id, this.residentRentIncrease$, ResidentRentIncreaseViewComponent);
+        break;
+      case CalendarEventType.AWAY_DAYS:
+        this.show_modal_view($event.event.id, this.residentAwayDays$, ResidentAwayDaysViewComponent);
         break;
       default:
         break;

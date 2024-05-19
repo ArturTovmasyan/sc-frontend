@@ -475,6 +475,12 @@
       "transaction_number": "Check/Transaction #",
       "notes": "Notes"
     },
+    "resident-away-days-list": {
+      "id": "ID",
+      "start": "1st Day Away",
+      "end": "Last Day Away",
+      "reason": "Reason"
+    },
     "resident-rent-increase-list": {
       "id": "ID",
       "resident": "Resident",
