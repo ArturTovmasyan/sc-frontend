@@ -15,8 +15,7 @@ export class Resident implements IdInterface {
   last_name: string;
   birthday: Date;
 
-  image: ResidentImage;
-  photo?: string;
+  image: string;
 
   gender: Gender;
   ssn: string;
@@ -31,15 +30,6 @@ export class Resident implements IdInterface {
   bed_number?: string;
   group?: string;
   group_type?: GroupType;
-}
-
-export class ResidentImage {
-  id: number;
-
-  photo: string;
-  photo_35_35: string;
-  photo_150_150: string;
-  photo_300_300: string;
 }
 
 export enum ResidentState {
