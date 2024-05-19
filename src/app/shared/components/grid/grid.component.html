@@ -327,9 +327,9 @@
     <ng-container *ngFor="let entry of data|str2json">
       <ng-container *ngFor="let item of entry|str2json|keyvalue:no_sort_order">
         <tr *ngIf="check_empty(item.value)">
-          <th class="text-right" style="padding-right: 0.5rem;">{{ item.key }}:</th>
-          <td *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</td>
-          <td *ngIf="_.isArray(item.value)">
+          <th width="50%" class="text-right" style="padding-right: 0.5rem;">{{ item.key }}:</th>
+          <td width="50%" *ngIf="!_.isArray(item.value)">{{ replace_known_value(item.value) }}</td>
+          <td width="50%" *ngIf="_.isArray(item.value)">
             <ng-container *ngFor="let iv of item.value">
               {{ iv }} <br/>
             </ng-container>

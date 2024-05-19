@@ -106,6 +106,9 @@ import {ListComponent as FacilityViewDocumentListComponent} from './residents/co
 import {ListComponent as FacilityRoomListComponent} from './residents/components/facility-room/list.component';
 import {FormComponent as FacilityRoomFormComponent} from './residents/components/facility-room/form/form.component';
 
+import {ListComponent as FacilityRoomTypeListComponent} from './residents/components/facility-room-type/list.component';
+import {FormComponent as FacilityRoomTypeFormComponent} from './residents/components/facility-room-type/form/form.component';
+
 import {ListComponent as FacilityBedListComponent} from './residents/components/facility-bed/list.component';
 
 import {ListComponent as FacilityDiningRoomListComponent} from './residents/components/facility-dining-room/list.component';
@@ -441,6 +444,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FacilityViewDiningRoomListComponent,
     FacilityViewDocumentListComponent,
 
+    FacilityRoomTypeListComponent,
+    FacilityRoomTypeFormComponent,
     FacilityRoomListComponent,
     FacilityRoomFormComponent,
     FacilityBedListComponent,
@@ -679,6 +684,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FacilityFormComponent,
 
     FacilityRoomFormComponent,
+    FacilityRoomTypeFormComponent,
 
     FacilityDiningRoomFormComponent,
 

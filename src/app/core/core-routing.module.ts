@@ -41,6 +41,7 @@ import {ListComponent as ApartmentRoomListComponent} from './residents/component
 import {ListComponent as FacilityListComponent} from './residents/components/facility/list.component';
 import {ViewComponent as FacilityViewComponent} from './residents/components/facility/view/view.component';
 import {ListComponent as FacilityRoomListComponent} from './residents/components/facility-room/list.component';
+import {ListComponent as FacilityRoomTypeListComponent} from './residents/components/facility-room-type/list.component';
 import {ListComponent as FacilityDiningRoomListComponent} from './residents/components/facility-dining-room/list.component';
 import {ListComponent as RegionListComponent} from './residents/components/region/list.component';
 
@@ -428,6 +429,15 @@ const routes: Routes = [
           nav: {show: true, group: 'Facility', title: 'Dining Rooms'},
           title: 'Facility Dining Rooms',
           permissions: ['persistence-facility', 'persistence-dining_room']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'facility/room-types', component: FacilityRoomTypeListComponent,
+        data: {
+          nav: {show: true, group: 'Facility', title: 'Room Types'},
+          title: 'Facility Room Types',
+          permissions: ['persistence-facility', 'persistence-facility_room_type']
         },
         canActivate: [AuthGuard]
       },

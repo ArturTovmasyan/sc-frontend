@@ -1,0 +1,92 @@
+﻿<h4>Facility Room Type</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item *ngIf="form.get('facility_id').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facility_id" nzRequired>Facility</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('facility_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="facility_id">
+        <ng-container *ngFor="let facility of facilities">
+          <nz-option [nzLabel]="facility.name" [nzValue]="facility.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('facility_id')">
+        <app-field-errors [errors]="fieldErrors('facility_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
+      <input nz-input placeholder="Title" formControlName="title">
+      <nz-form-explain *ngIf="hasErrors('title')">
+        <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="private">Private</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="private"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('private')">
+        <app-field-errors [errors]="fieldErrors('private')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="this.care_levels && this.care_levels.length > 0 && get_form_array('base_rates').controls.length > 0">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Base Rates</nz-form-label>
+    <div nz-col [nzSpan]="16">
+      <table
+             class="senior-care-form-table table table-hover table-bordered table-sm"
+             formArrayName="base_rates">
+        <thead>
+        <tr>
+          <th style="width:50%;">Care Level</th>
+          <th style="width:50%;">Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let base_rate of get_form_array('base_rates').controls;let i = index">
+          <tr [formGroupName]="i.toString()">
+            <td>{{ this.care_levels[i].title }}</td>
+            <td>
+              <nz-form-item>
+                <nz-form-control [nzSm]="16" [nzXs]="24"
+                                 [nzValidateStatus]="hasErrors('base_rates.'+i+'.amount')?'error':null">
+                  <nz-input-number nzSize="small" [nzMin]="0" [nzStep]="1" [nzPrecision]="2" nzPlaceHolder="Amount"
+                                   formControlName="amount"></nz-input-number>
+                  <nz-form-explain *ngIf="hasErrors('base_rates.'+i+'.amount')">
+                    <app-field-errors [errors]="fieldErrors('base_rates.'+i+'.amount')"></app-field-errors>
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description">Description</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('description')?'error':null">
+      <input-counter formControlName="description" placeholder="Description" [maxlength]="255"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('description')">
+        <app-field-errors [errors]="fieldErrors('description')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

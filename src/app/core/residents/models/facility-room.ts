@@ -1,5 +1,6 @@
 import {Facility} from './facility';
 import {FacilityBed} from './facility-bed';
+import {FacilityRoomType} from './facility-room-type';
 
 export class FacilityRoom implements IdInterface {
   id: number;
@@ -15,4 +16,5 @@ export class FacilityRoom implements IdInterface {
   beds: FacilityBed[];
 
   facility: Facility;
+  facility_room_type: FacilityRoomType;
 }

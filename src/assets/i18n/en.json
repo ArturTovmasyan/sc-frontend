@@ -96,6 +96,14 @@
       "title": "Title",
       "space": "Space"
     },
+    "facility-room-type-list": {
+      "id": "ID",
+      "facility": "Facility",
+      "title": "Title",
+      "description": "Description",
+      "private": "Private",
+      "base_rates": "Base Rates"
+    },
     "physician-speciality-list": {
       "id": "ID",
       "title": "Title",
