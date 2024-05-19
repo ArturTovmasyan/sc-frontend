@@ -62,6 +62,9 @@
     <div class="card">
       <div *ngIf="document" class="card-header">
         {{ document.title }}
+        <div class="card-header-actions">
+          <a nz-button nzSize="small" [href]="document.file"><i nz-icon nzType="download"></i> Download</a>
+        </div>
       </div>
       <div class="card-body">
         <nz-empty *ngIf="!document" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>

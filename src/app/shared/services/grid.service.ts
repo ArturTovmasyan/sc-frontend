@@ -4,6 +4,7 @@ import {formatDate} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {saveFile} from '../helpers/file-download-helper';
 import {Message} from '../../core/models/message';
+import {Params} from '@angular/router';
 
 export class GridService<T extends IdInterface> {
   protected SERVICE_URL_BASE;
@@ -74,8 +75,8 @@ export class GridService<T extends IdInterface> {
     return this.http.delete(this.SERVICE_URL_BASE, options);
   }
 
-  public get(id: number): Observable<T> {
-    return this.http.get<T>(this.SERVICE_URL_BASE + `/${id}`);
+  public get(id: number, queryParams?: Params): Observable<T> {
+    return this.http.get<T>(this.SERVICE_URL_BASE + `/${id}`, {params: queryParams});
   }
 
   public add(data: T): Observable<any> {

@@ -11,7 +11,7 @@ import {ReferralService} from '../../../services/referral.service';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {FormComponent as LeadFormComponent} from '../form/form.component';
 import {FormComponent as ReferralFormComponent} from '../../referral/form/form.component';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ActivityOwnerType} from '../../../models/activity';
 import {AuthGuard} from '../../../../guards/auth.guard';
 
@@ -29,6 +29,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   public title: string = null;
 
   protected $subscriptions: { [key: string]: Subscription; };
+  private query_params: Params;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -45,7 +46,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribe('title');
-    this.subscribe('param_id');
+    this.subscribe('query_map');
   }
 
   ngOnDestroy(): void {
@@ -64,8 +65,14 @@ export class ViewComponent implements OnInit, OnDestroy {
           }
         });
         break;
+      case 'query_map':
+        this.$subscriptions[key] = this.route$.queryParams.subscribe(query_params => {
+          this.query_params = query_params;
+          this.subscribe('param_id');
+        });
+        break;
       case 'get_lead':
-        this.$subscriptions[key] = this.lead$.get(params.lead_id).pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.lead$.get(params.lead_id, this.query_params).pipe(first()).subscribe(res => {
           if (res) {
             this.lead = res;
 
@@ -238,10 +245,10 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
 
   getPreviousLead() {
-    this.router$.navigate(['lead/lead', this.lead.previous_lead_id]).then();
+    this.router$.navigate(['lead/lead', this.lead.previous_lead_id], {queryParams: this.query_params}).then();
   }
 
   getNextLead() {
-    this.router$.navigate(['lead/lead', this.lead.next_lead_id]).then();
+    this.router$.navigate(['lead/lead', this.lead.next_lead_id], {queryParams: this.query_params}).then();
   }
 }

@@ -339,6 +339,20 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     return route_params;
   }
 
+  public query_params(): string {
+    const params: any = {};
+
+    this.sort.forEach(value => {
+      params['sort[' + value.key + ']'] = value.value.replace('end', '');
+    });
+
+    this.params.forEach(value => {
+      params[value.key] = value.value;
+    });
+
+    return params;
+  }
+
   public check_empty(value: any) {
     if (_.isString(value) || _.isArray(value) || value === null || value === undefined) {
       return !_.isEmpty(value) && !_.isEmpty(_.trim(value)) && value[0] !== null;

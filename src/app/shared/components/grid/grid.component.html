@@ -194,7 +194,7 @@
                 </a>
               </ng-container>
               <ng-container *ngIf="routeInfo(field.link, row) !== null">
-                <a *ngSwitchDefault [routerLink]="routeInfo(field.link, row)">
+                <a *ngSwitchDefault [routerLink]="routeInfo(field.link, row)" [queryParams]="query_params()">
                   {{ row[field.id] }}
                   <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i>
                 </a>
