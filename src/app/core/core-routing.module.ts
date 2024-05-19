@@ -621,20 +621,20 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'discounts', component: DiscountListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Discounts',
-          permissions: ['activity-reference', 'persistence-common-discount']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
         path: 'credits', component: CreditListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Credits',
           permissions: ['activity-reference', 'persistence-common-credit']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'discounts', component: DiscountListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Discounts',
+          permissions: ['activity-reference', 'persistence-common-discount']
         },
         canActivate: [AuthGuard]
       },
