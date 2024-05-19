@@ -21,6 +21,8 @@ export class User {
 
   owner: boolean;
   license_accepted: boolean;
+
+  lead_section_expand: boolean;
 }
 
 export class UserImage {

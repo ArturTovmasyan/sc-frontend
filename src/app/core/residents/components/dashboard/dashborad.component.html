@@ -1,7 +1,9 @@
 <div class="card">
   <div class="card-header">
     <div class="d-flex justify-content-between">
-      <button style="margin-top: 0.1rem;" nz-button nzType="default" [disabled]="show('previous')" (click)="getPreviousMonth()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous</button>
+      <div class="justify-content-start">
+        <button style="margin-top: 0.1rem;" nz-button nzType="default" [disabled]="show('previous')" (click)="getPreviousMonth()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous</button>
+      </div>
       Dashboard
       <div class="justify-content-end">
         <button style="margin-top: 0.1rem;" nz-button nzType="default" (click)="getCsvReport()"><i nz-icon nzType="file" nzTheme="outline"></i> Download .CSV</button>

@@ -32,6 +32,8 @@ export class ViewComponent implements OnInit, OnDestroy {
   protected $subscriptions: { [key: string]: Subscription; };
   private query_params: Params;
 
+  all_section_expand: boolean;
+
   constructor(
     private sanitizer: DomSanitizer,
     private modal$: NzModalService,
@@ -48,6 +50,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribe('title');
     this.subscribe('query_map');
+    this.subscribe('get_expand');
   }
 
   ngOnDestroy(): void {
@@ -88,6 +91,15 @@ export class ViewComponent implements OnInit, OnDestroy {
           if (res) {
             this.referral = res;
           }
+        });
+        break;
+      case 'get_expand':
+        this.$subscriptions[key] = this.lead$.getExpand().pipe(first()).subscribe(res => {
+            this.all_section_expand = false;
+            if (res && res.hasOwnProperty('lead_section_expand')) {
+                this.all_section_expand = res.lead_section_expand;
+                res.lead_section_expand = res;
+            }
         });
         break;
       default:
@@ -264,5 +276,21 @@ export class ViewComponent implements OnInit, OnDestroy {
     this.router$.navigate(['lead', 'lead', this.lead.next_lead_id], {queryParams: this.query_params}).then(() => {
       location.reload();
     });
+  }
+
+  expand_all() {
+    if (this.lead !== null) {
+        this.lead$.expand(true).subscribe(res => {
+            this.subscribe('get_expand', {});
+        });
+    }
+  }
+
+  collapse_all() {
+    if (this.lead !== null) {
+        this.lead$.expand(false).subscribe(res => {
+            this.subscribe('get_expand', {});
+        });
+    }
   }
 }

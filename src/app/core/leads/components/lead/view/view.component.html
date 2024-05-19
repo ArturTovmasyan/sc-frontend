@@ -1,10 +1,20 @@
-<div class="d-flex justify-content-end" style="margin-bottom: 1.2rem;">
-  <button *ngIf="lead" nzSize="small" nz-button nzType="default" [disabled]="show('previous')"
-          (click)="getPreviousLead()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous
-  </button>
-  <button *ngIf="lead" nzSize="small" nz-button nzType="default" [disabled]="show('next')"
-          (click)="getNextLead()">
-    Next <i nz-icon nzType="arrow-right" nzTheme="outline"></i></button>
+<div class="d-flex justify-content-between" style="margin-bottom: 1.2rem;">
+  <div class="d-flex justify-content-start">
+    <button *ngIf="!all_section_expand" nzSize="small" nz-button nzType="default"
+            (click)="expand_all()"><i nz-icon nzType="arrows-alt" nzTheme="outline"></i> Expand All
+    </button>
+    <button *ngIf="all_section_expand" nzSize="small" nz-button nzType="default"
+            (click)="collapse_all()"><i nz-icon nzType="shrink" nzTheme="outline"></i> Collapse All
+    </button>
+  </div>
+  <div class="justify-content-end">
+    <button *ngIf="lead" nzSize="small" nz-button nzType="default" [disabled]="show('previous')"
+            (click)="getPreviousLead()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous
+    </button>
+    <button *ngIf="lead" nzSize="small" nz-button nzType="default" [disabled]="show('next')"
+            (click)="getNextLead()">
+      Next <i nz-icon nzType="arrow-right" nzTheme="outline"></i></button>
+  </div>
 </div>
 <div class="row">
   <div class="col-sm-6 col-md-4">
@@ -23,7 +33,7 @@
 
         <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="leadTitle" nzActive="true">
+            <nz-collapse-panel [nzHeader]="leadTitle" [nzActive]="all_section_expand">
               <div class="card-body" style="font-size: 14px; font-weight: 500; text-align: left;">
                 <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
                 <div *ngIf="lead">
@@ -146,7 +156,7 @@
 
         <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-          <nz-collapse-panel [nzHeader]="referralTitle">
+          <nz-collapse-panel [nzHeader]="referralTitle" [nzActive]="all_section_expand">
             <div class="card-body" style="font-size: 14px; font-weight: 500; text-align: left;">
                 <nz-empty *ngIf="!referral" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
                 <ng-container *ngIf="referral">
@@ -223,7 +233,7 @@
 
         <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="hobbyTitle">
+            <nz-collapse-panel [nzHeader]="hobbyTitle" [nzActive]="all_section_expand">
               <div class="card-body" style="font-size: 14px; font-weight: 500; text-align: left;">
                   <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
                   <div *ngIf="lead">
@@ -270,7 +280,7 @@
 
         <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-          <nz-collapse-panel [nzHeader]="funnelsStage">
+          <nz-collapse-panel [nzHeader]="funnelsStage" [nzActive]="all_section_expand">
             <div class="card-body">
               <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
               <app-lead-lead-funnel-stage *ngIf="lead"
@@ -295,7 +305,7 @@
 
         <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="temperature">
+            <nz-collapse-panel [nzHeader]="temperature" [nzActive]="all_section_expand">
                 <div class="card-body">
                   <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
                   <app-lead-lead-temperature *ngIf="lead"
@@ -315,7 +325,7 @@
 
         <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="assessment">
+            <nz-collapse-panel [nzHeader]="assessment" [nzActive]="all_section_expand">
               <div class="card-body">
                 <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
                 <app-lead-lead-assessment *ngIf="lead"
@@ -334,7 +344,7 @@
 
         <div class="card">
           <nz-collapse [nzNoAnimation]="true" [nzBordered] = "false">
-            <nz-collapse-panel [nzHeader]="activity">
+            <nz-collapse-panel [nzHeader]="activity" [nzActive]="all_section_expand">
               <div class="card-body">
                 <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
                 <app-lead-lead-activity *ngIf="lead"
