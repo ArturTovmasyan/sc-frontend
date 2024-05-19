@@ -44,6 +44,8 @@ export class ListComponent extends GridComponent<Resident, ResidentService> impl
         }
 
         this.$init.next(true);
+      } else {
+        this.$init.next(true);
       }
     });
 
