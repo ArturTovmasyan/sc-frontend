@@ -143,7 +143,6 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     this.subscribe('list_state_change_reason');
 
     this.subscribe('list_organization');
-    this.subscribe('list_contact');
     this.subscribe('list_referrer_type');
   }
 
@@ -262,7 +261,9 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
         });
         break;
       case 'list_contact':
-        this.$subscriptions[key] = this.contact$.all().pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.contact$
+          .all(params && params.organization_id ? [{key: 'organization_id', value: params.organization_id}] : [])
+          .pipe(first()).subscribe(res => {
           if (res) {
             this.contacts = res;
 
@@ -273,6 +274,13 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
             }
 
             this.form.get('referral.contact_id').setValue(this.form.get('referral.contact_id').value);
+          }
+        });
+        break;
+      case 'vc_organization':
+        this.$subscriptions[key] = this.form.get('referral.organization_id').valueChanges.subscribe(next => {
+          if (next) {
+            this.subscribe('list_contact', {organization_id: next});
           }
         });
         break;
@@ -287,10 +295,19 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
             const type = this.referrer_types.filter(v => v.id === next).pop();
 
             if (type) {
+              this.contacts = [];
+              this.form.get('referral.organization_id').setValue(null);
+              this.form.get('referral.contact_id').setValue(null);
+              this.unsubscribe('vc_organization');
+
               if (type.organization_required) {
                 this.form.get('referral.organization_id').enable();
+
+                this.subscribe('vc_organization');
               } else {
                 this.form.get('referral.organization_id').disable();
+
+                this.subscribe('list_contact');
               }
 
               if (type.representative_required) {

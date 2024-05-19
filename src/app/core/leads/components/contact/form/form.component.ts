@@ -38,7 +38,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       first_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
       last_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
 
-      emails: [[], Validators.compose([Validators.required])],
+      emails: [[]],
 
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
