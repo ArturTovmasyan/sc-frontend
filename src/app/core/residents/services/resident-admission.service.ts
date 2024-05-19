@@ -26,8 +26,22 @@ export class ResidentAdmissionService extends GridService<ResidentAdmission> {
     return this.http.get<ResidentAdmission>(this.SERVICE_URL_BASE + `/${resident_id}/active`);
   }
 
-  public list_active_first(): Observable<any> {
-    return this.http.get(this.SERVICE_URL_BASE + `/active/first`);
+  public list_active_first(type: number, type_id: number, resident: string, room: string): Observable<any> {
+    let url_segment = '';
+
+    if (type !== null && type_id !== null && type !== undefined && type_id !== undefined) {
+      url_segment += `type=${type}&type_id=${type_id}`;
+    }
+
+    if (resident !== null && resident !== undefined) {
+      url_segment += `&resident=${resident}`;
+    }
+
+    if (room !== null && room !== undefined) {
+      url_segment += `&room=${room}`;
+    }
+
+    return this.http.get(this.SERVICE_URL_BASE + `/active/first?${url_segment}`);
   }
 
   public list_by_state(state: string, type: number, type_id: number): Observable<Resident[]> {
