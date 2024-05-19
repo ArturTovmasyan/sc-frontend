@@ -70,7 +70,7 @@ export class CSVComponent implements OnInit, OnDestroy {
         break;
       case 'get_report':
         this.$subscriptions[key] = this.report$
-          .reportAsObservable(params.config.group_alias, params.config.report_alias, 'csv', params.params, true)
+          .reportAsObservable(params.config.group_alias, params.config.report_alias, 'xls', params.params, true)
           .pipe(first()).subscribe(res => {
             if (res != null && Array.isArray(res) && res.length === 1) {
               const report_url = this.report$.reportURLbyHash(res[0]);
