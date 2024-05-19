@@ -166,6 +166,14 @@
       "title": "Title",
       "space": "Space"
     },
+    "credit-discount-item-list": {
+      "id": "ID",
+      "title": "Title",
+      "amount": "Amount",
+      "can_be_changed": "Can Be Changed",
+      "valid_through_date": "Valid Through Date",
+      "space": "Space"
+    },
     "event-definition-list": {
       "id": "ID",
       "type": "Type",
