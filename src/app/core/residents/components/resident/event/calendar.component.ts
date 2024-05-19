@@ -274,7 +274,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
           const component = <AbstractForm>modal.getContentComponent();
           component.before_submit();
-          const form_data = component.formObject.value;
+          const form_data = component.formValue();
 
           component.submitted = true;
 
@@ -310,7 +310,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
           const component = <AbstractForm>modal.getContentComponent();
           component.before_submit();
-          const form_data = component.formObject.value;
+          const form_data = component.formValue();
 
           component.submitted = true;
 

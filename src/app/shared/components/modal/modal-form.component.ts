@@ -206,7 +206,7 @@ export class ModalFormComponent {
     if (component instanceof AbstractForm) {
       component.before_submit();
 
-      const form_data = component.formObject.value;
+      const form_data = component.formValue();
       component.submitted = true;
 
       submit(form_data).subscribe(

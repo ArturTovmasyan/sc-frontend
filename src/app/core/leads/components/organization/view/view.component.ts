@@ -113,8 +113,8 @@ export class ViewComponent implements OnInit, OnDestroy {
             loading = true;
 
             const component = <AbstractForm>modal.getContentComponent();
-            component.before_submit()
-            const form_data = component.formObject.value;
+            component.before_submit();
+            const form_data = component.formValue();
 
             component.submitted = true;
 

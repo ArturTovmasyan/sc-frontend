@@ -111,7 +111,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
           const component = <AbstractForm>modal.getContentComponent();
           component.before_submit();
-          const form_data = component.formObject.value;
+          const form_data = component.formValue();
 
           component.submitted = true;
 
@@ -136,7 +136,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
             const component = <AbstractForm>modal.getContentComponent();
             component.before_submit();
-            const form_data = component.formObject.value;
+            const form_data = component.formValue();
             component.submitted = true;
 
             this.router.navigate(['report-csv'], { queryParams: { g: group_alias, r: report_alias, ...form_data}});

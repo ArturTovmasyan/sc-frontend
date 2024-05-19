@@ -337,4 +337,9 @@ export class AbstractForm implements OnDestroy {
       modal.create(data => service.add(data), null, null);
     }
   }
+
+  public formValue(): any {
+    return this.form.value;
+  }
+
 }

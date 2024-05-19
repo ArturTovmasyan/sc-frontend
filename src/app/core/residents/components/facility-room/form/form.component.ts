@@ -227,7 +227,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             const component = <AbstractForm>modal.getContentComponent();
             component.before_submit();
-            const form_data = component.formObject.value;
+            const form_data = component.formValue();
             component.submitted = true;
 
             this.residentAdmission$.move(form_data).subscribe(
