@@ -108,61 +108,63 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   init(reset: boolean = false): void {
     this.load_grid_fields().subscribe((data: any) => {
-      this.button_shows = data.buttons;
-      this.grid_options_loaded.next(true);
+      if (data) {
+        this.button_shows = data.buttons;
+        this.grid_options_loaded.next(true);
 
-      this.fields = data.fields;
-      this.fields.forEach(
-        field => {
-          this.filter[field.id] = {condition: null, value: null};
+        this.fields = data.fields;
+        this.fields.forEach(
+          field => {
+            this.filter[field.id] = {condition: null, value: null};
 
-          switch (field.type) {
-            case 'enum':
-              field.enum = [];
-              Object.entries(field.values).forEach(
-                ([key, value]) => {
-                  field.enum.push({label: key, value: value});
-                }
-              );
+            switch (field.type) {
+              case 'enum':
+                field.enum = [];
+                Object.entries(field.values).forEach(
+                  ([key, value]) => {
+                    field.enum.push({label: key, value: value});
+                  }
+                );
 
-              field.enum_map = {};
+                field.enum_map = {};
 
-              Object.entries(field.values).forEach(
-                ([key, value]) => {
-                  Object.defineProperty(field.enum_map, <number>value, {value: key});
-                }
-              );
+                Object.entries(field.values).forEach(
+                  ([key, value]) => {
+                    Object.defineProperty(field.enum_map, <number>value, {value: key});
+                  }
+                );
 
-              this.filter[field.id].value = new Array(1);
-              break;
-            case 'boolean':
-              field.enum = [
-                {label: 'Yes', value: 1},
-                {label: 'No', value: 0}
-              ];
+                this.filter[field.id].value = new Array(1);
+                break;
+              case 'boolean':
+                field.enum = [
+                  {label: 'Yes', value: 1},
+                  {label: 'No', value: 0}
+                ];
 
-              field.enum_map = {
-                true: 'Yes',
-                false: 'No'
-              };
+                field.enum_map = {
+                  true: 'Yes',
+                  false: 'No'
+                };
 
-              this.filter[field.id].value = new Array(1);
-              break;
-            case 'string':
-              this.filter[field.id].value = new Array(1);
-              break;
-            case 'id':
-            case 'date':
-            case 'datetime':
-            case 'time':
-            case 'number':
-              this.filter[field.id].value = new Array(2);
-              break;
+                this.filter[field.id].value = new Array(1);
+                break;
+              case 'string':
+                this.filter[field.id].value = new Array(1);
+                break;
+              case 'id':
+              case 'date':
+              case 'datetime':
+              case 'time':
+              case 'number':
+                this.filter[field.id].value = new Array(2);
+                break;
+            }
           }
-        }
-      );
+        );
 
-      this.reload_data(reset);
+        this.reload_data(reset);
+      }
     });
   }
 
