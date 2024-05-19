@@ -42,7 +42,7 @@
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
     "ng-http-loader": "^5.1.0",
-    "ng-zorro-antd": "^7.0.0",
+    "ng-zorro-antd": "^7.5.1",
     "ngx-bootstrap": "^3.2.0",
     "ngx-color-picker": "^7.2.15",
     "ngx-extended-pdf-viewer": "^0.9.55",
@@ -54,6 +54,7 @@
     "popper.js": "^1.14.7",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.3",
+    "videogular2": "^7.0.1",
     "zone.js": "~0.8.29"
   },
   "devDependencies": {

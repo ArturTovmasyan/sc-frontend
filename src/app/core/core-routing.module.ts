@@ -84,6 +84,7 @@ import {ListComponent as NotificationListComponent} from './admin/components/not
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
 import {ListComponent as InsuranceCompanyListComponent} from './residents/components/insurance-company/list.component';
 import {ViewComponent as DocumentViewComponent} from './documents/components/view/view.component';
+import {HelpComponent} from './components/help/help.component';
 
 const routes: Routes = [
   {
@@ -92,6 +93,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {title: 'Home', permissions: []},
     children: [
+      {
+        path: 'help', component: HelpComponent,
+        data: {
+          title: 'Help',
+          permissions: []
+        },
+        canActivate: [AuthGuard]
+      },
       {
         path: '', component: HomeComponent,
         data: {

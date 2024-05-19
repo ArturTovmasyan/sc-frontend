@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="card">
+      <div class="card-header">
+        Help Contents
+      </div>
+      <div class="card-body">
+        <nz-empty *ngIf="!categories" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+        <nz-tree *ngIf="categories" [nzData]="categories" (nzClick)="openItem($event)"
+                 [nzShowLine]="true"
+        ></nz-tree>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-8">
+    <div class="card">
+      <div *ngIf="object" class="card-header">
+        {{ object.title }}
+      </div>
+      <div class="card-body">
+        <nz-empty *ngIf="!object" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+        <ng-container *ngIf="!(!object)">
+          <p>{{ object.description }}</p>
+          <ng-container [ngSwitch]="object.type">
+            <ngx-extended-pdf-viewer *ngSwitchCase="HelpObjectType.PDF"
+                                     [src]="object.s3url"
+                                     useBrowserLocale="true"
+                                     [showPresentationModeButton]="true"
+                                     [showSidebarButton]="false"
+                                     [showOpenFileButton]="false"
+                                     [showBookmarkButton]="false"
+                                     [showFindButton]="false"
+                                     [showSecondaryToolbarButton]="false"
+                                     [handTool]="true"
+                                     height="80vh">
+            </ngx-extended-pdf-viewer>
+            <vg-player *ngSwitchCase="HelpObjectType.VIDEO">
+              <video [vgMedia]="media" #media preload="auto" controls>
+                <source [src]="object.s3url" type="video/mp4">
+              </video>
+            </vg-player>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

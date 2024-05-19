@@ -185,6 +185,8 @@ import {FormComponent as ResidentDocumentFormComponent} from './residents/compon
 import {ViewComponent as DocumentViewComponent} from './documents/components/view/view.component';
 import {FormComponent as DocumentFormComponent} from './documents/components/form/form.component';
 
+import {HelpComponent} from './components/help/help.component';
+
 import {HomeComponent} from './residents/components/home/home.component';
 
 import {CityStateZipPipe} from './residents/pipes/csz.pipe';
@@ -243,6 +245,10 @@ import {CronJobsModule} from '../cron-jobs/cron-jobs.module';
 import {ChangeLogPipe} from './pipes/change-log.pipe';
 import {ActivityTypePipe} from './leads/pipes/activity-type.pipe';
 import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer';
+import {VgBufferingModule} from 'videogular2/compiled/src/buffering/buffering';
+import {VgOverlayPlayModule} from 'videogular2/compiled/src/overlay-play/overlay-play';
+import {VgControlsModule} from 'videogular2/compiled/src/controls/controls';
+import {VgCoreModule} from 'videogular2/compiled/src/core/core';
 
 // import {ListComponent as ListComponent} from './residents/components//list.component';
 // import {FormComponent as FormComponent} from './residents/components//form/form.component';
@@ -430,8 +436,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EventDefinitionListComponent,
     EventDefinitionFormComponent,
 
+    HelpComponent,
     HomeComponent,
-
 
     ActivityStatusListComponent,
     ActivityStatusFormComponent,
@@ -632,7 +638,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     IconPickerModule,
     NgxExtendedPdfViewerModule,
     NgxMaskModule.forRoot(),
-    CronJobsModule
+    CronJobsModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true},
@@ -644,7 +654,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   exports: [
     CityStateZipPipe
-  ]
+  ],
 })
 
 export class CoreModule {
