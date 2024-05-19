@@ -1,5 +1,18 @@
 ﻿<h4>Rent</h4>
 <form nz-form [formGroup]="form">
+  <nz-form-item *ngIf="group_title && group_title !== ''">
+    <nz-form-label [nzSm]="8" [nzXs]="24">
+      <ng-container [ngSwitch]="residentSelector$.type.value">
+        <ng-container *ngSwitchCase="GROUP_TYPE.FACILITY">Facility</ng-container>
+        <ng-container *ngSwitchCase="GROUP_TYPE.APARTMENT">Apartment</ng-container>
+        <ng-container *ngSwitchCase="GROUP_TYPE.REGION">Region</ng-container>
+      </ng-container>
+    </nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      {{ group_title }}
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="start" nzRequired>Start Date</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('start')?'error':null">

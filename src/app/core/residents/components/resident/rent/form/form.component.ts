@@ -7,15 +7,20 @@ import {PaymentSourceService} from '../../../../services/payment-source.service'
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 import {PaymentPeriod} from '../../../../models/payment-period.enum';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {GroupType} from '../../../../models/group-type.enum';
+import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
+  GROUP_TYPE = GroupType;
+
   source_selector: number = null;
 
   payment_sources: PaymentSource[];
-  resident_id: number;
+
+  group_title: string = '';
 
   sources: { id: number, amount: number }[] = [];
   periods: { id: PaymentPeriod, name: string }[];
@@ -23,7 +28,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private payment_source$: PaymentSourceService,
-    private residentSelector$: ResidentSelectorService
+    private residentSelector$: ResidentSelectorService,
+    private admission$: ResidentAdmissionService
   ) {
     super();
   }
@@ -74,7 +80,36 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {
             this.form.get('resident_id').setValue(next);
+            this.subscribe('resident_info');
           }
+        });
+        break;
+      case 'resident_info':
+        this.$subscriptions[key] = this.admission$.active(this.form.get('resident_id').value).pipe(first()).subscribe(res => {
+          if (res != null && !Array.isArray(res)) {
+            const admission = res;
+
+            this.group_title = '';
+            if (admission.group_type) {
+              switch (admission.group_type) {
+                case GroupType.FACILITY:
+                  this.group_title = admission.facility_bed.room.facility.name + ' - #' + admission.facility_bed.room.number
+                    + ' (' + admission.facility_bed.number + ')';
+                  break;
+                case GroupType.REGION:
+                  this.group_title = admission.region.name;
+                  break;
+                case GroupType.APARTMENT:
+                  this.group_title = admission.apartment_bed.room.apartment.name + ' - #' + admission.apartment_bed.room.number
+                    + ' (' + admission.apartment_bed.number + ')';
+                  break;
+              }
+            }
+          } else {
+            this.group_title = '';
+          }
+        }, error => {
+          this.group_title = '';
         });
         break;
       default:
