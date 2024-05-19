@@ -123,7 +123,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       primary_facility_id: [null, Validators.compose([])],
       facilities: [[], Validators.compose([])],
-      notes: ['', Validators.compose([Validators.maxLength(512)])],
+      notes: ['', Validators.compose([Validators.maxLength(2048)])],
 
       funnel_stage_id: [null, Validators.compose([Validators.required])],
       temperature_id: [null, Validators.compose([Validators.required])],
