@@ -97,6 +97,8 @@ import {ListComponent as StageChangeReasonListComponent} from './leads/component
 import {ViewComponent as OutreachViewComponent} from './leads/components/outreach/view/view.component';
 import {ListComponent as OutreachListComponent} from './leads/components/outreach/list.component';
 import {ListComponent as OutreachTypeListComponent} from './leads/components/outreach-type/list.component';
+import {ListComponent as CurrentResidenceListComponent} from './leads/components/current-residence/list.component';
+import {ListComponent as HobbyListComponent} from './leads/components/hobby/list.component';
 import {ViewComponent as LeadContactViewComponent} from './leads/components/contact/view/view.component';
 import {ListComponent as DocumentCategoryListComponent} from './documents/components/category/list.component';
 import {DashboardComponent as CorporateDashboardComponent} from './residents/components/dashboard/dashboard.component';
@@ -986,6 +988,24 @@ const routes: Routes = [
               permissions: ['activity-lead_admin', 'persistence-lead-care_type']
             },
             canActivate: [AuthGuard]
+          },
+          {
+              path: 'current-residence', component: CurrentResidenceListComponent,
+              data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Current Residences',
+                  permissions: ['activity-lead_admin', 'persistence-lead-current_residence']
+              },
+              canActivate: [AuthGuard]
+          },
+          {
+              path: 'hobby', component: HobbyListComponent,
+              data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Hobbies',
+                  permissions: ['activity-lead_admin', 'persistence-lead-hobby']
+              },
+              canActivate: [AuthGuard]
           }
         ]
       },

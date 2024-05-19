@@ -541,6 +541,16 @@
       "title": "Title",
       "space": "Space"
     },
+    "lead-current-residence-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
+    "lead-hobby-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "lead-lead-list": {
       "button": {
         "open": "Open",

@@ -11,10 +11,14 @@ import {Organization} from '../../../models/organization';
 import {OrganizationService} from '../../../services/organization.service';
 import {CityStateZip} from '../../../../residents/models/city-state-zip';
 import {CareType} from '../../../models/care-type';
+import {CurrentResidence} from '../../../models/current-residence';
+import {Hobby} from '../../../models/hobby';
 import {User} from '../../../../models/user';
 import {Facility} from '../../../../residents/models/facility';
 import {CityStateZipService} from '../../../../residents/services/city-state-zip.service';
 import {CareTypeService} from '../../../services/care-type.service';
+import {CurrentResidenceService} from '../../../services/current-residence.service';
+import {HobbyService} from '../../../services/hobby.service';
 import {FacilityService} from '../../../../residents/services/facility.service';
 import {UserService} from '../../../../admin/services/user.service';
 import {PaymentSource} from '../../../../residents/models/payment-source';
@@ -24,6 +28,8 @@ import {Contact} from '../../../models/contact';
 import {ContactService} from '../../../services/contact.service';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as CareTypeFormComponent} from '../../care-type/form/form.component';
+import {FormComponent as CurrentResidenceFormComponent} from '../../current-residence/form/form.component';
+import {FormComponent as HobbyFormComponent} from '../../hobby/form/form.component';
 import {FormComponent as PaymentSourceFormComponent} from '../../../../residents/components/payment-source/form/form.component';
 import {FormComponent as CityStateZipFormComponent} from '../../../../residents/components/city-state-zip/form/form.component';
 import {FormComponent as ReferrerTypeFormComponent} from '../../referrer-type/form/form.component';
@@ -51,8 +57,11 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   referrer_types: ReferrerType[];
 
+  current_residences: CurrentResidence[];
+
   facilities: Facility[];
   facilities_all: Facility[];
+  hobbies: Hobby[];
 
   organizations: Organization[];
   contacts: Contact[];
@@ -71,7 +80,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     private payment_source$: PaymentSourceService,
     private user$: UserService,
     private facility$: FacilityService,
+    private hobby$: HobbyService,
     private care_type$: CareTypeService,
+    private current_residence$: CurrentResidenceService,
     private organization$: OrganizationService,
     private contact$: ContactService,
     private referrer_type$: ReferrerTypeService,
@@ -81,6 +92,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     super(modal$);
     this.modal_map = [
          {key: 'care_type', component: CareTypeFormComponent},
+         {key: 'current_residence', component: CurrentResidenceFormComponent},
+         {key: 'hobby', component: HobbyFormComponent},
          {key: 'payment_source', component: PaymentSourceFormComponent},
          {key: 'csz', component: CityStateZipFormComponent},
          {key: 'referrer_type', component: ReferrerTypeFormComponent},
@@ -105,6 +118,10 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       state: [LeadState.OPEN, Validators.compose([])],
 
+      birthday: [null],
+      spouse_name: ['', Validators.compose([Validators.maxLength(120)])],
+      current_residence_id: [null, Validators.compose([])],
+
       responsible_person_first_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
       responsible_person_last_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
       responsible_person_address_1: ['', Validators.compose([Validators.maxLength(100)])],
@@ -123,6 +140,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       primary_facility_id: [null, Validators.compose([])],
       facilities: [[], Validators.compose([])],
+      hobbies: [[], Validators.compose([])],
       notes: ['', Validators.compose([Validators.maxLength(2048)])],
 
       funnel_stage_id: [null, Validators.compose([Validators.required])],
@@ -158,7 +176,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_user');
     this.subscribe('list_facility');
     this.subscribe('list_facility_all');
+    this.subscribe('list_hobby');
     this.subscribe('list_care_type');
+    this.subscribe('list_current_residence');
 
     this.subscribe('list_organization');
     this.subscribe('list_referrer_type');
@@ -251,6 +271,20 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
+      case 'list_hobby':
+          this.$subscriptions[key] = this.hobby$.all().pipe(first()).subscribe(res => {
+              if (res) {
+                  this.hobbies = res;
+
+                  if (params) {
+                      const hobbies = _.isArray(this.form.get('hobbies').value) ? this.form.get('hobbies').value : [];
+                      hobbies.push(params.hobby_id);
+
+                      this.form.get('hobbies').setValue(hobbies);
+                  }
+              }
+          });
+          break;
       case 'list_user':
         this.$subscriptions[key] = this.user$.all().pipe(first()).subscribe(res => {
           if (res) {
@@ -271,6 +305,17 @@ export class FormComponent extends AbstractForm implements OnInit {
               this.form.get('care_type_id').setValue(params.care_type_id);
             }
           }
+        });
+        break;
+      case 'list_current_residence':
+        this.$subscriptions[key] = this.current_residence$.all().pipe(first()).subscribe(res => {
+            if (res) {
+                this.current_residences = res;
+
+                if (params) {
+                    this.form.get('current_residence_id').setValue(params.current_residence_id);
+                }
+            }
         });
         break;
       case 'list_referrer_type':

@@ -5,6 +5,8 @@ import {CityStateZip} from '../../residents/models/city-state-zip';
 import {CareType} from './care-type';
 import {PaymentSource} from '../../residents/models/payment-source';
 import {User} from '../../models/user';
+import {CurrentResidence} from './current-residence';
+import {Hobby} from './hobby';
 
 export class Lead implements IdInterface {
   id: number;
@@ -19,6 +21,10 @@ export class Lead implements IdInterface {
   owner: User;
   initial_contact_date: Date;
 
+  birthday: Date;
+  spouse_name: string;
+  current_residence: CurrentResidence;
+
   responsible_person_first_name: string;
   responsible_person_last_name: string;
   responsible_person_address_1: string;
@@ -31,6 +37,7 @@ export class Lead implements IdInterface {
 
   primary_facility: Facility;
   facilities: Facility[];
+  hobbies: Hobby[];
   notes: string;
   phones: Phone[];
 

@@ -64,6 +64,29 @@
                 <div nz-col [nzSpan]="8" class="text-right"><strong>Owner:</strong></div>
                 <div nz-col [nzSpan]="16">{{ lead.owner|user }}</div>
               </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.birthday">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Birthday:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.birthday|date:'MMM d, y' }}
+                  ({{ today | amDifference: lead.birthday :'years' : false }} years)
+                </div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.spouse_name">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Spouse's Name:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.spouse_name }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.current_residence">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Current Residence:</strong></div>
+                <div nz-col [nzSpan]="16">{{ lead.current_residence.title }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="lead.hobbies && lead.hobbies.length > 0">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Hobby(s):</strong></div>
+                <div nz-col [nzSpan]="16">
+                  <ng-container *ngFor="let hobby of lead.hobbies; let last = last;">
+                    {{ hobby.title }}
+                    <ng-container *ngIf="!last">,</ng-container>
+                  </ng-container>
+                </div>
+              </div>
               <div nz-row [nzGutter]="4" *ngIf="lead.primary_facility">
                 <div nz-col [nzSpan]="8" class="text-right"><strong>Primary Facility:</strong></div>
                 <div nz-col [nzSpan]="16">{{ lead.primary_facility.name }}</div>

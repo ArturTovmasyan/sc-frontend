@@ -94,6 +94,45 @@
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="birthday">Birthday</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('birthday')?'error':null">
+          <nz-date-picker formControlName="birthday" nzFormat="MM/dd/yyyy"></nz-date-picker>
+          <nz-form-explain *ngIf="hasErrors('birthday')">
+            <app-field-errors [errors]="fieldErrors('birthday')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="spouse_name">Spouse's Name</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('spouse_name')?'error':null">
+          <input nz-input placeholder="Spouse's Name" formControlName="spouse_name">
+          <nz-form-explain *ngIf="hasErrors('spouse_name')">
+            <app-field-errors [errors]="fieldErrors('spouse_name')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_type_id">Current Residence</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('current_residence_id')?'error':null">
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="current_residence_id">
+              <ng-container *ngFor="let current_residence of current_residences">
+                <nz-option [nzLabel]="current_residence.title" [nzValue]="current_residence.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('current_residence');">
+              <i nz-icon nzType="plus"></i>
+            </button>
+          </div>
+          <nz-form-explain *ngIf="hasErrors('current_residence_id')">
+            <app-field-errors [errors]="fieldErrors('current_residence_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
     </nz-tab>
 
     <nz-tab nzTitle="Responsible Info">
@@ -352,6 +391,25 @@
           </nz-select>
           <nz-form-explain *ngIf="hasErrors('facilities')">
             <app-field-errors [errors]="fieldErrors('facilities')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="hobbies">Hobby(s)</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('hobbies')?'error':null">
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="hobbies">
+              <ng-container *ngFor="let hobby of hobbies">
+                <nz-option [nzLabel]="hobby.title" [nzValue]="hobby.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('hobby');">
+              <i nz-icon nzType="plus"></i>
+            </button>
+          </div>
+          <nz-form-explain *ngIf="hasErrors('hobbies')">
+            <app-field-errors [errors]="fieldErrors('hobbies')"></app-field-errors>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>

@@ -317,7 +317,10 @@ import {ViewComponent as OutreachViewComponent} from './leads/components/outreac
 import {ListComponent as OutreachActivityComponent} from './leads/components/outreach/view/activity-list.component';
 import {FormComponent as OutreachTypeFormComponent} from './leads/components/outreach-type/form/form.component';
 import {ListComponent as OutreachTypeListComponent} from './leads/components/outreach-type/list.component';
-
+import {FormComponent as CurrentResidenceFormComponent} from './leads/components/current-residence/form/form.component';
+import {ListComponent as CurrentResidenceListComponent} from './leads/components/current-residence/list.component';
+import {FormComponent as HobbyFormComponent} from './leads/components/hobby/form/form.component';
+import {ListComponent as HobbyListComponent} from './leads/components/hobby/list.component';
 
 import {CronJobsModule} from '../cron-jobs/cron-jobs.module';
 import {ChangeLogPipe} from './pipes/change-log.pipe';
@@ -615,6 +618,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     OutreachViewComponent,
     OutreachTypeListComponent,
     OutreachTypeFormComponent,
+    CurrentResidenceListComponent,
+    CurrentResidenceFormComponent,
+    HobbyListComponent,
+    HobbyFormComponent,
 
     LeadContactListComponent,
     LeadContactFormComponent,
@@ -789,6 +796,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     StageChangeReasonFormComponent,
     OutreachFormComponent,
     OutreachTypeFormComponent,
+    CurrentResidenceFormComponent,
+    HobbyFormComponent,
 
     LeadContactFormComponent,
     LeadAssessmentFormComponent,
