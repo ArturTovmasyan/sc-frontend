@@ -93,16 +93,17 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'vc_medication_id':
         this.$subscriptions[key] = this.form.get('medication_id').valueChanges.pipe(pairwise())
           .subscribe(([prev, next]: [any, any]) => {
-            console.log(prev, next);
             if (next) {
-              this.residentMedication$.all([
-                {key: 'resident_id', value: this.form.get('resident_id').value},
-                {key: 'medication_id', value: next}
-              ]).subscribe(res => {
-                if (_.isArray(res) && res.length > 0) {
-                  this.show_medication_confirm(prev);
-                }
-              });
+              if (!this.edit_mode) {
+                this.residentMedication$.all([
+                  {key: 'resident_id', value: this.form.get('resident_id').value},
+                  {key: 'medication_id', value: next}
+                ]).subscribe(res => {
+                  if (_.isArray(res) && res.length > 0) {
+                    this.show_medication_confirm(prev);
+                  }
+                });
+              }
             }
           });
         break;

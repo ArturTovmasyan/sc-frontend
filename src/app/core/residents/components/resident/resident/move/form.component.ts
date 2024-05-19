@@ -81,7 +81,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [null, Validators.required],
 
-      group: [null, Validators.required],
+      group: [null],
       group_id: [null, Validators.required],
       group_type: [null, Validators.required],
 
@@ -167,21 +167,21 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
 
     if (service) {
-      service.all([{key: key, value: group_id}, {key: 'vacant', value: true}]).pipe(first()).subscribe(res => {
+      service.all([{key: key, value: group_id}, {key: 'vacant', value: 1}]).pipe(first()).subscribe(res => {
         if (res) {
-          let rooms = res;
+          // let rooms = res;
+          //
+          // rooms.forEach((room, i) => {
+          //   if (this.current_room && room.id === this.current_room.id) {
+          //     rooms[i].beds = this.current_room.beds;
+          //   }
+          //
+          //   rooms[i].beds = room.beds.filter(bed => bed.resident == null);
+          // });
+          //
+          // rooms = rooms.filter(room => room.beds.length > 0);
 
-          rooms.forEach((room, i) => {
-            if (this.current_room && room.id === this.current_room.id) {
-              rooms[i].beds = this.current_room.beds;
-            }
-
-            rooms[i].beds = room.beds.filter(bed => bed.resident == null);
-          });
-
-          rooms = rooms.filter(room => room.beds.length > 0);
-
-          this.rooms = rooms;
+          this.rooms = res.filter(room => room.beds.length > 0);
         }
       });
     }

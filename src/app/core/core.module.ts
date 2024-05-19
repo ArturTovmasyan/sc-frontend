@@ -452,6 +452,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     EventDefinitionFormComponent,
 
+    ResidentMoveComponent,
+
   ],
   imports: [
     CommonModule,
