@@ -55,15 +55,15 @@ export class DateHelper {
     return date ? (utc ? moment(date).utc().format(format) : moment(date).format(format) ) : null;
   }
 
-  // public static convertToUTC(date: string | Date) {
-  //   const newDate = date instanceof Date ? date : new Date(date);
-  //   return new Date(newDate.getTime() + newDate.getTimezoneOffset() * 60 * 1000);
-  // }
-  //
-  // public static convertFromUTC(date: string | Date) {
-  //   const newDate = date instanceof Date ? date : new Date(date);
-  //   return new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60 * 1000);
-  // }
+  public static convertToUTC(date: string | Date) {
+    const newDate = date instanceof Date ? date : new Date(date);
+    return new Date(newDate.getTime() + newDate.getTimezoneOffset() * 60 * 1000);
+  }
+
+  public static convertFromUTC(date: string | Date) {
+    const newDate = date instanceof Date ? date : new Date(date);
+    return new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60 * 1000);
+  }
 
   static getDateForKey(key: string): Date {
     const parts = key.split('-');

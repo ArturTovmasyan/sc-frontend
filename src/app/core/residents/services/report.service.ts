@@ -64,7 +64,6 @@ export class ReportService {
       request_params = request_params.append('type_id', params.group_id);
     }
     if (!_.isNil(params.group_ids) && !_.isEmpty(params.group_ids)) {
-      request_params = request_params.append('type_multi', '1');
       params.group_ids.forEach(value => {
         request_params = request_params.append('type_ids[]', value);
       });
