@@ -57,14 +57,14 @@ export class FormComponent extends AbstractForm implements OnInit {
         });
         break;
       case 'list_role':
-        this.$subscriptions[key] = this.role$.all(/** TODO: add space filter **/).pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.role$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.roles = res;
           }
         });
         break;
       case 'list_user':
-        this.$subscriptions[key] = this.user$.all(/** TODO: add space filter **/).pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.user$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.users = res;
           }

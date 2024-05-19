@@ -428,7 +428,7 @@
     "lead-outreach-list": {
       "id": "ID",
       "date": "Date",
-      "contact": "Contact",
+      "contacts": "Contacts",
       "type": "Type",
       "organization": "Organization",
       "notes": "Notes"
