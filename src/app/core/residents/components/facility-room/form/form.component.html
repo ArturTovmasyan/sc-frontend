@@ -15,12 +15,11 @@
   </nz-form-item>
 
   <nz-form-item *ngIf="facility">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="number" nzRequired>Occupation/Capacity</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('number')?'error':null">
-      {{ (room_curr_occupation + other_occupation) }} / {{ facility.capacity }}
-      <nz-form-explain *ngIf="hasErrors('number')">
-        <app-field-errors [errors]="fieldErrors('number')"></app-field-errors>
-      </nz-form-explain>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Occupation/Capacity</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <span
+        [style.color]="(room_curr_occupation + other_occupation) > facility.capacity ? 'red' : 'inherit'"
+      >{{ (room_curr_occupation + other_occupation) }} / {{ facility.capacity }}</span>
     </nz-form-control>
   </nz-form-item>
 

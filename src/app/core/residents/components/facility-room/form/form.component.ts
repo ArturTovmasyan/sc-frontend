@@ -241,21 +241,12 @@ export class FormComponent extends AbstractForm implements OnInit {
   before_set_form_data(data: any, previous_data?: any): void {
     if (data === null && previous_data !== null) {
       if (previous_data.hasOwnProperty('facility_id')) {
-        this.facility_room$.last_number(previous_data.facility_id).subscribe(res => {
-          if (res) {
-            const number = res[0].replace(/(\d+)$/, function (match, n) {
-              return ++n;
-            });
-            this.form.get('number').setValue(number);
-          } else {
-            if (previous_data.hasOwnProperty('number')) {
-              const number = previous_data.number.replace(/(\d+)$/, function (match, n) {
-                return ++n;
-              });
-              this.form.get('number').setValue(number);
-            }
-          }
-        });
+        if (previous_data.hasOwnProperty('number')) {
+          const number = previous_data.number.replace(/(\d+)$/, function (match, n) {
+            return ++n;
+          });
+          this.form.get('number').setValue(number);
+        }
 
         this.form.get('facility_id').setValue(previous_data.facility_id);
         if (previous_data.hasOwnProperty('floor')) {
