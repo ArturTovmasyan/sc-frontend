@@ -17,7 +17,7 @@
       <div class="col-sm-12 col-md-12">
         <div class="card">
           <div class="card-header">
-            Web Email
+            Social Media Email
           </div>
           <div class="card-body">
             <nz-empty *ngIf="!web_email" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
@@ -37,6 +37,10 @@
               <div nz-row [nzGutter]="4" *ngIf="!web_email.email_review_type">
                 <div nz-col [nzSpan]="8" class="text-right"><strong>Reviewed Type:</strong></div>
                 <div nz-col [nzSpan]="16">Not Reviewed</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="web_email.type">
+                <div nz-col [nzSpan]="8" class="text-right"><strong>Referral Type:</strong></div>
+                <div nz-col [nzSpan]="16">{{ web_email.type.title }}</div>
               </div>
               <div nz-row [nzGutter]="4" *ngIf="web_email.updated_by">
                 <div nz-col [nzSpan]="8" class="text-right"><strong>Reviewed By:</strong></div>

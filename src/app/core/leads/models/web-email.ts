@@ -1,6 +1,7 @@
 import {EmailReviewType} from './email-review-type';
 import {Facility} from '../../residents/models/facility';
 import {User} from '../../models/user';
+import {ReferrerType} from './referrer-type';
 
 export class WebEmail implements IdInterface {
   id: number;
@@ -9,6 +10,7 @@ export class WebEmail implements IdInterface {
 
   facility: Facility;
   email_review_type: EmailReviewType;
+  type: ReferrerType;
   updated_by: User;
 
   subject: string;

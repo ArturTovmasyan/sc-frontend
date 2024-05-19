@@ -185,7 +185,7 @@ const routes: Routes = [
             component: WebEmailViewComponent,
             canActivate: [AuthGuard],
             data: {
-              title: 'Web Emails',
+              title: 'Social Media Emails',
               permissions: ['persistence-lead-web_email']
             }
           },
@@ -316,7 +316,7 @@ const routes: Routes = [
             path: 'web-email', component: WebEmailListComponent,
             data: {
               nav: {show: true, group: 'Leads'},
-              title: 'Web Emails',
+              title: 'Social Media Emails',
               permissions: ['persistence-lead-web_email']
             },
             canActivate: [AuthGuard]
