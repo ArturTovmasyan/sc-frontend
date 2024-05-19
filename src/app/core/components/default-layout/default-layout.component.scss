@@ -40,6 +40,8 @@
 
       white-space: normal;
       word-break: normal;
+
+      text-align: right;
     }
   }
 
@@ -189,5 +191,11 @@
 
   .btn {
     padding: 0 15px;
+  }
+
+  .grant-table {
+    nz-select {
+      width: 95px;
+    }
   }
 }

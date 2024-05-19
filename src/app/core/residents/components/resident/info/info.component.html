@@ -114,15 +114,15 @@
   </div>
   <div nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Ambulatory:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.ambulatory }}</div>
+    <div nz-col [nzSpan]="16">{{ option.ambulatory ? 'Enabled' : 'Disabled' }}</div>
   </div>
   <div nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>DNR:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.dnr }}</div>
+    <div nz-col [nzSpan]="16">{{ option.dnr ? 'Enabled' : 'Disabled' }}</div>
   </div>
   <div nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>POLST:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.polst }}</div>
+    <div nz-col [nzSpan]="16">{{ option.polst ? 'Enabled' : 'Disabled' }}</div>
   </div>
 
   <div nz-row [nzGutter]="4">
@@ -153,15 +153,15 @@
   </div>
   <div nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Ambulatory:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.ambulatory }}</div>
+    <div nz-col [nzSpan]="16">{{ option.ambulatory ? 'Enabled' : 'Disabled' }}</div>
   </div>
   <div nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>DNR:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.dnr }}</div>
+    <div nz-col [nzSpan]="16">{{ option.dnr ? 'Enabled' : 'Disabled' }}</div>
   </div>
   <div nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>POLST:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.polst }}</div>
+    <div nz-col [nzSpan]="16">{{ option.polst ? 'Enabled' : 'Disabled' }}</div>
   </div>
 
   <div nz-row [nzGutter]="4">
