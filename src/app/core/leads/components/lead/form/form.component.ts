@@ -394,7 +394,12 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
   before_set_form_data(data: any, previous_data?: any): void {
     super.before_set_form_data(data, previous_data);
 
-    data.initial_contact_date = DateHelper.convertUTC(data.initial_contact_date);
-    data.state_effective_date = DateHelper.convertUTC(data.state_effective_date);
+    if (this.edit_mode) {
+      data.state_effective_date = DateHelper.convertUTC(data.state_effective_date);
+
+      this.form.get('initial_contact_date').disable();
+    } else {
+      this.form.get('initial_contact_date').enable();
+    }
   }
 }
