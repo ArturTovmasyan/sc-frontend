@@ -77,7 +77,7 @@
   <nz-select nzShowSearch [nzDropdownMatchSelectWidth]="false"
              [(ngModel)]="resident_id" (ngModelChange)="resident_changed()">
     <ng-container *ngFor="let resident of residents">
-      <nz-option [nzLabel]="resident|resident" [nzValue]="resident.id"></nz-option>
+      <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
     </ng-container>
   </nz-select>
 </div>

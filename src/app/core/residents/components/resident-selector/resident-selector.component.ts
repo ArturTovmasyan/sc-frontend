@@ -3,9 +3,10 @@ import {Router} from '@angular/router';
 import {ResidentSelectorService} from '../../services/resident-selector.service';
 import {FormBuilder} from '@angular/forms';
 import {AuthGuard} from '../../../guards/auth.guard';
-import {ResidentService} from '../../services/resident.service';
 import {Resident} from '../../models/resident';
 import {Subscription} from 'rxjs';
+import {first} from 'rxjs/operators';
+import {ResidentAdmissionService} from '../../services/resident-admission.service';
 
 @Component({
   selector: 'app-resident-selector',
@@ -23,7 +24,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router$: Router,
     private auth_$: AuthGuard,
-    private resident$: ResidentService,
+    private residentAdmission$: ResidentAdmissionService,
     public residentSelector$: ResidentSelectorService
   ) {
     this.$subscriptions = {};
@@ -31,7 +32,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribe('rs_resident');
-    this.subscribe('list_resident');
+    this.subscribe('rs_group');
   }
 
   ngOnDestroy(): void {
@@ -47,15 +48,27 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
   subscribe(key: string, params?: any) {
     switch (key) {
       case 'list_resident':
-        this.$subscriptions[key] = this.resident$.all().subscribe(res => {
-          if (res) {
-            this.residents = res;
-          }
+        this.$subscriptions[key] = this.residentAdmission$
+          .list_by_state('active', this.residentSelector$.type.value, this.residentSelector$.group.value)
+          .pipe(first()).subscribe(res => {
+            if (res) {
+              this.residents = res;
+            }
+          });
+        break;
+      case 'rs_group':
+        this.$subscriptions[key] = this.residentSelector$.group.subscribe(next => {
+          this.subscribe('list_resident');
         });
         break;
       case 'rs_resident':
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
-          this.resident_id = next;
+          if (this.residents) {
+            const resident = this.residents.filter(_resident => _resident.id === next).pop();
+            this.resident_id = resident ? resident.id : null;
+          } else {
+            this.resident_id = next;
+          }
         });
         break;
       default:
@@ -74,7 +87,9 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
   }
 
   resident_changed() {
-    this.residentSelector$.resident.next(this.resident_id);
-    this.router$.navigate(this.routeInfo('responsible-persons'));
+    if (this.resident_id !== null) {
+      this.residentSelector$.resident.next(this.resident_id);
+      this.router$.navigate(this.routeInfo('responsible-persons'));
+    }
   }
 }

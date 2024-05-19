@@ -5,6 +5,7 @@ import {first} from 'rxjs/operators';
 import {GroupType} from '../../models/group-type.enum';
 import {AuthGuard} from '../../../guards/auth.guard';
 import {ResidentAdmissionService} from '../../services/resident-admission.service';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: './home.component.html',
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     private residentAdmission$: ResidentAdmissionService,
+    private router$: Router,
     private auth_$: AuthGuard
   ) {
 
@@ -28,6 +30,10 @@ export class HomeComponent implements OnInit {
     this.residentAdmission$.list_active_first().pipe(first()).subscribe(res => {
       if (res) {
         this.data = res;
+        // TODO: add region/apartment case
+        if (this.data.facility.length === 1) {
+          this.router$.navigate(['residents', GroupType.FACILITY, this.data.facility[0].id]);
+        }
       }
     });
   }
