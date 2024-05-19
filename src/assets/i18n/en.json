@@ -618,7 +618,8 @@
       "LEAD_ACTIVITY": "Lead Activity",
       "LEAD_CHANGE_LOG": "Lead Change Log",
       "FACILITY_ACTIVITY": "Facility Activity",
-      "CORPORATE_ACTIVITY": "Corporate Activity"
+      "CORPORATE_ACTIVITY": "Corporate Activity",
+      "RESIDENT_RENT_INCREASE": "Resident Rent Increase"
     },
     "grant_level": {
       "NONE":"None",
