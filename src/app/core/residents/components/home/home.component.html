@@ -31,7 +31,7 @@
               <li *ngIf="facilities && facilities.length > 0" nz-menu-group
                   nzTitle="FFC- Facilities">
                 <ul class="sc-dd-ul">
-                  <ng-container nz-menu *ngFor="let facility of facilities">
+                  <ng-container *ngFor="let facility of facilities">
                     <li *ngIf="type_name === facility.name" nz-menu-item
                         (click)="select_facility(facility.id, facility.name)"><strong>{{ facility.name }}</strong></li>
                     <li *ngIf="type_name !== facility.name" nz-menu-item
