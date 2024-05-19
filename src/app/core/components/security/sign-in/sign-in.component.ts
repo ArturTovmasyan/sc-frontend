@@ -5,7 +5,6 @@ import {AuthenticationService} from '../../../services/auth.service';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {Message} from '../../../models/message';
 import {ProfileService} from '../../../services/profile.service';
-import {UserImage} from '../../../models/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +19,8 @@ export class SignInComponent extends AbstractForm implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private auth$: AuthenticationService,
-    private profile$: ProfileService) {
+    private profile$: ProfileService
+  ) {
     super();
 
     this.submit = (data: any) => {

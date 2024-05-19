@@ -4,6 +4,8 @@ import {ProfileService} from '../../services/profile.service';
 import {Route, Router} from '@angular/router';
 import {AuthGuard} from '../../guards/auth.guard';
 import * as normalize from 'normalize-path';
+import {AutoResume, DEFAULT_INTERRUPTSOURCES, Idle} from '@ng-idle/core';
+import {AuthenticationService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +25,9 @@ export class DefaultLayoutComponent {
   constructor(
     private router: Router,
     private profile$: ProfileService,
-    private auth_$: AuthGuard
+    private auth_$: AuthGuard,
+    private auth$: AuthenticationService,
+    private idle$: Idle
   ) {
     this.changes = new MutationObserver((mutations) => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
@@ -32,6 +36,14 @@ export class DefaultLayoutComponent {
     this.changes.observe(<Element>this.element, {
       attributes: true
     });
+
+    this.idle$.setIdle(3600);
+    this.idle$.setTimeout(60);
+    this.idle$.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+    this.idle$.onTimeout.subscribe(() => {
+      this.auth$.sign_out();
+    });
+    this.idle$.watch();
 
     this.profile$.me().subscribe(user => {
       this.user = user;

@@ -27,6 +27,8 @@
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
     "@coreui/icons": "^0.3.0",
     "@fortawesome/fontawesome-free": "^5.7.2",
+    "@ng-idle/core": "^7.0.0-beta.1",
+    "@ng-idle/keepalive": "^7.0.0-beta.1",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "ajv": "^6.10.0",
@@ -46,11 +48,11 @@
     "ngx-mask": "^7.3.6",
     "ngx-moment": "^3.2.0",
     "ngx-perfect-scrollbar": "^7.2.1",
+    "normalize-path": "^3.0.0",
     "popper.js": "^1.14.7",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.3",
-    "zone.js": "~0.8.29",
-    "normalize-path": "^3.0.0"
+    "zone.js": "~0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.9",
