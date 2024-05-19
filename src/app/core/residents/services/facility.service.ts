@@ -12,8 +12,9 @@ export class FacilityService extends GridService<Facility> {
     this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/facility`;
   }
 
-  public calendar(resident_id: any, date_from: Date, date_to: Date) {
-    return this.http.get<any>(this.SERVICE_URL_BASE + `/calendar/${resident_id}`); // ?date_from=${date_from}&date_to=${date_to}
+  public calendar(resident_id: any, definition_id: any, date_from: Date, date_to: Date) {
+    return this.http.get<any>(this.SERVICE_URL_BASE + `/calendar/${resident_id}`
+      + (definition_id !== null ? `?definition_id=${definition_id}` : '')); // ?date_from=${date_from}&date_to=${date_to}
   }
 
 }
