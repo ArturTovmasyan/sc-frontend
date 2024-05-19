@@ -13,6 +13,7 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {Category} from '../../../models/category';
 import {CategoryService} from '../../../services/category.service';
 import {first} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   templateUrl: './view.component.html'
@@ -39,6 +40,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     private service$: DocumentService,
     private category$: CategoryService,
     private sanitizer: DomSanitizer,
+    private route$: ActivatedRoute,
     private auth_$: AuthGuard
   ) {
     this.$subscriptions = {};
@@ -49,8 +51,8 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribe('title');
+    this.subscribe('param_id');
     this.subscribe('list_category');
-    this.subscribe('list_document');
   }
 
   ngOnDestroy(): void {
@@ -61,6 +63,15 @@ export class ViewComponent implements OnInit, OnDestroy {
     switch (key) {
       case 'title':
         this.$subscriptions[key] = this.title$.getTitle().subscribe(v => this.title = v);
+        break;
+      case 'param_id':
+        this.$subscriptions[key] = this.route$.queryParamMap.subscribe(route_params => {
+          if (route_params.has('id')) {
+            this.subscribe('list_document', {document_id: parseInt(route_params.get('id'), 10)});
+          } else {
+            this.subscribe('list_document');
+          }
+        });
         break;
       case 'list_category':
         this.$subscriptions[key] = this.category$.all().pipe(first()).subscribe(res => {
