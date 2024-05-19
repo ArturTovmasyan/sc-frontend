@@ -177,7 +177,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     onQualificationValueChange(next: any): void {
         if (this.edit_mode) {
             if (this.getFullQualifiedValue() === Qualified.NO) {
-                this.form.get('close_lead').enable();
+                // this.form.get('close_lead').enable();
+                this.form.get('close_lead').disable();
             } else {
                 this.form.get('close_lead').disable();
             }
