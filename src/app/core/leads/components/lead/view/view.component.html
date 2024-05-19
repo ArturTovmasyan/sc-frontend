@@ -28,7 +28,7 @@
                 <div nz-col [nzSpan]="16">{{ lead.responsible_person_address_2 }}</div>
               </div>
               <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_csz">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>RP CSZ:</strong></div>
+                <div nz-col [nzSpan]="8" class="text-right"><strong>RP City State Zip:</strong></div>
                 <div nz-col [nzSpan]="16">{{ lead.responsible_person_csz|csz }}</div>
               </div>
               <div nz-row [nzGutter]="4" *ngIf="lead.responsible_person_phone">

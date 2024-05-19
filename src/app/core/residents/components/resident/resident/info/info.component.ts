@@ -285,7 +285,7 @@ export class InfoComponent implements OnInit {
 
   show_report(group: string, alias: string): void {
     this.loading_report[alias.replace('-', '_')] = true;
-    this.report$.report(group, alias, 'pdf', {resident_id: this.residentSelector$.resident.value}, () => {
+    this.report$.report(group, alias, 'pdf', {group: 1, resident_id: this.residentSelector$.resident.value}, () => {
       this.loading_report[alias.replace('-', '_')] = false;
     }, (error) => {
       this.loading_report[alias.replace('-', '_')] = false;
