@@ -187,6 +187,7 @@
       "full_name": "Full Name",
       "gender": "Gender",
       "birthday": "Birthday",
+      "info": "Info",
       "space": "Space"
     },
     "facility-list": {

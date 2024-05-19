@@ -49,7 +49,7 @@ import {ListComponent as AssessmentFormListComponent} from './residents/componen
 import {ListComponent as AssessmentCareLevelListComponent} from './residents/components/assessment/care-level/list.component';
 import {ListComponent as AssessmentCareLevelGroupListComponent} from './residents/components/assessment/care-level-group/list.component';
 
-import {ListComponent as ResidentListComponent} from './residents/components/resident/list.component';
+import {ListComponent as ResidentListComponent} from './residents/components/resident/residents/list.component';
 import {ViewComponent as ResidentViewComponent} from './residents/components/resident/resident/view/view.component';
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
@@ -80,6 +80,7 @@ import {ViewComponent as ReferralViewComponent} from './leads/components/referra
 import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/view.component';
 import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
+import {ThumbnailComponent as ResidentThumbnailComponent} from './residents/components/resident/residents/thumbnail.component';
 
 const routes: Routes = [
   {
@@ -260,7 +261,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
           {
-            path: ':type/:group', component: ResidentListComponent,
+            path: ':type/:group', component: ResidentThumbnailComponent,
             data: {
               title: 'Residents',
               permissions: ['persistence-resident-resident']
