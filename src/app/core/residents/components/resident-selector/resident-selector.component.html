@@ -35,11 +35,18 @@
          title="Events">
         <i class="seniorcare seniorcare-3x seniorcare-events"></i>
       </a>
-      <a *ngIf="addIfHasPermission('persistence-resident-admission')" nz-button
+      <a *ngIf="addIfHasPermission('persistence-resident-admission') && residentSelector$.type.value === GROUP_TYPE.FACILITY" nz-button
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
          [routerLink]="routeInfo('admissions')"
          title="Admission and Room Assignments">
+        <i class="seniorcare seniorcare-3x seniorcare-admissions"></i>
+      </a>
+      <a *ngIf="addIfHasPermission('persistence-resident-admission') && residentSelector$.type.value === GROUP_TYPE.APARTMENT" nz-button
+         [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+         [routerLinkActive]="['active-link']"
+         [routerLink]="routeInfo('admissions')"
+         title="Apartment Assignment">
         <i class="seniorcare seniorcare-3x seniorcare-admissions"></i>
       </a>
       <a *ngIf="addIfHasPermission('persistence-resident-resident_rent')" nz-button

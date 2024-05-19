@@ -492,7 +492,7 @@ const routes: Routes = [
             component: CorporateDashboardMonthlyComponent,
             data: {
               nav: {show: false, group: 'Corporate'},
-              title: 'Dashboard Montly',
+              title: 'Dashboard Monthly',
               permissions: ['activity-corporate-dashboard']
             },
           },

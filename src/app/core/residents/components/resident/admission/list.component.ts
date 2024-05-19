@@ -63,6 +63,7 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
 
       if (type === GroupType.APARTMENT) {
         this.params.push({key: 'apartment', value: '1'});
+        this.title$.setTitle('Apartment Assignment');
       }
 
       super.init();
