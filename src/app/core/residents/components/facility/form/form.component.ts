@@ -31,15 +31,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
-      shorthand: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+      name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(100)])],
+      shorthand: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(100)])],
       description: ['', Validators.compose([Validators.maxLength(1000)])],
       phone: ['', CoreValidator.phone],
       fax: ['', CoreValidator.phone],
       license: ['', Validators.compose([Validators.maxLength(20)])],
       license_capacity: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
       capacity: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
-      address: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+      address: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(100)])],
       csz_id: [null, Validators.required],
     });
 

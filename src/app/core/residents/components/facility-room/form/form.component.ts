@@ -99,7 +99,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'beds':
         return this.formBuilder.group({
           id: [''],
-          number: ['', Validators.compose([Validators.required])],
+          number: ['', Validators.compose([CoreValidator.notEmpty])],
           enabled: [true, Validators.compose([Validators.required])],
           resident_id: [null],
         });

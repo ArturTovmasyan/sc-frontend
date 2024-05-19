@@ -4,6 +4,7 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {GrantService} from '../../../services/grant.service';
 import {Subscription} from 'rxjs';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 
 export interface GrantNodeInterface {
   key: number;
@@ -74,7 +75,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      name: ['', Validators.required],
+      name: ['', Validators.compose([CoreValidator.notEmpty])],
       default: [false, Validators.required],
       grants: [[]]
     });

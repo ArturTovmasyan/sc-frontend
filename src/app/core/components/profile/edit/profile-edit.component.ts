@@ -5,6 +5,7 @@ import {AbstractForm} from '../../../../shared/components/abstract-form/abstract
 import {Message} from '../../../models/message';
 import {ProfileService} from '../../../services/profile.service';
 import {PhoneType} from '../../../models/phone-type.enum';
+import {CoreValidator} from '../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: './profile-edit.component.html'
@@ -34,8 +35,8 @@ export class ProfileEditComponent extends AbstractForm implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
+      first_name: ['', Validators.compose([CoreValidator.notEmpty])],
+      last_name: ['', Validators.compose([CoreValidator.notEmpty])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       phones: this.formBuilder.array([]),
       avatar: [null, Validators.required],

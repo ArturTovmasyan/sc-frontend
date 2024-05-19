@@ -13,6 +13,7 @@ import {FormComponent as CSZFormComponent} from '../../city-state-zip/form/form.
 import {FormComponent as SalutationFormComponent} from '../../salutation/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
 import {AuthGuard} from '../../../../guards/auth.guard';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -43,10 +44,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      first_name: ['', Validators.required],
+      first_name: ['', Validators.compose([CoreValidator.notEmpty])],
       middle_name: [''],
-      last_name: ['', Validators.required],
-      address_1: ['', Validators.required],
+      last_name: ['', Validators.compose([CoreValidator.notEmpty])],
+      address_1: ['', Validators.compose([CoreValidator.notEmpty])],
       address_2: [''],
       email: ['', Validators.compose([Validators.email])],
       salutation_id: [null, Validators.required],

@@ -31,9 +31,9 @@ export class SignUpComponent extends AbstractForm implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      organization: ['', Validators.required],
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
+      organization: ['', Validators.compose([CoreValidator.notEmpty])],
+      first_name: ['', Validators.compose([CoreValidator.notEmpty])],
+      last_name: ['', Validators.compose([CoreValidator.notEmpty])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       phone: ['', Validators.compose([Validators.required, CoreValidator.phone])],
       password: ['', Validators.compose([Validators.required, CoreValidator.password])],

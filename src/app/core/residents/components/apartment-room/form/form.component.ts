@@ -50,7 +50,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       number: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(10)])],
-      floor: ['', Validators.compose([Validators.required, CoreValidator.floor])],
+      floor: ['', Validators.compose([CoreValidator.notEmpty, CoreValidator.floor])],
       notes: ['', Validators.compose([Validators.maxLength(1000)])],
 
       beds: this.formBuilder.array([]),
@@ -99,7 +99,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'beds':
         return this.formBuilder.group({
           id: [''],
-          number: ['', Validators.compose([Validators.required])],
+          number: ['', Validators.compose([CoreValidator.notEmpty])],
           enabled: [true, Validators.compose([Validators.required])],
           resident_id: [null],
         });

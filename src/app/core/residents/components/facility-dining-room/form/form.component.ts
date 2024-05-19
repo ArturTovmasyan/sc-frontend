@@ -4,6 +4,7 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {FacilityService} from '../../../services/facility.service';
 import {Facility} from '../../../models/facility';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -18,7 +19,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      title: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(50)])],
       facility_id: [null, Validators.required]
     });
 

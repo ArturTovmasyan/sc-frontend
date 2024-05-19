@@ -12,6 +12,7 @@ import * as differenceInCalendarDays from 'date-fns/difference_in_calendar_days'
 import {FormComponent as SalutationFormComponent} from '../../../salutation/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
 import {AuthGuard} from '../../../../../guards/auth.guard';
+import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -48,9 +49,9 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      first_name: ['', Validators.required],
+      first_name: ['', Validators.compose([CoreValidator.notEmpty])],
       middle_name: [''],
-      last_name: ['', Validators.required],
+      last_name: ['', Validators.compose([CoreValidator.notEmpty])],
       birthday: [new Date(), Validators.required],
       gender: [null, Validators.required],
       photo: [null],

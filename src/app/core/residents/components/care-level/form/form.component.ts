@@ -4,8 +4,8 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {SpaceService} from '../../../../services/space.service';
 import {first} from 'rxjs/operators';
 import {Space} from '../../../../models/space';
-import {NzModalService} from 'ng-zorro-antd';
 import {AuthGuard} from '../../../../guards/auth.guard';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -24,7 +24,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      title: ['', Validators.compose([Validators.required, Validators.maxLength(255)])],
+      title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(255)])],
       description: ['', Validators.compose([Validators.maxLength(500)])],
     });
 

@@ -1,6 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {first} from 'rxjs/operators';
+import {Component} from '@angular/core';
 
 @Component({
   templateUrl: 'message.component.html'

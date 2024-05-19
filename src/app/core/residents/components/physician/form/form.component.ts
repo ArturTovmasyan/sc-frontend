@@ -44,10 +44,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      first_name: ['', Validators.required],
+      first_name: ['', CoreValidator.notEmpty],
       middle_name: [''],
-      last_name: ['', Validators.required],
-      address_1: ['', Validators.required],
+      last_name: ['', CoreValidator.notEmpty],
+      address_1: ['', CoreValidator.notEmpty],
       address_2: [''],
       email: ['', Validators.compose([Validators.email])],
       website_url: [''],

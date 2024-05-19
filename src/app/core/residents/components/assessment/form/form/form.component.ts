@@ -8,8 +8,8 @@ import {AssessmentCareLevelGroup} from '../../../../models/assessment-care-level
 import {AssessmentCareLevelGroupService} from '../../../../services/assessment-care-level-group.service';
 import {AssessmentCategory} from '../../../../models/assessment-category';
 import {AssessmentCategoryService} from '../../../../services/assessment-category.service';
-import {NzModalService} from 'ng-zorro-antd';
 import {AuthGuard} from '../../../../../guards/auth.guard';
+import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -34,7 +34,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      title: ['', Validators.compose([Validators.required, Validators.maxLength(255)])],
+      title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(255)])],
 
       care_level_groups: [null, Validators.required],
 

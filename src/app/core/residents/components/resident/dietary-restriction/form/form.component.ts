@@ -7,6 +7,7 @@ import {DietService} from '../../../../services/diet.service';
 import {FormComponent as DietFormComponent} from '../../../diet/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -26,7 +27,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      description: ['', Validators.compose([Validators.required, Validators.maxLength(512)])],
+      description: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(512)])],
       diet_id: [null, Validators.required],
 
       resident_id: [null, Validators.required]

@@ -22,6 +22,10 @@
       "default": "Default",
       "space_default": "Default for Space"
     },
+    "space-list": {
+      "id": "ID",
+      "name": "Name"
+    },
     "allergen-list": {
       "id": "ID",
       "title": "Title",

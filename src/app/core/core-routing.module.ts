@@ -17,6 +17,7 @@ import {ProfileEditComponent} from './components/profile/edit/profile-edit.compo
 
 import {ListComponent as UserListComponent} from './admin/components/user/list.component';
 import {ListComponent as RoleListComponent} from './admin/components/role/list.component';
+import {ListComponent as SpaceListComponent} from './admin/components/space/list.component';
 
 import {ListComponent as AllergensListComponent} from './residents/components/allergen/list.component';
 import {ListComponent as CareLevelListComponent} from './residents/components/care-level/list.component';
@@ -491,6 +492,16 @@ const routes: Routes = [
           },
 
         ]
+      },
+
+      {
+        path: 'spaces', component: SpaceListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Spaces',
+          permissions: ['persistence-security-space']
+        },
+        canActivate: [AuthGuard]
       },
 
       {
