@@ -166,8 +166,19 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 id: rent.id,
                 event_type: CalendarEventType.RENT,
                 start: DateHelper.formatMoment(rent.start, 'YYYY-MM-DD', true),
-                end: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD', true),
+                end: null,
                 title: (new CurrencyPipe('en-US')).transform(rent.amount, 'USD', 'symbol-narrow', '1.2-2')
+              });
+
+              this.calendarEvents.push({
+                  borderColor: 'transparent',
+                  backgroundColor: '#009da1',
+                  textColor: '#ffffff',
+                  id: rent.id,
+                  event_type: CalendarEventType.RENT,
+                  start: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD', true),
+                  end: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD', true),
+                  title: (new CurrencyPipe('en-US')).transform(rent.amount, 'USD', 'symbol-narrow', '1.2-2')
               });
             });
 
