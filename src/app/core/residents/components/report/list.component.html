@@ -15,7 +15,7 @@
 <ng-template #reportBody>
   <nz-collapse [nzNoAnimation]="true">
     <ng-container *ngFor="let group of reports|keyvalue:no_sort_order">
-      <nz-collapse-panel *ngIf="show_group(group)" [nzHeader]="group.value['title']">
+      <nz-collapse-panel *ngIf="show_group(group)" [nzHeader]="group.value['title']" [nzActive]="active">
         <ul class="reports-list">
           <ng-container *ngFor="let report of group.value['reports']|keyvalue:no_sort_order">
             <li *ngIf="show_group(report)">

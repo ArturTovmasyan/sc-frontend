@@ -24,6 +24,7 @@ export class ListComponent implements OnInit, OnDestroy {
     public mode_group: string = null;
 
     group_type: GroupType;
+    active = false;
 
     public reports = null;
     protected $subscriptions: { [key: string]: Subscription; };
@@ -65,6 +66,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 case 'lead':
                     this.mode_group = 'lead';
                     this.residentSelector$.type.next(GroupType.FACILITY);
+                    this.active = true;
                     break;
             }
         }
