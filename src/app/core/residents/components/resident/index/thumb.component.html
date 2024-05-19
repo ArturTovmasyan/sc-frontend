@@ -54,11 +54,11 @@
           </a>
           <ng-container *ngIf="route_options.state !== 'no-admission'">
             <br/>
-            <span *ngIf="resident.group_type === GROUP_TYPE.FACILITY || resident.group_type === GROUP_TYPE.APARTMENT">
-                <ng-container *ngIf="!resident.private">{{ resident.room_number }} ({{ resident.bed_number }})</ng-container>
-                <ng-container *ngIf="resident.private">{{ resident.room_number }}</ng-container>
+            <span *ngIf="resident.group_type == GROUP_TYPE.FACILITY || resident.group_type == GROUP_TYPE.APARTMENT">
+                <ng-container *ngIf="resident.private === '0'">{{ resident.room_number }} ({{ resident.bed_number }})</ng-container>
+                <ng-container *ngIf="resident.private === '1'">{{ resident.room_number }}</ng-container>
             </span>
-            <span *ngIf="resident.group_type === GROUP_TYPE.REGION">
+            <span *ngIf="resident.group_type == GROUP_TYPE.REGION">
               {{ resident.address }} ({{ resident.csz_str }})
             </span>
             <ng-container *ngIf="resident.group !== null">
