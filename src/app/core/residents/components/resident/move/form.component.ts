@@ -70,6 +70,14 @@ export class FormComponent extends AbstractForm implements OnInit {
     this._show_group = value;
   }
 
+  get show_bed(): boolean {
+    return this._show_bed;
+  }
+
+  set show_bed(value: boolean) {
+    this._show_bed = value;
+  }
+
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [null, Validators.required],

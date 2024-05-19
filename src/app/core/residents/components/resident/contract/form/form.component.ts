@@ -39,6 +39,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   facility_rooms: FacilityRoom[];
   apartment_rooms: ApartmentRoom[];
 
+  group_id: any; /** TODO: review **/
+
   resident_id: number;
   selectedTab: number;
 
