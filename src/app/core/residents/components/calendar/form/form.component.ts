@@ -329,6 +329,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   before_submit(): void {
     this.form.get('start_date').setValue(DateHelper.makeUTCDateOnly(this.form.get('start_date').value)); // TODO: #846 - Review date/time fields in all system
     this.form.get('end_date').setValue(DateHelper.makeUTCDateOnly(this.form.get('end_date').value)); // TODO: #846 - Review date/time fields in all system
+    this.form.get('repeat_end').setValue(DateHelper.makeUTCDateOnly(this.form.get('repeat_end').value)); // TODO: #846 - Review date/time fields in all system
   }
 
   private updateRepeatValidators() {
