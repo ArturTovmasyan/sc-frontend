@@ -47,6 +47,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.sort_resident = null;
     this.sort_room = null;
+
+    this.resident_id = null;
+    this.type_name = null;
   }
 
   ngOnInit(): void {
@@ -100,6 +103,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           .pipe(first()).subscribe(res => {
             if (res) {
               this.data = res;
+
+              this.subscribe('list_facility_residents', {type: GroupType.FACILITY, type_id: this.type_id});
             }
           });
         break;
@@ -124,7 +129,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.resident_id = null;
 
     this.subscribe('list_active_first', {type: GroupType.FACILITY, type_id: this.type_id});
-    this.subscribe('list_facility_residents', {type: GroupType.FACILITY, type_id: this.type_id});
   }
 
   sort(sort_column: string) {

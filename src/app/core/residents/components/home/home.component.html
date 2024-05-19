@@ -23,7 +23,7 @@
         </div>
         <div>
           <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
-            {{ type_name ? type_name : 'Facilities' }}
+            {{ type_name && type_name !== '' ? type_name : 'Facilities' }}
             <i nz-icon nzType="down" class="title-caret"></i>
           </a>
           <nz-dropdown-menu #menu="nzDropdownMenu">
