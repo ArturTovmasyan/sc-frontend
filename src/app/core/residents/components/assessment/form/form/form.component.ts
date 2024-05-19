@@ -10,6 +10,7 @@ import {AssessmentCategory} from '../../../../models/assessment-category';
 import {AssessmentCategoryService} from '../../../../services/assessment-category.service';
 import {AuthGuard} from '../../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -22,13 +23,14 @@ export class FormComponent extends AbstractForm implements OnInit {
   spaces: Space[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private category$: AssessmentCategoryService,
     private care_level_group$: AssessmentCareLevelGroupService,
     private space$: SpaceService,
     private auth_$: AuthGuard
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

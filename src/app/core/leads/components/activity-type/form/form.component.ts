@@ -7,8 +7,8 @@ import {Space} from '../../../../models/space';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {ActivityStatusService} from '../../../services/activity-status.service';
 import {ActivityStatus} from '../../../models/activity-status';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as ActivityStatusFormComponent} from '../../activity-status/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -18,12 +18,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   activity_statuses: ActivityStatus[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private space$: SpaceService,
-    private modal$: NzModalService,
     private activity_status$: ActivityStatusService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'activity_status', component: ActivityStatusFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -73,20 +76,4 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'activity_status':
-        this.create_modal(
-          this.modal$,
-          ActivityStatusFormComponent,
-          data => this.activity_status$.add(data),
-          data => {
-            this.subscribe('list_activity_status', {activity_status_id: data[0]});
-            return null;
-          });
-        break;
-      default:
-        break;
-    }
-  }
 }

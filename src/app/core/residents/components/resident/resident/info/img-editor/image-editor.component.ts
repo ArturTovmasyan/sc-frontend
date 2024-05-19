@@ -3,6 +3,7 @@ import {ImgCropperConfig, ImgCropperEvent, LyResizingCroppingImages} from '@alyl
 import {LyTheme2, ThemeVariables} from '@alyle/ui';
 import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {FormBuilder, Validators} from '@angular/forms';
+import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
 
 @Component({
   selector: 'app-resident-image-editor',
@@ -24,8 +25,12 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
     height: 300, // Default `200`
   };
 
-  constructor(private formBuilder: FormBuilder, private theme: LyTheme2) {
-    super();
+  constructor(
+    protected modal$: ModalFormService,
+    private formBuilder: FormBuilder,
+    private theme: LyTheme2
+  ) {
+    super(modal$);
   }
 
   ngOnInit(): void {

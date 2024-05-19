@@ -4,9 +4,9 @@ import {AbstractForm} from '../../../../../../shared/components/abstract-form/ab
 import {first} from 'rxjs/operators';
 import {AssessmentCareLevelGroup} from '../../../../models/assessment-care-level-group';
 import {AssessmentCareLevelGroupService} from '../../../../services/assessment-care-level-group.service';
-import {NzModalService} from 'ng-zorro-antd';
-import {FormComponent as CaleLevelGroupFormComponent} from '../../care-level-group/form/form.component';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {FormComponent as AssessmentCareLevelGroupFormComponent} from '../../care-level-group/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -15,11 +15,14 @@ export class FormComponent extends AbstractForm implements OnInit {
   care_level_groups: AssessmentCareLevelGroup[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private care_level_group$: AssessmentCareLevelGroupService,
-    private modal$: NzModalService
+    private care_level_group$: AssessmentCareLevelGroupService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'care_level_group', component: AssessmentCareLevelGroupFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -60,20 +63,4 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'care_level_group':
-        this.create_modal(
-          this.modal$,
-          CaleLevelGroupFormComponent,
-          data => this.care_level_group$.add(data),
-          data => {
-            this.subscribe('list_care_level_group', {care_level_group_id: data[0]});
-            return null;
-          });
-        break;
-      default:
-        break;
-    }
-  }
 }

@@ -9,8 +9,6 @@ import {Space} from '../../../../../models/space';
 import {Salutation} from '../../../../models/salutation';
 import {SpaceService} from '../../../../../services/space.service';
 import {SalutationService} from '../../../../services/salutation.service';
-import {FormComponent as SalutationFormComponent} from '../../../salutation/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
 import {AuthGuard} from '../../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 import {DateHelper} from '../../../../../../shared/helpers/date-helper';
@@ -21,6 +19,8 @@ import {CareLevelService} from '../../../../services/care-level.service';
 import {CityStateZipService} from '../../../../services/city-state-zip.service';
 import {StringUtil} from '../../../../../../shared/utils/string-util';
 import {ResidentService} from '../../../../services/resident.service';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {FormComponent as SalutationFormComponent} from '../../../salutation/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -48,16 +48,19 @@ export class FormComponent extends AbstractForm implements OnInit {
   disabledDate: (date: Date) => boolean;
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private resident$: ResidentService,
     private care_level$: CareLevelService,
     private city_state_zip$: CityStateZipService,
     private salutation$: SalutationService,
     private space$: SpaceService,
-    private modal$: NzModalService,
     private auth_$: AuthGuard
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'salutation', component: SalutationFormComponent}
+    ];
 
     this.disabledDate = (current: Date): boolean => {
       const today = DateHelper.convertUTC(new Date());
@@ -201,23 +204,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.city_state_zips = res;
           }
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'salutation':
-        this.create_modal(
-          this.modal$,
-          SalutationFormComponent,
-          data => this.salutation$.add(data),
-          data => {
-            this.subscribe('list_salutation', {salutation_id: data[0]});
-            return null;
-          });
         break;
       default:
         break;

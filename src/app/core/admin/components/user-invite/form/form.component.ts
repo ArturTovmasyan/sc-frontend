@@ -8,6 +8,7 @@ import {Role} from '../../../../models/role';
 import {Space} from '../../../../models/space';
 import {User} from '../../../../models/user';
 import {UserService} from '../../../services/user.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -18,12 +19,13 @@ export class FormComponent extends AbstractForm implements OnInit {
   spaces: Space[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private user$: UserService,
     private role$: RoleService,
     private space$: SpaceService
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

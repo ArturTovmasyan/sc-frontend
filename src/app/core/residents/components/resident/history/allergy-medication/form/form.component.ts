@@ -4,9 +4,9 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {Medication} from '../../../../../models/medication';
 import {MedicationService} from '../../../../../services/medication.service';
-import {FormComponent as MedicationFormComponent} from '../../../../medication/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
 import {ResidentSelectorService} from '../../../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
+import {FormComponent as MedicationFormComponent} from '../../../../medication/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -15,12 +15,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   medications: Medication[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private medication$: MedicationService,
-    private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'medication', component: MedicationFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -62,20 +65,4 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'medication':
-        this.create_modal(
-          this.modal$,
-          MedicationFormComponent,
-          data => this.medication$.add(data),
-          data => {
-            this.subscribe('list_medication', {medication_id: data[0]});
-            return null;
-          });
-        break;
-      default:
-        break;
-    }
-  }
 }

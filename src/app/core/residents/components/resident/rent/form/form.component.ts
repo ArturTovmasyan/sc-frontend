@@ -10,6 +10,7 @@ import {ResidentSelectorService} from '../../../../services/resident-selector.se
 import {GroupType} from '../../../../models/group-type.enum';
 import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
 import {DateHelper} from '../../../../../../shared/helpers/date-helper';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -27,12 +28,13 @@ export class FormComponent extends AbstractForm implements OnInit {
   periods: { id: PaymentPeriod, name: string }[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private payment_source$: PaymentSourceService,
     private residentSelector$: ResidentSelectorService,
     private admission$: ResidentAdmissionService
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

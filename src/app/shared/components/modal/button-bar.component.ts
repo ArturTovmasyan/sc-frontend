@@ -181,7 +181,7 @@ export class ButtonBarComponent implements OnInit {
                        add_edit?: { submit: (data: any) => Observable<any>, result: any, previous_data?: any },
                        remove?: { submit: (ids: number[]) => Observable<any>, relation_count: number, ids: number[] }) {
     const modal = this.modal$.create(this.component);
-    modal.modal_callback = () => this._modal_callback(null);
+    modal.modal_callback = (data) => this._modal_callback(data);
 
     if (this._preset_modal_form_data) {
       modal.preset_modal_form_data = (form: FormGroup) => this._preset_modal_form_data(form);

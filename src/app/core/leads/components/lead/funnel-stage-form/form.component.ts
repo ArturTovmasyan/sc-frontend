@@ -2,15 +2,15 @@
 import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {first} from 'rxjs/operators';
-import {NzModalService} from 'ng-zorro-antd';
 import {Lead} from '../../../models/lead';
 import {LeadService} from '../../../services/lead.service';
 import {FunnelStage} from '../../../models/funnel-stage';
 import {StageChangeReason} from '../../../models/stage-change-reason';
 import {FunnelStageService} from '../../../services/funnel-stage.service';
 import {StageChangeReasonService} from '../../../services/stage-change-reason.service';
-import {FormComponent as StageChangeReasonFormComponent} from '../../stage-change-reason/form/form.component';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as FunnelStageFormComponent} from '../../funnel-stage/form/form.component';
+import {FormComponent as StageChangeReasonFormComponent} from '../../stage-change-reason/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -32,13 +32,17 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private modal$: NzModalService,
     private lead$: LeadService,
     private funnel_stage$: FunnelStageService,
     private stage_change_reason$: StageChangeReasonService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'funnel_stage', component: FunnelStageFormComponent},
+         {key: 'stage_change_reason', component: StageChangeReasonFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -87,7 +91,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.reasons = res;
 
             if (params) {
-              this.form.get('reason_id').setValue(params.reason_id);
+              this.form.get('reason_id').setValue(params.stage_change_reason_id);
             }
           }
         });
@@ -98,7 +102,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.stages = res;
 
             if (params) {
-              this.form.get('stage_id').setValue(params.stage_id);
+              this.form.get('stage_id').setValue(params.funnel_stage_id);
             }
           }
         });
@@ -116,28 +120,4 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'stage_change_reason':
-        this.create_modal(
-          this.modal$,
-          StageChangeReasonFormComponent,
-          data => this.stage_change_reason$.add(data),
-          data => {
-            this.subscribe('list_stage_change_reason', {reason_id: data[0]});
-            return null;
-          });
-        break;
-      case 'funnel_stage':
-        this.create_modal(
-          this.modal$,
-          FunnelStageFormComponent,
-          data => this.funnel_stage$.add(data),
-          data => {
-            this.subscribe('list_funnel_stage', {stage_id: data[0]});
-            return null;
-          });
-        break;
-    }
-  }
 }

@@ -11,12 +11,12 @@ import {Salutation} from '../../../models/salutation';
 import {SalutationService} from '../../../services/salutation.service';
 import {PhysicianSpeciality} from '../../../models/physician-speciality';
 import {PhysicianSpecialityService} from '../../../services/physician-speciality.service';
-import {NzModalService} from 'ng-zorro-antd';
-import {FormComponent as CSZFormComponent} from '../../city-state-zip/form/form.component';
-import {FormComponent as SpecialityFormComponent} from '../../physician-speciality/form/form.component';
-import {FormComponent as SalutationFormComponent} from '../../salutation/form/form.component';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {PhoneType} from '../../../../models/phone-type.enum';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {FormComponent as SalutationFormComponent} from '../../salutation/form/form.component';
+import {FormComponent as PhysicianSpecialityFormComponent} from '../../physician-speciality/form/form.component';
+import {FormComponent as CityStateZipFormComponent} from '../../city-state-zip/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -30,15 +30,20 @@ export class FormComponent extends AbstractForm implements OnInit {
   phone_types: { id: PhoneType, name: string }[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private city_state_zip$: CityStateZipService,
     private salutation$: SalutationService,
     private speciality$: PhysicianSpecialityService,
     private space$: SpaceService,
-    private modal$: NzModalService,
     private auth_$: AuthGuard
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'salutation', component: SalutationFormComponent},
+         {key: 'speciality', component: PhysicianSpecialityFormComponent},
+         {key: 'csz', component: CityStateZipFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -126,43 +131,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             }
           }
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'csz':
-        this.create_modal(
-          this.modal$,
-          CSZFormComponent,
-          data => this.city_state_zip$.add(data),
-          data => {
-            this.subscribe('list_csz', {csz_id: data[0]});
-            return null;
-          });
-        break;
-      case 'speciality':
-        this.create_modal(
-          this.modal$,
-          SpecialityFormComponent,
-          data => this.speciality$.add(data),
-          data => {
-            this.subscribe('list_speciality', {speciality_id: data[0]});
-            return null;
-          });
-        break;
-      case 'salutation':
-        this.create_modal(
-          this.modal$,
-          SalutationFormComponent,
-          data => this.salutation$.add(data),
-          data => {
-            this.subscribe('list_salutation', {salutation_id: data[0]});
-            return null;
-          });
         break;
       default:
         break;

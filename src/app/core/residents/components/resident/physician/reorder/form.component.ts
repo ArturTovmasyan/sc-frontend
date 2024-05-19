@@ -2,6 +2,7 @@
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {ResidentPhysician} from '../../../../models/resident-physician';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -10,9 +11,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   public resident_physicians: ResidentPhysician[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

@@ -12,6 +12,7 @@ import {Apartment} from '../../../../residents/models/apartment';
 import {FacilityService} from '../../../../residents/services/facility.service';
 import {RegionService} from '../../../../residents/services/region.service';
 import {ApartmentService} from '../../../../residents/services/apartment.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -24,6 +25,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   apartments: Apartment[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private notification_type$: NotificationTypeService,
     private facility$: FacilityService,
@@ -31,7 +33,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private apartment$: ApartmentService,
     private user$: UserService,
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

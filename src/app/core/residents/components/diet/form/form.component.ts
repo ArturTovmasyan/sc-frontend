@@ -6,6 +6,7 @@ import {first} from 'rxjs/operators';
 import {Space} from '../../../../models/space';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -16,11 +17,12 @@ export class FormComponent extends AbstractForm implements OnInit {
   protected color = '#ffffff';
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private space$: SpaceService,
     private auth_$: AuthGuard
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

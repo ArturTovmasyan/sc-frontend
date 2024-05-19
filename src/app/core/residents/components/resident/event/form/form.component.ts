@@ -7,16 +7,16 @@ import {MedicationService} from '../../../../services/medication.service';
 import {MedicationFormFactorService} from '../../../../services/medication-form-factor.service';
 import {EventDefinitionService} from '../../../../services/event-definition.service';
 import {EventDefinition} from '../../../../models/event-definition';
-import {FormComponent as EventDefinitionFormComponent} from '../../../event-definition/form/form.component';
-import {FormComponent as ResidentPhysicianFormComponent} from '../../physician/form/form.component';
-import {FormComponent as ResidentResponsiblePersonFormComponent} from '../../responsible-person/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {ResidentResponsiblePersonService} from '../../../../services/resident-responsible-person.service';
 import {ResidentPhysicianService} from '../../../../services/resident-physician.service';
 import {ResidentResponsiblePerson} from '../../../../models/resident-responsible-person';
 import {ResidentPhysician} from '../../../../models/resident-physician';
 import {DateHelper} from '../../../../../../shared/helpers/date-helper';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {FormComponent as ResidentPhysicianFormComponent} from '../../physician/form/form.component';
+import {FormComponent as ResidentResponsiblePersonFormComponent} from '../../responsible-person/form/form.component';
+import {FormComponent as EventDefinitionFormComponent} from '../../../event-definition/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -35,16 +35,21 @@ export class FormComponent extends AbstractForm implements OnInit {
   };
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private medication$: MedicationService,
     private form_factor$: MedicationFormFactorService,
     private definition$: EventDefinitionService,
     private resident_responsible_person$: ResidentResponsiblePersonService,
     private resident_physician$: ResidentPhysicianService,
-    private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'resident_physician', component: ResidentPhysicianFormComponent},
+         {key: 'resident_responsible_person', component: ResidentResponsiblePersonFormComponent},
+         {key: 'definition', component: EventDefinitionFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -201,43 +206,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.subscribe('list_resident_responsible_person');
           }
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'definition':
-        this.create_modal(
-          this.modal$,
-          EventDefinitionFormComponent,
-          data => this.definition$.add(data),
-          data => {
-            this.subscribe('list_definition', {definition_id: data[0]});
-            return null;
-          });
-        break;
-      case 'resident_physician':
-        this.create_modal(
-          this.modal$,
-          ResidentPhysicianFormComponent,
-          data => this.resident_physician$.add(data),
-          data => {
-            this.subscribe('list_resident_physician', {resident_physician_id: data[0]});
-            return null;
-          });
-        break;
-      case 'resident_responsible_person':
-        this.create_modal(
-          this.modal$,
-          ResidentResponsiblePersonFormComponent,
-          data => this.resident_responsible_person$.add(data),
-          data => {
-            this.subscribe('list_resident_responsible_person', {resident_responsible_person_id: data[0]});
-            return null;
-          });
         break;
       default:
         break;

@@ -4,6 +4,7 @@ import {AbstractForm} from '../../../../../../shared/components/abstract-form/ab
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {FileModel} from '../../../../../models/file-model';
 import {StringUtil} from '../../../../../../shared/utils/string-util';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -14,10 +15,11 @@ export class FormComponent extends AbstractForm implements OnInit {
   files: FileModel[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private residentSelector$: ResidentSelectorService
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

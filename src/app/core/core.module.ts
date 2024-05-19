@@ -45,8 +45,8 @@ import {FormComponent as RoleFormComponent} from './admin/components/role/form/f
 import {ListComponent as SpaceListComponent} from './admin/components/space/list.component';
 import {FormComponent as SpaceFormComponent} from './admin/components/space/form/form.component';
 
-import {ListComponent as AllergensListComponent} from './residents/components/allergen/list.component';
-import {FormComponent as AllergensFormComponent} from './residents/components/allergen/form/form.component';
+import {ListComponent as AllergenListComponent} from './residents/components/allergen/list.component';
+import {FormComponent as AllergenFormComponent} from './residents/components/allergen/form/form.component';
 
 import {ListComponent as CareLevelListComponent} from './residents/components/care-level/list.component';
 import {FormComponent as CareLevelFormComponent} from './residents/components/care-level/form/form.component';
@@ -338,8 +338,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SpaceListComponent,
     SpaceFormComponent,
 
-    AllergensListComponent,
-    AllergensFormComponent,
+    AllergenListComponent,
+    AllergenFormComponent,
 
     CareLevelListComponent,
     CareLevelFormComponent,
@@ -560,7 +560,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RoleFormComponent,
     SpaceFormComponent,
 
-    AllergensFormComponent,
+    AllergenFormComponent,
 
     CareLevelFormComponent,
 

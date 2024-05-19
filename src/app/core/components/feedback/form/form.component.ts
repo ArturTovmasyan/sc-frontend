@@ -2,6 +2,7 @@
 import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {CoreValidator} from '../../../../shared/utils/core-validator';
+import {ModalFormService} from '../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -18,9 +19,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

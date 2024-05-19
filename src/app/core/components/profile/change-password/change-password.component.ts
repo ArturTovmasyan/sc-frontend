@@ -5,17 +5,20 @@ import {AbstractForm} from '../../../../shared/components/abstract-form/abstract
 import {Message} from '../../../models/message';
 import {ProfileService} from '../../../services/profile.service';
 import {CoreValidator} from '../../../../shared/utils/core-validator';
+import {ModalFormService} from '../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: './change-password.component.html'
 })
 export class ChangePasswordComponent extends AbstractForm implements OnInit {
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private profile$: ProfileService) {
-    super();
+    private profile$: ProfileService
+  ) {
+    super(modal$);
 
     this.submit = (data: any) => {
       return this.profile$.changePassword(data);

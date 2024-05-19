@@ -4,6 +4,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {AccountService} from '../../../services/account.service';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {Message} from '../../../models/message';
+import {ModalFormService} from '../../../../shared/services/modal-form.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,11 +13,13 @@ import {Message} from '../../../models/message';
 })
 export class ForgotPasswordComponent extends AbstractForm implements OnInit {
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private account$: AccountService) {
-    super();
+    private account$: AccountService
+  ) {
+    super(modal$);
 
     this.submit = (data: any) => {
       return this.account$.forgotPassword(data);

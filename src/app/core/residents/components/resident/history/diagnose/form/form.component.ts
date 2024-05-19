@@ -5,9 +5,9 @@ import {AbstractForm} from '../../../../../../../shared/components/abstract-form
 import {Diagnosis} from '../../../../../models/diagnosis';
 import {DiagnosisService} from '../../../../../services/diagnosis.service';
 import {DiagnoseType} from '../../../../../models/diagnose-type.enum';
-import {NzModalService} from 'ng-zorro-antd';
-import {FormComponent as DiagnosisFormComponent} from '../../../../diagnosis/form/form.component';
 import {ResidentSelectorService} from '../../../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
+import {FormComponent as DiagnosisFormComponent} from '../../../../diagnosis/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -19,12 +19,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   resident_id: number;
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private diagnosis$: DiagnosisService,
-    private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'diagnosis', component: DiagnosisFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -68,23 +71,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get('resident_id').setValue(next);
           }
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'diagnosis':
-        this.create_modal(
-          this.modal$,
-          DiagnosisFormComponent,
-          data => this.diagnosis$.add(data),
-          data => {
-            this.subscribe('list_diagnosis', {diagnosis_id: data[0]});
-            return null;
-          });
         break;
       default:
         break;

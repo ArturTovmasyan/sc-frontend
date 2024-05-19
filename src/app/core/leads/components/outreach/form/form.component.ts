@@ -9,13 +9,13 @@ import {Organization} from '../../../models/organization';
 import {OrganizationService} from '../../../services/organization.service';
 import {ContactService} from '../../../services/contact.service';
 import {Contact} from '../../../models/contact';
-import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
-import {FormComponent as ContactFormComponent} from '../../contact/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
-import {FormComponent as OutreachTypeFormComponent} from '../../outreach-type/form/form.component';
 import {DateHelper} from '../../../../../shared/helpers/date-helper';
 import {User} from '../../../../models/user';
 import {UserService} from '../../../../admin/services/user.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {FormComponent as OutreachTypeFormComponent} from '../../outreach-type/form/form.component';
+import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
+import {FormComponent as LeadContactFormComponent} from '../../contact/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -27,14 +27,19 @@ export class FormComponent extends AbstractForm implements OnInit {
   users: User[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private modal$: NzModalService,
     private organization$: OrganizationService,
     private outreach_type$: OutreachTypeService,
     private contact$: ContactService,
     private user$: UserService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'outreach_type', component: OutreachTypeFormComponent},
+         {key: 'organization', component: OrganizationFormComponent},
+         {key: 'contact', component: LeadContactFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -66,7 +71,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.outreach_types = res;
 
             if (params) {
-              this.form.get('type_id').setValue(params.type_id);
+              this.form.get('type_id').setValue(params.outreach_type_id);
             } else {
               this.form.get('type_id').setValue(this.form.get('type_id').value);
             }
@@ -126,38 +131,4 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form.get('date').setValue(DateHelper.magicDate(this.form.get('date').value));
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'organization':
-        this.create_modal(
-          this.modal$,
-          OrganizationFormComponent,
-          data => this.organization$.add(data),
-          data => {
-            this.subscribe('list_organization', {organization_id: data[0]});
-            return null;
-          });
-        break;
-      case 'contact':
-        this.create_modal(
-          this.modal$,
-          ContactFormComponent,
-          data => this.contact$.add(data),
-          data => {
-            this.subscribe('list_contact', {contact_id: data[0]});
-            return null;
-          });
-        break;
-      case 'outreach_type':
-        this.create_modal(
-          this.modal$,
-          OutreachTypeFormComponent,
-          data => this.outreach_type$.add(data),
-          data => {
-            this.subscribe('list_outreach_type', {type_id: data[0]});
-            return null;
-          });
-        break;
-    }
-  }
 }

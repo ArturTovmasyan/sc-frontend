@@ -11,9 +11,10 @@ import {UserService} from '../../../../admin/services/user.service';
 import {FacilityService} from '../../../../residents/services/facility.service';
 import {ActivityStatusService} from '../../../services/activity-status.service';
 import {ActivityTypeService} from '../../../services/activity-type.service';
-import {FormComponent as ActivityStatusFormComponent} from '../../activity-status/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
 import {DateHelper} from '../../../../../shared/helpers/date-helper';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {FormComponent as ActivityTypeFormComponent} from '../../activity-type/form/form.component';
+import {FormComponent as ActivityStatusFormComponent} from '../../activity-status/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -25,14 +26,18 @@ export class FormComponent extends AbstractForm implements OnInit {
   facilities: Facility[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private modal$: NzModalService,
     private activity_type$: ActivityTypeService,
     private activity_status$: ActivityStatusService,
     private facility$: FacilityService,
     private user$: UserService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'activity_type', component: ActivityTypeFormComponent},
+         {key: 'activity_status', component: ActivityStatusFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -159,33 +164,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             }
           }
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'activity_status':
-        this.create_modal(
-          this.modal$,
-          ActivityStatusFormComponent,
-          data => this.activity_status$.add(data),
-          data => {
-            this.subscribe('list_activity_status', {activity_status_id: data[0]});
-            return null;
-          });
-        break;
-      case 'activity_type':
-        this.create_modal(
-          this.modal$,
-          ActivityStatusFormComponent,
-          data => this.activity_type$.add(data),
-          data => {
-            this.subscribe('list_activity_type', {activity_type_id: data[0]});
-            return null;
-          });
         break;
       default:
         break;

@@ -7,6 +7,7 @@ import {Space} from '../../../../models/space';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {NotificationCategory} from '../../../../models/notification-category.enum';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -17,11 +18,12 @@ export class FormComponent extends AbstractForm implements OnInit {
   categories: { id: NotificationCategory, name: string }[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private space$: SpaceService,
     private auth_$: AuthGuard
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

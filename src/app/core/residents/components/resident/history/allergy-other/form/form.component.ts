@@ -4,9 +4,9 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {Allergen} from '../../../../../models/allergen';
 import {AllergenService} from '../../../../../services/allergen.service';
-import {NzModalService} from 'ng-zorro-antd';
-import {FormComponent as AllergenFormComponent} from '../../../../allergen/form/form.component';
 import {ResidentSelectorService} from '../../../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
+import {FormComponent as AllergenFormComponent} from '../../../../allergen/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -15,12 +15,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   allergens: Allergen[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private allergen$: AllergenService,
-    private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'allergen', component: AllergenFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -56,23 +59,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get('resident_id').setValue(next);
           }
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'allergen':
-        this.create_modal(
-          this.modal$,
-          AllergenFormComponent,
-          data => this.allergen$.add(data),
-          data => {
-            this.subscribe('list_allergen', {allergen_id: data[0]});
-            return null;
-          });
         break;
       default:
         break;

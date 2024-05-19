@@ -4,10 +4,10 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {MedicalHistoryCondition} from '../../../../../models/medical-history-condition';
 import {MedicalHistoryConditionService} from '../../../../../services/medical-history-condition.service';
-import {NzModalService} from 'ng-zorro-antd';
-import {FormComponent as MedicationHistoryConditionFormComponent} from '../../../../medical-history-condition/form/form.component';
 import {ResidentSelectorService} from '../../../../../services/resident-selector.service';
 import {DateHelper} from '../../../../../../../shared/helpers/date-helper';
+import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
+import {FormComponent as MedicalHistoryConditionFormComponent} from '../../../../medical-history-condition/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -16,12 +16,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   conditions: MedicalHistoryCondition[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private condition$: MedicalHistoryConditionService,
-    private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'condition', component: MedicalHistoryConditionFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -59,23 +62,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get('resident_id').setValue(next);
           }
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'condition':
-        this.create_modal(
-          this.modal$,
-          MedicationHistoryConditionFormComponent,
-          data => this.condition$.add(data),
-          data => {
-            this.subscribe('list_condition', {condition_id: data[0]});
-            return null;
-          });
         break;
       default:
         break;

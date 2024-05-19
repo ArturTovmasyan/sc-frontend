@@ -10,12 +10,13 @@ import {Physician} from '../../../../models/physician';
 import {PhysicianService} from '../../../../services/physician.service';
 import {MedicationFormFactorService} from '../../../../services/medication-form-factor.service';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
-import {FormComponent as MedicationFormComponent} from '../../../medication/form/form.component';
-import {FormComponent as MedicationFormFactorFormComponent} from '../../../medication-form-factor/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
-import {FormComponent as PhysicianFormComponent} from '../../../physician/form/form.component';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {ResidentMedicationService} from '../../../../services/resident-medication.service';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {NzModalService} from 'ng-zorro-antd';
+import {FormComponent as MedicationFormComponent} from '../../../medication/form/form.component';
+import {FormComponent as MedicationFormFactorFormComponent} from '../../../medication-form-factor/form/form.component';
+import {FormComponent as PhysicianFormComponent} from '../../../physician/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -26,16 +27,22 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
   physicians: Physician[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private _el: ElementRef,
     private medication$: MedicationService,
     private residentMedication$: ResidentMedicationService,
     private form_factor$: MedicationFormFactorService,
     private physician$: PhysicianService,
-    private modal$: NzModalService,
-    private residentSelector$: ResidentSelectorService
+    private residentSelector$: ResidentSelectorService,
+    private nzModal$: NzModalService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'medication', component: MedicationFormComponent},
+         {key: 'form_factor', component: MedicationFormFactorFormComponent},
+         {key: 'physician', component: PhysicianFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -155,51 +162,14 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'medication':
-        this.create_modal(
-          this.modal$,
-          MedicationFormComponent,
-          data => this.medication$.add(data),
-          data => {
-            this.subscribe('list_medication', {medication_id: data[0]});
-            return null;
-          });
-        break;
-      case 'form_factor':
-        this.create_modal(
-          this.modal$,
-          MedicationFormFactorFormComponent,
-          data => this.form_factor$.add(data),
-          data => {
-            this.subscribe('list_form_factor', {form_factor_id: data[0]});
-            return null;
-          });
-        break;
-      case 'physician':
-        this.create_modal(
-          this.modal$,
-          PhysicianFormComponent,
-          data => this.physician$.add(data),
-          data => {
-            this.subscribe('list_physician', {physician_id: data[0]});
-            return null;
-          });
-        break;
-      default:
-        break;
-    }
-  }
-
   show_medication_confirm(prev: any): void {
-    const modal = this.modal$.create({
+    const modal = this.nzModal$.create({
       nzClosable: false,
       nzMaskClosable: false,
       nzTitle: null,
       nzContent: `<p class="modal-confirm text-center">
-      <i class="fa fa-info text-info"></i> This medication already added for this resident.<br/>
-      Are you sure to add one more?</p>`,
+                    <i class="fa fa-info text-info"></i> This medication already added for this resident.<br/>
+                    Are you sure to add one more?</p>`,
       nzFooter: [
         {
           label: 'No',

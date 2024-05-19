@@ -4,10 +4,10 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {Diet} from '../../../../models/diet';
 import {DietService} from '../../../../services/diet.service';
-import {FormComponent as DietFormComponent} from '../../../diet/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {FormComponent as DietFormComponent} from '../../../diet/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -16,12 +16,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   diets: Diet[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private diet$: DietService,
-    private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'diet', component: DietFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -56,23 +59,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get('resident_id').setValue(next);
           }
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'diet':
-        this.create_modal(
-          this.modal$,
-          DietFormComponent,
-          data => this.diet$.add(data),
-          data => {
-            this.subscribe('list_diet', {diet_id: data[0]});
-            return null;
-          });
         break;
       default:
         break;

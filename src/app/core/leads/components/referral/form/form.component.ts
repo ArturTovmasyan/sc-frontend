@@ -12,10 +12,10 @@ import {OrganizationService} from '../../../services/organization.service';
 import {Referral} from '../../../models/referral';
 import {ContactService} from '../../../services/contact.service';
 import {Contact} from '../../../models/contact';
-import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
-import {FormComponent as ContactFormComponent} from '../../contact/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as ReferrerTypeFormComponent} from '../../referrer-type/form/form.component';
+import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
+import {FormComponent as LeadContactFormComponent} from '../../contact/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -41,14 +41,19 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private modal$: NzModalService,
     private lead$: LeadService,
     private organization$: OrganizationService,
     private referrer_type$: ReferrerTypeService,
     private contact$: ContactService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'referrer_type', component: ReferrerTypeFormComponent},
+         {key: 'organization', component: OrganizationFormComponent},
+         {key: 'contact', component: LeadContactFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -82,7 +87,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.referrer_types = res;
 
             if (params) {
-              this.form.get('type_id').setValue(params.type_id);
+              this.form.get('type_id').setValue(params.referrer_type_id);
             }
 
             this.subscribe('vc_referrer_type');
@@ -208,38 +213,4 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'organization':
-        this.create_modal(
-          this.modal$,
-          OrganizationFormComponent,
-          data => this.organization$.add(data),
-          data => {
-            this.subscribe('list_organization', {organization_id: data[0]});
-            return null;
-          });
-        break;
-      case 'contact':
-        this.create_modal(
-          this.modal$,
-          ContactFormComponent,
-          data => this.contact$.add(data),
-          data => {
-            this.subscribe('list_contact', {contact_id: data[0]});
-            return null;
-          });
-        break;
-      case 'referrer_type':
-        this.create_modal(
-          this.modal$,
-          ReferrerTypeFormComponent,
-          data => this.referrer_type$.add(data),
-          data => {
-            this.subscribe('list_referrer_type', {type_id: data[0]});
-            return null;
-          });
-        break;
-    }
-  }
 }

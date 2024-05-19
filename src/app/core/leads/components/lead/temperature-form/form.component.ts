@@ -2,12 +2,12 @@
 import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {first} from 'rxjs/operators';
-import {NzModalService} from 'ng-zorro-antd';
 import {Lead} from '../../../models/lead';
 import {LeadService} from '../../../services/lead.service';
-import {FormComponent as TemperatureFormComponent} from '../../temperature/form/form.component';
 import {Temperature} from '../../../models/temperature';
 import {TemperatureService} from '../../../services/temperature.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {FormComponent as TemperatureFormComponent} from '../../temperature/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -28,12 +28,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private modal$: NzModalService,
     private lead$: LeadService,
     private temperature$: TemperatureService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'temperature', component: TemperatureFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -98,18 +101,4 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'temperature':
-        this.create_modal(
-          this.modal$,
-          TemperatureFormComponent,
-          data => this.temperature$.add(data),
-          data => {
-            this.subscribe('list_temperature', {temperature_id: data[0]});
-            return null;
-          });
-        break;
-    }
-  }
 }

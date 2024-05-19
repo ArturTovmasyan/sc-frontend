@@ -15,6 +15,7 @@ import {ApartmentService} from '../../../../services/apartment.service';
 import {RegionService} from '../../../../services/region.service';
 import {GroupType} from '../../../../models/group-type.enum';
 import {ApartmentRoomService} from '../../../../services/apartment-room.service';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -34,6 +35,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   private _current_room: { id: number, number: string, beds: ApartmentBed[] | FacilityBed[] };
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private resident$: ResidentService,
     private facility$: FacilityService,
@@ -42,7 +44,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private facility_room$: FacilityRoomService,
     private apartment_room$: ApartmentRoomService
   ) {
-    super();
+    super(modal$);
   }
 
   get resident(): Resident {

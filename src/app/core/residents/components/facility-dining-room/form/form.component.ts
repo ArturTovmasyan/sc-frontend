@@ -5,6 +5,7 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {FacilityService} from '../../../services/facility.service';
 import {Facility} from '../../../models/facility';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -12,8 +13,12 @@ import {CoreValidator} from '../../../../../shared/utils/core-validator';
 export class FormComponent extends AbstractForm implements OnInit {
   facilities: Facility[];
 
-  constructor(private formBuilder: FormBuilder, private facility$: FacilityService) {
-    super();
+  constructor(
+    protected modal$: ModalFormService,
+    private formBuilder: FormBuilder,
+    private facility$: FacilityService
+  ) {
+    super(modal$);
   }
 
   ngOnInit(): void {

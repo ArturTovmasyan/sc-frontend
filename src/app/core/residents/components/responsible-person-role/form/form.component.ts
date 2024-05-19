@@ -5,6 +5,7 @@ import {Space} from '../../../../models/space';
 import {SpaceService} from '../../../../services/space.service';
 import {first} from 'rxjs/operators';
 import {AuthGuard} from '../../../../guards/auth.guard';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -15,11 +16,12 @@ export class FormComponent extends AbstractForm implements OnInit {
   iconPicked: string = null;
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private space$: SpaceService,
     private auth_$: AuthGuard
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

@@ -7,6 +7,7 @@ import {ProfileService} from '../../../services/profile.service';
 import {PhoneType} from '../../../models/phone-type.enum';
 import {CoreValidator} from '../../../../shared/utils/core-validator';
 import {StringUtil} from '../../../../shared/utils/string-util';
+import {ModalFormService} from '../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: './profile-edit.component.html'
@@ -20,11 +21,13 @@ export class ProfileEditComponent extends AbstractForm implements OnInit {
   phone_types: { id: PhoneType, name: string }[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private profile$: ProfileService) {
-    super();
+    private profile$: ProfileService
+  ) {
+    super(modal$);
 
     this.submit = (data: any) => {
       return this.profile$.edit(data);

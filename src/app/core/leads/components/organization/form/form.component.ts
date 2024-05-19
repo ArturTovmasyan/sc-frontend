@@ -7,10 +7,10 @@ import {ReferrerTypeService} from '../../../services/referrer-type.service';
 import {ReferrerType} from '../../../models/referrer-type';
 import {CityStateZip} from '../../../../residents/models/city-state-zip';
 import {CityStateZipService} from '../../../../residents/services/city-state-zip.service';
-import {FormComponent as CSZFormComponent} from '../../../../residents/components/city-state-zip/form/form.component';
-import {FormComponent as ReferrerTypeFormComponent} from '../../referrer-type/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
 import {PhoneType} from '../../../../models/phone-type.enum';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {FormComponent as ReferrerTypeFormComponent} from '../../referrer-type/form/form.component';
+import {FormComponent as CityStateZipFormComponent} from '../../../../residents/components/city-state-zip/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -22,12 +22,16 @@ export class FormComponent extends AbstractForm implements OnInit {
   phone_types: { id: PhoneType, name: string }[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private city_state_zip$: CityStateZipService,
-    private referrer_type$: ReferrerTypeService,
-    private modal$: NzModalService
+    private referrer_type$: ReferrerTypeService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'referrer_type', component: ReferrerTypeFormComponent},
+         {key: 'csz', component: CityStateZipFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -85,7 +89,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.referrer_types = res;
 
             if (params) {
-              this.form.get('category_id').setValue(params.category_id);
+              this.form.get('category_id').setValue(params.referrer_type_id);
             }
           }
         });
@@ -106,30 +110,4 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'csz':
-        this.create_modal(
-          this.modal$,
-          CSZFormComponent,
-          data => this.city_state_zip$.add(data),
-          data => {
-            this.subscribe('list_csz', {csz_id: data[0]});
-            return null;
-          });
-        break;
-      case 'category':
-        this.create_modal(
-          this.modal$,
-          ReferrerTypeFormComponent,
-          data => this.referrer_type$.add(data),
-          data => {
-            this.subscribe('list_referrer_type', {category_id: data[0]});
-            return null;
-          });
-        break;
-      default:
-        break;
-    }
-  }
 }

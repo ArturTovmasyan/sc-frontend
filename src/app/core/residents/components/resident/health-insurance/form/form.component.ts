@@ -2,14 +2,14 @@
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
-import {FormComponent as InsuranceCompanyFormComponent} from '../../../insurance-company/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 import {InsuranceCompanyService} from '../../../../services/insurance-company.service';
 import {InsuranceCompany} from '../../../../models/insurance-company';
 import {FileModel} from '../../../../../models/file-model';
 import {StringUtil} from '../../../../../../shared/utils/string-util';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {FormComponent as InsuranceCompanyFormComponent} from '../../../insurance-company/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -23,12 +23,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   files: FileModel[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private insurance_company$: InsuranceCompanyService,
-    private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'insurance_company', component: InsuranceCompanyFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -63,7 +66,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.companies = res;
 
             if (params) {
-              this.form.get('company_id').setValue(params.company_id);
+              this.form.get('company_id').setValue(params.insurance_company_id);
             }
           }
         });
@@ -74,23 +77,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get('resident_id').setValue(next);
           }
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'insurance_company':
-        this.create_modal(
-          this.modal$,
-          InsuranceCompanyFormComponent,
-          data => this.insurance_company$.add(data),
-          data => {
-            this.subscribe('list_insurance_company', {company_id: data[0]});
-        return null;
-    });
         break;
       default:
         break;

@@ -7,9 +7,9 @@ import {SpaceService} from '../../../../services/space.service';
 import {Space} from '../../../../models/space';
 import {CityStateZip} from '../../../models/city-state-zip';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
-import {FormComponent as CSZFormComponent} from '../../city-state-zip/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
 import {AuthGuard} from '../../../../guards/auth.guard';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {FormComponent as CityStateZipFormComponent} from '../../city-state-zip/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -19,13 +19,16 @@ export class FormComponent extends AbstractForm implements OnInit {
   spaces: Space[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private city_state_zip$: CityStateZipService,
     private space$: SpaceService,
-    private modal$: NzModalService,
     private auth_$: AuthGuard
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'csz', component: CityStateZipFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -81,23 +84,6 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.form.get('license_capacity').valueChanges.subscribe(next => {
           this.form.get('capacity').setValue(this.form.get('capacity').value);
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'csz':
-        this.create_modal(
-          this.modal$,
-          CSZFormComponent,
-          data => this.city_state_zip$.add(data),
-          data => {
-            this.subscribe('list_csz', {csz_id: data[0]});
-            return null;
-          });
         break;
       default:
         break;

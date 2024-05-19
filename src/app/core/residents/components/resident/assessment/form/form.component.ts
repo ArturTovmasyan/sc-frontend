@@ -8,6 +8,7 @@ import {AssessmentFormService} from '../../../../services/assessment-form.servic
 import {AssessmentCategory} from '../../../../models/assessment-category';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {DateHelper} from '../../../../../../shared/helpers/date-helper';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html',
@@ -65,11 +66,14 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     return score.reduce((previous, value) => (previous + value), 0);
   }
 
-  constructor(private formBuilder: FormBuilder,
-              private assessment_form$: AssessmentFormService,
-              private residentSelector$: ResidentSelectorService,
-              private _el: ElementRef) {
-    super();
+  constructor(
+    protected modal$: ModalFormService,
+    private formBuilder: FormBuilder,
+    private assessment_form$: AssessmentFormService,
+    private residentSelector$: ResidentSelectorService,
+    private _el: ElementRef
+  ) {
+    super(modal$);
 
     this.loaded.next(false);
   }

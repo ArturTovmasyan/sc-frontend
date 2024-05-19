@@ -10,6 +10,7 @@ import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {PhoneType} from '../../../../models/phone-type.enum';
 import {GrantService} from '../../../services/grant.service';
 import {AuthGuard} from '../../../../guards/auth.guard';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -23,6 +24,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
   grant_lists: {};
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private role$: RoleService,
     private grant$: GrantService,
@@ -30,7 +32,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     private auth_$: AuthGuard,
     private _el: ElementRef
   ) {
-    super();
+    super(modal$);
   }
 
   ngOnInit(): void {

@@ -5,7 +5,6 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {FacilityService} from '../../../services/facility.service';
 import {Facility} from '../../../models/facility';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
-import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as ResidentMoveComponent} from '../../resident/resident/move/form.component';
 import {ResidentService} from '../../../services/resident.service';
 import {Resident} from '../../../models/resident';
@@ -13,6 +12,8 @@ import {FacilityRoom} from '../../../models/facility-room';
 import {FacilityRoomService} from '../../../services/facility-room.service';
 import {GroupType} from '../../../models/group-type.enum';
 import {ResidentAdmissionService} from '../../../services/resident-admission.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -30,14 +31,15 @@ export class FormComponent extends AbstractForm implements OnInit {
   @ViewChild('addBed') btn_add_bed;
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private facility$: FacilityService,
     private facility_room$: FacilityRoomService,
-    protected modal$: NzModalService,
     protected resident$: ResidentService,
-    protected residentAdmission$: ResidentAdmissionService
+    protected residentAdmission$: ResidentAdmissionService,
+    private nzModal$: NzModalService
   ) {
-    super();
+    super(modal$);
 
     this.room_orig_occupation = 0;
     this.room_curr_occupation = 0;
@@ -148,7 +150,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     let valid = false;
     let loading = false;
 
-    const modal = this.modal$.create({
+    const modal = this.nzModal$.create({
       nzClosable: false,
       nzMaskClosable: false,
       nzWidth: '45rem',

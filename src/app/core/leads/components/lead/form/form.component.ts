@@ -3,7 +3,6 @@ import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {first} from 'rxjs/operators';
-import {NzModalService} from 'ng-zorro-antd';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {PhoneType} from '../../../../models/phone-type.enum';
 import {ReferrerType} from '../../../models/referrer-type';
@@ -21,14 +20,15 @@ import {UserService} from '../../../../admin/services/user.service';
 import {PaymentSource} from '../../../../residents/models/payment-source';
 import {PaymentSourceService} from '../../../../residents/services/payment-source.service';
 import {Lead, LeadState} from '../../../models/lead';
-import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
-import {FormComponent as ContactFormComponent} from '../../contact/form/form.component';
-import {FormComponent as CareTypeFormComponent} from '../../care-type/form/form.component';
-import {FormComponent as ReferrerTypeFormComponent} from '../../referrer-type/form/form.component';
-import {FormComponent as CSZFormComponent} from '../../../../residents/components/city-state-zip/form/form.component';
-import {FormComponent as PaymentSourceFormComponent} from '../../../../residents/components/payment-source/form/form.component';
 import {Contact} from '../../../models/contact';
 import {ContactService} from '../../../services/contact.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {FormComponent as CareTypeFormComponent} from '../../care-type/form/form.component';
+import {FormComponent as PaymentSourceFormComponent} from '../../../../residents/components/payment-source/form/form.component';
+import {FormComponent as CityStateZipFormComponent} from '../../../../residents/components/city-state-zip/form/form.component';
+import {FormComponent as ReferrerTypeFormComponent} from '../../referrer-type/form/form.component';
+import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
+import {FormComponent as LeadContactFormComponent} from '../../contact/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -54,9 +54,9 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
   edit_data: Lead;
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private _el: ElementRef,
-    private modal$: NzModalService,
     private csz$: CityStateZipService,
     private payment_source$: PaymentSourceService,
     private user$: UserService,
@@ -66,7 +66,15 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     private contact$: ContactService,
     private referrer_type$: ReferrerTypeService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'care_type', component: CareTypeFormComponent},
+         {key: 'payment_source', component: PaymentSourceFormComponent},
+         {key: 'csz', component: CityStateZipFormComponent},
+         {key: 'referrer_type', component: ReferrerTypeFormComponent},
+         {key: 'organization', component: OrganizationFormComponent},
+         {key: 'contact', component: LeadContactFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -177,7 +185,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
             this.payment_sources = res;
 
             if (params) {
-              this.form.get('payment_type_id').setValue(params.payment_type_id);
+              this.form.get('payment_type_id').setValue(params.payment_source_id);
             }
           }
         });
@@ -223,7 +231,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
             this.referrer_types = res;
 
             if (params) {
-              this.form.get('referral.type_id').setValue(params.type_id);
+              this.form.get('referral.type_id').setValue(params.referrer_type_id);
             }
 
             this.subscribe('vc_referrer_type');
@@ -316,73 +324,6 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
             }
           }
         });
-        break;
-      default:
-        break;
-    }
-  }
-
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'organization':
-        this.create_modal(
-          this.modal$,
-          OrganizationFormComponent,
-          data => this.organization$.add(data),
-          data => {
-            this.subscribe('list_organization', {organization_id: data[0]});
-            return null;
-          });
-        break;
-      case 'contact':
-        this.create_modal(
-          this.modal$,
-          ContactFormComponent,
-          data => this.contact$.add(data),
-          data => {
-            this.subscribe('list_contact', {contact_id: data[0]});
-            return null;
-          });
-        break;
-      case 'csz':
-        this.create_modal(
-          this.modal$,
-          CSZFormComponent,
-          data => this.csz$.add(data),
-          data => {
-            this.subscribe('list_csz', {csz_id: data[0]});
-            return null;
-          });
-        break;
-      case 'payment_source':
-        this.create_modal(
-          this.modal$,
-          PaymentSourceFormComponent,
-          data => this.payment_source$.add(data),
-          data => {
-            this.subscribe('list_payment_source', {payment_type_id: data[0]});
-            return null;
-          });
-        break;
-      case 'care_type':
-        this.create_modal(
-          this.modal$,
-          CareTypeFormComponent,
-          data => this.care_type$.add(data),
-          data => {
-            this.subscribe('list_care_type', {care_type_id: data[0]});
-            return null;
-          });
-        break;
-      case 'referrer_type':
-        this.create_modal(
-          this.modal$,
-          ReferrerTypeFormComponent,
-          data => this.referrer_type$.add(data),
-          data => {
-            this.subscribe('list_referrer_type', {type_id: data[0]});
-            return null;
-          });
         break;
       default:
         break;

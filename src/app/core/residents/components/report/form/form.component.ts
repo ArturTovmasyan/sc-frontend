@@ -13,6 +13,7 @@ import {ResidentAdmissionService} from '../../../services/resident-admission.ser
 import {DateHelper} from '../../../../../shared/helpers/date-helper';
 import {AssessmentForm} from '../../../models/assessment-form';
 import {AssessmentFormService} from '../../../services/assessment-form.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -59,6 +60,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private facility$: FacilityService,
     private apartment$: ApartmentService,
@@ -67,7 +69,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private residentAdmission$: ResidentAdmissionService,
     private residentSelector$: ResidentSelectorService,
   ) {
-    super();
+    super(modal$);
 
     this.group_helper = new GroupHelper();
   }

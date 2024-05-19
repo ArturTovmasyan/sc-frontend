@@ -9,8 +9,8 @@ import {Organization} from '../../../models/organization';
 import {SpaceService} from '../../../../services/space.service';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {Space} from '../../../../models/space';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
-import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -22,13 +22,16 @@ export class FormComponent extends AbstractForm implements OnInit {
   phone_types: { id: PhoneType, name: string }[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private modal$: NzModalService,
     private organization$: OrganizationService,
     private space$: SpaceService,
     private auth_$: AuthGuard
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'organization', component: OrganizationFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -110,18 +113,4 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'organization':
-        this.create_modal(
-          this.modal$,
-          OrganizationFormComponent,
-          data => this.organization$.add(data),
-          data => {
-            this.subscribe('list_organization', {organization_id: data[0]});
-            return null;
-          });
-        break;
-    }
-  }
 }

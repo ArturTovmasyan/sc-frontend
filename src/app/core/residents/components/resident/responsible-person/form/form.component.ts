@@ -7,13 +7,13 @@ import {Relationship} from '../../../../models/relationship';
 import {ResponsiblePerson} from '../../../../models/responsible-person';
 import {ResponsiblePersonService} from '../../../../services/responsible-person.service';
 import {RelationshipService} from '../../../../services/relationship.service';
-import {NzModalService} from 'ng-zorro-antd';
-import {FormComponent as RelationshipFormComponent} from '../../../relationship/form/form.component';
-import {FormComponent as ResponsiblePersonFormComponent} from '../../../responsible-person/form/form.component';
-import {FormComponent as ResponsiblePersonRoleFormComponent} from '../../../responsible-person-role/form/form.component';
 import {ResponsiblePersonRole} from '../../../../models/responsible-person-role';
 import {ResponsiblePersonRoleService} from '../../../../services/responsible-person-role.service';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {FormComponent as ResponsiblePersonFormComponent} from '../../../responsible-person/form/form.component';
+import {FormComponent as RelationshipFormComponent} from '../../../relationship/form/form.component';
+import {FormComponent as ResponsiblePersonRoleFormComponent} from '../../../responsible-person-role/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -24,14 +24,19 @@ export class FormComponent extends AbstractForm implements OnInit {
   responsible_persons: ResponsiblePerson[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private relationship$: RelationshipService,
     private responsible_person_role$: ResponsiblePersonRoleService,
     private responsible_person$: ResponsiblePersonService,
-    private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'responsible_person', component: ResponsiblePersonFormComponent},
+         {key: 'relationship', component: RelationshipFormComponent},
+         {key: 'responsible_person_role', component: ResponsiblePersonRoleFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -47,7 +52,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.subscribe('rs_resident');
     this.subscribe('list_relationship');
-    this.subscribe('list_role');
+    this.subscribe('list_responsible_person_role');
     this.subscribe('list_responsible_person');
   }
 
@@ -64,14 +69,14 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
-      case 'list_role':
+      case 'list_responsible_person_role':
         this.$subscriptions[key] = this.responsible_person_role$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
           if (res) {
             this.roles = res;
 
             if (params) {
               const roles = _.isArray(this.form.get('roles').value) ? this.form.get('roles').value : [];
-              roles.push(params.role_id);
+              roles.push(params.responsible_person_role_id);
 
               this.form.get('roles').setValue(roles);
             }
@@ -101,40 +106,4 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'responsible_person':
-        this.create_modal(
-          this.modal$,
-          ResponsiblePersonFormComponent,
-          data => this.responsible_person$.add(data),
-          data => {
-            this.subscribe('list_responsible_person', {responsible_person_id: data[0]});
-            return null;
-          });
-        break;
-      case 'relationship':
-        this.create_modal(
-          this.modal$,
-          RelationshipFormComponent,
-          data => this.relationship$.add(data),
-          data => {
-            this.subscribe('list_relationship', {relationship_id: data[0]});
-            return null;
-          });
-        break;
-      case 'role':
-        this.create_modal(
-          this.modal$,
-          ResponsiblePersonRoleFormComponent,
-          data => this.responsible_person_role$.add(data),
-          data => {
-            this.subscribe('list_role', {role_id: data[0]});
-            return null;
-          });
-        break;
-      default:
-        break;
-    }
-  }
 }

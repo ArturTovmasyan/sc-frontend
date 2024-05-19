@@ -5,6 +5,7 @@ import {AuthenticationService} from '../../../services/auth.service';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {Message} from '../../../models/message';
 import {ProfileService} from '../../../services/profile.service';
+import {ModalFormService} from '../../../../shared/services/modal-form.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,13 +16,14 @@ export class SignInComponent extends AbstractForm implements OnInit {
   returnUrl: string;
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private auth$: AuthenticationService,
     private profile$: ProfileService
   ) {
-    super();
+    super(modal$);
 
     this.submit = (data: any) => {
       return this.auth$.sign_in(data);

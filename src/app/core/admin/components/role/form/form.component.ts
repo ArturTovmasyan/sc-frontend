@@ -5,6 +5,7 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {GrantService} from '../../../services/grant.service';
 import {Subscription} from 'rxjs';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 
 export interface GrantNodeInterface {
   key: number;
@@ -25,11 +26,12 @@ export class FormComponent extends AbstractForm implements OnInit {
   $grantValue: Subscription;
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private grant$: GrantService,
     private _el: ElementRef
   ) {
-    super();
+    super(modal$);
   }
 
   collapse(array: GrantNodeInterface[], data: GrantNodeInterface, $event: boolean): void {

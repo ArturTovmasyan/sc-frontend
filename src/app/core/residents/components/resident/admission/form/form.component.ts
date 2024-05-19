@@ -23,6 +23,7 @@ import {ResidentSelectorService} from '../../../../services/resident-selector.se
 import {GroupHelper} from '../../../../helper/group-helper';
 import {ResidentService} from '../../../../services/resident.service';
 import {DateHelper} from '../../../../../../shared/helpers/date-helper';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -46,6 +47,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
   admission_types: { id: AdmissionType, name: string }[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private facility$: FacilityService,
     private apartment$: ApartmentService,
@@ -59,7 +61,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     private resident$: ResidentService,
     private _el: ElementRef
   ) {
-    super();
+    super(modal$);
 
     this.group_helper = new GroupHelper();
   }

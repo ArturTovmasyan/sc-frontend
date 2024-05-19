@@ -6,9 +6,10 @@ import {AbstractForm} from '../../../../../../shared/components/abstract-form/ab
 import {Physician} from '../../../../models/physician';
 import {PhysicianService} from '../../../../services/physician.service';
 import {ResidentPhysicianService} from '../../../../services/resident-physician.service';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as PhysicianFormComponent} from '../../../physician/form/form.component';
-import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -17,13 +18,17 @@ export class FormComponent extends AbstractForm implements OnInit {
   physicians: Physician[];
 
   constructor(
+    protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private physician$: PhysicianService,
     private resident_physician$: ResidentPhysicianService,
-    private modal$: NzModalService,
-    private residentSelector$: ResidentSelectorService
+    private residentSelector$: ResidentSelectorService,
+    private nzModal$: NzModalService
   ) {
-    super();
+    super(modal$);
+    this.modal_map = [
+         {key: 'physician', component: PhysicianFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -87,25 +92,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public open_sub_modal(key: string): void {
-    switch (key) {
-      case 'physician':
-        this.create_modal(
-          this.modal$,
-          PhysicianFormComponent,
-          data => this.physician$.add(data),
-          data => {
-            this.subscribe('list_physician', {physician_id: data[0]});
-            return null;
-          });
-        break;
-      default:
-        break;
-    }
-  }
-
   show_modal_confirm(next: boolean, message: string): void {
-    const modal = this.modal$.create({
+    const modal = this.nzModal$.create({
       nzClosable: false,
       nzMaskClosable: false,
       nzTitle: null,
