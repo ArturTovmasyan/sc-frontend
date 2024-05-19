@@ -271,6 +271,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     if (this.edit_mode) {
       this.subscribe('last_admission');
+      this.photo_file_name = '(Loaded)';
     } else {
       this.form.get('dnr').disable();
       this.form.get('polst').disable();
