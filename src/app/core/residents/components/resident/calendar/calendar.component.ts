@@ -119,6 +119,19 @@ export class CalendarComponent implements OnInit, OnDestroy {
               });
             });
 
+            res.facility_events.forEach(event => {
+              this.calendarEvents.push({
+                borderColor: 'transparent',
+                backgroundColor: event.rsvp === false ? '#5d99d7' : '#1e75d7',
+                textColor: '#ffffff',
+                id: event.id,
+                event_type: CalendarEventType.FACILITY,
+                start: moment.utc(event.start).format('YYYY-MM-DD HH:mm:ss'),
+                end: event.end ? moment.utc(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
+                title: event.title
+              });
+            });
+
             res.resident_events.forEach(event => {
               this.calendarEvents.push({
                 borderColor: 'transparent',
