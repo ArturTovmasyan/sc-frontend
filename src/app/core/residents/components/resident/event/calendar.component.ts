@@ -95,8 +95,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: event.id,
                 event_type: CalendarEventType.FACILITY,
-                start: DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
-                end: DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
+                start: event.all_day ? DateHelper.formatMoment(event.start, 'YYYY-MM-DD') : DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
+                end:  event.all_day ? null : DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
                 title: event.title
               });
             });
