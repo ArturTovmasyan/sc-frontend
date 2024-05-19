@@ -308,3 +308,9 @@ app-aside {
     }
   }
 }
+
+::ng-deep {
+  .ant-tabs-nav .ant-tabs-tab-active {
+    color: rgb(35, 40, 44);
+  }
+}

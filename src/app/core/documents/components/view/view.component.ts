@@ -61,12 +61,14 @@ export class ViewComponent implements OnInit, OnDestroy {
             this.loading = false;
             this.documents = res;
 
-            this.documents.sort((a, b) => a.title.localeCompare(b.title));
+            if (res.length > 0) {
+              this.documents.sort((a, b) => a.title.localeCompare(b.title));
 
-            if (params) {
-              this.openPDF(this.documents.filter(v => v.id === params.document_id).pop());
-            } else {
-              this.openPDF(this.documents[0]);
+              if (params) {
+                this.openPDF(this.documents.filter(v => v.id === params.document_id).pop());
+              } else {
+                this.openPDF(this.documents[0]);
+              }
             }
           }
         });

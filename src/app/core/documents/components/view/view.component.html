@@ -11,9 +11,9 @@
             <nz-list-item>
               <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="item.description">
                 <ng-template #nzTitle>
-                  <a [routerLink]="" (click)="openPDF(item)">
-                    <span *ngIf="document && (document.id === item.id)" class="text-primary">{{ item.title }}</span>
-                    <span *ngIf="!document || (document && document.id !== item.id)">{{ item.title }}</span>
+                  <a [routerLink]="" (click)="openPDF(item)" style="font-size: 16px;">
+                    <strong *ngIf="document && (document.id === item.id)">{{ item.title }}</strong>
+                    <ng-container *ngIf="!document || (document && document.id !== item.id)">{{ item.title }}</ng-container>
                   </a>
                 </ng-template>
               </nz-list-item-meta>
