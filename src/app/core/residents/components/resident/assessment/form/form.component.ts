@@ -1,5 +1,6 @@
-﻿import {Component, ElementRef, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+﻿import * as _ from 'lodash';
+import {Component, ElementRef, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {AssessmentForm} from '../../../../models/assessment-form';
@@ -23,6 +24,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   rows: number[];
 
+  data_loaded: boolean = false;
+
   private static calc_multi_item(count: number): number {
     let total = 0;
 
@@ -37,6 +40,36 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
 
     return total;
+  }
+
+  private calculate_score(rows: Array<any>) {
+    const score = [];
+
+    if (rows) {
+      const category_rows = [].concat.apply(
+        [],
+        this.categories
+          .filter(c => !c.multi_item)
+          .map(c => c.rows)
+      );
+
+      rows.forEach(v => {
+        if (v) {
+          if (_.isArray(v)) {
+            score.push(FormComponent.calc_multi_item(v.length));
+          } else {
+            const row = category_rows.filter(r => r.id === v).pop();
+
+            if (row) {
+              score.push(row.score);
+            }
+          }
+        }
+      });
+
+    }
+
+    return score.reduce((previous, value) => (previous + value), 0);
   }
 
   constructor(private formBuilder: FormBuilder,
@@ -59,7 +92,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
 
       // Tab 1
-
       form_id: [null, Validators.required],
       date: [new Date(), Validators.required],
       performed_by: ['', Validators.required],
@@ -108,9 +140,10 @@ export class FormComponent extends AbstractForm implements OnInit {
           if (assessment_form) {
             this.rows = [];
             this.category_selected = 0;
-            this.tab_data_disabled = false;
 
             this.categories = assessment_form.categories;
+
+            const rows_controls: (FormControl | FormArray)[] = [];
 
             this.categories.forEach(category => {
               if (category.multi_item) {
@@ -120,11 +153,26 @@ export class FormComponent extends AbstractForm implements OnInit {
                 });
 
                 category.check_group = rows_group;
+                rows_controls.push(new FormControl(null, Validators.required));
               } else {
                 category.row = 0;
+
+                rows_controls.push(new FormControl(null, Validators.required));
               }
             });
+
+            if (!this.edit_mode || (this.edit_mode && this.data_loaded)) {
+              this.form.setControl('rows', new FormArray(rows_controls));
+              this.subscribe('vc_rows');
+            }
+
+            this.tab_data_disabled = false;
           }
+        });
+        break;
+      case 'vc_rows':
+        this.$subscriptions[key] = (<FormArray>this.form.get('rows')).valueChanges.subscribe(next => {
+          this.form.get('score').setValue(this.calculate_score(next));
         });
         break;
       case 'rs_resident':
@@ -141,53 +189,17 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   pre(): void {
     this.category_selected -= 1;
-    // console.log(this.categories);
   }
 
   next(): void {
     this.category_selected += 1;
-    // console.log(this.categories);
   }
 
-  calculate_score_and_rows() {
-    let score = [];
-    let rows = [];
-
-    // this.form.get('score');
-
-    this.categories.forEach(v => {
-      if (v.multi_item) {
-        const selected_rows = v.check_group.filter(r => r.checked);
-        const selected_ids = selected_rows.map(r => r.value);
-
-        rows.push(...selected_ids);
-        score.push(FormComponent.calc_multi_item(selected_rows.length));
-      } else {
-        const selected_ids = [v.row];
-        const selected_rows = v.rows.filter(r => r.id === selected_ids[0]);
-
-        const item_score = selected_rows.map(r => r.score);
-
-        rows.push(...selected_ids);
-
-        if (item_score.length === 1) {
-          score.push(item_score[0]);
-        }
-      }
-    });
-    rows = Array.from(new Set(rows));
-    score = score.reduce((previous, value) => (previous + value), 0);
-
-    this.form.setControl('rows', this.formBuilder.array([]));
-
-    rows.forEach(value => {
-      (<FormArray>this.form.get('rows')).push(new FormControl(value));
-    });
-
-    this.form.get('score').setValue(score);
+  update_multi_rows(i: number) {
+    this.form.get(`rows.${i}`).setValue(this.categories[i].check_group.filter(v => v.checked).map(v => v.value));
   }
 
-  public get_form_array_skeleton(key: string): FormGroup | FormControl {
+  public get_form_array_skeleton(key: string): FormControl {
     switch (key) {
       case 'rows':
         return new FormControl();
@@ -197,14 +209,20 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   public after_set_form_data(): void {
-    const rows = <Array<number>>this.form.get('rows').value;
+    const rows = <Array<any>>this.form.get('rows').value;
 
-    this.categories.forEach(category => {
-      if (category.multi_item) {
-        category.check_group.filter(check => rows.includes(check.value)).forEach(check => check.checked = true);
-      } else {
-        category.rows.filter(row => rows.includes(row.id)).forEach(row => category.row = row.id);
+    rows.forEach(row => {
+      if (_.isArray(row)) {
+        this.categories.filter(c => c.multi_item).forEach(category => {
+          category.check_group.filter(check => row.includes(check.value)).forEach(check => check.checked = true);
+        });
       }
     });
+
+    this.form.get('score').setValue(this.calculate_score(rows));
+    this.subscribe('vc_rows');
+
+    this.data_loaded = true;
   }
+
 }

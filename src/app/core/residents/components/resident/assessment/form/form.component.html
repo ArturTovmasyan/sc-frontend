@@ -60,22 +60,20 @@
       <nz-progress nzSize="small" [nzShowInfo]="false"
                    [nzPercent]="(category_selected + 1) * 100/categories.length"></nz-progress>
 
-      <div class="assessment">
-        <ng-container *ngFor="let category of categories; let i = index">
+      <div *ngIf="form.get('rows').controls.length > 0" class="assessment" formArrayName="rows">
+        <ng-container *ngFor="let control of form.get('rows').controls; let i = index">
           <div class="assessment-content" [hidden]="category_selected != i">
-            <p><strong>{{ category.title }}</strong></p>
-
-            <nz-radio-group *ngIf="!category.multi_item"
-                            [(ngModel)]="category.row" [ngModelOptions]="{standalone: true}"
-                            (ngModelChange)="calculate_score_and_rows()">
-              <label nz-radio *ngFor="let row of category.rows" [nzValue]="row.id">
+            <p><strong>{{ categories[i].title }}</strong></p>
+            <nz-radio-group *ngIf="!categories[i].multi_item" [formControlName]="i">
+              <label nz-radio *ngFor="let row of categories[i].rows" [nzValue]="row.id">
                 {{ row.title }} ({{ row.score }})
               </label>
             </nz-radio-group>
 
-            <nz-checkbox-group *ngIf="category.multi_item"
-                               [(ngModel)]="category.check_group" [ngModelOptions]="{standalone: true}"
-                               (ngModelChange)="calculate_score_and_rows()">
+            <nz-checkbox-group *ngIf="categories[i].multi_item"
+                               [(ngModel)]="categories[i].check_group"
+                               [ngModelOptions]="{standalone: true}"
+                               (ngModelChange)="update_multi_rows(i);">
             </nz-checkbox-group>
           </div>
         </ng-container>
