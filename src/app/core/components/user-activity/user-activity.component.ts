@@ -23,6 +23,7 @@ export class UserActivityComponent implements OnInit {
   constructor(
     private change_log$: ChangeLogService
   ) {
+    this.$subscriptions = {};
   }
 
   ngOnInit(): void {
