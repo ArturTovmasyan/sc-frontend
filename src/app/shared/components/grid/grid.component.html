@@ -124,7 +124,7 @@
           {{ row[field.id]|cron }}
         </ng-container>
         <ng-container *ngSwitchCase="'date'">
-          {{ row[field.id]|date:'MM/dd/yyyy' }}
+          {{ row[field.id]|date:'MM/dd/yyyy':'UTC' }}
         </ng-container>
         <ng-container *ngSwitchCase="'time'">
           {{ row[field.id]|date:'HH:mm:ss' }}
