@@ -39,10 +39,10 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="role_id" nzRequired>Role</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="role_id">Role</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('role_id')?'error':null">
       <div class="add-select-container">
-        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="role_id">
+        <nz-select nzShowSearch nzMode="default" [nzAllowClear]="true" nzPlaceHolder="Please select" formControlName="role_id">
           <ng-container *ngFor="let role of roles">
             <nz-option [nzLabel]="role.title" [nzValue]="role.id"></nz-option>
           </ng-container>

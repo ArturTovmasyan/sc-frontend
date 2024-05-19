@@ -476,7 +476,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgZorroAntdModule,
     ColorPickerModule,
     MomentModule,
-    DndModule.forRoot(),
+    DndModule,
     LyThemeModule.setTheme('minima-light'),
     LyResizingCroppingImageModule,
     LyButtonModule,
