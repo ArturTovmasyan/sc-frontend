@@ -241,6 +241,7 @@
       "gender": "Gender",
       "birthday": "Birthday",
       "room": "Room (Bed)",
+      "start": "Moved Out",
       "address": "Address",
       "csz_str": "City, State, Zip Code",
       "group_name": "FFC/IHC/IL",
