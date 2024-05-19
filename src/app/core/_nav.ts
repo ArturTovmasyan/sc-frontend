@@ -75,6 +75,11 @@ export const navItems = [
     icon: 'icon-people'
   },
   {
+    url: '/responsible-person-roles',
+    name: 'Responsible Person Roles',
+    icon: 'icon-people'
+  },
+  {
     url: '/physician-specialities',
     name: 'Physician Specialities',
     icon: 'icon-people'

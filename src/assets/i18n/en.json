@@ -87,6 +87,11 @@
       "title": "Title",
       "space": "Space"
     },
+    "responsible-person-role-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "physician-list": {
       "id": "ID",
       "speciality": "Speciality",

@@ -71,6 +71,9 @@ import {FormComponent as SalutationFormComponent} from './residents/components/s
 import {ListComponent as PhysicianSpecialityListComponent} from './residents/components/physician-speciality/list.component';
 import {FormComponent as PhysicianSpecialityFormComponent} from './residents/components/physician-speciality/form/form.component';
 
+import {ListComponent as ResponsiblePersonRoleListComponent} from './residents/components/responsible-person-role/list.component';
+import {FormComponent as ResponsiblePersonRoleFormComponent} from './residents/components/responsible-person-role/form/form.component';
+
 import {ListComponent as PhysicianListComponent} from './residents/components/physician/list.component';
 import {FormComponent as PhysicianFormComponent} from './residents/components/physician/form/form.component';
 
@@ -260,6 +263,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PhysicianSpecialityListComponent,
     PhysicianSpecialityFormComponent,
 
+    ResponsiblePersonRoleListComponent,
+    ResponsiblePersonRoleFormComponent,
+
     PhysicianListComponent,
     PhysicianFormComponent,
 
@@ -378,6 +384,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SalutationFormComponent,
 
     PhysicianSpecialityFormComponent,
+    ResponsiblePersonRoleFormComponent,
 
     PhysicianFormComponent,
 

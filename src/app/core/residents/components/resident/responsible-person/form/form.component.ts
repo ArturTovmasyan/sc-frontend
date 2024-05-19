@@ -9,18 +9,22 @@ import {RelationshipService} from '../../../../services/relationship.service';
 import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as ResponsiblePersonFormComponent} from '../../../responsible-person/form/form.component';
+import {ResponsiblePersonRole} from '../../../../models/responsible-person-role';
+import {ResponsiblePersonRoleService} from '../../../../services/responsible-person-role.service';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
   relationships: Relationship[];
+  roles: ResponsiblePersonRole[];
   responsible_persons: ResponsiblePerson[];
   resident_id: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private relationship$: RelationshipService,
+    private responsible_person_role$: ResponsiblePersonRoleService,
     private responsible_person$: ResponsiblePersonService,
     private modal$: NzModalService,
     private route$: ActivatedRoute
@@ -36,11 +40,13 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       responsible_person_id: [null, Validators.required],
       relationship_id: [null, Validators.required],
+      role_id: [null, Validators.required],
 
       resident_id: [this.resident_id, Validators.required]
     });
 
     this.subscribe('list_relationship');
+    this.subscribe('list_role');
     this.subscribe('list_responsible_person');
   }
 
@@ -50,6 +56,13 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.relationship$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
           if (res) {
             this.relationships = res;
+          }
+        });
+        break;
+      case 'list_role':
+        this.$subscriptions[key] = this.responsible_person_role$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+          if (res) {
+            this.roles = res;
           }
         });
         break;

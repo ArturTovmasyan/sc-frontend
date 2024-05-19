@@ -1,4 +1,4 @@
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {first} from 'rxjs/operators';
 import {ResidentService} from '../../../services/resident.service';
@@ -37,6 +37,7 @@ export class InfoComponent implements OnInit {
     private resident$: ResidentService,
     private contract$: ResidentContractService,
     protected modal$: NzModalService,
+    private router$: Router,
     private route$: ActivatedRoute,
     private residentSelector$: ResidentSelectorService
   ) {
@@ -138,6 +139,8 @@ export class InfoComponent implements OnInit {
                 res => {
                   loading = false;
 
+                  this.router$.navigate(['/residents']);
+
                   modal.close();
                 },
                 error => {
@@ -192,15 +195,20 @@ export class InfoComponent implements OnInit {
                 loading = false;
 
                 // TODO(haykg): review add case
-                this.loading = true;
-                this.resident$.get(this.resident_id).pipe(first()).subscribe(resident => {
-                  this.loading = false;
-                  if (resident) {
-                    this.resident = resident;
-                  }
-                });
+                if (result === null) {
+                  this.resident_id = res[0];
+                }
 
-                modal.close();
+                this.loading = true;
+                this.resident$.get(this.resident_id).pipe(first()).subscribe(next => {
+                  this.loading = false;
+                  if (next) {
+                    this.resident = next;
+                    this.resident_id = this.resident.id;
+                    this.residentSelector$.resident.next(this.resident.id);
+                  }
+                  modal.close();
+                });
               },
               error => {
                 loading = false;

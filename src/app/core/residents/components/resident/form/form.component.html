@@ -46,7 +46,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="birthday" nzRequired>Birthday</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('birthday')?'error':null">
-      <nz-date-picker formControlName="birthday"></nz-date-picker>
+      <nz-date-picker formControlName="birthday" [nzDisabledDate]="disabledDate"></nz-date-picker>
       <nz-form-explain *ngIf="hasErrors('birthday')">
         <app-field-errors [errors]="fieldErrors('birthday')"></app-field-errors>
       </nz-form-explain>
@@ -69,7 +69,7 @@
 
   <!--Photo-->
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="photo" nzRequired>Photo</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="photo">Photo</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('photo')?'error':null">
       <input type="file" #photo_file (change)="onFileChange($event)"
              accept="image/*" style="display: none;">

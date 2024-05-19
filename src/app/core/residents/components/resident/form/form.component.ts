@@ -8,6 +8,7 @@ import {Space} from '../../../../models/space';
 import {Salutation} from '../../../models/salutation';
 import {SpaceService} from '../../../../services/space.service';
 import {SalutationService} from '../../../services/salutation.service';
+import * as differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -22,12 +23,20 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   @ViewChild('photo_file') photo_file: ElementRef;
 
+  disabledDate: (date: Date) => boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private salutation$: SalutationService,
     private space$: SpaceService
   ) {
     super();
+
+    // TODO: review move to util
+    this.disabledDate = (current: Date): boolean => {
+      const today = new Date();
+      return differenceInCalendarDays(current, today) > 0;
+    };
   }
 
   ngOnInit(): void {
@@ -38,7 +47,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       last_name: ['', Validators.required],
       birthday: [new Date(), Validators.required],
       gender: [null, Validators.required],
-      photo: [null, Validators.required],
+      photo: [null],
 
       salutation_id: [null, Validators.required],
       space_id: [null, Validators.required],

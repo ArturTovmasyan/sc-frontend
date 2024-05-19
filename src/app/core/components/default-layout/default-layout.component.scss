@@ -19,6 +19,16 @@
 }
 
 ::ng-deep {
+  .no-data-placeholder {
+    position: relative;
+    padding: 16px 16px;
+    background: #fff;
+    text-align: center;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+  }
+
   .ant-btn > .anticon {
     vertical-align: baseline;
   }

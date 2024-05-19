@@ -59,6 +59,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
       } else {
         this.resident$.list_by_options(false, null, null).pipe(first()).subscribe(res => {
           if (res) {
+            this.active_residents = null;
             this.inactive_residents = res;
             this.residentSelector$.resident.next(this.residentSelector$.resident.value);
           }

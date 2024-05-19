@@ -29,6 +29,7 @@ import {ListComponent as MedicationFormFactorListComponent} from './residents/co
 import {ListComponent as RelationshipListComponent} from './residents/components/relationship/list.component';
 import {ListComponent as SalutationListComponent} from './residents/components/salutation/list.component';
 import {ListComponent as PhysicianSpecialityListComponent} from './residents/components/physician-speciality/list.component';
+import {ListComponent as ResponsiblePersonRoleListComponent} from './residents/components/responsible-person-role/list.component';
 
 import {ListComponent as PhysicianListComponent} from './residents/components/physician/list.component';
 import {ListComponent as ResponsiblePersonListComponent} from './residents/components/responsible-person/list.component';
@@ -144,6 +145,13 @@ const routes: Routes = [
       {
         path: 'physician-specialities', component: PhysicianSpecialityListComponent, data: {
           title: 'Physician Specialities',
+          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'responsible-person-roles', component: ResponsiblePersonRoleListComponent, data: {
+          title: 'Responsible Person Roles',
           roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
         },
         canActivate: [AuthGuard]
