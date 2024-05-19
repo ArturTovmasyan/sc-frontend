@@ -117,8 +117,6 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
 
   private static override_buttons(a: any, b: any): any {
-    console.log(a, b);
-
     return {
       override: false,
       add: (a.add === false || b.add === false) ? false : b.add,
