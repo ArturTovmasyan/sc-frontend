@@ -42,37 +42,37 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
   }
 
   ngAfterViewInit(): void {
-    this.add_button_left(new Button(
-      'mark_spam',
-      'grid.mark_spam',
-      'default',
-      ButtonMode.MULTI_SELECT,
-      'file-exclamation',
-      null,
-      true,
-      true,
-      () => {
-        this.service$.spam(this.checkbox_config.ids, true).subscribe(res => {
-          this.reload_data(true);
-        });
-      }
-    ));
-
-    this.add_button_left(new Button(
-      'unmark_spam',
-      'grid.unmark_spam',
-      'default',
-      ButtonMode.MULTI_SELECT,
-      'file-done',
-      null,
-      true,
-      true,
-      () => {
-        this.service$.spam(this.checkbox_config.ids, false).subscribe(res => {
-          this.reload_data(true);
-        });
-      }
-    ));
+    // this.add_button_left(new Button(
+    //   'mark_spam',
+    //   'grid.mark_spam',
+    //   'default',
+    //   ButtonMode.MULTI_SELECT,
+    //   'file-exclamation',
+    //   null,
+    //   true,
+    //   true,
+    //   () => {
+    //     this.service$.spam(this.checkbox_config.ids, true).subscribe(res => {
+    //       this.reload_data(true);
+    //     });
+    //   }
+    // ));
+    //
+    // this.add_button_left(new Button(
+    //   'unmark_spam',
+    //   'grid.unmark_spam',
+    //   'default',
+    //   ButtonMode.MULTI_SELECT,
+    //   'file-done',
+    //   null,
+    //   true,
+    //   true,
+    //   () => {
+    //     this.service$.spam(this.checkbox_config.ids, false).subscribe(res => {
+    //       this.reload_data(true);
+    //     });
+    //   }
+    // ));
 
     this.add_button_center(new Button(
       'report',
