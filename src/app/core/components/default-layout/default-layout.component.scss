@@ -24,6 +24,12 @@
 }
 
 ::ng-deep {
+  .card-header {
+    font-size: x-large;
+    font-weight: 700;
+    text-align: center;
+  }
+
   .app-header {
     z-index: 999 !important;
   }
