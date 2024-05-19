@@ -5,6 +5,7 @@ import {first} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {KeyValue} from '@angular/common';
+import {Papa} from 'ngx-papaparse';
 
 @Component({
   templateUrl: './csv.component.html'
@@ -18,7 +19,8 @@ export class CSVComponent implements OnInit, OnDestroy {
   constructor(
     private report$: ReportService,
     private title$: TitleService,
-    private route$: ActivatedRoute
+    private route$: ActivatedRoute,
+    private papa$: Papa
   ) {
     this.title$.getTitle().subscribe(v => this.title = v);
 
@@ -70,14 +72,11 @@ export class CSVComponent implements OnInit, OnDestroy {
             if (res) {
               const reader: FileReader = new FileReader();
               reader.onloadend = (file) => {
-                const rows = (reader.result as string).split(/[\r\n]+/);
-
-                for (let i = 0; i < rows.length; i++) {
-                  const cols = this.csv2array(rows[i]);
-                  if (cols !== null) {
-                    this.data.push(cols);
+                this.papa$.parse(reader.result as string, {
+                  complete: (result) => {
+                     this.data = result.data;
                   }
-                }
+                });
               };
               reader.readAsText(res.body);
             }
@@ -92,37 +91,6 @@ export class CSVComponent implements OnInit, OnDestroy {
     if (this.$subscriptions.hasOwnProperty(key)) {
       this.$subscriptions[key].unsubscribe();
     }
-  }
-
-  private csv2array(text) {
-    const re_valid = /^\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*(?:,\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*)*$/;
-    const re_value = /(?!\s*$)\s*(?:'([^'\\]*(?:\\[\S\s][^'\\]*)*)'|"([^"\\]*(?:\\[\S\s][^"\\]*)*)"|([^,'"\s\\]*(?:\s+[^,'"\s\\]+)*))\s*(?:,|$)/g;
-
-    // Return NULL if input string is not well formed CSV string.
-    if (!re_valid.test(text)) {
-      return null;
-    }
-
-    const a = [];                     // Initialize array to receive values.
-    // "Walk" the string using replace with callback.
-    text.replace(re_value, (m0, m1, m2, m3) => {
-      if (m1 !== undefined) {
-        // Remove backslash from \' in single quoted values.
-        a.push(m1.replace(/\\'/g, '\''));
-      } else if (m2 !== undefined) {
-        // Remove backslash from \" in double quoted values.
-        a.push(m2.replace(/\\"/g, '"'));
-      } else if (m3 !== undefined) {
-        a.push(m3);
-      }
-      return ''; // Return empty string.
-    });
-
-    // Handle special case of empty last value.
-    if (/,\s*$/.test(text)) {
-      a.push('');
-    }
-    return a;
   }
 
   public no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {

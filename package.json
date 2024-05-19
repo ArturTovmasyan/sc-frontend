@@ -54,6 +54,7 @@
     "ngx-icon-picker": "0.0.10",
     "ngx-mask": "^8.1.6",
     "ngx-moment": "^3.4.0",
+    "ngx-papaparse": "^4.0.4",
     "ngx-perfect-scrollbar": "^8.0.0",
     "normalize-path": "^3.0.0",
     "pdfobject": "^2.1.1",
