@@ -20,14 +20,14 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./resident-selector.component.scss']
 })
 export class ResidentSelectorComponent implements OnInit, OnDestroy {
-  protected form: FormGroup;
+  public form: FormGroup;
 
-  protected apartments: Apartment[];
-  protected facilities: Facility[];
-  protected regions: Region[];
+  public apartments: Apartment[];
+  public facilities: Facility[];
+  public regions: Region[];
 
-  protected active_residents: Resident[];
-  protected inactive_residents: Resident[];
+  public active_residents: Resident[];
+  public inactive_residents: Resident[];
 
   private $subscriptions: { [key: string]: Subscription; };
 
@@ -37,9 +37,9 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     private apartment$: ApartmentService,
     private region$: RegionService,
     private resident$: ResidentService,
-    private residentSelector$: ResidentSelectorService,
     private router$: Router,
-    private route$: ActivatedRoute
+    private route$: ActivatedRoute,
+    public residentSelector$: ResidentSelectorService
   ) {
 
     this.$subscriptions = {};
