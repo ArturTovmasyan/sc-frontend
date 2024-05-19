@@ -3,7 +3,6 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
-import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 import {CurrencyPipe} from '@angular/common';
 
 @Component({
@@ -24,9 +23,9 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.form = this.formBuilder.group({
             id: [''],
 
-            amount: [0, Validators.compose([Validators.required, CoreValidator.payment_amount])],
+            amount: [0, Validators.compose([Validators.required])],
 
-            balance_due: [0, Validators.compose([Validators.required, CoreValidator.payment_amount])],
+            balance_due: [0, Validators.compose([Validators.required])],
 
             resident_id: [null, Validators.required]
         });

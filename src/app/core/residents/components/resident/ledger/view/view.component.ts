@@ -82,7 +82,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   show_modal_edit(name: string): void {
     switch (name) {
       case 'ledger':
-        this.ledger$.get(this.ledger.id).subscribe(
+        this.ledger$.get(this.ledger.id, this.query_params).subscribe(
           res => {
             this.create_modal(LedgerFormComponent, data => this.ledger$.edit(data), res);
           },
