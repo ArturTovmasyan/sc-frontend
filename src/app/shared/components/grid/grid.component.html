@@ -173,6 +173,12 @@
         <ng-container *ngSwitchCase="'color'">
           <i class="fas fa-circle" style="font-size: 24px;" [style.color]="row[field.id]" [title]="row[field.id]"></i>
         </ng-container>
+        <ng-container *ngSwitchCase="'string_array'">
+          <ng-container *ngFor="let ai of row[field.id]; let last=last">
+            <ng-container *ngIf="!last">{{ ai }}, </ng-container>
+            <ng-container *ngIf="last">{{ ai }}</ng-container>
+          </ng-container>
+        </ng-container>
         <ng-container *ngSwitchDefault>
           <ng-container *ngIf="field.link">
             <ng-container [ngSwitch]="field.link">
