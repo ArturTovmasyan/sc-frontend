@@ -284,10 +284,12 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (res) {
               this.dining_rooms = res;
 
-              if (this.dining_rooms.filter(v => v.id === this.form.get('dining_room_id').value).length === 0) {
-                this.form.get('dining_room_id').setValue(null);
+              if (!this.edit_mode) {
+                if (this.dining_rooms.filter(v => v.id === this.form.get('dining_room_id').value).length === 0) {
+                  this.form.get('dining_room_id').setValue(null);
+                }
               } else {
-                if (this.edit_mode && this.edit_data.dining_room !== null) {
+                if (this.edit_data.dining_room !== null) {
                   if (this.dining_rooms.filter(v => v.id === this.edit_data.dining_room.id).length === 0) {
                     this.form.get('dining_room_id').setValue(null);
                   } else {
