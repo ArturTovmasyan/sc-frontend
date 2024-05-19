@@ -1,9 +1,9 @@
 <div class="d-flex justify-content-between" style="margin-bottom: 1.2rem;">
   <div class="justify-content-start">
     <nz-button-group>
-      <button *ngIf="ledger" nzSize="small" nz-button nzType="default" [disabled]="show('previous')"
-              (click)="getPreviousLedger()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous
-      </button>
+      <a *ngIf="ledger && ledger.resident" [routerLink]="['/resident', ledger.resident.id, {outlets: {'resident-details': ['ledgers']}}]" nzSize="small" nz-button nzType="default">
+        <i nz-icon nzType="arrow-left" nzTheme="outline"></i> Back
+      </a>
     </nz-button-group>
   </div>
   <div class="justify-content-center">
@@ -13,6 +13,9 @@
   </div>
   <div class="justify-content-end">
     <nz-button-group>
+      <button *ngIf="ledger" nzSize="small" nz-button nzType="default" [disabled]="show('previous')"
+              (click)="getPreviousLedger()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous
+      </button>
       <button *ngIf="ledger" nzSize="small" nz-button nzType="default" [disabled]="show('next')"
               (click)="getNextLedger()">
         Next <i nz-icon nzType="arrow-right" nzTheme="outline"></i>
