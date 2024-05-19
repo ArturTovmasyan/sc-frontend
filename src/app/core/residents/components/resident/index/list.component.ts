@@ -13,7 +13,7 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
   providers: [ResidentService, ModalFormService]
 })
 export class ListComponent extends GridComponent<Resident, ResidentService> implements OnInit, OnDestroy {
-  @Input('options') set options(options: { state?: string, type?: number, type_id?: number }) {
+  @Input('options') set options(options: { state?: string, type?: number, type_id?: number, compact?: boolean }) {
     this.remove_param('state');
     this.remove_param('type');
     this.remove_param('type_id');
@@ -30,7 +30,20 @@ export class ListComponent extends GridComponent<Resident, ResidentService> impl
         this.add_param('type_id', options.type_id.toString());
       }
 
+      if (options.compact) {
+        this.add_param('compact', 'true');
+      }
+
       super.init();
+
+      this.grid_options_loaded.subscribe(next => {
+        if (next) {
+          if (options.compact) {
+            this.component = null;
+            this.update_sort({key: 'room', value: 'asc'});
+          }
+        }
+      });
     }
   }
 

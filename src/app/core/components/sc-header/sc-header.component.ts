@@ -55,7 +55,6 @@ export class ScHeaderComponent implements OnInit, OnDestroy {
       }))
       .pipe(filter((route) => route.outlet === 'primary' || route.outlet === 'resident-details')) // TODO(haykg): review
       .subscribe((route) => {
-        console.log(route.routeConfig);
         this.show_group = ['facility/:id', 'apartment/:id', 'region/:id', 'resident/:id'].includes(route.routeConfig.path)
           || route.routeConfig.outlet === 'resident-details';
       });

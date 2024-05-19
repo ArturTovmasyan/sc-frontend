@@ -17,6 +17,7 @@ import {GroupType} from '../../../models/group-type.enum';
   templateUrl: './view.component.html'
 })
 export class ViewComponent implements OnInit, OnDestroy {
+  GroupType = GroupType;
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   facility: Facility;
