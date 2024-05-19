@@ -101,7 +101,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res.facility_events.forEach(event => {
               this.calendarEvents.push({
                 borderColor: 'transparent',
-                backgroundColor: event.rsvp ? '#5d99d7' : '#1e75d7',
+                backgroundColor: event.rsvp === false ? '#5d99d7' : '#1e75d7',
                 textColor: '#ffffff',
                 id: event.id,
                 event_type: CalendarEventType.FACILITY,
