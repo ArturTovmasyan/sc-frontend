@@ -59,7 +59,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       physician_id: [null],
 
-      responsible_persons: [[]],
+      responsible_persons: [null],
 
       resident_id: [null, Validators.required]
     });
@@ -103,7 +103,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
               this.form.get('physician_id').setValue(id);
             } else {
-              this.form.get('physician_id').setValue(this.form.get('physician_id').value);
+              //this.form.get('physician_id').setValue(this.form.get('physician_id').value);
             }
           }
         });
@@ -129,7 +129,7 @@ export class FormComponent extends AbstractForm implements OnInit {
               }
 
             } else {
-              this.form.get('responsible_persons').setValue(this.form.get('responsible_persons').value);
+              //this.form.get('responsible_persons').setValue(this.form.get('responsible_persons').value);
             }
           }
         });
@@ -152,7 +152,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
               if (definition.physician || definition.physician_optional) {
                 this.form.get('physician_id').enable();
-                this.form.get('physician_id').reset(null);
+                // this.form.get('physician_id').reset(null);
                 this.form.get('physician_id').clearValidators();
 
                 if (definition.physician) {
@@ -169,7 +169,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 || definition.responsible_person_multi || definition.responsible_person_multi_optional) {
 
                 this.form.get('responsible_persons').enable();
-                this.form.get('responsible_persons').reset(null);
+                // this.form.get('responsible_persons').reset(null);
                 this.form.get('responsible_persons').clearValidators();
 
                 this.rp_single = definition.responsible_person || definition.responsible_person_optional;
