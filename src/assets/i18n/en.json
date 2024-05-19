@@ -567,6 +567,7 @@
       },
       "id": "ID",
       "date": "Date",
+      "responsible_person": "Responsible Person",
       "full_name": "Full Name",
       "owner": "Owner",
       "state": "Status",
