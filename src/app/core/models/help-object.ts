@@ -1,13 +1,14 @@
 export class HelpObject implements IdInterface {
   id: number;
   key?: number;
+  isLeaf?: boolean;
 
   title: string;
   description: string;
 
   type: HelpObjectType;
 
-  s3url: string;
+  url: string;
 }
 
 export enum HelpObjectType {

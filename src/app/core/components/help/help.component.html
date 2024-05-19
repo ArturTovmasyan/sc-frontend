@@ -23,7 +23,7 @@
           <p>{{ object.description }}</p>
           <ng-container [ngSwitch]="object.type">
             <ngx-extended-pdf-viewer *ngSwitchCase="HelpObjectType.PDF"
-                                     [src]="object.s3url"
+                                     [src]="object.url"
                                      useBrowserLocale="true"
                                      [showPresentationModeButton]="true"
                                      [showSidebarButton]="false"
@@ -36,7 +36,7 @@
             </ngx-extended-pdf-viewer>
             <vg-player *ngSwitchCase="HelpObjectType.VIDEO">
               <video [vgMedia]="media" #media preload="auto" controls>
-                <source [src]="object.s3url" type="video/mp4">
+                <source [src]="object.url" type="video/mp4">
               </video>
             </vg-player>
           </ng-container>
