@@ -324,17 +324,6 @@ export class ViewComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  get_discount_item_sum() {
-    let result = 0;
-    if (this.ledger.resident_discount_items && this.ledger.resident_discount_items.length > 0) {
-      this.ledger.resident_discount_items.forEach(function (value) {
-        result += value.amount;
-      });
-    }
-
-    return result;
-  }
-
   public get_days_in_month(month, year) {
     let result = 0;
     if (month && year) {

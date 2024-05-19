@@ -580,14 +580,16 @@
                             <strong>{{ (get_private_pay_sum_for_rent(ledger.privat_pay_source, rent_id) + get_not_private_pay_sum_for_rent(ledger.not_privat_pay_source, rent_id))|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
                           </td>
                         </tr>
-                        <tr class="text-right">
-                          <td colspan="3" style="width: 80% !important;">
-                            <strong>{{ ledger.date_created|date:'MMMM' }} Effective Discount to Base Rate</strong>
-                          </td>
-                          <td class="text-right" style="width: 20% !important;">
-                            <strong>{{ get_discount_item_sum()|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
-                          </td>
-                        </tr>
+                        <ng-container *ngIf="item.baseRate - get_private_pay_sum_for_rent(ledger.privat_pay_source, rent_id) - get_not_private_pay_sum_for_rent(ledger.not_privat_pay_source, rent_id) > 0">
+                          <tr class="text-right">
+                            <td colspan="3" style="width: 80% !important;">
+                              <strong>{{ ledger.date_created|date:'MMMM' }} Effective Discount to Base Rate</strong>
+                            </td>
+                            <td class="text-right" style="width: 20% !important;">
+                              <strong>{{ (item.baseRate - get_private_pay_sum_for_rent(ledger.privat_pay_source, rent_id) - get_not_private_pay_sum_for_rent(ledger.not_privat_pay_source, rent_id))|currency:'USD':'symbol-narrow':'1.2-2' }}</strong>
+                            </td>
+                          </tr>
+                        </ng-container>
                         <tr class="text-center">
                           <th colspan="4" style="width: 100% !important; background-color: #e4e5e6;">
                             <strong>Private Pay Billable Days Details</strong>
