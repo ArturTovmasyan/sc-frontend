@@ -34,7 +34,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
 
       effective_date: [new Date(), Validators.required],
-      notification_date: [null],
+      notification_date: [new Date(), Validators.required],
 
       reason: [null, Validators.compose([Validators.required])],
       amount: [0, Validators.compose([Validators.required, CoreValidator.payment_amount])],

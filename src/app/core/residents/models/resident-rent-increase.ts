@@ -14,6 +14,6 @@ export class ResidentRentIncrease implements IdInterface {
 }
 
 export enum ResidentRentIncreaseReason {
-  ANNUAL = 0,
-  CARE_LEVEL_ADJUSTMENT = 1
+  ANNUAL = 1,
+  CARE_LEVEL_ADJUSTMENT = 2
 }
