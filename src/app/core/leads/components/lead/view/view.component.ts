@@ -245,10 +245,14 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
 
   getPreviousLead() {
-    this.router$.navigate(['lead/lead', this.lead.previous_lead_id], {queryParams: this.query_params}).then();
+    this.router$.navigate(['lead', 'lead', this.lead.previous_lead_id], {queryParams: this.query_params}).then(() => {
+      location.reload();
+    });
   }
 
   getNextLead() {
-    this.router$.navigate(['lead/lead', this.lead.next_lead_id], {queryParams: this.query_params}).then();
+    this.router$.navigate(['lead', 'lead', this.lead.next_lead_id], {queryParams: this.query_params}).then(() => {
+      location.reload();
+    });
   }
 }
