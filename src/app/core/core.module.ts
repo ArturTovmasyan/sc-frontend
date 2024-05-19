@@ -227,6 +227,12 @@ import {ListComponent as OrganizationReferralListComponent} from './leads/compon
 // import {ListComponent as ListComponent} from './residents/components//list.component';
 // import {FormComponent as FormComponent} from './residents/components//form/form.component';
 
+import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
+import {FormComponent as NotificationFormComponent} from './admin/components/notification/form/form.component';
+import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
+import {FormComponent as NotificationTypeFormComponent} from './admin/components/notification-type/form/form.component';
+import {CronJobsModule} from '../cron-jobs/cron-jobs.module';
+
 registerLocaleData(en);
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -445,7 +451,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     OrganizationViewComponent,
     ReferralViewComponent,
-    LeadViewComponent
+    LeadViewComponent,
+
+    NotificationListComponent,
+    NotificationFormComponent,
+    NotificationTypeListComponent,
+    NotificationTypeFormComponent
   ],
   entryComponents: [
     UserFormComponent,
@@ -550,7 +561,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ReferralReportFormComponent,
     LeadReportFormComponent,
-    ActivityReportFormComponent
+    ActivityReportFormComponent,
+
+    NotificationFormComponent,
+    NotificationTypeFormComponent
+
   ],
   imports: [
     CommonModule,
@@ -579,7 +594,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CoreRoutingModule,
     SharedModule,
     IconPickerModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    CronJobsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true},

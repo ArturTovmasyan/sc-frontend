@@ -162,6 +162,9 @@
         <ng-container *ngSwitchCase="'boolean'">
           {{ field.enum_map[row[field.id]] }}
         </ng-container>
+        <ng-container *ngSwitchCase="'cron'">
+          {{ row[field.id]|cron }}
+        </ng-container>
         <ng-container *ngSwitchCase="'date'">
           {{ row[field.id]|date:'MM/dd/yyyy' }}
         </ng-container>

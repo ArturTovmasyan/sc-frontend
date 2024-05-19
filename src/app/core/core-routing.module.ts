@@ -78,6 +78,8 @@ import {ListComponent as LeadListComponent} from './leads/components/lead/list.c
 import {ViewComponent as OrganizationViewComponent} from './leads/components/organization/view/view.component';
 import {ViewComponent as ReferralViewComponent} from './leads/components/referral/view/view.component';
 import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/view.component';
+import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
+import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
 
 const routes: Routes = [
   {
@@ -665,11 +667,30 @@ const routes: Routes = [
       },
 
       {
+        path: 'notifications', component: NotificationListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Notifications',
+          permissions: ['persistence-security-user']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'notification-types', component: NotificationTypeListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Notification Types',
+          permissions: ['persistence-common-notification']
+        },
+        canActivate: [AuthGuard]
+      },
+
+      {
         path: 'users', component: UserListComponent,
         data: {
           nav: {show: true, group: 'Administration'},
           title: 'Users',
-          permissions: ['persistence-security-user']
+          permissions: ['persistence-common-notification_type']
         },
         canActivate: [AuthGuard]
       },

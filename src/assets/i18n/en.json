@@ -438,6 +438,24 @@
       "date": "Due Date",
       "notes": "Notes",
       "info": "Info"
+    },
+    "admin-notification-list": {
+      "id": "ID",
+      "type": "Type",
+      "enabled":"Enabled",
+      "schedule": "Schedule",
+      "emails":"Emails"
+    },
+    "admin-notification-type-list": {
+      "id": "ID",
+      "title": "Title",
+      "category": "Category",
+      "email": "Email",
+      "sms": "SMS",
+      "facility": "Facility",
+      "region": "Region",
+      "apartment": "Apartment",
+      "space": "Space"
     }
   }
 }

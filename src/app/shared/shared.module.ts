@@ -14,6 +14,7 @@ import {FilterPipe} from './pipes/filter.pipe';
 import {KeysPipe} from './pipes/keys.pipe';
 import {String2JsonPipe} from './pipes/str2json.pipe';
 import {StringPipe} from './pipes/string.pipe';
+import {CronPipe} from './pipes/cron.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {StringPipe} from './pipes/string.pipe';
     InputCounterComponent,
     MessageComponent,
 
+    CronPipe,
     FilterPipe,
     KeysPipe,
     String2JsonPipe,
@@ -54,6 +56,7 @@ import {StringPipe} from './pipes/string.pipe';
     FormErrorsComponent,
     InputCounterComponent,
 
+    CronPipe,
     KeysPipe,
     FilterPipe,
     String2JsonPipe,

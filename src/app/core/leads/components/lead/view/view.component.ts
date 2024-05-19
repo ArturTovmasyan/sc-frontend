@@ -165,7 +165,6 @@ export class ViewComponent implements OnInit, OnDestroy {
 
         if (component instanceof ReferralFormComponent) {
           component.show_lead = false;
-          console.log(component);
         }
 
         if (result !== null) {

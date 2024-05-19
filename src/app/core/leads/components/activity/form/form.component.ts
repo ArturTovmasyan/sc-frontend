@@ -76,8 +76,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             this.subscribe('vc_activity_type');
             this.form.get('type_id').setValue(this.form.get('type_id').value);
-
-            console.log(this.form);
           }
         });
         break;

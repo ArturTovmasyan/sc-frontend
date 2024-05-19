@@ -1,0 +1,114 @@
+﻿<h4>Notification</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="enabled">Enabled</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <nz-switch formControlName="enabled"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('enabled')">
+        <app-field-errors [errors]="fieldErrors('enabled')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="type_id" nzRequired>Type</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('type_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type_id">
+        <ng-container *ngFor="let notification_type of notification_types">
+          <nz-option [nzLabel]="notification_type.title" [nzValue]="notification_type.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('type_id')">
+        <app-field-errors [errors]="fieldErrors('type_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="users" nzRequired>User(s)</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('users')?'error':null">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="users">
+        <ng-container *ngFor="let user of users">
+          <nz-option [nzLabel]="user|resident" [nzValue]="user.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('users')">
+        <app-field-errors [errors]="fieldErrors('users')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="emails" nzRequired>E-Mail(s)</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('emails')?'error':null">
+      <nz-select nzShowSearch nzMode="tags" [nzTokenSeparators]="[' ', ',']" nzPlaceHolder="Please select" formControlName="emails">
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('emails')">
+        <app-field-errors [errors]="fieldErrors('emails')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('facilities').enabled">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="facilities" nzRequired>Facilities</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('facilities')?'error':null">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="facilities">
+        <ng-container *ngFor="let facility of facilities">
+          <nz-option [nzLabel]="facility.name" [nzValue]="facility.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('facilities')">
+        <app-field-errors [errors]="fieldErrors('facilities')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('regions').enabled">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="regions" nzRequired>Regions</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('regions')?'error':null">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="regions">
+        <ng-container *ngFor="let region of regions">
+          <nz-option [nzLabel]="region.name" [nzValue]="region.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('regions')">
+        <app-field-errors [errors]="fieldErrors('regions')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('apartments').enabled">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="apartments" nzRequired>Apartments</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('apartments')?'error':null">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="apartments">
+        <ng-container *ngFor="let apartment of apartments">
+          <nz-option [nzLabel]="apartment.name" [nzValue]="apartment.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('apartments')">
+        <app-field-errors [errors]="fieldErrors('apartments')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="schedule" nzRequired>Schedule</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('schedule')?'error':null">
+      <cron-jobs [formControl]="form.get('schedule')"></cron-jobs>
+      <nz-form-explain *ngIf="hasErrors('schedule')">
+        <app-field-errors [errors]="fieldErrors('schedule')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
