@@ -154,6 +154,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('responsible_person_multi').disable();
                 this.form.get('responsible_person_multi_optional').disable();
                 this.form.get('additional_date').disable();
+                this.form.get('done').disable();
                 break;
               case EventDefinitionView.CORPORATE:
                 this.form.get('residents').disable();

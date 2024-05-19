@@ -159,11 +159,13 @@ import {FormComponent as ResidentDietFormComponent} from './residents/components
 
 import {CalendarComponent as ResidentCalendarComponent} from './residents/components/resident/calendar/calendar.component';
 import {CalendarComponent as FacilityCalendarComponent} from './residents/components/facility/calendar/calendar.component';
+import {CalendarComponent as CorporateCalendarComponent} from './residents/components/calendar/calendar.component';
 
 import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
 import {FormComponent as ResidentEventFormComponent} from './residents/components/resident/event/form/form.component';
 
 import {FormComponent as FacilityEventFormComponent} from './residents/components/facility/event-form/form.component';
+import {FormComponent as CorporateEventFormComponent} from './residents/components/calendar/form/form.component';
 
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {FormComponent as ResidentAdmissionFormComponent} from './residents/components/resident/admission/form/form.component';
@@ -466,10 +468,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentCalendarComponent,
     FacilityCalendarComponent,
+    CorporateCalendarComponent,
 
     ResidentEventListComponent,
     ResidentEventFormComponent,
     FacilityEventFormComponent,
+    CorporateEventFormComponent,
 
     ResidentRentComponent,
     ResidentRentRoomListComponent,
@@ -669,6 +673,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentEventFormComponent,
     FacilityEventFormComponent,
+    CorporateEventFormComponent,
 
     ResidentRentRoomFormComponent,
     ResidentRentIncreaseFormComponent,

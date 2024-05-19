@@ -6,7 +6,7 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {MedicationService} from '../../../services/medication.service';
 import {MedicationFormFactorService} from '../../../services/medication-form-factor.service';
 import {EventDefinitionService} from '../../../services/event-definition.service';
-import {CalendarEventType, EventDefinition, RepeatType} from '../../../models/event-definition';
+import {CalendarEventType, EventDefinition, EventDefinitionView, RepeatType} from '../../../models/event-definition';
 import {ResidentResponsiblePersonService} from '../../../services/resident-responsible-person.service';
 import {ResidentPhysicianService} from '../../../services/resident-physician.service';
 import {ResidentResponsiblePerson} from '../../../models/resident-responsible-person';
@@ -22,6 +22,10 @@ import {UserService} from '../../../../admin/services/user.service';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {ResidentAdmissionService} from '../../../services/resident-admission.service';
 import {GroupType} from '../../../models/group-type.enum';
+import {Facility} from '../../../models/facility';
+import {Role} from '../../../../models/role';
+import {FacilityService} from '../../../services/facility.service';
+import {RoleService} from '../../../../admin/services/role.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -34,6 +38,9 @@ export class FormComponent extends AbstractForm implements OnInit {
   resident_physicians: ResidentPhysician[];
   residents: Resident[];
   users: User[];
+
+  facilities: Facility[];
+  roles: Role[];
 
   repeatTypes: { id: RepeatType, name: string }[];
 
@@ -79,6 +86,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     private resident_responsible_person$: ResidentResponsiblePersonService,
     private resident_physician$: ResidentPhysicianService,
     private resident$: ResidentAdmissionService,
+    private facility$: FacilityService,
+    private role$: RoleService,
     private user$: UserService
   ) {
     super(modal$);
@@ -94,8 +103,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-
-      facility_id: [null, Validators.required],
 
       definition_id: [null, Validators.required],
 
@@ -119,6 +126,10 @@ export class FormComponent extends AbstractForm implements OnInit {
       repeat: [null, Validators.required],
       repeat_end: [DateHelper.convertUTC(new Date())],
       no_repeat_end: [true, Validators.required],
+
+      facilities: [[], Validators.required],
+      roles: [[], Validators.required],
+      done: [false, Validators.required],
     });
 
     this.form.get('date').disable();
@@ -139,6 +150,10 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.form.get('rsvp').disable();
 
+    this.form.get('facilities').disable();
+    this.form.get('roles').disable();
+    this.form.get('done').disable();
+
     this.repeatTypes = [
       {id: RepeatType.EVERY_DAY, name: 'Every Day'},
       {id: RepeatType.EVERY_WEEK, name: 'Every Week'},
@@ -147,7 +162,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.subscribe('list_definition');
     this.subscribe('list_user');
-    this.subscribe('vc_facility_id');
+    this.subscribe('list_facility');
+    this.subscribe('list_role');
     this.subscribe('vc_all_day');
     this.subscribe('vc_no_repeat_end');
   }
@@ -155,7 +171,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_definition':
-        this.$subscriptions[key] = this.definition$.all([{key: 'view', value: CalendarEventType.FACILITY.toString()}]).pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.definition$.all([{key: 'view', value: CalendarEventType.CORPORATE.toString()}]).pipe(first()).subscribe(res => {
           if (res) {
             this.definitions = res;
 
@@ -181,6 +197,20 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.user$.all(/** TODO: add filter**/).pipe(first()).subscribe(res => {
           if (res) {
             this.users = res;
+          }
+        });
+        break;
+      case 'list_facility':
+        this.$subscriptions[key] = this.facility$.all(/** TODO: add filter**/).pipe(first()).subscribe(res => {
+          if (res) {
+            this.facilities = res;
+          }
+        });
+        break;
+      case 'list_role':
+        this.$subscriptions[key] = this.role$.all(/** TODO: add filter**/).pipe(first()).subscribe(res => {
+          if (res) {
+            this.roles = res;
           }
         });
         break;
@@ -353,17 +383,22 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('done').disable();
               }
 
+              if (definition.view === EventDefinitionView.CORPORATE) {
+                this.form.get('facilities').enable();
+                this.form.get('roles').enable();
+
+                this.form.get('residents').disable();
+              } else  {
+                this.form.get('facilities').disable();
+                this.form.get('roles').disable();
+
+                this.form.get('residents').enable();
+              }
+
               this.form.get('additional_date').updateValueAndValidity();
               this.form.get('physician_id').updateValueAndValidity();
               this.form.get('responsible_persons').updateValueAndValidity();
             }
-          }
-        });
-        break;
-      case 'vc_facility_id':
-        this.$subscriptions[key] = this.form.get('facility_id').valueChanges.subscribe(next => {
-          if (next) {
-            this.subscribe('list_resident', {facility_id: next});
           }
         });
         break;

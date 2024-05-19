@@ -6,7 +6,7 @@ import {AbstractForm} from '../../../../../../shared/components/abstract-form/ab
 import {MedicationService} from '../../../../services/medication.service';
 import {MedicationFormFactorService} from '../../../../services/medication-form-factor.service';
 import {EventDefinitionService} from '../../../../services/event-definition.service';
-import {EventDefinition, RepeatType} from '../../../../models/event-definition';
+import {CalendarEventType, EventDefinition, RepeatType} from '../../../../models/event-definition';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {ResidentResponsiblePersonService} from '../../../../services/resident-responsible-person.service';
 import {ResidentPhysicianService} from '../../../../services/resident-physician.service';
@@ -156,7 +156,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_definition':
-        this.$subscriptions[key] = this.definition$.all([{key: 'resident', value: '1'}]).pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.definition$.all([{key: 'view', value: CalendarEventType.RESIDENT.toString()}]).pipe(first()).subscribe(res => {
           if (res) {
             this.definitions = res;
 

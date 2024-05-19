@@ -99,6 +99,7 @@ import {DashboardComponent as ResidentDashboardComponent} from './residents/comp
 import {DashboardDetailComponent as ResidentDashboardDetailComponent} from './residents/components/dashboard/dashboard-detail.component';
 import {ListComponent as FacilityDocumentListComponent} from './residents/components/facility-document/list.component';
 import {CalendarComponent as ResidentCalendarComponent} from './residents/components/resident/calendar/calendar.component';
+import {CalendarComponent as CorporateCalendarComponent} from './residents/components/calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -373,6 +374,15 @@ const routes: Routes = [
             }
           }
         ]
+      },
+      {
+        path: 'calendar',
+        component: CorporateCalendarComponent,
+        data: {
+          nav: {show: true, group: 'Corporate'},
+          title: 'Calendar',
+          permissions: ['persistence-corporate-corporate_event']
+        }
       },
       {
         path: 'residents',
@@ -805,7 +815,7 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Calendar',
-              permissions: ['persistence-resident-resident_calendar'] // TODO: change to calendar
+              permissions: ['persistence-resident-resident_event']
             },
             canActivate: [AuthGuard]
           },

@@ -3,8 +3,10 @@ import {Resident} from './resident';
 import {ResponsiblePerson} from './responsible-person';
 import {EventDefinition, RepeatType} from './event-definition';
 import {User} from '../../models/user';
+import {Facility} from './facility';
+import {Role} from '../../models/role';
 
-export class ResidentEvent implements IdInterface {
+export class CorporateEvent implements IdInterface {
   id: number;
 
   definition: EventDefinition;
@@ -28,5 +30,8 @@ export class ResidentEvent implements IdInterface {
   repeat: RepeatType;
   repeat_end: Date;
 
-  resident: Resident;
+  user: User;
+
+  facilities: Facility[];
+  roles: Role[];
 }

@@ -11,4 +11,8 @@ export class UserService extends GridService<User> {
 
     this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/user`;
   }
+
+  public calendar(date_from: Date, date_to: Date) {
+    return this.http.get<any>(this.SERVICE_URL_BASE + `/calendar`); // ?date_from=${date_from}&date_to=${date_to}
+  }
 }

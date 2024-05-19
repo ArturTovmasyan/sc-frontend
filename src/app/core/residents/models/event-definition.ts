@@ -27,6 +27,8 @@ export class EventDefinition implements IdInterface {
   repeats: boolean;
   rsvp: boolean;
 
+  done: boolean;
+
   space: Space;
 
 }
@@ -46,4 +48,13 @@ export enum RepeatType {
   EVERY_DAY = 1,
   EVERY_WEEK = 2,
   EVERY_MONTH = 3
+}
+
+export enum CalendarEventType {
+  RESIDENT = 1,
+  FACILITY = 2,
+  CORPORATE = 3,
+  ADMISSION = 4,
+  RENT = 4,
+  RENT_INCREASE = 5,
 }
