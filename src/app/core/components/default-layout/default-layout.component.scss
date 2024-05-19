@@ -27,6 +27,10 @@
   }
 }
 
+::ng-deep .sc-resident-list > table {
+  width: 100% !important;
+}
+
 ::ng-deep table.ant-table-fixed {
   table-layout: fixed;
 }

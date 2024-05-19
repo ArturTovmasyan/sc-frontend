@@ -91,7 +91,7 @@
           <div class="card-header">
             Residents
           </div>
-          <div class="card-body">
+          <div class="card-body sc-resident-list">
             <nz-empty *ngIf="!facility" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
             <app-residents-list *ngIf="facility" [options]="{state: 'active', type: GroupType.FACILITY, type_id: facility.id, compact: true}"></app-residents-list>
           </div>
