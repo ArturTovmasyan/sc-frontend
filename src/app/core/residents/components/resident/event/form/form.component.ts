@@ -1,4 +1,5 @@
-﻿import {Component, OnInit} from '@angular/core';
+﻿import * as _ from 'lodash';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
@@ -58,7 +59,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       physician_id: [null],
 
-      responsible_persons: [null],
+      responsible_persons: [[]],
 
       resident_id: [null, Validators.required]
     });
@@ -122,7 +123,7 @@ export class FormComponent extends AbstractForm implements OnInit {
               if (this.rp_single) {
                 this.form.get('responsible_persons').setValue([id]);
               } else {
-                const rps = this.form.get('responsible_persons').value;
+                const rps = _.isArray(this.form.get('responsible_persons').value) ? this.form.get('responsible_persons').value : [];
                 rps.push(id);
                 this.form.get('responsible_persons').setValue(rps);
               }

@@ -1,4 +1,5 @@
-﻿import {Component, OnInit} from '@angular/core';
+﻿import * as _ from 'lodash';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
@@ -39,7 +40,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       responsible_person_id: [null, Validators.required],
       relationship_id: [null, Validators.required],
-      roles: [null],
+      roles: [[]],
 
       resident_id: [null, Validators.required]
     });
@@ -69,7 +70,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.roles = res;
 
             if (params) {
-              const roles = this.form.get('roles').value;
+              const roles = _.isArray(this.form.get('roles').value) ? this.form.get('roles').value : [];
               roles.push(params.role_id);
 
               this.form.get('roles').setValue(roles);
