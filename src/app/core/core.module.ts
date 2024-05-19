@@ -335,7 +335,6 @@ import {ViewComponent as ResidentRentViewComponent} from './residents/components
 import {ViewComponent as ResidentRentIncreaseViewComponent} from './residents/components/resident/rent/rent-increase/view/view.component';
 import {EventRepeatPipe} from './residents/pipes/event-repeat.pipe';
 import {DateInterceptor} from './interceptors/date.interceptor';
-import {CustomUrlSerializer} from './interceptors/url-serializer';
 
 registerLocaleData(en);
 
