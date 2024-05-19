@@ -37,7 +37,7 @@ export enum OptionType {
   week,
   month,
   year
-  }
+}
 
 export interface CronJobsValidationConfig {
   validate?: boolean;

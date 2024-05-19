@@ -47,8 +47,8 @@ export class CronJobsComponent implements OnInit, OnChanges, OnDestroy, ControlV
   private cronService: PosixService;
 
   constructor(private dataService: DataService,
-    private injector: Injector,
-    private formBuilder: FormBuilder) {
+              private injector: Injector,
+              private formBuilder: FormBuilder) {
 
     this.cronJobsForm = this.formBuilder.group({
       baseFrequency: 0,
@@ -67,10 +67,10 @@ export class CronJobsComponent implements OnInit, OnChanges, OnDestroy, ControlV
   ngOnInit() {
     this.baseFrequency$ = this.cronJobsForm.get('baseFrequency')
       .valueChanges.pipe(
-      takeUntil(this.unSubscribe),
-      map(v => +v),
-      publishReplay(1),
-      refCount(), );
+        takeUntil(this.unSubscribe),
+        map(v => +v),
+        publishReplay(1),
+        refCount(),);
 
     this.cronJobsForm
       .valueChanges.pipe(
@@ -79,11 +79,11 @@ export class CronJobsComponent implements OnInit, OnChanges, OnDestroy, ControlV
       map((freq: CronJobsFrequency) => {
         freq.baseFrequency = +freq.baseFrequency;
         return freq;
-      }), )
+      }),)
       .subscribe((values: CronJobsFrequency) => {
         if (!values.baseFrequency) {
           values = this.cronService.getDefaultFrequenceWithDefault();
-          this.cronJobsForm.patchValue(values, { emitEvent: false });
+          this.cronJobsForm.patchValue(values, {emitEvent: false});
         }
         this.onChange(this.cronService.setCron(values));
       });
@@ -121,7 +121,7 @@ export class CronJobsComponent implements OnInit, OnChanges, OnDestroy, ControlV
         if (!changes['config'].previousValue ||
           changes['config'].previousValue['quartz'] !== changes['config'].currentValue['quartz']) {
           this.daysOfWeekData = this.dataService.getDaysOfWeek(this.config.quartz);
-          this.cronJobsForm.patchValue({ daysOfWeek: this.daysOfWeekData[0].value });
+          this.cronJobsForm.patchValue({daysOfWeek: this.daysOfWeekData[0].value});
         }
       });
       this.setService();

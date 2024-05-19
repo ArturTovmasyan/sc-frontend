@@ -12,7 +12,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgZorroAntdModule,
+    NgZorroAntdModule
   ],
   declarations: [
     CronJobsComponent

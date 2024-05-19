@@ -101,46 +101,27 @@ export class PosixService {
 
   setCron(value: CronJobsFrequency) {
     const cron = ['*', '*', '*', '*', '*'];
+
     if (value && value.baseFrequency) {
       if (value.baseFrequency >= this.baseFrequency.hour) {
-        cron[0] = value.minutes.toString();
+        cron[0] = value.minutes.length > 0 ? value.minutes.join(',') : '*';
       }
 
       if (value.baseFrequency >= this.baseFrequency.day) {
-        cron[1] = value.hours.toString();
+        cron[1] = value.hours.length > 0 ? value.hours.join(',') : '*';
       }
 
       if (value.baseFrequency === this.baseFrequency.week) {
-        cron[4] = value.daysOfWeek.toString();
+        cron[4] = value.daysOfWeek.length > 0 ? value.daysOfWeek.join(',') : '*';
       }
 
       if (value.baseFrequency >= this.baseFrequency.month) {
-        cron[2] = value.daysOfMonth.toString();
+        cron[2] = value.daysOfMonth.length > 0 ? value.daysOfMonth.join(',') : '*';
       }
 
       if (value.baseFrequency === this.baseFrequency.year) {
-        cron[3] = value.months.toString();
+        cron[3] = value.months.length > 0 ? value.months.join(',') : '*';
       }
-
-      // if (value.baseFrequency >= this.baseFrequency.hour) {
-      //   cron[0] = value.minutes.length > 0 ? value.minutes.join(',') : '*';
-      // }
-      //
-      // if (value.baseFrequency >= this.baseFrequency.day) {
-      //   cron[1] = value.hours.length > 0 ? value.hours.join(',') : '*';
-      // }
-      //
-      // if (value.baseFrequency === this.baseFrequency.week) {
-      //   cron[4] = value.daysOfWeek.length > 0 ? value.daysOfWeek.join(',') : '*';
-      // }
-      //
-      // if (value.baseFrequency >= this.baseFrequency.month) {
-      //   cron[2] = value.daysOfMonth.length > 0 ? value.daysOfMonth.join(',') : '*';
-      // }
-      //
-      // if (value.baseFrequency === this.baseFrequency.year) {
-      //   cron[3] = value.months.length > 0 ? value.months.join(',') : '*';
-      // }
     } else {
       return '';
     }

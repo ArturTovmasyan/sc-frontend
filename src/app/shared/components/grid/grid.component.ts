@@ -226,6 +226,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
       this.data = data.data;
       this.checkbox_refresh();
     });
+
+    this.on_reload();
   }
 
   protected load_grid_fields() {
@@ -351,6 +353,10 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   public clear_button_right() {
     this._btnBar.buttons_right = [];
+  }
+
+  public on_reload() {
+
   }
 
 }
