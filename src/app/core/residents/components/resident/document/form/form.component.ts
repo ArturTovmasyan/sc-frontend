@@ -34,6 +34,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       file: [null],
 
+      file_name: [''],
+
       resident_id: [null, Validators.required]
     });
 
@@ -62,6 +64,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     if ($event.target.files && $event.target.files.length > 0) {
       const file = $event.target.files[0];
       model.file_name = StringUtil.truncate(file.name, 25);
+      this.form.get('file_name').setValue(file.name);
       model.full_file_name = file.name;
       model.extension = StringUtil.extension(file.name);
 
