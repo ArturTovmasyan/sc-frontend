@@ -242,6 +242,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
       if (component instanceof ResidentEventViewComponent) {
         component.event = result;
       }
+      if (component instanceof ResidentRentViewComponent) {
+        component.event = result;
+      }
+      if (component instanceof ResidentRentIncreaseViewComponent) {
+        component.event = result;
+      }
     });
   }
 
