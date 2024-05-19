@@ -50,7 +50,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     @ViewChild('addCreditItem', {static: false}) btn_add_credit_item;
     @ViewChild('addDiscountItem', {static: false}) btn_add_discount_item;
-    @ViewChild('addPaymentReceivedItem', {static: false}) btn_add_payment_received_item;
+    @ViewChild('addPrivatePayPaymentReceivedItem', {static: false}) btn_add_private_pay_payment_received_item;
+    @ViewChild('addNotPrivatePayPaymentReceivedItem', {static: false}) btn_add_not_private_pay_payment_received_item;
 
     constructor(
         protected modal$: ModalFormService,
@@ -78,7 +79,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             resident_credit_items: this.formBuilder.array([]),
             resident_discount_items: this.formBuilder.array([]),
-            resident_payment_received_items: this.formBuilder.array([]),
+            resident_private_pay_payment_received_items: this.formBuilder.array([]),
+            resident_not_private_pay_payment_received_items: this.formBuilder.array([]),
 
             late_payment_id: [null, Validators.compose([])],
 
@@ -201,7 +203,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           discount_item_id: [null, Validators.required],
           ledger_id: [null]
         });
-      case 'resident_payment_received_items':
+      case 'resident_private_pay_payment_received_items':
         return this.formBuilder.group({
           id: [''],
           notes: ['', Validators.compose([Validators.maxLength(512)])],
@@ -210,6 +212,16 @@ export class FormComponent extends AbstractForm implements OnInit {
           date: [DateHelper.newDate(), Validators.required],
           payment_type_id: [null, Validators.required],
           responsible_person_id: [null, Validators.required],
+          ledger_id: [null]
+        });
+      case 'resident_not_private_pay_payment_received_items':
+        return this.formBuilder.group({
+          id: [''],
+          notes: ['', Validators.compose([Validators.maxLength(512)])],
+          transaction_number: ['', Validators.compose([Validators.maxLength(32)])],
+          amount: [0, Validators.compose([Validators.required, Validators.min(1), CoreValidator.payment_amount])],
+          date: [DateHelper.newDate(), Validators.required],
+          payment_type_id: [null, Validators.required],
           ledger_id: [null]
         });
       default:
@@ -237,8 +249,11 @@ export class FormComponent extends AbstractForm implements OnInit {
     value.resident_discount_items.forEach(discount_item => {
       discount_item.date = DateHelper.makeUTCDateOnly(discount_item.date);
     });
-    value.resident_payment_received_items.forEach(payment_received_item => {
-      payment_received_item.date = DateHelper.makeUTCDateOnly(payment_received_item.date);
+    value.resident_private_pay_payment_received_items.forEach(private_pay_payment_received_item => {
+      private_pay_payment_received_item.date = DateHelper.makeUTCDateOnly(private_pay_payment_received_item.date);
+    });
+    value.resident_not_private_pay_payment_received_items.forEach(not_private_pay_payment_received_item => {
+      not_private_pay_payment_received_item.date = DateHelper.makeUTCDateOnly(not_private_pay_payment_received_item.date);
     });
     return value;
   }

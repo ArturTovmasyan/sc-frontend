@@ -3,7 +3,8 @@ import {PaymentSource} from './payment-source';
 import {ResidentExpenseItem} from './resident-expense-item';
 import {ResidentCreditItem} from './resident-credit-item';
 import {ResidentDiscountItem} from './resident-discount-item';
-import {ResidentPaymentReceivedItem} from './resident-payment-received-item';
+import {ResidentPrivatePayPaymentReceivedItem} from './resident-private-pay-payment-received-item';
+import {ResidentNotPrivatePayPaymentReceivedItem} from './resident-not-private-pay-payment-received-item';
 import {LatePayment} from './late-payment';
 
 export class ResidentLedger implements IdInterface {
@@ -28,7 +29,8 @@ export class ResidentLedger implements IdInterface {
   resident_expense_items: ResidentExpenseItem[];
   resident_credit_items: ResidentCreditItem[];
   resident_discount_items: ResidentDiscountItem[];
-  resident_payment_received_items: ResidentPaymentReceivedItem[];
+  resident_private_pay_payment_received_items: ResidentPrivatePayPaymentReceivedItem[];
+  resident_not_private_pay_payment_received_items: ResidentNotPrivatePayPaymentReceivedItem[];
 
   next_ledger_id: number;
   previous_ledger_id: number;

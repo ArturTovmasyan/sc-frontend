@@ -202,17 +202,17 @@
       </nz-form-item>
     </nz-tab>
 
-    <nz-tab nzTitle="Payment Received Item">
-      <fieldset formArrayName="resident_payment_received_items">
+    <nz-tab nzTitle="Payment Received Item" *ngIf="!isThirdParty">
+      <fieldset formArrayName="resident_private_pay_payment_received_items">
         <legend class="senior-care-legend">
           Payment Received Item(s)
-          <button type="button" [style.float]="'right'" #addPaymentReceivedItem nz-button nzType="primary" nzSize="small" nzShape="circle"
-                  (click)="add_field('resident_payment_received_items');">
+          <button type="button" [style.float]="'right'" #addPrivatePayPaymentReceivedItem nz-button nzType="primary" nzSize="small" nzShape="circle"
+                  (click)="add_field('resident_private_pay_payment_received_items');">
             <i nz-icon nzType="plus"></i>
           </button>
         </legend>
         <table class="senior-care-form-table table table-hover table-bordered table-sm"
-               *ngIf="get_form_array('resident_payment_received_items').controls.length > 0">
+               *ngIf="get_form_array('resident_private_pay_payment_received_items').controls.length > 0">
           <thead>
           <tr>
             <th class="w-20 text-left">
@@ -237,15 +237,15 @@
           </tr>
           </thead>
           <tbody>
-          <ng-container *ngFor="let item of get_form_array('resident_payment_received_items').controls;let i = index">
+          <ng-container *ngFor="let item of get_form_array('resident_private_pay_payment_received_items').controls;let i = index">
             <tr [formGroupName]="i">
               <td>
                 <nz-form-item>
                   <nz-form-control [nzSm]="16" [nzXs]="24"
-                                   [nzValidateStatus]="hasErrors('resident_payment_received_items.'+i+'.date')?'error':null">
+                                   [nzValidateStatus]="hasErrors('resident_private_pay_payment_received_items.'+i+'.date')?'error':null">
                     <nz-date-picker formControlName="date" nzFormat="MM/dd/yyyy"></nz-date-picker>
-                    <nz-form-explain *ngIf="hasErrors('resident_payment_received_items.'+i+'.date')">
-                      <app-field-errors [errors]="fieldErrors('resident_payment_received_items.'+i+'.date')"></app-field-errors>
+                    <nz-form-explain *ngIf="hasErrors('resident_private_pay_payment_received_items.'+i+'.date')">
+                      <app-field-errors [errors]="fieldErrors('resident_private_pay_payment_received_items.'+i+'.date')"></app-field-errors>
                     </nz-form-explain>
                   </nz-form-control>
                 </nz-form-item>
@@ -253,14 +253,14 @@
               <td>
                 <nz-form-item>
                   <nz-form-control [nzSm]="16" [nzXs]="24"
-                                   [nzValidateStatus]="hasErrors('resident_payment_received_items.'+i+'.payment_type_id')?'error':null">
+                                   [nzValidateStatus]="hasErrors('resident_private_pay_payment_received_items.'+i+'.payment_type_id')?'error':null">
                     <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="payment_type_id">
                       <ng-container *ngFor="let payment_type of payment_types">
                         <nz-option [nzLabel]="payment_type.title" [nzValue]="payment_type.id"></nz-option>
                       </ng-container>
                     </nz-select>
-                    <nz-form-explain *ngIf="hasErrors('resident_payment_received_items.'+i+'.payment_type_id')">
-                      <app-field-errors [errors]="fieldErrors('resident_payment_received_items.'+i+'.payment_type_id')"></app-field-errors>
+                    <nz-form-explain *ngIf="hasErrors('resident_private_pay_payment_received_items.'+i+'.payment_type_id')">
+                      <app-field-errors [errors]="fieldErrors('resident_private_pay_payment_received_items.'+i+'.payment_type_id')"></app-field-errors>
                     </nz-form-explain>
                   </nz-form-control>
                 </nz-form-item>
@@ -268,21 +268,21 @@
               <td>
                 <nz-form-item>
                   <nz-form-control [nzSm]="16" [nzXs]="24"
-                                   [nzValidateStatus]="hasErrors('resident_payment_received_items.'+i+'.amount')?'error':null">
+                                   [nzValidateStatus]="hasErrors('resident_private_pay_payment_received_items.'+i+'.amount')?'error':null">
                     <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
                                      nzSize="small" nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
-                    <nz-form-explain *ngIf="hasErrors('resident_payment_received_items.'+i+'.amount')">
-                      <app-field-errors [errors]="fieldErrors('resident_payment_received_items.'+i+'.amount')"></app-field-errors>
+                    <nz-form-explain *ngIf="hasErrors('resident_private_pay_payment_received_items.'+i+'.amount')">
+                      <app-field-errors [errors]="fieldErrors('resident_private_pay_payment_received_items.'+i+'.amount')"></app-field-errors>
                     </nz-form-explain>
                   </nz-form-control>
                 </nz-form-item>
               </td>
               <td>
                 <nz-form-item>
-                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('resident_payment_received_items.'+i+'.transaction_number')?'error':null">
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('resident_private_pay_payment_received_items.'+i+'.transaction_number')?'error':null">
                     <input nz-input placeholder="Transaction Number" formControlName="transaction_number">
-                    <nz-form-explain *ngIf="hasErrors('resident_payment_received_items.'+i+'.transaction_number')">
-                      <app-field-errors [errors]="fieldErrors('resident_payment_received_items.'+i+'.transaction_number')"></app-field-errors>
+                    <nz-form-explain *ngIf="hasErrors('resident_private_pay_payment_received_items.'+i+'.transaction_number')">
+                      <app-field-errors [errors]="fieldErrors('resident_private_pay_payment_received_items.'+i+'.transaction_number')"></app-field-errors>
                     </nz-form-explain>
                   </nz-form-control>
                 </nz-form-item>
@@ -290,14 +290,14 @@
               <td>
                 <nz-form-item>
                   <nz-form-control [nzSm]="16" [nzXs]="24"
-                                   [nzValidateStatus]="hasErrors('resident_payment_received_items.'+i+'.responsible_person_id')?'error':null">
+                                   [nzValidateStatus]="hasErrors('resident_private_pay_payment_received_items.'+i+'.responsible_person_id')?'error':null">
                     <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
                       <ng-container *ngFor="let rp of responsible_persons">
                         <nz-option [nzLabel]="rp.responsible_person|responsible_person" [nzValue]="rp.id"></nz-option>
                       </ng-container>
                     </nz-select>
-                    <nz-form-explain *ngIf="hasErrors('resident_payment_received_items.'+i+'.responsible_person_id')">
-                      <app-field-errors [errors]="fieldErrors('resident_payment_received_items.'+i+'.responsible_person_id')"></app-field-errors>
+                    <nz-form-explain *ngIf="hasErrors('resident_private_pay_payment_received_items.'+i+'.responsible_person_id')">
+                      <app-field-errors [errors]="fieldErrors('resident_private_pay_payment_received_items.'+i+'.responsible_person_id')"></app-field-errors>
                     </nz-form-explain>
                   </nz-form-control>
                 </nz-form-item>
@@ -305,17 +305,17 @@
               <td>
                 <nz-form-item>
                   <nz-form-control [nzSm]="16" [nzXs]="24"
-                                   [nzValidateStatus]="hasErrors('resident_payment_received_items.'+i+'.notes')?'error':null">
+                                   [nzValidateStatus]="hasErrors('resident_private_pay_payment_received_items.'+i+'.notes')?'error':null">
                     <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512" id="{{ 'note-' + i }}"></input-counter>
-                    <nz-form-explain *ngIf="hasErrors('resident_payment_received_items.'+i+'.notes')">
-                      <app-field-errors [errors]="fieldErrors('resident_payment_received_items.'+i+'.notes')"></app-field-errors>
+                    <nz-form-explain *ngIf="hasErrors('resident_private_pay_payment_received_items.'+i+'.notes')">
+                      <app-field-errors [errors]="fieldErrors('resident_private_pay_payment_received_items.'+i+'.notes')"></app-field-errors>
                     </nz-form-explain>
                   </nz-form-control>
                 </nz-form-item>
               </td>
               <td class="text-center">
                 <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle" [nzLoading]="button_loading[i]"
-                        (click)="remove_field('resident_payment_received_items', i);">
+                        (click)="remove_field('resident_private_pay_payment_received_items', i);">
                   <i nz-icon nzType="minus"></i>
                 </button>
               </td>
@@ -325,9 +325,122 @@
         </table>
       </fieldset>
       <nz-form-item>
-        <nz-form-control [nzSm]="24" [nzXs]="24" [nzValidateStatus]="hasErrors('resident_payment_received_items')?'error':null">
-          <nz-form-explain *ngIf="hasErrors('resident_payment_received_items')">
-            <app-field-errors [errors]="fieldErrors('resident_payment_received_items')"></app-field-errors>
+        <nz-form-control [nzSm]="24" [nzXs]="24" [nzValidateStatus]="hasErrors('resident_private_pay_payment_received_items')?'error':null">
+          <nz-form-explain *ngIf="hasErrors('resident_private_pay_payment_received_items')">
+            <app-field-errors [errors]="fieldErrors('resident_private_pay_payment_received_items')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+
+    <nz-tab nzTitle="Payment Received Item" *ngIf="isThirdParty">
+      <fieldset formArrayName="resident_not_private_pay_payment_received_items">
+        <legend class="senior-care-legend">
+          Payment Received Item(s)
+          <button type="button" [style.float]="'right'" #addNotPrivatePayPaymentReceivedItem nz-button nzType="primary" nzSize="small" nzShape="circle"
+                  (click)="add_field('resident_not_private_pay_payment_received_items');">
+            <i nz-icon nzType="plus"></i>
+          </button>
+        </legend>
+        <table class="senior-care-form-table table table-hover table-bordered table-sm"
+               *ngIf="get_form_array('resident_not_private_pay_payment_received_items').controls.length > 0">
+          <thead>
+          <tr>
+            <th class="w-20 text-left">
+              <nz-form-label nzRequired>Date</nz-form-label>
+            </th>
+            <th class="w-20 text-left">
+              <nz-form-label nzRequired>Type</nz-form-label>
+            </th>
+            <th class="w-20 text-left">
+              <nz-form-label nzRequired>Amount</nz-form-label>
+            </th>
+            <th class="w-20 text-left">
+              <nz-form-label nzRequired>Trans. #</nz-form-label>
+            </th>
+            <th class="w-20 text-left">
+              <nz-form-label>Notes</nz-form-label>
+            </th>
+            <th>&nbsp;</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let item of get_form_array('resident_not_private_pay_payment_received_items').controls;let i = index">
+            <tr [formGroupName]="i">
+              <td>
+                <nz-form-item>
+                  <nz-form-control [nzSm]="16" [nzXs]="24"
+                                   [nzValidateStatus]="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.date')?'error':null">
+                    <nz-date-picker formControlName="date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+                    <nz-form-explain *ngIf="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.date')">
+                      <app-field-errors [errors]="fieldErrors('resident_not_private_pay_payment_received_items.'+i+'.date')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td>
+                <nz-form-item>
+                  <nz-form-control [nzSm]="16" [nzXs]="24"
+                                   [nzValidateStatus]="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.payment_type_id')?'error':null">
+                    <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="payment_type_id">
+                      <ng-container *ngFor="let payment_type of payment_types">
+                        <nz-option [nzLabel]="payment_type.title" [nzValue]="payment_type.id"></nz-option>
+                      </ng-container>
+                    </nz-select>
+                    <nz-form-explain *ngIf="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.payment_type_id')">
+                      <app-field-errors [errors]="fieldErrors('resident_not_private_pay_payment_received_items.'+i+'.payment_type_id')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td>
+                <nz-form-item>
+                  <nz-form-control [nzSm]="16" [nzXs]="24"
+                                   [nzValidateStatus]="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.amount')?'error':null">
+                    <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
+                                     nzSize="small" nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
+                    <nz-form-explain *ngIf="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.amount')">
+                      <app-field-errors [errors]="fieldErrors('resident_not_private_pay_payment_received_items.'+i+'.amount')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td>
+                <nz-form-item>
+                  <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.transaction_number')?'error':null">
+                    <input nz-input placeholder="Transaction Number" formControlName="transaction_number">
+                    <nz-form-explain *ngIf="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.transaction_number')">
+                      <app-field-errors [errors]="fieldErrors('resident_not_private_pay_payment_received_items.'+i+'.transaction_number')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td>
+                <nz-form-item>
+                  <nz-form-control [nzSm]="16" [nzXs]="24"
+                                   [nzValidateStatus]="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.notes')?'error':null">
+                    <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512" id="{{ 'note-' + i }}"></input-counter>
+                    <nz-form-explain *ngIf="hasErrors('resident_not_private_pay_payment_received_items.'+i+'.notes')">
+                      <app-field-errors [errors]="fieldErrors('resident_not_private_pay_payment_received_items.'+i+'.notes')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td class="text-center">
+                <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle" [nzLoading]="button_loading[i]"
+                        (click)="remove_field('resident_not_private_pay_payment_received_items', i);">
+                  <i nz-icon nzType="minus"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </fieldset>
+      <nz-form-item>
+        <nz-form-control [nzSm]="24" [nzXs]="24" [nzValidateStatus]="hasErrors('resident_not_private_pay_payment_received_items')?'error':null">
+          <nz-form-explain *ngIf="hasErrors('resident_not_private_pay_payment_received_items')">
+            <app-field-errors [errors]="fieldErrors('resident_not_private_pay_payment_received_items')"></app-field-errors>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>

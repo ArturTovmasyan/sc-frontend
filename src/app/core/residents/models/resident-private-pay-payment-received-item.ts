@@ -1,7 +1,7 @@
 import {RpPaymentType} from './rp-payment-type';
 import {ResidentResponsiblePerson} from './resident-responsible-person';
 
-export class ResidentPaymentReceivedItem implements IdInterface {
+export class ResidentPrivatePayPaymentReceivedItem implements IdInterface {
   id: number;
 
   date: Date;

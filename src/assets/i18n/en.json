@@ -473,7 +473,7 @@
       "id": "ID",
       "resident": "Resident",
       "date_created": "Created At",
-      "private_pay_balance_due": "Privat Pay Balance Due",
+      "private_pay_balance_due": "Private Pay Balance Due",
       "not_private_pay_balance_due": "3rd Party Balance Due",
       "balance_due": "Balance Due",
       "info": "Sources"
@@ -499,7 +499,15 @@
       "amount": "Amount",
       "notes": "Notes"
     },
-    "resident-payment-received-item-list": {
+    "resident-private-pay-payment-received-item-list": {
+      "id": "ID",
+      "payment_type": "Payment Type",
+      "date": "Date",
+      "amount": "Amount",
+      "transaction_number": "Check/Transaction #",
+      "notes": "Notes"
+    },
+    "resident-not-private-pay-payment-received-item-list": {
       "id": "ID",
       "payment_type": "Payment Type",
       "date": "Date",

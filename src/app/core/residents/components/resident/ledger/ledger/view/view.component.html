@@ -176,7 +176,7 @@
                       </th>
                     </tr>
                     <ng-container
-                      *ngIf="ledger.prior_private_pay_balance_due && ledger.prior_private_pay_balance_due > 0">
+                      *ngIf="ledger.prior_private_pay_balance_due && ledger.prior_private_pay_balance_due !== 0">
                       <tr class="text-center">
                         <td style="width: 15% !important;">{{ ledger.date_created|date:'MM/01/y' }}</td>
                         <td style="width: 20% !important;">Prior Balance</td>
@@ -204,8 +204,8 @@
                       </ng-container>
                     </ng-container>
                     <ng-container
-                      *ngIf="ledger.resident_payment_received_items && ledger.resident_payment_received_items.length > 0">
-                      <ng-container *ngFor="let item of ledger.resident_payment_received_items">
+                      *ngIf="ledger.resident_private_pay_payment_received_items && ledger.resident_private_pay_payment_received_items.length > 0">
+                      <ng-container *ngFor="let item of ledger.resident_private_pay_payment_received_items">
                         <tr class="text-center">
                           <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
                           <td style="width: 20% !important;">Payment</td>
@@ -320,7 +320,7 @@
                         </th>
                       </tr>
                       <ng-container
-                        *ngIf="ledger.prior_not_private_pay_balance_due && ledger.prior_not_private_pay_balance_due > 0">
+                        *ngIf="ledger.prior_not_private_pay_balance_due && ledger.prior_not_private_pay_balance_due !== 0">
                         <tr class="text-center">
                           <td style="width: 15% !important;">{{ ledger.date_created|date:'MM/01/y' }}</td>
                           <td style="width: 20% !important;">Prior Balance</td>
@@ -348,14 +348,14 @@
                         </ng-container>
                       </ng-container>
                       <ng-container
-                        *ngIf="ledger.resident_payment_received_items && ledger.resident_payment_received_items.length > 0">
-                        <ng-container *ngFor="let item of ledger.resident_payment_received_items">
+                        *ngIf="ledger.resident_not_private_pay_payment_received_items && ledger.resident_not_private_pay_payment_received_items.length > 0">
+                        <ng-container *ngFor="let item of ledger.resident_not_private_pay_payment_received_items">
                           <tr class="text-center">
                             <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
                             <td style="width: 20% !important;">Payment</td>
                             <td style="width: 15% !important;">Check #</td>
                             <td style="width: 15% !important;">{{item.transaction_number}}</td>
-                            <td style="width: 20% !important;">{{item.responsible_person?.responsible_person|responsible_person}}</td>
+                            <td style="width: 20% !important;"></td>
                             <td style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
                           </tr>
                         </ng-container>
