@@ -5,7 +5,6 @@ import {CityStateZip} from '../../residents/models/city-state-zip';
 import {CareType} from './care-type';
 import {PaymentSource} from '../../residents/models/payment-source';
 import {User} from '../../models/user';
-import {StateChangeReason} from './state-change-reason';
 
 export class Lead implements IdInterface {
   id: number;
@@ -19,9 +18,6 @@ export class Lead implements IdInterface {
   payment_type: PaymentSource;
   owner: User;
   initial_contact_date: Date;
-
-  state_change_reason: StateChangeReason;
-  state_effective_date: Date;
 
   responsible_person_first_name: string;
   responsible_person_last_name: string;

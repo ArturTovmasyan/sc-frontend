@@ -226,7 +226,6 @@ import {FormComponent as ActivityStatusFormComponent} from './leads/components/a
 import {FormComponent as ActivityTypeFormComponent} from './leads/components/activity-type/form/form.component';
 import {FormComponent as ReferrerTypeFormComponent} from './leads/components/referrer-type/form/form.component';
 import {FormComponent as CareTypeFormComponent} from './leads/components/care-type/form/form.component';
-import {FormComponent as StateChangeReasonFormComponent} from './leads/components/state-change-reason/form/form.component';
 import {FormComponent as OrganizationFormComponent} from './leads/components/organization/form/form.component';
 import {FormComponent as ReferralFormComponent} from './leads/components/referral/form/form.component';
 import {FormComponent as LeadFormComponent} from './leads/components/lead/form/form.component';
@@ -238,7 +237,6 @@ import {ListComponent as ActivityStatusListComponent} from './leads/components/a
 import {ListComponent as ActivityTypeListComponent} from './leads/components/activity-type/list.component';
 import {ListComponent as ReferrerTypeListComponent} from './leads/components/referrer-type/list.component';
 import {ListComponent as CareTypeListComponent} from './leads/components/care-type/list.component';
-import {ListComponent as StateChangeReasonListComponent} from './leads/components/state-change-reason/list.component';
 import {ListComponent as OrganizationListComponent} from './leads/components/organization/list.component';
 import {ListComponent as ReferralListComponent} from './leads/components/referral/list.component';
 import {ListComponent as LeadListComponent} from './leads/components/lead/list.component';
@@ -502,9 +500,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LeadContactListComponent,
     LeadContactFormComponent,
 
-    StateChangeReasonListComponent,
-    StateChangeReasonFormComponent,
-
     OrganizationListComponent,
     OrganizationFormComponent,
 
@@ -644,7 +639,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ActivityTypeFormComponent,
     ReferrerTypeFormComponent,
     CareTypeFormComponent,
-    StateChangeReasonFormComponent,
     OrganizationFormComponent,
     ReferralFormComponent,
     LeadFormComponent,

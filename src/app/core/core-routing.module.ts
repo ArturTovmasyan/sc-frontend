@@ -68,7 +68,6 @@ import {LoggedActivate} from './guards/logged.guard';
 import {ListComponent as ActivityStatusListComponent} from './leads/components/activity-status/list.component';
 import {ListComponent as ActivityTypeListComponent} from './leads/components/activity-type/list.component';
 import {ListComponent as CareTypeListComponent} from './leads/components/care-type/list.component';
-import {ListComponent as StateChangeReasonListComponent} from './leads/components/state-change-reason/list.component';
 import {ListComponent as ReferrerTypeListComponent} from './leads/components/referrer-type/list.component';
 import {ListComponent as OrganizationListComponent} from './leads/components/organization/list.component';
 import {ListComponent as ReferralListComponent} from './leads/components/referral/list.component';
@@ -296,15 +295,6 @@ const routes: Routes = [
                   nav: {show: true, group: 'Leads'},
                   title: 'Care Types',
                   permissions: ['persistence-lead-care_type']
-                },
-                canActivate: [AuthGuard]
-              },
-              {
-                path: 'state-change-reason', component: StateChangeReasonListComponent,
-                data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Status Change Reasons',
-                  permissions: ['persistence-lead-state_change_reason']
                 },
                 canActivate: [AuthGuard]
               }

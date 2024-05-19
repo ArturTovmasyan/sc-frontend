@@ -94,38 +94,6 @@
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
-
-      <!-- State -->
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state_change_reason_id">Status Change Reason</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state_change_reason_id')?'error':null">
-          <div class="add-select-container">
-            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select"
-                       formControlName="state_change_reason_id">
-              <ng-container *ngFor="let state_change_reason of state_change_reasons">
-                <nz-option [nzLabel]="state_change_reason.title" [nzValue]="state_change_reason.id"></nz-option>
-              </ng-container>
-            </nz-select>
-            <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('state_change_reason');">
-              <i nz-icon type="plus"></i>
-            </button>
-          </div>
-          <nz-form-explain *ngIf="hasErrors('state_change_reason_id')">
-            <app-field-errors [errors]="fieldErrors('state_change_reason_id')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state_effective_date">Status Effective Date</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state_effective_date')?'error':null">
-          <nz-date-picker formControlName="state_effective_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
-          <nz-form-explain *ngIf="hasErrors('state_effective_date')">
-            <app-field-errors [errors]="fieldErrors('state_effective_date')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
     </nz-tab>
 
     <nz-tab nzTitle="Responsible Info">

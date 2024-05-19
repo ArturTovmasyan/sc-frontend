@@ -436,8 +436,6 @@
       "full_name": "Full Name",
       "owner": "Owner",
       "state": "Status",
-      "state_change_reason": "Status Change Reason",
-      "effective_date": "Effective Date",
       "referral": "Referral",
       "primary_facility": "Primary Facility"
     },

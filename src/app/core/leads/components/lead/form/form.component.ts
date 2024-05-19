@@ -13,26 +13,22 @@ import {OrganizationService} from '../../../services/organization.service';
 import {CityStateZip} from '../../../../residents/models/city-state-zip';
 import {CareType} from '../../../models/care-type';
 import {User} from '../../../../models/user';
-import {StateChangeReason} from '../../../models/state-change-reason';
 import {Facility} from '../../../../residents/models/facility';
 import {CityStateZipService} from '../../../../residents/services/city-state-zip.service';
 import {CareTypeService} from '../../../services/care-type.service';
 import {FacilityService} from '../../../../residents/services/facility.service';
 import {UserService} from '../../../../admin/services/user.service';
-import {StateChangeReasonService} from '../../../services/state-change-reason.service';
 import {PaymentSource} from '../../../../residents/models/payment-source';
 import {PaymentSourceService} from '../../../../residents/services/payment-source.service';
 import {Lead, LeadState} from '../../../models/lead';
 import {FormComponent as OrganizationFormComponent} from '../../organization/form/form.component';
 import {FormComponent as ContactFormComponent} from '../../contact/form/form.component';
 import {FormComponent as CareTypeFormComponent} from '../../care-type/form/form.component';
-import {FormComponent as StateChangeReasonFormComponent} from '../../state-change-reason/form/form.component';
 import {FormComponent as ReferrerTypeFormComponent} from '../../referrer-type/form/form.component';
 import {FormComponent as CSZFormComponent} from '../../../../residents/components/city-state-zip/form/form.component';
 import {FormComponent as PaymentSourceFormComponent} from '../../../../residents/components/payment-source/form/form.component';
 import {Contact} from '../../../models/contact';
 import {ContactService} from '../../../services/contact.service';
-import {DateHelper} from '../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -43,7 +39,6 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
   users: User[];
 
   care_types: CareType[];
-  state_change_reasons: StateChangeReason[];
 
   referrer_types: ReferrerType[];
 
@@ -67,7 +62,6 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     private user$: UserService,
     private facility$: FacilityService,
     private care_type$: CareTypeService,
-    private state_change_reason$: StateChangeReasonService,
     private organization$: OrganizationService,
     private contact$: ContactService,
     private referrer_type$: ReferrerTypeService
@@ -88,9 +82,6 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
       initial_contact_date: [new Date(), Validators.compose([Validators.required])],
 
       state: [LeadState.OPEN, Validators.compose([])],
-
-      state_change_reason_id: [null, Validators.compose([])],
-      state_effective_date: [new Date(), Validators.compose([])],
 
       responsible_person_first_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
       responsible_person_last_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
@@ -143,7 +134,6 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     this.subscribe('list_user');
     this.subscribe('list_facility');
     this.subscribe('list_care_type');
-    this.subscribe('list_state_change_reason');
 
     this.subscribe('list_organization');
     this.subscribe('list_referrer_type');
@@ -222,17 +212,6 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
 
             if (params) {
               this.form.get('care_type_id').setValue(params.care_type_id);
-            }
-          }
-        });
-        break;
-      case 'list_state_change_reason':
-        this.$subscriptions[key] = this.state_change_reason$.all().pipe(first()).subscribe(res => {
-          if (res) {
-            this.state_change_reasons = res;
-
-            if (params) {
-              this.form.get('state_change_reason_id').setValue(params.state_change_reason_id);
             }
           }
         });
@@ -395,16 +374,6 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
             return null;
           });
         break;
-      case 'state_change_reason':
-        this.create_modal(
-          this.modal$,
-          StateChangeReasonFormComponent,
-          data => this.state_change_reason$.add(data),
-          data => {
-            this.subscribe('list_state_change_reason', {state_change_reason_id: data[0]});
-            return null;
-          });
-        break;
       case 'referrer_type':
         this.create_modal(
           this.modal$,
@@ -428,8 +397,6 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     }
 
     if (this.edit_mode) {
-      data.state_effective_date = DateHelper.convertUTC(data.state_effective_date);
-
       this.form.get('initial_contact_date').disable();
 
       if (data.referral === null) {
