@@ -90,6 +90,25 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="contact">Contact</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="contact"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('contact')">
+        <app-field-errors [errors]="fieldErrors('contact')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="amount">Amount</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="amount"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('amount')">
+        <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="editable">Editable</nz-form-label>

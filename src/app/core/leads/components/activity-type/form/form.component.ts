@@ -41,6 +41,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       sms: [false, Validators.required],
       facility: [false, Validators.required],
 
+      contact: [false, Validators.required],
+      amount: [false, Validators.required],
+
       editable: [true, Validators.required],
       deletable: [true, Validators.required],
 

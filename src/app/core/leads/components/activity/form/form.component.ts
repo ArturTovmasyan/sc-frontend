@@ -15,6 +15,9 @@ import {DateHelper} from '../../../../../shared/helpers/date-helper';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as ActivityTypeFormComponent} from '../../activity-type/form/form.component';
 import {FormComponent as ActivityStatusFormComponent} from '../../activity-status/form/form.component';
+import {FormComponent as ContactFormComponent} from '../../contact/form/form.component';
+import {Contact} from '../../../models/contact';
+import {ContactService} from '../../../services/contact.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -24,6 +27,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   activity_statuses: ActivityStatus[];
   users: User[];
   facilities: Facility[];
+  contacts: Contact[];
 
   constructor(
     protected modal$: ModalFormService,
@@ -31,12 +35,14 @@ export class FormComponent extends AbstractForm implements OnInit {
     private activity_type$: ActivityTypeService,
     private activity_status$: ActivityStatusService,
     private facility$: FacilityService,
+    private contact$: ContactService,
     private user$: UserService
   ) {
     super(modal$);
     this.modal_map = [
-         {key: 'activity_type', component: ActivityTypeFormComponent},
-         {key: 'activity_status', component: ActivityStatusFormComponent}
+      {key: 'activity_type', component: ActivityTypeFormComponent},
+      {key: 'activity_status', component: ActivityStatusFormComponent},
+      {key: 'contact', component: ContactFormComponent}
     ];
   }
 
@@ -56,6 +62,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       assign_to_id: [null, Validators.compose([Validators.required])],
       facility_id: [null, Validators.compose([Validators.required])],
 
+      task_contact_id: [null, Validators.compose([Validators.required])],
+      amount: [null, Validators.compose([Validators.required])],
+
       owner_type: [null, Validators.compose([])],
       lead_id: [null, Validators.compose([])],
       referral_id: [null, Validators.compose([])],
@@ -64,6 +73,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       outreach_id: [null, Validators.compose([])],
       contact_id: [null, Validators.compose([])],
     });
+
+    this.form.get('task_contact_id').disable();
+    this.form.get('amount').disable();
 
     this.form.get('facility_id').disable();
     this.form.get('assign_to_id').disable();
@@ -74,6 +86,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_activity_type');
     this.subscribe('list_activity_status');
     this.subscribe('list_facility');
+    this.subscribe('list_contact');
     this.subscribe('list_user');
   }
 
@@ -101,7 +114,18 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.activity_statuses = res;
 
             if (params) {
-              this.form.get('status_id').setValue(params.activity_type_id);
+              this.form.get('status_id').setValue(params.activity_status_id);
+            }
+          }
+        });
+        break;
+      case 'list_contact':
+        this.$subscriptions[key] = this.contact$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.contacts = res;
+
+            if (params) {
+              this.form.get('status_id').setValue(params.contact_id);
             }
           }
         });
@@ -156,7 +180,21 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('reminder_date').disable();
               }
 
+              if (type.contact) {
+                this.form.get('task_contact_id').enable();
+              } else {
+                this.form.get('task_contact_id').disable();
+              }
+
+              if (type.amount) {
+                this.form.get('amount').enable();
+              } else {
+                this.form.get('amount').disable();
+              }
+
             } else {
+              this.form.get('task_contact_id').disable();
+              this.form.get('amount').disable();
               this.form.get('facility_id').disable();
               this.form.get('assign_to_id').disable();
               this.form.get('status_id').disable();

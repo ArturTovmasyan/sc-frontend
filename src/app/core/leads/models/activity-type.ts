@@ -15,6 +15,9 @@ export class ActivityType implements IdInterface {
   document: boolean;
   facility: boolean;
 
+  contact: boolean;
+  amount: boolean;
+
   editable: boolean;
   deletable: boolean;
 

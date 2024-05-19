@@ -107,6 +107,36 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item *ngIf="form.get('task_contact_id').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="task_contact_id" nzRequired>Contact</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('task_contact_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="task_contact_id">
+          <ng-container *ngFor="let contact of contacts">
+            <nz-option [nzLabel]="contact|lead_contact" [nzValue]="contact.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('contact');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('task_contact_id')">
+        <app-field-errors [errors]="fieldErrors('task_contact_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('amount').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="amount" nzRequired>Amount</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('amount')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Amount"
+                       formControlName="amount"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('amount')">
+        <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.notes')?'error':null">

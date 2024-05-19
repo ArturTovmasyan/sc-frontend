@@ -373,6 +373,8 @@
       "cc": "CC",
       "sms": "SMS",
       "facility": "Facility",
+      "contact": "Contact",
+      "amount": "Amount",
       "editable": "Editable",
       "deletable": "Deletable"
     },
