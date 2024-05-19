@@ -118,7 +118,7 @@ export class GridService<T extends IdInterface> {
             value.value.forEach((v, i) => {
               if (v != null) {
                 if (v instanceof Date) {
-                  v = formatDate(v, 'yyy-MM-ddTHH:mm:ss', 'en-US');
+                  v = formatDate(v, 'yyyy-MM-ddTHH:mm:ssZ', 'UTC');
                 }
 
                 query = query.append('filter[' + key + '][v][' + i + ']', v);
