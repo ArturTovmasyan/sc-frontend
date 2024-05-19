@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between">
-  <template [ngTemplateOutlet]="tplButtonBar"
+  <template *ngIf="component" [ngTemplateOutlet]="tplButtonBar"
             [ngTemplateOutletContext]="{buttons: buttons_crud}"></template>
   <template [ngTemplateOutlet]="tplButtonBar"
             [ngTemplateOutletContext]="{buttons: buttons_left}"></template>
