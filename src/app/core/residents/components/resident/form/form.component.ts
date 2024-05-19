@@ -9,6 +9,8 @@ import {Salutation} from '../../../models/salutation';
 import {SpaceService} from '../../../../services/space.service';
 import {SalutationService} from '../../../services/salutation.service';
 import * as differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
+import {FormComponent as SalutationFormComponent} from '../../salutation/form/form.component';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -28,7 +30,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private salutation$: SalutationService,
-    private space$: SpaceService
+    private space$: SpaceService,
+    private modal$: NzModalService
   ) {
     super();
 
@@ -55,19 +58,10 @@ export class FormComponent extends AbstractForm implements OnInit {
       phones: this.formBuilder.array([]),
     });
 
-    this.salutation$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.salutations = res;
-      }
-    });
+    this.subscribe('list_salutation');
+    this.subscribe('list_space');
 
-    this.space$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        res.sort((a, b) => a.name.localeCompare(b.name));
-        this.spaces = res;
-      }
-    });
-
+    // TODO: review
     this.genders = [
       {id: Gender.MALE, name: 'Male'},
       {id: Gender.FEMALE, name: 'Female'},
@@ -82,6 +76,50 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: PhoneType.FAX, name: 'FAX'},
       {id: PhoneType.ROOM, name: 'ROOM'}
     ];
+  }
+
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_space':
+        this.$subscriptions[key] = this.space$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            res.sort((a, b) => a.name.localeCompare(b.name));
+            this.spaces = res;
+          }
+        });
+        break;
+      case 'list_salutation':
+        this.$subscriptions[key] = this.salutation$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.salutations = res;
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'salutation':
+        this.create_modal(
+          this.modal$,
+          SalutationFormComponent,
+          data => this.salutation$.add(data),
+          data => {
+            this.$subscriptions[key] = this.salutation$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.salutations = res;
+                this.form.get('salutation_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
+        break;
+      default:
+        break;
+    }
   }
 
   public get_form_array_skeleton(key: string): FormGroup {

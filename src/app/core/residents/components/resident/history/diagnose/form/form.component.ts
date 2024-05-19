@@ -6,19 +6,24 @@ import {Diagnosis} from '../../../../../models/diagnosis';
 import {DiagnosisService} from '../../../../../services/diagnosis.service';
 import {ActivatedRoute} from '@angular/router';
 import {DiagnoseType} from '../../../../../models/diagnose-type.enum';
+import {NzModalService} from 'ng-zorro-antd';
+import {FormComponent as DiagnosisFormComponent} from '../../../../diagnosis/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  sub_form_enabled: boolean = false;
-
   types: { id: DiagnoseType, name: string }[];
 
   diagnoses: Diagnosis[];
   resident_id: number;
 
-  constructor(private formBuilder: FormBuilder, private diagnosis$: DiagnosisService, private route$: ActivatedRoute) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private diagnosis$: DiagnosisService,
+    private route$: ActivatedRoute,
+    private modal$: NzModalService
+  ) {
     super();
   }
 
@@ -32,23 +37,12 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       diagnose_id: [null, Validators.required],
 
-      diagnose: this.formBuilder.group({
-        title: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
-        acronym: ['', Validators.compose([Validators.maxLength(20)])],
-        description: ['', Validators.compose([Validators.maxLength(255)])],
-      }),
-
       resident_id: [this.resident_id, Validators.required]
     });
 
-    this.toggle_sub_form();
+    this.subscribe('list_diagnosis');
 
-    this.diagnosis$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.diagnoses = res;
-      }
-    });
-
+    // TODO: review
     this.types = [
       {id: DiagnoseType.PRIMARY, name: 'Primary'},
       {id: DiagnoseType.SECONDARY, name: 'Secondary'},
@@ -56,16 +50,40 @@ export class FormComponent extends AbstractForm implements OnInit {
     ];
   }
 
-  toggle_sub_form() {
-    if (this.sub_form_enabled) {
-      this.form.get('diagnose').enable();
-      this.form.get('diagnose_id').disable();
-    } else {
-      this.form.get('diagnose_id').enable();
-      this.form.get('diagnose').disable();
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_diagnosis':
+        this.$subscriptions[key] = this.diagnosis$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.diagnoses = res;
+          }
+        });
+        break;
+      default:
+        break;
     }
+  }
 
-    this.sub_form_enabled = !this.sub_form_enabled;
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'diagnose':
+        this.create_modal(
+          this.modal$,
+          DiagnosisFormComponent,
+          data => this.diagnosis$.add(data),
+          data => {
+            this.$subscriptions[key] = this.diagnosis$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.diagnoses = res;
+                this.form.get('diagnose_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
+        break;
+      default:
+        break;
+    }
   }
 
 }

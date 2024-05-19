@@ -26,12 +26,22 @@ export class FormComponent extends AbstractForm implements OnInit {
       space_id: [null, Validators.required],
     });
 
-    this.space$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        res.sort((a, b) => a.name.localeCompare(b.name));
-        this.spaces = res;
-      }
-    });
+    this.subscribe('list_space');
+  }
+
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_space':
+        this.$subscriptions[key] = this.space$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            res.sort((a, b) => a.name.localeCompare(b.name));
+            this.spaces = res;
+          }
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   public get_form_array_skeleton(key: string): FormGroup {

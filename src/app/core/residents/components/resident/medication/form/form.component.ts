@@ -10,6 +10,9 @@ import {Physician} from '../../../../models/physician';
 import {PhysicianService} from '../../../../services/physician.service';
 import {MedicationFormFactorService} from '../../../../services/medication-form-factor.service';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
+import {FormComponent as MedicationFormComponent} from '../../../medication/form/form.component';
+import {FormComponent as MedicationFormFactorFormComponent} from '../../../medication-form-factor/form/form.component';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -26,8 +29,10 @@ export class FormComponent extends AbstractForm implements OnInit {
     private medication$: MedicationService,
     private form_factor$: MedicationFormFactorService,
     private physician$: PhysicianService,
+    private modal$: NzModalService,
     private route$: ActivatedRoute,
-    private _el: ElementRef) {
+    private _el: ElementRef
+  ) {
     super();
   }
 
@@ -67,24 +72,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       resident_id: [this.resident_id, Validators.required]
     });
 
-    this.medication$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.medications = res;
-      }
-    });
-
-    this.form_factor$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.form_factors = res;
-      }
-    });
-
-    this.physician$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.physicians = res;
-      }
-    });
-
     this.postSubmit = (data: any) => {
       const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
       if (invalid_el) {
@@ -93,5 +80,73 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
     };
 
+    this.subscribe('list_medication');
+    this.subscribe('list_form_factor');
+    this.subscribe('list_physician');
+  }
+
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_medication':
+        this.$subscriptions[key] = this.medication$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.medications = res;
+          }
+        });
+        break;
+      case 'list_form_factor':
+        this.$subscriptions[key] = this.form_factor$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.form_factors = res;
+          }
+        });
+        break;
+      case 'list_physician':
+        this.$subscriptions[key] = this.physician$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.physicians = res;
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'medication':
+        this.create_modal(
+          this.modal$,
+          MedicationFormComponent,
+          data => this.medication$.add(data),
+          data => {
+            this.$subscriptions[key] = this.medication$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.medications = res;
+                this.form.get('medication_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
+        break;
+      case 'form_factor':
+        this.create_modal(
+          this.modal$,
+          MedicationFormFactorFormComponent,
+          data => this.form_factor$.add(data),
+          data => {
+            this.$subscriptions[key] = this.form_factor$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.form_factors = res;
+                this.form.get('form_factor_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
+        break;
+      default:
+        break;
+    }
   }
 }

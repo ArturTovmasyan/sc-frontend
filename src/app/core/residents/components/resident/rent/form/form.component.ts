@@ -43,15 +43,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       resident_id: [this.resident_id, Validators.required]
     });
 
-    this.payment_source$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.payment_sources = res;
-        this.payment_sources.forEach(v => v.disabled = false);
+    this.subscribe('list_payment_source');
 
-        this.after_set_form_data();
-      }
-    });
-
+    /// TODO: review
     this.periods = [
       {id: PaymentPeriod.HOURLY, name: 'Hourly'},
       {id: PaymentPeriod.DAILY, name: 'Daily'},
@@ -59,6 +53,23 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: PaymentPeriod.MONTHLY, name: 'Monthly'},
     ];
 
+  }
+
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_payment_source':
+        this.$subscriptions[key] = this.payment_source$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.payment_sources = res;
+            this.payment_sources.forEach(v => v.disabled = false);
+
+            this.after_set_form_data();
+          }
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   add_source() {

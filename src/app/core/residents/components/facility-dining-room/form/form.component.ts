@@ -22,11 +22,20 @@ export class FormComponent extends AbstractForm implements OnInit {
       facility_id: [null, Validators.required]
     });
 
-    this.facility$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.facilities = res;
-      }
-    });
+    this.subscribe('list_facility');
   }
 
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_facility':
+        this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.facilities = res;
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
 }

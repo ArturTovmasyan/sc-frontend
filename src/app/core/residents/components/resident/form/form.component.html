@@ -2,11 +2,16 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="salutation_id" nzRequired>Salutation</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('salutation_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="salutation_id">
-        <ng-container *ngFor="let salutation of salutations">
-          <nz-option [nzLabel]="salutation.title" [nzValue]="salutation.id"></nz-option>
-        </ng-container>
-      </nz-select>
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="salutation_id">
+          <ng-container *ngFor="let salutation of salutations">
+            <nz-option [nzLabel]="salutation.title" [nzValue]="salutation.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('salutation');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
       <nz-form-explain *ngIf="hasErrors('salutation_id')">
         <app-field-errors [errors]="fieldErrors('salutation_id')"></app-field-errors>
       </nz-form-explain>

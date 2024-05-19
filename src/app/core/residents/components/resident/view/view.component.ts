@@ -1,35 +1,42 @@
-import {ActivatedRoute} from '@angular/router';
-import {Component, ElementRef, OnInit} from '@angular/core';
-import {ResidentService} from '../../../services/resident.service';
-import {Resident} from '../../../models/resident';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TitleService} from '../../../../services/title.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   templateUrl: './view.component.html'
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent implements OnInit, OnDestroy {
   public title: string = null;
 
-  resident: Resident;
+  protected $subscriptions: { [key: string]: Subscription; };
 
-  resident_id: number;
-
-  constructor(private el: ElementRef, private resident$: ResidentService, title$: TitleService, private route$: ActivatedRoute) {
-    title$.getTitle().subscribe(v => this.title = v);
+  constructor(private title$: TitleService) {
+    this.$subscriptions = {};
   }
 
   ngOnInit(): void {
-    // Replace(this.el);
-
-    this.route$.params.subscribe(params => {
-      // console.log(params);
-      this.resident_id = +params['id'];
-
-      // this.resident$.get(this.resident_id).pipe(first()).subscribe(res => {
-      //   if (res) {
-      //     this.resident = res;
-      //   }
-      // });
-    });
+    this.subscribe('title');
   }
+
+  ngOnDestroy(): void {
+    Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
+  }
+
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'title':
+        this.$subscriptions[key] = this.title$.getTitle().subscribe(v => this.title = v);
+        break;
+      default:
+        break;
+    }
+  }
+
+  protected unsubscribe(key: string): void {
+    if (this.$subscriptions.hasOwnProperty(key)) {
+      this.$subscriptions[key].unsubscribe();
+    }
+  }
+
+
 }

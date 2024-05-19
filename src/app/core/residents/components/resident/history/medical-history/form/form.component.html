@@ -9,7 +9,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item [hidden]="!sub_form_enabled">
+  <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="condition_id" nzRequired>Condition</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('condition_id')?'error':null">
       <div class="add-select-container">
@@ -18,8 +18,8 @@
             <nz-option [nzLabel]="condition.title" [nzValue]="condition.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="toggle_sub_form();"><i nz-icon
-                                                                                                           type="plus"></i>
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('condition');">
+          <i nz-icon type="plus"></i>
         </button>
       </div>
       <nz-form-explain *ngIf="hasErrors('condition_id')">
@@ -27,34 +27,6 @@
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
-
-  <fieldset [hidden]="sub_form_enabled" [formGroup]="form.get('condition')">
-    <legend class="senior-care-legend">Add Condition
-      <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="toggle_sub_form();">
-        <i nz-icon type="close"></i>
-      </button>
-    </legend>
-    <nz-form-control [nzSm]="24" [nzXs]="24" [nzValidateStatus]="hasErrors('condition')?'error':null">
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('condition.title')?'error':null">
-          <input nz-input placeholder="Title" formControlName="title">
-          <nz-form-explain *ngIf="hasErrors('condition.title')">
-            <app-field-errors [errors]="fieldErrors('condition.title')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description">Description</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('condition.description')?'error':null">
-          <textarea formControlName="description" nz-input rows="2" placeholder="Description"></textarea>
-          <nz-form-explain *ngIf="hasErrors('condition.description')">
-            <app-field-errors [errors]="fieldErrors('condition.description')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-form-control>
-  </fieldset>
 
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>

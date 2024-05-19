@@ -31,11 +31,16 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_level_group_id" nzRequired>Care Level Group</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_level_group_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="care_level_group_id">
-        <ng-container *ngFor="let care_level_group of care_level_groups">
-          <nz-option [nzLabel]="care_level_group.title" [nzValue]="care_level_group.id"></nz-option>
-        </ng-container>
-      </nz-select>
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="care_level_group_id">
+          <ng-container *ngFor="let care_level_group of care_level_groups">
+            <nz-option [nzLabel]="care_level_group.title" [nzValue]="care_level_group.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('care_level_group');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
       <nz-form-explain *ngIf="hasErrors('care_level_group_id')">
         <app-field-errors [errors]="fieldErrors('care_level_group_id')"></app-field-errors>
       </nz-form-explain>

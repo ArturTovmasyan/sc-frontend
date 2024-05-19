@@ -5,17 +5,22 @@ import {AbstractForm} from '../../../../../../../shared/components/abstract-form
 import {MedicalHistoryCondition} from '../../../../../models/medical-history-condition';
 import {MedicalHistoryConditionService} from '../../../../../services/medical-history-condition.service';
 import {ActivatedRoute} from '@angular/router';
+import {NzModalService} from 'ng-zorro-antd';
+import {FormComponent as MedicationHistoryConditionFormComponent} from '../../../../medical-history-condition/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  sub_form_enabled: boolean = false;
-
   conditions: MedicalHistoryCondition[];
   resident_id: number;
 
-  constructor(private formBuilder: FormBuilder, private condition$: MedicalHistoryConditionService, private route$: ActivatedRoute) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private condition$: MedicalHistoryConditionService,
+    private route$: ActivatedRoute,
+    private modal$: NzModalService
+  ) {
     super();
   }
 
@@ -30,33 +35,46 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       condition_id: [null, Validators.required],
 
-      condition: this.formBuilder.group({
-        title: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
-        description: ['', Validators.compose([Validators.maxLength(255)])],
-      }),
-
       resident_id: [this.resident_id, Validators.required]
     });
 
-    this.toggle_sub_form();
-
-    this.condition$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.conditions = res;
-      }
-    });
+    this.subscribe('list_condition');
   }
 
-  toggle_sub_form() {
-    if (this.sub_form_enabled) {
-      this.form.get('condition').enable();
-      this.form.get('condition_id').disable();
-    } else {
-      this.form.get('condition_id').enable();
-      this.form.get('condition').disable();
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_condition':
+        this.$subscriptions[key] = this.condition$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.conditions = res;
+          }
+        });
+        break;
+      default:
+        break;
     }
+  }
 
-    this.sub_form_enabled = !this.sub_form_enabled;
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'condition':
+        this.create_modal(
+          this.modal$,
+          MedicationHistoryConditionFormComponent,
+          data => this.condition$.add(data),
+          data => {
+            this.$subscriptions[key] = this.condition$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.conditions = res;
+                this.form.get('condition_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
+        break;
+      default:
+        break;
+    }
   }
 
 }

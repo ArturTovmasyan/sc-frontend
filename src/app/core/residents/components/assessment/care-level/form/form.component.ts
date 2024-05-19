@@ -4,6 +4,8 @@ import {AbstractForm} from '../../../../../../shared/components/abstract-form/ab
 import {first} from 'rxjs/operators';
 import {AssessmentCareLevelGroup} from '../../../../models/assessment-care-level-group';
 import {AssessmentCareLevelGroupService} from '../../../../services/assessment-care-level-group.service';
+import {NzModalService} from 'ng-zorro-antd';
+import {FormComponent as CaleLevelGroupFormComponent} from '../../care-level-group/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -11,7 +13,11 @@ import {AssessmentCareLevelGroupService} from '../../../../services/assessment-c
 export class FormComponent extends AbstractForm implements OnInit {
   care_level_groups: AssessmentCareLevelGroup[];
 
-  constructor(private formBuilder: FormBuilder, private care_level_group$: AssessmentCareLevelGroupService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private care_level_group$: AssessmentCareLevelGroupService,
+    private modal$: NzModalService
+  ) {
     super();
   }
 
@@ -24,11 +30,42 @@ export class FormComponent extends AbstractForm implements OnInit {
       care_level_group_id: [null, Validators.required],
     });
 
-    this.care_level_group$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.care_level_groups = res;
-      }
-    });
+    this.subscribe('list_care_level_group');
   }
 
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_care_level_group':
+        this.$subscriptions[key] = this.care_level_group$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.care_level_groups = res;
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'care_level_group':
+        this.create_modal(
+          this.modal$,
+          CaleLevelGroupFormComponent,
+          data => this.care_level_group$.add(data),
+          data => {
+            this.$subscriptions[key] = this.care_level_group$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.care_level_groups = res;
+                this.form.get('care_level_group_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
+        break;
+      default:
+        break;
+    }
+  }
 }

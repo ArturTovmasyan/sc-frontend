@@ -7,24 +7,7 @@ import {Resident} from '../../../models/resident';
   selector: 'app-resident-history',
   templateUrl: './history.component.html'
 })
-export class HistoryComponent implements OnInit {
-  resident: Resident;
-
-  resident_id: number;
-
-  constructor(private el: ElementRef, private resident$: ResidentService, private route$: ActivatedRoute) {
-  }
-
-  ngOnInit(): void {
-    this.route$.params.subscribe(params => {
-      // console.log(params);
-      this.resident_id = +params['id'];
-
-      // this.resident$.get(this.resident_id).pipe(first()).subscribe(res => {
-      //   if (res) {
-      //     this.resident = res;
-      //   }
-      // });
-    });
+export class HistoryComponent {
+  constructor() {
   }
 }

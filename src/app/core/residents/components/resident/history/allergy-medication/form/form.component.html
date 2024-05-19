@@ -1,5 +1,5 @@
 ﻿<form nz-form [formGroup]="form">
-  <nz-form-item [hidden]="!sub_form_enabled">
+  <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="medication_id" nzRequired>Medication</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('medication_id')?'error':null">
       <div class="add-select-container">
@@ -8,8 +8,8 @@
             <nz-option [nzLabel]="medication.title" [nzValue]="medication.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="toggle_sub_form();"><i nz-icon
-                                                                                                           type="plus"></i>
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('medication');">
+          <i nz-icon type="plus"></i>
         </button>
       </div>
       <nz-form-explain *ngIf="hasErrors('medication_id')">
@@ -17,23 +17,6 @@
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
-
-  <fieldset [hidden]="sub_form_enabled" [formGroup]="form.get('medication')">
-    <legend class="senior-care-legend">Add Medication
-      <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="toggle_sub_form();">
-        <i nz-icon type="close"></i>
-      </button>
-    </legend>
-    <nz-form-control [nzSm]="24" [nzXs]="24" [nzValidateStatus]="hasErrors('medication')?'error':null">
-      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
-      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('medication.title')?'error':null">
-        <input nz-input placeholder="Title" formControlName="title">
-        <nz-form-explain *ngIf="hasErrors('medication.title')">
-          <app-field-errors [errors]="fieldErrors('medication.title')"></app-field-errors>
-        </nz-form-explain>
-      </nz-form-control>
-    </nz-form-control>
-  </fieldset>
 
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>

@@ -40,28 +40,42 @@ export class FormComponent extends AbstractForm implements OnInit {
       space_id: [null, Validators.required],
     });
 
-    this.category$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        res.sort((a, b) => a.title.localeCompare(b.title));
-        this.categories = res;
+    this.subscribe('list_category');
+    this.subscribe('list_care_level_group');
+    this.subscribe('list_space');
+  }
 
-        this.after_set_form_data();
-      }
-    });
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_space':
+        this.$subscriptions[key] = this.space$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            res.sort((a, b) => a.name.localeCompare(b.name));
+            this.spaces = res;
+          }
+        });
+        break;
+      case 'list_category':
+        this.$subscriptions[key] = this.category$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            res.sort((a, b) => a.title.localeCompare(b.title));
+            this.categories = res;
 
-    this.care_level_group$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        res.sort((a, b) => a.title.localeCompare(b.title));
-        this.care_level_groups = res;
-      }
-    });
-
-    this.space$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        res.sort((a, b) => a.name.localeCompare(b.name));
-        this.spaces = res;
-      }
-    });
+            this.after_set_form_data();
+          }
+        });
+        break;
+      case 'list_care_level_group':
+        this.$subscriptions[key] = this.care_level_group$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            res.sort((a, b) => a.title.localeCompare(b.title));
+            this.care_level_groups = res;
+          }
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   public get_title(idx: number) {

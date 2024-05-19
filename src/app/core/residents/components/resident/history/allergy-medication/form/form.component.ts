@@ -5,17 +5,22 @@ import {AbstractForm} from '../../../../../../../shared/components/abstract-form
 import {Medication} from '../../../../../models/medication';
 import {MedicationService} from '../../../../../services/medication.service';
 import {ActivatedRoute} from '@angular/router';
+import {FormComponent as MedicationFormComponent} from '../../../../medication/form/form.component';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  sub_form_enabled: boolean = false;
-
   medications: Medication[];
   resident_id: number;
 
-  constructor(private formBuilder: FormBuilder, private medication$: MedicationService, private route$: ActivatedRoute) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private medication$: MedicationService,
+    private route$: ActivatedRoute,
+    private modal$: NzModalService
+  ) {
     super();
   }
 
@@ -28,32 +33,45 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       medication_id: [null, Validators.required],
 
-      medication: this.formBuilder.group({
-        title: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
-      }),
-
       resident_id: [this.resident_id, Validators.required]
     });
 
-    this.toggle_sub_form();
-
-    this.medication$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.medications = res;
-      }
-    });
+    this.subscribe('list_medication');
   }
 
-  toggle_sub_form() {
-    if (this.sub_form_enabled) {
-      this.form.get('medication').enable();
-      this.form.get('medication_id').disable();
-    } else {
-      this.form.get('medication_id').enable();
-      this.form.get('medication').disable();
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_medication':
+        this.$subscriptions[key] = this.medication$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.medications = res;
+          }
+        });
+        break;
+      default:
+        break;
     }
-
-    this.sub_form_enabled = !this.sub_form_enabled;
   }
 
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'medication':
+        this.create_modal(
+          this.modal$,
+          MedicationFormComponent,
+          data => this.medication$.add(data),
+          data => {
+            this.$subscriptions[key] = this.medication$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.medications = res;
+                this.form.get('medication_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
+        break;
+      default:
+        break;
+    }
+  }
 }

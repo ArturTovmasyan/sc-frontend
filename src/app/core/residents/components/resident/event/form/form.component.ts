@@ -62,13 +62,50 @@ export class FormComponent extends AbstractForm implements OnInit {
       resident_id: [this.resident_id, Validators.required]
     });
 
-    this.definition$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.definitions = res;
+    this.subscribe('list_definition');
+    this.subscribe('list_physician');
+    this.subscribe('list_responsible_person');
+  }
 
-        this.form.get('definition_id').valueChanges.subscribe(next => {
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_definition':
+        this.$subscriptions[key] = this.definition$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.definitions = res;
+
+            this.subscribe('vc_definition_id');
+
+            this.list_loaded.definition = true;
+            this.loaded.next(this.list_loaded.definition && this.list_loaded.physician && this.list_loaded.responsible_person);
+          }
+        });
+        break;
+      case 'list_physician':
+        this.$subscriptions[key] = this.physician$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.physicians = res;
+
+            this.list_loaded.physician = true;
+            this.loaded.next(this.list_loaded.definition && this.list_loaded.physician && this.list_loaded.responsible_person);
+          }
+        });
+        break;
+      case 'list_responsible_person':
+        this.$subscriptions[key] = this.responsible_person$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.responsible_persons = res;
+
+            this.list_loaded.responsible_person = true;
+            this.loaded.next(this.list_loaded.definition && this.list_loaded.physician && this.list_loaded.responsible_person);
+          }
+        });
+        break;
+      case 'vc_definition_id':
+        this.$subscriptions[key] = this.form.get('definition_id').valueChanges.subscribe(next => {
           const definition = this.definitions.filter(item => item.id === this.form.get('definition_id').value).pop();
 
+          // TODO: review
           if (definition) {
             this.show.date = definition.additional_date;
             this.show.responsible_person = definition.responsible_person;
@@ -79,30 +116,10 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.show.physician ? this.form.get('physician_id').enable() : this.form.get('physician_id').disable();
           }
         });
-
-        this.list_loaded.definition = true;
-
-        this.loaded.next(this.list_loaded.definition && this.list_loaded.physician && this.list_loaded.responsible_person);
-      }
-    });
-
-    this.physician$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.physicians = res;
-
-        this.list_loaded.physician = true;
-        this.loaded.next(this.list_loaded.definition && this.list_loaded.physician && this.list_loaded.responsible_person);
-      }
-    });
-
-    this.responsible_person$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.responsible_persons = res;
-
-        this.list_loaded.responsible_person = true;
-        this.loaded.next(this.list_loaded.definition && this.list_loaded.physician && this.list_loaded.responsible_person);
-      }
-    });
+        break;
+      default:
+        break;
+    }
   }
 
 }

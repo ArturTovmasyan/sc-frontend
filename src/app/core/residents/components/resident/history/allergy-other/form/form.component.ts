@@ -5,17 +5,22 @@ import {AbstractForm} from '../../../../../../../shared/components/abstract-form
 import {Allergen} from '../../../../../models/allergen';
 import {AllergenService} from '../../../../../services/allergen.service';
 import {ActivatedRoute} from '@angular/router';
+import {NzModalService} from 'ng-zorro-antd';
+import {FormComponent as AllergenFormComponent} from '../../../../allergen/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  sub_form_enabled: boolean = false;
-
   allergens: Allergen[];
   resident_id: number;
 
-  constructor(private formBuilder: FormBuilder, private allergen$: AllergenService, private route$: ActivatedRoute) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private allergen$: AllergenService,
+    private route$: ActivatedRoute,
+    private modal$: NzModalService
+  ) {
     super();
   }
 
@@ -28,33 +33,46 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       allergen_id: [null, Validators.required],
 
-      allergen: this.formBuilder.group({
-        title: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
-        description: ['', Validators.compose([Validators.maxLength(255)])],
-      }),
-
       resident_id: [this.resident_id, Validators.required]
     });
 
-    this.toggle_sub_form();
-
-    this.allergen$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.allergens = res;
-      }
-    });
+    this.subscribe('list_allergen');
   }
 
-  toggle_sub_form() {
-    if (this.sub_form_enabled) {
-      this.form.get('allergen').enable();
-      this.form.get('allergen_id').disable();
-    } else {
-      this.form.get('allergen_id').enable();
-      this.form.get('allergen').disable();
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_allergen':
+        this.$subscriptions[key] = this.allergen$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.allergens = res;
+          }
+        });
+        break;
+      default:
+        break;
     }
+  }
 
-    this.sub_form_enabled = !this.sub_form_enabled;
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'allergen':
+        this.create_modal(
+          this.modal$,
+          AllergenFormComponent,
+          data => this.allergen$.add(data),
+          data => {
+            this.$subscriptions[key] = this.allergen$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.allergens = res;
+                this.form.get('allergen_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
+        break;
+      default:
+        break;
+    }
   }
 
 }

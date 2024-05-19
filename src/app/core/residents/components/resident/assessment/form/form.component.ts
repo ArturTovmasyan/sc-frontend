@@ -77,11 +77,32 @@ export class FormComponent extends AbstractForm implements OnInit {
       resident_id: [this.resident_id, Validators.required]
     });
 
-    this.assessment_form$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-      if (res) {
-        this.assessment_forms = res;
+    this.postSubmit = (data: any) => {
+      const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
+      if (invalid_el) {
+        const tab_el = invalid_el.closest('.ant-tabs-tabpane');
+        this.tab_selected = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
+      }
+    };
 
-        this.form.get('form_id').valueChanges.subscribe(next => {
+    this.subscribe('list_assessment_form');
+  }
+
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_assessment_form':
+        this.$subscriptions[key] = this.assessment_form$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+          if (res) {
+            this.assessment_forms = res;
+
+            this.subscribe('vc_form_id');
+
+            this.loaded.next(true);
+          }
+        });
+        break;
+      case 'vc_form_id':
+        this.$subscriptions[key] = this.form.get('form_id').valueChanges.subscribe(next => {
           const assessment_form = this.assessment_forms.filter(item => item.id === this.form.get('form_id').value).pop();
 
           if (assessment_form) {
@@ -105,18 +126,10 @@ export class FormComponent extends AbstractForm implements OnInit {
             });
           }
         });
-
-        this.loaded.next(true);
-      }
-    });
-
-    this.postSubmit = (data: any) => {
-      const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
-      if (invalid_el) {
-        const tab_el = invalid_el.closest('.ant-tabs-tabpane');
-        this.tab_selected = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
-      }
-    };
+        break;
+      default:
+        break;
+    }
   }
 
   pre(): void {

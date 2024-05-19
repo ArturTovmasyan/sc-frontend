@@ -56,26 +56,40 @@ export class FormComponent extends AbstractForm implements OnInit {
       facility_id: [null, Validators.required]
     });
 
-    this.form.get('beds').valueChanges.subscribe(next => {
-      this.room_curr_occupation = next.length;
-    });
+    this.subscribe('vc_beds');
+    this.subscribe('vc_facility_id');
+    this.subscribe('list_facility');
+  }
 
-    this.form.get('facility_id').valueChanges.subscribe(next => {
-      if (next) {
-        if (this.facilities) {
-          this.facility = this.facilities.filter(v => v.id === next).pop();
-          this.other_occupation = this.facility.occupation - this.room_orig_occupation;
-        }
-      }
-    });
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_facility':
+        this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.facilities = res;
 
-    this.facility$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.facilities = res;
-
-        this.form.get('facility_id').setValue(this.form.get('facility_id').value);
-      }
-    });
+            this.form.get('facility_id').setValue(this.form.get('facility_id').value);
+          }
+        });
+        break;
+      case 'vc_facility_id':
+        this.$subscriptions[key] = this.form.get('facility_id').valueChanges.subscribe(next => {
+          if (next) {
+            if (this.facilities) {
+              this.facility = this.facilities.filter(v => v.id === next).pop();
+              this.other_occupation = this.facility.occupation - this.room_orig_occupation;
+            }
+          }
+        });
+        break;
+      case 'vc_beds':
+        this.$subscriptions[key] = this.form.get('beds').valueChanges.subscribe(next => {
+          this.room_curr_occupation = next.length;
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   public get_form_array_skeleton(key: string): FormGroup | FormControl {

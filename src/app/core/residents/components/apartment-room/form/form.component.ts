@@ -56,26 +56,40 @@ export class FormComponent extends AbstractForm implements OnInit {
       apartment_id: [null, Validators.required]
     });
 
-    this.form.get('beds').valueChanges.subscribe(next => {
-      this.room_curr_occupation = next.length;
-    });
+    this.subscribe('vc_beds');
+    this.subscribe('vc_apartment_id');
+    this.subscribe('list_apartment');
+  }
 
-    this.form.get('apartment_id').valueChanges.subscribe(next => {
-      if (next) {
-        if (this.apartments) {
-          this.apartment = this.apartments.filter(v => v.id === next).pop();
-          this.other_occupation = this.apartment.occupation - this.room_orig_occupation;
-        }
-      }
-    });
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_apartment':
+        this.$subscriptions[key] = this.apartment$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.apartments = res;
 
-    this.apartment$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.apartments = res;
-
-        this.form.get('apartment_id').setValue(this.form.get('apartment_id').value);
-      }
-    });
+            this.form.get('apartment_id').setValue(this.form.get('apartment_id').value);
+          }
+        });
+        break;
+      case 'vc_apartment_id':
+        this.$subscriptions[key] = this.form.get('apartment_id').valueChanges.subscribe(next => {
+          if (next) {
+            if (this.apartments) {
+              this.apartment = this.apartments.filter(v => v.id === next).pop();
+              this.other_occupation = this.apartment.occupation - this.room_orig_occupation;
+            }
+          }
+        });
+        break;
+      case 'vc_beds':
+        this.$subscriptions[key] = this.form.get('beds').valueChanges.subscribe(next => {
+          this.room_curr_occupation = next.length;
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   public get_form_array_skeleton(key: string): FormGroup | FormControl {
