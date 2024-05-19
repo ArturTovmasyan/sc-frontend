@@ -10,6 +10,25 @@
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="day" nzRequired>Day</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('day')?'error':null">
+      <nz-input-number [nzMin]="1" [nzStep]="1" nzPlaceHolder="Day"
+                       formControlName="day"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('day')">
+        <app-field-errors [errors]="fieldErrors('day')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description" nzRequired>Description</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('description')?'error':null">
+      <input-counter formControlName="description" placeholder="Description" [maxlength]="256"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('description')">
+        <app-field-errors [errors]="fieldErrors('description')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
 
   <nz-form-item *ngIf="form.get('space_id')">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>

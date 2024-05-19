@@ -27,6 +27,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
+      day: ['', Validators.compose([Validators.required, CoreValidator.late_payment_day])],
+      description: ['', Validators.compose([Validators.required, Validators.maxLength(256)])],
     });
 
     this.add_space();

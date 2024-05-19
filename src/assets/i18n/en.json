@@ -193,6 +193,8 @@
     "late-payment-list": {
       "id": "ID",
       "title": "Title",
+      "day": "Day of the Month",
+      "description": "Description",
       "space": "Space"
     },
     "event-definition-list": {

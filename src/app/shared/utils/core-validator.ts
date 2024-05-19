@@ -23,6 +23,7 @@ export class CoreValidator {
     SSN: /^[\dX]{3}-?[\dX]{2}-?[\dX]{4}$/,
 
     KEY_FINANCE_DAY: /^([1-9]|[1]\d|2[0-8])$/,
+    LATE_PAYMENT_DAY: /^([1-9][0-9]?|[12][0-9][0-9]|3[0-5][0-9]|36[0-5])$/,
   };
 
   public static password: ValidatorFn = CoreValidator.patternValidate(
@@ -90,6 +91,10 @@ export class CoreValidator {
   public static key_finance_day: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.KEY_FINANCE_DAY,
     {pattern_validator_key_finance_day: 'The value should be in range 1-28.'}
+  );
+  public static late_payment_day: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.LATE_PAYMENT_DAY,
+    {pattern_validator_late_payment_day: 'The value should be in range 1-365.'}
   );
 
   public static notNullOneOf(fields: string[], message: string) {
