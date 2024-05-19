@@ -395,7 +395,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   open_edit_modal(id: number) {
     const btn = this._btnBar.buttons_crud.filter(v => v.name === 'edit').pop();
-    if (btn.show) {
+    if (btn && btn.show) {
       this._btnBar.open_edit_modal(id);
     }
   }
