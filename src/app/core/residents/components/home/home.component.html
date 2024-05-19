@@ -10,26 +10,26 @@
       </template>
     </div>
   </div>
-  <div *ngIf="data.apartment && data.apartment.length > 0" class="card">
-    <div class="card-header">
-      Apartments
-    </div>
-    <div class="card-body">
-      <template [ngTemplateOutlet]="tplResidentList"
-                [ngTemplateOutletContext]="{ type: GROUP_TYPE.APARTMENT, data: data.apartment }">
-      </template>
-    </div>
-  </div>
-  <div *ngIf="data.region && data.region.length > 0" class="card">
-    <div class="card-header">
-      Regions
-    </div>
-    <div class="card-body">
-      <template [ngTemplateOutlet]="tplResidentList"
-                [ngTemplateOutletContext]="{ type: GROUP_TYPE.REGION, data: data.region }">
-      </template>
-    </div>
-  </div>
+  <!--<div *ngIf="data.apartment && data.apartment.length > 0" class="card">-->
+    <!--<div class="card-header">-->
+      <!--Apartments-->
+    <!--</div>-->
+    <!--<div class="card-body">-->
+      <!--<template [ngTemplateOutlet]="tplResidentList"-->
+                <!--[ngTemplateOutletContext]="{ type: GROUP_TYPE.APARTMENT, data: data.apartment }">-->
+      <!--</template>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div *ngIf="data.region && data.region.length > 0" class="card">-->
+    <!--<div class="card-header">-->
+      <!--Regions-->
+    <!--</div>-->
+    <!--<div class="card-body">-->
+      <!--<template [ngTemplateOutlet]="tplResidentList"-->
+                <!--[ngTemplateOutletContext]="{ type: GROUP_TYPE.REGION, data: data.region }">-->
+      <!--</template>-->
+    <!--</div>-->
+  <!--</div>-->
 </ng-container>
 
 <ng-template #tplResidentList let-group_data="data" let-type="type">

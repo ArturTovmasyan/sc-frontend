@@ -1,6 +1,6 @@
 <app-header
   [fixed]="true"
-  [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 89, height: 25, alt: 'Senior Care'}"
+  [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 125, height: 32, alt: 'Senior Care'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/logo_sm.png', width: 30, height: 30, alt: 'Senior Care'}"
   [sidebarToggler]="'lg'"
   [asideMenuToggler]="false"
@@ -28,7 +28,7 @@
 <div class="app-body">
   <app-sidebar [fixed]="true" [display]="'lg'">
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
-    <a [href]="'mailto:support@seniorcaresw.com?subject='+user.space.name" style="text-align: center;padding: 0.5rem;color: white;">Contact Us</a>
+    <a *ngIf="user && user.space" [href]="'mailto:support@seniorcaresw.com?subject='+user.space.name" style="text-align: center;padding: 0.5rem;color: white;">Contact Us</a>
     <!--<app-sidebar-minimizer></app-sidebar-minimizer>-->
   </app-sidebar>
   <!-- Main content -->
