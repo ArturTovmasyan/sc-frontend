@@ -1,0 +1,62 @@
+<nz-empty *ngIf="!addIfHasPermission('persistence-resident-resident') || !residents" class="ant-empty-normal"
+          [nzNotFoundImage]="defaultSvg"></nz-empty>
+<ng-container *ngIf="addIfHasPermission('persistence-resident-resident') && residents">
+  <template [ngTemplateOutlet]="tplResidentList"
+            [ngTemplateOutletContext]="{ type: GROUP_TYPE.FACILITY, residents: residents }">
+  </template>
+
+  <nz-pagination *ngIf="residents" class="pull-right"
+                 [nzTotal]="route_options.total"
+                 [nzPageIndex]="route_options.page"
+                 [nzPageSize]="route_options.per_page"
+                 [nzSize]="'small'"
+                 nzShowSizeChanger
+                 nzHideOnSinglePage
+                 (nzPageIndexChange)="page_changed($event)"
+                 (nzPageSizeChange)="page_size_changed($event)"
+  ></nz-pagination>
+</ng-container>
+
+<ng-template #tplResidentList let-residents="residents" let-type="type">
+  <ng-container *ngFor="let resident of residents; let index = index">
+    <div *ngIf="index % 5 === 0" class="row justify-content-center">
+      <template *ngIf="index + 0 < residents.length" [ngTemplateOutlet]="tplResident"
+                [ngTemplateOutletContext]="{ type: type, resident: residents[index + 0] }"></template>
+      <template *ngIf="index + 1 < residents.length" [ngTemplateOutlet]="tplResident"
+                [ngTemplateOutletContext]="{ type: type, resident: residents[index + 1] }"></template>
+      <template *ngIf="index + 2 < residents.length" [ngTemplateOutlet]="tplResident"
+                [ngTemplateOutletContext]="{ type: type, resident: residents[index + 2] }"></template>
+      <template *ngIf="index + 3 < residents.length" [ngTemplateOutlet]="tplResident"
+                [ngTemplateOutletContext]="{ type: type, resident: residents[index + 3] }"></template>
+      <template *ngIf="index + 4 < residents.length" [ngTemplateOutlet]="tplResident"
+                [ngTemplateOutletContext]="{ type: type, resident: residents[index + 4] }"></template>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #tplResident let-resident="resident" let-type="type">
+  <div class="col-2">
+    <div class="row">
+      <div class="col-12 text-center">
+        <img *ngIf="!resident.photo" src="/assets/img/person_placeholder.png" class="img-thumbnail"
+             style="max-height: 150px"
+             alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
+        <img *ngIf="resident.photo" src="{{ resident.photo }}" class="img-thumbnail"
+             style="max-height: 150px"
+             alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <p class="text-center">
+          <a [routerLink]="['/resident', resident.id, {outlets: {'resident-details': ['responsible-persons']}}]">
+            {{ resident|resident }}
+          </a><br/>
+          <span *ngIf="route_options.state !== 'no-admission' && type === GROUP_TYPE.FACILITY || type === GROUP_TYPE.APARTMENT">
+            {{ resident.room_number }} ({{ resident.bed_number }})
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-template>

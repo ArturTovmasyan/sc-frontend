@@ -1,11 +1,18 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {GridService} from '../../../shared/services/grid.service';
 import {ResidentAdmission} from '../models/resident-admission';
 import {Resident} from '../models/resident';
 import {Message} from '../../models/message';
+
+class PagedResponse<T> {
+  page: number;
+  per_page: number;
+  total: number;
+  data: T[];
+}
 
 @Injectable({providedIn: 'root'})
 export class ResidentAdmissionService extends GridService<ResidentAdmission> {
@@ -51,5 +58,33 @@ export class ResidentAdmissionService extends GridService<ResidentAdmission> {
     }
 
     return this.http.put<Message>(this.SERVICE_URL_BASE + `/${data.id}/move`, request_data);
+  }
+
+  list_by_page(params: {key: any, value: any}[]): Observable<PagedResponse<Resident>> {
+    let query = new HttpParams();
+    if (params) {
+      params.forEach(param => {
+        query = query.append(param.key, param.value);
+      });
+    }
+
+    let state = query.get('state');
+    const page = query.get('page');
+    const per_page = query.get('per_page');
+
+    const type = query.get('type');
+    const type_id = query.get('type_id');
+
+    if (state === null || state === undefined) {
+      state = 'active';
+    }
+
+    let url_segment = `${state}/${page}/${per_page}`;
+
+    if (type !== null && type_id !== null && type !== undefined && type_id !== undefined) {
+      url_segment += `/${type}/${type_id}`;
+    }
+
+    return this.http.get<PagedResponse<Resident>>(`${this.SERVICE_URL_BASE}/${url_segment}`);
   }
 }

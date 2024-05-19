@@ -35,8 +35,8 @@
 <ng-template #tplResidentList let-group_data="data" let-type="type">
   <ng-container *ngFor="let data of group_data; let last = last;">
     <h3 style="margin: 1rem;text-align: center">{{ data.name }}</h3>
-    <div class="row">
-      <div class="col-lg-2 col-md-4" *ngFor="let resident of data.residents">
+    <div class="row justify-content-center">
+      <div class="col" *ngFor="let resident of data.residents">
         <div class="row">
           <div class="col-12 text-center">
             <img *ngIf="!resident.photo" src="/assets/img/person_placeholder.png" class="img-thumbnail"
@@ -52,10 +52,11 @@
             <p class="text-center">
               <a [routerLink]="['/resident', resident.id, {outlets: {'resident-details': ['responsible-persons']}}]">
                 {{ resident|resident }}
-              </a>
+              </a><br/>
+              <span *ngIf="type === GROUP_TYPE.FACILITY || type === GROUP_TYPE.APARTMENT">
+                {{ resident.room_number }} ({{ resident.bed_number }})
+              </span>
             </p>
-            <p *ngIf="type === GROUP_TYPE.FACILITY || type === GROUP_TYPE.APARTMENT"
-               class="text-center">{{ resident.room_number }} ({{ resident.bed_number }})</p>
           </div>
         </div>
       </div>

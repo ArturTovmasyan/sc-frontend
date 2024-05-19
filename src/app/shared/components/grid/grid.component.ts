@@ -623,8 +623,12 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   }
 
   protected search() {
-    this.params = this.params.filter(v => v.key !== 'query');
-    this.params.push({key: 'query', value: this.search_query});
+    this.add_param('query', this.search_query);
     this.reload_data(true);
+  }
+
+  protected add_param(key: string, value: string) {
+    this.params = this.params.filter(v => v.key !== key);
+    this.params.push({key: key, value: value});
   }
 }

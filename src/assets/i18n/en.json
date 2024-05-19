@@ -188,7 +188,12 @@
       "ssn": "Social Security Number",
       "gender": "Gender",
       "birthday": "Birthday",
-      "info": "Room/Bed Info",
+      "room": "Room (Bed)",
+      "address": "Address",
+      "csz_str": "City, State, Zip Code",
+      "facility": "Facility",
+      "apartment": "Apartment",
+      "region": "Region",
       "space": "Space"
     },
     "facility-list": {

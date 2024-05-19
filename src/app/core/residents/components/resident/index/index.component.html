@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-header">
+    {{ title }}
+
+    <div class="card-header-actions">
+      <nz-select *ngIf="options.state !== null && options.state !== undefined && options.state !== 'no-admission'" class="card-header-action" style="width: 250px;font-weight: normal;"
+                 nzShowSearch nzSize="small" nzPlaceHolder="Please select filter"
+                 [(ngModel)]="group" (ngModelChange)="group_changes($event)"
+      >
+        <nz-option-group *ngIf="group_helper.facilities" nzLabel="FFC - Facilities">
+          <ng-container *ngFor="let facility of group_helper.facilities">
+            <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
+          </ng-container>
+        </nz-option-group>
+        <!--<nz-option-group *ngIf="group_helper.regions" nzLabel="IHC - Regions">-->
+        <!--<ng-container *ngFor="let region of group_helper.regions">-->
+        <!--<nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>-->
+        <!--</ng-container>-->
+        <!--</nz-option-group>-->
+        <!--<nz-option-group *ngIf="group_helper.apartments" nzLabel="IL - Apartments">-->
+        <!--<ng-container *ngFor="let apartment of group_helper.apartments">-->
+        <!--<nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>-->
+        <!--</ng-container>-->
+        <!--</nz-option-group>-->
+      </nz-select>
+
+      <span class="card-header-action" (click)="mode_changed()">
+        <i *ngIf="!mode" style="vertical-align: baseline;" nz-icon nzType="appstore"></i>
+        <i *ngIf="mode"  style="vertical-align: baseline;" nz-icon nzType="unordered-list"></i>
+      </span>
+    </div>
+  </div>
+  <div class="card-body">
+    <app-residents-thumbs *ngIf="mode" [options]="options"></app-residents-thumbs>
+    <app-residents-list *ngIf="!mode" [options]="options"></app-residents-list>
+  </div>
+</div>
