@@ -87,6 +87,12 @@
             </ng-container>
           </tr>
           <tr>
+            <td>Web Leads</td>
+            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
+              <td class="text-center">{{item.value.web_leads}}</td>
+            </ng-container>
+          </tr>
+          <tr>
             <td>Hot Leads</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
               <td class="text-center">{{item.value.hot_leads}}</td>

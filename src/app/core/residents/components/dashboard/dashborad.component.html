@@ -101,6 +101,13 @@
             </ng-container>
           </tr>
           <tr>
+            <td>Web Leads</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td
+                class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.web_leads : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
             <td>Hot Leads</td>
             <ng-container *ngFor="let facility of facilities">
               <td
