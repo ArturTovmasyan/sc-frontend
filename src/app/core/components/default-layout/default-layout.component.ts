@@ -8,6 +8,8 @@ import {AuthGuard} from '../../guards/auth.guard';
 import {ProfileService} from '../../services/profile.service';
 import {AuthenticationService} from '../../services/auth.service';
 import {DomHelper} from '../../../shared/helpers/dom-helper';
+import moment from 'moment';
+import {DateHelper} from "../../../shared/helpers/date-helper";
 
 @Component({
   selector: 'app-dashboard',
@@ -207,5 +209,9 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
 
   addIfHasPermission(permission: string) {
     return this.auth_$.checkPermission([permission]);
+  }
+
+  public getCurrentYear() {
+    return moment().format('YYYY');
   }
 }

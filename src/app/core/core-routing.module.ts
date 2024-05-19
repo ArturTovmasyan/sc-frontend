@@ -591,11 +591,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'relationships', component: RelationshipListComponent,
+        path: 'allergens', component: AllergensListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
-          title: 'Relationships',
-          permissions: ['activity-reference', 'persistence-common-relationship']
+          title: 'Allergens',
+          permissions: ['activity-reference', 'persistence-common-allergen']
         },
         canActivate: [AuthGuard]
       },
@@ -608,41 +608,12 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
-
       {
-        path: 'payment-sources', component: PaymentSourceListComponent,
+        path: 'city-state-zips', component: CityStateZipListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
-          title: 'Payment Sources',
-          permissions: ['activity-reference', 'persistence-common-payment_source']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'payment-source-base-rates', component: PaymentSourceBaseRateListComponent,
-        data: {
-          nav: {show: true, group: 'Reference', title: 'Payment Source Base Rates'},
-          title: 'Payment Source Base Rates',
-          permissions: ['activity-reference', 'persistence-common-payment_source_base_rate']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'rp-payment-types', component: RpPaymentTypeListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'RP Payment Types',
-          permissions: ['activity-reference', 'persistence-common-rp_payment_type']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'expense-items', component: ExpenseItemListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Expense Items',
-          permissions: ['activity-reference', 'persistence-common-expense_item']
+          title: 'City, State, Zip Code',
+          permissions: ['activity-reference', 'persistence-common-city_state_zip']
         },
         canActivate: [AuthGuard]
       },
@@ -656,11 +627,56 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'diagnoses', component: DiagnosisListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Diagnoses',
+          permissions: ['activity-reference', 'persistence-common-diagnosis']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'diets', component: DietListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Dietary Restriction Categories',
+          permissions: ['activity-reference', 'persistence-common-diet']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'discount-items', component: DiscountItemListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Discount Items',
           permissions: ['activity-reference', 'persistence-common-discount_item']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'expense-items', component: ExpenseItemListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Expense Items',
+          permissions: ['activity-reference', 'persistence-common-expense_item']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'hospice-providers', component: HospiceProviderListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Hospice Providers',
+          permissions: ['activity-reference', 'persistence-common-hospice_provider']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'insurance-companies', component: InsuranceCompanyListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Insurance Companies',
+          permissions: ['activity-reference', 'persistence-common-insurance_company']
         },
         canActivate: [AuthGuard]
       },
@@ -682,46 +698,6 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
-
-      {
-        path: 'city-state-zips', component: CityStateZipListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'City, State, Zip Code',
-          permissions: ['activity-reference', 'persistence-common-city_state_zip']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'salutations', component: SalutationListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Salutations',
-          permissions: ['activity-reference', 'persistence-common-category']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'hospice-providers', component: HospiceProviderListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Hospice Providers',
-          permissions: ['activity-reference', 'persistence-common-hospice_provider']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'insurance-companies', component: InsuranceCompanyListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Insurance Companies',
-          permissions: ['activity-reference', 'persistence-common-insurance_company']
-        },
-        canActivate: [AuthGuard]
-      },
-
       {
         path: 'medications', component: MedicationListComponent,
         data: {
@@ -750,29 +726,20 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'diets', component: DietListComponent,
+        path: 'payment-sources', component: PaymentSourceListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
-          title: 'Dietary Restriction Categories',
-          permissions: ['activity-reference', 'persistence-common-diet']
+          title: 'Payment Sources',
+          permissions: ['activity-reference', 'persistence-common-payment_source']
         },
         canActivate: [AuthGuard]
       },
       {
-        path: 'diagnoses', component: DiagnosisListComponent,
+        path: 'payment-source-base-rates', component: PaymentSourceBaseRateListComponent,
         data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Diagnoses',
-          permissions: ['activity-reference', 'persistence-common-diagnosis']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'allergens', component: AllergensListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Allergens',
-          permissions: ['activity-reference', 'persistence-common-allergen']
+          nav: {show: true, group: 'Reference', title: 'Payment Source Base Rates'},
+          title: 'Payment Source Base Rates',
+          permissions: ['activity-reference', 'persistence-common-payment_source_base_rate']
         },
         canActivate: [AuthGuard]
       },
@@ -786,6 +753,15 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'relationships', component: RelationshipListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Relationships',
+          permissions: ['activity-reference', 'persistence-common-relationship']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'responsible-person-roles', component: ResponsiblePersonRoleListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
@@ -794,7 +770,24 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
-
+      {
+        path: 'rp-payment-types', component: RpPaymentTypeListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'RP Payment Types',
+          permissions: ['activity-reference', 'persistence-common-rp_payment_type']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'salutations', component: SalutationListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Salutations',
+          permissions: ['activity-reference', 'persistence-common-salutation']
+        },
+        canActivate: [AuthGuard]
+      },
       {
         path: 'resident/:id/documents',
         component: ResidentDocumentViewComponent,
