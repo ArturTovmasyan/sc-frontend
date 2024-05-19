@@ -4,7 +4,7 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {ApartmentService} from '../../../services/apartment.service';
 import {Apartment} from '../../../models/apartment';
-import {RoomType} from '../../../models/room-type';
+import {RoomType} from '../../../models/room-type.enum';
 import {ValidationPatterns} from '../../../../../shared/constants/validation.patterns';
 
 @Component({

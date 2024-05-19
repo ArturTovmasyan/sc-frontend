@@ -13,6 +13,8 @@ import {FormGroup} from '@angular/forms';
 // })
 export class GridComponent<T extends IdInterface, Service extends GridService<T>>
   implements OnInit {
+  protected card:boolean = true; // TODO(haykg): review to convert Input
+
   protected loading = false;
 
   protected page_config = {
@@ -262,7 +264,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
             loading = true;
 
             const component = <AbstractForm> modal.getContentComponent();
-            const form_data = component.formObject.getRawValue();
+            const form_data = component.formObject.value;
 
             component.submitted = true;
 
@@ -279,7 +281,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
                 loading = false;
 
                 component.handleSubmitError(error);
-
+                component.postSubmit(null);
                 // console.error(error);
               });
           }

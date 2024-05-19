@@ -1,0 +1,67 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item [hidden]="!sub_form_enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="allergen_id" nzRequired>Allergen</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('allergen_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="allergen_id">
+          <ng-container *ngFor="let allergen of allergens">
+            <nz-option [nzLabel]="allergen.title" [nzValue]="allergen.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="toggle_sub_form();"><i nz-icon
+                                                                                                           type="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('allergen_id')">
+        <app-field-errors [errors]="fieldErrors('allergen_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <fieldset [hidden]="sub_form_enabled" [formGroup]="form.get('allergen')">
+    <legend>Add Allergen
+      <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="toggle_sub_form();"><i nz-icon
+                                                                                                        type="close"></i>
+      </button>
+    </legend>
+    <nz-form-control [nzSm]="24" [nzXs]="24" [nzValidateStatus]="hasErrors('allergen')?'error':null">
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('allergen.title')?'error':null">
+          <input nz-input placeholder="Title" formControlName="title">
+          <nz-form-explain *ngIf="hasErrors('allergen.title')">
+            <app-field-errors [errors]="fieldErrors('allergen.title')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description">Description</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('allergen.description')?'error':null">
+          <textarea formControlName="description" nz-input rows="2" placeholder="Description"></textarea>
+          <nz-form-explain *ngIf="hasErrors('allergen.description')">
+            <app-field-errors [errors]="fieldErrors('allergen.description')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-form-control>
+  </fieldset>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
+      <textarea formControlName="notes" nz-input rows="4" placeholder="Description"></textarea>
+      <nz-form-explain *ngIf="hasErrors('notes')">
+        <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

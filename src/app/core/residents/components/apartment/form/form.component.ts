@@ -15,7 +15,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   city_state_zips: CityStateZip[];
   spaces: Space[];
 
-  constructor(private formBuilder: FormBuilder, private city_space_zip$: CityStateZipService, private space$: SpaceService) {
+  constructor(private formBuilder: FormBuilder, private city_state_zip$: CityStateZipService, private space$: SpaceService) {
     super();
   }
 
@@ -34,7 +34,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       space_id: [null, Validators.required],
     });
 
-    this.city_space_zip$.all().pipe(first()).subscribe(res => {
+    this.city_state_zip$.all().pipe(first()).subscribe(res => {
       if (res) {
         this.city_state_zips = res;
       }

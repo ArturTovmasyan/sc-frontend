@@ -1,0 +1,162 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-tabset [nzSelectedIndex]="selectedTab">
+    <nz-tab nzTitle="General Information">
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="medication_id" nzRequired>Medication</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('medication_id')?'error':null">
+          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="medication_id">
+            <ng-container *ngFor="let medication of medications">
+              <nz-option [nzLabel]="medication.name" [nzValue]="medication.id"></nz-option>
+            </ng-container>
+          </nz-select>
+          <nz-form-explain *ngIf="hasErrors('medication_id')">
+            <app-field-errors [errors]="fieldErrors('medication_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="form_factor_id" nzRequired>Form Factor</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('form_factor_id')?'error':null">
+          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="form_factor_id">
+            <ng-container *ngFor="let form_factor of form_factors">
+              <nz-option [nzLabel]="form_factor.title" [nzValue]="form_factor.id"></nz-option>
+            </ng-container>
+          </nz-select>
+          <nz-form-explain *ngIf="hasErrors('form_factor_id')">
+            <app-field-errors [errors]="fieldErrors('form_factor_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="dosage" nzRequired>Dosage</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('dosage')?'error':null">
+          <input nz-input placeholder="Dosage" formControlName="dosage">
+          <nz-form-explain *ngIf="hasErrors('dosage')">
+            <app-field-errors [errors]="fieldErrors('dosage')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="dosage_unit" nzRequired>Dosage Unit</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('dosage_unit')?'error':null">
+          <input nz-input placeholder="Dosage Unit" formControlName="dosage_unit">
+          <nz-form-explain *ngIf="hasErrors('dosage_unit')">
+            <app-field-errors [errors]="fieldErrors('dosage_unit')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician_id" nzRequired>Physician</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('physician_id')?'error':null">
+          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
+            <ng-container *ngFor="let physician of physicians">
+              <nz-option [nzLabel]="physician|physician" [nzValue]="physician.id"></nz-option>
+            </ng-container>
+          </nz-select>
+          <nz-form-explain *ngIf="hasErrors('physician_id')">
+            <app-field-errors [errors]="fieldErrors('physician_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
+          <textarea formControlName="notes" nz-input rows="4" placeholder="Description"></textarea>
+          <nz-form-explain *ngIf="hasErrors('notes')">
+            <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="prescription_number">Prescription Number</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('prescription_number')?'error':null">
+          <input nz-input placeholder="Prescription Number" formControlName="prescription_number">
+          <nz-form-explain *ngIf="hasErrors('prescription_number')">
+            <app-field-errors [errors]="fieldErrors('prescription_number')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+    <nz-tab nzTitle="Medication Schedule">
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="am">Am</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('am')?'error':null">
+          <input nz-input placeholder="Am" formControlName="am">
+          <nz-form-explain *ngIf="hasErrors('am')">
+            <app-field-errors [errors]="fieldErrors('am')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="nn">Nn</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('nn')?'error':null">
+          <input nz-input placeholder="Nn" formControlName="nn">
+          <nz-form-explain *ngIf="hasErrors('nn')">
+            <app-field-errors [errors]="fieldErrors('nn')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="pm">Pm</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('pm')?'error':null">
+          <input nz-input placeholder="Pm" formControlName="pm">
+          <nz-form-explain *ngIf="hasErrors('pm')">
+            <app-field-errors [errors]="fieldErrors('pm')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="hs">Hs</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('hs')?'error':null">
+          <input nz-input placeholder="Hs" formControlName="hs">
+          <nz-form-explain *ngIf="hasErrors('hs')">
+            <app-field-errors [errors]="fieldErrors('hs')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="disabled" nzRequired>PRN</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+          <nz-switch formControlName="prn"></nz-switch>
+          <nz-form-explain *ngIf="hasErrors('prn')">
+            <app-field-errors [errors]="fieldErrors('prn')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="disabled" nzRequired>Discontinued</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+          <nz-switch formControlName="discontinued"></nz-switch>
+          <nz-form-explain *ngIf="hasErrors('discontinued')">
+            <app-field-errors [errors]="fieldErrors('discontinued')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="treatment" nzRequired>Treatment</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+          <nz-switch formControlName="treatment"></nz-switch>
+          <nz-form-explain *ngIf="hasErrors('treatment')">
+            <app-field-errors [errors]="fieldErrors('treatment')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+  </nz-tabset>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

@@ -91,10 +91,54 @@ import {FormComponent as RegionFormComponent} from './residents/components/regio
 
 import {ResidentSelectorComponent} from './residents/components/resident-selector/resident-selector.component';
 
-import {ListComponent as ResidentDietListComponent} from './residents/components/resident-diet/list.component';
-import {FormComponent as ResidentDietFormComponent} from './residents/components/resident-diet/form/form.component';
+import {ResidentComponent} from './residents/components/resident/resident.component';
+import {InfoComponent as ResidentInfoComponent} from './residents/components/resident/info/info.component';
+
+// import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
+// import {FormComponent as ResidentResponsiblePersonFormComponent} from './residents/components/resident/responsible-person/form/form.component';
+//
+// import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
+// import {FormComponent as ResidentEventFormComponent} from './residents/components/resident/event/form/form.component';
+//
+// import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
+// import {FormComponent as ResidentRentFormComponent} from './residents/components/resident/rent/form/form.component';
+//
+// import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
+// import {FormComponent as ResidentPhysicianFormComponent} from './residents/components/resident/physician/form/form.component';
+
+import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
+import {FormComponent as ResidentMedicationFormComponent} from './residents/components/resident/medication/form/form.component';
+
+import {HistoryComponent as ResidentHistoryComponent} from './residents/components/resident/history/history.component';
+
+import {ListComponent as ResidentDiagnoseListComponent} from './residents/components/resident/history/diagnose/list.component';
+import {FormComponent as ResidentDiagnoseFormComponent} from './residents/components/resident/history/diagnose/form/form.component';
+
+import {ListComponent as ResidentAllergyMedicationListComponent} from './residents/components/resident/history/allergy-medication/list.component';
+import {FormComponent as ResidentAllergyMedicationFormComponent} from './residents/components/resident/history/allergy-medication/form/form.component';
+
+import {ListComponent as ResidentAllergyOtherListComponent} from './residents/components/resident/history/allergy-other/list.component';
+import {FormComponent as ResidentAllergyOtherFormComponent} from './residents/components/resident/history/allergy-other/form/form.component';
+
+import {ListComponent as ResidentMedicalHistoryListComponent} from './residents/components/resident/history/medical-history/list.component';
+import {FormComponent as ResidentMedicalHistoryFormComponent} from './residents/components/resident/history/medical-history/form/form.component';
+
+import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
+import {FormComponent as ResidentDietFormComponent} from './residents/components/resident/dietary-restriction/form/form.component';
+
+// import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
+// import {FormComponent as ResidentAssessmentFormComponent} from './residents/components/resident/assessment/form/form.component';
+//
+// import {ListComponent as ResidentReportListComponent} from './residents/components/resident/report/list.component';
+// import {FormComponent as ResidentReportFormComponent} from './residents/components/resident/report/form/form.component';
+
+
+
+
 
 import {CityStateZipPipe} from './residents/pipes/csz.pipe';
+import {PhysicianPipe} from './residents/pipes/physician.pipe';
+import {ResidentPipe} from './residents/pipes/resident.pipe';
 
 registerLocaleData(en);
 
@@ -105,6 +149,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 @NgModule({
   declarations: [
     CityStateZipPipe,
+    PhysicianPipe,
+    ResidentPipe,
 
     CoreComponent,
 
@@ -185,8 +231,47 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentSelectorComponent,
 
+    ResidentComponent,
+    ResidentInfoComponent,
+
     ResidentDietListComponent,
     ResidentDietFormComponent,
+
+    ResidentMedicationListComponent,
+    ResidentMedicationFormComponent,
+
+    // ResidentResponsiblePersonListComponent,
+    // ResidentResponsiblePersonFormComponent,
+
+    // ResidentEventListComponent,
+    // ResidentEventFormComponent,
+
+    // ResidentRentListComponent,
+    // ResidentRentFormComponent,
+
+    // ResidentPhysicianListComponent,
+    // ResidentPhysicianFormComponent,
+
+    ResidentHistoryComponent,
+
+    ResidentDiagnoseListComponent,
+    ResidentDiagnoseFormComponent,
+
+    ResidentAllergyMedicationListComponent,
+    ResidentAllergyMedicationFormComponent,
+
+    ResidentAllergyOtherListComponent,
+    ResidentAllergyOtherFormComponent,
+
+    ResidentMedicalHistoryListComponent,
+    ResidentMedicalHistoryFormComponent,
+
+    // ResidentAssessmentListComponent,
+    // ResidentAssessmentFormComponent,
+
+    // ResidentReportListComponent,
+    // ResidentReportFormComponent,
+
   ],
   entryComponents: [
     RoleFormComponent,
@@ -225,6 +310,19 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RegionFormComponent,
 
     ResidentDietFormComponent,
+    ResidentMedicationFormComponent,
+
+    // ResidentResponsiblePersonFormComponent,
+    // ResidentEventFormComponent,
+    // ResidentRentFormComponent,
+    // ResidentPhysicianFormComponent,
+    ResidentDiagnoseFormComponent,
+    ResidentAllergyMedicationFormComponent,
+    ResidentAllergyOtherFormComponent,
+    ResidentMedicalHistoryFormComponent,
+    // ResidentAssessmentFormComponent,
+    // ResidentReportFormComponent,
+
   ],
   imports: [
     CommonModule,

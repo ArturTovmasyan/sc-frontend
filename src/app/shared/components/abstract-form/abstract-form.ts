@@ -10,7 +10,8 @@ export class AbstractForm {
   protected message: string = null;
 
   protected submit: (data: any) => Observable<any>;
-  protected postSubmit: (data: any) => void;
+  public postSubmit: (data: any) => void = (data: any) => {
+  };
 
   public get f() {
     return this.form.controls;
@@ -59,10 +60,15 @@ export class AbstractForm {
     }
   }
 
+  protected hasErrors(name: string) {
+    const control = this.findFieldControl(name);
+    return control != null && !(control instanceof FormGroup) && (control.dirty || control.touched) && control.errors != null;
+  }
+
   public fieldErrors(name: string): FormError[] {
     let control = this.findFieldControl(name);
 
-    if (control && (control.touched || control.dirty || this._submitted) && control.errors) {
+    if (control != null && !(control instanceof FormGroup) && (control.dirty || control.touched) && control.errors != null) {
       return this.getErrors(control);
     } else {
       return undefined;
@@ -109,6 +115,10 @@ export class AbstractForm {
           control = group;
         }
       });
+
+      if (control instanceof FormGroup) {
+        control = this.form;
+      }
     } else {
       // Field is not defined in form but there is a validation error for it, set it globally
       control = this.form;
@@ -127,10 +137,5 @@ export class AbstractForm {
     Object.keys(this.form.controls).forEach(key => {
       this.form.controls[key].markAsDirty();
     });
-  }
-
-  protected hasErrors(name: string) {
-    const control = this.findFieldControl(name);
-    return control != null && (control.dirty || control.touched) && control.errors != null;
   }
 }

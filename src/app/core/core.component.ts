@@ -38,7 +38,7 @@ export class CoreComponent {
         }
         return route;
       }))
-      .pipe(filter((route) => route.outlet === 'primary'))
+      .pipe(filter((route) => route.outlet === 'primary' || route.outlet === 'resident-details' )) // TODO(haykg): review
       .pipe(mergeMap((route) => route.data))
       .subscribe((event) => this.title$.setTitle(event['title']));
 

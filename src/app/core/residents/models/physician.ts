@@ -1,5 +1,6 @@
 import {CityStateZip} from './city-state-zip';
 import {Space} from '../../models/space';
+import {Salutation} from './salutation';
 
 export class Physician implements IdInterface {
   id: number;
@@ -14,6 +15,7 @@ export class Physician implements IdInterface {
   emergency_phone: string;
   email: string;
   website_url: string;
+  salutation: Salutation;
   csz: CityStateZip;
   space: Space;
 }

@@ -8,7 +8,7 @@ import {Message} from '../../core/models/message';
 export class GridService<T extends IdInterface> {
   protected SEVICE_URL_BASE;
 
-  protected constructor(private http: HttpClient) {
+  protected constructor(protected http: HttpClient) {
   }
 
   all(): Observable<T[]> {

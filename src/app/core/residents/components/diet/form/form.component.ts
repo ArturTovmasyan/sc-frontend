@@ -16,7 +16,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       title: ['', Validators.compose([Validators.required, Validators.max(255)])],
-      color: ['', Validators.compose([Validators.required, Validators.max(20)])], // TODO: add colorpicker
+      color: ['', Validators.compose([Validators.required, Validators.max(20)])],
     });
   }
 

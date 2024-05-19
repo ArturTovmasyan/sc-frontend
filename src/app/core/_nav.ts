@@ -65,6 +65,11 @@ export const navItems = [
     icon: 'icon-people'
   },
   {
+    name: 'Physician Specialities',
+    url: '/physician-specialities',
+    icon: 'icon-people'
+  },
+  {
     title: true,
     name: 'Common',
   },
@@ -116,11 +121,6 @@ export const navItems = [
   {
     name: 'Salutations',
     url: '/salutations',
-    icon: 'icon-people'
-  },
-  {
-    name: 'Physician Specialities',
-    url: '/physician-specialities',
     icon: 'icon-people'
   },
   {

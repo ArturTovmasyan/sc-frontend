@@ -1,9 +1,9 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
-import {Diet} from '../../../models/diet';
-import {DietService} from '../../../services/diet.service';
+import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
+import {Diet} from '../../../../models/diet';
+import {DietService} from '../../../../services/diet.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

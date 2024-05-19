@@ -1,5 +1,19 @@
 ﻿<form nz-form [formGroup]="form">
   <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="salutation_id" nzRequired>Salutation</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('salutation_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="salutation_id">
+        <ng-container *ngFor="let salutation of salutations">
+          <nz-option [nzLabel]="salutation.title" [nzValue]="salutation.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('salutation_id')">
+        <app-field-errors [errors]="fieldErrors('salutation_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('first_name')?'error':null">
       <input nz-input placeholder="First Name" formControlName="first_name">
@@ -97,7 +111,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>CSZ</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="csz_id" nzRequired>CSZ</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('csz_id')?'error':null">
       <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="csz_id">
         <ng-container *ngFor="let city_state_zip of city_state_zips">

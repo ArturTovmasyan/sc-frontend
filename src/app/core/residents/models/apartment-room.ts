@@ -1,5 +1,5 @@
 import {Facility} from './facility';
-import {RoomType} from './room-type';
+import {RoomType} from './room-type.enum';
 
 export class ApartmentRoom implements IdInterface {
   id: number;

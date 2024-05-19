@@ -7,15 +7,23 @@ import {SpaceService} from '../../../../services/space.service';
 import {Space} from '../../../../models/space';
 import {CityStateZip} from '../../../models/city-state-zip';
 import {ValidationPatterns} from '../../../../../shared/constants/validation.patterns';
+import {Salutation} from '../../../models/salutation';
+import {SalutationService} from '../../../services/salutation.service';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
+  salutations: Salutation[];
   city_state_zips: CityStateZip[];
   spaces: Space[];
 
-  constructor(private formBuilder: FormBuilder, private city_space_zip$: CityStateZipService, private space$: SpaceService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private city_state_zip$: CityStateZipService,
+    private salutation$: SalutationService,
+    private space$: SpaceService
+  ) {
     super();
   }
 
@@ -33,13 +41,20 @@ export class FormComponent extends AbstractForm implements OnInit {
       emergency_phone: ['', Validators.compose([Validators.pattern(ValidationPatterns.PHONE)])],
       email: ['', Validators.compose([Validators.email])],
       website_url: [''],
+      salutation_id: [null, Validators.required],
       csz_id: [null, Validators.required],
       space_id: [null, Validators.required],
     });
 
-    this.city_space_zip$.all().pipe(first()).subscribe(res => {
+    this.city_state_zip$.all().pipe(first()).subscribe(res => {
       if (res) {
         this.city_state_zips = res;
+      }
+    });
+
+    this.salutation$.all().pipe(first()).subscribe(res => {
+      if (res) {
+        this.salutations = res;
       }
     });
 

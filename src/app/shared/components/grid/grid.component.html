@@ -1,8 +1,17 @@
-<div class="card">
-  <div class="card-header">
-    {{ title }}
+<ng-container *ngIf="card">
+  <div class="card">
+    <div class="card-header">
+      {{ title }}
+    </div>
+    <div class="card-body">
+      <template [ngTemplateOutlet]="table"></template>
+    </div>
   </div>
-  <div class="card-body">
+</ng-container>
+<ng-container *ngIf="!card">
+  <template [ngTemplateOutlet]="table"></template>
+</ng-container>
+<ng-template #table>
     <div class="d-flex">
       <nz-button-group [nzSize]="'medium'">
         <button nz-button nzType="primary" [disabled]="checkbox_config.ids.length != 0"
@@ -90,8 +99,7 @@
       </tr>
       </tbody>
     </nz-table>
-  </div>
-</div>
+</ng-template>
 
 <ng-template #filterEnum let-field="field" let-first="first">
   <nz-dropdown [nzPlacement]="first ? 'bottomLeft' : 'bottomRight'" nzTrigger="click" [nzClickHide]="false">

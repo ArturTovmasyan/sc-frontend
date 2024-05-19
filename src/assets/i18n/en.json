@@ -132,30 +132,46 @@
       "facility": "Facility"
     },
     "facility-room-list": {
-      "id":  "ID",
+      "id": "ID",
       "number": "Number",
-      "floor":  "Floor",
+      "floor": "Floor",
       "type": "Type",
-      "disabled":  "Disabled",
+      "disabled": "Disabled",
       "shared": "Shared",
-      "notes":  "Notes",
+      "notes": "Notes",
       "facility": "Facility"
     },
     "apartment-room-list": {
-      "id":  "ID",
+      "id": "ID",
       "number": "Number",
-      "floor":  "Floor",
+      "floor": "Floor",
       "type": "Type",
-      "disabled":  "Disabled",
+      "disabled": "Disabled",
       "shared": "Shared",
-      "notes":  "Notes",
+      "notes": "Notes",
       "apartment": "Apartment"
     },
-    "resident-diet-list": {
+    "resident-dietary-restriction-list": {
       "id": "ID",
       "diet_title": "Category",
       "diet_color": "Color",
       "description": "Description"
+    },
+    "resident-medication-list": {
+      "id": "ID",
+      "medication": "Medication",
+      "form_factor": "Form Factor",
+      "dosage": "Dosage",
+      "dosage_unit": "Unit",
+      "am": "AM",
+      "nn": "NN",
+      "pm": "PM",
+      "hs": "HS",
+      "prn": "PRN",
+      "discontinued": "DC",
+      "treatment": "TR",
+      "notes": "Notes",
+      "prescription_number": "Prescription #"
     }
   }
 }
