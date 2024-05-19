@@ -16,5 +16,5 @@ export class FacilityRoom implements IdInterface {
   beds: FacilityBed[];
 
   facility: Facility;
-  facility_room_type: FacilityRoomType;
+  type: FacilityRoomType;
 }

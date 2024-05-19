@@ -1,4 +1,5 @@
 import {Resident} from './resident';
+import {RentReason} from './rent-reason';
 
 export class ResidentRentIncrease implements IdInterface {
   id: number;
@@ -8,12 +9,7 @@ export class ResidentRentIncrease implements IdInterface {
   effective_date: Date;
   notification_date: Date;
 
-  reason: ResidentRentIncreaseReason;
+  reason: RentReason;
 
   resident: Resident;
-}
-
-export enum ResidentRentIncreaseReason {
-  ANNUAL = 1,
-  CARE_LEVEL_ADJUSTMENT = 2
 }

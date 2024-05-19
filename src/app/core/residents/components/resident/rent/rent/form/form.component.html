@@ -1,7 +1,7 @@
 ﻿<h4>Room Rent</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
-  <nz-form-item *ngIf="group_title && group_title !== ''">
+  <nz-form-item *ngIf="admission">
     <nz-form-label [nzSm]="8" [nzXs]="24">
       <ng-container [ngSwitch]="residentSelector$.type.value">
         <ng-container *ngSwitchCase="GROUP_TYPE.FACILITY">Facility</ng-container>
@@ -10,7 +10,13 @@
       </ng-container>
     </nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
-      {{ group_title }}
+      {{ get_group_title() }}
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="admission && residentSelector$.type.value == GROUP_TYPE.FACILITY">
+    <nz-form-label [nzSm]="8" [nzXs]="24">Base Room Rate</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      {{ get_base_room_rate()|currency:'USD':'symbol-narrow':'1.2-2' }}
     </nz-form-control>
   </nz-form-item>
 
@@ -55,6 +61,35 @@
                        formControlName="amount"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('amount')">
         <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="use_base_rate">Use Base Room Rate</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="use_base_rate"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('use_base_rate')">
+        <app-field-errors [errors]="fieldErrors('use_base_rate')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="reason_id">Reason</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('reason_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="reason_id">
+          <ng-container *ngFor="let reason of reasons">
+            <nz-option [nzLabel]="reason.title" [nzValue]="reason.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('reason');">
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('reason_id')">
+        <app-field-errors [errors]="fieldErrors('reason_id')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

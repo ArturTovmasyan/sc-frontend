@@ -8,7 +8,10 @@ import {GroupType} from '../../../../../models/group-type.enum';
 import {ResidentAdmissionService} from '../../../../../services/resident-admission.service';
 import {DateHelper} from '../../../../../../../shared/helpers/date-helper';
 import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
-import {ResidentRentIncreaseReason} from '../../../../../models/resident-rent-increase';
+import {RentReasonService} from '../../../../../services/rent-reason.service';
+import {RentReason} from '../../../../../models/rent-reason';
+import {ResidentAdmission} from '../../../../../models/resident-admission';
+import {FormComponent as RentReasonFormComponent} from '../../../../rent-reason/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -16,17 +19,20 @@ import {ResidentRentIncreaseReason} from '../../../../../models/resident-rent-in
 export class FormComponent extends AbstractForm implements OnInit {
   GROUP_TYPE = GroupType;
 
-  group_title: string = '';
-
-  reasons: { id: ResidentRentIncreaseReason, name: string }[];
+  admission: ResidentAdmission;
+  reasons: RentReason[];
 
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
+    private reason$: RentReasonService,
     private residentSelector$: ResidentSelectorService,
     private admission$: ResidentAdmissionService
   ) {
     super(modal$);
+    this.modal_map = [
+      {key: 'reason', component: RentReasonFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -36,69 +42,77 @@ export class FormComponent extends AbstractForm implements OnInit {
       effective_date: [DateHelper.newDate(), Validators.required],
       notification_date: [DateHelper.newDate(), Validators.required],
 
-      reason: [null, Validators.compose([Validators.required])],
+      reason_id: [null, Validators.required],
       amount: [0, Validators.compose([Validators.required, CoreValidator.payment_amount])],
 
       resident_id: [null, Validators.required]
     });
 
     this.subscribe('rs_resident');
-
-    /// TODO: review
-    this.reasons = [
-      {id: ResidentRentIncreaseReason.ANNUAL, name: 'Annual'},
-      {id: ResidentRentIncreaseReason.CARE_LEVEL_ADJUSTMENT, name: 'Care Level Adjustment'},
-    ];
-
+    this.subscribe('list_reason');
   }
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'list_reason':
+        this.$subscriptions[key] = this.reason$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.reasons = res;
+
+            if (params) {
+              this.form.get('reason_id').setValue(params.reason_id);
+            }
+          }
+        });
+        break;
       case 'rs_resident':
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {
             this.form.get('resident_id').setValue(next);
-            this.subscribe('resident_info');
+            this.subscribe('get_resident_admission');
           }
         });
         break;
-      case 'resident_info':
+      case 'get_resident_admission':
         this.$subscriptions[key] = this.admission$.active(this.form.get('resident_id').value).pipe(first()).subscribe(res => {
-          if (res != null && !Array.isArray(res)) {
-            const admission = res;
-
-            this.group_title = '';
-            if (admission.group_type) {
-              switch (admission.group_type) {
-                case GroupType.FACILITY:
-                  this.group_title = admission.facility_bed.room.facility.name + ' - #' +
-                    (admission.facility_bed.room.private ?
-                        admission.facility_bed.room.number :
-                        (admission.facility_bed.room.number + ' (' + admission.facility_bed.number + ')')
-                    );
-                  break;
-                case GroupType.REGION:
-                  this.group_title = admission.region.name;
-                  break;
-                case GroupType.APARTMENT:
-                  this.group_title = admission.apartment_bed.room.apartment.name + ' - #' +
-                    (admission.apartment_bed.room.private ?
-                        admission.apartment_bed.room.number :
-                        (admission.apartment_bed.room.number + ' (' + admission.apartment_bed.number + ')')
-                    );
-                  break;
-              }
-            }
+          if (res) {
+            this.admission = res;
           } else {
-            this.group_title = '';
+            this.admission = null;
           }
         }, error => {
-          this.group_title = '';
+          this.admission = null;
         });
         break;
       default:
         break;
     }
+  }
+
+  public get_group_title() {
+    let group_title = '';
+    if (this.admission && this.admission.group_type) {
+      switch (this.admission.group_type) {
+        case GroupType.FACILITY:
+          group_title = this.admission.facility_bed.room.facility.name + ' - #' +
+            (!this.admission.facility_bed.room.type || this.admission.facility_bed.room.type.private ?
+                this.admission.facility_bed.room.number :
+                (this.admission.facility_bed.room.number + ' (' + this.admission.facility_bed.number + ')')
+            );
+          break;
+        case GroupType.REGION:
+          group_title = this.admission.region.name;
+          break;
+        case GroupType.APARTMENT:
+          group_title = this.admission.apartment_bed.room.apartment.name + ' - #' +
+            (this.admission.apartment_bed.room.private ?
+                this.admission.apartment_bed.room.number :
+                (this.admission.apartment_bed.room.number + ' (' + this.admission.apartment_bed.number + ')')
+            );
+          break;
+      }
+    }
+    return group_title;
   }
 
 }

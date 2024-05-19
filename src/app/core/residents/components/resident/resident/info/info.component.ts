@@ -64,6 +64,7 @@ export class InfoComponent implements OnInit {
           this.loading = false;
           if (res) {
             this.resident = res;
+            this.resident.photo = this.sanitizer.bypassSecurityTrustUrl(this.resident.photo).toString();
           } else {
             this.resident = null;
           }

@@ -89,6 +89,9 @@ import {FormComponent as PhysicianFormComponent} from './residents/components/ph
 import {ListComponent as ResponsiblePersonListComponent} from './residents/components/responsible-person/list.component';
 import {FormComponent as ResponsiblePersonFormComponent} from './residents/components/responsible-person/form/form.component';
 
+import {ListComponent as RentReasonListComponent} from './residents/components/rent-reason/list.component';
+import {FormComponent as RentReasonFormComponent} from './residents/components/rent-reason/form/form.component';
+
 import {ListComponent as ApartmentListComponent} from './residents/components/apartment/list.component';
 import {FormComponent as ApartmentFormComponent} from './residents/components/apartment/form/form.component';
 
@@ -319,7 +322,6 @@ import {LeadPipe} from './residents/pipes/lead.pipe';
 import {EmbedVideo} from 'ngx-embed-video/dist';
 import {FullCalendarModule} from '@fullcalendar/angular';
 import {PaymentPeriodPipe} from './residents/pipes/payment-period.pipe';
-import {RentIncreaseReasonPipe} from './residents/pipes/rent-increase-reason.pipe';
 import {ViewComponent as ResidentRentViewComponent} from './residents/components/resident/rent/rent/view/view.component';
 import {ViewComponent as ResidentRentIncreaseViewComponent} from './residents/components/resident/rent/rent-increase/view/view.component';
 import {EventRepeatPipe} from './residents/pipes/event-repeat.pipe';
@@ -349,7 +351,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChangeLogPipe,
     ActivityTypePipe,
     PaymentPeriodPipe,
-    RentIncreaseReasonPipe,
 
     CoreComponent,
 
@@ -427,6 +428,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResponsiblePersonListComponent,
     ResponsiblePersonFormComponent,
+
+    RentReasonListComponent,
+    RentReasonFormComponent,
 
     ApartmentListComponent,
     ApartmentFormComponent,
@@ -674,6 +678,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PhysicianFormComponent,
 
     ResponsiblePersonFormComponent,
+
+    RentReasonFormComponent,
 
     ApartmentFormComponent,
 

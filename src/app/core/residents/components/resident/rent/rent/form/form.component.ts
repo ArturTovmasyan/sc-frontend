@@ -11,6 +11,11 @@ import {GroupType} from '../../../../../models/group-type.enum';
 import {ResidentAdmissionService} from '../../../../../services/resident-admission.service';
 import {DateHelper} from '../../../../../../../shared/helpers/date-helper';
 import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
+import {ResidentAdmission} from '../../../../../models/resident-admission';
+import {FacilityRoomType} from '../../../../../models/facility-room-type';
+import {RentReason} from '../../../../../models/rent-reason';
+import {RentReasonService} from '../../../../../services/rent-reason.service';
+import {FormComponent as RentReasonFormComponent} from '../../../../rent-reason/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -21,8 +26,9 @@ export class FormComponent extends AbstractForm implements OnInit {
   source_selector: number = null;
 
   payment_sources: PaymentSource[];
+  reasons: RentReason[];
 
-  group_title: string = '';
+  admission: ResidentAdmission;
 
   sources: { id: number, amount: number }[] = [];
   periods: { id: PaymentPeriod, name: string }[];
@@ -31,10 +37,16 @@ export class FormComponent extends AbstractForm implements OnInit {
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private payment_source$: PaymentSourceService,
+    private reason$: RentReasonService,
     private residentSelector$: ResidentSelectorService,
     private admission$: ResidentAdmissionService
   ) {
     super(modal$);
+    this.modal_map = [
+      {key: 'reason', component: RentReasonFormComponent}
+    ];
+
+    this.admission = null;
   }
 
   ngOnInit(): void {
@@ -51,15 +63,20 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       source: this.formBuilder.array([]),
 
-      resident_id: [null, Validators.required]
-    });
+      resident_id: [null, Validators.required],
+
+      reason_id: [null],
+      use_base_rate: [false, Validators.required],
+  });
 
     this.subscribe('rs_resident');
+    this.subscribe('vc_use_base_rate');
+    this.subscribe('list_reason');
     this.subscribe('list_payment_source');
 
     /// TODO: review
     this.periods = [
-      {id: PaymentPeriod.HOURLY, name: 'Hourly'},
+      // {id: PaymentPeriod.HOURLY, name: 'Hourly'},
       {id: PaymentPeriod.DAILY, name: 'Daily'},
       {id: PaymentPeriod.WEEKLY, name: 'Weekly'},
       {id: PaymentPeriod.MONTHLY, name: 'Monthly'},
@@ -79,46 +96,37 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
+      case 'list_reason':
+        this.$subscriptions[key] = this.reason$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.reasons = res;
+          }
+        });
+        break;
       case 'rs_resident':
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {
             this.form.get('resident_id').setValue(next);
-            this.subscribe('resident_info');
+            this.subscribe('get_resident_admission');
           }
         });
         break;
-      case 'resident_info':
+      case 'get_resident_admission':
         this.$subscriptions[key] = this.admission$.active(this.form.get('resident_id').value).pipe(first()).subscribe(res => {
-          if (res != null && !Array.isArray(res)) {
-            const admission = res;
-
-            this.group_title = '';
-            if (admission.group_type) {
-              switch (admission.group_type) {
-                case GroupType.FACILITY:
-                  this.group_title = admission.facility_bed.room.facility.name + ' - #' +
-                    (admission.facility_bed.room.private ?
-                        admission.facility_bed.room.number :
-                        (admission.facility_bed.room.number + ' (' + admission.facility_bed.number + ')')
-                    );
-                  break;
-                case GroupType.REGION:
-                  this.group_title = admission.region.name;
-                  break;
-                case GroupType.APARTMENT:
-                  this.group_title = admission.apartment_bed.room.apartment.name + ' - #' +
-                    (admission.apartment_bed.room.private ?
-                        admission.apartment_bed.room.number :
-                        (admission.apartment_bed.room.number + ' (' + admission.apartment_bed.number + ')')
-                    );
-                  break;
-              }
-            }
+          if (res) {
+            this.admission = res;
           } else {
-            this.group_title = '';
+            this.admission = null;
           }
         }, error => {
-          this.group_title = '';
+          this.admission = null;
+        });
+        break;
+      case 'vc_use_base_rate':
+        this.$subscriptions[key] = this.form.get('use_base_rate').valueChanges.subscribe(next => {
+          if (next) {
+            this.form.get('amount').setValue(this.get_base_room_rate());
+          }
         });
         break;
       default:
@@ -127,11 +135,12 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   add_source() {
-    const source = this.payment_sources.filter(item => item.id === this.source_selector).pop();
+    let source = this.payment_sources.filter(item => item.id === this.source_selector).pop();
     if (source) {
       source.disabled = true;
+      source = Object.assign(new PaymentSource(), source); // TODO: review
 
-      this.add_field('source', {id: source.id, amount: 0});
+      this.add_field('source', {id: source.id, amount: source.get_amount(this.admission.care_level)});
 
       this.source_selector = null;
     }
@@ -190,4 +199,39 @@ export class FormComponent extends AbstractForm implements OnInit {
     return source ? source.title : '';
   }
 
+  public get_group_title() {
+    let group_title = '';
+    if (this.admission && this.admission.group_type) {
+      switch (this.admission.group_type) {
+        case GroupType.FACILITY:
+          group_title = this.admission.facility_bed.room.facility.name + ' - #' +
+            (!this.admission.facility_bed.room.type || this.admission.facility_bed.room.type.private ?
+                this.admission.facility_bed.room.number :
+                (this.admission.facility_bed.room.number + ' (' + this.admission.facility_bed.number + ')')
+            );
+          break;
+        case GroupType.REGION:
+          group_title = this.admission.region.name;
+          break;
+        case GroupType.APARTMENT:
+          group_title = this.admission.apartment_bed.room.apartment.name + ' - #' +
+            (this.admission.apartment_bed.room.private ?
+                this.admission.apartment_bed.room.number :
+                (this.admission.apartment_bed.room.number + ' (' + this.admission.apartment_bed.number + ')')
+            );
+          break;
+      }
+    }
+    return group_title;
+  }
+
+  public get_base_room_rate() {
+    if (this.admission && this.admission.group_type === GroupType.FACILITY && this.admission.facility_bed.room.type) {
+      const room_type = Object.assign(new FacilityRoomType(), this.admission.facility_bed.room.type); // TODO: review
+
+      return room_type.get_amount(this.admission.care_level);
+    }
+
+    return 0;
+  }
 }
