@@ -1,11 +1,15 @@
 ﻿import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {FileModel} from '../../../../models/file-model';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FacilityService} from '../../../services/facility.service';
 import {Facility} from '../../../models/facility';
 import {StringUtil} from '../../../../../shared/utils/string-util';
+import {FormComponent as CategoryFormComponent} from '../../../../documents/components/category/form/form.component';
+import {Category} from '../../../../documents/models/category';
+import {CategoryService} from '../../../../documents/services/category.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -16,13 +20,19 @@ export class FormComponent extends AbstractForm implements OnInit {
   files: FileModel[];
 
   facilities: Facility[];
+  categories: Category[];
 
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private facility$: FacilityService
+    private facility$: FacilityService,
+    private category$: CategoryService
   ) {
     super(modal$);
+
+    this.modal_map = [
+      {key: 'category', component: CategoryFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -34,12 +44,16 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
 
       title: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      description: ['', Validators.compose([Validators.maxLength(512)])],
 
       file: [null],
+
+      category_id: [null, Validators.compose([Validators.required])],
 
       facility_id: [null, Validators.required]
     });
 
+    this.subscribe('list_category');
     this.subscribe('list_facility');
   }
 
@@ -49,6 +63,17 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.facility$.all().subscribe(res => {
           if (res) {
             this.facilities = res;
+          }
+        });
+        break;
+      case 'list_category':
+        this.$subscriptions[key] = this.category$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.categories = res;
+
+            if (params) {
+              this.form.get('category_id').setValue(params.category_id);
+            }
           }
         });
         break;

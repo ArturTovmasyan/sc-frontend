@@ -15,12 +15,42 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item *ngIf="form.get('category_id')">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="category_id" nzRequired>Category</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('category_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="category_id">
+          <ng-container *ngFor="let category of categories">
+            <nz-option [nzLabel]="category.title" [nzValue]="category.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
+                (click)="open_sub_modal('category');">
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('category_id')">
+        <app-field-errors [errors]="fieldErrors('category_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
       <input nz-input placeholder="Title" formControlName="title">
       <nz-form-explain *ngIf="hasErrors('title')">
         <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description">Description</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('description')?'error':null">
+      <input-counter formControlName="description" placeholder="Description" [maxlength]="512"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('description')">
+        <app-field-errors [errors]="fieldErrors('description')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

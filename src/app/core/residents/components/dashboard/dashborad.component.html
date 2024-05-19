@@ -115,7 +115,8 @@
           <tr>
             <td>Average Room Rent</td>
             <ng-container *ngFor="let facility of facilities">
-              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.average_room_rent : '-' }}</td>
+              <td
+                class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? (dashboardData[facility.id].data.average_room_rent|currency:'USD':'symbol-narrow':'1.2-2') : '-' }}</td>
             </ng-container>
           </tr>
         </table>

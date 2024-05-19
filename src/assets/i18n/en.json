@@ -223,6 +223,8 @@
     "facility-document-list": {
       "id": "ID",
       "title": "Title",
+      "category": "Category",
+      "description": "Description",
       "date": "Date",
       "user": "Uploaded By",
       "facility": "Facility",
