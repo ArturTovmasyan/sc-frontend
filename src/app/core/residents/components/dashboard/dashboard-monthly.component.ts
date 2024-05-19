@@ -9,6 +9,7 @@ import {simpleEmptyImage} from 'ng-zorro-antd';
 import {ActivatedRoute} from '@angular/router';
 import {FacilityDashboard} from '../../models/facility-dashboard';
 import {DateHelper} from '../../../../shared/helpers/date-helper';
+import {Color} from 'ng2-charts';
 
 @Component({
   templateUrl: './dashborad-monthly.component.html',
@@ -21,6 +22,7 @@ export class DashboardMonthlyComponent implements OnInit, OnDestroy {
 
   public lineChartData: Array<any>;
   public lineChartLabels: Array<any>;
+  public lineChartColors: Color[];
 
   public facilityId: number;
   public facilityName: string;
@@ -68,23 +70,30 @@ export class DashboardMonthlyComponent implements OnInit, OnDestroy {
             this.facilityName = res[0].name;
 
             this.lineChartLabels = Object.keys(this.dashboardData.data);
+            this.lineChartColors = [
+              { backgroundColor: 'blue' },
+              { backgroundColor: 'yellow' },
+              { backgroundColor: 'red' },
+              { backgroundColor: 'green' },
+              ];
             this.lineChartData = [
               {
-                label: 'Total Capacity',
-                data: this.lineChartLabels.map(dkey => this.dashboardData.data[dkey].total_capacity)
+                label: 'Beds Target',
+                data: this.lineChartLabels.map(dkey => this.dashboardData.data[dkey].beds_target),
+                color: 'green'
               },
               {
-                label: 'Break Even',
-                data: this.lineChartLabels.map(dkey => this.dashboardData.data[dkey].break_even)
+                label: 'Yellow Flag',
+                data: this.lineChartLabels.map(dkey => this.dashboardData.data[dkey].yellow_flag)
+              },
+              {
+                label: 'Red Flag',
+                data: this.lineChartLabels.map(dkey => this.dashboardData.data[dkey].red_flag)
               },
               {
                 label: 'Ending Occupancy',
                 data: this.lineChartLabels.map(dkey => this.dashboardData.data[dkey].ending_occupancy)
-              },
-              {
-                label: 'Projected Near Term Occupancy',
-                data: this.lineChartLabels.map(dkey => this.dashboardData.data[dkey].projected_near_term_occupancy)
-              } // TODO: review
+              }
             ];
           }
         });
