@@ -87,6 +87,9 @@ import {FormComponent as ResponsiblePersonRoleFormComponent} from './residents/c
 import {ListComponent as PhysicianListComponent} from './residents/components/physician/list.component';
 import {FormComponent as PhysicianFormComponent} from './residents/components/physician/form/form.component';
 
+import {ListComponent as HospiceProviderListComponent} from './residents/components/hospice-provider/list.component';
+import {FormComponent as HospiceProviderFormComponent} from './residents/components/hospice-provider/form/form.component';
+
 import {ListComponent as ResponsiblePersonListComponent} from './residents/components/responsible-person/list.component';
 import {FormComponent as ResponsiblePersonFormComponent} from './residents/components/responsible-person/form/form.component';
 
@@ -685,6 +688,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NotificationTypeListComponent,
     NotificationTypeFormComponent,
 
+    HospiceProviderListComponent,
+    HospiceProviderFormComponent,
 
     InsuranceCompanyListComponent,
     InsuranceCompanyFormComponent,
@@ -839,6 +844,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     NotificationFormComponent,
     NotificationTypeFormComponent,
+
+    HospiceProviderFormComponent,
 
     InsuranceCompanyFormComponent,
     ResidentHealthInsuranceFormComponent,

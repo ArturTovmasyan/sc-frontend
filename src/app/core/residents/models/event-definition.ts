@@ -19,6 +19,7 @@ export class EventDefinition implements IdInterface {
   responsible_person_optional: boolean;
   responsible_person_multi: boolean;
   responsible_person_multi_optional: boolean;
+  hospice_provider: boolean;
   additional_date: boolean;
 
   residents: boolean;

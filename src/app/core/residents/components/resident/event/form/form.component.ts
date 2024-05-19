@@ -13,8 +13,11 @@ import {ResidentPhysician} from '../../../../models/resident-physician';
 import {DateHelper} from '../../../../../../shared/helpers/date-helper';
 import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 import {FormComponent as ResidentPhysicianFormComponent} from '../../physician/form/form.component';
+import {FormComponent as HospiceProviderFormComponent} from '../../../hospice-provider/form/form.component';
 import {FormComponent as ResidentResponsiblePersonFormComponent} from '../../responsible-person/form/form.component';
 import {FormComponent as EventDefinitionFormComponent} from '../../../event-definition/form/form.component';
+import {HospiceProvider} from '../../../../models/hospice-provider';
+import {HospiceProviderService} from '../../../../services/hospice-provider.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -25,11 +28,13 @@ export class FormComponent extends AbstractForm implements OnInit {
   definitions: EventDefinition[];
   resident_responsible_persons: ResidentResponsiblePerson[];
   resident_physicians: ResidentPhysician[];
+  hospice_providers: HospiceProvider[];
 
   rp_single: boolean;
 
   required = {
     physician_id: false,
+    hospice_provider_id: false,
     responsible_persons: false,
   };
 
@@ -39,11 +44,13 @@ export class FormComponent extends AbstractForm implements OnInit {
     private definition$: EventDefinitionService,
     private resident_responsible_person$: ResidentResponsiblePersonService,
     private resident_physician$: ResidentPhysicianService,
+    private hospice_provider$: HospiceProviderService,
     private residentSelector$: ResidentSelectorService
   ) {
     super(modal$);
     this.modal_map = [
       {key: 'resident_physician', component: ResidentPhysicianFormComponent},
+      {key: 'hospice_provider', component: HospiceProviderFormComponent},
       {key: 'resident_responsible_person', component: ResidentResponsiblePersonFormComponent},
       {key: 'definition', component: EventDefinitionFormComponent}
     ];
@@ -64,6 +71,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       additional_date: [DateHelper.newDate(), Validators.required],
 
       physician_id: [null],
+      hospice_provider_id: [null],
       responsible_persons: [null]
 
     });
@@ -71,6 +79,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form.get('additional_date').disable();
     this.form.get('responsible_persons').disable();
     this.form.get('physician_id').disable();
+    this.form.get('hospice_provider_id').disable();
 
     this.subscribe('rs_resident');
   }
@@ -105,6 +114,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (definition) {
               this.required = {
                 physician_id: false,
+                hospice_provider_id: false,
                 responsible_persons: false,
               };
 
@@ -127,6 +137,21 @@ export class FormComponent extends AbstractForm implements OnInit {
                 }
               } else {
                 this.form.get('physician_id').disable();
+              }
+
+              if (definition.hospice_provider) {
+                this.form.get('hospice_provider_id').enable();
+                // this.form.get('hospice_provider_id').reset(null);
+                this.form.get('hospice_provider_id').clearValidators();
+
+                if (definition.hospice_provider) {
+                  this.required.hospice_provider_id = true;
+                  this.form.get('hospice_provider_id').setValidators([Validators.required]);
+                } else {
+                  this.required.hospice_provider_id = false;
+                }
+              } else {
+                this.form.get('hospice_provider_id').disable();
               }
 
               if (definition.responsible_person || definition.responsible_person_optional
@@ -163,6 +188,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.subscribe('list_resident', {facility_id: this.residentSelector$.group.value});
             this.subscribe('list_definition', {type: this.residentSelector$.type.value});
             this.subscribe('list_resident_physician');
+            this.subscribe('list_hospice_provider');
             this.subscribe('list_resident_responsible_person');
           }
         });
@@ -209,6 +235,17 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             } else {
               // this.form.get('responsible_persons').setValue(this.form.get('responsible_persons').value);
+            }
+          }
+        });
+        break;
+      case 'list_hospice_provider':
+        this.$subscriptions[key] = this.hospice_provider$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.hospice_providers = res;
+
+            if (params) {
+                this.form.get('hospice_provider_id').setValue(params.hospice_provider_id);
             }
           }
         });

@@ -180,6 +180,7 @@
       "responsible_person_optional": "Responsible Person (Optional)",
       "responsible_person_multi": "Responsible Person Multiple (Required)",
       "responsible_person_multi_optional": "Responsible Person Multiple (Optional)",
+      "hospice_provider": "Hospice Provider",
       "additional_date": "Date Added",
       "resident": "Resident",
       "facility":"Facility",
@@ -640,6 +641,16 @@
       "emails": "Emails",
       "date": "Date",
       "success": "Success"
+    },
+    "hospice-provider-list": {
+      "id": "ID",
+      "name": "Name",
+      "address_1": "Address 1",
+      "address_2": "Address 2",
+      "csz_str": "City, State, Zip Code",
+      "phone": "Phone",
+      "email": "E-Mail",
+      "space": "Space"
     },
     "insurance-company-list": {
       "id": "ID",

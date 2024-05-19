@@ -88,6 +88,7 @@ import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/v
 import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
 import {ListComponent as EmailLogListComponent} from './admin/components/email-log/list.component';
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
+import {ListComponent as HospiceProviderListComponent} from './residents/components/hospice-provider/list.component';
 import {ListComponent as InsuranceCompanyListComponent} from './residents/components/insurance-company/list.component';
 import {ViewComponent as DocumentViewComponent} from './documents/components/document/view/view.component';
 import {HelpComponent} from './components/help/help.component';
@@ -638,6 +639,15 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
 
+      {
+        path: 'hospice-providers', component: HospiceProviderListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Hospice Providers',
+          permissions: ['activity-reference', 'persistence-common-hospice_provider']
+        },
+        canActivate: [AuthGuard]
+      },
 
       {
         path: 'insurance-companies', component: InsuranceCompanyListComponent,

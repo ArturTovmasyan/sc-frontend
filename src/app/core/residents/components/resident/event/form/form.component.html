@@ -82,6 +82,28 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item *ngIf="this.form.get('hospice_provider_id').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="hospice_provider_id" [nzRequired]="required.hospice_provider_id">Hospice Provider
+    </nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('hospice_provider_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="hospice_provider_id">
+          <ng-container *ngFor="let hospice_provider of hospice_providers">
+            <nz-option [nzLabel]="hospice_provider.name"
+                       [nzValue]="hospice_provider.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
+                (click)="open_sub_modal('hospice_provider');">
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('hospice_provider_id')">
+        <app-field-errors [errors]="fieldErrors('hospice_provider_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">

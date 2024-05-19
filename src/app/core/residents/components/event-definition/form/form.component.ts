@@ -46,6 +46,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       responsible_person_optional: [false, Validators.required],
       responsible_person_multi: [false, Validators.required],
       responsible_person_multi_optional: [false, Validators.required],
+      hospice_provider: [false, Validators.required],
       additional_date: [false, Validators.required],
 
       residents: [true, Validators.required],
@@ -77,6 +78,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form.get('responsible_person_optional').disable();
     this.form.get('responsible_person_multi').disable();
     this.form.get('responsible_person_multi_optional').disable();
+    this.form.get('hospice_provider').disable();
     this.form.get('additional_date').disable();
 
     this.form.get('residents').disable();
@@ -128,6 +130,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('responsible_person_optional').enable();
                 this.form.get('responsible_person_multi').enable();
                 this.form.get('responsible_person_multi_optional').enable();
+                this.form.get('hospice_provider').enable();
                 this.form.get('additional_date').enable();
 
                 this.form.get('residents').disable();
@@ -153,6 +156,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('responsible_person_optional').disable();
                 this.form.get('responsible_person_multi').disable();
                 this.form.get('responsible_person_multi_optional').disable();
+                this.form.get('hospice_provider').disable();
                 this.form.get('additional_date').disable();
                 this.form.get('done').disable();
                 break;
@@ -173,6 +177,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('responsible_person_optional').disable();
                 this.form.get('responsible_person_multi').disable();
                 this.form.get('responsible_person_multi_optional').disable();
+                this.form.get('hospice_provider').disable();
                 this.form.get('additional_date').disable();
 
                 this.form.get('done').enable();

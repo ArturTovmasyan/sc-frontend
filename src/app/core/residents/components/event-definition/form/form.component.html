@@ -139,6 +139,16 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item *ngIf="form.get('hospice_provider').enabled">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="hospice_provider">Hospice Provider</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="hospice_provider"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('hospice_provider')">
+        <app-field-errors [errors]="fieldErrors('hospice_provider')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item *ngIf="form.get('additional_date').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="additional_date">Date Added</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
