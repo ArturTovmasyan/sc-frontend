@@ -138,7 +138,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         return this.formBuilder.group({
           id: [null],
           type: [null, Validators.required],
-          number: ['', Validators.required],
+          number: ['', Validators.compose([Validators.required, CoreValidator.phone])],
           primary: [false],
           sms_enabled: [false],
           compatibility: [null]
