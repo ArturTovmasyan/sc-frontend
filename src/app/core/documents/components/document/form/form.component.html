@@ -93,6 +93,17 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emails">CC</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('emails')?'error':null">
+      <sc-select scShowSearch scMode="tags" [scTokenSeparators]="[' ', ',']" scPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="emails">
+      </sc-select>
+      <nz-form-explain *ngIf="hasErrors('emails')">
+        <app-field-errors [errors]="fieldErrors('emails')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-control [nzSpan]="16" [nzOffset]="8">
       <label nz-checkbox formControlName="notification">Send Email Notification</label>
       <nz-form-explain *ngIf="hasErrors('notification')">

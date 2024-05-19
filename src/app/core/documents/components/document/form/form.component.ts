@@ -53,6 +53,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       file: [null],
 
       notification: [false, Validators.compose([Validators.required])],
+      emails: [[]],
 
       category_id: [null, Validators.compose([Validators.required])],
 
