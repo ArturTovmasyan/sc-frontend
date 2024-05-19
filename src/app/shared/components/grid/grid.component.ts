@@ -30,6 +30,12 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   };
 
   protected fields = null;
+  protected button_shows = {
+    add: false,
+    edit: false,
+    remove: false
+  };
+
   protected data = [];
 
   protected title: string = null;
@@ -74,7 +80,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   init(): void {
     this.load_grid_fields().subscribe((data: any) => {
-      this.fields = data;
+      this.button_shows = data.buttons;
+      this.fields = data.fields;
       this.fields.forEach(
         field => {
           this.filter[field.id] = {condition: null, value: null};

@@ -14,19 +14,22 @@
 <ng-template #table>
   <div class="d-flex">
     <nz-button-group *ngIf="component !== null" [nzSize]="'small'">
-      <button nz-button nzType="primary"
+      <button *ngIf="button_shows.add"
+              nz-button nzType="primary"
               [disabled]="checkbox_config.ids.length != 0"
               (click)="show_modal_add(); $event.preventDefault();">
         <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
       </button>
-      <button nz-button nzType="default" [nzLoading]="loading_edit_modal"
+      <button *ngIf="button_shows.edit"
+              nz-button nzType="default" [nzLoading]="loading_edit_modal"
               [disabled]="checkbox_config.ids.length != 1"
               (click)="show_modal_edit(); $event.preventDefault();">
         <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
       </button>
-      <button nz-button nzType="danger"
-              [disabled]="checkbox_config.ids.length == 0"
-              (click)="show_modal_remove(); $event.preventDefault();">
+      <button *ngIf="button_shows.remove"
+        nz-button nzType="danger"
+        [disabled]="checkbox_config.ids.length == 0"
+        (click)="show_modal_remove(); $event.preventDefault();">
         <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
       </button>
     </nz-button-group>
