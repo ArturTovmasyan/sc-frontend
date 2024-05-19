@@ -59,6 +59,8 @@ export class FormComponent extends AbstractForm implements OnInit {
       gender: [null, Validators.required],
       photo: [null],
 
+      ssn: ['', Validators.compose([CoreValidator.ssn])],
+
       salutation_id: [null, Validators.required],
 
       phones: this.formBuilder.array([]),

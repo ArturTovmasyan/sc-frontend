@@ -185,6 +185,7 @@
     "resident-list": {
       "id": "ID",
       "full_name": "Full Name",
+      "ssn": "Social Security Number",
       "gender": "Gender",
       "birthday": "Birthday",
       "info": "Room/Bed Info",

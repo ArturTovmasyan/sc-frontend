@@ -74,6 +74,17 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="ssn" nzRequired>Social Security Number</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('ssn')?'error':null">
+      <input nz-input placeholder="Social Security Number" formControlName="ssn"
+             mask="000-00-0000" [showMaskTyped]="true" [dropSpecialCharacters]="false">
+      <nz-form-explain *ngIf="hasErrors('ssn')">
+        <app-field-errors [errors]="fieldErrors('ssn')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <!--Photo-->
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="photo">Photo</nz-form-label>

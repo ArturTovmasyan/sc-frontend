@@ -46,6 +46,11 @@
         <div nz-col [nzSpan]="16">{{ resident.gender|gender }}</div>
       </div>
 
+      <div *ngIf="resident.ssn" nz-row [nzGutter]="4">
+        <div nz-col [nzSpan]="8" class="text-right"><strong>SSN:</strong></div>
+        <div nz-col [nzSpan]="16">{{ resident.ssn| mask: '000-00-0000' }}</div>
+      </div>
+
       <div *ngIf="resident.phones && resident.phones.length > 0" nz-row [nzGutter]="4">
         <div nz-col [nzSpan]="24"><strong>Phone Numbers:</strong></div>
         <div nz-col [nzOffset]="4" [nzSpan]="20">

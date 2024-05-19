@@ -19,6 +19,7 @@ export class CoreValidator {
     STATE_ABBR: /^[A-Z]{2}$/,
     ZIP_MAIN: /^[0-9]{5}([- ]?[0-9]{4})?$/,
     PHONE: /^\([0-9]{3}\)\s?[0-9]{3}-[0-9]{4}$/,
+    SSN: /^[\dX]{3}-?[\dX]{2}-?[\dX]{4}$/,
   };
 
   public static password: ValidatorFn = CoreValidator.patternValidate(
@@ -30,6 +31,10 @@ export class CoreValidator {
         'one number and ' +
         'one special character (non-word characters).'
     }
+  );
+  public static ssn: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.SSN,
+    {pattern_validator_ssn: 'Invalid format. Valid format is XXX-XX-XXXX.'}
   );
   public static phone: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.PHONE,

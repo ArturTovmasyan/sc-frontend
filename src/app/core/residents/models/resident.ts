@@ -18,6 +18,7 @@ export class Resident implements IdInterface {
   photo?: string;
 
   gender: Gender;
+  ssn: string;
 
   phones: Phone[];
 
