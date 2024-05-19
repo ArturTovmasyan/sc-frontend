@@ -184,7 +184,7 @@ export class CoreValidator {
     };
   }
 
-  public static laterThan(otherName: string): ValidatorFn {
+  public static laterThan(otherName: string, datetime: boolean = true): ValidatorFn {
     let me: FormControl;
     let other: FormControl;
 
@@ -210,7 +210,97 @@ export class CoreValidator {
         return null;
       }
 
-      return me.value <= other.value ? {'later_than': {value: DateHelper.convertFromUTC(other.value)}} : null;
+      return me.value < other.value ? {'later_than': {value: DateHelper.convertFromUTC(other.value), datetime: datetime}} : null;
+    };
+  }
+
+  public static laterThanEqual(otherName: string, datetime: boolean = true): ValidatorFn {
+    let me: FormControl;
+    let other: FormControl;
+
+    return (control: FormControl): { [key: string]: any } => {
+      if (!control.parent) {
+        return null;
+      }
+
+      if (!me) {
+        me = control;
+        other = control.parent.get(otherName) as FormControl;
+
+        if (!other) {
+          throw new Error('laterThan(): other control is not found in parent group');
+        }
+
+        other.valueChanges.subscribe(() => {
+          me.updateValueAndValidity();
+        });
+      }
+
+      if (!other) {
+        return null;
+      }
+
+      return me.value <= other.value ? {'later_than_equal': {value: DateHelper.convertFromUTC(other.value), datetime: datetime}} : null;
+    };
+  }
+
+  public static earlierThan(otherName: string, datetime: boolean = true): ValidatorFn {
+    let me: FormControl;
+    let other: FormControl;
+
+    return (control: FormControl): { [key: string]: any } => {
+      if (!control.parent) {
+        return null;
+      }
+
+      if (!me) {
+        me = control;
+        other = control.parent.get(otherName) as FormControl;
+
+        if (!other) {
+          throw new Error('earlierThan(): other control is not found in parent group');
+        }
+
+        other.valueChanges.subscribe(() => {
+          me.updateValueAndValidity();
+        });
+      }
+
+      if (!other) {
+        return null;
+      }
+
+      return me.value > other.value ? {'earlier_than': {value: DateHelper.convertFromUTC(other.value), datetime: datetime}} : null;
+    };
+  }
+
+  public static earlierThanEqual(otherName: string, datetime: boolean = true): ValidatorFn {
+    let me: FormControl;
+    let other: FormControl;
+
+    return (control: FormControl): { [key: string]: any } => {
+      if (!control.parent) {
+        return null;
+      }
+
+      if (!me) {
+        me = control;
+        other = control.parent.get(otherName) as FormControl;
+
+        if (!other) {
+          throw new Error('earlierThan(): other control is not found in parent group');
+        }
+
+        other.valueChanges.subscribe(() => {
+          me.updateValueAndValidity();
+        });
+      }
+
+      if (!other) {
+        return null;
+      }
+
+      return me.value >= other.value ? {'earlier_than_equal': {value: DateHelper.convertFromUTC(other.value), datetime: datetime}} : null;
     };
   }
 

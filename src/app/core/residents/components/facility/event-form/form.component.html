@@ -15,93 +15,53 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item *ngIf="this.form.get('date').enabled">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
-      <nz-date-picker formControlName="date" nzFormat="MM/dd/yyyy"></nz-date-picker>
-      <nz-form-explain *ngIf="hasErrors('date')">
-        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item *ngIf="this.form.get('additional_date').enabled">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="additional_date" nzRequired>End Date</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('additional_date')?'error':null">
-      <nz-date-picker formControlName="additional_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
-      <nz-form-explain *ngIf="hasErrors('additional_date')">
-        <app-field-errors [errors]="fieldErrors('additional_date')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item *ngIf="this.form.get('physician_id').enabled">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician_id" [nzRequired]="required.physician_id">Physician</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('physician_id')?'error':null">
-      <div class="add-select-container">
-        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
-          <ng-container *ngFor="let resident_physician of resident_physicians">
-            <nz-option [nzLabel]="resident_physician.physician|physician"
-                       [nzValue]="resident_physician.physician.id"></nz-option>
-          </ng-container>
-        </nz-select>
-        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
-                (click)="open_sub_modal('resident_physician');">
-          <i nz-icon nzType="plus"></i>
-        </button>
-      </div>
-      <nz-form-explain *ngIf="hasErrors('physician_id')">
-        <app-field-errors [errors]="fieldErrors('physician_id')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item *ngIf="this.form.get('responsible_persons').enabled">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_persons" [nzRequired]="required.responsible_persons">{{ rp_single ? 'Responsible Person' : 'Responsible Person(s)' }}</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_persons')?'error':null">
-      <div class="add-select-container">
-        <nz-select nzShowSearch
-                   [nzMode]="'multiple'"
-                   [nzMaxMultipleCount]="rp_single?1:Infinity"
-                   nzPlaceHolder="Please select" formControlName="responsible_persons">
-          <ng-container *ngFor="let resident_responsible_person of resident_responsible_persons">
-            <nz-option [nzLabel]="resident_responsible_person.responsible_person|responsible_person"
-                       [nzValue]="resident_responsible_person.responsible_person.id"></nz-option>
-          </ng-container>
-        </nz-select>
-        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
-                (click)="open_sub_modal('resident_responsible_person');">
-          <i nz-icon nzType="plus"></i>
-        </button>
-      </div>
-      <nz-form-explain *ngIf="hasErrors('responsible_persons')">
-        <app-field-errors [errors]="fieldErrors('responsible_persons')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <ng-container *ngIf="this.form.get('start').enabled && this.form.get('all_day').enabled">
+  <ng-container *ngIf="this.form.get('start_date').enabled && this.form.get('all_day').enabled">
     <nz-form-item>
-      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="start" nzRequired>Start</nz-form-label>
-      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('start')?'error':null"
-                       class="sc-select-all">
-        <nz-date-picker nzPlaceHolder="Start" formControlName="start"
-                        nzShowTime nzFormat="yyyy-MM-dd hh:mm aaa" ></nz-date-picker>
-        <label nz-checkbox formControlName="all_day">All Day</label>
-        <nz-form-explain *ngIf="hasErrors('start')">
-          <app-field-errors [errors]="fieldErrors('start')"></app-field-errors>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="start_date" nzRequired>Start</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('start_date')?'error':null">
+
+        <div *ngIf="this.form.get('start_time').enabled" nz-row nzType="flex" nzJustify="space-between">
+          <div nz-col nzSpan="10">
+            <nz-date-picker formControlName="start_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+          </div>
+          <div nz-col nzSpan="6">
+            <nz-time-picker formControlName="start_time" nzFormat="hh:mm aaa"></nz-time-picker>
+          </div>
+          <div nz-col nzSpan="5" class="text-center"><label nz-checkbox formControlName="all_day">All Day</label></div>
+        </div>
+
+        <div *ngIf="!this.form.get('start_time').enabled" nz-row nzType="flex" nzJustify="space-between">
+          <div nz-col nzSpan="19">
+            <nz-date-picker style="width: 97%;" formControlName="start_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+          </div>
+          <div nz-col nzSpan="5" class="text-center"><label nz-checkbox formControlName="all_day">All Day</label></div>
+        </div>
+
+        <nz-form-explain *ngIf="hasErrors('start_date')">
+          <app-field-errors [errors]="fieldErrors('start_date')"></app-field-errors>
+        </nz-form-explain>
+        <nz-form-explain *ngIf="hasErrors('start_time')">
+          <app-field-errors [errors]="fieldErrors('start_time')"></app-field-errors>
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="this.form.get('end').enabled">
-      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="end" nzRequired>End</nz-form-label>
-      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('end')?'error':null"
-                       class="sc-select-all">
-        <nz-date-picker nzPlaceHolder="End" formControlName="end"
-                        [nzDisabledDate]="disabledEndDate"
-                        nzShowTime nzFormat="yyyy-MM-dd hh:mm aaa"></nz-date-picker>
-        <nz-form-explain *ngIf="hasErrors('end')">
-          <app-field-errors [errors]="fieldErrors('end')"></app-field-errors>
+    <nz-form-item *ngIf="this.form.get('end_date').enabled">
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="end_date" nzRequired>End</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('end_date')?'error':null">
+
+        <div nz-row nzType="flex" nzJustify="space-between">
+          <div nz-col nzSpan="10"><nz-date-picker formControlName="end_date" nzFormat="MM/dd/yyyy" [nzDisabledDate]="disabledEndDate"></nz-date-picker></div>
+          <div nz-col nzSpan="6"><nz-time-picker formControlName="end_time" nzFormat="hh:mm aaa"
+                                                 [nzDisabledHours]="disabledEndHours"
+                                                 [nzDisabledMinutes]="disabledEndMinutes"></nz-time-picker></div>
+          <div nz-col nzSpan="5">&nbsp;</div>
+        </div>
+
+        <nz-form-explain *ngIf="hasErrors('end_date')">
+          <app-field-errors [errors]="fieldErrors('end_date')"></app-field-errors>
+        </nz-form-explain>
+        <nz-form-explain *ngIf="hasErrors('end_time')">
+          <app-field-errors [errors]="fieldErrors('end_time')"></app-field-errors>
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
@@ -110,14 +70,19 @@
   <ng-container *ngIf="this.form.get('repeat').enabled && this.form.get('no_repeat_end').enabled">
     <nz-form-item *ngIf="this.form.get('repeat').enabled">
       <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="repeat" nzRequired>Repeat</nz-form-label>
-      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('repeat')?'error':null"
-                       class="sc-select-all">
-        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="repeat">
-          <ng-container *ngFor="let repeatType of repeatTypes">
-            <nz-option [nzLabel]="repeatType.name" [nzValue]="repeatType.id"></nz-option>
-          </ng-container>
-        </nz-select>
-        <label nz-checkbox formControlName="no_repeat_end">No end</label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('repeat')?'error':null">
+        <div nz-row nzType="flex" nzJustify="space-between">
+          <div nz-col nzSpan="19">
+            <nz-select style="width: 97%;" nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="repeat">
+              <ng-container *ngFor="let repeatType of repeatTypes">
+                <nz-option [nzLabel]="repeatType.name" [nzValue]="repeatType.id"></nz-option>
+              </ng-container>
+            </nz-select>
+          </div>
+          <div nz-col nzSpan="5" class="text-center"><label nz-checkbox formControlName="no_repeat_end">No end</label>
+          </div>
+        </div>
+
         <nz-form-explain *ngIf="hasErrors('repeat')">
           <app-field-errors [errors]="fieldErrors('repeat')"></app-field-errors>
         </nz-form-explain>
@@ -128,29 +93,19 @@
       <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="repeat_end" nzRequired>Repeat End</nz-form-label>
       <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('repeat_end')?'error':null"
                        class="sc-select-all">
-        <nz-date-picker nzPlaceHolder="End" formControlName="repeat_end"
-                        [nzDisabledDate]="disabledRepeatEndDate"
-                        nzShowTime nzFormat="yyyy-MM-dd hh:mm aaa"></nz-date-picker>
+        <div nz-row nzType="flex" nzJustify="space-between">
+          <div nz-col nzSpan="19">
+            <nz-date-picker style="width: 97%;" formControlName="repeat_end" nzFormat="MM/dd/yyyy"
+                            [nzDisabledDate]="disabledRepeatEndDate"></nz-date-picker>
+          </div>
+          <div nz-col nzSpan="5" class="text-center">&nbsp;</div>
+        </div>
         <nz-form-explain *ngIf="hasErrors('repeat_end')">
           <app-field-errors [errors]="fieldErrors('repeat_end')"></app-field-errors>
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
   </ng-container>
-
-  <nz-form-item *ngIf="this.form.get('residents').enabled">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="residents" nzRequired>Resident(s)</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('residents')?'error':null">
-      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="residents">
-        <ng-container *ngFor="let resident of residents">
-          <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
-        </ng-container>
-      </nz-select>
-      <nz-form-explain *ngIf="hasErrors('residents')">
-        <app-field-errors [errors]="fieldErrors('residents')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
 
   <nz-form-item *ngIf="this.form.get('users').enabled">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="users" nzRequired>User(s)</nz-form-label>
@@ -162,6 +117,20 @@
       </nz-select>
       <nz-form-explain *ngIf="hasErrors('users')">
         <app-field-errors [errors]="fieldErrors('users')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="this.form.get('residents').enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="residents" nzRequired>Resident(s)</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('residents')?'error':null">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="residents">
+        <ng-container *ngFor="let resident of residents">
+          <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('residents')">
+        <app-field-errors [errors]="fieldErrors('residents')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

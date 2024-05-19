@@ -30,6 +30,7 @@
 ::ng-deep table.ant-table-fixed {
   table-layout: fixed;
 }
+
 ::ng-deep thead.ant-table-thead > tr:first-child > th:first-child {
   width: 4rem;
 }
@@ -46,6 +47,7 @@
   .ant-list-item-meta-description {
     word-break: break-all;
   }
+
   .ant-modal {
     h4 {
       font-size: x-large;
@@ -57,6 +59,7 @@
       margin: 10px 0;
     }
   }
+
   .modal-confirm {
     i {
       padding: 1rem;
@@ -286,9 +289,15 @@
     nz-date-picker {
       width: 80%;
       margin-right: 0.75rem;
+    }
+  }
 
-      .ant-calendar-picker {
-        width: 100% !important;
+  nz-form-control {
+    nz-date-picker {
+      nz-picker {
+        span.ant-calendar-picker {
+          width: 100% !important;
+        }
       }
     }
   }
