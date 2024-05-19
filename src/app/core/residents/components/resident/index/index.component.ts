@@ -138,11 +138,10 @@ export class IndexComponent implements OnInit, OnDestroy {
   }
 
   group_changes($event: any) {
-    this.subscribe('get_title');
-
     this.options.type = this.group.type;
     this.options.type_id = this.group.id;
 
+    this.subscribe('get_title');
     this.options = Object.assign({}, this.options);
   }
 

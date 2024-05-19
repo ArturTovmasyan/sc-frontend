@@ -11,9 +11,8 @@
   margin: -1.5rem -30px 1.5rem;
 }
 
-//::ng-deep {
 .resident-pages {
-  margin-left: auto;
+  margin: 0 auto;
 
   a {
     &.ant-btn {
@@ -28,18 +27,3 @@
     }
   }
 }
-
-.group-selector {
-  margin-left: auto;
-  line-height: 5rem;
-
-  i.fa {
-    padding: 0 1rem;
-  }
-
-  nz-select {
-    width: 10rem;
-  }
-}
-
-//}
