@@ -26,25 +26,6 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   protected $subscriptions: { [key: string]: Subscription; };
 
-  private static b64toBlob(b64Data, contentType = '', sliceSize = 512): Blob {
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
-
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-
-    return new Blob(byteArrays, {type: contentType});
-  }
-
   constructor(
     private title$: TitleService,
     private modal$: NzModalService,
@@ -80,9 +61,6 @@ export class ViewComponent implements OnInit, OnDestroy {
             this.documents = res;
 
             this.documents.sort((a, b) => a.title.localeCompare(b.title));
-            this.documents.forEach(v => {
-              v.file = ViewComponent.b64toBlob(v.file.replace('data:application/pdf;base64,', ''), 'application/pdf');
-            });
 
             if (params) {
               this.document = this.documents.filter(v => v.id = params.document_id).pop();
