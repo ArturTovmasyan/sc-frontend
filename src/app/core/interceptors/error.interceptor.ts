@@ -37,7 +37,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             this.auth$.sign_out();
             // TODO(haykg) location.reload(true);
           } else if (err.status === 403) {
-            console.log('FORBIDDEN');
+            // console.log('FORBIDDEN');
           }
 
           const error = {'code': err.status, 'statusText': err.statusText, 'data': err.error};
