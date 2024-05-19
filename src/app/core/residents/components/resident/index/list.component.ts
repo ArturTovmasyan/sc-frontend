@@ -17,6 +17,10 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class ListComponent extends GridComponent<Resident, ResidentService> implements OnInit, OnDestroy {
   @Input('options') set options(options: { state?: string, type?: number, type_id?: number }) {
+    this.remove_param('state');
+    this.remove_param('type');
+    this.remove_param('type_id');
+
     if (options !== undefined && options !== null) {
       if (options.state !== undefined && options.state !== null) {
         this.add_param('state', options.state);

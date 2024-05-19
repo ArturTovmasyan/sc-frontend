@@ -78,23 +78,37 @@ export class IndexComponent implements OnInit, OnDestroy {
         });
         break;
       case 'get_title':
-        switch (this.options.type) {
-          case GroupType.FACILITY:
-            params = {service: this.facility$, id: this.options.type_id};
-            break;
-          case GroupType.APARTMENT:
-            params = {service: this.apartment$, id: this.options.type_id};
-            break;
-          case GroupType.REGION:
-            params = {service: this.region$, id: this.options.type_id};
-            break;
-        }
-
-        this.$subscriptions[key] = params.service.get(params.id).pipe(first()).subscribe(res => {
-          if (res) {
-            this.title$.setTitle(res.name);
+        if (this.options.type !== null && this.options.type !== undefined) {
+          switch (this.options.type) {
+            case GroupType.FACILITY:
+              params = {service: this.facility$, id: this.options.type_id};
+              break;
+            case GroupType.APARTMENT:
+              params = {service: this.apartment$, id: this.options.type_id};
+              break;
+            case GroupType.REGION:
+              params = {service: this.region$, id: this.options.type_id};
+              break;
           }
-        });
+
+          this.$subscriptions[key] = params.service.get(params.id).pipe(first()).subscribe(res => {
+            if (res) {
+              this.title$.setTitle(res.name);
+            }
+          });
+        } else {
+          switch (this.options.state) {
+            case 'active':
+              this.title$.setTitle('Active');
+              break;
+            case 'inactive':
+              this.title$.setTitle('Inactive');
+              break;
+            case 'no-admission':
+              this.title$.setTitle('Pre-Admit');
+              break;
+          }
+        }
         break;
       case 'list_facility':
         this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
@@ -138,8 +152,8 @@ export class IndexComponent implements OnInit, OnDestroy {
   }
 
   group_changes($event: any) {
-    this.options.type = this.group.type;
-    this.options.type_id = this.group.id;
+    this.options.type = this.group !== null ? this.group.type : null;
+    this.options.type_id = this.group !== null ? this.group.id : null;
 
     this.subscribe('get_title');
     this.options = Object.assign({}, this.options);

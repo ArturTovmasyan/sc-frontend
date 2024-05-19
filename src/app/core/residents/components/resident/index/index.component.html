@@ -4,7 +4,7 @@
 
     <div class="card-header-actions">
       <nz-select *ngIf="options.state !== null && options.state !== undefined && options.state !== 'no-admission'" class="card-header-action" style="width: 250px;font-weight: normal;"
-                 nzShowSearch nzSize="small" nzPlaceHolder="Please select filter"
+                 nzShowSearch [nzAllowClear]="true" nzSize="small" nzPlaceHolder="Please select filter"
                  [(ngModel)]="group" (ngModelChange)="group_changes($event)"
       >
         <nz-option-group *ngIf="group_helper.facilities" nzLabel="FFC - Facilities">

@@ -631,4 +631,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     this.params = this.params.filter(v => v.key !== key);
     this.params.push({key: key, value: value});
   }
+
+  protected remove_param(key: string) {
+    this.params = this.params.filter(v => v.key !== key);
+  }
 }
