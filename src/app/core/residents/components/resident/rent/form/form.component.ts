@@ -185,7 +185,9 @@ export class FormComponent extends AbstractForm implements OnInit {
   before_set_form_data(data: any, previous_data?: any): void {
     super.before_set_form_data(data, previous_data);
 
-    data.start = DateHelper.convertUTC(data.start);
-    data.end = DateHelper.convertUTC(data.end);
+    if (this.edit_mode) {
+      data.start = DateHelper.convertUTC(data.start);
+      data.end = DateHelper.convertUTC(data.end);
+    }
   }
 }
