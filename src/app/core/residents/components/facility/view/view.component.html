@@ -84,6 +84,19 @@
   </div>
   <div class="col-sm-6 col-md-8">
     <div class="row">
+      <div *ngIf="true" class="col-sm-12 col-md-12">
+        <div class="card">
+          <div class="card-header">
+            Calendar
+          </div>
+          <div class="card-body">
+            <nz-empty *ngIf="!facility" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+            <app-facility-calendar *ngIf="facility" [facility_id]="facility.id"></app-facility-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div *ngIf="checkPermission(['persistence-facility_room'])" class="col-sm-12 col-md-12">
         <div class="card">
           <div class="card-header">

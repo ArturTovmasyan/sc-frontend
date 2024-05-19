@@ -4,9 +4,8 @@
   [header]="calendarHeader"
   [plugins]="calendarPlugins"
   [events]="calendarEvents"
+  (eventClick)="eventMouseEnter($event)"
 ></full-calendar>
-<!--  [eventTimeFormat]="calendarTimeFormat"-->
-<!--(eventMouseEnter)="eventMouseEnter($event)"-->
 <div class="d-flex justify-content-between" style="margin-top: 1rem;">
   <div><span class="fc-event-dot" style="background-color:#fac22b"></span> - Admission</div>
   <div><span class="fc-event-dot" style="background-color:#009da1"></span> - Rent</div>

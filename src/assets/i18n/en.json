@@ -143,6 +143,14 @@
       "responsible_person_multi": "Responsible Person Multiple (Required)",
       "responsible_person_multi_optional": "Responsible Person Multiple (Optional)",
       "additional_date": "Date Added",
+      "resident": "Resident",
+      "facility":"Facility",
+      "corporate": "Corporate",
+      "residents":"Residents",
+      "users": "Users",
+      "duration":"Duration",
+      "repeats": "Repeats",
+      "rsvp":"RSVP",
       "space": "Space"
     },
     "assessment-form-list": {

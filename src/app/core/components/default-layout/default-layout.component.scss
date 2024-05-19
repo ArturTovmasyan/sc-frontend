@@ -277,9 +277,20 @@
     }
   }
 
-  nz-form-control.sc-select-all nz-select {
-    width: 75%;
-    margin-right: 1rem;
+  nz-form-control.sc-select-all {
+    nz-select {
+      width: 80%;
+      margin-right: 0.75rem;
+    }
+
+    nz-date-picker {
+      width: 80%;
+      margin-right: 0.75rem;
+
+      .ant-calendar-picker {
+        width: 100% !important;
+      }
+    }
   }
 
   .btn {

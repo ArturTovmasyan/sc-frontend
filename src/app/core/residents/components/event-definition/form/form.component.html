@@ -2,8 +2,32 @@
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type" nzRequired>Type</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type')?'error':null">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
+      <input nz-input placeholder="Title" formControlName="title">
+      <nz-form-explain *ngIf="hasErrors('title')">
+        <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="view" nzRequired>View</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="hasErrors('view')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="view">
+        <ng-container *ngFor="let view of views">
+          <nz-option [nzLabel]="view.name" [nzValue]="view.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('view')">
+        <app-field-errors [errors]="fieldErrors('view')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="type" nzRequired>Type</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="hasErrors('type')?'error':null">
       <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type">
         <ng-container *ngFor="let type of types">
           <nz-option [nzLabel]="type.name" [nzValue]="type.id"></nz-option>
@@ -11,16 +35,6 @@
       </nz-select>
       <nz-form-explain *ngIf="hasErrors('type')">
         <app-field-errors [errors]="fieldErrors('type')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
-      <input nz-input placeholder="Title" formControlName="title">
-      <nz-form-explain *ngIf="hasErrors('title')">
-        <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -35,7 +49,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="form.get('ffc').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="ffc">FFC</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="ffc"></nz-switch>
@@ -45,7 +59,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="form.get('ihc').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="ihc">IHC</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="ihc"></nz-switch>
@@ -55,7 +69,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="form.get('il').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="il">IL</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="il"></nz-switch>
@@ -65,7 +79,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="form.get('physician').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="physician">Physician (Required)</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="physician"></nz-switch>
@@ -75,7 +89,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="form.get('physician_optional').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="physician_optional">Physician (Optional)</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="physician_optional"></nz-switch>
@@ -85,7 +99,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="form.get('responsible_person').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person">Responsible Person (Required)</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="responsible_person"></nz-switch>
@@ -95,7 +109,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="form.get('responsible_person_optional').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person_optional">Responsible Person (Optional)</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="responsible_person_optional"></nz-switch>
@@ -105,7 +119,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="form.get('responsible_person_multi').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person_multi">Responsible Person Multi (Required)</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="responsible_person_multi"></nz-switch>
@@ -115,7 +129,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="form.get('responsible_person_multi_optional').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="responsible_person_multi_optional">Responsible Person Multi (Optional)</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="responsible_person_multi_optional"></nz-switch>
@@ -125,12 +139,72 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="form.get('additional_date').enabled">
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="additional_date">Date Added</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <nz-switch formControlName="additional_date"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('additional_date')">
         <app-field-errors [errors]="fieldErrors('additional_date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('residents').enabled">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="residents">Residents</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="residents"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('residents')">
+        <app-field-errors [errors]="fieldErrors('residents')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('users').enabled">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="users">Users</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="users"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('users')">
+        <app-field-errors [errors]="fieldErrors('users')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('duration').enabled">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="duration">Duration</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="duration"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('duration')">
+        <app-field-errors [errors]="fieldErrors('duration')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('repeats').enabled">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="repeats">Repeats</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="repeats"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('repeats')">
+        <app-field-errors [errors]="fieldErrors('repeats')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('rsvp').enabled">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="rsvp">RSVP</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="rsvp"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('rsvp')">
+        <app-field-errors [errors]="fieldErrors('rsvp')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('done').enabled">
+    <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="done">Done</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="done"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('done')">
+        <app-field-errors [errors]="fieldErrors('done')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

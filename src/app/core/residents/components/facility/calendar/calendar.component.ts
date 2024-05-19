@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Observable, Subscription} from 'rxjs';
@@ -8,22 +8,24 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import {AuthGuard} from '../../../../guards/auth.guard';
-import {ResidentService} from '../../../services/resident.service';
-import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
 import {PaymentPeriodPipe} from '../../../pipes/payment-period.pipe';
 import {RentIncreaseReasonPipe} from '../../../pipes/rent-increase-reason.pipe';
 import {AdmissionType} from '../../../models/resident-admission';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
-import {ResidentEventService} from '../../../services/resident-event.service';
-import {FormComponent} from '../event/form/form.component';
+import {FormComponent} from '../event-form/form.component';
+import {FacilityService} from '../../../services/facility.service';
+import {FacilityEventService} from '../../../services/facility-event.service';
 
 @Component({
+  selector: 'app-facility-calendar',
   templateUrl: './calendar.component.html',
   providers: []
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
+
+  @Input() facility_id: Number;
 
   calendarPlugins = [dayGridPlugin, listPlugin, bootstrapPlugin]; // important!
   calendarCustomButtons = {
@@ -42,16 +44,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
   constructor(
     private sanitizer: DomSanitizer,
     private modal$: NzModalService,
-    private resident$: ResidentService,
-    private residentEvent$: ResidentEventService,
-    private residentSelector$: ResidentSelectorService,
+    private facility$: FacilityService,
+    private facilityEvent$: FacilityEventService,
     private auth_$: AuthGuard
   ) {
     this.$subscriptions = {};
   }
 
   ngOnInit(): void {
-    this.subscribe('rs_resident');
+    this.subscribe('list_calendar');
   }
 
   ngOnDestroy(): void {
@@ -66,29 +67,22 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
-      case 'rs_resident':
-        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
-          if (next) {
-            this.subscribe('list_calendar', {resident_id: next});
-          }
-        });
-        break;
       case 'list_calendar':
-        this.$subscriptions[key] = this.resident$.calendar(params.resident_id, null, null).pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.facility$.calendar(this.facility_id, null, null).pipe(first()).subscribe(res => {
           if (res) {
             this.calendarEvents = [];
 
-            res.admissions.forEach(admission => {
-              this.calendarEvents.push({
-                borderColor: 'transparent',
-                backgroundColor: '#fac22b',
-                textColor: '#ffffff',
-                id: admission.id,
-                start: moment(admission.start).format('YYYY-MM-DD'),
-                end: this.formatAdmissionEnd(admission),
-                title: (new AdmissionTypePipe()).transform(admission.admission_type)
-              });
-            });
+            // res.admissions.forEach(admission => {
+            //   this.calendarEvents.push({
+            //     borderColor: 'transparent',
+            //     backgroundColor: '#fac22b',
+            //     textColor: '#ffffff',
+            //     id: admission.id,
+            //     start: moment.utc(admission.start).format('YYYY-MM-DD'),
+            //     end: this.formatAdmissionEnd(admission),
+            //     title: (new AdmissionTypePipe()).transform(admission.admission_type)
+            //   });
+            // });
 
             res.rents.forEach(rent => {
               this.calendarEvents.push({
@@ -96,8 +90,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 backgroundColor: '#009da1',
                 textColor: '#ffffff',
                 id: rent.id,
-                start: moment(rent.start).format('YYYY-MM-DD'),
-                end: rent.end ? moment(rent.end).format('YYYY-MM-DD') : null,
+                start: moment.utc(rent.start).format('YYYY-MM-DD'),
+                end: rent.end ? moment.utc(rent.end).format('YYYY-MM-DD') : null,
                 title: (new PaymentPeriodPipe()).transform(rent.period)
               });
             });
@@ -108,8 +102,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 backgroundColor: '#1e75d7',
                 textColor: '#ffffff',
                 id: event.id,
-                start: moment(event.start).format('YYYY-MM-DD HH:mm:ss'),
-                end: event.end ? moment(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
+                start: moment.utc(event.start).format('YYYY-MM-DD HH:mm:ss'),
+                end: event.end ? moment.utc(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
                 title: event.title
               });
             });
@@ -120,8 +114,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 backgroundColor: '#d7255d',
                 textColor: '#ffffff',
                 id: event.id,
-                start: moment(event.start).format('YYYY-MM-DD HH:mm:ss'),
-                end: event.end ? moment(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
+                start: moment.utc(event.start).format('YYYY-MM-DD HH:mm:ss'),
+                end: event.end ? moment.utc(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
                 title: event.title
               });
             });
@@ -132,8 +126,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 backgroundColor: '#603e95',
                 textColor: '#ffffff',
                 id: rent_increase.id,
-                start: moment(rent_increase.start).format('YYYY-MM-DD'),
-                end: rent_increase.end ? moment(rent_increase.end).format('YYYY-MM-DD') : null,
+                start: moment.utc(rent_increase.start).format('YYYY-MM-DD'),
+                end: rent_increase.end ? moment.utc(rent_increase.end).format('YYYY-MM-DD') : null,
                 title: (new RentIncreaseReasonPipe()).transform(rent_increase.reason)
               });
             });
@@ -163,7 +157,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   show_modal_add(): void {
-    this.create_modal(FormComponent, data => this.residentEvent$.add(data), null);
+    this.create_modal(FormComponent, data => this.facilityEvent$.add(data), null);
+  }
+
+  show_modal_edit(id: number): void {
+    this.facilityEvent$.get(id).pipe(first()).subscribe(res => {
+      if (res) {
+        this.create_modal(FormComponent, data => this.facilityEvent$.edit(data), res);
+      }
+    });
   }
 
   private create_modal(form_component: any, submit: (data: any) => Observable<any>, result: any) {
@@ -195,7 +197,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              this.subscribe('rs_resident');
+              this.subscribe('list_calendar');
 
               modal.close();
             },
@@ -229,7 +231,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              this.subscribe('rs_resident');
+              this.subscribe('list_calendar');
 
               modal.close();
 
@@ -260,6 +262,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
       if (component instanceof FormComponent) {
         const form = component.formObject;
 
+        form.get('facility_id').setValue(this.facility_id);
+
         if (result !== null) {
           component.loaded.subscribe(v => {
             if (v) {
@@ -279,6 +283,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   eventMouseEnter($event: any) {
-    console.log($event);
+    this.show_modal_edit($event.event.id);
   }
 }

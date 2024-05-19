@@ -4,6 +4,11 @@ export class DateHelper {
     return new Date(newDate.getTime() + newDate.getTimezoneOffset() * 60 * 1000);
   }
 
+  public static convertFromUTC(date: string | Date) {
+    const newDate = date instanceof Date ? date : new Date(date);
+    return new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60 * 1000);
+  }
+
   public static magicDate(input: Date) {
     const date: Date = new Date(input);
     date.setUTCFullYear(date.getFullYear());

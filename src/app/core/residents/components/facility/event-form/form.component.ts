@@ -2,27 +2,26 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
-import {MedicationService} from '../../../../services/medication.service';
-import {MedicationFormFactorService} from '../../../../services/medication-form-factor.service';
-import {EventDefinitionService} from '../../../../services/event-definition.service';
-import {EventDefinition, RepeatType} from '../../../../models/event-definition';
-import {ResidentSelectorService} from '../../../../services/resident-selector.service';
-import {ResidentResponsiblePersonService} from '../../../../services/resident-responsible-person.service';
-import {ResidentPhysicianService} from '../../../../services/resident-physician.service';
-import {ResidentResponsiblePerson} from '../../../../models/resident-responsible-person';
-import {ResidentPhysician} from '../../../../models/resident-physician';
-import {DateHelper} from '../../../../../../shared/helpers/date-helper';
-import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
+import {MedicationService} from '../../../services/medication.service';
+import {MedicationFormFactorService} from '../../../services/medication-form-factor.service';
+import {EventDefinitionService} from '../../../services/event-definition.service';
+import {EventDefinition, RepeatType} from '../../../models/event-definition';
+import {ResidentResponsiblePersonService} from '../../../services/resident-responsible-person.service';
+import {ResidentPhysicianService} from '../../../services/resident-physician.service';
+import {ResidentResponsiblePerson} from '../../../models/resident-responsible-person';
+import {ResidentPhysician} from '../../../models/resident-physician';
+import {DateHelper} from '../../../../../shared/helpers/date-helper';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as ResidentPhysicianFormComponent} from '../../physician/form/form.component';
 import {FormComponent as ResidentResponsiblePersonFormComponent} from '../../responsible-person/form/form.component';
-import {FormComponent as EventDefinitionFormComponent} from '../../../event-definition/form/form.component';
-import {User} from '../../../../../models/user';
-import {Resident} from '../../../../models/resident';
-import {UserService} from '../../../../../admin/services/user.service';
-import {CoreValidator} from '../../../../../../shared/utils/core-validator';
-import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
-import {GroupType} from '../../../../models/group-type.enum';
+import {FormComponent as EventDefinitionFormComponent} from '../../event-definition/form/form.component';
+import {User} from '../../../../models/user';
+import {Resident} from '../../../models/resident';
+import {UserService} from '../../../../admin/services/user.service';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
+import {ResidentAdmissionService} from '../../../services/resident-admission.service';
+import {GroupType} from '../../../models/group-type.enum';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -80,8 +79,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private resident_responsible_person$: ResidentResponsiblePersonService,
     private resident_physician$: ResidentPhysicianService,
     private resident$: ResidentAdmissionService,
-    private user$: UserService,
-    private residentSelector$: ResidentSelectorService
+    private user$: UserService
   ) {
     super(modal$);
     this.modal_map = [
@@ -97,7 +95,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
 
-      resident_id: [null, Validators.required],
+      facility_id: [null, Validators.required],
 
       definition_id: [null, Validators.required],
 
@@ -148,7 +146,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.subscribe('list_definition');
     this.subscribe('list_user');
-    this.subscribe('rs_resident');
+    this.subscribe('vc_facility_id');
     this.subscribe('vc_all_day');
     this.subscribe('vc_no_repeat_end');
   }
@@ -355,14 +353,10 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
-      case 'rs_resident':
-        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+      case 'vc_facility_id':
+        this.$subscriptions[key] = this.form.get('facility_id').valueChanges.subscribe(next => {
           if (next) {
-            this.form.get('resident_id').setValue(next);
-
-            this.subscribe('list_resident', {facility_id: this.residentSelector$.group.value});
-            this.subscribe('list_resident_physician');
-            this.subscribe('list_resident_responsible_person');
+            this.subscribe('list_resident', {facility_id: next});
           }
         });
         break;
