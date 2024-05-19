@@ -108,6 +108,20 @@
     </nz-tab>
     <nz-tab nzTitle="Security Info">
       <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+            <ng-container *ngFor="let space of spaces">
+              <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
+            </ng-container>
+          </nz-select>
+          <nz-form-explain *ngIf="hasErrors('space_id')">
+            <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="username" nzRequired>Username</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('username')?'error':null">
           <input nz-input placeholder="Username" formControlName="username">
@@ -146,8 +160,6 @@
       </nz-form-item>
     </nz-tab>
     <nz-tab nzTitle="Role & Access Info">
-      <blockquote>Under construction!</blockquote>
-
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="roles" nzRequired>Role(s)</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('roles')?'error':null">
@@ -180,7 +192,6 @@
           </nz-form-item>
         </ng-container>
       </ng-container>
-
     </nz-tab>
   </nz-tabset>
   <nz-form-item *ngIf="formErrors()">

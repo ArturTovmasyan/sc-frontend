@@ -3,8 +3,6 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {GrantService} from '../../../services/grant.service';
-import {SpaceService} from '../../../../services/space.service';
-import {Space} from '../../../../models/space';
 import {Subscription} from 'rxjs';
 
 export interface GrantNodeInterface {
@@ -23,17 +21,11 @@ export interface GrantNodeInterface {
 })
 export class FormComponent extends AbstractForm implements OnInit {
   expandDataCache = {};
-
-  spaces: Space[];
-
-  selectedTab: number;
-
   $grantValue: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
     private grant$: GrantService,
-    private space$: SpaceService,
     private _el: ElementRef
   ) {
     super();
@@ -80,14 +72,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedTab = 0;
-
     this.form = this.formBuilder.group({
       id: [''],
       name: ['', Validators.required],
       default: [false, Validators.required],
-      space_id: [null],
-      space_default: [false, Validators.required],
       grants: [[]]
     });
 
@@ -99,20 +87,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
     });
 
-    this.space$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        res.sort((a, b) => a.name.localeCompare(b.name));
-        this.spaces = res;
-      }
-    });
-
-    this.postSubmit = (data: any) => {
-      const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
-      if (invalid_el) {
-        const tab_el = invalid_el.closest('.ant-tabs-tabpane');
-        this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
-      }
-    };
   }
 
   before_set_form_data(): void {

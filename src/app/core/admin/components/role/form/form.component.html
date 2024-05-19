@@ -1,97 +1,75 @@
-﻿<nz-tabset [nzSelectedIndex]="selectedTab">
-  <nz-tab nzTitle="General">
-    <form nz-form [formGroup]="form">
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="name" nzRequired>Name</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('name')?'error':null">
-          <input nz-input placeholder="Name" formControlName="name">
-          <nz-form-explain *ngIf="hasErrors('name')">
-            <app-field-errors [errors]="fieldErrors('name')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="default" nzRequired>Default</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24">
-          <nz-switch formControlName="default"></nz-switch>
-          <nz-form-explain *ngIf="hasErrors('default')">
-            <app-field-errors [errors]="fieldErrors('default')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
-            <ng-container *ngFor="let space of spaces">
-              <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
-            </ng-container>
-          </nz-select>
-          <nz-form-explain *ngIf="hasErrors('space_id')">
-            <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_default" nzRequired>Default for Space</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_default')?'error':null">
-          <nz-switch formControlName="space_default"></nz-switch>
-          <nz-form-explain *ngIf="hasErrors('space_default')">
-            <app-field-errors [errors]="fieldErrors('space_default')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item *ngIf="formErrors()">
-        <nz-form-control [nzSm]="24" [nzXs]="24">
-          <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
-  </nz-tab>
-  <nz-tab nzTitle="Grants">
-    <nz-table #nzTable [nzData]="form.get('grants').value" nzSize="small" nzShowPagination="false" class="grant-table">
-      <thead>
-      <tr>
-        <th nzWidth="60%">Title</th>
-        <th nzWidth="20%">Level</th>
-        <th nzWidth="20%">Identity</th>
-      </tr>
-      </thead>
-      <tbody>
-      <ng-template ngFor let-data [ngForOf]="nzTable.data">
-        <ng-template ngFor let-item [ngForOf]="expandDataCache[data.key]">
-          <tr *ngIf="(item.tree_parent&&item.tree_parent.tree_expand)||!(item.tree_parent)">
-            <td [nzIndentSize]="item.tree_level*20" [nzShowExpand]="!!item.children" [(nzExpand)]="item.tree_expand"
-                (nzExpandChange)="collapse(expandDataCache[data.key],item,$event)"
-                [attr.colspan]="!item.hasOwnProperty('level') && !item.hasOwnProperty('identity') ? 3 : (item.hasOwnProperty('level') && !item.hasOwnProperty('identity') ? 2  : null)"
-            >
-              <nz-switch nzSize="small" *ngIf="item.hasOwnProperty('enabled') && item.enabled !== null" [(ngModel)]="item.enabled"></nz-switch>&nbsp;
-              <span style="font-size: smaller">{{item.title}}</span>
-            </td>
-            <td>
-              <nz-select nzSize="small" *ngIf="item.hasOwnProperty('level') && item.level !== null" nzPlaceHolder="Please select" [(ngModel)]="item.level">
-                <nz-option [nzLabel]="'None'" [nzValue]="0"></nz-option>
-                <nz-option [nzLabel]="'View'" [nzValue]="1"></nz-option>
-                <nz-option [nzLabel]="'Edit'" [nzValue]="2"></nz-option>
-                <nz-option [nzLabel]="'Create'" [nzValue]="3"></nz-option>
-                <nz-option [nzLabel]="'Delete'" [nzValue]="4"></nz-option>
-                <nz-option [nzLabel]="'Undelete'" [nzValue]="5"></nz-option>
-              </nz-select>
-            </td>
-            <td>
-              <nz-select nzSize="small" *ngIf="item.hasOwnProperty('identity') && item.identity !== null" nzPlaceHolder="Please select" [(ngModel)]="item.identity">
-                <nz-option [nzLabel]="'All'" [nzValue]="0"></nz-option>
-                <nz-option [nzLabel]="'Several'" [nzValue]="1"></nz-option>
-                <nz-option [nzLabel]="'Own'" [nzValue]="2"></nz-option>
-              </nz-select>
-            </td>
-          </tr>
-        </ng-template>
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="name" nzRequired>Name</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('name')?'error':null">
+      <input nz-input placeholder="Name" formControlName="name">
+      <nz-form-explain *ngIf="hasErrors('name')">
+        <app-field-errors [errors]="fieldErrors('name')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="default" nzRequired>
+      Default
+      <i class="far fa-question-circle" nz-tooltip nzTitle="The default role for new registered customer."></i>
+    </nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="default"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('default')">
+        <app-field-errors [errors]="fieldErrors('default')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+  <nz-table #nzTable [nzData]="form.get('grants').value" nzSize="small" nzShowPagination="false" class="grant-table">
+    <thead>
+    <tr>
+      <th nzWidth="60%">Title</th>
+      <th nzWidth="20%">Level</th>
+      <th nzWidth="20%">Identity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-template ngFor let-data [ngForOf]="nzTable.data">
+      <ng-template ngFor let-item [ngForOf]="expandDataCache[data.key]">
+        <tr *ngIf="(item.tree_parent&&item.tree_parent.tree_expand)||!(item.tree_parent)">
+          <td [nzIndentSize]="item.tree_level*20" [nzShowExpand]="!!item.children" [(nzExpand)]="item.tree_expand"
+              (nzExpandChange)="collapse(expandDataCache[data.key],item,$event)"
+              [attr.colspan]="!item.hasOwnProperty('level') && !item.hasOwnProperty('identity') ? 3 : (item.hasOwnProperty('level') && !item.hasOwnProperty('identity') ? 2  : null)"
+          >
+            <nz-switch nzSize="small" *ngIf="item.hasOwnProperty('enabled') && item.enabled !== null"
+                       [(ngModel)]="item.enabled"></nz-switch>&nbsp;
+            <span style="font-size: smaller">{{item.title}}</span>
+          </td>
+          <td>
+            <nz-select nzSize="small" *ngIf="item.hasOwnProperty('level') && item.level !== null"
+                       nzPlaceHolder="Please select" [(ngModel)]="item.level">
+              <nz-option [nzLabel]="'None'" [nzValue]="0"></nz-option>
+              <nz-option [nzLabel]="'View'" [nzValue]="1"></nz-option>
+              <nz-option [nzLabel]="'Edit'" [nzValue]="2"></nz-option>
+              <nz-option [nzLabel]="'Create'" [nzValue]="3"></nz-option>
+              <nz-option [nzLabel]="'Delete'" [nzValue]="4"></nz-option>
+              <nz-option [nzLabel]="'Undelete'" [nzValue]="5"></nz-option>
+            </nz-select>
+          </td>
+          <td>
+            <nz-select nzSize="small" *ngIf="item.hasOwnProperty('identity') && item.identity !== null"
+                       nzPlaceHolder="Please select" [(ngModel)]="item.identity">
+              <nz-option [nzLabel]="'All'" [nzValue]="0"></nz-option>
+              <nz-option [nzLabel]="'Several'" [nzValue]="1"></nz-option>
+              <nz-option [nzLabel]="'Own'" [nzValue]="2"></nz-option>
+            </nz-select>
+          </td>
+        </tr>
       </ng-template>
-      </tbody>
-    </nz-table>
-  </nz-tab>
-</nz-tabset>
+    </ng-template>
+    </tbody>
+  </nz-table>
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
 
 <ng-template #tplFormErrors>
   <app-form-errors [errors]="formErrors()"></app-form-errors>

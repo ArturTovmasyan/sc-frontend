@@ -53,7 +53,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       grants: this.formBuilder.group({}),
 
-      // role_id: [null],
       space_id: [null],
     });
 
