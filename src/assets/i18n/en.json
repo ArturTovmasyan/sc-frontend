@@ -282,6 +282,7 @@
       "id": "ID",
       "diagnosis": "Diagnosis",
       "type": "Type",
+      "acronym": "Acronym",
       "notes": "Notes"
     },
     "resident-allergy-medication-list": {
