@@ -324,7 +324,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
-      if (component instanceof FormComponent) {
+      if (component instanceof FormComponent || component instanceof FacilityEventFormComponent ) {
         const form = component.formObject;
 
         if (result !== null) {
