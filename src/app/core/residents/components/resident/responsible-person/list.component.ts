@@ -26,19 +26,19 @@ export class ListComponent implements OnInit {
     private title$: TitleService,
     private modal$: NzModalService,
     private route$: ActivatedRoute,
-    private resitentSelector$: ResidentSelectorService,
+    private residentSelector$: ResidentSelectorService,
   ) {
     this.selected_tab = 0;
   }
 
   ngOnInit(): void {
-    this.resitentSelector$.resident.subscribe(next => {
+    this.residentSelector$.resident.subscribe(next => {
       this.reload_data();
     });
   }
 
   reload_data() {
-    this.service$.all([{key: 'resident_id', value: `${this.resitentSelector$.resident.value}`}])
+    this.service$.all([{key: 'resident_id', value: `${this.residentSelector$.resident.value}`}])
       .pipe(first()).subscribe(next => {
       if (next) {
         this.responsible_persons = next;

@@ -19,6 +19,10 @@
 }
 
 ::ng-deep {
+  .ant-btn > .anticon {
+    vertical-align: baseline;
+  }
+
   .ant-tabs .ant-tabs-left-bar .ant-tabs-tab {
     text-align: left;
   }
