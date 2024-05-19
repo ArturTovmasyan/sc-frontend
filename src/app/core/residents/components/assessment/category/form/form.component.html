@@ -62,7 +62,7 @@
           <td>
             <nz-form-item>
               <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('rows.'+i+'.score')?'error':null">
-                <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="0.1" nzSize="small" placeholder="Score"
+                <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="0.1" nzSize="small" nzPlaceHolder="Score"
                                  formControlName="score"></nz-input-number>
                 <nz-form-explain *ngIf="hasErrors('rows.'+i+'.score')">
                   <app-field-errors [errors]="fieldErrors('rows.'+i+'.score')"></app-field-errors>

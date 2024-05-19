@@ -65,7 +65,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="license_capacity" nzRequired>Licence capacity</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('license_capacity')?'error':null">
-      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" placeholder="Licence capacity"
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Licence capacity"
                        formControlName="license_capacity"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('license_capacity')">
         <app-field-errors [errors]="fieldErrors('license_capacity')"></app-field-errors>
@@ -76,7 +76,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="capacity" nzRequired>Resident capacity</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('capacity')?'error':null">
-      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" placeholder="Resident capacity"
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Resident capacity"
                        formControlName="capacity"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('capacity')">
         <app-field-errors [errors]="fieldErrors('capacity')"></app-field-errors>

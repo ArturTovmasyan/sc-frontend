@@ -14,7 +14,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="level_low" nzRequired>Level Low</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('level_low')?'error':null">
-      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" placeholder="Level Low"
+      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" nzPlaceHolder="Level Low"
                        formControlName="level_low"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('level_low')">
         <app-field-errors [errors]="fieldErrors('level_low')"></app-field-errors>
@@ -24,7 +24,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="level_high">Level High</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('level_high')?'error':null">
-      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" placeholder="Level High"
+      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" nzPlaceHolder="Level High"
                        formControlName="level_high"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('level_high')">
         <app-field-errors [errors]="fieldErrors('level_high')"></app-field-errors>

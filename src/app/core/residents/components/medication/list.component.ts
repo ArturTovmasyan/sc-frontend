@@ -5,7 +5,6 @@ import {GridComponent} from '../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {Medication} from '../../models/medication';
 import {ModalFormService} from '../../../../shared/services/modal-form.service';
-import {ButtonBarComponent} from '../../../../shared/components/modal/button-bar.component';
 
 @Component({
   templateUrl: '../../../../shared/components/grid/grid.component.html',

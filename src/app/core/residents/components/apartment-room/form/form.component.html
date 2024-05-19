@@ -36,7 +36,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="floor" nzRequired>Floor</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('floor')?'error':null">
-      <nz-input-number [nzMin]="1" [nzMax]="99" [nzStep]="1" placeholder="Floor"
+      <nz-input-number [nzMin]="1" [nzMax]="99" [nzStep]="1" nzPlaceHolder="Floor"
                        formControlName="floor"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('floor')">
         <app-field-errors [errors]="fieldErrors('floor')"></app-field-errors>

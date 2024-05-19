@@ -51,7 +51,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="amount" nzRequired>Amount</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('amount')?'error':null">
-      <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" placeholder="Amount"
+      <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" nzPlaceHolder="Amount"
                        formControlName="amount"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('amount')">
         <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
@@ -111,7 +111,7 @@
           {{ get_title(i) }}
         </td>
         <td>
-          <nz-input-number [nzMin]="0" [nzStep]="0.01" nzSize="small" placeholder="Amount"
+          <nz-input-number [nzMin]="0" [nzStep]="0.01" nzSize="small" nzPlaceHolder="Amount"
                            formControlName="amount"></nz-input-number>
         </td>
         <td class="text-center">
