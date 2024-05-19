@@ -79,7 +79,7 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
         this.loading = true;
         this.params = this.params.filter(v => v.key !== 'discontinued');
         this.params.push({key: 'discontinued', value: value});
-        super.init();
+        super.init(true);
 
         this.buttons = [];
         this.buttons.push(this.get_show_hide_button());

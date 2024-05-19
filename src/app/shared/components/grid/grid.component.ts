@@ -79,7 +79,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     }
   }
 
-  init(): void {
+  init(reset: boolean = false): void {
     this.load_grid_fields().subscribe((data: any) => {
       this.button_shows = data.buttons;
       this.fields = data.fields;
@@ -133,7 +133,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
         }
       );
 
-      this.reload_data();
+      this.reload_data(reset);
     });
   }
 
