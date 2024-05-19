@@ -76,6 +76,10 @@ export class ReportService {
       request_params = request_params.append('assessment_id', params.assessment_id);
     }
 
+    if (params.assessment_form_id) {
+      request_params = request_params.append('assessment_form_id', params.assessment_form_id);
+    }
+
     return request_params;
   }
 }

@@ -11,8 +11,8 @@ import {ResidentSelectorService} from '../../../services/resident-selector.servi
 import {GroupHelper} from '../../../helper/group-helper';
 import {ResidentAdmissionService} from '../../../services/resident-admission.service';
 import {DateHelper} from '../../../../../shared/helpers/date-helper';
-import {ResidentAssessment} from '../../../models/resident-assessment';
-import {ResidentAssessmentService} from '../../../services/resident-assessment.service';
+import {AssessmentForm} from '../../../models/assessment-form';
+import {AssessmentFormService} from '../../../services/assessment-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -23,7 +23,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   protected group_helper: GroupHelper;
 
   residents: Resident[];
-  assessments: ResidentAssessment[];
+  assessments: AssessmentForm[];
 
   format_date: string = 'MM/dd/yyyy';
   format_date_from: string = 'MM/yyyy';
@@ -63,7 +63,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private facility$: FacilityService,
     private apartment$: ApartmentService,
     private region$: RegionService,
-    private residentAssessment$: ResidentAssessmentService,
+    private assessmentForm$: AssessmentFormService,
     private residentAdmission$: ResidentAdmissionService,
     private residentSelector$: ResidentSelectorService,
   ) {
@@ -82,7 +82,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       resident_id: [null, Validators.required],
       resident_all: [false, Validators.required],
 
-      assessment_id: [null, Validators.required],
+      assessment_form_id: [null, Validators.required],
 
       date: [new Date(), Validators.required],
 
@@ -93,7 +93,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     });
 
     this.form.disable();
-    this.form.get('group').enable();
 
     this.subscribe('rs_resident');
     this.subscribe('rs_type');
@@ -103,6 +102,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_apartment');
     this.subscribe('list_region');
 
+    this.subscribe('list_assessment');
     this.subscribe('list_admission');
     this.subscribe('vc_resident_all');
     this.subscribe('vc_group_all');
@@ -111,11 +111,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
-      case 'list_resident_assessment':
-        this.$subscriptions[key] = this.residentAssessment$.all([{
-          key: 'resident_id',
-          value: params.resident_id
-        }]).pipe(first()).subscribe(res => {
+      case 'list_assessment':
+        this.$subscriptions[key] = this.assessmentForm$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.assessments = res;
           }
@@ -170,8 +167,6 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {
             this.form.get('resident_id').setValue(next);
-
-            this.subscribe('list_resident_assessment', {resident_id: next});
           }
         });
         break;
@@ -227,9 +222,9 @@ export class FormComponent extends AbstractForm implements OnInit {
   public init_report_parameters(title: string, parameters: any) {
     this.title = title;
 
-    if (parameters.hasOwnProperty('assessment')) {
+    if (parameters.hasOwnProperty('form')) {
       this.show.assessment = true;
-      this.form.get('assessment_id').enable();
+      this.form.get('assessment_form_id').enable();
     }
 
     if (parameters.hasOwnProperty('resident')) {
@@ -237,8 +232,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       this.show.resident = true;
       this.form.get('resident_id').enable();
       this.form.get('resident_id').setValue(this.residentSelector$.resident.value);
-
-      this.subscribe('list_resident_assessment', {resident_id: this.residentSelector$.resident.value});
 
       if (parameter_config.select_all) {
         this.show.resident_all = true;
@@ -256,6 +249,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     if (parameters.hasOwnProperty('group')) {
       const parameter_config = parameters['group'];
       this.show.group = true;
+      this.form.get('group').enable();
       this.form.get('group_id').enable();
       this.form.get('group_list').enable();
 

@@ -98,15 +98,15 @@
   </nz-form-item>
 
   <nz-form-item *ngIf="show.assessment">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="assessment_id" nzRequired>Assessment</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('assessment_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="assessment_id">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="assessment_form_id" nzRequired>Assessment Form</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('assessment_form_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="assessment_form_id">
         <ng-container *ngFor="let assessment of assessments">
-          <nz-option [nzLabel]="assessment.form.title" [nzValue]="assessment.id"></nz-option>
+          <nz-option [nzLabel]="assessment.title" [nzValue]="assessment.id"></nz-option>
         </ng-container>
       </nz-select>
-      <nz-form-explain *ngIf="hasErrors('assessment_id')">
-        <app-field-errors [errors]="fieldErrors('assessment_id')"></app-field-errors>
+      <nz-form-explain *ngIf="hasErrors('assessment_form_id')">
+        <app-field-errors [errors]="fieldErrors('assessment_form_id')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
