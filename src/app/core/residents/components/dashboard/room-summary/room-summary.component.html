@@ -16,23 +16,19 @@
         <table class="table table-sm table-bordered">
           <thead>
           <tr>
-            <th class="text-center">Full Name</th>
-            <th class="text-center">Responsible Person</th>
-            <th class="text-center">Care Type</th>
-            <th class="text-center">Payment Type</th>
-            <th class="text-center">Primary Facility</th>
-            <th class="text-center">Owner</th>
+            <th class="text-center">Facility</th>
+            <th class="text-center">Room Type</th>
+            <th class="text-center">Private</th>
+            <th class="text-center">Rooms Count</th>
           </tr>
           </thead>
           <tbody>
           <ng-container *ngFor="let item of dashboardData">
             <tr>
-              <td><a [routerLink]="['/lead/lead', item.id]">{{ item.first_name }} {{ item.last_name }}</a></td>
-              <td>{{ item.responsible_person_first_name }} {{ item.responsible_person_last_name }}</td>
-              <td>{{ item.care_type ? item.care_type.title : '-' }}</td>
-              <td>{{ item.payment_type ? item.payment_type.title : '-' }}</td>
-              <td>{{ item.primary_facility ? item.primary_facility.name : '-' }}</td>
-              <td>{{ item.owner ? (item.owner.first_name + ' ' + item.owner.last_name) : '-' }}</td>
+              <td>{{ item.facility ? item.facility.name : '-' }}</td>
+              <td>{{ item.title }}</td>
+              <td class="text-right">{{ item.private ? 'Yes' : 'No' }}</td>
+              <td class="text-right">{{ item.count_rooms }}</td>
             </tr>
           </ng-container>
           </tbody>

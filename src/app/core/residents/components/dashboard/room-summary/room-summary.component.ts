@@ -8,6 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import {DateHelper} from '../../../../../shared/helpers/date-helper';
 import {LeadService} from '../../../../leads/services/lead.service';
 import {FacilityService} from '../../../services/facility.service';
+import {FacilityRoomTypeService} from '../../../services/facility-room-type.service';
 
 @Component({
   templateUrl: './room-summary.component.html',
@@ -27,7 +28,7 @@ export class RoomSummaryComponent implements OnInit, OnDestroy {
   constructor(
     private sanitizer: DomSanitizer,
     private facility$: FacilityService,
-    private service$: LeadService,
+    private service$: FacilityRoomTypeService,
     private route$: ActivatedRoute
   ) {
     this.$subscriptions = {};
