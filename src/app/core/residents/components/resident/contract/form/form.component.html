@@ -22,20 +22,6 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="period" nzRequired>Period</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('period')?'error':null">
-          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="period">
-            <ng-container *ngFor="let period of periods">
-              <nz-option [nzLabel]="(period.name)|translate" [nzValue]="period.id"></nz-option>
-            </ng-container>
-          </nz-select>
-          <nz-form-explain *ngIf="hasErrors('period')">
-            <app-field-errors [errors]="fieldErrors('period')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group_id" nzRequired>Group</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group_id')?'error':null">
           <nz-select nzShowSearch [(ngModel)]="group_id" (ngModelChange)="init_subform($event);"

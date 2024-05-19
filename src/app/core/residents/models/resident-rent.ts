@@ -1,8 +1,13 @@
 import {PaymentSource} from './payment-source';
 import {Resident} from './resident';
+import {PaymentPeriod} from './payment-period.enum';
 
-export class ResidentPayment implements IdInterface {
+export class ResidentRent implements IdInterface {
   id: number;
+
+  start: Date;
+  end: Date;
+  period: PaymentPeriod;
 
   amount: number;
   notes: string;

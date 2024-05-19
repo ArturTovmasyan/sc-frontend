@@ -42,15 +42,15 @@ export class FormComponent extends AbstractForm implements OnInit {
       last_name: ['', Validators.required],
       address_1: ['', Validators.required],
       address_2: [''],
-      office_phone: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.PHONE)])],
-      fax: ['', Validators.compose([Validators.pattern(CoreValidator.Patterns.PHONE)])],
-      emergency_phone: ['', Validators.compose([Validators.pattern(CoreValidator.Patterns.PHONE)])],
+      office_phone: ['', Validators.compose([Validators.required, CoreValidator.phone])],
+      fax: ['', Validators.compose([CoreValidator.phone])],
+      emergency_phone: ['', Validators.compose([CoreValidator.phone])],
       email: ['', Validators.compose([Validators.email])],
       website_url: [''],
 
       speciality_id: [null, Validators.required],
       speciality: this.formBuilder.group({
-        title: ['', Validators.compose([Validators.required, Validators.max(255)])]
+        title: ['', Validators.compose([Validators.required, Validators.maxLength(255)])]
       }),
 
       salutation_id: [null, Validators.required],

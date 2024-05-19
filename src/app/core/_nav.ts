@@ -13,7 +13,7 @@ export const navItems = [
   },
   {
     title: true,
-    name: 'Space???',
+    name: 'Space',
   },
   {
     url: '/residents',

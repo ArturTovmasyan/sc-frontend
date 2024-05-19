@@ -45,7 +45,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   selectedTab: number;
 
   states: { id: State, name: string }[];
-  periods: { id: PaymentPeriod, name: string }[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -72,8 +71,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       start: [new Date(), Validators.required],
       end: [new Date(), Validators.required],
-
-      period: [null, Validators.required],
 
       group_id: [null, Validators.required],
       type: [null, Validators.required],
@@ -114,14 +111,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: State.ACTIVE, name: 'Active'},
       {id: State.SUSPENDED, name: 'Suspended'},
       {id: State.TERMINATED, name: 'Terminated'}
-    ];
-
-    this.periods = [
-      {id: PaymentPeriod.HOURLY, name: 'Hourly'},
-      {id: PaymentPeriod.DAILY, name: 'Daily'},
-      {id: PaymentPeriod.WEEKLY, name: 'Weekly'},
-      {id: PaymentPeriod.MONTHLY, name: 'Monthly'},
-      {id: PaymentPeriod.YEARLY, name: 'Yearly'},
     ];
 
     this.selectedTab = 0;

@@ -34,7 +34,6 @@ export class ProfileEditComponent extends AbstractForm implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      password: ['', Validators.required],
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],

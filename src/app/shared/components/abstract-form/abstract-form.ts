@@ -217,13 +217,15 @@ export class AbstractForm {
         data[key + '_id'] = data[key] ? data[key].id : null;
         delete data[key];
 
-        form.get(key + '_id').setValue(data[key + '_id'], {emitEvent: true});
+        form.get(key + '_id').setValue(data[key + '_id']);
+        form.get(key + '_id').markAsTouched();
       } else if ((data[key] instanceof Array) && !(form.get(key) instanceof FormArray)) {
         // console.log('AR', key);
         if (data[key].length > 0 && data[key][0] != null && data[key][0].hasOwnProperty('id')) {
           data[key] = data[key].map(v => v.id);
         }
         form.get(key).setValue(data[key]);
+        form.get(key).markAsTouched();
       } else if ((data[key] instanceof Array) && (form.get(key) instanceof FormArray)) {
         // console.log('FA', key);
         // console.log('FA', data[key]);
@@ -234,7 +236,6 @@ export class AbstractForm {
         for (let i = 0; i < data[key].length; i++) {
           const skeleton = component.get_form_array_skeleton(key);
           if (skeleton instanceof FormGroup) {
-            // skeleton.setValue(data[key]);
             this.set_form_data(component, skeleton, data[key][i]);
             form_array.push(skeleton);
           } else if (skeleton instanceof FormControl) {
@@ -247,6 +248,7 @@ export class AbstractForm {
             }
 
             skeleton.setValue(data[key][i]);
+            skeleton.markAsTouched();
 
             form_array.push(skeleton);
           }
@@ -262,6 +264,7 @@ export class AbstractForm {
         // console.log('ELSE', key);
         if (form.get(key) !== null) {
           form.get(key).setValue(data[key]);
+          form.get(key).markAsTouched();
         }
       }
     });

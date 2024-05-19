@@ -1,6 +1,5 @@
 import {Resident} from './resident';
 import {ResidentType} from './resident-type.enum';
-import {PaymentPeriod} from './payment-period.enum';
 import {ApartmentBed, ApartmentRoom} from './apartment-room';
 import {FacilityRoom} from './facility-room';
 import {FacilityDiningRoom} from './facility-dining-room';
@@ -13,7 +12,6 @@ export class ResidentContract implements IdInterface {
 
   start: Date;
   end: Date;
-  period: PaymentPeriod;
 
   type: ResidentType;
   option: ContractOptionApartment | ContractOptionFacility | ContractOptionRegion;

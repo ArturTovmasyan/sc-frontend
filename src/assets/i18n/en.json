@@ -286,16 +286,17 @@
     },
     "resident-contract-list": {
       "id": "ID",
-      "period": "Period",
       "start": "Start date",
       "end": "End date",
       "type": "Type",
       "space": "Space"
     },
-    "resident-payment-list": {
+    "resident-rent-list": {
       "id": "ID",
       "resident": "Resident",
-      "date": "Date",
+      "start": "Start Date",
+      "end": "End Date",
+      "period": "Period",
       "amount": "Amount",
       "notes": "Notes",
       "sources": "Sources",

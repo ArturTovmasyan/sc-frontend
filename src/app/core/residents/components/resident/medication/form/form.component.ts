@@ -44,21 +44,21 @@ export class FormComponent extends AbstractForm implements OnInit {
       medication_id: [null, Validators.required],
       form_factor_id: [null, Validators.required],
 
-      dosage: ['', Validators.compose([Validators.required, Validators.max(10), Validators.pattern(CoreValidator.Patterns.DOSAGE)])],
-      dosage_unit: ['', Validators.compose([Validators.required, Validators.max(20), Validators.pattern(CoreValidator.Patterns.DOSAGE_UNIT)])],
+      dosage: ['', Validators.compose([Validators.required, Validators.maxLength(10), CoreValidator.dosage])],
+      dosage_unit: ['', Validators.compose([Validators.required, Validators.maxLength(20), CoreValidator.dosage_unit])],
 
       physician_id: [null, Validators.required],
 
-      notes: ['', Validators.compose([Validators.max(512)])],
+      notes: ['', Validators.compose([Validators.maxLength(512)])],
 
-      prescription_number: ['', Validators.compose([Validators.max(40)])],
+      prescription_number: ['', Validators.compose([Validators.maxLength(40)])],
 
       // Tab 2
 
-      am: ['0', Validators.compose([Validators.max(10)])],
-      nn: ['0', Validators.compose([Validators.max(10)])],
-      pm: ['0', Validators.compose([Validators.max(10)])],
-      hs: ['0', Validators.compose([Validators.max(10)])],
+      am: ['0', Validators.compose([Validators.maxLength(10)])],
+      nn: ['0', Validators.compose([Validators.maxLength(10)])],
+      pm: ['0', Validators.compose([Validators.maxLength(10)])],
+      hs: ['0', Validators.compose([Validators.maxLength(10)])],
 
       prn: [false, Validators.required],
       discontinued: [false, Validators.required],

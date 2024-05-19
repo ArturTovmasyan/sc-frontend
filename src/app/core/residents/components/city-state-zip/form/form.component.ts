@@ -19,11 +19,11 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      state_full: ['', Validators.compose([Validators.required, Validators.max(100)])],
-      state_abbr: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.STATE_ABBR)])],
-      city: ['', Validators.compose([Validators.required, Validators.max(100)])],
-      zip_main: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.ZIP_MAIN)])],
-      zip_sub: ['', Validators.compose([Validators.max(100)])],
+      state_full: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+      state_abbr: ['', Validators.compose([Validators.required, CoreValidator.state_abbr])],
+      city: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+      zip_main: ['', Validators.compose([Validators.required, CoreValidator.zip_main])],
+      zip_sub: ['', Validators.compose([Validators.maxLength(100)])],
 
       space_id: [null, Validators.required],
     });

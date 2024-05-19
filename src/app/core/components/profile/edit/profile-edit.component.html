@@ -8,17 +8,6 @@
           </div>
           <div class="card-body">
             <nz-form-item>
-              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" nzRequired>Current Password</nz-form-label>
-              <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('password')?'error':null">
-                <input nz-input type="password" id="password" formControlName="password">
-                <nz-form-explain *ngIf="hasErrors('password')">
-                  <app-field-errors [errors]="fieldErrors('password')"></app-field-errors>
-                </nz-form-explain>
-              </nz-form-control>
-            </nz-form-item>
-
-
-            <nz-form-item>
               <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>
               <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('first_name')?'error':null">
                 <input nz-input placeholder="First Name" formControlName="first_name">

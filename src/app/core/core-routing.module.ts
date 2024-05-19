@@ -51,7 +51,7 @@ import {ViewComponent as ResidentViewComponent} from './residents/components/res
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
 import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
 import {ListComponent as ResidentContractListComponent} from './residents/components/resident/contract/list.component';
-import {ListComponent as ResidentPaymentListComponent} from './residents/components/resident/payment/list.component';
+import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
 import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
 import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
@@ -339,12 +339,12 @@ const routes: Routes = [
             canActivate: [AuthGuard]
           },
           {
-            path: 'payments',
-            component: ResidentPaymentListComponent,
+            path: 'rents',
+            component: ResidentRentListComponent,
             outlet: 'resident-details',
             pathMatch: 'full',
             data: {
-              title: 'Payments',
+              title: 'Rents',
               roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
             },
             canActivate: [AuthGuard]

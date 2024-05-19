@@ -33,7 +33,7 @@ import {ProfileViewComponent} from './components/profile/view/profile-view.compo
 import {ProfileEditComponent} from './components/profile/edit/profile-edit.component';
 
 import {ListComponent as UserListComponent} from './admin/components/user/list.component';
-// import {FormComponent as UserFormComponent} from './admin/components/roles/form/form.component';
+import {FormComponent as UserFormComponent} from './admin/components/user/form/form.component';
 
 import {ListComponent as RoleListComponent} from './admin/components/role/list.component';
 import {FormComponent as RoleFormComponent} from './admin/components/role/form/form.component';
@@ -136,8 +136,8 @@ import {FormComponent as ResidentEventFormComponent} from './residents/component
 import {ListComponent as ResidentContractListComponent} from './residents/components/resident/contract/list.component';
 import {FormComponent as ResidentContractFormComponent} from './residents/components/resident/contract/form/form.component';
 
-import {ListComponent as ResidentPaymentListComponent} from './residents/components/resident/payment/list.component';
-import {FormComponent as ResidentPaymentFormComponent} from './residents/components/resident/payment/form/form.component';
+import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
+import {FormComponent as ResidentRentFormComponent} from './residents/components/resident/rent/form/form.component';
 
 import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
 import {FormComponent as ResidentAssessmentFormComponent} from './residents/components/resident/assessment/form/form.component';
@@ -217,7 +217,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ProfileEditComponent,
 
     UserListComponent,
-    // UserFormComponent,
+    UserFormComponent,
 
     RoleListComponent,
     RoleFormComponent,
@@ -303,8 +303,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentContractListComponent,
     ResidentContractFormComponent,
 
-    ResidentPaymentListComponent,
-    ResidentPaymentFormComponent,
+    ResidentRentListComponent,
+    ResidentRentFormComponent,
 
     ResidentPhysicianListComponent,
     ResidentPhysicianFormComponent,
@@ -348,6 +348,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EventDefinitionFormComponent,
   ],
   entryComponents: [
+    UserFormComponent,
+
     RoleFormComponent,
 
     AllergensFormComponent,
@@ -395,7 +397,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentResponsiblePersonFormComponent,
     ResidentEventFormComponent,
     ResidentContractFormComponent,
-    ResidentPaymentFormComponent,
+    ResidentRentFormComponent,
     ResidentPhysicianFormComponent,
     ResidentDiagnoseFormComponent,
     ResidentAllergyMedicationFormComponent,

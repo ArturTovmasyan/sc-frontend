@@ -6,6 +6,7 @@ import {PaymentSource} from '../../../../models/payment-source';
 import {PaymentSourceService} from '../../../../services/payment-source.service';
 import {ActivatedRoute} from '@angular/router';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
+import {PaymentPeriod} from '../../../../models/payment-period.enum';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -17,6 +18,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   resident_id: number;
 
   sources: { id: number, amount: number }[] = [];
+  periods: { id: PaymentPeriod, name: string }[];
 
   constructor(private formBuilder: FormBuilder, private payment_source$: PaymentSourceService, private route$: ActivatedRoute) {
     super();
@@ -28,10 +30,13 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
 
-      date: [new Date(), Validators.required],
+      start: [new Date(), Validators.required],
+      end: [new Date(), Validators.required],
 
-      notes: ['', Validators.compose([Validators.max(512)])],
-      amount: [0, Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.PAYMENT_AMOUNT)])],
+      period: [null, Validators.required],
+
+      notes: ['', Validators.compose([Validators.maxLength(512)])],
+      amount: [0, Validators.compose([Validators.required, CoreValidator.payment_amount])],
 
       source: this.formBuilder.array([]),
 
@@ -46,6 +51,14 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.after_set_form_data();
       }
     });
+
+    this.periods = [
+      {id: PaymentPeriod.HOURLY, name: 'Hourly'},
+      {id: PaymentPeriod.DAILY, name: 'Daily'},
+      {id: PaymentPeriod.WEEKLY, name: 'Weekly'},
+      {id: PaymentPeriod.MONTHLY, name: 'Monthly'},
+      {id: PaymentPeriod.YEARLY, name: 'Yearly'},
+    ];
 
   }
 

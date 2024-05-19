@@ -22,7 +22,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.form = this.formBuilder.group({
       id: [''],
-      description: ['', Validators.compose([Validators.required, Validators.max(512)])],
+      description: ['', Validators.compose([Validators.required, Validators.maxLength(512)])],
       diet_id: [null, Validators.required],
 
       resident_id: [this.resident_id, Validators.required]
