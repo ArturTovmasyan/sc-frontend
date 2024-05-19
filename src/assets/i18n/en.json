@@ -245,7 +245,7 @@
       "prn": "PRN",
       "discontinued": "DC",
       "treatment": "TR",
-      "notes": "Notes",
+      "notes": "Instructions",
       "prescription_number": "Prescription #"
     },
     "responsible-person-list": {
