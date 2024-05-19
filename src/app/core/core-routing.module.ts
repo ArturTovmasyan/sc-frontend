@@ -63,6 +63,7 @@ import {ListComponent as ResidentReportListComponent} from './residents/componen
 import {HistoryComponent as ResidentHistoryComponent} from './residents/components/resident/history/history.component';
 import {HomeComponent} from './residents/components/home/home.component';
 import {InvitationComponent} from './components/account/invitation/invitation.component';
+import {LoggedActivate} from './guards/logged.guard';
 
 
 const routes: Routes = [
@@ -569,12 +570,12 @@ const routes: Routes = [
     ]
   },
 
-  {path: 'sign-up', component: SignUpComponent, data: {title: 'Sign Up'}},
-  {path: 'activate', component: ActivateComponent, data: {title: 'Account Activation'}},
-  {path: 'accept', component: InvitationComponent, data: {title: 'Accept Invitation'}},
-  {path: 'forgot-password', component: ForgotPasswordComponent, data: {title: 'Forgot password'}},
-  {path: 'reset-password', component: ResetPasswordComponent, data: {title: 'Reset password'}},
-  {path: 'sign-in', component: SignInComponent, data: {title: 'Sign In'}},
+  {path: 'sign-up', component: SignUpComponent, data: {title: 'Sign Up'}, canActivate: [LoggedActivate]},
+  {path: 'activate', component: ActivateComponent, data: {title: 'Account Activation'}, canActivate: [LoggedActivate]},
+  {path: 'accept', component: InvitationComponent, data: {title: 'Accept Invitation'}, canActivate: [LoggedActivate]},
+  {path: 'forgot-password', component: ForgotPasswordComponent, data: {title: 'Forgot password'}, canActivate: [LoggedActivate]},
+  {path: 'reset-password', component: ResetPasswordComponent, data: {title: 'Reset password'}, canActivate: [LoggedActivate]},
+  {path: 'sign-in', component: SignInComponent, data: {title: 'Sign In'}, canActivate: [LoggedActivate]},
   {path: 'sign-out', component: SignOutComponent, data: {title: 'Sign Out'}},
 
   {path: '404', component: P404Component, data: {title: 'Page 404'}},
