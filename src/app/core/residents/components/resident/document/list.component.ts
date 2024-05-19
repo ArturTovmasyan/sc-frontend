@@ -42,6 +42,7 @@ export class ListComponent extends GridComponent<ResidentDocument, ResidentDocum
           this.service$.download(ids[0], () => {
             this.loading = false;
           }, (error) => {
+            this.loading = false;
             this.message$.error(error.data.error, {nzDuration: 10000});
           });
         }

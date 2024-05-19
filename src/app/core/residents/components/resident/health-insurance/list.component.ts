@@ -42,6 +42,7 @@ export class ListComponent extends GridComponent<ResidentHealthInsurance, Reside
           this.service$.download(ids[0], 1, () => {
             this.loading = false;
           }, (error) => {
+            this.loading = false;
             this.message$.error(error.data.error, {nzDuration: 10000});
           });
         }
@@ -58,6 +59,7 @@ export class ListComponent extends GridComponent<ResidentHealthInsurance, Reside
           this.service$.download(ids[0], 2, () => {
             this.loading = false;
           }, (error) => {
+            this.loading = false;
             this.message$.error(error.data.error, {nzDuration: 10000});
           });
         }

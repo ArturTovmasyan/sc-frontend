@@ -45,6 +45,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
           this.report$.report('assessment', 'blank', 'pdf', {assessment_id: ids[0]}, () => {
             this.loading = false;
           }, (error) => {
+            this.loading = false;
             this.message$.error(error.data.error, {nzDuration: 10000});
           });
         }
@@ -64,6 +65,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
           this.report$.report('assessment', 'filled', 'pdf', {assessment_id: ids[0]}, () => {
             this.loading = false;
           }, (error) => {
+            this.loading = false;
             this.message$.error(error.data.error, {nzDuration: 10000});
           });
         }
