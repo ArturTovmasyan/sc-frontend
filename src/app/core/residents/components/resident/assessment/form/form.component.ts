@@ -55,9 +55,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       } else {
         if (rows[idx]) {
           const row = c.rows.filter(r => r.id === rows[idx]).pop();
-          score.push(row.score);
-        } else {
-          score.push(0);
+          if (row) {
+            score.push(row.score);
+          }
         }
       }
     });
