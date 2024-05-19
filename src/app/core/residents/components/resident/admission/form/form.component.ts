@@ -104,7 +104,8 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
 
     // TODO: review
     this.admission_types = [
-      {id: AdmissionType.ADMIT, name: 'Admit'},
+      {id: AdmissionType.LONG_ADMIT, name: 'Long-Term Admit'},
+      {id: AdmissionType.SHORT_ADMIT, name: 'Short-Term Admit'},
       {id: AdmissionType.READMIT, name: 'Re-Admit/Assign Room'},
       {id: AdmissionType.TEMPORARY_DISCHARGE, name: 'Temporary Discharge'},
       {id: AdmissionType.DISCHARGE, name: 'Discharge'}
@@ -133,7 +134,8 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
         this.$subscriptions[key] = this.form.get('admission_type').valueChanges.subscribe(next => {
           if (next) {
             switch (next) {
-              case AdmissionType.ADMIT:
+              case AdmissionType.LONG_ADMIT:
+              case AdmissionType.SHORT_ADMIT:
               case AdmissionType.READMIT:
                 this.form.get('group').enable();
                 this.form.get('group_type').enable();

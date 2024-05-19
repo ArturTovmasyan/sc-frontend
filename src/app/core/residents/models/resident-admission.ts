@@ -40,8 +40,9 @@ export class ResidentAdmission implements IdInterface {
 }
 
 export enum AdmissionType {
-  ADMIT = 1,
-  READMIT = 2,
-  TEMPORARY_DISCHARGE = 3,
-  DISCHARGE = 4
+  LONG_ADMIT = 1,
+  SHORT_ADMIT = 2,
+  READMIT = 3,
+  TEMPORARY_DISCHARGE = 4,
+  DISCHARGE = 5
 }

@@ -5,8 +5,10 @@ import {AdmissionType} from '../models/resident-admission';
 export class AdmissionTypePipe implements PipeTransform {
   transform(value: AdmissionType) {
     switch (value) {
-      case AdmissionType.ADMIT:
-        return 'Admit';
+      case AdmissionType.LONG_ADMIT:
+        return 'Long-Term Admit';
+      case AdmissionType.SHORT_ADMIT:
+        return 'Short-Term Admit';
       case  AdmissionType.READMIT:
         return 'Re-admit';
       case  AdmissionType.TEMPORARY_DISCHARGE:
