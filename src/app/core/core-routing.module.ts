@@ -63,6 +63,8 @@ import {ViewComponent as ResidentDocumentViewComponent} from './residents/compon
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {EventComponent as ResidentEventComponent} from './residents/components/resident/event/event.component';
 import {RentComponent as ResidentRentComponent} from './residents/components/resident/rent/rent.component';
+import {ListComponent as ResidentLedgerListComponent} from './residents/components/resident/ledger/list.component';
+import {ViewComponent as ResidentLedgerViewComponent} from './residents/components/resident/ledger/view/view.component';
 import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
 import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
@@ -176,13 +178,13 @@ const routes: Routes = [
             }
           },
           {
-              path: 'web-email/:id',
-              component: WebEmailViewComponent,
-              canActivate: [AuthGuard],
-              data: {
-                  title: 'Web Emails',
-                  permissions: ['persistence-lead-web_email']
-              }
+            path: 'web-email/:id',
+            component: WebEmailViewComponent,
+            canActivate: [AuthGuard],
+            data: {
+              title: 'Web Emails',
+              permissions: ['persistence-lead-web_email']
+            }
           },
           {
             path: 'dashboard',
@@ -773,7 +775,16 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
-
+      {
+        path: 'resident/ledger/:id',
+        component: ResidentLedgerViewComponent,
+        pathMatch: 'full',
+        data: {
+          title: 'Ledgers',
+          permissions: ['persistence-resident-resident_ledger']
+        },
+        canActivate: [AuthGuard]
+      },
       {
         path: 'resident/:id',
         component: ResidentViewComponent,
@@ -835,6 +846,17 @@ const routes: Routes = [
             data: {
               title: 'Rents',
               permissions: ['persistence-resident-resident_rent']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'ledgers',
+            component: ResidentLedgerListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Ledgers',
+              permissions: ['persistence-resident-resident_ledger']
             },
             canActivate: [AuthGuard]
           },

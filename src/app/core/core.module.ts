@@ -162,7 +162,12 @@ import {FormComponent as ResidentPhysicianReorderFormComponent} from './resident
 import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
 import {FormComponent as ResidentMedicationFormComponent} from './residents/components/resident/medication/form/form.component';
 
+import {ListComponent as ResidentLedgerListComponent} from './residents/components/resident/ledger/list.component';
+import {FormComponent as ResidentLedgerFormComponent} from './residents/components/resident/ledger/form/form.component';
+import {ViewComponent as ResidentLedgerViewComponent} from './residents/components/resident/ledger/view/view.component';
+
 import {HistoryComponent as ResidentHistoryComponent} from './residents/components/resident/history/history.component';
+import {LedgerComponent as ResidentLedgerComponent} from './residents/components/resident/ledger/ledger/ledger.component';
 
 import {ListComponent as ResidentDiagnoseListComponent} from './residents/components/resident/history/diagnose/list.component';
 import {FormComponent as ResidentDiagnoseFormComponent} from './residents/components/resident/history/diagnose/form/form.component';
@@ -175,6 +180,12 @@ import {FormComponent as ResidentAllergyOtherFormComponent} from './residents/co
 
 import {ListComponent as ResidentMedicalHistoryListComponent} from './residents/components/resident/history/medical-history/list.component';
 import {FormComponent as ResidentMedicalHistoryFormComponent} from './residents/components/resident/history/medical-history/form/form.component';
+
+import {ListComponent as ResidentExpenseItemListComponent} from './residents/components/resident/ledger/ledger/expense-item/list.component';
+import {FormComponent as ResidentExpenseItemFormComponent} from './residents/components/resident/ledger/ledger/expense-item/form/form.component';
+
+import {ListComponent as ResidentCreditDiscountItemListComponent} from './residents/components/resident/ledger/ledger/credit-discount-item/list.component';
+import {FormComponent as ResidentCreditDiscountItemFormComponent} from './residents/components/resident/ledger/ledger/credit-discount-item/form/form.component';
 
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
 import {FormComponent as ResidentDietFormComponent} from './residents/components/resident/dietary-restriction/form/form.component';
@@ -531,6 +542,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentMedicationListComponent,
     ResidentMedicationFormComponent,
 
+    ResidentLedgerListComponent,
+    ResidentLedgerFormComponent,
+    ResidentLedgerViewComponent,
+
     ResidentResponsiblePersonListComponent,
     ResidentResponsiblePersonFormComponent,
     ResidentResponsiblePersonReorderFormComponent,
@@ -564,6 +579,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentPhysicianReorderFormComponent,
 
     ResidentHistoryComponent,
+    ResidentLedgerComponent,
 
     ResidentDiagnoseListComponent,
     ResidentDiagnoseFormComponent,
@@ -576,6 +592,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentMedicalHistoryListComponent,
     ResidentMedicalHistoryFormComponent,
+
+    ResidentExpenseItemListComponent,
+    ResidentExpenseItemFormComponent,
+
+    ResidentCreditDiscountItemListComponent,
+    ResidentCreditDiscountItemFormComponent,
 
     ResidentAssessmentListComponent,
     ResidentAssessmentFormComponent,
@@ -779,6 +801,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentMedicationFormComponent,
 
+    ResidentLedgerFormComponent,
+
     ResidentResponsiblePersonFormComponent,
     ResidentResponsiblePersonReorderFormComponent,
 
@@ -807,6 +831,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentAllergyOtherFormComponent,
 
     ResidentMedicalHistoryFormComponent,
+
+    ResidentExpenseItemFormComponent,
+
+    ResidentCreditDiscountItemFormComponent,
 
     ResidentAssessmentFormComponent,
 

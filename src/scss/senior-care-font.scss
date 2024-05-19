@@ -25,6 +25,32 @@ $sc-font-size-base: 14px;
   transform: translate(0, 0); // ensures no half-pixel rendering in firefox
 }
 
+[data-icon]:before {
+  font-family: $sc-css-prefix !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="seniorcare-"]:before,
+[class*=" seniorcare-"]:before {
+  font-family: $sc-css-prefix !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .#{$sc-css-prefix} {
   &-lg {
     font-size: (4em / 3);
@@ -99,5 +125,8 @@ $sc-font-size-base: 14px;
   }
   &-plus:before {
     content: "\e00e";
+  }
+  &-ledgers:before {
+    content: "\e011";
   }
 }

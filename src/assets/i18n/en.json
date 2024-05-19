@@ -448,6 +448,25 @@
       "reason": "Reason",
       "space": "Space"
     },
+    "resident-ledger-list": {
+      "id": "ID",
+      "resident": "Resident",
+      "date_created": "Created At"
+    },
+    "resident-expense-item-list": {
+      "id": "ID",
+      "expense_item": "Expense Item",
+      "date": "Date",
+      "amount": "Amount",
+      "notes": "Notes"
+    },
+    "resident-credit-discount-item-list": {
+      "id": "ID",
+      "credit_discount_item": "Credit/Discount Item",
+      "date": "Date",
+      "amount": "Amount",
+      "notes": "Notes"
+    },
     "resident-rent-increase-list": {
       "id": "ID",
       "resident": "Resident",

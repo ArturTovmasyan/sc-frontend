@@ -56,6 +56,13 @@
          title="Rents">
         <i class="seniorcare seniorcare-3x seniorcare-rents"></i>
       </a>
+      <a *ngIf="addIfHasPermission('persistence-resident-resident_ledger')" nz-button
+         [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+         [routerLinkActive]="['active-link']"
+         [routerLink]="routeInfo('ledgers')"
+         title="Ledgers">
+        <i class="seniorcare seniorcare-3x seniorcare-ledgers"></i>
+      </a>
       <a *ngIf="addIfHasPermission('persistence-resident-resident_physician') && residentSelector$.type.value === GROUP_TYPE.FACILITY" nz-button
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
