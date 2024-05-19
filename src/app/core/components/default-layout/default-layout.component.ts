@@ -59,9 +59,12 @@ export class DefaultLayoutComponent {
 
           if (vv.hasOwnProperty('children')) {
             Object.keys(vv.children).forEach(vvv => {
-              vv.children[vvv] = vv.children[vvv].flat[0];
-
-              vv.children[vvv].url = vv.url + '/' + vv.children[vvv].url;
+              if (vv.children[vvv]) {
+                vv.children[vvv] = vv.children[vvv].flat[0];
+                if (vv.children[vvv]) {
+                  vv.children[vvv].url = vv.url + '/' + vv.children[vvv].url;
+                }
+              }
             });
           }
 
@@ -83,7 +86,12 @@ export class DefaultLayoutComponent {
 
       if (route.children && route.children.length > 0) {
         const children = [];
-        route.children.forEach(v => children.push(this.collectRoutes(v, {}, true)));
+        route.children.forEach(v => {
+          const child_routes = this.collectRoutes(v, {}, true);
+          if (child_routes) {
+            children.push(child_routes);
+          }
+        });
 
         if (children.length > 0) {
           group_data.children = children;

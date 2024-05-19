@@ -11,6 +11,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {GroupHelper} from '../../helper/group-helper';
 import {ResidentAdmissionService} from '../../services/resident-admission.service';
+import {SpaceService} from '../../../services/space.service';
+import {AuthGuard} from '../../../guards/auth.guard';
 
 @Component({
   selector: 'app-resident-selector',
@@ -34,6 +36,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     private region$: RegionService,
     private residentAdmission$: ResidentAdmissionService,
     private router$: Router,
+    private auth_$: AuthGuard,
     public residentSelector$: ResidentSelectorService
   ) {
     this.group_helper = new GroupHelper();
@@ -268,4 +271,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     return ['/resident', resident_id, {outlets: {'resident-details': [route_name]}}];
   }
 
+  addIfHasPermission(permission: string) {
+    return this.auth_$.checkPermission([permission]);
+  }
 }

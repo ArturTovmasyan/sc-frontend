@@ -196,51 +196,52 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
 
-      {
-        path: 'assessment',
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Assessment'
-        },
-        children: [
-          {
-            path: 'categories', component: AssessmentCategoryListComponent,
-            data: {
-              nav: {show: true, group: 'Residents'},
-              title: 'Categories',
-              permissions: ['persistence-assessment-category']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'forms', component: AssessmentFormListComponent,
-            data: {
-              nav: {show: true, group: 'Residents'},
-              title: 'Forms',
-              permissions: ['persistence-assessment-form']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'care-levels', component: AssessmentCareLevelListComponent,
-            data: {
-              nav: {show: true, group: 'Residents'},
-              title: 'Care Levels',
-              permissions: ['persistence-assessment-care_level']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'care-level-groups', component: AssessmentCareLevelGroupListComponent,
-            data: {
-              nav: {show: true, group: 'Residents'},
-              title: 'Care Level Groups',
-              permissions: ['persistence-assessment-care_level_group']
-            },
-            canActivate: [AuthGuard]
-          }
-        ]
-      },
+      // TODO: review sidebar
+      // {
+      //   path: 'assessment',
+      //   data: {
+      //     nav: {show: true, group: 'Residents'},
+      //     title: 'Assessment'
+      //   },
+      //   children: [
+      //     {
+      //       path: 'categories', component: AssessmentCategoryListComponent,
+      //       data: {
+      //         nav: {show: true, group: 'Residents'},
+      //         title: 'Categories',
+      //         permissions: ['persistence-assessment-category']
+      //       },
+      //       canActivate: [AuthGuard]
+      //     },
+      //     {
+      //       path: 'forms', component: AssessmentFormListComponent,
+      //       data: {
+      //         nav: {show: true, group: 'Residents'},
+      //         title: 'Forms',
+      //         permissions: ['persistence-assessment-form']
+      //       },
+      //       canActivate: [AuthGuard]
+      //     },
+      //     {
+      //       path: 'care-levels', component: AssessmentCareLevelListComponent,
+      //       data: {
+      //         nav: {show: true, group: 'Residents'},
+      //         title: 'Care Levels',
+      //         permissions: ['persistence-assessment-care_level']
+      //       },
+      //       canActivate: [AuthGuard]
+      //     },
+      //     {
+      //       path: 'care-level-groups', component: AssessmentCareLevelGroupListComponent,
+      //       data: {
+      //         nav: {show: true, group: 'Residents'},
+      //         title: 'Care Level Groups',
+      //         permissions: ['persistence-assessment-care_level_group']
+      //       },
+      //       canActivate: [AuthGuard]
+      //     }
+      //   ]
+      // },
       {
         path: 'relationships', component: RelationshipListComponent,
         data: {
@@ -262,7 +263,7 @@ const routes: Routes = [
       {
         path: 'event-types', component: EventDefinitionListComponent,
         data: {
-          nav: {show: true, group: 'Residents'},
+          nav: {show: true, group: 'Reference'},
           title: 'Event Types',
           permissions: ['persistence-common-event_definition']
         },

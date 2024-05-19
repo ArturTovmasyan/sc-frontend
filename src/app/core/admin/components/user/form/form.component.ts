@@ -9,6 +9,7 @@ import {Space} from '../../../../models/space';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {PhoneType} from '../../../../models/phone-type.enum';
 import {GrantService} from '../../../services/grant.service';
+import {AuthGuard} from '../../../../guards/auth.guard';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -28,6 +29,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private role$: RoleService,
     private grant$: GrantService,
     private space$: SpaceService,
+    private auth_$: AuthGuard,
     private _el: ElementRef
   ) {
     super();
@@ -79,8 +81,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   private add_space() {
-    this.form.addControl('space_id', new FormControl(null, [Validators.required]));
-    this.subscribe('list_space');
+    if (this.auth_$.checkPermission(['persistence-security-space'])) {
+      this.form.addControl('space_id', new FormControl(null, [Validators.required]));
+      this.subscribe('list_space');
+    }
   }
 
   protected subscribe(key: string, params?: any): void {
