@@ -12,7 +12,7 @@ export const environment = {
  * import the following file, but please comment it out in production mode
  * because it will have performance impact when throw error
   production: false,
-  apiUrl: 'http://seniorcare.local/backend'
+  apiUrl: (<any>window).location.origin + '/backend'
 };
 
 /*
