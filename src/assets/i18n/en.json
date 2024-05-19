@@ -555,6 +555,7 @@
     "lead-qualification-requirement-list": {
       "id": "ID",
       "title": "Title",
+      "use": "Use",
       "space": "Space"
     },
     "lead-lead-list": {
