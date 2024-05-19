@@ -32,6 +32,7 @@ import {ListComponent as MedicationFormFactorListComponent} from './residents/co
 import {ListComponent as RelationshipListComponent} from './residents/components/relationship/list.component';
 import {ListComponent as SalutationListComponent} from './residents/components/salutation/list.component';
 import {ListComponent as PhysicianSpecialityListComponent} from './residents/components/physician-speciality/list.component';
+import {ListComponent as RentReasonListComponent} from './residents/components/rent-reason/list.component';
 import {ListComponent as ResponsiblePersonRoleListComponent} from './residents/components/responsible-person-role/list.component';
 
 import {ListComponent as PhysicianListComponent} from './residents/components/physician/list.component';
@@ -766,6 +767,15 @@ const routes: Routes = [
           nav: {show: true, group: 'Reference'},
           title: 'Responsible Person Roles',
           permissions: ['activity-reference', 'persistence-common-responsible-person-role']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'rent-reasons', component: RentReasonListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Rent Reasons',
+          permissions: ['activity-reference', 'persistence-common-rent_reason']
         },
         canActivate: [AuthGuard]
       },
