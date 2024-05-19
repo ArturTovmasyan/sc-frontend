@@ -3,7 +3,7 @@
   [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 125, height: 32, alt: 'Senior Care'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/logo_sm.png', width: 30, height: 30, alt: 'Senior Care'}"
   [sidebarToggler]="'lg'"
-  [asideMenuToggler]="'lg'"
+  [asideMenuToggler]="asideVisible"
   [mobileAsideMenuToggler]="false">
   <p *ngIf="user && user.space"
      style="font-weight: 700;font-size: x-large;margin: 0 auto;font-family: sans-serif;">{{ user.space.name }}</p>

@@ -29,6 +29,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
 
   public change_logs: ChangeLog[];
 
+  public asideVisible: string | boolean = false;
   public licenseVisible: boolean = false;
 
   private $subscriptions: { [key: string]: Subscription; };
@@ -42,6 +43,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     private idle$: Idle
   ) {
     this.$subscriptions = {};
+    this.asideVisible = false;
 
     this.changes = new MutationObserver((mutations) => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
@@ -79,6 +81,12 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.change_log$.all().subscribe(res => {
           if (res) {
             this.change_logs = res;
+
+            if (this.change_logs.length > 0) {
+              this.asideVisible = 'lg';
+            } else {
+              this.asideVisible = false;
+            }
           }
           // this.subscribe('timer_change_log');
         });

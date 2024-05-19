@@ -360,7 +360,7 @@
 </ng-template>
 
 <ng-template #json_field let-data="data">
-  <dl class="grid-definition-list">
+  <dl class="grid-definition-list" style="width: 25rem;">
     <ng-container *ngFor="let entry of data|str2json">
       <ng-container *ngFor="let item of entry|str2json|keyvalue:no_sort_order">
         <ng-container *ngIf="check_empty(item.value)">
