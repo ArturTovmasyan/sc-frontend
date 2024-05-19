@@ -114,7 +114,7 @@
               <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('avatar')?'error':null">
                 <input type="file" #avatar_file (change)="onFileChange($event)"
                        accept="image/*" style="display: none;">
-                <button nz-button (click)="select_file();">
+                <button nz-button type="button" (click)="select_file();">
                   <i nz-icon type="upload"></i><span>Select file...</span>
                 </button>
                 <nz-form-explain *ngIf="hasErrors('avatar')">

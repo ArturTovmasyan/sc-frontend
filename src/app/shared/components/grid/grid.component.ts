@@ -83,7 +83,10 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
             case 'string':
               this.filter[field.id].value = new Array(1);
               break;
+            case 'id':
             case 'date':
+            case 'datetime':
+            case 'time':
             case 'number':
               this.filter[field.id].value = new Array(2);
               break;
@@ -368,5 +371,10 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected button_action(button) {
     button.click(this.checkbox_config.ids);
+  }
+
+  protected routeInfo(route: string, id: number) {
+    const route_prefix = route.replace('/:id', '');
+    return [route_prefix, id];
   }
 }

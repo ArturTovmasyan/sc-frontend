@@ -9,7 +9,7 @@ import {Region} from '../../models/region';
 import {Resident} from '../../models/resident';
 import {ResidentService} from '../../services/resident.service';
 import {ResidentType} from '../../models/resident-type.enum';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-resident-selector',
@@ -42,6 +42,15 @@ export class ResidentSelectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.router$.events.subscribe(next => {
+      if (next instanceof NavigationEnd) {
+        if (this.route$.firstChild) {
+          this.route$.firstChild.params.subscribe(params => {
+            this.resident_id = +params['id'];
+          });
+        }
+      }
+    });
     if (this.route$.firstChild) {
       this.route$.firstChild.params.subscribe(params => {
         this.resident_id = +params['id'];
