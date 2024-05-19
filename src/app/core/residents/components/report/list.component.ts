@@ -135,26 +135,7 @@ export class ListComponent implements OnInit, OnDestroy {
             const form_data = component.formObject.value;
             component.submitted = true;
 
-            this.report$
-              .reportAsObservable(group_alias, report_alias, 'csv', form_data, true)
-              .pipe(first()).subscribe(res => {
-              if (res != null && Array.isArray(res) && res.length === 1) {
-                const url = 'https://sheet.zoho.com/sheet/importview.do?url='
-                  + encodeURIComponent(`${environment.apiUrl}/api/v1.0/report/csv-view/` + res[0]);
-
-                loading[idx] = false;
-                modal.close();
-
-                window.open(url, '_blank');
-              }
-            }, (error) => {
-              loading[idx] = false;
-              component.handleSubmitError(error);
-              component.postSubmit(null);
-            });
-
-            // this.router
-            //   .navigate(['report-csv'], { queryParams: { g: group_alias, r: report_alias, ...form_data}});
+            this.router.navigate(['report-csv'], { queryParams: { g: group_alias, r: report_alias, ...form_data}});
           }
         });
      }

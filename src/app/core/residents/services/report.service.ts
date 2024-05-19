@@ -48,6 +48,12 @@ export class ReportService {
     return this.http.get<any>(this.SERVICE_URL_BASE + `/${group_alias}/${report_alias}`, options);
   }
 
+  public reportURL(group_alias, report_alias, format, params) {
+    const request_params = this.create_request_params(format, params);
+
+    return this.SERVICE_URL_BASE + `/${group_alias}/${report_alias}?` + request_params.toString();
+  }
+
   private create_request_params(format, params, hash: boolean = false): HttpParams {
     let request_params = new HttpParams().append('format', format);
 
