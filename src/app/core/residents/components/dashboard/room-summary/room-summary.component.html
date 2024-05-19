@@ -11,9 +11,8 @@
   </div>
   <div class="card-body">
     <div class="d-flex justify-content-center">
-      <nz-empty *ngIf="!dashboardData" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
-      <div *ngIf="dashboardData" class="table-responsive">
-
+      <nz-empty *ngIf="!dashboardData || dashboardData.length === 0" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+      <div *ngIf="dashboardData && dashboardData.length > 0" class="table-responsive">
         <table class="table table-sm table-bordered">
           <thead>
           <tr>
