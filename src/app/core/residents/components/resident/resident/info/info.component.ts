@@ -89,6 +89,8 @@ export class InfoComponent implements OnInit {
 
             this.resident$.last_admission(this.resident_id).pipe(first()).subscribe(last_admission => {
               if (last_admission) {
+                this.admission = last_admission;
+
                 this.residentSelector$.type.next(last_admission.group_type);
                 this.residentSelector$.group.next(GroupHelper.get_group_id(last_admission));
               } else {
