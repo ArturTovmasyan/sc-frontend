@@ -99,7 +99,7 @@
           </nz-select>
         </td>
         <td>
-          <button [style.float]="'right'" type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
+          <button type="button" [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
                   (click)="add_source();">
             <i nz-icon type="plus"></i>
           </button>
@@ -115,7 +115,7 @@
                            formControlName="amount"></nz-input-number>
         </td>
         <td class="text-center">
-          <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_source(i);">
+          <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_source(i);">
             <i nz-icon type="minus"></i>
           </button>
         </td>

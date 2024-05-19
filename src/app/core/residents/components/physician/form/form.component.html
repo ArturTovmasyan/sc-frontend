@@ -131,7 +131,7 @@
   <fieldset formArrayName="phones">
     <legend class="senior-care-legend">
       <span style="display: inline-block;margin-right: 4px;color: #f5222d;font-size: 14px;font-family: SimSun,sans-serif;line-height: 1;">*</span> Phone Number(s)
-      <button [style.float]="'right'" type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
+      <button type="button" [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
               (click)="add_field('phones');">
         <i nz-icon type="plus"></i>
       </button>
@@ -199,7 +199,7 @@
             </nz-form-item>
           </td>
           <td class="text-center">
-            <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_field('phones', i);">
+            <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_field('phones', i);">
               <i nz-icon type="minus"></i>
             </button>
           </td>

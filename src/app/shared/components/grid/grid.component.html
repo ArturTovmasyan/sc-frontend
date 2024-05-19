@@ -14,19 +14,19 @@
 <ng-template #table>
   <div class="d-flex justify-content-between">
     <nz-button-group *ngIf="component !== null" [nzSize]="'small'">
-      <button *ngIf="button_shows.add"
+      <button type="button" *ngIf="button_shows.add"
               nz-button nzType="primary"
               [disabled]="checkbox_config.ids.length != 0"
               (click)="show_modal_add(); $event.preventDefault();">
         <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
       </button>
-      <button *ngIf="button_shows.edit"
+      <button type="button" *ngIf="button_shows.edit"
               nz-button nzType="default" [nzLoading]="loading_edit_modal"
               [disabled]="checkbox_config.ids.length != 1"
               (click)="show_modal_edit(); $event.preventDefault();">
         <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
       </button>
-      <button *ngIf="button_shows.remove"
+      <button type="button" *ngIf="button_shows.remove"
         nz-button nzType="danger"
         [disabled]="checkbox_config.ids.length == 0"
         (click)="show_modal_remove(); $event.preventDefault();">
@@ -35,7 +35,7 @@
 
       <ng-container *ngIf="fields != null && buttons_left">
         <ng-container *ngFor="let button of buttons_left">
-          <button nz-button [nzType]="button.type" (click)="button_action(button)"
+          <button type="button" nz-button [nzType]="button.type" (click)="button_action(button)"
                   [disabled]="button.free === false && (button.multiselect == false && checkbox_config.ids.length != 1)
                  || (button.multiselect == true && checkbox_config.ids.length == 0)">
             <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
@@ -48,7 +48,7 @@
 
     <nz-button-group *ngIf="fields != null && buttons_center" [nzSize]="'small'">
       <ng-container *ngFor="let button of buttons_center">
-        <button nz-button [nzType]="button.type" (click)="button_action(button)"
+        <button type="button" nz-button [nzType]="button.type" (click)="button_action(button)"
                 [disabled]="button.free === false && (button.multiselect == false && checkbox_config.ids.length != 1)
                  || (button.multiselect == true && checkbox_config.ids.length == 0)">
           <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
@@ -60,7 +60,7 @@
 
     <nz-button-group *ngIf="fields != null && buttons_right" [nzSize]="'small'">
       <ng-container *ngFor="let button of buttons_right">
-        <button nz-button [nzType]="button.type" (click)="button_action(button)"
+        <button type="button" nz-button [nzType]="button.type" (click)="button_action(button)"
                 [disabled]="button.free === false && (button.multiselect == false && checkbox_config.ids.length != 1)
                  || (button.multiselect == true && checkbox_config.ids.length == 0)">
           <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
@@ -75,10 +75,10 @@
       <input type="text" nz-input placeholder="Search..." [(ngModel)]="search_query" (change)="search();" />
     </nz-input-group>
     <ng-template #suffixIconButton>
-      <button nz-button [nzSize]="'small'" nzType="primary" nzSearch (click)="search();"><i nz-icon type="search"></i></button>
+      <button type="button" nz-button [nzSize]="'small'" nzType="primary" nzSearch (click)="search();"><i nz-icon type="search"></i></button>
     </ng-template>
     <!--<nz-button-group [nzSize]="'small'">-->
-      <!--<button nz-button nzType="dashed" (click)="download_pdf()">-->
+      <!--<button type="button" nz-button nzType="dashed" (click)="download_pdf()">-->
       <!--<i nz-icon type="file-pdf"></i> {{ "grid.pdf"|translate }}-->
       <!--</button>-->
     <!--</nz-button-group>-->

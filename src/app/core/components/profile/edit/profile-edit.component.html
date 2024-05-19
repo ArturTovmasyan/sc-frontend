@@ -40,7 +40,7 @@
             <fieldset formArrayName="phones">
               <legend class="senior-care-legend">
                 Phone Number(s)
-                <button [style.float]="'right'" type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
+                <button type="button" [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
                         (click)="add_field('phones');">
                   <i nz-icon type="plus"></i>
                 </button>
@@ -101,7 +101,7 @@
                       </nz-form-item>
                     </td>
                     <td class="text-center">
-                      <button nz-button nzType="danger" nzSize="small" nzShape="circle"
+                      <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle"
                               (click)="remove_field('phones', i);">
                         <i nz-icon type="minus"></i>
                       </button>
@@ -117,10 +117,10 @@
               <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('avatar')?'error':null">
                 <input type="file" #avatar_file (change)="onFileChange($event)"
                        accept="image/*" style="display: none;">
-                <button nz-button nzSize="small" *ngIf="!(photo_file_name && photo_file_name !== '')" type="button" (click)="select_file();">
+                <button type="button" nz-button nzSize="small" *ngIf="!(photo_file_name && photo_file_name !== '')" (click)="select_file();">
                   <i nz-icon type="upload"></i><span>Select file...</span>
                 </button>
-                <button nz-button nzSize="small" nzType="danger" *ngIf="photo_file_name && photo_file_name !== ''" (click)="clear_file();">
+                <button type="button" nz-button nzSize="small" nzType="danger" *ngIf="photo_file_name && photo_file_name !== ''" (click)="clear_file();">
                   <i nz-icon type="close"></i>
                   {{ photo_file_name }}
                 </button>
@@ -153,7 +153,7 @@
             </nz-form-item>
           </div>
           <div class="card-footer text-right">
-            <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="form.invalid" type="submit"
+            <button type="submit" nz-button nzType="primary" [nzLoading]="loading" [disabled]="form.invalid"
                     class="btn btn-primary">
               Save
             </button>

@@ -23,7 +23,7 @@
   <fieldset formArrayName="rows">
     <legend class="senior-care-legend">
       Row(s)
-      <button [style.float]="'right'" type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
+      <button type="button" [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
               (click)="add_field('rows');">
         <i nz-icon type="plus"></i>
       </button>
@@ -71,7 +71,7 @@
             </nz-form-item>
           </td>
           <td class="text-center">
-            <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_field('rows', i);">
+            <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_field('rows', i);">
               <i nz-icon type="minus"></i>
             </button>
           </td>

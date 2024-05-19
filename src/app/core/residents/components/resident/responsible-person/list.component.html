@@ -16,7 +16,7 @@
           <strong
             style="font-size: large;">{{ rrp.responsible_person|responsible_person }}</strong>
 
-          <button class="pull-right" nz-button nzSize="small" nzType="default"
+          <button type="button" class="pull-right" nz-button nzSize="small" nzType="default"
                   (click)="show_rp_edit(rrp.responsible_person.id); $event.preventDefault();"
                   [nzLoading]="loading_rp_edit_modal">
             <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
@@ -83,19 +83,19 @@
 
 <div class="d-flex">
   <nz-button-group [nzSize]="'small'" class="ml-auto">
-    <button nz-button nzType="primary" (click)="show_modal_add(); $event.preventDefault();">
+    <button type="button" nz-button nzType="primary" (click)="show_modal_add(); $event.preventDefault();">
       <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
     </button>
-    <button *ngIf="(responsible_persons && responsible_persons.length > 0)"
+    <button type="button" *ngIf="(responsible_persons && responsible_persons.length > 0)"
             nz-button nzType="default" (click)="show_modal_edit(); $event.preventDefault();"
             [nzLoading]="loading_edit_modal">
       <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
     </button>
-    <button *ngIf="(responsible_persons && responsible_persons.length > 0)"
+    <button type="button" *ngIf="(responsible_persons && responsible_persons.length > 0)"
             nz-button nzType="danger" (click)="show_modal_remove(); $event.preventDefault();">
       <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
     </button>
-    <button *ngIf="(responsible_persons && responsible_persons.length > 1)"
+    <button type="button" *ngIf="(responsible_persons && responsible_persons.length > 1)"
             nz-button nzType="default" (click)="show_modal_reorder(); $event.preventDefault();">
       <i nz-icon type="drag"></i> Reorder
     </button>
