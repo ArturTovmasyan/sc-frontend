@@ -1,93 +1,88 @@
-<nz-empty *ngIf="!addIfHasPermission('persistence-resident-resident') || !data" class="ant-empty-normal"
-          [nzNotFoundImage]="defaultSvg"></nz-empty>
-<ng-container *ngIf="addIfHasPermission('persistence-resident-resident') && data">
-  <div *ngIf="data.facility && data.facility.length > 0" class="card">
-    <div class="card-header">
-      <div class="d-flex justify-content-between">
-        <div>
-          <span style="font-size: small;margin-right: 0.5rem;">Sort by:</span>
-          <nz-button-group [nzSize]="'small'" class="ml-auto">
-            <a nz-button nzSize="small" nzType="default" (click)="sort('resident')">
-              <i *ngIf="sort_resident === null" class="fas fa-sort"></i>
-              <i *ngIf="sort_resident === true" class="fas fa-sort-up"></i>
-              <i *ngIf="sort_resident === false" class="fas fa-sort-down"></i>
-              Resident
-            </a>
-            <a nz-button nzSize="small" nzType="default" (click)="sort('room')">
-              <i *ngIf="sort_room === null" class="fas fa-sort"></i>
-              <i *ngIf="sort_room === true" class="fas fa-sort-up"></i>
-              <i *ngIf="sort_room === false" class="fas fa-sort-down"></i>
-              Room
-            </a>
-          </nz-button-group>
-        </div>
-        <div>
-          <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
-            {{ type_name && type_name !== '' ? type_name : 'Facilities' }}
-            <i nz-icon nzType="down" class="title-caret"></i>
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between">
+      <div>
+        <span style="font-size: small;margin-right: 0.5rem;">Sort by:</span>
+        <nz-button-group [nzSize]="'small'" class="ml-auto">
+          <a nz-button nzSize="small" nzType="default" (click)="sort('resident')">
+            <i *ngIf="options.sort_resident === null" class="fas fa-sort"></i>
+            <i *ngIf="options.sort_resident === true" class="fas fa-sort-up"></i>
+            <i *ngIf="options.sort_resident === false" class="fas fa-sort-down"></i>
+            Resident
           </a>
-          <nz-dropdown-menu #menu="nzDropdownMenu">
-            <ul nz-menu>
-              <li *ngIf="facilities && facilities.length > 0" nz-menu-group
-                  nzTitle="FFC- Facilities">
-                <ul class="sc-dd-ul">
-                  <ng-container *ngFor="let facility of facilities">
-                    <li *ngIf="type_name === facility.name" nz-menu-item
-                        (click)="select_facility(facility.id, facility.name)"><strong>{{ facility.name }}</strong></li>
-                    <li *ngIf="type_name !== facility.name" nz-menu-item
-                        (click)="select_facility(facility.id, facility.name)">{{ facility.name }}</li>
-                  </ng-container>
-                </ul>
-              </li>
-            </ul>
-          </nz-dropdown-menu>
-        </div>
-        <div>
-          <div *ngIf="residents">
-            <nz-select nzShowSearch nzSize="small" [nzDropdownMatchSelectWidth]="false"
-                       nzPlaceHolder="Select Resident"
-                       [(ngModel)]="resident_id" (ngModelChange)="resident_changed()">
-              <ng-container *ngFor="let resident of residents">
-                <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
-              </ng-container>
-            </nz-select>
-          </div>
-        </div>
+          <a *ngIf="show_room_sort()" nz-button nzSize="small" nzType="default" (click)="sort('room')">
+            <i *ngIf="options.sort_room === null" class="fas fa-sort"></i>
+            <i *ngIf="options.sort_room === true" class="fas fa-sort-up"></i>
+            <i *ngIf="options.sort_room === false" class="fas fa-sort-down"></i>
+            Room
+          </a>
+        </nz-button-group>
+      </div>
+      <div>
+        <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+          {{ type_name ? type_name : 'Facilities' }}
+          <i nz-icon nzType="down" class="title-caret"></i>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li *ngIf="group_helper.facilities && group_helper.facilities.length > 0" nz-menu-group
+                nzTitle="AL- Facilities">
+              <ul class="sc-dd-ul">
+                <ng-container *ngFor="let facility of group_helper.facilities">
+                  <li *ngIf="type_name === facility.name" nz-menu-item
+                      (click)="select_group(GroupType.FACILITY, facility.id, facility.name)">
+                    <strong>{{ facility.name }}</strong></li>
+                  <li *ngIf="type_name !== facility.name" nz-menu-item
+                      (click)="select_group(GroupType.FACILITY, facility.id, facility.name)">{{ facility.name }}</li>
+                </ng-container>
+              </ul>
+            </li>
+            <li *ngIf="group_helper.regions && group_helper.regions.length > 0" nz-menu-group nzTitle="IHC - Regions">
+              <ul class="sc-dd-ul">
+                <ng-container *ngFor="let region of group_helper.regions">
+                  <li *ngIf="type_name === region.name" nz-menu-item
+                      (click)="select_group(GroupType.REGION, region.id, region.name)">
+                    <strong>{{ region.name }}</strong></li>
+                  <li *ngIf="type_name !== region.name" nz-menu-item
+                      (click)="select_group(GroupType.REGION, region.id, region.name)">{{ region.name }}</li>
+                </ng-container>
+              </ul>
+            </li>
+            <li *ngIf="group_helper.apartments && group_helper.apartments.length > 0" nz-menu-group
+                nzTitle="IL - Apartments">
+              <ul class="sc-dd-ul">
+                <ng-container *ngFor="let apartment of group_helper.apartments">
+                  <li *ngIf="type_name === apartment.name" nz-menu-item
+                      (click)="select_group(GroupType.APARTMENT, apartment.id, apartment.name)">
+                    <strong>{{ apartment.name }}</strong></li>
+                  <li *ngIf="type_name !== apartment.name" nz-menu-item
+                      (click)="select_group(GroupType.APARTMENT, apartment.id, apartment.name)">{{ apartment.name }}</li>
+                </ng-container>
+              </ul>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+      <div>
+        <div *ngIf="!residents" class="sc-residents-placeholder">&nbsp;</div>
+        <nz-select *ngIf="residents" nzShowSearch nzSize="small" [nzDropdownMatchSelectWidth]="false"
+                   nzPlaceHolder="Select Resident" [(ngModel)]="resident_id" (ngModelChange)="resident_changed()">
+          <ng-container *ngFor="let resident of residents">
+            <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
+          </ng-container>
+        </nz-select>
       </div>
     </div>
-    <div class="card-body">
-      <template [ngTemplateOutlet]="tplResidentList"
-                [ngTemplateOutletContext]="{ type: GROUP_TYPE.FACILITY, data: data.facility }">
-      </template>
-    </div>
   </div>
-  <!--<div *ngIf="data.apartment && data.apartment.length > 0" class="card">-->
-  <!--<div class="card-header">-->
-  <!--Apartments-->
-  <!--</div>-->
-  <!--<div class="card-body">-->
-  <!--<template [ngTemplateOutlet]="tplResidentList"-->
-  <!--[ngTemplateOutletContext]="{ type: GROUP_TYPE.APARTMENT, data: data.apartment }">-->
-  <!--</template>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div *ngIf="data.region && data.region.length > 0" class="card">-->
-  <!--<div class="card-header">-->
-  <!--Regions-->
-  <!--</div>-->
-  <!--<div class="card-body">-->
-  <!--<template [ngTemplateOutlet]="tplResidentList"-->
-  <!--[ngTemplateOutletContext]="{ type: GROUP_TYPE.REGION, data: data.region }">-->
-  <!--</template>-->
-  <!--</div>-->
-  <!--</div>-->
-</ng-container>
+  <div class="card-body">
+    <template [ngTemplateOutlet]="tplResidentList"
+              [ngTemplateOutletContext]="{ type: options.type, data: data }">
+    </template>
+  </div>
+</div>
 
 <ng-template #tplResidentList let-group_data="data" let-type="type">
   <ng-container *ngFor="let data of group_data; let last = last;">
-<!--    <h3 style="margin: 1rem;text-align: center">-->
-<!--      <a [routerLink]="['/facility', data.id]">{{ data.name }}</a>-->
-<!--    </h3>-->
     <ng-container *ngFor="let resident of data.residents; let index = index">
       <div *ngIf="index % 5 === 0" class="row justify-content-center">
         <template *ngIf="index + 0 < data.residents.length" [ngTemplateOutlet]="tplResident"
@@ -126,8 +121,9 @@
           <a [routerLink]="['/resident', resident.id, {outlets: {'resident-details': ['responsible-persons']}}]">
             {{ resident|resident }}
           </a><br/>
-          <span *ngIf="type === GROUP_TYPE.FACILITY || type === GROUP_TYPE.APARTMENT">
-            <ng-container *ngIf="!resident.private">{{ resident.room_number }} ({{ resident.bed_number }})</ng-container>
+          <span *ngIf="type === GroupType.FACILITY || type === GroupType.APARTMENT">
+            <ng-container *ngIf="!resident.private">{{ resident.room_number }} ({{ resident.bed_number }}
+              )</ng-container>
             <ng-container *ngIf="resident.private">{{ resident.room_number }}</ng-container>
           </span>
         </p>
