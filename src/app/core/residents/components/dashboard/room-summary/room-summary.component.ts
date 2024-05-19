@@ -21,6 +21,8 @@ export class RoomSummaryComponent implements OnInit, OnDestroy {
   public facilityName: string;
   public dashboardData: any;
 
+  public total = null;
+
   public currentDate: Date;
 
   protected $subscriptions: { [key: string]: Subscription; };
@@ -71,6 +73,8 @@ export class RoomSummaryComponent implements OnInit, OnDestroy {
         ]).pipe(first()).subscribe(res => {
           if (res) {
             this.dashboardData = res;
+
+            this.total = this.dashboardData.reduce((total, val) => total + val.count_rooms, 0);
           }
         });
         break;
