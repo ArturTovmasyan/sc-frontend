@@ -14,13 +14,13 @@
         <div nz-col [nzSpan]="24">
           <div class="text-center m-0">
             <div class="resident-photo">
-              <img *ngIf="!resident.image || !resident.image.photo_300_300" src="/assets/img/person_placeholder.png" class="img-thumbnail"
+              <img *ngIf="!resident.image || !resident.image.photo" src="/assets/img/person_placeholder.png" class="img-thumbnail"
                    style="max-height: 25rem"
                    alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
-              <img *ngIf="resident.image && resident.image.photo_300_300" src="{{ resident.image.photo_300_300 }}" class="img-thumbnail"
+              <img *ngIf="resident.image && resident.image.photo" src="{{ resident.image.photo }}" class="img-thumbnail"
                    style="max-height: 25rem"
                    alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
-              <div *ngIf="resident.image && resident.image.photo_300_300" class="edit">
+              <div *ngIf="resident.image && resident.image.photo" class="edit">
                 <button nz-button nzType="primary" (click)="show_modal_image_editor();"><i
                   class="fas fa-pencil-alt"></i>
                 </button>
