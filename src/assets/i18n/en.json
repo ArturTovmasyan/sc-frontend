@@ -434,7 +434,7 @@
       "id": "ID",
       "date": "Date",
       "contacts": "Contacts",
-      "users": "Users",
+      "participants": "Participants",
       "type": "Type",
       "organization": "Organization",
       "notes": "Notes"
