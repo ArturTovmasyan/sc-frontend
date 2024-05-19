@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FacilityDashboardService} from '../../services/facility-dashboard.service';
 import {Subscription} from 'rxjs';
@@ -21,7 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public facilities: Facility[];
   public dashboardData: any;
 
-  public todayDate: Date;
+  public currentDate: Date;
 
   protected $subscriptions: { [key: string]: Subscription; };
 
@@ -32,12 +33,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {
     this.$subscriptions = {};
 
-    this.todayDate = DateHelper.newDate();
+    this.currentDate = DateHelper.newDate();
   }
 
   ngOnInit() {
     this.subscribe('list_facility');
-    this.subscribe('list_dashboard');
+
+    this.getCurrentMonth();
   }
 
   ngOnDestroy(): void {
@@ -47,16 +49,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_dashboard':
-        this.$subscriptions[key] = this.facilityDashboard$.all().pipe(first()).subscribe(res => {
-          if (res) {
-            this.dashboardData = {};
-            res.forEach(value => {
-              const vkey = Object.keys(value.data)[0];
-              value.data = value.data[vkey];
-              this.dashboardData[value.id] = value;
-            });
-          }
-        });
+        this.$subscriptions[key] = this.facilityDashboard$
+          .all([
+            {key: 'date', value: moment(params.from).format('YYYY-MM-DD')},
+            {key: 'date', value: moment(params.to).format('YYYY-MM-DD')}
+          ])
+          .pipe(first())
+          .subscribe(res => {
+            if (res) {
+              this.dashboardData = {};
+              res.forEach(value => {
+                const vkey = Object.keys(value.data)[0];
+                value.data = value.data[vkey];
+                this.dashboardData[value.id] = value;
+              });
+            }
+          });
         break;
       case 'list_facility':
         this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
@@ -74,5 +82,49 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.$subscriptions.hasOwnProperty(key)) {
       this.$subscriptions[key].unsubscribe();
     }
+  }
+
+  show(button: string): boolean {
+    const today = moment(new Date());
+    const current = moment(this.currentDate);
+
+    switch (button) {
+      case 'previous':
+        return false;
+      case 'next':
+        return current.isSameOrAfter(today, 'month');
+    }
+  }
+
+  getCurrentMonth(): void {
+    const today = moment(new Date());
+    const fromDate = moment(today).startOf('month').toDate();
+    this.currentDate = today.toDate();
+
+    this.subscribe('list_dashboard', {from: fromDate, to: this.currentDate});
+  }
+
+  getPreviousMonth(): void {
+    const today = moment(new Date());
+    const fromDate = moment(this.currentDate).subtract(1, 'months').startOf('month').toDate();
+    this.currentDate = moment(this.currentDate).subtract(1, 'months').endOf('month').toDate();
+
+    if (today.isSame(this.currentDate, 'month')) {
+      this.currentDate = today.toDate();
+    }
+
+    this.subscribe('list_dashboard', {from: fromDate, to: this.currentDate});
+  }
+
+  getNextMonth(): void {
+    const today = moment(new Date());
+    const fromDate = moment(this.currentDate).add(1, 'months').startOf('month').toDate();
+    this.currentDate = moment(this.currentDate).add(1, 'months').endOf('month').toDate();
+
+    if (today.isSame(this.currentDate, 'month')) {
+      this.currentDate = today.toDate();
+    }
+
+    this.subscribe('list_dashboard', {from: fromDate, to: this.currentDate});
   }
 }
