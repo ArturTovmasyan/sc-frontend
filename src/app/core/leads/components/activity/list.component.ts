@@ -10,6 +10,7 @@ import {saveFile} from '../../../../shared/helpers/file-download-helper';
 import {Observable} from 'rxjs';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {ReportService} from '../../../residents/services/report.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   templateUrl: '../../../../shared/components/grid/grid.component.html',
@@ -21,7 +22,8 @@ export class ListComponent extends GridComponent<Activity, ActivityService> impl
     protected service$: ActivityService,
     protected report$: ReportService,
     protected title$: TitleService,
-    protected modal$: NzModalService
+    protected modal$: NzModalService,
+    private route$: ActivatedRoute
   ) {
     super(service$, title$, modal$);
 
@@ -60,6 +62,10 @@ export class ListComponent extends GridComponent<Activity, ActivityService> impl
         }
       }
     );
+
+    if (this.route$.snapshot.url[0].path === 'my') {
+      this.params.push({key: 'my', value: '1'});
+    }
 
     super.init();
   }
