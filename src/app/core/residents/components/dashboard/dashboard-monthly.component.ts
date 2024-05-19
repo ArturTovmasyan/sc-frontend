@@ -117,33 +117,27 @@ export class DashboardMonthlyComponent implements OnInit, OnDestroy {
   }
 
   getCurrentMonth(facility_id: number): void {
-    const fromDate = DateHelper.getPreviousYear();
-    this.currentDate = DateHelper.newDate();
+    this.currentDate = moment(DateHelper.newDate())                               .endOf('month').toDate();
+    const fromDate   = moment(this.currentDate).subtract(1, 'years').startOf('month').toDate();
 
     this.subscribe('list_dashboard', {facility_id: facility_id, from: fromDate, to: this.currentDate});
   }
 
   getPreviousMonth(): void {
-    const today = moment(DateHelper.newDate());
     const fromDate = moment(this.currentDate).subtract(2, 'years').startOf('month').toDate();
-    this.currentDate = moment(this.currentDate).subtract(1, 'years').endOf('month').toDate();
+    const toDate   = moment(this.currentDate).subtract(1, 'years').endOf('month').toDate();
 
-    if (today.isSame(this.currentDate, 'month')) {
-      this.currentDate = today.toDate();
-    }
+    this.currentDate = toDate;
 
-    this.subscribe('list_dashboard', {facility_id: this.facilityId, from: fromDate, to: this.currentDate});
+    this.subscribe('list_dashboard', {facility_id: this.facilityId, from: fromDate, to: toDate});
   }
 
   getNextMonth(): void {
-    const today = moment(DateHelper.newDate());
-    const fromDate = moment(this.currentDate).add(1, 'years').endOf('month').toDate();
-    this.currentDate = moment(this.currentDate).add(2, 'years').startOf('month').toDate();
+    const fromDate = moment(this.currentDate).startOf('month').toDate();
+    const toDate = moment(this.currentDate).add(1, 'years').endOf('month').toDate();
 
-    if (today.isSame(this.currentDate, 'month')) {
-      this.currentDate = today.toDate();
-    }
+    this.currentDate = toDate;
 
-    this.subscribe('list_dashboard', {facility_id: this.facilityId, from: fromDate, to: this.currentDate});
+    this.subscribe('list_dashboard', {facility_id: this.facilityId, from: fromDate, to: toDate});
   }
 }
