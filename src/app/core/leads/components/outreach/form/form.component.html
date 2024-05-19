@@ -30,7 +30,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="users" nzRequired>Contact</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="users" nzRequired>User(s)</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('users')?'error':null">
         <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="users">
           <ng-container *ngFor="let user of users">
@@ -63,7 +63,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="contacts" nzRequired>Contact</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="contacts" nzRequired>Contact(s)</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('contacts')?'error':null">
       <div class="add-select-container">
         <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="contacts">

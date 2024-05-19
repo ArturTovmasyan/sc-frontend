@@ -172,7 +172,7 @@ export class ButtonBarComponent implements OnInit {
             .reduce((previousValue, currentValue) => (previousValue + value[0][currentValue].sum), 0);
         }
 
-        this.create_modal(true, null, {submit: this._service$.removeBulk, relation_count: relation_count, ids: this._ids});
+        this.create_modal(true, null, {submit: data => this._service$.removeBulk(data), relation_count: relation_count, ids: this._ids});
       }
     });
   }
@@ -183,7 +183,6 @@ export class ButtonBarComponent implements OnInit {
     const modal = this.modal$.create(this.component);
     modal.modal_callback = () => this._modal_callback(null);
 
-    console.log(this._preset_modal_form_data);
     if (this._preset_modal_form_data) {
       modal.preset_modal_form_data = (form: FormGroup) => this._preset_modal_form_data(form);
     }

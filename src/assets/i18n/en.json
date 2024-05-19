@@ -425,6 +425,19 @@
       "contact": "Contact",
       "notes": "Notes"
     },
+    "lead-outreach-list": {
+      "id": "ID",
+      "date": "Date",
+      "contact": "Contact",
+      "type": "Type",
+      "organization": "Organization",
+      "notes": "Notes"
+    },
+    "lead-outreach-type-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "lead-lead-list": {
       "button": {
         "open": "Open",
