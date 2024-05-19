@@ -137,7 +137,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="dining_room_id" nzRequired>Dinning Room</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="dining_room_id" nzRequired>Dining Room</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('dining_room_id')?'error':null">
           <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="dining_room_id">
             <ng-container *ngFor="let dining_room of dining_rooms">

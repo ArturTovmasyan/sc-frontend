@@ -182,7 +182,7 @@ addIfHasPermission(!admission?'report-form-medication-list-resident-no-admission
   </div>
 
   <div *ngIf="option.dining_room" nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8" class="text-right"><strong>Dinning Room:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Dining Room:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.dining_room.title }}</div>
   </div>
   <div *ngIf="option.facility_bed && option.facility_bed.room && option.facility_bed.room.facility" nz-row

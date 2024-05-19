@@ -75,7 +75,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="ssn" nzRequired>Social Security Number</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="ssn">Social Security Number</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('ssn')?'error':null">
       <input nz-input placeholder="Social Security Number" formControlName="ssn"
              mask="000-00-0000" [showMaskTyped]="true" [dropSpecialCharacters]="false">
