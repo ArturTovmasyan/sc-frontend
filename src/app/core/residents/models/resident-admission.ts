@@ -44,5 +44,6 @@ export enum AdmissionType {
   SHORT_ADMIT = 2,
   READMIT = 3,
   TEMPORARY_DISCHARGE = 4,
-  DISCHARGE = 5
+  PENDING_DISCHARGE = 5,
+  DISCHARGE = 6
 }

@@ -108,6 +108,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: AdmissionType.SHORT_ADMIT, name: 'Short-Term Admit'},
       {id: AdmissionType.READMIT, name: 'Re-Admit/Assign Room'},
       {id: AdmissionType.TEMPORARY_DISCHARGE, name: 'Temporary Discharge'},
+      {id: AdmissionType.PENDING_DISCHARGE, name: 'Pending Discharge'},
       {id: AdmissionType.DISCHARGE, name: 'Discharge'}
     ];
 
@@ -137,6 +138,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('group_type').enable();
                 break;
               case AdmissionType.TEMPORARY_DISCHARGE:
+              case AdmissionType.PENDING_DISCHARGE:
               case AdmissionType.DISCHARGE:
                 this.form.get('group').disable();
                 this.form.get('group_type').disable();
