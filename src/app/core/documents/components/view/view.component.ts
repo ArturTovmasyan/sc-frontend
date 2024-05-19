@@ -224,7 +224,7 @@ export class ViewComponent implements OnInit, OnDestroy {
               if (res != null && Array.isArray(res) && res.length === 1) {
                 this.subscribe('list_document', {document_id: res[0]});
               } else {
-                this.subscribe('list_document');
+                this.subscribe('list_document', {document_id: this.document.id});
               }
 
               modal.close();

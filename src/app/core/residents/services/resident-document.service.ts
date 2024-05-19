@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {ResidentHealthInsurance} from '../models/resident-health-insurance';
 import {GridService} from '../../../shared/services/grid.service';
+import {ResidentDocument} from '../models/resident-document';
 import {first} from 'rxjs/operators';
 import {saveFile} from '../../../shared/helpers/file-download-helper';
 
 @Injectable({providedIn: 'root'})
-export class ResidentHealthInsuranceService extends GridService<ResidentHealthInsurance> {
+export class ResidentDocumentService extends GridService<ResidentDocument> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/health/insurance`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/document`;
   }
 
   public download(id: number, callback: any, error_callback: any) {

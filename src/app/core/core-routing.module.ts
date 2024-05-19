@@ -53,6 +53,7 @@ import {ListComponent as ResidentListComponent} from './residents/components/res
 import {ViewComponent as ResidentViewComponent} from './residents/components/resident/resident/view/view.component';
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
 import {ListComponent as ResidentHealthInsuranceListComponent} from './residents/components/resident/health-insurance/list.component';
+import {ListComponent as ResidentDocumentListComponent} from './residents/components/resident/document/list.component';
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
 import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
@@ -619,7 +620,18 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Health Insurance',
-              permissions: ['persistence-resident-health_insurance']
+              permissions: ['persistence-resident-resident_health_insurance']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'documents',
+            component: ResidentDocumentListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Documents',
+              permissions: ['persistence-resident-resident_document']
             },
             canActivate: [AuthGuard]
           },

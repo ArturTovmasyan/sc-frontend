@@ -179,6 +179,9 @@ import {FormComponent as InsuranceCompanyFormComponent} from './residents/compon
 import {ListComponent as ResidentHealthInsuranceListComponent} from './residents/components/resident/health-insurance/list.component';
 import {FormComponent as ResidentHealthInsuranceFormComponent} from './residents/components/resident/health-insurance/form/form.component';
 
+import {ListComponent as ResidentDocumentListComponent} from './residents/components/resident/document/list.component';
+import {FormComponent as ResidentDocumentFormComponent} from './residents/components/resident/document/form/form.component';
+
 import {ViewComponent as DocumentViewComponent} from './documents/components/view/view.component';
 import {FormComponent as DocumentFormComponent} from './documents/components/form/form.component';
 
@@ -478,6 +481,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentHealthInsuranceListComponent,
     ResidentHealthInsuranceFormComponent,
 
+    ResidentDocumentListComponent,
+    ResidentDocumentFormComponent,
 
     DocumentViewComponent,
     DocumentFormComponent
@@ -594,6 +599,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     InsuranceCompanyFormComponent,
     ResidentHealthInsuranceFormComponent,
+    ResidentDocumentFormComponent,
 
     DocumentFormComponent
   ],

@@ -56,39 +56,42 @@ $sc-font-size-base: 14px;
 
 .#{$sc-css-prefix} {
   &-admin:before {
-    content: "\61";
+    content: "\e000";
   }
   &-assessments:before {
-    content: "\62";
+    content: "\e001";
   }
   &-contracts:before {
-    content: "\63";
+    content: "\e002";
   }
   &-dietary:before {
-    content: "\64";
+    content: "\e003";
   }
   &-events:before {
-    content: "\65";
+    content: "\e004";
+  }
+  &-documents:before {
+    content: "\e005";
   }
   &-medical-history:before {
-    content: "\66";
+    content: "\e006";
   }
   &-medications:before {
-    content: "\67";
+    content: "\e007";
   }
   &-rents:before {
-    content: "\68";
+    content: "\e008";
   }
   &-physicians:before {
-    content: "\69";
-  }
-  &-reports:before {
-    content: "\6a";
-  }
-  &-resident:before {
-    content: "\6b";
+    content: "\e009";
   }
   &-insurance:before {
-    content: "\6c";
+    content: "\e00a";
+  }
+  &-reports:before {
+    content: "\e00b";
+  }
+  &-resident:before {
+    content: "\e00c";
   }
 }

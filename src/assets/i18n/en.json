@@ -473,7 +473,19 @@
       "insurance_company": "Insurance Company",
       "medical_record_number": "Medical Record Number",
       "group_number": "Group Number",
-      "notes": "Notes"
+      "notes": "Notes",
+      "button": {
+        "download": "Download"
+      }
+    },
+    "resident-document-list": {
+      "id": "ID",
+      "title": "Title",
+      "date": "Date",
+      "user": "User",
+      "button": {
+        "download": "Download"
+      }
     }
   },
   "list": {

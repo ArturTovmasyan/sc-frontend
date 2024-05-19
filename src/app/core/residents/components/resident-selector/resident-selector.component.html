@@ -5,7 +5,13 @@
      title="Responsible Persons">
     <i class="seniorcare seniorcare-3x seniorcare-resident"></i>
   </a>
-  <a *ngIf="addIfHasPermission('persistence-resident-health_insurance')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+  <a *ngIf="addIfHasPermission('persistence-resident-resident_document')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
+     [routerLink]="routeInfo('documents')"
+     title="Documents">
+    <i class="seniorcare seniorcare-3x seniorcare-documents"></i>
+  </a>
+  <a *ngIf="addIfHasPermission('persistence-resident-resident_health_insurance')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
      [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('health-insurance')"
      title="Health Insurance">

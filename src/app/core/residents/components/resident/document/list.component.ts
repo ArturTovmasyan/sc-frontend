@@ -1,20 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
+import {ResidentDocumentService} from '../../../services/resident-document.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
-import {ResidentHealthInsurance} from '../../../models/resident-health-insurance';
-import {ResidentHealthInsuranceService} from '../../../services/resident-health-insurance.service';
+import {ResidentDocument} from '../../../models/resident-document';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
-  providers: [ResidentHealthInsuranceService]
+  providers: [ResidentDocumentService]
 })
-export class ListComponent extends GridComponent<ResidentHealthInsurance, ResidentHealthInsuranceService> implements OnInit {
+export class ListComponent extends GridComponent<ResidentDocument, ResidentDocumentService> implements OnInit {
   constructor(
-    protected service$: ResidentHealthInsuranceService,
+    protected service$: ResidentDocumentService,
     protected title$: TitleService,
     protected modal$: NzModalService,
     private residentSelector$: ResidentSelectorService
@@ -24,7 +24,7 @@ export class ListComponent extends GridComponent<ResidentHealthInsurance, Reside
     this.card = false;
     this.component = FormComponent;
 
-    this.name = 'resident-health-insurance-list';
+    this.name = 'resident-document-list';
   }
 
   ngOnInit(): void {
