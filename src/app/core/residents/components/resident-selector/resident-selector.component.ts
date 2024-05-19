@@ -53,7 +53,6 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     });
 
     this.$subscriptions['vc_group'] = this.form.get('group').valueChanges.subscribe(next => {
-      console.log(next);
       if (next) {
         this.residentSelector$.type.next(next.type);
         this.residentSelector$.group.next(next.id);
@@ -91,7 +90,6 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
         this.$subscriptions['vc_group'].unsubscribe();
         this.form.get('group').setValue(this.get_group_data(next));
         this.$subscriptions['vc_group'] = this.form.get('group').valueChanges.subscribe(next_ => {
-          console.log(next_);
           if (next_) {
             this.residentSelector$.type.next(next_.type);
             this.residentSelector$.group.next(next_.id);
