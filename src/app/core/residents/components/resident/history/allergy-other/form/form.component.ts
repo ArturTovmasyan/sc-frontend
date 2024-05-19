@@ -39,12 +39,16 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_allergen');
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_allergen':
         this.$subscriptions[key] = this.allergen$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.allergens = res;
+
+            if (params) {
+              this.form.get('allergen_id').setValue(params.allergen_id);
+            }
           }
         });
         break;
@@ -61,12 +65,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           AllergenFormComponent,
           data => this.allergen$.add(data),
           data => {
-            this.$subscriptions[key] = this.allergen$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.allergens = res;
-                this.form.get('allergen_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_allergen', {allergen_id: data[0]});
             return null;
           });
         break;

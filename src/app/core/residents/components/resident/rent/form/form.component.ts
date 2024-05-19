@@ -55,7 +55,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_payment_source':
         this.$subscriptions[key] = this.payment_source$.all().pipe(first()).subscribe(res => {

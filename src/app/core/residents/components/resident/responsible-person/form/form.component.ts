@@ -52,12 +52,16 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_responsible_person');
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_relationship':
         this.$subscriptions[key] = this.relationship$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
           if (res) {
             this.relationships = res;
+
+            if (params) {
+              this.form.get('relationship_id').setValue(params.relationship_id);
+            }
           }
         });
         break;
@@ -65,6 +69,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.responsible_person_role$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
           if (res) {
             this.roles = res;
+
+            if (params) {
+              this.form.get('role_id').setValue(params.role_id);
+            }
           }
         });
         break;
@@ -72,6 +80,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.responsible_person$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.responsible_persons = res;
+
+            if (params) {
+              this.form.get('responsible_person_id').setValue(params.responsible_person_id);
+            }
           }
         });
         break;
@@ -88,12 +100,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           ResponsiblePersonFormComponent,
           data => this.responsible_person$.add(data),
           data => {
-            this.$subscriptions[key] = this.responsible_person$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.responsible_persons = res;
-                this.form.get('responsible_person_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_responsible_person', {responsible_person_id: data[0]});
             return null;
           });
         break;
@@ -103,12 +110,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           RelationshipFormComponent,
           data => this.relationship$.add(data),
           data => {
-            this.$subscriptions[key] = this.relationship$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.relationships = res;
-                this.form.get('relationship_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_relationship', {relationship_id: data[0]});
             return null;
           });
         break;
@@ -118,12 +120,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           ResponsiblePersonRoleFormComponent,
           data => this.responsible_person_role$.add(data),
           data => {
-            this.$subscriptions[key] = this.responsible_person_role$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.roles = res;
-                this.form.get('role_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_role', {role_id: data[0]});
             return null;
           });
         break;

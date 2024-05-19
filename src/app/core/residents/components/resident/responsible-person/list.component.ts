@@ -37,11 +37,15 @@ export class ListComponent implements OnInit {
     });
   }
 
-  reload_data() {
+  reload_data(id?: number) {
     this.service$.all([{key: 'resident_id', value: `${this.residentSelector$.resident.value}`}])
       .pipe(first()).subscribe(next => {
       if (next) {
         this.responsible_persons = next;
+
+        if (id) {
+          this.selected_tab = this.responsible_persons.findIndex(v => v === this.responsible_persons.find(value => value.id === id));
+        }
       }
     });
   }
@@ -140,7 +144,11 @@ export class ListComponent implements OnInit {
             res => {
               loading = false;
 
-              this.reload_data();
+              if (res != null && Array.isArray(res) && res.length === 1) {
+                this.reload_data(res[0]);
+              } else {
+                this.reload_data();
+              }
 
               modal.close();
             },
@@ -174,7 +182,11 @@ export class ListComponent implements OnInit {
             res => {
               loading = false;
 
-              this.reload_data();
+              if (res != null && Array.isArray(res) && res.length === 1) {
+                this.reload_data(res[0]);
+              } else {
+                this.reload_data();
+              }
 
               modal.close();
 

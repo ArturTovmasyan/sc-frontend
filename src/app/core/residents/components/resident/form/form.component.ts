@@ -83,7 +83,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_space');
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_space':
         this.$subscriptions[key] = this.space$.all().pipe(first()).subscribe(res => {
@@ -97,6 +97,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.salutation$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.salutations = res;
+
+            if (params) {
+              this.form.get('salutation_id').setValue(params.salutation_id);
+            }
           }
         });
         break;
@@ -113,12 +117,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           SalutationFormComponent,
           data => this.salutation$.add(data),
           data => {
-            this.$subscriptions[key] = this.salutation$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.salutations = res;
-                this.form.get('salutation_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_salutation', {salutation_id: data[0]});
             return null;
           });
         break;

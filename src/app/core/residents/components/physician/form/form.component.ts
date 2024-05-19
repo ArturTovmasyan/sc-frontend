@@ -68,7 +68,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_space');
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_space':
         this.$subscriptions[key] = this.space$.all().pipe(first()).subscribe(res => {
@@ -82,6 +82,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.city_state_zip$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.city_state_zips = res;
+
+            if (params) {
+              this.form.get('csz_id').setValue(params.csz_id);
+            }
           }
         });
         break;
@@ -89,6 +93,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.speciality$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.specialities = res;
+
+            if (params) {
+              this.form.get('speciality_id').setValue(params.speciality_id);
+            }
           }
         });
         break;
@@ -96,6 +104,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.salutation$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.salutations = res;
+
+            if (params) {
+              this.form.get('salutation_id').setValue(params.salutation_id);
+            }
           }
         });
         break;
@@ -112,12 +124,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           CSZFormComponent,
           data => this.city_state_zip$.add(data),
           data => {
-            this.$subscriptions[key] = this.city_state_zip$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.city_state_zips = res;
-                this.form.get('csz_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_csz', {csz_id: data[0]});
             return null;
           });
         break;
@@ -127,12 +134,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           SpecialityFormComponent,
           data => this.speciality$.add(data),
           data => {
-            this.$subscriptions[key] = this.speciality$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.specialities = res;
-                this.form.get('speciality_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_speciality', {speciality_id: data[0]});
             return null;
           });
         break;
@@ -142,12 +144,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           SalutationFormComponent,
           data => this.salutation$.add(data),
           data => {
-            this.$subscriptions[key] = this.salutation$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.salutations = res;
-                this.form.get('salutation_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_salutation', {salutation_id: data[0]});
             return null;
           });
         break;

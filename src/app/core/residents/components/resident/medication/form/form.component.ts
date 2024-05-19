@@ -13,6 +13,7 @@ import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 import {FormComponent as MedicationFormComponent} from '../../../medication/form/form.component';
 import {FormComponent as MedicationFormFactorFormComponent} from '../../../medication-form-factor/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
+import {FormComponent as PhysicianFormComponent} from '../../../physician/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -85,12 +86,16 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_physician');
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_medication':
         this.$subscriptions[key] = this.medication$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.medications = res;
+
+            if (params) {
+              this.form.get('medication_id').setValue(params.medication_id);
+            }
           }
         });
         break;
@@ -98,6 +103,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.form_factor$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.form_factors = res;
+
+            if (params) {
+              this.form.get('form_factor_id').setValue(params.form_factor_id);
+            }
           }
         });
         break;
@@ -105,6 +114,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.physician$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.physicians = res;
+
+            if (params) {
+              this.form.get('physician_id').setValue(params.physician_id);
+            }
           }
         });
         break;
@@ -121,12 +134,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           MedicationFormComponent,
           data => this.medication$.add(data),
           data => {
-            this.$subscriptions[key] = this.medication$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.medications = res;
-                this.form.get('medication_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_medication', {medication_id: data[0]});
             return null;
           });
         break;
@@ -136,12 +144,17 @@ export class FormComponent extends AbstractForm implements OnInit {
           MedicationFormFactorFormComponent,
           data => this.form_factor$.add(data),
           data => {
-            this.$subscriptions[key] = this.form_factor$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.form_factors = res;
-                this.form.get('form_factor_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_form_factor', {form_factor_id: data[0]});
+            return null;
+          });
+        break;
+      case 'physician':
+        this.create_modal(
+          this.modal$,
+          PhysicianFormComponent,
+          data => this.physician$.add(data),
+          data => {
+            this.subscribe('list_physician', {physician_id: data[0]});
             return null;
           });
         break;

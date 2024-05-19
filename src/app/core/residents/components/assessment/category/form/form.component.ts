@@ -32,7 +32,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_space');
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_space':
         this.$subscriptions[key] = this.space$.all().pipe(first()).subscribe(res => {

@@ -33,12 +33,16 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_care_level_group');
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_care_level_group':
         this.$subscriptions[key] = this.care_level_group$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.care_level_groups = res;
+
+            if (params) {
+              this.form.get('care_level_group_id').setValue(params.care_level_group_id);
+            }
           }
         });
         break;
@@ -55,12 +59,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           CaleLevelGroupFormComponent,
           data => this.care_level_group$.add(data),
           data => {
-            this.$subscriptions[key] = this.care_level_group$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.care_level_groups = res;
-                this.form.get('care_level_group_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_care_level_group', {care_level_group_id: data[0]});
             return null;
           });
         break;

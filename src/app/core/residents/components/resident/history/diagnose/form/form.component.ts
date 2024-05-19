@@ -50,12 +50,16 @@ export class FormComponent extends AbstractForm implements OnInit {
     ];
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_diagnosis':
         this.$subscriptions[key] = this.diagnosis$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.diagnoses = res;
+
+            if (params) {
+              this.form.get('diagnosis_id').setValue(params.diagnosis_id);
+            }
           }
         });
         break;
@@ -66,18 +70,13 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   public open_sub_modal(key: string): void {
     switch (key) {
-      case 'diagnose':
+      case 'diagnosis':
         this.create_modal(
           this.modal$,
           DiagnosisFormComponent,
           data => this.diagnosis$.add(data),
           data => {
-            this.$subscriptions[key] = this.diagnosis$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.diagnoses = res;
-                this.form.get('diagnose_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_diagnosis', {diagnosis_id: data[0]});
             return null;
           });
         break;

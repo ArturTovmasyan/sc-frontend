@@ -105,7 +105,10 @@ import {FormComponent        as ResidentFormComponent} from './residents/compone
 import {ViewComponent        as ResidentViewComponent} from './residents/components/resident/view/view.component';
 import {InfoComponent        as ResidentInfoComponent} from './residents/components/resident/info/info.component';
 import {FormComponent        as ResidentMoveComponent} from './residents/components/resident/move/form.component';
-import {ImageEditorComponent as ResidentImageEditorComponent} from './residents/components/resident/info/img-editor/image-editor.component';
+import {
+  ImageEditorComponent,
+  ImageEditorComponent as ResidentImageEditorComponent
+} from './residents/components/resident/info/img-editor/image-editor.component';
 
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
 import {FormComponent as ResidentResponsiblePersonFormComponent} from './residents/components/resident/responsible-person/form/form.component';
@@ -297,6 +300,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentListComponent,
     ResidentFormComponent,
+    ImageEditorComponent,
     ResidentViewComponent,
     ResidentInfoComponent,
     ResidentImageEditorComponent,
@@ -317,8 +321,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentEventListComponent,
     ResidentEventFormComponent,
 
-   ResidentContractListComponent,
-   ResidentContractFormComponent,
+    ResidentContractListComponent,
+    ResidentContractFormComponent,
 
     ResidentRentListComponent,
     ResidentRentFormComponent,
@@ -410,6 +414,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RegionFormComponent,
 
     ResidentFormComponent,
+    ImageEditorComponent,
 
     ResidentDietFormComponent,
 

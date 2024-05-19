@@ -1,7 +1,7 @@
 ﻿<h4>Dietary Restriction</h4>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="diet_id" nzRequired>Dietary Restriction Category</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="diet_id" nzRequired>Category</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('diet_id')?'error':null">
       <div class="add-select-container">
         <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="diet_id">
@@ -19,7 +19,7 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description" nzRequired>Restriction name or small description</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description" nzRequired>Description</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('description')?'error':null">
       <textarea formControlName="description" nz-input rows="4" placeholder="Description"></textarea>
       <nz-form-explain *ngIf="hasErrors('description')">

@@ -88,7 +88,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_assessment_form');
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_assessment_form':
         this.$subscriptions[key] = this.assessment_form$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {

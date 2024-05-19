@@ -42,7 +42,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('vc_primary');
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'vc_primary':
         this.$subscriptions[key] = this.form.get('primary').valueChanges.subscribe(next => {
@@ -67,6 +67,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.physician$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
           if (res) {
             this.physicians = res;
+
+            if (params) {
+              this.form.get('physician_id').setValue(params.physician_id);
+            }
           }
         });
         break;
@@ -83,12 +87,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           PhysicianFormComponent,
           data => this.physician$.add(data),
           data => {
-            this.$subscriptions[key] = this.physician$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-              if (res) {
-                this.physicians = res;
-                this.form.get('physician_id').setValue(data[0]);
-              }
-            });
+            this.subscribe('list_physician', {physician_id: data[0]});
             return null;
           });
         break;
