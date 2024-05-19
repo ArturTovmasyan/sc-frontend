@@ -86,7 +86,10 @@
             <nz-form-item>
               <nz-form-control [nzSm]="16" [nzXs]="24"
                                [nzValidateStatus]="hasErrors('beds.'+i+'.number')?'error':null">
-                <input nz-input nzSize="small" placeholder="Number" formControlName="number">
+                <div style="width: 100%;">
+                  <input style="width: 50%;" nz-input nzSize="small" placeholder="Number" formControlName="number"/>
+                  <span style="width: 50%;margin-left: 1rem;"><strong>{{ get_resident_of_bed(i) }}</strong></span>
+                </div>
                 <nz-form-explain *ngIf="hasErrors('beds.'+i+'.number')">
                   <app-field-errors [errors]="fieldErrors('beds.'+i+'.number')"></app-field-errors>
                 </nz-form-explain>

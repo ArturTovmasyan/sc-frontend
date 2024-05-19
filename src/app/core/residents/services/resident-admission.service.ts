@@ -82,4 +82,7 @@ export class ResidentAdmissionService extends GridService<ResidentAdmission> {
     return this.http.put<Message>(this.SERVICE_URL_BASE + `/swap`, data);
   }
 
+  public get_beds(data: any): Observable<any> {
+    return this.http.post<any>(this.SERVICE_URL_BASE + `/beds`, data);
+  }
 }

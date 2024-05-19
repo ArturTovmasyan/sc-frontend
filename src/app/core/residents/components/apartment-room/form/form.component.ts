@@ -26,6 +26,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   room_orig_occupation: number;
   room_curr_occupation: number;
 
+  bed_resident_map: any = {};
+
   button_loading: Array<boolean>;
 
   @ViewChild('addBed', {static: false}) btn_add_bed;
@@ -67,6 +69,14 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'get_beds':
+        this.$subscriptions[key] = this.residentAdmission$.get_beds({type: GroupType.APARTMENT, ids: params.beds})
+          .pipe(first()).subscribe(res => {
+            if (res) {
+              this.bed_resident_map = res[0];
+            }
+          });
+        break;
       case 'list_apartment':
         this.$subscriptions[key] = this.apartment$.all().pipe(first()).subscribe(res => {
           if (res) {
@@ -119,6 +129,15 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.room_orig_occupation = (<FormArray>this.form.get('beds')).controls.length;
     this.room_curr_occupation = this.room_orig_occupation;
+
+    const beds = (<FormArray>this.form.get('beds')).controls;
+    const ids = [];
+
+    for (let i = 0; i < beds.length; i++) {
+      ids.push(beds[i].get('id').value);
+    }
+
+    this.subscribe('get_beds', {beds: ids});
   }
 
   remove_field(key: string, i: number): void {
@@ -259,5 +278,20 @@ export class FormComponent extends AbstractForm implements OnInit {
         }
       }
     }
+  }
+
+  before_submit(): void {
+    this.form.get('apartment_id').enable();
+  }
+
+  get_resident_of_bed(i: number) {
+    const bed_id = this.form.get('beds.' + i + '.id').value;
+
+    if (bed_id !== null && this.bed_resident_map.hasOwnProperty(bed_id) && this.bed_resident_map[bed_id]) {
+      const resident = this.bed_resident_map[bed_id];
+      return `${resident}`;
+    }
+
+    return '';
   }
 }
