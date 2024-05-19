@@ -34,8 +34,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     });
 
     this.add_space();
-
-    this.subscribe('vc_icon');
   }
 
   private add_space() {
@@ -55,25 +53,13 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
-      case 'vc_icon':
-        this.$subscriptions[key] = this.form.get('icon').valueChanges.subscribe(next => {
-          if (next) {
-            this.iconPicked = next;
-          }
-        });
-        break;
       default:
         break;
     }
   }
 
   public onIconPickerSelect($event): void {
-    if (this.iconPicked !== null) {
-      this.form.get('icon').setValue($event);
-    }
+    this.form.get('icon').setValue($event);
   }
 
-  public check() {
-    this.iconPicked = '';
-  }
 }
