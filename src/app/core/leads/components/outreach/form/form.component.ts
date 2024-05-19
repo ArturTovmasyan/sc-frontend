@@ -48,7 +48,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
 
-      date: [new Date(), Validators.compose([Validators.required])],
+      date: [DateHelper.newDate(), Validators.compose([Validators.required])],
       type_id: [null, Validators.compose([Validators.required])],
 
       participants: [[], Validators.compose([Validators.required])],

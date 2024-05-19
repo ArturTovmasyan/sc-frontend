@@ -72,7 +72,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       admission_type: [null, Validators.required],
 
-      date: [new Date(), Validators.required],
+      date: [DateHelper.newDate(), Validators.required],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
       resident_id: [null, Validators.required],
@@ -431,7 +431,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   before_submit(): void {
-    this.form.get('date').setValue(DateHelper.magicDate(this.form.get('date').value));
+    this.form.get('date').setValue(DateHelper.magicDate(this.form.get('date').value)); // TODO: #846 - Review date/time fields in all system
   }
 
   after_submit(): void {

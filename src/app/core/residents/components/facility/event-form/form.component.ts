@@ -98,15 +98,15 @@ export class FormComponent extends AbstractForm implements OnInit {
       users: [[], Validators.required],
       rsvp: [false, Validators.required],
 
-      start_date: [new Date(), Validators.required],
-      start_time: [new Date(), Validators.required],
-      end_date: [new Date(), Validators.compose([Validators.required, CoreValidator.laterThanEqual('start_date', false)])],
-      end_time: [new Date(), Validators.compose([Validators.required, CoreValidator.laterThan('start_time', true)])],
+      start_date: [DateHelper.newDate(), Validators.required],
+      start_time: [DateHelper.newDate(), Validators.required],
+      end_date: [DateHelper.newDate(), Validators.compose([Validators.required, CoreValidator.laterThanEqual('start_date', false)])],
+      end_time: [DateHelper.newDate(), Validators.compose([Validators.required, CoreValidator.laterThan('start_time', true)])],
 
       all_day: [true, Validators.required],
 
       repeat: [null, Validators.required],
-      repeat_end: [new Date()],
+      repeat_end: [DateHelper.newDate()],
       no_repeat_end: [true, Validators.required],
 
       facility_id: [null, Validators.required],

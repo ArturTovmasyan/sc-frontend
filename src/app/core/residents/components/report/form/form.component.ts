@@ -86,10 +86,10 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       assessment_form_id: [null, Validators.required],
 
-      date: [new Date(), Validators.required],
+      date: [DateHelper.newDate(), Validators.required],
 
-      date_from: [new Date(), Validators.required],
-      date_to: [new Date(), Validators.required],
+      date_from: [DateHelper.newDate(), Validators.required],
+      date_to: [DateHelper.newDate(), Validators.required],
 
       discontinued: [false, Validators.required],
     });

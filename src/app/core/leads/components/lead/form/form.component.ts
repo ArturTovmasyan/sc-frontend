@@ -35,6 +35,7 @@ import {FunnelStage} from '../../../models/funnel-stage';
 import {Temperature} from '../../../models/temperature';
 import {FunnelStageService} from '../../../services/funnel-stage.service';
 import {TemperatureService} from '../../../services/temperature.service';
+import {DateHelper} from '../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -100,7 +101,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       payment_type_id: [null, Validators.compose([])],
       owner_id: [null, Validators.compose([Validators.required])],
 
-      initial_contact_date: [new Date(), Validators.compose([Validators.required])],
+      initial_contact_date: [DateHelper.newDate(), Validators.compose([Validators.required])],
 
       state: [LeadState.OPEN, Validators.compose([])],
 

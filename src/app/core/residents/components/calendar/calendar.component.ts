@@ -79,8 +79,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: event.id,
                 event_type: CalendarEventType.CORPORATE,
-                start: moment.utc(event.start).format('YYYY-MM-DD HH:mm:ss'),
-                end: event.end ? moment.utc(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
+                start: moment(event.start).format('YYYY-MM-DD HH:mm:ss'),
+                end: event.end ? moment(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
                 title: event.title
               });
             });

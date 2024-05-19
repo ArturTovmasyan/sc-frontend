@@ -41,7 +41,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
 
-      start: [new Date(), Validators.required],
+      start: [DateHelper.newDate(), Validators.required],
       end: [null],
 
       period: [null, Validators.required],

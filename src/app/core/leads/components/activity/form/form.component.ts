@@ -52,11 +52,11 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       type_id: [null, Validators.compose([])],
       title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(100)])],
-      date: [new Date(), Validators.required],
+      date: [DateHelper.newDate(), Validators.required],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
-      due_date: [new Date(), Validators.required],
-      reminder_date: [new Date(), Validators.required],
+      due_date: [DateHelper.newDate(), Validators.required],
+      reminder_date: [DateHelper.newDate(), Validators.required],
 
       status_id: [null, Validators.compose([Validators.required])],
       assign_to_id: [null, Validators.compose([Validators.required])],

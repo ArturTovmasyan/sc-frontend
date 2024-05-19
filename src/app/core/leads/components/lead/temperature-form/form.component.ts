@@ -8,6 +8,7 @@ import {Temperature} from '../../../models/temperature';
 import {TemperatureService} from '../../../services/temperature.service';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as TemperatureFormComponent} from '../../temperature/form/form.component';
+import {DateHelper} from '../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -46,7 +47,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       lead_id: [null, Validators.compose([Validators.required])],
       temperature_id: [null, Validators.compose([Validators.required])],
 
-      date: [new Date(), Validators.compose([Validators.required])],
+      date: [DateHelper.newDate(), Validators.compose([Validators.required])],
 
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 

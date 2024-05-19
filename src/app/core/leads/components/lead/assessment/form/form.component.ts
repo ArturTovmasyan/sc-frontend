@@ -83,7 +83,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       // Tab 1
       form_id: [null, Validators.required],
-      date: [new Date(), Validators.required],
+      date: [DateHelper.newDate(), Validators.required],
       performed_by: ['', Validators.required],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 

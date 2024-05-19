@@ -18,8 +18,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      date_from: [new Date(), Validators.compose([Validators.required])],
-      date_to: [new Date(), Validators.compose([Validators.required])]
+      date_from: [DateHelper.newDate(), Validators.compose([Validators.required])],
+      date_to: [DateHelper.newDate(), Validators.compose([Validators.required])]
     });
   }
 

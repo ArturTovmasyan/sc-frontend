@@ -11,6 +11,7 @@ import {StageChangeReasonService} from '../../../services/stage-change-reason.se
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as FunnelStageFormComponent} from '../../funnel-stage/form/form.component';
 import {FormComponent as StageChangeReasonFormComponent} from '../../stage-change-reason/form/form.component';
+import {DateHelper} from '../../../../../shared/helpers/date-helper';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -53,7 +54,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       stage_id: [null, Validators.compose([Validators.required])],
       reason_id: [null, Validators.compose([Validators.required])],
 
-      date: [new Date(), Validators.compose([Validators.required])],
+      date: [DateHelper.newDate(), Validators.compose([Validators.required])],
 
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 

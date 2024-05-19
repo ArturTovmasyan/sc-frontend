@@ -86,7 +86,6 @@ export class DateInterceptor implements HttpInterceptor {
 
       if (value instanceof Date) {
         object[key] = DateHelper.convertFromUTC(value);
-        console.log(value, object[key]);
       }
     }
   }
