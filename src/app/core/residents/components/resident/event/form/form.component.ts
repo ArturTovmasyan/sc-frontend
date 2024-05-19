@@ -165,11 +165,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('responsible_persons').enable();
                 this.form.get('responsible_persons').clearValidators();
 
-                if (definition.responsible_person) {
-                  this.rp_single = true;
-                } else {
-                  this.rp_single = false;
-                }
+                this.rp_single = definition.responsible_person || definition.responsible_person_optional;
 
                 if (definition.responsible_person || definition.responsible_person_multi) {
                   this.required.responsible_persons = true;
