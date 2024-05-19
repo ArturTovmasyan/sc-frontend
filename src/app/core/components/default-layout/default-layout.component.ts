@@ -49,14 +49,14 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
 
     this.generateNavigation(this.router.config[0]);
 
-    DomHelper.checkElement('.sc-reference-nav')
-      .then((element) => {
-        const nav_ref = document.querySelector('.sc-reference-nav');
-        nav_ref.addEventListener('click', () => {
-          this.toggleRef(nav_ref);
-        });
-        this.toggleRef(nav_ref, true);
-      });
+    // DomHelper.checkElement('.sc-reference-nav')
+    //   .then((element) => {
+    //     const nav_ref = document.querySelector('.sc-reference-nav');
+    //     nav_ref.addEventListener('click', () => {
+    //       this.toggleRef(nav_ref);
+    //     });
+    //     this.toggleRef(nav_ref, true);
+    //   });
   }
 
   toggleRef(nav_ref: Element, first: boolean = false) {

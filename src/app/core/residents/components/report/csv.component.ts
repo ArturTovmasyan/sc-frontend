@@ -76,21 +76,21 @@ export class CSVComponent implements OnInit, OnDestroy {
               const report_url = this.report$.reportURLbyHash(res[0]);
               this.url = this.sanitizer.bypassSecurityTrustResourceUrl(`https://view.officeapps.live.com/op/embed.aspx?src=${report_url}`);
 
-              setTimeout(() => {
-                const element_ids = [
-                  'm_excelEmbedRenderer_m_refreshDataAnchor',
-                  'm_excelEmbedRenderer_m_feedbackAnchor',
-                  'm_excelEmbedRenderer_m_backstageAnchor'
-                ];
-
-                element_ids.forEach(value => {
-                  const el = document.getElementById('lala');
-
-                  if (el) {
-                    el.parentNode.removeChild(el);
-                  }
-                });
-              }, 500);
+              // setTimeout(() => {
+              //   const element_ids = [
+              //     'm_excelEmbedRenderer_m_refreshDataAnchor',
+              //     'm_excelEmbedRenderer_m_feedbackAnchor',
+              //     'm_excelEmbedRenderer_m_backstageAnchor'
+              //   ];
+              //
+              //   element_ids.forEach(value => {
+              //     const el = document.getElementById('lala');
+              //
+              //     if (el) {
+              //       el.parentNode.removeChild(el);
+              //     }
+              //   });
+              // }, 500);
             }
           });
         break;
