@@ -2,7 +2,7 @@
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-tabset [nzSelectedIndex]="tabSelected.value" (nzSelectedIndexChange)="tabChanged($event);">
-    <nz-tab nzTitle="Expense Item">
+    <nz-tab nzTitle="Expense Item" *ngIf="!isThirdParty">
       <fieldset formArrayName="resident_expense_items">
         <legend class="senior-care-legend">
           Expense Item(s)
@@ -102,7 +102,7 @@
       </nz-form-item>
     </nz-tab>
 
-    <nz-tab nzTitle="Credit Item">
+    <nz-tab nzTitle="Credit Item" *ngIf="!isThirdParty">
       <fieldset formArrayName="resident_credit_items">
         <legend class="senior-care-legend">
           Credit Item(s)
@@ -202,7 +202,7 @@
       </nz-form-item>
     </nz-tab>
 
-    <nz-tab nzTitle="Discount Item">
+    <nz-tab nzTitle="Discount Item" *ngIf="!isThirdParty">
       <fieldset formArrayName="resident_discount_items">
         <legend class="senior-care-legend">
           Discount Item(s)
@@ -318,14 +318,17 @@
             <th class="w-20 text-left">
               <nz-form-label nzRequired>Date</nz-form-label>
             </th>
-            <th class="w-20 text-left">
+            <th class="w-15 text-left">
               <nz-form-label nzRequired>Type</nz-form-label>
             </th>
             <th class="w-20 text-left">
               <nz-form-label nzRequired>Amount</nz-form-label>
             </th>
             <th class="w-20 text-left">
-              <nz-form-label nzRequired>Transaction #</nz-form-label>
+              <nz-form-label nzRequired>Trans. #</nz-form-label>
+            </th>
+            <th class="w-15 text-left">
+              <nz-form-label nzRequired>Res. Person</nz-form-label>
             </th>
             <th class="w-20 text-left">
               <nz-form-label>Notes</nz-form-label>
@@ -380,6 +383,21 @@
                     <input nz-input placeholder="Transaction Number" formControlName="transaction_number">
                     <nz-form-explain *ngIf="hasErrors('resident_payment_received_items.'+i+'.transaction_number')">
                       <app-field-errors [errors]="fieldErrors('resident_payment_received_items.'+i+'.transaction_number')"></app-field-errors>
+                    </nz-form-explain>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td>
+                <nz-form-item>
+                  <nz-form-control [nzSm]="16" [nzXs]="24"
+                                   [nzValidateStatus]="hasErrors('resident_payment_received_items.'+i+'.responsible_person_id')?'error':null">
+                    <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
+                      <ng-container *ngFor="let rp of responsible_persons">
+                        <nz-option [nzLabel]="rp.responsible_person|responsible_person" [nzValue]="rp.id"></nz-option>
+                      </ng-container>
+                    </nz-select>
+                    <nz-form-explain *ngIf="hasErrors('resident_payment_received_items.'+i+'.responsible_person_id')">
+                      <app-field-errors [errors]="fieldErrors('resident_payment_received_items.'+i+'.responsible_person_id')"></app-field-errors>
                     </nz-form-explain>
                   </nz-form-control>
                 </nz-form-item>

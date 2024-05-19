@@ -1,4 +1,5 @@
 import {RpPaymentType} from './rp-payment-type';
+import {ResidentResponsiblePerson} from './resident-responsible-person';
 
 export class ResidentPaymentReceivedItem implements IdInterface {
   id: number;
@@ -6,6 +7,7 @@ export class ResidentPaymentReceivedItem implements IdInterface {
   date: Date;
 
   payment_type: RpPaymentType;
+  responsible_person: ResidentResponsiblePerson;
 
   amount: number;
   transaction_number: string;

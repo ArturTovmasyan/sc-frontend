@@ -18,6 +18,9 @@ import {RpPaymentType} from '../../../../models/rp-payment-type';
 import {CreditItemService} from '../../../../services/credit-item.service';
 import {DiscountItemService} from '../../../../services/discount-item.service';
 import {RpPaymentTypeService} from '../../../../services/rp-payment-type.service';
+import {ResidentResponsiblePerson} from '../../../../models/resident-responsible-person';
+import {ResidentResponsiblePersonService} from '../../../../services/resident-responsible-person.service';
+import {ActivatedRoute, Params} from '@angular/router';
 
 @Component({
     templateUrl: 'form.component.html'
@@ -33,6 +36,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     credit_items: CreditItem[];
     discount_items: DiscountItem[];
     payment_types: RpPaymentType[];
+    responsible_persons: ResidentResponsiblePerson[];
+
+    private query_params: Params;
 
     public isThirdParty: boolean;
 
@@ -50,12 +56,14 @@ export class FormComponent extends AbstractForm implements OnInit {
         protected modal$: ModalFormService,
         private formBuilder: FormBuilder,
         private residentSelector$: ResidentSelectorService,
+        private route$: ActivatedRoute,
         private ledger$: ResidentLedgerService,
         private payment_source$: PaymentSourceService,
         private expense_item$: ExpenseItemService,
         private credit_item$: CreditItemService,
         private discount_item$: DiscountItemService,
         private payment_type$: RpPaymentTypeService,
+        private responsible_person$: ResidentResponsiblePersonService,
     ) {
         super(modal$);
 
@@ -82,11 +90,13 @@ export class FormComponent extends AbstractForm implements OnInit {
         });
 
         this.subscribe('rs_resident');
+        this.subscribe('query_map');
         this.subscribe('list_payment_source');
         this.subscribe('list_expense_item');
         this.subscribe('list_credit_item');
         this.subscribe('list_discount_item');
         this.subscribe('list_payment_type');
+        this.subscribe('list_resident_responsible_person');
     }
 
     protected subscribe(key: string, params?: any): void {
@@ -105,6 +115,11 @@ export class FormComponent extends AbstractForm implements OnInit {
                     }
                 });
                 break;
+          case 'query_map':
+            this.$subscriptions[key] = this.route$.queryParams.subscribe(query_params => {
+              this.query_params = query_params;
+            });
+            break;
             case 'list_expense_item':
               this.$subscriptions[key] = this.expense_item$.all().pipe(first()).subscribe(res => {
                 if (res) {
@@ -145,6 +160,17 @@ export class FormComponent extends AbstractForm implements OnInit {
 
                   if (params) {
                     this.form.get('payment_type_id').setValue(params.payment_type_id);
+                  }
+                }
+              });
+              break;
+            case 'list_resident_responsible_person':
+              this.$subscriptions[key] = this.responsible_person$.all([{key: 'resident_id', value: this.query_params['resident_id']}, {key: 'financially', value: true}]).pipe(first()).subscribe(res => {
+                if (res) {
+                  this.responsible_persons = res;
+
+                  if (params) {
+                    this.form.get('responsible_person_id').setValue(params.responsible_person_id);
                   }
                 }
               });
@@ -196,6 +222,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           amount: [0, Validators.compose([Validators.required, Validators.min(1), CoreValidator.payment_amount])],
           date: [DateHelper.newDate(), Validators.required],
           payment_type_id: [null, Validators.required],
+          responsible_person_id: [null, Validators.required],
           ledger_id: [null]
         });
       case 'resident_away_days':
