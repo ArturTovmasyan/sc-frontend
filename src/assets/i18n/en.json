@@ -746,6 +746,13 @@
       "date": "Date",
       "success": "Success"
     },
+    "admin-report-log-list": {
+      "id": "ID",
+      "created_at": "Created At",
+      "created_by": "Created By",
+      "title": "Title",
+      "format": "Format"
+    },
     "hospice-provider-list": {
       "id": "ID",
       "name": "Name",

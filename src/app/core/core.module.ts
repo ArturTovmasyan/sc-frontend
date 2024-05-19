@@ -393,6 +393,7 @@ import {ViewComponent as ResidentAwayDaysViewComponent} from './residents/compon
 import {EventRepeatPipe} from './residents/pipes/event-repeat.pipe';
 import {DateInterceptor} from './interceptors/date.interceptor';
 import {ListComponent as EmailLogListComponent} from './admin/components/email-log/list.component';
+import {ListComponent as ReportLogListComponent} from './admin/components/report-log/list.component';
 import {ChartsModule} from 'ng2-charts';
 
 registerLocaleData(en);
@@ -759,6 +760,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LeadViewComponent,
 
     EmailLogListComponent,
+    ReportLogListComponent,
     NotificationListComponent,
     NotificationFormComponent,
     NotificationTypeListComponent,

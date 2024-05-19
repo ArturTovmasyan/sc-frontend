@@ -92,6 +92,7 @@ import {ViewComponent as ReferralViewComponent} from './leads/components/referra
 import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/view.component';
 import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
 import {ListComponent as EmailLogListComponent} from './admin/components/email-log/list.component';
+import {ListComponent as ReportLogListComponent} from './admin/components/report-log/list.component';
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
 import {ListComponent as HospiceProviderListComponent} from './residents/components/hospice-provider/list.component';
 import {ListComponent as InsuranceCompanyListComponent} from './residents/components/insurance-company/list.component';
@@ -1199,6 +1200,15 @@ const routes: Routes = [
           nav: {show: true, group: 'Administration'},
           title: 'Roles',
           permissions: ['activity-security-space', 'persistence-security-role']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'report-log', component: ReportLogListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Report Activity Log',
+          permissions: ['persistence-security-report_log']
         },
         canActivate: [AuthGuard]
       },
