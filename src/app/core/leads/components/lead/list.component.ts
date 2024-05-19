@@ -42,14 +42,15 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
       () => {
         const btn = this._btnBar.buttons_right[0];
 
-        btn.faIcon = btn.name === 'open' ? 'fas fa-star' : 'fas fa-star-half-alt';
-        btn.title = btn.name === 'open' ? 'grid.lead-lead-list.button.all' : 'grid.lead-lead-list.button.open';
-        btn.name = btn.name === 'open' ? 'all' : 'open';
-
         this.params = [];
         if (btn.name === 'all') {
           this.params.push({key: 'all', value: '1'});
         }
+
+      btn.faIcon = btn.name === 'open' ? 'fas fa-star' : 'fas fa-star-half-alt';
+      btn.title = btn.name === 'open' ? 'grid.lead-lead-list.button.all' : 'grid.lead-lead-list.button.open';
+      btn.name = btn.name === 'open' ? 'all' : 'open';
+
         this.reload_data(true);
       }));
 
