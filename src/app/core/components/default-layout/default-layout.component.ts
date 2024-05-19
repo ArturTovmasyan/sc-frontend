@@ -132,7 +132,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
           nav_flat.push({
             title: true,
             name: v,
-            attributes: v === 'Reference' ? {class: 'sc-reference-nav'} : {}
+            // attributes: v === 'Reference' ? {class: 'sc-reference-nav'} : {}
           });
           nav_flat.push(...temp_flat);
         }
