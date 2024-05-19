@@ -27,6 +27,26 @@ export class ListComponent extends GridComponent<LeadTemperature, LeadTemperatur
     this.component = FormComponent;
 
     this.name = 'lead-lead-temperature-list';
+
+    this.button_shows = {
+      override: false,
+      add: true,
+      edit: false,
+      remove: false,
+    };
+
+    this.button_labels = {
+      add: 'Change',
+      edit: '',
+      remove: '',
+    };
+
+    this.button_icons = {
+      add: 'edit',
+      edit: '',
+      remove: ''
+    };
+
   }
 
   ngOnInit(): void {

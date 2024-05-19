@@ -33,19 +33,19 @@
               nz-button nzType="primary"
               [disabled]="checkbox_config.ids.length != 0"
               (click)="show_modal_add(); $event.preventDefault();">
-        <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
+        <i nz-icon [type]="button_icons.add"></i> {{ button_labels.add|translate }}
       </button>
       <button type="button" *ngIf="button_shows.edit"
               nz-button nzType="default" [nzLoading]="loading_edit_modal"
               [disabled]="checkbox_config.ids.length != 1"
               (click)="show_modal_edit(); $event.preventDefault();">
-        <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+        <i nz-icon [type]="button_icons.edit"></i> {{ button_labels.edit|translate }}
       </button>
       <button type="button" *ngIf="button_shows.remove"
         nz-button nzType="danger"
         [disabled]="checkbox_config.ids.length == 0"
         (click)="show_modal_remove(); $event.preventDefault();">
-        <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
+        <i nz-icon [type]="button_icons.remove"></i> {{ button_labels.remove|translate }}
       </button>
 
       <ng-container *ngIf="fields != null && buttons_left">

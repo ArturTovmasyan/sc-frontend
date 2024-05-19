@@ -36,10 +36,24 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   };
 
   protected fields: any[] = null;
+
   protected button_shows = {
-    add: false,
-    edit: false,
-    remove: false
+    override: true,
+    add: true,
+    edit: true,
+    remove: true
+  };
+
+  protected button_labels = {
+    add: 'grid.add',
+    edit: 'grid.edit',
+    remove: 'grid.remove'
+  };
+
+  protected button_icons = {
+    add: 'plus',
+    edit: 'edit',
+    remove: 'delete'
   };
 
   protected data = [];
@@ -101,6 +115,17 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   protected modal_save_loading: () => boolean;
   protected modal_save_disabled: () => boolean;
 
+
+  private static override_buttons(a: any, b: any): any {
+    console.log(a, b);
+
+    return {
+      override: false,
+      add: (a.add === false || b.add === false) ? false : b.add,
+      edit: (a.edit === false || b.edit === false) ? false : b.edit,
+      remove: (a.remove === false || b.remove === false) ? false : b.remove
+    };
+  }
   constructor(protected service$: Service, protected title$: TitleService, protected modal$: NzModalService) {
     this.title$.getTitle().subscribe(v => this.title = v);
 
@@ -125,7 +150,9 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   init(reset: boolean = false): void {
     this.load_grid_fields().subscribe((data: any) => {
       if (data) {
-        this.button_shows = data.buttons;
+        this.button_shows = this.button_shows.override === true
+          ? data.buttons
+          : GridComponent.override_buttons(this.button_shows, data.buttons);
         this.grid_options_loaded.next(true);
 
         this.fields = data.fields;
