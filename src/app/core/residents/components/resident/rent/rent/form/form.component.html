@@ -38,22 +38,22 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="use_base_rate">Use Base Room Rate</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="use_base_rate"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('use_base_rate')">
+        <app-field-errors [errors]="fieldErrors('use_base_rate')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="amount" nzRequired>Amount</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('amount')?'error':null">
       <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
                        nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('amount')">
         <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="use_base_rate">Use Base Room Rate</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
-      <nz-switch formControlName="use_base_rate"></nz-switch>
-      <nz-form-explain *ngIf="hasErrors('use_base_rate')">
-        <app-field-errors [errors]="fieldErrors('use_base_rate')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
