@@ -12,6 +12,7 @@ import {RentReasonService} from '../../../../../services/rent-reason.service';
 import {RentReason} from '../../../../../models/rent-reason';
 import {ResidentAdmission} from '../../../../../models/resident-admission';
 import {FormComponent as RentReasonFormComponent} from '../../../../rent-reason/form/form.component';
+import {FacilityRoomType} from '../../../../../models/facility-room-type';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -33,6 +34,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.modal_map = [
       {key: 'reason', component: RentReasonFormComponent}
     ];
+
+    this.admission = null;
   }
 
   ngOnInit(): void {
@@ -77,6 +80,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.admission$.active(this.form.get('resident_id').value).pipe(first()).subscribe(res => {
           if (res) {
             this.admission = res;
+
+            if (!this.edit_mode) {
+              this.form.get('amount').setValue(this.get_base_room_rate());
+            }
           } else {
             this.admission = null;
           }
@@ -113,6 +120,16 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
     }
     return group_title;
+  }
+
+  public get_base_room_rate() {
+    if (this.admission && this.admission.group_type === GroupType.FACILITY && this.admission.facility_bed.room.type) {
+      const room_type = Object.assign(new FacilityRoomType(), this.admission.facility_bed.room.type); // TODO: review
+
+      return room_type.get_amount(this.admission.care_level);
+    }
+
+    return 0;
   }
 
 }

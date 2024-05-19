@@ -105,9 +105,11 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'vc_care_level_adjustment':
         this.$subscriptions[key] = this.form.get('care_level_adjustment').valueChanges.subscribe(next => {
           if (next) {
+            this.form.get('amount').disable();
             this.form.get('base_rates').enable();
             this.subscribe('list_care_level');
           } else {
+            this.form.get('amount').enable();
             this.form.get('base_rates').disable();
           }
         });

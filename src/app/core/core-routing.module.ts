@@ -443,6 +443,15 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'rent-reasons', component: RentReasonListComponent,
+        data: {
+          nav: {show: true, group: 'Facility'},
+          title: 'Rent Reasons',
+          permissions: ['activity-reference', 'persistence-common-rent_reason']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'facility/documents', component: FacilityDocumentListComponent,
         data: {
           nav: {show: true, group: 'Facility', title: 'Documents'},
@@ -767,15 +776,6 @@ const routes: Routes = [
           nav: {show: true, group: 'Reference'},
           title: 'Responsible Person Roles',
           permissions: ['activity-reference', 'persistence-common-responsible-person-role']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'rent-reasons', component: RentReasonListComponent,
-        data: {
-          nav: {show: true, group: 'Reference'},
-          title: 'Rent Reasons',
-          permissions: ['activity-reference', 'persistence-common-rent_reason']
         },
         canActivate: [AuthGuard]
       },
