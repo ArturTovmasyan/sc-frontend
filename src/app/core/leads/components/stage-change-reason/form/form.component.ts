@@ -6,14 +6,12 @@ import {first} from 'rxjs/operators';
 import {Space} from '../../../../models/space';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
-import {StageChangeReasonState} from '../../../models/stage-change-reason';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
   spaces: Space[];
-  stage_change_reason_states: { id: StageChangeReasonState, name: string }[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,15 +24,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(200)])],
-      state: [null, Validators.required],
+      title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(200)])]
     });
-
-    // TODO: review
-    this.stage_change_reason_states = [
-      {id: StageChangeReasonState.OPEN, name: 'Open'},
-      {id: StageChangeReasonState.CLOSED, name: 'Closed'},
-    ];
 
     this.add_space();
   }

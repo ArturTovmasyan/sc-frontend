@@ -42,7 +42,7 @@ export class ListComponent extends GridComponent<LeadTemperature, LeadTemperatur
     };
 
     this.button_icons = {
-      add: 'add',
+      add: 'plus',
       edit: 'edit',
       remove: ''
     };

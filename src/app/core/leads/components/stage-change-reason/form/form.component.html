@@ -10,19 +10,6 @@
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state" nzRequired>Type</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="state">
-        <ng-container *ngFor="let stage_change_reason_state of stage_change_reason_states">
-          <nz-option [nzLabel]="(stage_change_reason_state.name)|translate" [nzValue]="stage_change_reason_state.id"></nz-option>
-        </ng-container>
-      </nz-select>
-      <nz-form-explain *ngIf="hasErrors('state')">
-        <app-field-errors [errors]="fieldErrors('state')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
 
   <nz-form-item *ngIf="form.get('space_id')">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
