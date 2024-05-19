@@ -7,8 +7,9 @@ export class CoreValidator {
     DOSAGE: /[0-9\.\-\/]+/,
     DOSAGE_UNIT: /[a-zA-Z0-9\%\+\/]+/,
 
-    FLOOR: /(^[1-9][0-9]?$)/,
-    NUMBER_OF_FLOORS: /(^[1-4]$)/,
+    FLOOR: /^[1-9][0-9]?$/,
+    ROOM: /^[A-Za-z0-9]+$/,
+    NUMBER_OF_FLOORS: /^[1-4]$/,
 
     PAYMENT_AMOUNT: /(^0$)|(^[1-9][0-9]*$)|(^[0-9]+(\.[0-9]{1,2})$)/,
 
@@ -44,6 +45,10 @@ export class CoreValidator {
   public static floor: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.FLOOR,
     {pattern_validator_floor: 'The value should be numeric and more than zero and no longer than 2 characters.'}
+  );
+  public static room: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.ROOM,
+    {pattern_validator_room: 'The value should be alphanumeric.'}
   );
   public static payment_amount: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.PAYMENT_AMOUNT,

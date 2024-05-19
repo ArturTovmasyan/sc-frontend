@@ -21,6 +21,7 @@ import {FormError} from '../../../models/form-error';
       <span *ngSwitchCase="'pattern_validator_dosage'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_dosage_unit'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_floor'">{{ e.params }}&nbsp;</span>
+      <span *ngSwitchCase="'pattern_validator_room'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_number_of_floors'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_payment_amount'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_group_capacity'">{{ e.params }}&nbsp;</span>

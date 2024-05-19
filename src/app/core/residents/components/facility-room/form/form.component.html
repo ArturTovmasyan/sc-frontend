@@ -27,7 +27,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="number" nzRequired>Number</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('number')?'error':null">
-      <input nz-input placeholder="Number" formControlName="number">
+      <input nz-input placeholder="Number" maxlength="10" formControlName="number">
       <nz-form-explain *ngIf="hasErrors('number')">
         <app-field-errors [errors]="fieldErrors('number')"></app-field-errors>
       </nz-form-explain>
@@ -36,7 +36,8 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="floor" nzRequired>Floor</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('floor')?'error':null">
-      <input nz-input placeholder="Floor" formControlName="floor">
+      <nz-input-number [nzMin]="1" [nzMax]="99" [nzStep]="1" placeholder="Floor"
+                       formControlName="floor"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('floor')">
         <app-field-errors [errors]="fieldErrors('floor')"></app-field-errors>
       </nz-form-explain>
@@ -55,7 +56,7 @@
 
   <fieldset formArrayName="beds">
     <legend class="senior-care-legend">
-      Bed(s)
+      <span style="display: inline-block;margin-right: 4px;color: #f5222d;font-size: 14px;font-family: SimSun,sans-serif;">*</span>Bed(s)
       <button [style.float]="'right'" #addBed type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
               (click)="add_field('beds');" [disabled]="!form.get('facility_id').value
         || (facility !== null && ((room_curr_occupation + other_occupation) >= facility.capacity))">

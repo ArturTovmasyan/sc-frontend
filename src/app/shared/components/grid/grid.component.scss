@@ -32,13 +32,9 @@ nz-select, nz-input-number {
   width: 100%;
 }
 
-[nz-button] {
-  margin-right: 8px;
-  margin-bottom: 12px;
-}
-
 nz-button-group [nz-button] {
   margin-right: 0;
+  margin-bottom: 12px;
 }
 
 .ant-btn > .anticon {
