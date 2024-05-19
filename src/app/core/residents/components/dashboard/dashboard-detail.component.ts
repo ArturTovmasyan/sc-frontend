@@ -76,7 +76,7 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
               },
               {
                 label: 'Projected Near Term Occupancy',
-                data: this.lineChartLabels.map(dkey => this.dashboardData.data[dkey].capacity_yellow)
+                data: this.lineChartLabels.map(dkey => this.dashboardData.data[dkey].projected_near_term_occupancy)
               } // TODO: review
             ];
           }
