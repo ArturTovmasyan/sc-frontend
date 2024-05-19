@@ -671,7 +671,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Administration'},
           title: 'Notifications',
-          permissions: ['persistence-security-user']
+          permissions: ['persistence-common-notification']
         },
         canActivate: [AuthGuard]
       },
@@ -680,7 +680,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Administration'},
           title: 'Notification Types',
-          permissions: ['persistence-common-notification']
+          permissions: ['persistence-common-notification_type']
         },
         canActivate: [AuthGuard]
       },
