@@ -12,6 +12,20 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="categories" nzRequired>Categories</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('categories')?'error':null">
+      <nz-select nzMode="multiple" nzPlaceHolder="Please select" formControlName="categories">
+        <ng-container *ngFor="let category of categories">
+          <nz-option [nzLabel]="category.name" [nzValue]="category.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('categories')">
+        <app-field-errors [errors]="fieldErrors('categories')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="default_status_id" nzRequired>Default status</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('default_status_id')?'error':null">
       <div class="add-select-container">

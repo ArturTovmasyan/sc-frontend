@@ -291,7 +291,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
               this.contacts = [];
 
               if (this.edit_mode) {
-                if (this.edit_data.referral.type.id !== next) {
+                if (this.edit_data.referral !== null && this.edit_data.referral.type !== null && this.edit_data.referral.type.id !== next) {
                   this.form.get('referral.organization_id').setValue(null);
                   this.form.get('referral.contact_id').setValue(null);
                   this.edit_data.referral.type.id = null;

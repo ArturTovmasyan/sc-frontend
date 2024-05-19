@@ -9,6 +9,7 @@ import {ActivityStatusService} from '../../../services/activity-status.service';
 import {ActivityStatus} from '../../../models/activity-status';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as ActivityStatusFormComponent} from '../../activity-status/form/form.component';
+import {ActivityOwnerType} from '../../../models/activity';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -16,6 +17,7 @@ import {FormComponent as ActivityStatusFormComponent} from '../../activity-statu
 export class FormComponent extends AbstractForm implements OnInit {
   spaces: Space[];
   activity_statuses: ActivityStatus[];
+  categories: { id: ActivityOwnerType, name: string }[];
 
   constructor(
     protected modal$: ModalFormService,
@@ -34,6 +36,8 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
       title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(200)])],
 
+      categories: [[], Validators.required],
+
       assign_to: [false, Validators.required],
       due_date: [false, Validators.required],
       reminder_date: [false, Validators.required],
@@ -51,6 +55,14 @@ export class FormComponent extends AbstractForm implements OnInit {
     });
 
     this.subscribe('list_activity_status');
+
+    this.categories = [
+      {id: ActivityOwnerType.LEAD, name: 'Lead'},
+      {id: ActivityOwnerType.REFERRAL, name: 'Referral'},
+      {id: ActivityOwnerType.ORGANIZATION, name: 'Organization'},
+      {id: ActivityOwnerType.OUTREACH, name: 'Outreach'},
+      {id: ActivityOwnerType.CONTACT, name: 'Contact'}
+    ];
   }
 
   protected subscribe(key: string, params?: any): void {

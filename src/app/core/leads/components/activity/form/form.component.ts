@@ -83,7 +83,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form.get('due_date').disable();
     this.form.get('reminder_date').disable();
 
-    this.subscribe('list_activity_type');
+    this.subscribe('vc_owner_type');
     this.subscribe('list_activity_status');
     this.subscribe('list_facility');
     this.subscribe('list_contact');
@@ -92,9 +92,18 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'vc_owner_type':
+        this.$subscriptions[key] = this.form.get('owner_type').valueChanges.subscribe(next => {
+          if (next != null) {
+            this.subscribe('list_activity_type');
+          }
+        });
+        break;
       case 'list_activity_type':
         this.unsubscribe('vc_activity_type');
-        this.$subscriptions[key] = this.activity_type$.all().pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.activity_type$
+          .all([{key: 'owner_type', value: this.form.get('owner_type').value}])
+          .pipe(first()).subscribe(res => {
           if (res) {
             this.activity_types = res;
 
