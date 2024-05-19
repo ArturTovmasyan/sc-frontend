@@ -21,48 +21,7 @@ export class ReportService {
   }
 
   public report(group_alias, report_alias, format, params, callback: any, error_callback: any) {
-    let request_params = new HttpParams().append('format', format);
-
-    if (params.group) {
-      request_params = request_params.append('type', params.group);
-    }
-    if (params.group_id) {
-      request_params = request_params.append('type_id', params.group_id);
-    }
-    if (params.group_all) {
-      request_params = request_params.append('type_all', params.group_all);
-    }
-    if (params.discontinued) {
-      request_params = request_params.append('discontinued', params.discontinued);
-    }
-    if (params.resident_id) {
-      request_params = request_params.append('resident_id', params.resident_id);
-    }
-
-    if (params.resident_all) {
-      request_params = request_params.append('resident_all', params.resident_all);
-      request_params = request_params.append('type_id', this.residentSelector$.group.value.toString());
-    }
-
-    if (params.date) {
-      request_params = request_params.append('date', params.date.toISOString());
-    }
-    if (params.date_from) {
-      request_params = request_params.append('date_from', params.date_from.toISOString());
-    }
-    if (params.date_to) {
-      request_params = request_params.append('date_to', params.date_to.toISOString());
-    }
-    if (params.assessment_id) {
-      request_params = request_params.append('assessment_id', params.assessment_id);
-    }
-
-    return this.http
-      .get(this.SERVICE_URL_BASE + `/${group_alias}/${report_alias}`, {
-        responseType: 'blob',
-        observe: 'response',
-        params: request_params
-      })
+    return this.reportAsObservable(group_alias, report_alias, format, params)
       .pipe(first())
       .subscribe(response => {
           saveFile(response);
@@ -74,6 +33,17 @@ export class ReportService {
   }
 
   public reportAsObservable(group_alias, report_alias, format, params) {
+    const request_params = this.create_request_params(format, params);
+
+    return this.http
+      .get(this.SERVICE_URL_BASE + `/${group_alias}/${report_alias}`, {
+        responseType: 'blob',
+        observe: 'response',
+        params: request_params
+      });
+  }
+
+  private create_request_params(format, params): HttpParams {
     let request_params = new HttpParams().append('format', format);
 
     if (params.group) {
@@ -91,6 +61,7 @@ export class ReportService {
     if (params.resident_all) {
       request_params = request_params.append('resident_all', params.resident_all);
     }
+
     if (params.date) {
       request_params = request_params.append('date', params.date.toISOString());
     }
@@ -100,15 +71,11 @@ export class ReportService {
     if (params.date_to) {
       request_params = request_params.append('date_to', params.date_to.toISOString());
     }
+
     if (params.assessment_id) {
       request_params = request_params.append('assessment_id', params.assessment_id);
     }
 
-    return this.http
-      .get(this.SERVICE_URL_BASE + `/${group_alias}/${report_alias}`, {
-        responseType: 'blob',
-        observe: 'response',
-        params: request_params
-      });
+    return request_params;
   }
 }
