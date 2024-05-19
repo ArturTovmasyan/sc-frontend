@@ -125,7 +125,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.contacts = res;
 
             if (params) {
-              this.form.get('status_id').setValue(params.task_contact_id);
+              this.form.get('task_contact_id').setValue(params.contact_id);
             }
           }
         });
