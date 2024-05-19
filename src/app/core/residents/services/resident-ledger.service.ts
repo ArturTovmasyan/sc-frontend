@@ -11,4 +11,8 @@ export class ResidentLedgerService extends GridService<ResidentLedger> {
 
     this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/ledger`;
   }
+
+  public getRents(id: number) {
+    return this.http.get<any>(this.SERVICE_URL_BASE + `/${id}/rent`, {});
+  }
 }

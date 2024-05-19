@@ -468,7 +468,8 @@
       "id": "ID",
       "resident": "Resident",
       "date_created": "Created At",
-      "amount": "Amount",
+      "private_pay_balance_due": "Privat Pay Balance Due",
+      "not_private_pay_balance_due": "3rd Party Balance Due",
       "balance_due": "Balance Due",
       "info": "Sources"
     },

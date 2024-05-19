@@ -11,6 +11,10 @@ import {AbstractForm} from '../../../../../../shared/components/abstract-form/ab
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {PaymentSource} from '../../../../models/payment-source';
 import {PaymentSourceService} from '../../../../services/payment-source.service';
+import {KeyValue} from '@angular/common';
+import {ResidentResponsiblePersonService} from '../../../../services/resident-responsible-person.service';
+import {ResidentResponsiblePerson} from '../../../../models/resident-responsible-person';
+import {PaymentPeriod} from '../../../../models/payment-period.enum';
 
 @Component({
   templateUrl: './view.component.html'
@@ -21,6 +25,9 @@ export class ViewComponent implements OnInit, OnDestroy {
   ledger: ResidentLedger;
 
   payment_sources: PaymentSource[];
+  residentResponsiblePersons: ResidentResponsiblePerson[];
+
+  rents = [];
 
   public title: string = null;
 
@@ -34,7 +41,8 @@ export class ViewComponent implements OnInit, OnDestroy {
     private ledger$: ResidentLedgerService,
     private route$: ActivatedRoute,
     private router$: Router,
-    private paymentSource$: PaymentSourceService
+    private paymentSource$: PaymentSourceService,
+    private residentResponsiblePerson$: ResidentResponsiblePersonService
   ) {
     this.$subscriptions = {};
   }
@@ -43,6 +51,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     this.subscribe('title');
     this.subscribe('query_map');
     this.subscribe('list_payment_source');
+    this.subscribe('list_resident_responsible_person');
   }
 
   ngOnDestroy(): void {
@@ -58,6 +67,7 @@ export class ViewComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.route$.paramMap.subscribe(route_params => {
           if (route_params.has('id')) {
             this.subscribe('get_ledger', {ledger_id: route_params.get('id')});
+            this.subscribe('get_rents', {ledger_id: route_params.get('id')});
           }
         });
         break;
@@ -74,12 +84,27 @@ export class ViewComponent implements OnInit, OnDestroy {
           }
         });
         break;
+      case 'get_rents':
+        this.$subscriptions[key] = this.ledger$.getRents(params.ledger_id).pipe(first()).subscribe(res => {
+          if (res) {
+            this.rents = res;
+          }
+        });
+        break;
       case 'list_payment_source':
         this.$subscriptions[key] = this.paymentSource$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.payment_sources = res;
           }
         });
+        break;
+      case 'list_resident_responsible_person':
+        this.$subscriptions[key] = this.residentResponsiblePerson$
+          .all([{key: 'resident_id', value: this.query_params['resident_id']}]).subscribe(res => {
+            if (res) {
+              this.residentResponsiblePersons = res;
+            }
+          });
         break;
       default:
         break;
@@ -92,12 +117,12 @@ export class ViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  show_modal_edit(name: string): void {
+  show_modal_edit(name: string, isThirdParty?: boolean): void {
     switch (name) {
       case 'ledger':
         this.ledger$.get(this.ledger.id, this.query_params).subscribe(
           res => {
-            this.create_modal(LedgerFormComponent, data => this.ledger$.edit(data), res);
+            this.create_modal(LedgerFormComponent, data => this.ledger$.edit(data), res, isThirdParty);
           },
           error => {
           });
@@ -107,7 +132,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  private create_modal(form_component: any, submit: (data: any) => Observable<any>, result: any) {
+  private create_modal(form_component: any, submit: (data: any) => Observable<any>, result: any, isThirdParty?: boolean) {
     let valid = false;
     let loading = false;
 
@@ -160,8 +185,10 @@ export class ViewComponent implements OnInit, OnDestroy {
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
-      if (component instanceof AbstractForm) {
+      if (component instanceof LedgerFormComponent) {
         const form = component.formObject;
+
+        component.isThirdParty = isThirdParty;
 
         if (result !== null) {
           component.loaded.subscribe(v => {
@@ -182,6 +209,10 @@ export class ViewComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  public no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {
+    return 0;
   }
 
   show(direction: string) {
@@ -216,6 +247,46 @@ export class ViewComponent implements OnInit, OnDestroy {
       if (source) {
         result = source.title;
       }
+    }
+
+    return result;
+  }
+
+  get_resident_responsible_person_name(id: number) {
+    let result = '(none)';
+
+    if (this.residentResponsiblePersons && this.residentResponsiblePersons.length > 0) {
+      const item = this.residentResponsiblePersons.filter(v => v.id === id).pop();
+
+      if (item) {
+        result = item.responsible_person.first_name + ' ' + item.responsible_person.last_name;
+      }
+    }
+
+    return result;
+  }
+
+  get_source_period(id: number) {
+    let result: PaymentPeriod;
+
+    if (this.payment_sources && this.payment_sources.length > 0) {
+      const source = this.payment_sources.filter(v => v.id === id).pop();
+
+      if (source) {
+        result = source.period;
+      }
+    }
+
+    return result;
+  }
+
+  get_prior_date() {
+    let result = new Date();
+
+    if (this.ledger.date_created) {
+      result = new Date(this.ledger.date_created);
+      result.setDate(1);
+      result.setMonth(result.getMonth() - 1);
     }
 
     return result;

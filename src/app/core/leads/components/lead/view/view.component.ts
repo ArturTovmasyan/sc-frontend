@@ -54,7 +54,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribe('title');
     this.subscribe('query_map');
-    this.subscribe('get_expand');
+    this.subscribe('');
   }
 
   ngOnDestroy(): void {

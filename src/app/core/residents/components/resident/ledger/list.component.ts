@@ -24,6 +24,21 @@ export class ListComponent extends GridComponent<ResidentLedger, ResidentLedgerS
         this.component = FormComponent;
         this.permission = 'persistence-resident-resident_ledger';
         this.name = 'resident-ledger-list';
+
+        this.grid_options_loaded.subscribe(next => {
+          if (next) {
+            const btn = this._btnBar.buttons_crud.filter(v => v.name === 'add').pop();
+            const btn_edit = this._btnBar.buttons_crud.filter(v => v.name === 'edit').pop();
+
+            if (btn) {
+              btn.show = false; // TODO: review
+            }
+
+            if (btn_edit) {
+              btn_edit.show = false; // TODO: review
+            }
+          }
+        });
     }
 
     ngOnInit(): void {

@@ -1,9 +1,18 @@
 <div class="d-flex justify-content-between" style="margin-bottom: 1.2rem;">
-  <div class="justify-content-end">
+  <div class="justify-content-start">
     <nz-button-group>
       <button *ngIf="ledger" nzSize="small" nz-button nzType="default" [disabled]="show('previous')"
               (click)="getPreviousLedger()"><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Previous
       </button>
+    </nz-button-group>
+  </div>
+  <div class="justify-content-center">
+    <ng-container *ngIf="ledger">
+      <strong style="font-weight: bolder; font-size: large">{{ ledger.date_created|date:'MMMM yyyy' }}</strong>
+    </ng-container>
+  </div>
+  <div class="justify-content-end">
+    <nz-button-group>
       <button *ngIf="ledger" nzSize="small" nz-button nzType="default" [disabled]="show('next')"
               (click)="getNextLedger()">
         Next <i nz-icon nzType="arrow-right" nzTheme="outline"></i>
@@ -11,59 +20,397 @@
     </nz-button-group>
   </div>
 </div>
-<div class="row">
-  <div class="col-sm-6 col-md-4">
-    <div class="row">
-      <div class="col-sm-12 col-md-12">
-        <div class="card">
-          <div class="card-header">
-            Ledger
-          </div>
-          <div class="card-body">
-            <nz-empty *ngIf="!ledger" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
-            <div *ngIf="ledger">
-              <div nz-row [nzGutter]="4" *ngIf="ledger.date_created">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Created At:</strong></div>
-                <div nz-col [nzSpan]="16">{{ ledger.date_created|date:'MMM d, y' }}</div>
-              </div>
-              <div nz-row [nzGutter]="4">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Amount:</strong></div>
-                <div nz-col [nzSpan]="16">{{ ledger.amount|currency:'USD':'symbol-narrow':'1.2-2' }}</div>
-              </div>
-              <div nz-row [nzGutter]="4">
-                <div nz-col [nzSpan]="8" class="text-right"><strong>Balance Due:</strong></div>
-                <div nz-col [nzSpan]="16">{{ ledger.balance_due|currency:'USD':'symbol-narrow':'1.2-2' }}</div>
-              </div>
-              <div nz-row [nzGutter]="4" *ngIf="ledger.source && ledger.source.length > 0">
-                <div nz-col [nzSpan]="24" class="text-center"><strong>Sources</strong></div>
-                <div nz-col [nzSpan]="24" class="text-center">
-                  <ng-container *ngFor="let source of ledger.source;">
-                    <b>{{ get_source_title(source.id) }}:</b> {{ source.amount|currency:'USD':'symbol-narrow':'1.2-2' }}
-                    <br>
-                  </ng-container>
+<div class="row" *ngIf="ledger">
+  <div class="col-sm-12 col-md-12">
+    <ng-container *ngIf="rents && rents.length > 0">
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <ng-template #rentTitle>
+            <div class="card-header">
+              <div class="d-flex justify-content-between">
+                <div class="justify-content-start">
+                </div>
+                <div class="justify-content-center">
+                  Rents<span *ngIf="ledger.resident"> - {{ ledger.resident|resident }}</span>
+                </div>
+                <div class="justify-content-end">
                 </div>
               </div>
+            </div>
+          </ng-template>
 
-              <nz-divider></nz-divider>
-              <div class="d-flex">
-                <nz-button-group [nzSize]="'small'" class="ml-auto">
+          <div class="card">
+            <nz-collapse [nzNoAnimation]="true" [nzBordered]="false">
+              <nz-collapse-panel [nzHeader]="rentTitle" [nzActive]="false">
+                <div class="card-body">
+                  <nz-empty *ngIf="!ledger" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+                  <div *ngIf="ledger" class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                      <ng-container *ngFor="let item of rents">
+                        <tr class="text-left">
+                          <td colspan="3" style="width: 100% !important; border: 1px solid #ffffff; border-bottom: 1px solid #c8ced3;">
+                            <div nz-row [nzGutter]="4">
+                              <div nz-col [nzSpan]="6" class="text-right"><strong>Room:</strong></div>
+                              <div nz-col [nzSpan]="18">{{ item.room }}</div>
+                            </div>
+                            <div nz-row [nzGutter]="4">
+                              <div nz-col [nzSpan]="6" class="text-right"><strong>Type:</strong></div>
+                              <div nz-col [nzSpan]="18">{{ item.roomType }}</div>
+                            </div>
+                            <div nz-row [nzGutter]="4">
+                              <div nz-col [nzSpan]="6" class="text-right"><strong>Base Rate:</strong></div>
+                              <div nz-col [nzSpan]="18">{{ item.baseRate|currency:'USD':'symbol-narrow':'1.2-2' }}</div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr class="text-center">
+                          <th style="width: 15% !important;">
+                            <strong>Start Date</strong>
+                          </th>
+                          <th style="width: 19% !important;">
+                            <strong>Reason</strong>
+                          </th>
+                          <th style="width: 15% !important;">
+                            <strong>Amount</strong>
+                          </th>
+                          <th colspan="3" style="width: 51% !important;">
+                            <strong>Sources</strong>
+                          </th>
+                        </tr>
+                        <tr class="text-center">
+                          <td style="width: 15% !important;">{{item.start|date:'MM/d/y'}}</td>
+                          <td style="width: 19% !important;">{{item.reason}}</td>
+                          <td style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                          <td style="width: 17% !important; margin: 0; padding: 0;">
+                            <ng-container *ngIf="item.sources && item.sources.length > 0">
+                              <ng-container *ngFor="let source of item.sources;">
+                                <div style="border: 1px solid #c8ced3;">{{ get_source_title(source.id) }}</div>
+                              </ng-container>
+                            </ng-container>
+                          </td>
+                          <td style="width: 17% !important; margin: 0; padding: 0;">
+                            <ng-container *ngIf="item.sources && item.sources.length > 0">
+                              <ng-container *ngFor="let source of item.sources;">
+                                <ng-template #sourcePeriod>
+                                  <div style="border: 1px solid #c8ced3;">{{ get_source_period(source.id)|payment_period }}</div>
+                                </ng-template>
+
+                                <div style="border: 1px solid #c8ced3;" *ngIf="source.responsible_person_id; else sourcePeriod">
+                                  {{ get_resident_responsible_person_name(source.responsible_person_id) }}
+                                </div>
+                              </ng-container>
+                            </ng-container>
+                          </td>
+                          <td style="width: 17% !important; margin: 0; padding: 0;">
+                            <ng-container *ngIf="item.sources && item.sources.length > 0">
+                              <ng-container *ngFor="let source of item.sources;">
+                                <div style="border: 1px solid #c8ced3;">{{source.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</div>
+                              </ng-container>
+                            </ng-container>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </table>
+                  </div>
+                </div>
+              </nz-collapse-panel>
+            </nz-collapse>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="ledger.privat_pay_source && ledger.privat_pay_source.length > 0">
+      <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <ng-template #privatPayTitle>
+          <div class="card-header">
+            <div class="d-flex justify-content-between">
+              <div class="justify-content-start">
+                <nz-button-group>
                   <button type="button" nz-button nzType="default"
-                          (click)="show_modal_edit('ledger'); $event.preventDefault();">
+                          (click)="show_modal_edit('ledger', false); $event.preventDefault();">
                     <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
                   </button>
                 </nz-button-group>
               </div>
+              <div class="justify-content-center">
+                Private Pay Billing Statement<span *ngIf="ledger.resident"> - {{ ledger.resident|resident }}</span>
+              </div>
+              <div class="justify-content-end">
+              </div>
             </div>
           </div>
+        </ng-template>
+
+        <div class="card">
+          <nz-collapse [nzNoAnimation]="true" [nzBordered]="false">
+            <nz-collapse-panel [nzHeader]="privatPayTitle" [nzActive]="false">
+              <div class="card-body">
+                <nz-empty *ngIf="!ledger" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+                <div *ngIf="ledger" class="table-responsive">
+                  <table class="table table-sm table-bordered">
+                    <tr class="text-center">
+                      <th style="width: 15% !important;">
+                        <strong>Date</strong>
+                      </th>
+                      <th style="width: 20% !important;">
+                        <strong>Item</strong>
+                      </th>
+                      <th style="width: 15% !important;">
+                      </th>
+                      <th style="width: 15% !important;">
+                      </th>
+                      <th style="width: 20% !important;">
+                      </th>
+                      <th style="width: 15% !important;">
+                        <strong>Amount</strong>
+                      </th>
+                    </tr>
+                    <ng-container
+                      *ngIf="ledger.prior_private_pay_balance_due && ledger.prior_private_pay_balance_due > 0">
+                      <tr class="text-center">
+                        <td style="width: 15% !important;">{{ ledger.date_created|date:'MM/01/y' }}</td>
+                        <td style="width: 20% !important;">Prior Balance</td>
+                        <td style="width: 15% !important;">{{ get_prior_date()|date:'MMMM' }}</td>
+                        <td style="width: 15% !important;"></td>
+                        <td style="width: 20% !important;"></td>
+                        <td style="width: 15% !important; color:#FF0000">
+                          ({{ledger.prior_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}})
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <ng-container *ngIf="ledger.privat_pay_source && ledger.privat_pay_source.length > 0">
+                      <ng-container *ngFor="let item of ledger.privat_pay_source">
+                        <tr class="text-center">
+                          <td style="width: 15% !important;">{{ledger.date_created|date:'MM/01/y'}}</td>
+                          <td style="width: 20% !important;">Room Rent</td>
+                          <td style="width: 15% !important;">{{ get_source_title(item.id) }}</td>
+                          <td style="width: 15% !important;"></td>
+                          <td
+                            style="width: 20% !important;">{{ get_resident_responsible_person_name(item.responsible_person_id) }}</td>
+                          <td style="width: 15% !important; color:#FF0000">
+                            ({{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}})
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="ledger.resident_payment_received_items && ledger.resident_payment_received_items.length > 0">
+                      <ng-container *ngFor="let item of ledger.resident_payment_received_items">
+                        <tr class="text-center">
+                          <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
+                          <td style="width: 20% !important;">Payment</td>
+                          <td style="width: 15% !important;">Check #</td>
+                          <td style="width: 15% !important;">{{item.transaction_number}}</td>
+                          <td style="width: 20% !important;"></td>
+                          <td style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="ledger.resident_expense_items && ledger.resident_expense_items.length > 0">
+                      <ng-container *ngFor="let item of ledger.resident_expense_items">
+                        <tr class="text-center">
+                          <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
+                          <td style="width: 20% !important;">{{item.expense_item.title}}</td>
+                          <td style="width: 15% !important;"></td>
+                          <td style="width: 15% !important;"></td>
+                          <td style="width: 20% !important;"></td>
+                          <td style="width: 15% !important; color:#FF0000">
+                            ({{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}})
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="ledger.resident_credit_items && ledger.resident_credit_items.length > 0">
+                      <ng-container *ngFor="let item of ledger.resident_credit_items">
+                        <tr class="text-center">
+                          <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
+                          <td style="width: 20% !important;">{{item.credit_item.title}}</td>
+                          <td style="width: 15% !important;"></td>
+                          <td style="width: 15% !important;"></td>
+                          <td style="width: 20% !important;"></td>
+                          <td style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="ledger.resident_discount_items && ledger.resident_discount_items.length > 0">
+                      <ng-container *ngFor="let item of ledger.resident_discount_items">
+                        <tr class="text-center">
+                          <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
+                          <td style="width: 20% !important;">{{item.discount_item.title}}</td>
+                          <td style="width: 15% !important;"></td>
+                          <td style="width: 15% !important;"></td>
+                          <td style="width: 20% !important;"></td>
+                          <td style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                    <tr class="text-center">
+                      <td style="width: 15% !important;"></td>
+                      <td style="width: 20% !important;"></td>
+                      <td style="width: 15% !important;"></td>
+                      <td style="width: 15% !important;"></td>
+                      <td style="width: 20% !important;"><strong>Balance Due</strong></td>
+                      <td
+                        style="width: 15% !important;"><strong>{{ledger.private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}}</strong></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </nz-collapse-panel>
+          </nz-collapse>
         </div>
       </div>
     </div>
-  </div>
-  <div class="col-sm-6 col-md-8">
-    <div class="row">
-      <div class="col-sm-12 col-md-12">
-        <app-resident-ledger></app-resident-ledger>
+    </ng-container>
+    <ng-container *ngIf="ledger.not_privat_pay_source && ledger.not_privat_pay_source.length > 0">
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <ng-template #notPrivatPayTitle>
+            <div class="card-header">
+              <div class="d-flex justify-content-between">
+                <div class="justify-content-start">
+                  <nz-button-group>
+                    <button type="button" nz-button nzType="default"
+                            (click)="show_modal_edit('ledger', true); $event.preventDefault();">
+                      <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
+                    </button>
+                  </nz-button-group>
+                </div>
+                <div class="justify-content-center">
+                  3rd Party Billing Statement<span *ngIf="ledger.resident"> - {{ ledger.resident|resident }}</span>
+                </div>
+                <div class="justify-content-end">
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <div class="card">
+            <nz-collapse [nzNoAnimation]="true" [nzBordered]="false">
+              <nz-collapse-panel [nzHeader]="notPrivatPayTitle" [nzActive]="false">
+                <div class="card-body">
+                  <nz-empty *ngIf="!ledger" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+                  <div *ngIf="ledger" class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                      <tr class="text-center">
+                        <th style="width: 15% !important;">
+                          <strong>Date</strong>
+                        </th>
+                        <th style="width: 20% !important;">
+                          <strong>Item</strong>
+                        </th>
+                        <th style="width: 15% !important;">
+                        </th>
+                        <th style="width: 15% !important;">
+                        </th>
+                        <th style="width: 20% !important;">
+                        </th>
+                        <th style="width: 15% !important;">
+                          <strong>Amount</strong>
+                        </th>
+                      </tr>
+                      <ng-container
+                        *ngIf="ledger.prior_private_pay_balance_due && ledger.prior_private_pay_balance_due > 0">
+                        <tr class="text-center">
+                          <td style="width: 15% !important;">{{ ledger.date_created|date:'MM/01/y' }}</td>
+                          <td style="width: 20% !important;">Prior Balance</td>
+                          <td style="width: 15% !important;">{{ get_prior_date()|date:'MMMM' }}</td>
+                          <td style="width: 15% !important;"></td>
+                          <td style="width: 20% !important;"></td>
+                          <td style="width: 15% !important; color:#FF0000">
+                            ({{ledger.prior_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}})
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="ledger.not_privat_pay_source && ledger.not_privat_pay_source.length > 0">
+                        <ng-container *ngFor="let item of ledger.not_privat_pay_source">
+                          <tr class="text-center">
+                            <td style="width: 15% !important;">{{ledger.date_created|date:'MM/01/y'}}</td>
+                            <td style="width: 20% !important;">Room Rent</td>
+                            <td style="width: 15% !important;">{{ get_source_title(item.id) }}</td>
+                            <td style="width: 15% !important;"></td>
+                            <td
+                              style="width: 20% !important;"></td>
+                            <td style="width: 15% !important; color:#FF0000">
+                              ({{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}})
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="ledger.resident_payment_received_items && ledger.resident_payment_received_items.length > 0">
+                        <ng-container *ngFor="let item of ledger.resident_payment_received_items">
+                          <tr class="text-center">
+                            <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
+                            <td style="width: 20% !important;">Payment</td>
+                            <td style="width: 15% !important;">Check #</td>
+                            <td style="width: 15% !important;">{{item.transaction_number}}</td>
+                            <td style="width: 20% !important;"></td>
+                            <td style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container *ngIf="ledger.resident_expense_items && ledger.resident_expense_items.length > 0">
+                        <ng-container *ngFor="let item of ledger.resident_expense_items">
+                          <tr class="text-center">
+                            <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
+                            <td style="width: 20% !important;">{{item.expense_item.title}}</td>
+                            <td style="width: 15% !important;"></td>
+                            <td style="width: 15% !important;"></td>
+                            <td style="width: 20% !important;"></td>
+                            <td style="width: 15% !important; color:#FF0000">
+                              ({{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}})
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container *ngIf="ledger.resident_credit_items && ledger.resident_credit_items.length > 0">
+                        <ng-container *ngFor="let item of ledger.resident_credit_items">
+                          <tr class="text-center">
+                            <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
+                            <td style="width: 20% !important;">{{item.credit_item.title}}</td>
+                            <td style="width: 15% !important;"></td>
+                            <td style="width: 15% !important;"></td>
+                            <td style="width: 20% !important;"></td>
+                            <td style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container *ngIf="ledger.resident_discount_items && ledger.resident_discount_items.length > 0">
+                        <ng-container *ngFor="let item of ledger.resident_discount_items">
+                          <tr class="text-center">
+                            <td style="width: 15% !important;">{{item.date|date:'MM/d/y'}}</td>
+                            <td style="width: 20% !important;">{{item.discount_item.title}}</td>
+                            <td style="width: 15% !important;"></td>
+                            <td style="width: 15% !important;"></td>
+                            <td style="width: 20% !important;"></td>
+                            <td style="width: 15% !important;">{{item.amount|currency:'USD':'symbol-narrow':'1.2-2'}}</td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                      <tr class="text-center">
+                        <td style="width: 15% !important;"></td>
+                        <td style="width: 20% !important;"></td>
+                        <td style="width: 15% !important;"></td>
+                        <td style="width: 15% !important;"></td>
+                        <td style="width: 20% !important;"><strong>Balance Due</strong></td>
+                        <td
+                          style="width: 15% !important;"><strong>{{ledger.not_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}}</strong></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </nz-collapse-panel>
+            </nz-collapse>
+          </div>
+        </div>
       </div>
-    </div>
+    </ng-container>
+    <!--    <div class="row">-->
+    <!--      <div class="col-sm-12 col-md-12">-->
+    <!--        <app-resident-ledger></app-resident-ledger>-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 </div>
