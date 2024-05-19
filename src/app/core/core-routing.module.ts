@@ -163,7 +163,7 @@ const routes: Routes = [
             component: OutreachViewComponent,
             canActivate: [AuthGuard],
             data: {
-              title: 'Outreach',
+              title: 'Outreach Events',
               permissions: ['persistence-lead-outreach']
             }
           },
@@ -181,7 +181,7 @@ const routes: Routes = [
             path: 'outreach', component: OutreachListComponent,
             data: {
               nav: {show: true, group: 'Leads'},
-              title: 'Outreach',
+              title: 'Outreach Events',
               permissions: ['persistence-lead-outreach']
             },
             canActivate: [AuthGuard]
