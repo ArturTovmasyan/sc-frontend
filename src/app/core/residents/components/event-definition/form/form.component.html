@@ -2,6 +2,20 @@
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type" nzRequired>Type</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type">
+        <ng-container *ngFor="let type of types">
+          <nz-option [nzLabel]="type.name" [nzValue]="type.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('type')">
+        <app-field-errors [errors]="fieldErrors('type')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSm]="10" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
       <input nz-input placeholder="Title" formControlName="title">

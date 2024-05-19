@@ -130,6 +130,7 @@
     },
     "event-definition-list": {
       "id": "ID",
+      "type": "Type",
       "title": "Title",
       "in_chooser": "In Chooser",
       "ffc": "FFC",

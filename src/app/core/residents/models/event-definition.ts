@@ -19,3 +19,8 @@ export class EventDefinition implements IdInterface {
   space: Space;
 
 }
+
+export enum EventDefinitionType {
+  NONE = 1,
+  ABSENCE = 2
+}

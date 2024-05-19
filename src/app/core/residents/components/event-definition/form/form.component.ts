@@ -7,12 +7,15 @@ import {Space} from '../../../../models/space';
 import {AuthGuard} from '../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {EventDefinitionType} from '../../../models/event-definition';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
   spaces: Space[];
+
+  types: { id: EventDefinitionType, name: string }[];
 
   constructor(
     protected modal$: ModalFormService,
@@ -28,6 +31,8 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
       title: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(100)])],
 
+      type: [null, Validators.required],
+
       in_chooser: [true, Validators.required],
       ffc: [true, Validators.required],
       ihc: [true, Validators.required],
@@ -41,6 +46,11 @@ export class FormComponent extends AbstractForm implements OnInit {
       responsible_person_multi_optional: [false, Validators.required],
       additional_date: [false, Validators.required],
     });
+
+    this.types = [
+      { id: EventDefinitionType.NONE, name: 'None'},
+      { id: EventDefinitionType.ABSENCE, name: 'Absence'}
+    ];
 
     this.subscribe('vc_physician');
     this.subscribe('vc_physician_optional');
