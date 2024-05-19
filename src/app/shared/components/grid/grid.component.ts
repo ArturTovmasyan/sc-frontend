@@ -80,6 +80,19 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
               this.filter[field.id].value = new Array(1);
               break;
+            case 'boolean':
+              field.enum = [
+                {label: 'True', value: 1},
+                {label: 'False', value: 0}
+              ];
+
+              field.enum_map = {
+                true: 'True',
+                false: 'False'
+              };
+
+              this.filter[field.id].value = new Array(1);
+              break;
             case 'string':
               this.filter[field.id].value = new Array(1);
               break;
@@ -100,7 +113,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   update_filter(field: any): void {
     let update_flag = true;
-    if (field.type === 'enum') {
+    if (field.type === 'enum' || field.type === 'boolean') {
       const clone_filter = _.cloneDeep(this.filter);
       const value = field.enum.filter(v => (v.hasOwnProperty('checked') && v.checked === true)).map(v => v.value);
       this.filter[field.id].value = value.length > 0 ? value : [null];

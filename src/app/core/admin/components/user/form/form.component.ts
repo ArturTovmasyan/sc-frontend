@@ -92,8 +92,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   public before_set_form_data(): void {
     if (this.edit_mode) {
-      console.log(this.form);
-
       this.form.get('password').setErrors(null);
       this.form.get('password').clearValidators();
       this.form.get('re_password').setErrors(null);

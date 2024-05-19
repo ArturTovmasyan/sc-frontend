@@ -57,7 +57,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: PaymentPeriod.DAILY, name: 'Daily'},
       {id: PaymentPeriod.WEEKLY, name: 'Weekly'},
       {id: PaymentPeriod.MONTHLY, name: 'Monthly'},
-      {id: PaymentPeriod.YEARLY, name: 'Yearly'},
     ];
 
   }

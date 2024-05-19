@@ -85,6 +85,7 @@
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'datetime'" [ngTemplateOutlet]="filterDate"></template>
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'time'" [ngTemplateOutlet]="filterDate"></template>
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'enum'" [ngTemplateOutlet]="filterEnum"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'boolean'" [ngTemplateOutlet]="filterEnum"></template>
           <strong *ngSwitchDefault>?</strong>
         </th>
         <th *ngIf="field.sortable && field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id"
@@ -97,6 +98,7 @@
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'datetime'" [ngTemplateOutlet]="filterDate"></template>
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'time'" [ngTemplateOutlet]="filterDate"></template>
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'enum'" [ngTemplateOutlet]="filterEnum"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'boolean'" [ngTemplateOutlet]="filterEnum"></template>
           <strong *ngSwitchDefault>?</strong>
         </th>
         <th *ngIf="!field.sortable && !field.filterable">{{ ("grid." + name + "." + field.id)|translate }}</th>
@@ -113,8 +115,8 @@
         <ng-container *ngSwitchCase="'enum'">
           {{ field.enum_map[row[field.id]] }}
         </ng-container>
-        <ng-container *ngSwitchCase="'bool'">
-          {{ row[field.id] ? 'true' : 'false' }}
+        <ng-container *ngSwitchCase="'boolean'">
+          {{ field.enum_map[row[field.id]] }}
         </ng-container>
         <ng-container *ngSwitchCase="'date'">
           {{ row[field.id]|date:'MM/dd/yyyy' }}
@@ -194,12 +196,11 @@
           <div nz-col [nzSpan]="16">
             <nz-select [nzSize]="'small'" [(ngModel)]="filter[field.id].condition">
               <nz-option [nzLabel]="'='" [nzValue]="0"></nz-option>
-              <nz-option [nzLabel]="'!='" [nzValue]="1"></nz-option>
-              <nz-option [nzLabel]="'<'" [nzValue]="2"></nz-option>
-              <nz-option [nzLabel]="'>'" [nzValue]="3"></nz-option>
+              <nz-option [nzLabel]="'<'" [nzValue]="1"></nz-option>
+              <nz-option [nzLabel]="'>'" [nzValue]="2"></nz-option>
+              <nz-option [nzLabel]="'<='" [nzValue]="3"></nz-option>
               <nz-option [nzLabel]="'>='" [nzValue]="4"></nz-option>
-              <nz-option [nzLabel]="'<='" [nzValue]="5"></nz-option>
-              <nz-option [nzLabel]="'><'" [nzValue]="6"></nz-option>
+              <nz-option [nzLabel]="'><'" [nzValue]="5"></nz-option>
             </nz-select>
           </div>
         </div>
@@ -247,8 +248,8 @@
           <div nz-col [nzSpan]="16">
             <nz-select [nzSize]="'small'" [(ngModel)]="filter[field.id].condition">
               <nz-option [nzLabel]="'='" [nzValue]="0"></nz-option>
-              <nz-option [nzLabel]="'>='" [nzValue]="1"></nz-option>
-              <nz-option [nzLabel]="'<='" [nzValue]="2"></nz-option>
+              <nz-option [nzLabel]="'<='" [nzValue]="1"></nz-option>
+              <nz-option [nzLabel]="'>='" [nzValue]="2"></nz-option>
               <nz-option [nzLabel]="'><'" [nzValue]="3"></nz-option>
             </nz-select>
           </div>
@@ -282,8 +283,8 @@
         </div>
       </div>
       <div class="ant-table-filter-dropdown-btns">
-        <a class="ant-table-filter-dropdown-link confirm" (click)="update_filter(field)"><span>OK</span></a>
-        <a class="ant-table-filter-dropdown-link clear" (click)="reset_filter(field)"><span>Reset</span></a>
+        <a class="ant-table-filter-dropdown-link confirm" (click)="update_filter(field);"><span>OK</span></a>
+        <a class="ant-table-filter-dropdown-link clear" (click)="reset_filter(field);"><span>Reset</span></a>
       </div>
     </div>
   </nz-dropdown>

@@ -198,8 +198,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form.get('group_id').setValue(group_id);
     this.form.get('type').setValue(group_type);
     this.form.setControl('option', option);
-
-    console.log(this.form);
   }
 
 }
