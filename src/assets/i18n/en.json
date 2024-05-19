@@ -224,7 +224,8 @@
       "shared": "Shared",
       "notes": "Notes",
       "facility": "Facility",
-      "shorthand": "Shorthand"
+      "shorthand": "Shorthand",
+      "bed_count": "Bed Count"
     },
     "apartment-room-list": {
       "id": "ID",
@@ -235,7 +236,8 @@
       "shared": "Shared",
       "notes": "Notes",
       "apartment": "Apartment",
-      "shorthand": "Shorthand"
+      "shorthand": "Shorthand",
+      "bed_count": "Bed Count"
     },
     "resident-dietary-restriction-list": {
       "id": "ID",
