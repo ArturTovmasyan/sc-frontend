@@ -1,0 +1,103 @@
+﻿<h4>Outreach</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+      <nz-date-picker formControlName="date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date')">
+        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type_id" nzRequired>Type</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type_id">
+          <ng-container *ngFor="let outreach_type of outreach_types">
+            <nz-option [nzLabel]="outreach_type.title" [nzValue]="outreach_type.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('outreach_type');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('type_id')">
+        <app-field-errors [errors]="fieldErrors('type_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="users" nzRequired>Contact</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('users')?'error':null">
+        <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="users">
+          <ng-container *ngFor="let user of users">
+            <nz-option [nzLabel]="user|user" [nzValue]="user.id"></nz-option>
+          </ng-container>
+        </nz-select>
+      <nz-form-explain *ngIf="hasErrors('users')">
+        <app-field-errors [errors]="fieldErrors('users')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="organization_id">Organization</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('organization_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="organization_id">
+          <ng-container *ngFor="let organization of organizations">
+            <nz-option [nzLabel]="organization.name" [nzValue]="organization.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('organization');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('organization_id')">
+        <app-field-errors [errors]="fieldErrors('organization_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="contacts" nzRequired>Contact</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('contacts')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="contacts">
+          <ng-container *ngFor="let contact of contacts">
+            <nz-option [nzLabel]="contact|lead_contact" [nzValue]="contact.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('contact');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('contacts')">
+        <app-field-errors [errors]="fieldErrors('contacts')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
+      <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('notes')">
+        <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

@@ -5,7 +5,7 @@ import {Phone} from '../../models/phone';
 export class Organization implements IdInterface {
   id: number;
 
-  title: string;
+  name: string;
   category: ReferrerType;
   address_1: string;
   address_2: string;

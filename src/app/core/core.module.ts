@@ -262,6 +262,12 @@ import {FormComponent as LeadTemperatureFormComponent} from './leads/components/
 import {ListComponent as LeadTemperatureListComponent} from './leads/components/lead/view/temperature-list.component';
 import {FormComponent as StageChangeReasonFormComponent} from './leads/components/stage-change-reason/form/form.component';
 import {ListComponent as StageChangeReasonListComponent} from './leads/components/stage-change-reason/list.component';
+import {FormComponent as OutreachFormComponent} from './leads/components/outreach/form/form.component';
+import {ListComponent as OutreachListComponent} from './leads/components/outreach/list.component';
+import {ViewComponent as OutreachViewComponent} from './leads/components/outreach/view/view.component';
+import {ListComponent as OutreachActivityComponent} from './leads/components/outreach/view/activity-list.component';
+import {FormComponent as OutreachTypeFormComponent} from './leads/components/outreach-type/form/form.component';
+import {ListComponent as OutreachTypeListComponent} from './leads/components/outreach-type/list.component';
 
 
 import {CronJobsModule} from '../cron-jobs/cron-jobs.module';
@@ -496,6 +502,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LeadTemperatureListComponent,
     StageChangeReasonListComponent,
     StageChangeReasonFormComponent,
+    OutreachListComponent,
+    OutreachFormComponent,
+    OutreachActivityComponent,
+    OutreachViewComponent,
+    OutreachTypeListComponent,
+    OutreachTypeFormComponent,
 
     LeadContactListComponent,
     LeadContactFormComponent,
@@ -648,6 +660,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LeadFunnelStageFormComponent,
     LeadTemperatureFormComponent,
     StageChangeReasonFormComponent,
+    OutreachFormComponent,
+    OutreachTypeFormComponent,
 
     LeadContactFormComponent,
 

@@ -86,6 +86,9 @@ import {ListComponent as LeadContactListComponent} from './leads/components/cont
 import {ListComponent as TemperatureListComponent} from './leads/components/temperature/list.component';
 import {ListComponent as FunnelStageListComponent} from './leads/components/funnel-stage/list.component';
 import {ListComponent as StageChangeReasonListComponent} from './leads/components/stage-change-reason/list.component';
+import {ViewComponent as OutreachViewComponent} from './leads/components/outreach/view/view.component';
+import {ListComponent as OutreachListComponent} from './leads/components/outreach/list.component';
+import {ListComponent as OutreachTypeListComponent} from './leads/components/outreach-type/list.component';
 
 const routes: Routes = [
   {
@@ -123,6 +126,15 @@ const routes: Routes = [
             }
           },
           {
+            path: 'outreach/:id',
+            component: OutreachViewComponent,
+            canActivate: [AuthGuard],
+            data: {
+              title: 'Outreach',
+              permissions: ['persistence-lead-outreach']
+            }
+          },
+          {
             path: 'dashboard',
             component: LeadDashboardComponent,
             canActivate: [AuthGuard],
@@ -131,6 +143,15 @@ const routes: Routes = [
               title: 'My Dashboard',
               permissions: ['persistence-lead-lead']
             }
+          },
+          {
+            path: 'outreach', component: OutreachListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Outreach',
+              permissions: ['persistence-lead-outreach']
+            },
+            canActivate: [AuthGuard]
           },
           {
             path: 'leads', component: LeadListComponent,
@@ -272,14 +293,23 @@ const routes: Routes = [
                 canActivate: [AuthGuard]
               },
               {
-              path: 'activity-status', component: ActivityStatusListComponent,
-              data: {
-                nav: {show: true, group: 'Leads'},
-                title: 'Activity Statuses',
-                permissions: ['persistence-lead-activity_status']
+                path: 'activity-status', component: ActivityStatusListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Activity Statuses',
+                  permissions: ['persistence-lead-activity_status']
+                },
+                canActivate: [AuthGuard]
               },
-              canActivate: [AuthGuard]
-            },
+              {
+                path: 'outreach-type', component: OutreachTypeListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Outreach Types',
+                  permissions: ['persistence-lead-outreach_type']
+                },
+                canActivate: [AuthGuard]
+              },
               {
                 path: 'activity-type', component: ActivityTypeListComponent,
                 data: {

@@ -33,5 +33,6 @@ export class Activity implements IdInterface {
 export enum ActivityOwnerType {
   LEAD = 1,
   REFERRAL = 2,
-  ORGANIZATION = 3
+  ORGANIZATION = 3,
+  OUTREACH = 4
 }
