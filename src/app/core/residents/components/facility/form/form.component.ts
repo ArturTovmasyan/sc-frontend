@@ -36,6 +36,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       description: ['', Validators.compose([Validators.maxLength(1000)])],
       phone: ['', CoreValidator.phone],
       fax: ['', CoreValidator.phone],
+      number_of_floors: ['', Validators.compose([Validators.required, CoreValidator.number_of_floors])],
       license: ['', Validators.compose([Validators.maxLength(20)])],
       license_capacity: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
       capacity: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],

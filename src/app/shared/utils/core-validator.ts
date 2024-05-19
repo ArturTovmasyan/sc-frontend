@@ -8,6 +8,7 @@ export class CoreValidator {
     DOSAGE_UNIT: /[a-zA-Z0-9\%\+\/]+/,
 
     FLOOR: /(^[1-9][0-9]?$)/,
+    NUMBER_OF_FLOORS: /(^[1-4]$)/,
 
     PAYMENT_AMOUNT: /(^0$)|(^[1-9][0-9]*$)|(^[0-9]+(\.[0-9]{1,2})$)/,
 
@@ -52,9 +53,13 @@ export class CoreValidator {
     CoreValidator.Patterns.GROUP_CAPACITY,
     {pattern_validator_group_capacity: 'The value should be numeric and more than zero.'}
   );
+  public static number_of_floors: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.NUMBER_OF_FLOORS,
+    {pattern_validator_number_of_floors: 'The value should be 1/2/3/4.'}
+  );
   public static care_group: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.CARE_GROUP,
-    {pattern_validator_group_capacity: 'The value should be numeric and more than zero.'}
+    {pattern_validator_care_group: 'The value should be numeric and more than zero.'}
   );
   public static state_abbr: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.STATE_ABBR,

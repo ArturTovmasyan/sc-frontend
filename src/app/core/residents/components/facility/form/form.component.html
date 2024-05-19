@@ -63,6 +63,17 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="number_of_floors" nzRequired>Number of Floors</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('number_of_floors')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" placeholder="Number of Floors"
+                       formControlName="number_of_floors"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('number_of_floors')">
+        <app-field-errors [errors]="fieldErrors('number_of_floors')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="license_capacity" nzRequired>Licence capacity</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('license_capacity')?'error':null">
       <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" placeholder="Licence capacity"
