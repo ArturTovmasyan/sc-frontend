@@ -1,9 +1,11 @@
 <full-calendar
+  [customButtons]="calendarCustomButtons"
+  [displayEventTime]="false"
   [header]="calendarHeader"
-  [eventTimeFormat]="calendarTimeFormat"
   [plugins]="calendarPlugins"
   [events]="calendarEvents"
 ></full-calendar>
+<!--  [eventTimeFormat]="calendarTimeFormat"-->
 <!--(eventMouseEnter)="eventMouseEnter($event)"-->
 <div class="d-flex justify-content-between" style="margin-top: 1rem;">
   <div><span class="fc-event-dot" style="background-color:#fac22b"></span> - Admission</div>

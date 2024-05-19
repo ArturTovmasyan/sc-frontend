@@ -1,8 +1,8 @@
 import * as moment from 'moment';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {simpleEmptyImage} from 'ng-zorro-antd';
+import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
@@ -14,6 +14,9 @@ import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
 import {PaymentPeriodPipe} from '../../../pipes/payment-period.pipe';
 import {RentIncreaseReasonPipe} from '../../../pipes/rent-increase-reason.pipe';
 import {AdmissionType} from '../../../models/resident-admission';
+import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
+import {ResidentEventService} from '../../../services/resident-event.service';
+import {FormComponent} from '../event/form/form.component';
 
 @Component({
   templateUrl: './calendar.component.html',
@@ -23,7 +26,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   calendarPlugins = [dayGridPlugin, listPlugin, bootstrapPlugin]; // important!
-  calendarHeader = {left: 'prev,next today', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listMonth'};
+  calendarCustomButtons = {
+    add_event: {
+      text: 'Add Event',
+      click: () => this.show_modal_add()
+    }
+  };
+
+  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listMonth'};
   calendarTimeFormat = {hour: '2-digit', minute: '2-digit', second: '2-digit', meridiem: false};
   calendarEvents = [];
 
@@ -31,7 +41,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   constructor(
     private sanitizer: DomSanitizer,
+    private modal$: NzModalService,
     private resident$: ResidentService,
+    private residentEvent$: ResidentEventService,
     private residentSelector$: ResidentSelectorService,
     private auth_$: AuthGuard
   ) {
@@ -96,8 +108,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 backgroundColor: '#d7255d',
                 textColor: '#ffffff',
                 id: event.id,
-                start: moment(event.start).format('YYYY-MM-DD'),
-                end: event.end ? moment(event.end).format('YYYY-MM-DD') : null,
+                start: moment(event.start).format('YYYY-MM-DD HH:mm:ss'),
+                end: event.end ? moment(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
                 title: event.title
               });
             });
@@ -136,6 +148,122 @@ export class CalendarComponent implements OnInit, OnDestroy {
       return moment(admission.end).format('YYYY-MM-DD');
     }
 
+  }
+
+  show_modal_add(): void {
+    this.create_modal(FormComponent, data => this.residentEvent$.add(data), null);
+  }
+
+  private create_modal(form_component: any, submit: (data: any) => Observable<any>, result: any) {
+    let valid = false;
+    let loading = false;
+
+    const footer = [
+      {
+        label: 'Cancel',
+        onClick: () => {
+          modal.close();
+        }
+      },
+      {
+        type: 'primary',
+        label: 'Save',
+        loading: () => loading,
+        disabled: () => !valid,
+        onClick: () => {
+          loading = true;
+
+          const component = <AbstractForm>modal.getContentComponent();
+          component.before_submit();
+          const form_data = component.formObject.value;
+
+          component.submitted = true;
+
+          submit(form_data).subscribe(
+            res => {
+              loading = false;
+
+              this.subscribe('rs_resident');
+
+              modal.close();
+            },
+            error => {
+              loading = false;
+
+              component.handleSubmitError(error);
+              component.postSubmit(null);
+              // console.error(error);
+            });
+        }
+      },
+    ];
+
+    if (result === null) {
+      footer.push({
+        type: 'primary',
+        label: 'Save & Add',
+        loading: () => loading,
+        disabled: () => !valid,
+        onClick: () => {
+          loading = true;
+
+          const component = <AbstractForm>modal.getContentComponent();
+          component.before_submit();
+          const form_data = component.formObject.value;
+
+          component.submitted = true;
+
+          submit(form_data).subscribe(
+            res => {
+              loading = false;
+
+              this.subscribe('rs_resident');
+
+              modal.close();
+
+              this.create_modal(form_component, submit, result);
+            },
+            error => {
+              loading = false;
+
+              component.handleSubmitError(error);
+              component.postSubmit(null);
+              // console.error(error);
+            });
+        }
+      });
+    }
+
+    const modal = this.modal$.create({
+      nzClosable: false,
+      nzMaskClosable: false,
+      nzWidth: '45rem',
+      nzTitle: null,
+      nzContent: form_component,
+      nzFooter: footer
+    });
+
+    modal.afterOpen.subscribe(() => {
+      const component = modal.getContentComponent();
+      if (component instanceof FormComponent) {
+        const form = component.formObject;
+
+        if (result !== null) {
+          component.loaded.subscribe(v => {
+            if (v) {
+              component.before_set_form_data(result);
+              component.set_form_data(component, form, result);
+              component.after_set_form_data();
+            }
+          });
+        }
+
+        valid = form.valid;
+        form.valueChanges.subscribe(val => {
+          valid = form.valid;
+        });
+      }
+    });
   }
 
   eventMouseEnter($event: any) {
