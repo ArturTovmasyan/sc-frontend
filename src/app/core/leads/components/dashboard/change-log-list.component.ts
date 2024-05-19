@@ -33,15 +33,15 @@ export class ListComponent extends GridComponent<ChangeLog, ChangeLogService> im
         const remove_btn = this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop();
 
         if (add_btn) {
-          this._btnBar.buttons_crud.filter(v => v.name === 'add').pop().show = false; // TODO: review
+          add_btn.show = false; // TODO: review
         }
 
         if (edit_btn) {
-          this._btnBar.buttons_crud.filter(v => v.name === 'edit').pop().show = false; // TODO: review
+          edit_btn.show = false; // TODO: review
         }
 
         if (remove_btn) {
-          this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop().show = true; // TODO: review
+          remove_btn.show = true; // TODO: review
         }
       }
     });
