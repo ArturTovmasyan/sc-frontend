@@ -4,6 +4,7 @@ import {TitleService} from '../../../../services/title.service';
 import {ResidentResponsiblePersonService} from '../../../services/resident-responsible-person.service';
 import {ResidentResponsiblePerson} from '../../../models/resident-responsible-person';
 import {FormComponent} from './form/form.component';
+import {FormComponent as ReorderFormComponent} from './reorder/form.component';
 import {Observable, Subscription} from 'rxjs';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
@@ -73,6 +74,17 @@ export class ListComponent implements OnInit, OnDestroy {
         if (id) {
           this.selected_tab = this.responsible_persons.findIndex(v => v === this.responsible_persons.find(value => value.id === id));
         }
+      }
+    });
+  }
+
+  show_modal_reorder(): void {
+    this.service$.all([{key: 'resident_id', value: `${this.residentSelector$.resident.value}`}])
+      .pipe(first()).subscribe(next => {
+      if (next) {
+        this.create_modal(ReorderFormComponent, data => this.service$.reorder(data), {
+          responsible_persons: next
+        });
       }
     });
   }
@@ -241,8 +253,12 @@ export class ListComponent implements OnInit, OnDestroy {
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
-      if (component instanceof FormComponent) {
+      if (component instanceof FormComponent || component instanceof ReorderFormComponent) {
         const form = component.formObject;
+
+        if (component instanceof ReorderFormComponent) {
+          component.resident_responsible_persons = this.responsible_persons;
+        }
 
         if (result !== null) {
           component.loaded.subscribe(v => {
