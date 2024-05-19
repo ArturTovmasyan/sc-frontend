@@ -21,7 +21,7 @@
           <tr>
             <td>Total Capacity</td>
             <ng-container *ngFor="let facility of facilities">
-              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.total_capacity : '-' }}</td>
+              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.beds_target : '-' }}</td>
             </ng-container>
           </tr>
           <tr>

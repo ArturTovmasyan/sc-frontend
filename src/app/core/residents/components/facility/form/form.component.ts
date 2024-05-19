@@ -18,6 +18,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   city_state_zips: CityStateZip[];
   spaces: Space[];
 
+  beds_configured: number;
+
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
@@ -39,17 +41,17 @@ export class FormComponent extends AbstractForm implements OnInit {
       description: ['', Validators.compose([Validators.maxLength(1000)])],
       phone: ['', CoreValidator.phone],
       fax: ['', CoreValidator.phone],
-      number_of_floors: ['', Validators.compose([Validators.required, CoreValidator.number_of_floors])],
       license: ['', Validators.compose([Validators.maxLength(20)])],
-      license_capacity: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
-      capacity: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
-      capacity_yellow: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
-      capacity_red: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
+      beds_licensed: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
+      beds_target: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
       address: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(100)])],
       csz_id: [null, Validators.required],
+      number_of_floors: ['', Validators.compose([Validators.required, CoreValidator.number_of_floors])],
+      yellow_flag: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
+      red_flag: ['', Validators.compose([Validators.required, CoreValidator.group_capacity])],
     });
 
-    this.subscribe('vc_license_capacity');
+    this.subscribe('vc_beds_license');
     this.subscribe('list_csz');
 
     this.add_space();
@@ -83,9 +85,9 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
-      case 'vc_license_capacity':
-        this.$subscriptions[key] = this.form.get('license_capacity').valueChanges.subscribe(next => {
-          this.form.get('capacity').setValue(this.form.get('capacity').value);
+      case 'vc_beds_license':
+        this.$subscriptions[key] = this.form.get('beds_license').valueChanges.subscribe(next => {
+          this.form.get('beds_target').setValue(this.form.get('beds_target').value);
         });
         break;
       default:
@@ -93,4 +95,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
+  before_set_form_data(data: any, previous_data?: any): void {
+    if (this.edit_mode) {
+      this.beds_configured = data.beds_configured;
+    }
+  }
 }

@@ -10,9 +10,11 @@ export class Apartment implements IdInterface {
   phone: string;
   fax: string;
   license: string;
-  license_capacity: string;
 
-  capacity: number;
+  beds_licensed: number;
+  beds_target: number;
+  beds_configured: number;
+
   occupation: number;
 
   address: string;

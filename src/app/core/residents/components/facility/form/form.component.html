@@ -65,7 +65,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="number_of_floors" nzRequired>Number of Floors</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('number_of_floors')?'error':null">
-      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Number of Floors"
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzPlaceHolder="Number of Floors"
                        formControlName="number_of_floors"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('number_of_floors')">
         <app-field-errors [errors]="fieldErrors('number_of_floors')"></app-field-errors>
@@ -74,45 +74,52 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="license_capacity" nzRequired>Licence capacity</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('license_capacity')?'error':null">
-      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Licence capacity"
-                       formControlName="license_capacity"></nz-input-number>
-      <nz-form-explain *ngIf="hasErrors('license_capacity')">
-        <app-field-errors [errors]="fieldErrors('license_capacity')"></app-field-errors>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="beds_licensed" nzRequired>Beds - Licensed</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('beds_licensed')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzPlaceHolder="Beds - Licensed"
+                       formControlName="beds_licensed"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('beds_licensed')">
+        <app-field-errors [errors]="fieldErrors('beds_licensed')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="capacity" nzRequired>Resident capacity</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('capacity')?'error':null">
-      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Resident capacity"
-                       formControlName="capacity"></nz-input-number>
-      <nz-form-explain *ngIf="hasErrors('capacity')">
-        <app-field-errors [errors]="fieldErrors('capacity')"></app-field-errors>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="beds_target" nzRequired>Beds - Target</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('beds_target')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzPlaceHolder="Beds - Target"
+                       formControlName="beds_target"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('beds_target')">
+        <app-field-errors [errors]="fieldErrors('beds_target')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="edit_mode">
+    <nz-form-label [nzSm]="8" [nzXs]="24">Beds - Configured</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      {{ beds_configured }}
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="yellow_flag" nzRequired>Yellow Flag Warning</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('yellow_flag')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzPlaceHolder="Yellow Flag Warning"
+                       formControlName="yellow_flag"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('yellow_flag')">
+        <app-field-errors [errors]="fieldErrors('yellow_flag')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="capacity_yellow" nzRequired>Capacity Yellow Flag Warning</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('capacity_yellow')?'error':null">
-      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Capacity Yellow Flag Warning"
-                       formControlName="capacity_yellow"></nz-input-number>
-      <nz-form-explain *ngIf="hasErrors('capacity_yellow')">
-        <app-field-errors [errors]="fieldErrors('capacity_yellow')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="capacity_red" nzRequired>Capacity Red Flag Warning</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('capacity_red')?'error':null">
-      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Capacity Red Flag Warning"
-                       formControlName="capacity_red"></nz-input-number>
-      <nz-form-explain *ngIf="hasErrors('capacity_red')">
-        <app-field-errors [errors]="fieldErrors('capacity_red')"></app-field-errors>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="red_flag" nzRequired>Red Flag Warning</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('red_flag')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzPlaceHolder="Red Flag Warning"
+                       formControlName="red_flag"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('red_flag')">
+        <app-field-errors [errors]="fieldErrors('red_flag')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -136,7 +143,8 @@
             <nz-option [nzLabel]="city_state_zip|csz" [nzValue]="city_state_zip.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('csz');">
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
+                (click)="open_sub_modal('csz');">
           <i nz-icon nzType="plus"></i>
         </button>
       </div>

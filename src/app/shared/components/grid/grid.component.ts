@@ -12,7 +12,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected _btnBar: ButtonBarComponent;
 
-  @ViewChild(ButtonBarComponent, {static: false}) set btnBar (btnBar: ButtonBarComponent) {
+  @ViewChild(ButtonBarComponent, {static: false}) set btnBar(btnBar: ButtonBarComponent) {
     this._btnBar = btnBar;
   }
 
@@ -38,6 +38,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     ids: []
   };
 
+  protected header: any[] = null;
+  protected header_helper: any[];
   protected fields: any[] = null;
   protected data = [];
 
@@ -84,8 +86,45 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
         this.grid_options_loaded.next(true);
 
         this.fields = data.fields;
+        this.header = [{}];
+
+        const col_groups = {};
+
+        this.fields
+          .filter(f => f.hasOwnProperty('col_group'))
+          .map(f => f.col_group)
+          .forEach((col_group) => col_groups[col_group] = (col_groups[col_group] || 0) + 1);
+
+        const has_col_group = Object.keys(col_groups).length > 0;
+
+        if (has_col_group) {
+          this.header.push({});
+        }
+
         this.fields.forEach(
           field => {
+            if (field.col_group) {
+              this.header[0][field.col_group] = {
+                colspan: col_groups[field.col_group],
+                rowspan: 1,
+                row_span_max: has_col_group ? 2 : 1,
+                field: {id: field.col_group}
+              };
+              this.header[1][field.id] = {
+                colspan: null,
+                rowspan: 1,
+                row_span_max: has_col_group ? 2 : 1,
+                field: field
+              };
+            } else {
+              this.header[0][field.id] = {
+                colspan: null,
+                rowspan: 2,
+                row_span_max: has_col_group ? 2 : 1,
+                field: field
+              };
+            }
+
             this.filter[field.id] = {condition: null, value: null};
 
             switch (field.type) {
@@ -133,6 +172,9 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
             }
           }
         );
+
+        this.header = this.header.map(header_row => Object.values(header_row));
+        this.header_helper = new Array(this.header[0].length);
 
         this.reload_data(reset);
       }

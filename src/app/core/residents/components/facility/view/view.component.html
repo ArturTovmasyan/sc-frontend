@@ -42,21 +42,25 @@
                 <div nz-col [nzSpan]="10" class="text-right"><strong>Number of Floors:</strong></div>
                 <div nz-col [nzSpan]="14">{{ facility.number_of_floors }}</div>
               </div>
-              <div nz-row [nzGutter]="4" *ngIf="facility.license_capacity">
-                <div nz-col [nzSpan]="10" class="text-right"><strong>Licence capacity:</strong></div>
-                <div nz-col [nzSpan]="14">{{ facility.license_capacity }}</div>
+              <div nz-row [nzGutter]="4" *ngIf="facility.beds_licensed">
+                <div nz-col [nzSpan]="10" class="text-right"><strong>Beds - Licensed:</strong></div>
+                <div nz-col [nzSpan]="14">{{ facility.beds_licensed }}</div>
               </div>
-              <div nz-row [nzGutter]="4" *ngIf="facility.capacity">
-                <div nz-col [nzSpan]="10" class="text-right"><strong>Resident capacity:</strong></div>
-                <div nz-col [nzSpan]="14">{{ facility.capacity }}</div>
+              <div nz-row [nzGutter]="4" *ngIf="facility.beds_target">
+                <div nz-col [nzSpan]="10" class="text-right"><strong>Beds - Target:</strong></div>
+                <div nz-col [nzSpan]="14">{{ facility.beds_target }}</div>
               </div>
-              <div nz-row [nzGutter]="4" *ngIf="facility.capacity_yellow">
-                <div nz-col [nzSpan]="10" class="text-right"><strong>Capacity Yellow Flag Warning:</strong></div>
-                <div nz-col [nzSpan]="14">{{ facility.capacity_yellow }}</div>
+              <div nz-row [nzGutter]="4" *ngIf="facility.beds_configured">
+                <div nz-col [nzSpan]="10" class="text-right"><strong>Beds - Configured:</strong></div>
+                <div nz-col [nzSpan]="14">{{ facility.beds_configured }}</div>
               </div>
-              <div nz-row [nzGutter]="4" *ngIf="facility.capacity_red">
-                <div nz-col [nzSpan]="10" class="text-right"><strong>Capacity Red Flag Warning:</strong></div>
-                <div nz-col [nzSpan]="14">{{ facility.capacity_red }}</div>
+              <div nz-row [nzGutter]="4" *ngIf="facility.yellow_flag">
+                <div nz-col [nzSpan]="10" class="text-right"><strong>Yellow Flag Warning:</strong></div>
+                <div nz-col [nzSpan]="14">{{ facility.yellow_flag }}</div>
+              </div>
+              <div nz-row [nzGutter]="4" *ngIf="facility.red_flag">
+                <div nz-col [nzSpan]="10" class="text-right"><strong>Red Flag Warning:</strong></div>
+                <div nz-col [nzSpan]="14">{{ facility.red_flag }}</div>
               </div>
               <div nz-row [nzGutter]="4" *ngIf="facility.license">
                 <div nz-col [nzSpan]="10" class="text-right"><strong>License Number:</strong></div>
