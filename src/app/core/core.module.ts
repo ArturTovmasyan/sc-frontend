@@ -168,6 +168,7 @@ import {ViewComponent as ResidentEventViewComponent} from './residents/component
 import {FormComponent as ResidentEventFormComponent} from './residents/components/resident/event/form/form.component';
 
 import {FormComponent as FacilityEventFormComponent} from './residents/components/facility/event-form/form.component';
+import {ViewComponent as FacilityEventViewComponent} from './residents/components/facility/event-form/view.component';
 import {FormComponent as CorporateEventFormComponent} from './residents/components/calendar/form/form.component';
 
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
@@ -317,6 +318,7 @@ import {PaymentPeriodPipe} from './residents/pipes/payment-period.pipe';
 import {RentIncreaseReasonPipe} from './residents/pipes/rent-increase-reason.pipe';
 import {ViewComponent as ResidentRentViewComponent} from './residents/components/resident/rent/rent/view/view.component';
 import {ViewComponent as ResidentRentIncreaseViewComponent} from './residents/components/resident/rent/rent-increase/view/view.component';
+import {EventRepeatPipe} from './residents/pipes/event-repeat.pipe';
 
 registerLocaleData(en);
 
@@ -328,6 +330,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [
     GenderPipe,
     PhoneTypePipe,
+    EventRepeatPipe,
     AdmissionTypePipe,
     CityStateZipPipe,
     PhysicianPipe,
@@ -483,6 +486,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentEventViewComponent,
     ResidentEventFormComponent,
     FacilityEventFormComponent,
+    FacilityEventViewComponent,
     CorporateEventFormComponent,
 
     ResidentRentViewComponent,
@@ -690,6 +694,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentEventViewComponent,
     ResidentEventFormComponent,
     FacilityEventFormComponent,
+    FacilityEventViewComponent,
     CorporateEventFormComponent,
 
     ResidentRentViewComponent,

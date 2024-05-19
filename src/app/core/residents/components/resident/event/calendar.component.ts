@@ -19,6 +19,7 @@ import {FormComponent} from './form/form.component';
 import {FormComponent as FacilityEventFormComponent} from '../../facility/event-form/form.component';
 import {CalendarEventType} from '../../../models/event-definition';
 import {FacilityEventService} from '../../../services/facility-event.service';
+import {ViewComponent as FacilityEventViewComponent} from '../../facility/event-form/view.component';
 import {ViewComponent as ResidentEventViewComponent} from './view/view.component';
 import {ViewComponent as ResidentRentViewComponent} from '../rent/rent/view/view.component';
 import {ViewComponent as ResidentRentIncreaseViewComponent} from '../rent/rent-increase/view/view.component';
@@ -223,6 +224,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
       if (component instanceof ResidentRentViewComponent) {
         component.event = result;
       }
+      if (component instanceof FacilityEventViewComponent) {
+        component.event = result;
+      }
       if (component instanceof ResidentRentIncreaseViewComponent) {
         component.event = result;
       }
@@ -347,6 +351,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.facilityEvent$.isEditable($event.event.id).subscribe(res => {
           if (res) {
             this.show_modal_edit($event.event.id, this.facilityEvent$, FacilityEventFormComponent);
+          } else {
+            this.show_modal_view($event.event.id, this.facilityEvent$, FacilityEventViewComponent);
           }
         });
         break;
