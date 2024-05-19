@@ -11,6 +11,8 @@ export class AdmissionTypePipe implements PipeTransform {
         return 'Short-Term Admit';
       case  AdmissionType.READMIT:
         return 'Re-admit';
+      case  AdmissionType.PENDING_DISCHARGE:
+        return 'Pending Discharge';
       case  AdmissionType.TEMPORARY_DISCHARGE:
         return 'Temporary Discharge';
       case  AdmissionType.DISCHARGE:
