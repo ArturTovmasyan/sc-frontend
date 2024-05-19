@@ -323,16 +323,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       if (this.form.get('facilities').value === null || this.form.get('facilities').value.length === 0) {
         this.form.get('facilities_all').setValue(true);
       }
-
-      const start_date = this.form.get('start_date').value;
-      this.form.get('start_date').setValue(DateHelper.convertToUTC(start_date));
-
-      const end_date = this.form.get('end_date').value;
-      this.form.get('end_date').setValue(DateHelper.convertToUTC(end_date));
-
-      const repeat_end = this.form.get('repeat_end').value;
-      this.form.get('repeat_end').setValue(DateHelper.convertToUTC(repeat_end));
     }
+  }
+
+  before_submit(): void {
+    this.form.get('start_date').setValue(DateHelper.makeUTCDateOnly(this.form.get('start_date').value));
+    this.form.get('end_date').setValue(DateHelper.makeUTCDateOnly(this.form.get('end_date').value));
+    this.form.get('repeat_end').setValue(DateHelper.makeUTCDateOnly(this.form.get('repeat_end').value));
   }
 
   private updateRepeatValidators() {
