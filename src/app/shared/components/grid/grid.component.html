@@ -90,6 +90,7 @@
     [nzScroll]="{x:'100%'}"
 
     [nzData]="data"
+    [nzSize]="'middle'"
     (nzCurrentPageDataChange)="current_page_data_change($event)"
     (nzPageIndexChange)="reload_data()"
     (nzPageSizeChange)="reload_data(true)">
