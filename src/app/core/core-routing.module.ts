@@ -385,6 +385,87 @@ const routes: Routes = [
         }
       },
       {
+        path: 'documents', component: DocumentViewComponent,
+        data: {
+          nav: {show: true, group: 'Corporate'},
+          title: 'Documents',
+          permissions: ['persistence-common-document']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'facility/list', component: FacilityListComponent,
+        data: {
+          nav: {show: true, group: 'Facility', title: 'List'},
+          title: 'Facilities',
+          permissions: ['persistence-facility']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'facility/rooms', component: FacilityRoomListComponent,
+        data: {
+          nav: {show: true, group: 'Facility', title: 'Rooms'},
+          title: 'Facility Rooms',
+          permissions: ['persistence-facility', 'persistence-facility_room']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'facility/dining-rooms', component: FacilityDiningRoomListComponent,
+        data: {
+          nav: {show: true, group: 'Facility', title: 'Dining Rooms'},
+          title: 'Facility Dining Rooms',
+          permissions: ['persistence-facility', 'persistence-dining_room']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'facility/documents', component: FacilityDocumentListComponent,
+        data: {
+          nav: {show: true, group: 'Facility', title: 'Documents'},
+          title: 'Facility Documents',
+          permissions: ['persistence-facility', 'persistence-facility_document']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'facility/:id',
+        component: FacilityViewComponent,
+        canActivate: [AuthGuard],
+        data: {
+          title: 'Facility',
+          permissions: ['persistence-facility']
+        }
+      },
+      {
+        path: 'apartment/list', component: ApartmentListComponent,
+        data: {
+          nav: {show: true, group: 'Apartment', title: 'List'},
+          title: 'Apartments',
+          permissions: ['persistence-apartment']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'apartment/rooms', component: ApartmentRoomListComponent,
+        data: {
+          nav: {show: true, group: 'Apartment', title: 'Rooms'},
+          title: 'Apartment Rooms',
+          permissions: ['persistence-apartment', 'persistence-apartment_room']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'regions', component: RegionListComponent,
+        data: {
+          nav: {show: true, group: 'Region', title: 'List'},
+          title: 'Regions',
+          permissions: ['persistence-region']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'residents',
         data: {
           nav: {show: true, group: 'Residents'},
@@ -427,102 +508,6 @@ const routes: Routes = [
           }
         ]
       },
-      {
-        path: 'facility',
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Facilities',
-          permissions: ['persistence-facility']
-        },
-        children: [
-          {
-            path: 'list', component: FacilityListComponent,
-            data: {
-              nav: {show: true, group: 'Residents', title: 'List'},
-              title: 'Facilities',
-              permissions: ['persistence-facility']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'rooms', component: FacilityRoomListComponent,
-            data: {
-              nav: {show: true, group: 'Residents', title: 'Rooms'},
-              title: 'Facility Rooms',
-              permissions: ['persistence-facility_room']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'dining-rooms', component: FacilityDiningRoomListComponent,
-            data: {
-              nav: {show: true, group: 'Residents', title: 'Dining Rooms'},
-              title: 'Facility Dining Rooms',
-              permissions: ['persistence-dining_room']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'documents', component: FacilityDocumentListComponent,
-            data: {
-              nav: {show: true, group: 'Residents', title: 'Documents'},
-              title: 'Facility Documents',
-              permissions: ['persistence-facility_document']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: ':id',
-            component: FacilityViewComponent,
-            canActivate: [AuthGuard],
-            data: {
-              title: 'Facility',
-              permissions: ['persistence-facility']
-            }
-          },
-        ],
-        canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'apartment',
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Apartments',
-          permissions: ['persistence-apartment']
-        },
-        children: [
-          {
-            path: 'list', component: ApartmentListComponent,
-            data: {
-              nav: {show: true, group: 'Residents', title: 'List'},
-              title: 'Apartments',
-              permissions: ['persistence-facility']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'rooms', component: ApartmentRoomListComponent,
-            data: {
-              nav: {show: true, group: 'Residents', title: 'Rooms'},
-              title: 'Apartment Rooms',
-              permissions: ['persistence-apartment_room']
-            },
-            canActivate: [AuthGuard]
-          },
-        ],
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'regions', component: RegionListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Regions',
-          permissions: ['persistence-region']
-        },
-        canActivate: [AuthGuard]
-      },
-
       {
         path: 'responsible-persons', component: ResponsiblePersonListComponent,
         data: {
@@ -608,18 +593,9 @@ const routes: Routes = [
       {
         path: 'document-categories', component: DocumentCategoryListComponent,
         data: {
-          nav: {show: true, group: 'Documents'},
-          title: 'Categories',
+          nav: {show: true, group: 'Reference'},
+          title: 'Document Categories',
           permissions: ['persistence-common-document_category']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'documents', component: DocumentViewComponent,
-        data: {
-          nav: {show: true, group: 'Documents'},
-          title: 'Documents',
-          permissions: ['persistence-common-document']
         },
         canActivate: [AuthGuard]
       },
