@@ -15,6 +15,7 @@ import {ResidentAdmissionService} from '../../../services/resident-admission.ser
 })
 export class ThumbComponent implements OnInit, OnDestroy {
   @Input('options') set options(options: {state?: string, type?: number, type_id?: number}) {
+    this.route_options.page = 1;
     this.route_options.state = options.state;
     this.route_options.type = options.type;
     this.route_options.type_id = options.type_id;
