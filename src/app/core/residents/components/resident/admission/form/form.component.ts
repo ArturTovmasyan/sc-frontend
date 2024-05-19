@@ -155,10 +155,20 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
           if (res) {
             res.id = null;
 
+            res.admission_type = this.form.get('admission_type').value;
+            res.date = this.form.get('date').value;
+            res.notes = this.form.get('notes').value;
+
+            this.unsubscribe('vc_group');
+            this.unsubscribe('vc_admission_type');
             this.before_set_form_data(res);
             this.set_form_data(this, this.form, res);
+            this.subscribe('vc_group');
+            this.subscribe('vc_admission_type');
+
             this.form.get('facility_bed_id').setValue(null);
             this.form.get('apartment_bed_id').setValue(null);
+            this.form.get('group').setValue(this.form.get('group').value);
           }
         });
         break;
