@@ -116,7 +116,7 @@
   </nz-form-item>
 
   <nz-form-item *ngIf="form.get('space_id')">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>{{ 'form.admin.notification_type.'|translate }}</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>{{ 'form.admin.notification_type.space'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
       <nz-select nzShowSearch nzMode="default" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="space_id">
         <ng-container *ngFor="let space of spaces">
