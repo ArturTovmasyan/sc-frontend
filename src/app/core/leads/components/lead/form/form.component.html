@@ -236,7 +236,7 @@
           <div class="add-select-container">
             <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="organization_id">
               <ng-container *ngFor="let organization of organizations">
-                <nz-option [nzLabel]="organization.title" [nzValue]="organization.id"></nz-option>
+                <nz-option [nzLabel]="organization.name" [nzValue]="organization.id"></nz-option>
               </ng-container>
             </nz-select>
             <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('organization');">
@@ -289,7 +289,7 @@
         </nz-form-item>
         <nz-form-item *ngIf="contact.organization">
           <nz-form-label [nzSm]="8" [nzXs]="24">Organization</nz-form-label>
-          <nz-form-control [nzSm]="16" [nzXs]="24">{{ contact.organization.title }}</nz-form-control>
+          <nz-form-control [nzSm]="16" [nzXs]="24">{{ contact.organization.name }}</nz-form-control>
         </nz-form-item>
         <nz-form-item *ngIf="contact.emails && contact.emails.length > 0">
           <nz-form-label [nzSm]="8" [nzXs]="24">E-Mail(s)</nz-form-label>

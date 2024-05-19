@@ -38,7 +38,7 @@
       <div class="add-select-container">
         <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="organization_id">
           <ng-container *ngFor="let organization of organizations">
-            <nz-option [nzLabel]="organization.title" [nzValue]="organization.id"></nz-option>
+            <nz-option [nzLabel]="organization.name" [nzValue]="organization.id"></nz-option>
           </ng-container>
         </nz-select>
         <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('organization');">
