@@ -308,7 +308,7 @@
     },
     "resident-event-list": {
       "id": "ID",
-      "definition": "Definition",
+      "definition": "Type",
       "notes": "Notes",
       "date": "Date",
       "additional_date": "Additional Date",

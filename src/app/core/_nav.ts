@@ -158,8 +158,8 @@ export const navItems = [
     icon: 'icon-people'
   },
   {
-    url: '/event-definitions',
-    name: 'Event Definitions',
+    url: '/event-types',
+    name: 'Event Types',
     icon: 'icon-people'
   },
   {

@@ -1,7 +1,7 @@
 ﻿<h4>Event</h4>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="definition_id" nzRequired>Definition</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="definition_id" nzRequired>Type</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('definition_id')?'error':null">
       <div class="add-select-container">
         <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="definition_id">

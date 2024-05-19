@@ -242,8 +242,8 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'event-definitions', component: EventDefinitionListComponent, data: {
-          title: 'Event Definitions',
+        path: 'event-types', component: EventDefinitionListComponent, data: {
+          title: 'Event Types',
           roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
         },
         canActivate: [AuthGuard]
