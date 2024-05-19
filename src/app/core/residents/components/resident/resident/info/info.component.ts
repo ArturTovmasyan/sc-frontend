@@ -246,6 +246,7 @@ export class InfoComponent implements OnInit {
         const form = component.formObject;
 
         if (result !== null) {
+          component.edit_mode = true;
           component.loaded.subscribe(v => {
             if (v) {
               component.before_set_form_data(result);
@@ -253,6 +254,8 @@ export class InfoComponent implements OnInit {
               component.after_set_form_data();
             }
           });
+        } else {
+          component.edit_mode = false;
         }
 
         valid = form.valid;

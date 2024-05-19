@@ -1,6 +1,7 @@
-﻿import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+﻿import * as differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
 import {first} from 'rxjs/operators';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {Gender} from '../../../../models/gender.enum';
 import {PhoneType} from '../../../../../models/phone-type.enum';
@@ -8,17 +9,30 @@ import {Space} from '../../../../../models/space';
 import {Salutation} from '../../../../models/salutation';
 import {SpaceService} from '../../../../../services/space.service';
 import {SalutationService} from '../../../../services/salutation.service';
-import * as differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
 import {FormComponent as SalutationFormComponent} from '../../../salutation/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
 import {AuthGuard} from '../../../../../guards/auth.guard';
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 import {DateHelper} from '../../../../../../shared/helpers/date-helper';
+import {GroupType} from '../../../../models/group-type.enum';
+import {CityStateZip} from '../../../../models/city-state-zip';
+import {CareLevel} from '../../../../models/care-level';
+import {CareLevelService} from '../../../../services/care-level.service';
+import {CityStateZipService} from '../../../../services/city-state-zip.service';
+import {StringUtil} from '../../../../../../shared/utils/string-util';
+import {ResidentService} from '../../../../services/resident.service';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
+  GROUP_TYPE = GroupType;
+
+  group_type: GroupType;
+
+  city_state_zips: CityStateZip[];
+  care_levels: CareLevel[];
+
   salutations: Salutation[];
   spaces: Space[];
 
@@ -35,6 +49,9 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private resident$: ResidentService,
+    private care_level$: CareLevelService,
+    private city_state_zip$: CityStateZipService,
     private salutation$: SalutationService,
     private space$: SpaceService,
     private modal$: NzModalService,
@@ -65,7 +82,24 @@ export class FormComponent extends AbstractForm implements OnInit {
       salutation_id: [null, Validators.required],
 
       phones: this.formBuilder.array([]),
+
+      /*** Admission ***/
+      dnr: [false, [Validators.required]],
+      polst: [false, [Validators.required]],
+      ambulatory: [false, [Validators.required]],
+      care_group: [null, [Validators.compose([Validators.required, CoreValidator.care_group])]],
+      care_level_id: [null, [Validators.required]],
+      address: ['', [Validators.required]],
+      csz_id: [null, [Validators.required]]
     });
+
+    this.form.get('dnr').disable();
+    this.form.get('polst').disable();
+    this.form.get('ambulatory').disable();
+    this.form.get('care_group').disable();
+    this.form.get('care_level_id').disable();
+    this.form.get('address').disable();
+    this.form.get('csz_id').disable();
 
     this.subscribe('list_salutation');
 
@@ -116,6 +150,58 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
+      case 'last_admission':
+        this.$subscriptions[key] = this.resident$.last_admission(this.form.get('id').value).pipe(first()).subscribe(res => {
+          if (res) {
+            this.group_type = res.group_type;
+
+            this.subscribe('list_care_level');
+            this.subscribe('list_city_state_zip');
+
+            this.form.get('dnr').setValue(res.dnr);
+            this.form.get('polst').setValue(res.polst);
+            this.form.get('ambulatory').setValue(res.ambulatory);
+            this.form.get('care_group').setValue(res.care_group);
+            this.form.get('care_level_id').setValue(res.care_level ? res.care_level.id : null);
+            this.form.get('address').setValue(res.address);
+            this.form.get('csz_id').setValue(res.csz ? res.csz.id : null);
+
+
+            switch(this.group_type) {
+              case GroupType.FACILITY:
+                this.form.get('dnr').enable();
+                this.form.get('polst').enable();
+                this.form.get('ambulatory').enable();
+                this.form.get('care_group').enable();
+                this.form.get('care_level_id').enable();
+                break;
+              case GroupType.REGION:
+                this.form.get('care_group').enable();
+                this.form.get('care_level_id').enable();
+                this.form.get('dnr').enable();
+                this.form.get('polst').enable();
+                this.form.get('ambulatory').enable();
+                this.form.get('address').enable();
+                this.form.get('csz_id').enable();
+                break;
+            }
+          }
+        });
+        break;
+      case 'list_care_level':
+        this.$subscriptions[key] = this.care_level$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.care_levels = res;
+          }
+        });
+        break;
+      case 'list_city_state_zip':
+        this.$subscriptions[key] = this.city_state_zip$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.city_state_zips = res;
+          }
+        });
+        break;
       default:
         break;
     }
@@ -158,7 +244,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     const reader = new FileReader();
     if ($event.target.files && $event.target.files.length > 0) {
       const file = $event.target.files[0];
-      this.photo_file_name = FormComponent.truncate(file.name, 25);
+      this.photo_file_name = StringUtil.truncate(file.name, 25);
       reader.readAsDataURL(file);
       reader.onload = () => {
         if (reader.result) {
@@ -194,15 +280,27 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form.get('photo').setValue(null);
   }
 
-  private static truncate(value: string, length: number): string {
-    return value.length > length ? (value.slice(0, length - 3) + '...') : value;
-  }
-
   before_set_form_data(data: any, previous_data?: any): void {
     super.before_set_form_data(data, previous_data);
 
     if (this.edit_mode) {
       data.birthday = DateHelper.convertUTC(data.birthday);
+    }
+  }
+
+  after_set_form_data(): void {
+    super.after_set_form_data();
+
+    if (this.edit_mode) {
+      this.subscribe('last_admission');
+    } else {
+      this.form.get('dnr').disable();
+      this.form.get('polst').disable();
+      this.form.get('ambulatory').disable();
+      this.form.get('care_group').disable();
+      this.form.get('care_level_id').disable();
+      this.form.get('address').disable();
+      this.form.get('csz_id').disable();
     }
   }
 
