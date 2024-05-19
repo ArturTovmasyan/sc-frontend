@@ -43,6 +43,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       csz_id: [null, Validators.required],
     });
 
+    this.subscribe('vc_license_capacity');
     this.subscribe('list_csz');
 
     this.add_space();
@@ -74,6 +75,11 @@ export class FormComponent extends AbstractForm implements OnInit {
               this.form.get('csz_id').setValue(params.csz_id);
             }
           }
+        });
+        break;
+      case 'vc_license_capacity':
+        this.$subscriptions[key] = this.form.get('license_capacity').valueChanges.subscribe(next => {
+          this.form.get('capacity').setValue(this.form.get('capacity').value);
         });
         break;
       default:
