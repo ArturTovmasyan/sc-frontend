@@ -37,7 +37,7 @@
         </nz-form-control>
       </nz-form-item>
 
-      <nz-form-item>
+      <nz-form-item *ngIf="form.get('group').enabled">
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group" nzRequired>Facility</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group')?'error':null">
           <nz-select nzShowSearch formControlName="group">
@@ -64,7 +64,7 @@
       </nz-form-item>
     </nz-tab>
 
-    <nz-tab *ngIf="form.get('group_type').value === GROUP_TYPE.FACILITY" nzTitle="Facility and Room Information">
+    <nz-tab *ngIf="form.get('group').enabled && form.get('group_type').value === GROUP_TYPE.FACILITY" nzTitle="Facility and Room Information">
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_group" nzRequired>Care Group</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_group')?'error':null">
@@ -150,7 +150,7 @@
       </nz-form-item>
     </nz-tab>
 
-    <nz-tab *ngIf="form.get('group_type').value === GROUP_TYPE.APARTMENT" nzTitle="Apartment and Room Information">
+    <nz-tab *ngIf="form.get('group').enabled && form.get('group_type').value === GROUP_TYPE.APARTMENT" nzTitle="Apartment and Room Information">
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="apartment_bed_id" nzRequired>Room/Bed</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('apartment_bed_id')?'error':null">
@@ -169,7 +169,7 @@
         </nz-form-control>
       </nz-form-item>
     </nz-tab>
-    <nz-tab *ngIf="form.get('group_type').value === GROUP_TYPE.REGION" nzTitle="IHC Region Information">
+    <nz-tab *ngIf="form.get('group').enabled && form.get('group_type').value === GROUP_TYPE.REGION" nzTitle="IHC Region Information">
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_group" nzRequired>Care Group</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_group')?'error':null">

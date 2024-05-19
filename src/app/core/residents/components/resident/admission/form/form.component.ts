@@ -92,9 +92,12 @@ export class FormComponent extends AbstractForm implements OnInit {
       csz_id: [null, [Validators.required]]
     });
 
+    this.form.get('group').disable();
+    this.form.get('group_type').disable();
     this.init_subform(null);
 
     this.subscribe('rs_resident');
+    this.subscribe('vc_admission_type');
     this.subscribe('vc_group');
 
     // TODO: review
@@ -116,6 +119,25 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'vc_admission_type':
+        this.$subscriptions[key] = this.form.get('admission_type').valueChanges.subscribe(next => {
+          if (next) {
+            switch (next) {
+              case AdmissionType.ADMIT:
+              case AdmissionType.READMIT:
+                this.form.get('group').enable();
+                this.form.get('group_type').enable();
+                break;
+              case AdmissionType.TEMPORARY_DISCHARGE:
+              case AdmissionType.DISCHARGE:
+                this.form.get('group').disable();
+                this.form.get('group_type').disable();
+                this.selectedTab = 0;
+                break;
+            }
+          }
+        });
+        break;
       case 'list_facility':
         this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
           if (res) {
