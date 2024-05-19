@@ -387,7 +387,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     const color_row_field = this.fields.filter(v => v.type === 'color_row' && v.hidden === true).pop();
 
     if (color_row_field) {
-      return row[color_row_field.id] === true ? '#d0ffff' : 'inherit';
+      return row[color_row_field.id] === true ? '#ff3333' : 'inherit';
     }
 
     return 'inherit';

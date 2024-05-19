@@ -374,8 +374,9 @@
       "notes": "Instructions",
       "prescription_number": "Prescription #",
       "button": {
-        "hide": "Hide",
-        "unhide": "Unhide"
+        "active": "Active",
+        "discontinued": "Discontinued",
+        "both": "Both"
       }
     },
     "responsible-person-list": {

@@ -9,32 +9,92 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
 import {Button, ButtonMode} from '../../../../../shared/components/modal/button-bar.component';
 
 @Component({
-  templateUrl: '../../../../../shared/components/grid/grid.component.html',
-  styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
-  providers: [ResidentMedicationService, ModalFormService]
+    templateUrl: '../../../../../shared/components/grid/grid.component.html',
+    styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
+    providers: [ResidentMedicationService, ModalFormService]
 })
 export class ListComponent extends GridComponent<ResidentMedication, ResidentMedicationService> implements OnInit, AfterViewInit {
-  constructor(
-    protected service$: ResidentMedicationService,
-    protected title$: TitleService,
-    protected modal$: ModalFormService,
-    private residentSelector$: ResidentSelectorService
-  ) {
-    super(service$, title$, modal$);
+    constructor(protected service$: ResidentMedicationService,
+                protected title$: TitleService,
+                protected modal$: ModalFormService,
+                private residentSelector$: ResidentSelectorService) {
+        super(service$, title$, modal$);
 
-    this.component = FormComponent;
-    this.permission = 'persistence-resident-resident_medication';
-    this.name = 'resident-medication-list';
-  }
+        this.component = FormComponent;
+        this.permission = 'persistence-resident-resident_medication';
+        this.name = 'resident-medication-list';
+    }
 
-  ngOnInit(): void {
-    this.subscribe('rs_resident');
+    ngOnInit(): void {
+        this.subscribe('rs_resident');
+        super.init();
+    }
 
-  }
+    ngAfterViewInit(): void {
+        this.add_button_center(new Button(
+            'active',
+            'grid.resident-medication-list.button.active',
+            'default',
+            ButtonMode.FREE_SELECT,
+            null,
+            'fas fa-medkit',
+            false,
+            true,
+            () => {
+                const btn = this._btnBar.buttons_center[0];
 
-  ngAfterViewInit(): void {
-    this.add_button_center(this.get_show_hide_button());
-  }
+                this.params = [];
+                if (btn.name === 'active') {
+                    this.params.push({key: 'active', value: '1'});
+                }
+
+                this.subscribe('rs_resident');
+                this.reload_data(true);
+            }));
+
+        this.add_button_center(new Button(
+            'discontinued',
+            'grid.resident-medication-list.button.discontinued',
+            'default',
+            ButtonMode.FREE_SELECT,
+            null,
+            'fas fa-medkit',
+            false,
+            true,
+            () => {
+                const btn = this._btnBar.buttons_center[1];
+
+                this.params = [];
+                if (btn.name === 'discontinued') {
+                    this.params.push({key: 'discontinued', value: '1'});
+                }
+
+                this.subscribe('rs_resident');
+                this.reload_data(true);
+            }));
+
+        this.add_button_center(new Button(
+            'both',
+            'grid.resident-medication-list.button.both',
+            'default',
+            ButtonMode.FREE_SELECT,
+            null,
+            'fas fa-medkit',
+            false,
+            true,
+            () => {
+                const btn = this._btnBar.buttons_center[2];
+
+                this.params = [];
+                if (btn.name === 'both') {
+                    this.params.push({key: 'both', value: '1'});
+                }
+
+                this.subscribe('rs_resident');
+                this.reload_data(true);
+            }));
+
+    }
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
@@ -43,7 +103,6 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
           if (next) {
             if (this.params.filter(v => v.key === 'resident_id').length === 0) {
               this.params.push({key: 'resident_id', value: next.toString()});
-              super.init();
             }
           }
         });
@@ -51,43 +110,5 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
       default:
         break;
     }
-  }
-
-  get_show_hide_button() {
-    let label = '';
-    let value = '';
-
-    const param = this.params.filter(v => v.key === 'discontinued').pop();
-
-    if (param) {
-      value = param.value === '1' ? '0' : '1';
-    } else {
-      value = '1';
-    }
-
-    if (value === '1') {
-      label = 'grid.resident-medication-list.button.unhide';
-    } else {
-      label = 'grid.resident-medication-list.button.hide';
-    }
-
-    return new Button(
-      'show_hide',
-      label,
-      'default',
-      ButtonMode.FREE_SELECT,
-      null,
-      'fas fa-medkit',
-      false,
-      true,
-      () => {
-        this.loading = true;
-        this.params = this.params.filter(v => v.key !== 'discontinued');
-        this.params.push({key: 'discontinued', value: value});
-        super.init(true);
-
-        this.clear_button_center();
-        this.add_button_center(this.get_show_hide_button());
-      });
   }
 }
