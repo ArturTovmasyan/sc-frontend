@@ -11,7 +11,7 @@
             <div *ngIf="outreach">
               <div nz-row [nzGutter]="4" *ngIf="outreach.date">
                 <div nz-col [nzSpan]="8" class="text-right"><strong>Date:</strong></div>
-                <div nz-col [nzSpan]="16">{{ outreach.date|date:'MMM d, y':'UTC' }}</div>
+                <div nz-col [nzSpan]="16">{{ outreach.date|date:'MMM d, y' }}</div>
               </div>
               <div nz-row [nzGutter]="4" *ngIf="outreach.type">
                 <div nz-col [nzSpan]="8" class="text-right"><strong>Type:</strong></div>
