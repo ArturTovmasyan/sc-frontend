@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
@@ -9,7 +9,7 @@ import {CropperComponent} from 'angular-cropperjs';
   templateUrl: './image-editor.component.html',
   styleUrls: ['./image-editor.component.scss']
 })
-export class ImageEditorComponent extends AbstractForm implements OnInit {
+export class ImageEditorComponent extends AbstractForm implements OnInit, AfterViewInit {
   imageUrl: any;
 
   cropperConfig: object = {
@@ -23,7 +23,8 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
     }
   };
 
-  @ViewChild('angularCropper', {static: false}) public angularCropper: CropperComponent;
+  @ViewChildren('angularCropper') public angularCroppers: QueryList<CropperComponent>;
+  angularCropper: CropperComponent;
 
   constructor(
     protected modal$: ModalFormService,
@@ -39,8 +40,22 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.angularCroppers.changes.subscribe((comps: QueryList<CropperComponent>) => {
+      this.angularCropper = comps.first;
+
+      if (this.angularCropper) {
+        this.angularCropper.export.subscribe(next => {
+          if (next) {
+            this.form.get('photo').setValue(next.dataUrl);
+          }
+        });
+      }
+    });
+  }
+
   exportImage() {
-    this.form.get('photo').setValue(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+    this.angularCropper.exportCanvas(true);
   }
 
   readyImage(event) {
