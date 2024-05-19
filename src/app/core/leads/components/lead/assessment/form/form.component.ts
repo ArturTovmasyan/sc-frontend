@@ -4,10 +4,10 @@ import {FormArray, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {AssessmentForm} from '../../../../../residents/models/assessment-form';
-import {AssessmentCategory} from '../../../../../residents/models/assessment-category';
-import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 import {AssessmentFormService} from '../../../../../residents/services/assessment-form.service';
+import {AssessmentCategory} from '../../../../../residents/models/assessment-category';
 import {DateHelper} from '../../../../../../shared/helpers/date-helper';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html',
@@ -15,16 +15,11 @@ import {DateHelper} from '../../../../../../shared/helpers/date-helper';
 })
 export class FormComponent extends AbstractForm implements OnInit {
   assessment_forms: AssessmentForm[];
-
-  tab_data_disabled: boolean;
-
   categories: AssessmentCategory[];
 
-  category_selected;
-
-  rows: number[];
-
-  data_loaded: boolean = false;
+  category_selected: number;
+  tab_data_disabled: boolean;
+  data_loaded: boolean;
 
   private static calc_multi_item(count: number): number {
     let total = 0;
@@ -73,17 +68,18 @@ export class FormComponent extends AbstractForm implements OnInit {
   ) {
     super(modal$);
 
-    this.loaded.next(false);
-  }
-
-  ngOnInit(): void {
-    this.tab_data_disabled = true;
-
+    this.assessment_forms = [];
     this.category_selected = 0;
     this.categories = [];
 
+    this.tab_data_disabled = true;
+    this.data_loaded = false;
+  }
+
+  ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
+      lead_id: [null, Validators.required],
 
       // Tab 1
       form_id: [null, Validators.required],
@@ -95,9 +91,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       // Tab 2
       score: [{value: 0, disabled: true}, Validators.required],
 
-      rows: this.formBuilder.array([], Validators.required),
-
-      lead_id: [null, Validators.required]
+      rows: this.formBuilder.array([], Validators.required)
     });
 
     this.postSubmit = (data: any) => {
@@ -118,13 +112,12 @@ export class FormComponent extends AbstractForm implements OnInit {
   protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_assessment_form':
-        this.$subscriptions[key] = this.assessment_form$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.assessment_form$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.assessment_forms = res;
 
+            this.update_by_form_data();
             this.subscribe('vc_form_id');
-
-            this.loaded.next(true);
           }
         });
         break;
@@ -132,12 +125,10 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.form.get('form_id').valueChanges.subscribe(next => {
           this.form.get('score').setValue(0);
 
-          const assessment_form = this.assessment_forms.filter(item => item.id === this.form.get('form_id').value).pop();
+          const assessment_form = this.assessment_forms.filter(item => item.id === next).pop();
 
           if (assessment_form) {
-            this.rows = [];
             this.category_selected = 0;
-
             this.categories = assessment_form.categories;
 
             const rows_controls: (FormControl | FormArray)[] = [];
@@ -175,6 +166,45 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
       default:
         break;
+    }
+  }
+
+  private update_by_form_data() {
+    const form_id = this.form.get('form_id').value;
+
+    if (this.assessment_forms && form_id) {
+      const assessment_form = this.assessment_forms.filter(item => item.id === form_id).pop();
+      if (assessment_form) {
+        this.category_selected = 0;
+        this.categories = assessment_form.categories;
+
+        this.categories.forEach(category => {
+          if (category.multi_item) {
+            const rows_group = [];
+            category.rows.forEach(row => {
+              rows_group.push({label: row.title, value: row.id, checked: false});
+            });
+            category.check_group = rows_group;
+          } else {
+            category.row = 0;
+          }
+        });
+
+        const rows = <Array<any>>this.form.get('rows').value;
+        if (rows) {
+          rows.forEach(row => {
+            if (_.isArray(row)) {
+              this.categories.filter(c => c.multi_item).forEach(category => {
+                category.check_group.filter(check => row.includes(check.value)).forEach(check => check.checked = true);
+              });
+            }
+          });
+        }
+
+        this.form.get('score').setValue(this.calculate_score(rows));
+      }
+
+      this.tab_data_disabled = false;
     }
   }
 
