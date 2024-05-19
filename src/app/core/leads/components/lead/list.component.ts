@@ -91,26 +91,26 @@ export class ListComponent extends GridComponent<Lead, LeadService> implements O
       }));
 
     // this.add_button_right(new Button(
-      // 'spam',
-      // 'grid.lead-lead-list.button.spam',
-      // 'default',
-      // ButtonMode.FREE_SELECT,
-      // 'file-exclamation',
-      // null,
-      // false,
-      // true,
-      // () => {
-      //   const btn = this._btnBar.buttons_right[4];
-      //
-      //   this.params = [];
-      //   if (btn.name === 'spam') {
-      //     this.params.push({key: 'spam', value: '1'});
-      //   }
-      //   this.reload_data(true);
-      //
-      //   btn.name = btn.name === 'spam' ? 'not_spam' : 'spam';
-      //   btn.nzIcon = btn.name === 'spam' ? 'file-exclamation' : 'file-done';
-      //   btn.title = btn.name === 'not_spam' ? 'grid.lead-lead-list.button.not_spam' : 'grid.lead-lead-list.button.spam';
-      // }));
+    //   'spam',
+    //   'grid.lead-lead-list.button.spam',
+    //   'default',
+    //   ButtonMode.FREE_SELECT,
+    //   'file-exclamation',
+    //   null,
+    //   false,
+    //   true,
+    //   () => {
+    //     const btn = this._btnBar.buttons_right[4];
+    //
+    //     this.params = [];
+    //     if (btn.name === 'spam') {
+    //       this.params.push({key: 'spam', value: '1'});
+    //     }
+    //     this.reload_data(true);
+    //
+    //     btn.name = btn.name === 'spam' ? 'not_spam' : 'spam';
+    //     btn.nzIcon = btn.name === 'spam' ? 'file-exclamation' : 'file-done';
+    //     btn.title = btn.name === 'not_spam' ? 'grid.lead-lead-list.button.not_spam' : 'grid.lead-lead-list.button.spam';
+    //   }));
   }
 }
