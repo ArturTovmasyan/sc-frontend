@@ -289,7 +289,12 @@
       "date": "Date",
       "performed_by": "Performed By",
       "notes": "Notes",
-      "score": "Score"
+      "score": "Score",
+
+      "button": {
+        "blank": "Blank Report",
+        "filled": "Filled Report"
+      }
     }
   }
 }

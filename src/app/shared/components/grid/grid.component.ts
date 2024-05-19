@@ -35,6 +35,15 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   protected title: string = null;
   protected name: string = null;
 
+  protected buttons: {
+    name: string,
+    type: string,
+    multiselect: boolean,
+    nzIcon: string,
+    faIcon: string,
+    click: (ids: number[]) => void
+  }[] = [];
+
   protected component: any;
 
   private filter: { [id: string]: { condition: number, value: any[] } } = {};
@@ -66,7 +75,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
               Object.entries(field.values).forEach(
                 ([key, value]) => {
-                  Object.defineProperty(field.enum_map, <number> value, {value: key});
+                  Object.defineProperty(field.enum_map, <number>value, {value: key});
                 }
               );
 
@@ -357,4 +366,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     return this.service$.removeBulk(ids);
   }
 
+  protected button_action(button) {
+    button.click(this.checkbox_config.ids);
+  }
 }

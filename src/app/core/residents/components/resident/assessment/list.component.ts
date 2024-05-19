@@ -4,10 +4,8 @@ import {TitleService} from '../../../../services/title.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {ResidentAssessmentService} from '../../../services/resident-assessment.service';
-import {ResidentAssessment} from '../../../models/resident-assessment';
-import {PhysicianService} from '../../../services/physician.service';
+import {AssessmentReportType, ResidentAssessment} from '../../../models/resident-assessment';
 import {ActivatedRoute} from '@angular/router';
-import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
@@ -29,5 +27,37 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
     this.params.push({key: 'resident_id', value: resident_id});
 
     super.init();
+
+    this.buttons.push(
+      {
+        name: 'blank',
+        type: 'default',
+        multiselect: false,
+        nzIcon: null,
+        faIcon: 'far fa-file',
+        click: (ids: number[]) => {
+          this.loading = true;
+          this.service$.report(ids[0], AssessmentReportType.FILLED, () => {
+            this.loading = false;
+          });
+        }
+      }
+    );
+
+    this.buttons.push(
+      {
+        name: 'filled',
+        type: 'default',
+        multiselect: false,
+        nzIcon: null,
+        faIcon: 'far fa-file-alt',
+        click: (ids: number[]) => {
+          this.loading = true;
+          this.service$.report(ids[0], AssessmentReportType.BLANK, () => {
+            this.loading = false;
+          });
+        }
+      }
+    );
   }
 }

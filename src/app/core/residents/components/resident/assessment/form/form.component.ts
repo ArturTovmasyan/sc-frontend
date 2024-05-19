@@ -25,6 +25,22 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   rows: number[];
 
+  private static calc_multi_item(count: number): number {
+    let total = 0;
+
+    if (count < 3) {
+      total = 2 - count;
+    } else if (count > 2 && count <= 4) {
+      total = 2 - count;
+    } else if (count > 4 && count <= 7) {
+      total = 1 - count;
+    } else if (count > 7 && count <= 10) {
+      total = 0 - count;
+    }
+
+    return total;
+  }
+
   constructor(private formBuilder: FormBuilder,
               private assessment_form$: AssessmentFormService,
               private route$: ActivatedRoute,
@@ -122,7 +138,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         const selected_ids = selected_rows.map(r => r.value);
 
         rows.push(...selected_ids);
-        score.push(selected_rows.length);
+        score.push(FormComponent.calc_multi_item(selected_rows.length));
       } else {
         const selected_ids = [v.row];
         const selected_rows = v.rows.filter(r => r.id === selected_ids[0]);

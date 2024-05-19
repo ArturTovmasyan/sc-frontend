@@ -5,3 +5,8 @@ export class ResidentAssessment implements IdInterface {
 
   resident: Resident;
 }
+
+export enum AssessmentReportType {
+  FILLED = 1,
+  BLANK = 2
+}

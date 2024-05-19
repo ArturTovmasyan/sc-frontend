@@ -12,101 +12,114 @@
   <template [ngTemplateOutlet]="table"></template>
 </ng-container>
 <ng-template #table>
-    <div class="d-flex">
-      <nz-button-group [nzSize]="'medium'">
-        <button nz-button nzType="primary" [disabled]="checkbox_config.ids.length != 0"
-                (click)="show_modal_add(); $event.preventDefault();">
-          <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
-        </button>
-        <button nz-button nzType="default" [nzLoading]="loading_edit_modal" [disabled]="checkbox_config.ids.length != 1"
-                (click)="show_modal_edit(); $event.preventDefault();">
-          <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
-        </button>
-        <button nz-button nzType="danger" [disabled]="checkbox_config.ids.length == 0"
-                (click)="show_modal_remove(); $event.preventDefault();">
-          <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
-        </button>
-      </nz-button-group>
+  <div class="d-flex">
+    <nz-button-group [nzSize]="'small'">
+      <button nz-button nzType="primary" [disabled]="checkbox_config.ids.length != 0"
+              (click)="show_modal_add(); $event.preventDefault();">
+        <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
+      </button>
+      <button nz-button nzType="default" [nzLoading]="loading_edit_modal" [disabled]="checkbox_config.ids.length != 1"
+              (click)="show_modal_edit(); $event.preventDefault();">
+        <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+      </button>
+      <button nz-button nzType="danger" [disabled]="checkbox_config.ids.length == 0"
+              (click)="show_modal_remove(); $event.preventDefault();">
+        <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
+      </button>
+    </nz-button-group>
 
-      <nz-button-group [nzSize]="'medium'" class="ml-auto">
-        {{ checkbox_config.ids }}
-      </nz-button-group>
+    <!--<nz-button-group [nzSize]="'small'" class="ml-auto">-->
+      <!--{{ checkbox_config.ids }}-->
+    <!--</nz-button-group>-->
 
-      <nz-button-group [nzSize]="'medium'" class="ml-auto">
-        <button nz-button nzType="dashed" (click)="download_pdf()">
-          <i nz-icon type="file-pdf"></i> {{ "grid.pdf"|translate }}
+
+    <nz-button-group *ngIf="buttons" [nzSize]="'small'" class="ml-auto">
+      <ng-container *ngFor="let button of buttons">
+        <button nz-button [nzType]="button.type" (click)="button_action(button)"
+                [disabled]="(button.multiselect == false && checkbox_config.ids.length != 1)
+                 || (button.multiselect == true && checkbox_config.ids.length == 0)">
+          <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
+          <i *ngIf="button.faIcon" [class]="button.faIcon"></i>
+          {{ ("grid." + name + ".button." + button.name)|translate }}
         </button>
-      </nz-button-group>
-    </div>
-    <nz-table
-      *ngIf="fields != null"
-      nzShowSizeChanger
-      nzShowQuickJumper
-      nzHideOnSinglePage
-      [nzLoading]="loading"
-      [nzFrontPagination]="false"
-      [(nzPageIndex)]="page_config.page"
-      [(nzPageSize)]="page_config.per_page"
-      [nzTotal]="page_config.total"
+      </ng-container>
+    </nz-button-group>
 
-      [nzData]="data"
-      (nzCurrentPageDataChange)="current_page_data_change($event)"
-      (nzPageIndexChange)="reload_data()"
-      (nzPageSizeChange)="reload_data(true)">
-      <thead (nzSortChange)="update_sort($event)">
-      <tr>
-        <th nzShowCheckbox [(nzChecked)]="checkbox_config.all" [nzIndeterminate]="checkbox_config.indeterminate"
-            (nzCheckedChange)="checkbox_all($event)"></th>
-        <ng-template ngFor let-field [ngForOf]="fields" let-first="first">
-          <th *ngIf="field.sortable && !field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id">
-            {{ ("grid." + name + "." + field.id)|translate }}
-          </th>
-          <th *ngIf="!field.sortable && field.filterable" nzCustomFilter [ngSwitch]="field.type">
-            {{ ("grid." + name + "." + field.id)|translate }}
-            <template [ngTemplateOutletContext]="{ field: field, first: first }"
-                      *ngSwitchCase="'string'" [ngTemplateOutlet]="filterString"></template>
-            <template [ngTemplateOutletContext]="{ field: field, first: first }"
-                      *ngSwitchCase="'number'" [ngTemplateOutlet]="filterNumber"></template>
-            <template [ngTemplateOutletContext]="{ field: field, first: first }"
-                      *ngSwitchCase="'date'" [ngTemplateOutlet]="filterDate"></template>
-            <template [ngTemplateOutletContext]="{ field: field, first: first }"
-                      *ngSwitchCase="'enum'" [ngTemplateOutlet]="filterEnum"></template>
-            <strong *ngSwitchDefault>?</strong>
-          </th>
-          <th *ngIf="field.sortable && field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id"
-              nzCustomFilter [ngSwitch]="field.type">
-            {{ ("grid." + name + "." + field.id)|translate }}
-            <template [ngTemplateOutletContext]="{ field: field, first: first }"
-                      *ngSwitchCase="'string'" [ngTemplateOutlet]="filterString"></template>
-            <template [ngTemplateOutletContext]="{ field: field, first: first }"
-                      *ngSwitchCase="'number'" [ngTemplateOutlet]="filterNumber"></template>
-            <template [ngTemplateOutletContext]="{ field: field, first: first }"
-                      *ngSwitchCase="'date'" [ngTemplateOutlet]="filterDate"></template>
-            <template [ngTemplateOutletContext]="{ field: field, first: first }"
-                      *ngSwitchCase="'enum'" [ngTemplateOutlet]="filterEnum"></template>
-            <strong *ngSwitchDefault>?</strong>
-          </th>
-          <th *ngIf="!field.sortable && !field.filterable">{{ ("grid." + name + "." + field.id)|translate }}</th>
-        </ng-template>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let row of data">
-        <td nzShowCheckbox [(nzChecked)]="row.checked" (nzCheckedChange)="checkbox_refresh()"></td>
-        <td *ngFor="let field of fields" [ngSwitch]="field.type">
-          <ng-container *ngSwitchCase="'enum'">
-            {{ field.enum_map[row[field.id]] }}
-          </ng-container>
-          <ng-container *ngSwitchCase="'date'">
-            {{ row[field.id]|date }}
-          </ng-container>
-          <ng-container *ngSwitchDefault>
-            {{ row[field.id] }}
-          </ng-container>
-        </td>
-      </tr>
-      </tbody>
-    </nz-table>
+    <nz-button-group [nzSize]="'small'" class="ml-auto">
+      <button nz-button nzType="dashed" (click)="download_pdf()">
+        <i nz-icon type="file-pdf"></i> {{ "grid.pdf"|translate }}
+      </button>
+    </nz-button-group>
+  </div>
+  <nz-table
+    *ngIf="fields != null"
+    nzShowSizeChanger
+    nzShowQuickJumper
+    nzHideOnSinglePage
+    [nzLoading]="loading"
+    [nzFrontPagination]="false"
+    [(nzPageIndex)]="page_config.page"
+    [(nzPageSize)]="page_config.per_page"
+    [nzTotal]="page_config.total"
+
+    [nzData]="data"
+    (nzCurrentPageDataChange)="current_page_data_change($event)"
+    (nzPageIndexChange)="reload_data()"
+    (nzPageSizeChange)="reload_data(true)">
+    <thead (nzSortChange)="update_sort($event)">
+    <tr>
+      <th nzShowCheckbox [(nzChecked)]="checkbox_config.all" [nzIndeterminate]="checkbox_config.indeterminate"
+          (nzCheckedChange)="checkbox_all($event)"></th>
+      <ng-template ngFor let-field [ngForOf]="fields" let-first="first">
+        <th *ngIf="field.sortable && !field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id">
+          {{ ("grid." + name + "." + field.id)|translate }}
+        </th>
+        <th *ngIf="!field.sortable && field.filterable" nzCustomFilter [ngSwitch]="field.type">
+          {{ ("grid." + name + "." + field.id)|translate }}
+          <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                    *ngSwitchCase="'string'" [ngTemplateOutlet]="filterString"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                    *ngSwitchCase="'number'" [ngTemplateOutlet]="filterNumber"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                    *ngSwitchCase="'date'" [ngTemplateOutlet]="filterDate"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                    *ngSwitchCase="'enum'" [ngTemplateOutlet]="filterEnum"></template>
+          <strong *ngSwitchDefault>?</strong>
+        </th>
+        <th *ngIf="field.sortable && field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id"
+            nzCustomFilter [ngSwitch]="field.type">
+          {{ ("grid." + name + "." + field.id)|translate }}
+          <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                    *ngSwitchCase="'string'" [ngTemplateOutlet]="filterString"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                    *ngSwitchCase="'number'" [ngTemplateOutlet]="filterNumber"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                    *ngSwitchCase="'date'" [ngTemplateOutlet]="filterDate"></template>
+          <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                    *ngSwitchCase="'enum'" [ngTemplateOutlet]="filterEnum"></template>
+          <strong *ngSwitchDefault>?</strong>
+        </th>
+        <th *ngIf="!field.sortable && !field.filterable">{{ ("grid." + name + "." + field.id)|translate }}</th>
+      </ng-template>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of data">
+      <td nzShowCheckbox [(nzChecked)]="row.checked" (nzCheckedChange)="checkbox_refresh()"></td>
+      <td *ngFor="let field of fields" [ngSwitch]="field.type">
+        <ng-container *ngSwitchCase="'enum'">
+          {{ field.enum_map[row[field.id]] }}
+        </ng-container>
+        <ng-container *ngSwitchCase="'date'">
+          {{ row[field.id]|date }}
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          {{ row[field.id] }}
+        </ng-container>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
 </ng-template>
 
 <ng-template #filterEnum let-field="field" let-first="first">
