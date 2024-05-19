@@ -532,9 +532,9 @@ const routes: Routes = [
       {
         path: 'documents', component: DocumentViewComponent,
         data: {
-          nav: {show: true, group: 'Reference'},
+          nav: {show: true, group: 'Documents'},
           title: 'Documents',
-          permissions: ['activity-reference', 'persistence-common-document']
+          permissions: ['persistence-common-document']
         },
         canActivate: [AuthGuard]
       },
