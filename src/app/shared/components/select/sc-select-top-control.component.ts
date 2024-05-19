@@ -24,7 +24,7 @@ import {
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
-import {NzNoAnimationDirective, zoomMotion} from 'ng-zorro-antd/core';
+import { zoomMotion, NzNoAnimationDirective } from 'ng-zorro-antd/core';
 
 import {ScOptionComponent} from './sc-option.component';
 import {ScSelectService} from './sc-select.service';
@@ -42,7 +42,8 @@ export class ScSelectTopControlComponent implements OnInit, OnDestroy {
   inputValue: string;
   isComposing = false;
   private destroy$ = new Subject();
-  @ViewChild('inputElement', {static: false}) inputElement: ElementRef;
+  @ViewChild('inputElement', { static: false }) inputElement: ElementRef;
+  @ViewChild('mirrorElement', { static: false }) mirrorElement: ElementRef;
   @Input() scShowSearch = false;
   @Input() scPlaceHolder: string;
   @Input() scOpen = false;
@@ -65,13 +66,21 @@ export class ScSelectTopControlComponent implements OnInit, OnDestroy {
 
   setInputValue(value: string): void {
     /** fix clear value https://github.com/NG-ZORRO/ng-zorro-antd/issues/3825 **/
-    if (this.inputElement && !value) {
-      this.inputElement.nativeElement.value = value;
+    if (this.inputDOM && !value) {
+      this.inputDOM.value = value;
     }
     this.inputValue = value;
     this.updateWidth();
     this.scSelectService.updateSearchValue(value);
     this.scSelectService.tokenSeparate(this.inputValue, this.scTokenSeparators);
+  }
+
+  get mirrorDOM(): HTMLElement {
+    return this.mirrorElement && this.mirrorElement.nativeElement;
+  }
+
+  get inputDOM(): HTMLInputElement {
+    return this.inputElement && this.inputElement.nativeElement;
   }
 
   get placeHolderDisplay(): string {
@@ -105,22 +114,23 @@ export class ScSelectTopControlComponent implements OnInit, OnDestroy {
   }
 
   updateWidth(): void {
-    if (this.scSelectService.isMultipleOrTags && this.inputElement) {
-      if (this.inputValue || this.isComposing) {
-        this.renderer.setStyle(
-          this.inputElement.nativeElement,
-          'width',
-          `${this.inputElement.nativeElement.scrollWidth}px`
-        );
-      } else {
-        this.renderer.removeStyle(this.inputElement.nativeElement, 'width');
-      }
+    if (this.mirrorDOM && this.inputDOM && this.inputDOM.value) {
+      this.mirrorDOM.innerText = `${this.inputDOM.value}&nbsp;`;
+      this.renderer.removeStyle(this.inputDOM, 'width');
+      this.renderer.setStyle(this.inputDOM, 'width', `${this.mirrorDOM.clientWidth}px`);
+    } else if (this.inputDOM) {
+      this.renderer.removeStyle(this.inputDOM, 'width');
+      this.mirrorDOM.innerText = '';
     }
   }
 
   removeSelectedValue(option: ScOptionComponent, e: MouseEvent): void {
     this.scSelectService.removeValueFormSelected(option);
     e.stopPropagation();
+  }
+
+  animationEnd(): void {
+    this.scSelectService.animationEvent$.next();
   }
 
   constructor(
@@ -133,7 +143,7 @@ export class ScSelectTopControlComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.scSelectService.open$.pipe(takeUntil(this.destroy$)).subscribe(open => {
       if (this.inputElement && open) {
-        setTimeout(() => this.inputElement.nativeElement.focus());
+        setTimeout(() => this.inputDOM.focus());
       }
     });
     this.scSelectService.clearInput$.pipe(takeUntil(this.destroy$)).subscribe(() => {

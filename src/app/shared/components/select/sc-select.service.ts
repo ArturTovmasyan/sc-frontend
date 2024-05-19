@@ -8,7 +8,7 @@
 
 import {BACKSPACE, DOWN_ARROW, ENTER, SPACE, TAB, UP_ARROW} from '@angular/cdk/keycodes';
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, combineLatest, merge, ReplaySubject, Subject} from 'rxjs';
+import { combineLatest, merge, BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import {distinctUntilChanged, filter, map, share, skip, tap} from 'rxjs/operators';
 
 import {isNil, isNotNil} from 'ng-zorro-antd/core';
@@ -19,7 +19,7 @@ import {defaultFilterOption, ScFilterOptionPipe, TFilterOption} from './sc-optio
 
 @Injectable()
 export class ScSelectService {
-  // Input params
+  /** Input params **/
   autoClearSearchValue = true;
   serverSearch = false;
   filterOption: TFilterOption = defaultFilterOption;
@@ -29,13 +29,13 @@ export class ScSelectService {
   private _tokenSeparators: string[] = [];
   // tslint:disable-next-line:no-any
   compareWith = (o1: any, o2: any) => o1 === o2;
-  // selectedValueChanged should emit ngModelChange or not
+  /** selectedValueChanged should emit ngModelChange or not **/
   // tslint:disable-next-line:no-any
   private listOfSelectedValueWithEmit$ = new BehaviorSubject<{ value: any[]; emit: boolean }>({
     value: [],
     emit: false
   });
-  // ContentChildren Change
+  /** ContentChildren Change **/
   private mapOfTemplateOption$ = new BehaviorSubject<{
     listOfScOptionComponent: ScOptionComponent[];
     listOfScOptionGroupComponent: ScOptionGroupComponent[];
@@ -52,7 +52,9 @@ export class ScSelectService {
   clearInput$ = new Subject<boolean>();
   searchValue = '';
   isShowNotFound = false;
-  // open
+  /** animation event **/
+  animationEvent$ = new Subject();
+  /** open event **/
   open$ = this.openRaw$.pipe(distinctUntilChanged());
   activatedOption: ScOptionComponent | null;
   activatedOption$ = new ReplaySubject<ScOptionComponent | null>(1);
@@ -86,20 +88,20 @@ export class ScSelectService {
   );
   // tslint:disable-next-line:no-any
   listOfSelectedValue: any[] = [];
-  // flat ViewChildren
+  /** flat ViewChildren **/
   listOfTemplateOption: ScOptionComponent[] = [];
-  // tag option
+  /** tag option **/
   listOfTagOption: ScOptionComponent[] = [];
-  // tag option concat template option
+  /** tag option concat template option **/
   listOfTagAndTemplateOption: ScOptionComponent[] = [];
-  // ViewChildren
+  /** ViewChildren **/
   listOfScOptionComponent: ScOptionComponent[] = [];
   listOfScOptionGroupComponent: ScOptionGroupComponent[] = [];
-  // click or enter add tag option
+  /** click or enter add tag option **/
   addedTagOption: ScOptionComponent | null;
-  // display in top control
+  /** display in top control **/
   listOfCachedSelectedOption: ScOptionComponent[] = [];
-  // selected value or ViewChildren change
+  /** selected value or ViewChildren change **/
   valueOrOption$ = combineLatest([this.listOfSelectedValue$, this.mapOfTemplateOption$]).pipe(
     tap(data => {
       const [listOfSelectedValue, mapOfTemplateOption] = data;
@@ -366,9 +368,7 @@ export class ScSelectService {
         if (this.isMultipleOrTags && eventTarget.value && eventTarget.value !== ''
           && this._tokenSeparators && this._tokenSeparators.length > 0) {
           this.tokenSeparate(eventTarget.value + this._tokenSeparators[0], this._tokenSeparators);
-          if (!this.open) {
-            this.setOpenState(true);
-          }
+          this.setOpenState(false);
           e.preventDefault();
         } else {
           this.setOpenState(false);

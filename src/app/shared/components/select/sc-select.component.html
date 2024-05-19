@@ -19,6 +19,8 @@
   [scTokenSeparators]="scTokenSeparators"
   [class.ant-select-selection--single]="scSelectService.isSingleMode"
   [class.ant-select-selection--multiple]="scSelectService.isMultipleOrTags"
+  (focus)="onFocus()"
+  (blur)="onBlur()"
   (keydown)="onKeyDown($event)">
 </div>
 <ng-template

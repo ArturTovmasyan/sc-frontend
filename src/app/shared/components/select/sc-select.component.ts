@@ -6,10 +6,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {FocusMonitor} from '@angular/cdk/a11y';
-import {CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange} from '@angular/cdk/overlay';
-import {Platform} from '@angular/cdk/platform';
+import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { Platform } from '@angular/cdk/platform';
 import {
+  forwardRef,
   AfterContentInit,
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -18,7 +18,6 @@ import {
   ContentChildren,
   ElementRef,
   EventEmitter,
-  forwardRef,
   Host,
   Input,
   OnDestroy,
@@ -31,17 +30,24 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {EMPTY, merge, Subject} from 'rxjs';
-import {flatMap, startWith, takeUntil} from 'rxjs/operators';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { merge, EMPTY, Subject } from 'rxjs';
+import { flatMap, startWith, takeUntil } from 'rxjs/operators';
 
-import {InputBoolean, isNotNil, NzNoAnimationDirective, NzSizeLDSType, slideMotion, toBoolean} from 'ng-zorro-antd/core';
+import {
+  isNotNil,
+  slideMotion,
+  toBoolean,
+  InputBoolean,
+  NzNoAnimationDirective,
+  NzSizeLDSType
+} from 'ng-zorro-antd/core';
 
-import {ScOptionGroupComponent} from './sc-option-group.component';
-import {ScOptionComponent} from './sc-option.component';
-import {TFilterOption} from './sc-option.pipe';
-import {ScSelectTopControlComponent} from './sc-select-top-control.component';
-import {ScSelectService} from './sc-select.service';
+import { ScOptionGroupComponent } from './sc-option-group.component';
+import { ScOptionComponent } from './sc-option.component';
+import { TFilterOption } from './sc-option.pipe';
+import { ScSelectTopControlComponent } from './sc-select-top-control.component';
+import { ScSelectService } from './sc-select.service';
 
 @Component({
   selector: 'sc-select',
@@ -91,12 +97,12 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
   dropDownPosition: 'top' | 'center' | 'bottom' = 'bottom';
   triggerWidth: number;
   private _disabled = false;
-  private _autoFocus = false;
   private isInit = false;
   private destroy$ = new Subject();
-  @ViewChild(CdkOverlayOrigin, {static: false}) cdkOverlayOrigin: CdkOverlayOrigin;
-  @ViewChild(CdkConnectedOverlay, {static: false}) cdkConnectedOverlay: CdkConnectedOverlay;
-  @ViewChild(ScSelectTopControlComponent, {static: false}) scSelectTopControlComponent: ScSelectTopControlComponent;
+  @ViewChild(CdkOverlayOrigin, { static: false }) cdkOverlayOrigin: CdkOverlayOrigin;
+  @ViewChild(CdkConnectedOverlay, { static: false }) cdkConnectedOverlay: CdkConnectedOverlay;
+  @ViewChild(ScSelectTopControlComponent, { static: true }) scSelectTopControlComponent: ScSelectTopControlComponent;
+  @ViewChild(ScSelectTopControlComponent, { static: true, read: ElementRef }) scSelectTopControlElement: ElementRef;
   /** should move to sc-option-container when https://github.com/angular/angular/issues/20810 resolved **/
   @ContentChildren(ScOptionComponent) listOfScOptionComponent: QueryList<ScOptionComponent>;
   @ContentChildren(ScOptionGroupComponent) listOfScOptionGroupComponent: QueryList<ScOptionGroupComponent>;
@@ -113,6 +119,7 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
   @Input() @InputBoolean() scAllowClear = false;
   @Input() @InputBoolean() scShowSearch = false;
   @Input() @InputBoolean() scLoading = false;
+  @Input() @InputBoolean() scAutoFocus = false;
   @Input() scPlaceHolder: string;
   @Input() scMaxTagCount: number;
   @Input() scDropdownRender: TemplateRef<void>;
@@ -122,6 +129,7 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
   @Input() scRemoveIcon: TemplateRef<void>;
   @Input() scMenuItemSelectedIcon: TemplateRef<void>;
   @Input() scShowArrow = true;
+//  @Input() scTokenSeparators: string[] = [];
   @Input()
   set scTokenSeparators(value: string[]) {
     this.scSelectService.tokenSeparators = value;
@@ -167,16 +175,6 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
   }
 
   @Input()
-  set scAutoFocus(value: boolean) {
-    this._autoFocus = toBoolean(value);
-    this.updateAutoFocus();
-  }
-
-  get scAutoFocus(): boolean {
-    return this._autoFocus;
-  }
-
-  @Input()
   set scOpen(value: boolean) {
     this.open = value;
     this.scSelectService.setOpenState(value);
@@ -196,32 +194,34 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
     return this._disabled;
   }
 
+  get scSelectTopControlDOM(): HTMLElement {
+    return this.scSelectTopControlElement && this.scSelectTopControlElement.nativeElement;
+  }
+
   updateAutoFocus(): void {
-    if (this.scSelectTopControlComponent.inputElement) {
-      if (this.scAutoFocus) {
-        this.renderer.setAttribute(
-          this.scSelectTopControlComponent.inputElement.nativeElement,
-          'autofocus',
-          'autofocus'
-        );
-      } else {
-        this.renderer.removeAttribute(this.scSelectTopControlComponent.inputElement.nativeElement, 'autofocus');
-      }
+    if (this.scSelectTopControlDOM && this.scAutoFocus) {
+      this.scSelectTopControlDOM.focus();
     }
   }
 
   focus(): void {
-    if (this.scSelectTopControlComponent.inputElement) {
-      this.focusMonitor.focusVia(this.scSelectTopControlComponent.inputElement, 'keyboard');
-      this.scFocus.emit();
+    if (this.scSelectTopControlDOM) {
+      this.scSelectTopControlDOM.focus();
     }
   }
 
   blur(): void {
-    if (this.scSelectTopControlComponent.inputElement) {
-      this.scSelectTopControlComponent.inputElement.nativeElement.blur();
-      this.scBlur.emit();
+    if (this.scSelectTopControlDOM) {
+      this.scSelectTopControlDOM.blur();
     }
+  }
+
+  onFocus(): void {
+    this.scFocus.emit();
+  }
+
+  onBlur(): void {
+    this.scBlur.emit();
   }
 
   onKeyDown(event: KeyboardEvent): void {
@@ -257,10 +257,9 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
   }
 
   constructor(
-    private renderer: Renderer2,
+    renderer: Renderer2,
     public scSelectService: ScSelectService,
     private cdr: ChangeDetectorRef,
-    private focusMonitor: FocusMonitor,
     private platform: Platform,
     elementRef: ElementRef,
     @Host() @Optional() public noAnimation?: NzNoAnimationDirective
@@ -298,6 +297,9 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
   }
 
   ngOnInit(): void {
+    this.scSelectService.animationEvent$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.updateCdkConnectedOverlayPositions());
     this.scSelectService.searchValue$.pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.scOnSearch.emit(data);
       this.updateCdkConnectedOverlayPositions();
@@ -306,7 +308,6 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
       if (this.value !== modelValue) {
         this.value = modelValue;
         this.onChange(this.value);
-        this.updateCdkConnectedOverlayPositions();
       }
     });
     this.scSelectService.open$.pipe(takeUntil(this.destroy$)).subscribe(value => {
@@ -321,7 +322,6 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
         this.onTouched();
       }
       this.open = value;
-
       this.scSelectService.clearInput();
     });
     this.scSelectService.check$.pipe(takeUntil(this.destroy$)).subscribe(() => {
@@ -331,6 +331,7 @@ export class ScSelectComponent implements ControlValueAccessor, OnInit, AfterVie
 
   ngAfterViewInit(): void {
     this.updateCdkConnectedOverlayStatus();
+    this.updateAutoFocus();
     this.isInit = true;
   }
 

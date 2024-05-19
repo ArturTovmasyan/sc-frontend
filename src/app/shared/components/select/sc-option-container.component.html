@@ -12,11 +12,13 @@
     [scMenuItemSelectedIcon]="scMenuItemSelectedIcon"
     [scOption]="scSelectService.addedTagOption">
   </li>
-  <li sc-option-li
-    *ngFor="let option of scSelectService.listOfScOptionComponent | scFilterOption : scSelectService.searchValue : scSelectService.filterOption : scSelectService.serverSearch; trackBy: trackValue"
-    [scMenuItemSelectedIcon]="scMenuItemSelectedIcon"
-    [scOption]="option">
-  </li>
+  <ng-container *ngFor="let option of scSelectService.listOfScOptionComponent | scFilterOption : scSelectService.searchValue : scSelectService.filterOption : scSelectService.serverSearch; trackBy: trackValue">
+    <li sc-option-li
+      *ngIf="!option.scHide"
+      [scMenuItemSelectedIcon]="scMenuItemSelectedIcon"
+      [scOption]="option">
+    </li>
+  </ng-container>
   <li class="ant-select-dropdown-menu-item-group"
     *ngFor="let group of scSelectService.listOfScOptionGroupComponent | scFilterGroupOption : scSelectService.searchValue : scSelectService.filterOption :scSelectService.serverSearch; trackBy: trackLabel">
     <div class="ant-select-dropdown-menu-item-group-title"
@@ -24,11 +26,13 @@
       <ng-container *nzStringTemplateOutlet="group.scLabel"> {{group.scLabel}} </ng-container>
     </div>
     <ul class="ant-select-dropdown-menu-item-group-list">
-      <li sc-option-li
-        *ngFor="let option of group.listOfScOptionComponent | scFilterOption : scSelectService.searchValue : scSelectService.filterOption :scSelectService.serverSearch; trackBy: trackValue"
-        [scMenuItemSelectedIcon]="scMenuItemSelectedIcon"
-        [scOption]="option">
-      </li>
+      <ng-container *ngFor="let option of group.listOfScOptionComponent | scFilterOption : scSelectService.searchValue : scSelectService.filterOption :scSelectService.serverSearch; trackBy: trackValue">
+        <li sc-option-li
+          *ngIf="!option.scHide"
+          [scMenuItemSelectedIcon]="scMenuItemSelectedIcon"
+          [scOption]="option">
+        </li>
+      </ng-container>
     </ul>
   </li>
   <li sc-option-li

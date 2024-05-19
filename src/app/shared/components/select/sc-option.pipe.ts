@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {Pipe, PipeTransform} from '@angular/core';
+import {Pipe, PipeTransform, QueryList } from '@angular/core';
 import {ScOptionGroupComponent} from './sc-option-group.component';
 import {ScOptionComponent} from './sc-option.component';
 
@@ -15,13 +15,13 @@ export type TFilterOption = (input: string, option: ScOptionComponent) => boolea
 @Pipe({ name: 'scFilterOption' })
 export class ScFilterOptionPipe implements PipeTransform {
   transform(
-    options: ScOptionComponent[],
+    options: ScOptionComponent[] | QueryList<ScOptionComponent>,
     searchValue: string,
     filterOption: TFilterOption,
     serverSearch: boolean
   ): ScOptionComponent[] {
     if (serverSearch || !searchValue) {
-      return options;
+      return options as ScOptionComponent[];
     } else {
       return (options as ScOptionComponent[]).filter(o => filterOption(searchValue, o));
     }

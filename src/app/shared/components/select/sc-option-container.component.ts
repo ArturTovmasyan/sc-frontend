@@ -7,6 +7,7 @@
  */
 
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -24,7 +25,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {fromEvent, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {filter, map, pairwise, takeUntil} from 'rxjs/operators';
 import {ScOptionGroupComponent} from './sc-option-group.component';
 import {ScOptionLiComponent} from './sc-option-li.component';
 import {ScOptionComponent} from './sc-option.component';
@@ -38,11 +39,11 @@ import {ScSelectService} from './sc-select.service';
   preserveWhitespaces: false,
   templateUrl: './sc-option-container.component.html'
 })
-export class ScOptionContainerComponent implements OnDestroy, OnInit {
+export class ScOptionContainerComponent implements OnDestroy, OnInit, AfterViewInit {
   private destroy$ = new Subject();
   private lastScrollTop = 0;
   @ViewChildren(ScOptionLiComponent) listOfScOptionLiComponent: QueryList<ScOptionLiComponent>;
-  @ViewChild('dropdownUl', {static: false}) dropdownUl: ElementRef<HTMLUListElement>;
+  @ViewChild('dropdownUl', {static: true}) dropdownUl: ElementRef<HTMLUListElement>;
   @Input() scNotFoundContent: string;
   @Input() scMenuItemSelectedIcon: TemplateRef<void>;
   @Output() readonly scScrollToBottom = new EventEmitter<void>();
@@ -54,11 +55,10 @@ export class ScOptionContainerComponent implements OnDestroy, OnInit {
         const targetOption = this.listOfScOptionLiComponent.find(o =>
           this.scSelectService.compareWith(o.scOption.scValue, option.scValue)
         );
-        /* tslint:disable:no-any */
+        // tslint:disable:no-any
         if (targetOption && targetOption.el && (targetOption.el as any).scrollIntoViewIfNeeded) {
           (targetOption.el as any).scrollIntoViewIfNeeded(false);
         }
-        /* tslint:enable:no-any */
       }
     });
   }
@@ -96,6 +96,17 @@ export class ScOptionContainerComponent implements OnDestroy, OnInit {
           }
         });
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.listOfScOptionLiComponent.changes
+      .pipe(
+        map(list => list.length),
+        pairwise(),
+        filter(([before, after]) => after < before),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => (this.lastScrollTop = 0));
   }
 
   ngOnDestroy(): void {

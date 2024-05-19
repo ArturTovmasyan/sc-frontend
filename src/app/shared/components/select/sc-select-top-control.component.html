@@ -4,10 +4,10 @@
     class="ant-select-search__field"
     (compositionstart)="isComposing = true"
     (compositionend)="isComposing = false"
-    (input)="updateWidth()"
     [ngModel]="inputValue"
     (ngModelChange)="setInputValue($event)"
     [disabled]="scSelectService.disabled">
+  <span #mirrorElement class="ant-select-search__field__mirror"></span>
 </ng-template>
 <div class="ant-select-selection__rendered">
   <div *ngIf="scPlaceHolder"
@@ -21,7 +21,7 @@
       class="ant-select-selection-selected-value"
       [attr.title]="scSelectService.listOfCachedSelectedOption[0]?.scLabel"
       [ngStyle]="selectedValueStyle">
-      <ng-container *nzStringTemplateOutlet="scCustomTemplate">
+      <ng-container *nzStringTemplateOutlet="scCustomTemplate; context: { $implicit: scSelectService.listOfCachedSelectedOption[0] }">
         <ng-container>{{ scSelectService.listOfCachedSelectedOption[0]?.scLabel }}</ng-container>
       </ng-container>
     </div>
@@ -30,7 +30,6 @@
       class="ant-select-search ant-select-search--inline" [style.display]="scOpen ? 'block' : 'none'">
       <div class="ant-select-search__field__wrap">
         <ng-template [ngTemplateOutlet]="inputTemplate"></ng-template>
-        <span class="ant-select-search__field__mirror">{{inputValue}}&nbsp;</span>
       </div>
     </div>
   </ng-container>
@@ -42,8 +41,9 @@
         [nzNoAnimation]="noAnimation?.nzNoAnimation"
         [attr.title]="option.scLabel"
         [class.ant-select-selection__choice__disabled]="option.scDisabled"
+        (@zoomMotion.done)="animationEnd()"
         class="ant-select-selection__choice">
-        <ng-container *nzStringTemplateOutlet="scCustomTemplate">
+        <ng-container *nzStringTemplateOutlet="scCustomTemplate; context:{ $implicit: scSelectService.listOfCachedSelectedOption[index] }">
           <div class="ant-select-selection__choice__content">{{ option.scLabel }}</div>
         </ng-container>
         <span *ngIf="!option.scDisabled"
@@ -58,6 +58,7 @@
       [@zoomMotion]
       [@.disabled]="noAnimation?.nzNoAnimation"
       [nzNoAnimation]="noAnimation?.nzNoAnimation"
+      (@zoomMotion.done)="animationEnd()"
       class="ant-select-selection__choice">
       <div class="ant-select-selection__choice__content">
         <ng-container *ngIf="scMaxTagPlaceholder">

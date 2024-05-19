@@ -25,6 +25,7 @@ export class ScOptionComponent implements OnChanges {
   // tslint:disable-next-line:no-any
   @Input() scValue: any;
   @Input() @InputBoolean() scDisabled = false;
+  @Input() @InputBoolean() scHide = false;
   @Input() @InputBoolean() scCustomContent = false;
 
   ngOnChanges(): void {
