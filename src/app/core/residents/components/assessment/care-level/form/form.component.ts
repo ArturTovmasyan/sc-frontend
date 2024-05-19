@@ -31,6 +31,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     });
 
     this.subscribe('list_care_level_group');
+    this.subscribe('vc_care_level_group_id');
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -43,7 +44,12 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (params) {
               this.form.get('care_level_group_id').setValue(params.care_level_group_id);
             }
-
+          }
+        });
+        break;
+      case 'vc_care_level_group_id':
+        this.$subscriptions[key] = this.form.get('care_level_group_id').valueChanges.subscribe(next => {
+          if (next) {
             this.form.get('title').setValue(this.form.get('title').value);
           }
         });
