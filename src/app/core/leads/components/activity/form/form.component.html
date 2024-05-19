@@ -1,7 +1,7 @@
 ﻿<h4>Activity</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
-  <nz-form-item>
+  <nz-form-item *ngIf="!edit_mode">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type_id" nzRequired>Activity Type</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type_id')?'error':null">
       <div class="add-select-container">
