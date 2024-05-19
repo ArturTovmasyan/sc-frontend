@@ -51,6 +51,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   referrer_types: ReferrerType[];
 
   facilities: Facility[];
+  facilities_all: Facility[];
 
   organizations: Organization[];
   contacts: Contact[];
@@ -155,6 +156,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_payment_source');
     this.subscribe('list_user');
     this.subscribe('list_facility');
+    this.subscribe('list_facility_all');
     this.subscribe('list_care_type');
 
     this.subscribe('list_organization');
@@ -238,11 +240,13 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.facilities = res;
-
-            if (params) {
-              /// ???
-              this.form.get('facility_id').setValue(params.facility_id);
-            }
+          }
+        });
+        break;
+      case 'list_facility_all':
+        this.$subscriptions[key] = this.facility$.all([{key: 'all', value: '1'}]).pipe(first()).subscribe(res => {
+          if (res) {
+            this.facilities_all = res;
           }
         });
         break;

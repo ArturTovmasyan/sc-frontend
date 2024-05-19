@@ -346,7 +346,7 @@
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facilities">Secondary Facilities</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('facilities')?'error':null">
           <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="facilities">
-            <ng-container *ngFor="let facility of facilities">
+            <ng-container *ngFor="let facility of facilities_all">
               <nz-option [nzLabel]="facility.name" [nzValue]="facility.id"></nz-option>
             </ng-container>
           </nz-select>
