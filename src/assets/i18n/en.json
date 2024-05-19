@@ -191,7 +191,7 @@
       "room": "Room (Bed)",
       "address": "Address",
       "csz_str": "City, State, Zip Code",
-      "group": "FFC/IHC/IL",
+      "group_name": "FFC/IHC/IL",
       "space": "Space"
     },
     "facility-list": {
