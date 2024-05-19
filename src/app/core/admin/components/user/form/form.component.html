@@ -1,13 +1,13 @@
-﻿<h4>User</h4>
+﻿<h4>{{ 'form.admin.user._title'|translate }}</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-tabset [nzSelectedIndex]="selectedTab">
-    <nz-tab nzTitle="Personal Info">
+    <nz-tab nzTitle="{{ 'form.admin.user.tab_personal_info'|translate }}">
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>{{ 'form.admin.user.first_name'|translate }}</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('first_name')?'error':null">
-          <input nz-input placeholder="First Name" formControlName="first_name">
+          <input nz-input placeholder="{{ 'form.admin.user.first_name'|translate }}" formControlName="first_name">
           <nz-form-explain *ngIf="hasErrors('first_name')">
             <app-field-errors [errors]="fieldErrors('first_name')"></app-field-errors>
           </nz-form-explain>
@@ -15,9 +15,9 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="last_name" nzRequired>Last Name</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="last_name" nzRequired>{{ 'form.admin.user.last_name'|translate }}</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('last_name')?'error':null">
-          <input nz-input placeholder="Last Name" formControlName="last_name">
+          <input nz-input placeholder="{{ 'form.admin.user.last_name'|translate }}" formControlName="last_name">
           <nz-form-explain *ngIf="hasErrors('last_name')">
             <app-field-errors [errors]="fieldErrors('last_name')"></app-field-errors>
           </nz-form-explain>
@@ -25,9 +25,9 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email" nzRequired>E-Mail</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email" nzRequired>{{ 'form.admin.user.email'|translate }}</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email')?'error':null">
-          <input nz-input placeholder="E-Mail" formControlName="email">
+          <input nz-input placeholder="{{ 'form.admin.user.email'|translate }}" formControlName="email">
           <nz-form-explain *ngIf="hasErrors('email')">
             <app-field-errors [errors]="fieldErrors('email')"></app-field-errors>
           </nz-form-explain>
@@ -36,7 +36,7 @@
 
       <fieldset formArrayName="phones">
         <legend class="senior-care-legend">
-          Phone Number(s)
+          {{ 'form.admin.user.phones'|translate }}
           <button type="button" [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
                   (click)="add_field('phones');">
             <i nz-icon type="plus"></i>
@@ -47,16 +47,16 @@
           <thead>
           <tr>
             <th style="width:20%;">
-              <nz-form-label>Primary</nz-form-label>
+              <nz-form-label>{{ 'form.phone.primary'|translate }}</nz-form-label>
             </th>
             <th style="width:15%;">
-              <nz-form-label>SMS</nz-form-label>
+              <nz-form-label>{{ 'form.phone.sms'|translate }}</nz-form-label>
             </th>
             <th style="width:32%;">
-              <nz-form-label nzRequired>Type</nz-form-label>
+              <nz-form-label nzRequired>{{ 'form.phone.type'|translate }}</nz-form-label>
             </th>
             <th style="width:30%;">
-              <nz-form-label nzRequired>Number</nz-form-label>
+              <nz-form-label nzRequired>{{ 'form.phone.number'|translate }}</nz-form-label>
             </th>
             <th style="width:3%;">&nbsp;</th>
           </tr>
@@ -74,7 +74,7 @@
                 <nz-form-item>
                   <nz-form-control [nzSm]="16" [nzXs]="24"
                                    [nzValidateStatus]="hasErrors('phones.'+i+'.type')?'error':null">
-                    <nz-select nzSize="small" nzMode="default" nzPlaceHolder="Select Type" formControlName="type">
+                    <nz-select nzSize="small" nzMode="default" nzPlaceHolder="{{ 'form.phone.select_placeholder'|translate }}" formControlName="type">
                       <ng-container *ngFor="let type of phone_types">
                         <nz-option [nzLabel]="(type.name)|translate" [nzValue]="type.id"></nz-option>
                       </ng-container>
@@ -108,11 +108,11 @@
         </table>
       </fieldset>
     </nz-tab>
-    <nz-tab nzTitle="Security Info">
+    <nz-tab nzTitle="{{ 'form.admin.user.tab_security_info'|translate }}">
       <nz-form-item *ngIf="form.get('space_id')">
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>{{ 'form.admin.user.space'|translate }}</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="space_id">
             <ng-container *ngFor="let space of spaces">
               <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
             </ng-container>
@@ -124,25 +124,25 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="username" nzRequired>Username</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="username" nzRequired>{{ 'form.admin.user.username'|translate }}</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('username')?'error':null">
-          <input nz-input placeholder="Username" formControlName="username">
+          <input nz-input placeholder="{{ 'form.admin.user.username'|translate }}" formControlName="username">
           <nz-form-explain *ngIf="hasErrors('username')">
             <app-field-errors [errors]="fieldErrors('username')"></app-field-errors>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" [nzRequired]="!this.edit_mode">Password</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" [nzRequired]="!this.edit_mode">{{ 'form.admin.user.password'|translate }}</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('password')?'error':null">
-          <input nz-input type="password" formControlName="password">
+          <input nz-input type="password" formControlName="password" autocomplete="new-password">
           <nz-form-explain *ngIf="hasErrors('password')">
             <app-field-errors [errors]="fieldErrors('password')"></app-field-errors>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="re_password" [nzRequired]="!this.edit_mode">Repeat Password
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="re_password" [nzRequired]="!this.edit_mode">{{ 'form.admin.user.re_password'|translate }}
         </nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('re_password')?'error':null">
           <input nz-input type="password" formControlName="re_password">
@@ -152,7 +152,7 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="enabled">Enabled</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="enabled">{{ 'form.admin.user.enabled'|translate }}</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24">
           <nz-switch formControlName="enabled"></nz-switch>
           <nz-form-explain *ngIf="hasErrors('enabled')">
@@ -161,11 +161,11 @@
         </nz-form-control>
       </nz-form-item>
     </nz-tab>
-    <nz-tab nzTitle="Role & Access Info">
+    <nz-tab nzTitle="{{ 'form.admin.user.tab_access_info'|translate }}">
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="roles" nzRequired>Role(s)</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="roles" nzRequired>{{ 'form.admin.user.roles'|translate }}</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('roles')?'error':null">
-          <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="roles">
+          <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="roles">
             <ng-container *ngFor="let role of roles">
               <nz-option [nzLabel]="role.name" [nzValue]="role.id"></nz-option>
             </ng-container>
@@ -181,7 +181,7 @@
           <nz-form-item>
             <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="roles">{{ grant_lists[grant_key].title }}(s)</nz-form-label>
             <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('grants.' + grant_key)?'error':null">
-              <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" [formControlName]="grant_key">
+              <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" [formControlName]="grant_key">
                 <ng-container *ngFor="let item of grant_lists[grant_key].items">
                   <nz-option [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
                 </ng-container>

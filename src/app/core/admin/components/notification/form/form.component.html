@@ -1,8 +1,8 @@
-﻿<h4>Notification</h4>
+﻿<h4>{{ 'form.admin.notification._title'|translate }}</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="enabled">Enabled</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="enabled">{{ 'form.admin.notification.enabled'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24">
       <nz-switch formControlName="enabled"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('enabled')">
@@ -12,9 +12,9 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="type_id" nzRequired>Type</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="type_id" nzRequired>{{ 'form.admin.notification.type'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('type_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="type_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="type_id">
         <ng-container *ngFor="let notification_type of notification_types">
           <nz-option [nzLabel]="notification_type.title" [nzValue]="notification_type.id"></nz-option>
         </ng-container>
@@ -26,9 +26,9 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="users" nzRequired>User(s)</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="users" nzRequired>{{ 'form.admin.notification.users'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('users')?'error':null">
-      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="users">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="users">
         <ng-container *ngFor="let user of users">
           <nz-option [nzLabel]="user|resident" [nzValue]="user.id"></nz-option>
         </ng-container>
@@ -40,9 +40,9 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="emails" nzRequired>E-Mail(s)</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="emails" nzRequired>{{ 'form.admin.notification.emails'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('emails')?'error':null">
-      <nz-select nzShowSearch nzMode="tags" [nzTokenSeparators]="[' ', ',']" nzPlaceHolder="Please select" formControlName="emails">
+      <nz-select nzShowSearch nzMode="tags" [nzTokenSeparators]="[' ', ',']" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="emails">
       </nz-select>
       <nz-form-explain *ngIf="hasErrors('emails')">
         <app-field-errors [errors]="fieldErrors('emails')"></app-field-errors>
@@ -51,9 +51,9 @@
   </nz-form-item>
 
   <nz-form-item *ngIf="form.get('facilities').enabled">
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="facilities" nzRequired>Facilities</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="facilities" nzRequired>{{ 'form.admin.notification.facilities'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('facilities')?'error':null">
-      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="facilities">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="facilities">
         <ng-container *ngFor="let facility of facilities">
           <nz-option [nzLabel]="facility.name" [nzValue]="facility.id"></nz-option>
         </ng-container>
@@ -65,9 +65,9 @@
   </nz-form-item>
 
   <nz-form-item *ngIf="form.get('regions').enabled">
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="regions" nzRequired>Regions</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="regions" nzRequired>{{ 'form.admin.notification.regions'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('regions')?'error':null">
-      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="regions">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="regions">
         <ng-container *ngFor="let region of regions">
           <nz-option [nzLabel]="region.name" [nzValue]="region.id"></nz-option>
         </ng-container>
@@ -79,9 +79,9 @@
   </nz-form-item>
 
   <nz-form-item *ngIf="form.get('apartments').enabled">
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="apartments" nzRequired>Apartments</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="apartments" nzRequired>{{ 'form.admin.notification.apartments'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('apartments')?'error':null">
-      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="apartments">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="apartments">
         <ng-container *ngFor="let apartment of apartments">
           <nz-option [nzLabel]="apartment.name" [nzValue]="apartment.id"></nz-option>
         </ng-container>
@@ -93,7 +93,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="schedule" nzRequired>Schedule</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="schedule" nzRequired>{{ 'form.admin.notification.schedule'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="24" [nzValidateStatus]="hasErrors('schedule')?'error':null">
       <cron-jobs [formControl]="form.get('schedule')"></cron-jobs>
       <nz-form-explain *ngIf="hasErrors('schedule')">

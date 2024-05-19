@@ -1,10 +1,10 @@
-﻿<h4>Role</h4>
+﻿<h4>{{ 'form.admin.role._title'|translate }}</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="name" nzRequired>Name</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="name" nzRequired>{{ 'form.admin.role.name'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('name')?'error':null">
-      <input nz-input placeholder="Name" formControlName="name">
+      <input nz-input placeholder="{{ 'form.admin.role.name'|translate }}" formControlName="name">
       <nz-form-explain *ngIf="hasErrors('name')">
         <app-field-errors [errors]="fieldErrors('name')"></app-field-errors>
       </nz-form-explain>
@@ -12,8 +12,8 @@
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="default">
-      Default
-      <i class="far fa-question-circle" nz-tooltip nzTitle="The default role for new registered customer."></i>
+      {{ 'form.admin.role.default'|translate }}
+      <i class="far fa-question-circle" nz-tooltip nzTitle="{{ 'form.admin.role.default_hint'|translate }}"></i>
     </nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="default"></nz-switch>
@@ -26,9 +26,9 @@
 <nz-table #nzTable [nzData]="form.get('grants').value" nzSize="small" nzShowPagination="false" class="grant-table">
   <thead>
   <tr>
-    <th nzWidth="60%">Title</th>
-    <th nzWidth="20%">Level</th>
-    <th nzWidth="20%">Identity</th>
+    <th nzWidth="60%">{{ 'form.admin.role.grant_title'|translate }}</th>
+    <th nzWidth="20%">{{ 'form.admin.role.grant_level'|translate }}</th>
+    <th nzWidth="20%">{{ 'form.admin.role.grant_identity'|translate }}</th>
   </tr>
   </thead>
   <tbody>
@@ -45,21 +45,21 @@
         </td>
         <td>
           <nz-select nzSize="small" *ngIf="item.hasOwnProperty('level') && item.level !== null"
-                     nzPlaceHolder="Please select" [(ngModel)]="item.level">
-            <nz-option [nzLabel]="'None'" [nzValue]="0"></nz-option>
-            <nz-option [nzLabel]="'View'" [nzValue]="1"></nz-option>
-            <nz-option [nzLabel]="'Edit'" [nzValue]="2"></nz-option>
-            <nz-option [nzLabel]="'Create'" [nzValue]="3"></nz-option>
-            <nz-option [nzLabel]="'Delete'" [nzValue]="4"></nz-option>
-            <nz-option [nzLabel]="'Undelete'" [nzValue]="5"></nz-option>
+                     nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" [(ngModel)]="item.level">
+            <nz-option nzLabel="{{ 'list.grant_level.NONE'|translate }}" [nzValue]="0"></nz-option>
+            <nz-option nzLabel="{{ 'list.grant_level.VIEW'|translate }}" [nzValue]="1"></nz-option>
+            <nz-option nzLabel="{{ 'list.grant_level.EDIT'|translate }}" [nzValue]="2"></nz-option>
+            <nz-option nzLabel="{{ 'list.grant_level.CREATE'|translate }}" [nzValue]="3"></nz-option>
+            <nz-option nzLabel="{{ 'list.grant_level.DELETE'|translate }}" [nzValue]="4"></nz-option>
+            <nz-option nzLabel="{{ 'list.grant_level.UNDELETE'|translate }}" [nzValue]="5"></nz-option>
           </nz-select>
         </td>
         <td>
           <nz-select nzSize="small" *ngIf="item.hasOwnProperty('identity') && item.identity !== null"
-                     nzPlaceHolder="Please select" [(ngModel)]="item.identity">
-            <nz-option [nzLabel]="'All'" [nzValue]="0"></nz-option>
-            <nz-option [nzLabel]="'Several'" [nzValue]="1"></nz-option>
-            <nz-option [nzLabel]="'Own'" [nzValue]="2"></nz-option>
+                     nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" [(ngModel)]="item.identity">
+            <nz-option nzLabel="{{ 'list.grant_identity.ALL'|translate }}" [nzValue]="0"></nz-option>
+            <nz-option nzLabel="{{ 'list.grant_identity.SEVERAL'|translate }}" [nzValue]="1"></nz-option>
+            <nz-option nzLabel="{{ 'list.grant_identity.OWN'|translate }}" [nzValue]="2"></nz-option>
           </nz-select>
         </td>
       </tr>

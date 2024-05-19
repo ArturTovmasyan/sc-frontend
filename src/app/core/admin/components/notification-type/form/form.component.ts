@@ -44,9 +44,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     });
 
     this.categories = [
-      {id: NotificationCategory.SIXTY_DAYS_REPORT, name: 'Sixty Days Report'},
-      {id: NotificationCategory.LEAD_ACTIVITY, name: 'Lead Activity'},
-      {id: NotificationCategory.LEAD_CHANGE_LOG, name: 'Lead Change Log'}
+      {id: NotificationCategory.SIXTY_DAYS_REPORT, name: 'list.notification_category.SIXTY_DAYS_REPORT'},
+      {id: NotificationCategory.LEAD_ACTIVITY, name: 'list.notification_category.LEAD_ACTIVITY'},
+      {id: NotificationCategory.LEAD_CHANGE_LOG, name: 'list.notification_category.LEAD_CHANGE_LOG'}
     ];
 
     this.add_space();

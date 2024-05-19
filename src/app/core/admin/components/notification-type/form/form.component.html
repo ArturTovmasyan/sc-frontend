@@ -1,10 +1,10 @@
-﻿<h4>Notification Type</h4>
+﻿<h4>{{ 'form.admin.notification_type._title'|translate }}</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>{{ 'form.admin.notification_type.title'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
-      <input nz-input placeholder="Title" formControlName="title">
+      <input nz-input placeholder="{{ 'form.admin.notification_type.title'|translate }}" formControlName="title">
       <nz-form-explain *ngIf="hasErrors('title')">
         <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
       </nz-form-explain>
@@ -12,9 +12,9 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="category" nzRequired>Category</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="category" nzRequired>{{ 'form.admin.notification_type.category'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('category')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Select Category" formControlName="category">
+      <nz-select nzMode="default" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="category">
         <ng-container *ngFor="let category of categories">
           <nz-option [nzLabel]="(category.name)|translate" [nzValue]="category.id"></nz-option>
         </ng-container>
@@ -26,7 +26,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">Email</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">{{ 'form.admin.notification_type.email'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="email"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('email')">
@@ -36,7 +36,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="sms">SMS</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="sms">{{ 'form.admin.notification_type.sms'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="sms"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('sms')">
@@ -46,7 +46,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facility">Facility</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facility">{{ 'form.admin.notification_type.facility'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="facility"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('facility')">
@@ -56,7 +56,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="region">Region</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="region">{{ 'form.admin.notification_type.region'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="region"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('region')">
@@ -66,7 +66,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="apartment">Apartment</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="apartment">{{ 'form.admin.notification_type.apartment'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
       <nz-switch formControlName="apartment"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('apartment')">
@@ -76,9 +76,9 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email_subject">Email Subject</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email_subject">{{ 'form.admin.notification_type.email_subject'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email_subject')?'error':null">
-      <input-counter formControlName="email_subject" placeholder="Email Subject" [maxlength]="60"></input-counter>
+      <input-counter formControlName="email_subject" placeholder="{{ 'form.admin.notification_type.email_subject'|translate }}" [maxlength]="60"></input-counter>
       <nz-form-explain *ngIf="hasErrors('email_subject')">
         <app-field-errors [errors]="fieldErrors('email_subject')"></app-field-errors>
       </nz-form-explain>
@@ -86,9 +86,9 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email_message">Email Body</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email_message">{{ 'form.admin.notification_type.email_message'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email_message')?'error':null">
-      <input-counter formControlName="email_message" placeholder="Email Body" [maxlength]="1000"></input-counter>
+      <input-counter formControlName="email_message" placeholder="{{ 'form.admin.notification_type.email_message'|translate }}" [maxlength]="1000"></input-counter>
       <nz-form-explain *ngIf="hasErrors('email_message')">
         <app-field-errors [errors]="fieldErrors('email_message')"></app-field-errors>
       </nz-form-explain>
@@ -96,9 +96,9 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="sms_subject">SMS Subject</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="sms_subject">{{ 'form.admin.notification_type.sms_subject'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('sms_subject')?'error':null">
-      <input-counter formControlName="sms_subject" placeholder="SMS Subject" [maxlength]="60"></input-counter>
+      <input-counter formControlName="sms_subject" placeholder="{{ 'form.admin.notification_type.sms_subject'|translate }}" [maxlength]="60"></input-counter>
       <nz-form-explain *ngIf="hasErrors('sms_subject')">
         <app-field-errors [errors]="fieldErrors('sms_subject')"></app-field-errors>
       </nz-form-explain>
@@ -106,9 +106,9 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="sms_message">SMS Body</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="sms_message">{{ 'form.admin.notification_type.sms_message'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('sms_message')?'error':null">
-      <input-counter formControlName="sms_message" placeholder="SMS Body" [maxlength]="1000"></input-counter>
+      <input-counter formControlName="sms_message" placeholder="{{ 'form.admin.notification_type.sms_message'|translate }}" [maxlength]="1000"></input-counter>
       <nz-form-explain *ngIf="hasErrors('sms_message')">
         <app-field-errors [errors]="fieldErrors('sms_message')"></app-field-errors>
       </nz-form-explain>
@@ -116,9 +116,9 @@
   </nz-form-item>
 
   <nz-form-item *ngIf="form.get('space_id')">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>{{ 'form.admin.notification_type.'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="{{ 'form.select_placeholder'|translate }}" formControlName="space_id">
         <ng-container *ngFor="let space of spaces">
           <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
         </ng-container>

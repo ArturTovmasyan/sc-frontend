@@ -470,10 +470,116 @@
     },
     "resident-health-insurance-list": {
       "id": "ID",
-      "insurance_company":  "Insurance Company",
+      "insurance_company": "Insurance Company",
       "medical_record_number": "Medical Record Number",
-      "group_number":  "Group Number",
+      "group_number": "Group Number",
       "notes": "Notes"
+    }
+  },
+  "list": {
+    "phone_type": {
+      "HOME": "Home",
+      "MOBILE": "Mobile",
+      "WORK":  "Work",
+      "OFFICE": "Office",
+      "EMERGENCY":  "Emergency",
+      "FAX": "Fax",
+      "ROOM":  "Room"
+    },
+    "notification_category": {
+      "SIXTY_DAYS_REPORT": "Sixty Days Report",
+      "LEAD_ACTIVITY": "Lead Activity",
+      "LEAD_CHANGE_LOG": "Lead Change Log"
+    },
+    "grant_level": {
+      "NONE":"None",
+      "VIEW":"View",
+      "EDIT":"Edit",
+      "CREATE":"Create",
+      "DELETE":"Delete",
+      "UNDELETE":"Undelete"
+    },
+    "grant_identity": {
+      "ALL":"All",
+      "SEVERAL":"Several",
+      "OWN":"Own"
+    }
+  },
+  "form": {
+    "select_placeholder": "Please select",
+    "phone": {
+      "primary":"Primary",
+      "sms":"SMS",
+      "type":"Type",
+      "number":"Number",
+      "select_placeholder": "Select Type"
+    },
+    "admin": {
+      "space": {
+        "_title": "Space",
+        "name": "Name"
+      },
+      "user": {
+        "_title": "User",
+        "tab_personal_info": "Personal Info",
+        "tab_security_info": "Security Info",
+        "tab_access_info": "Role & Access Info",
+        "first_name":"First Name",
+        "last_name":"Last Name",
+        "email":"E-Mail",
+        "phones":"Phone Number(s)",
+        "username": "Username",
+        "password": "Password",
+        "re_password":  "Repeat Password",
+        "enabled": "Enabled",
+        "roles":  "Role(s)",
+        "space": "Space"
+
+      },
+      "user_invite": {
+        "_title": "Invite User",
+        "email":  "E-Mail",
+        "as_owner": "As Owner",
+        "roles":  "Role(s)",
+        "invited_by": "Invited by",
+        "space": "Space"
+      },
+      "role": {
+        "_title": "Role",
+        "name": "Name",
+        "default": "Default",
+        "default_hint": "The default role for new registered customer.",
+        "grant_title": "Title",
+        "grant_level": "Level",
+        "grant_identity": "Identity"
+
+      },
+      "notification": {
+        "_title": "Notification",
+        "enabled": "Enabled",
+        "type": "Type",
+        "users": "User(s)",
+        "emails": "E-Mail(s)",
+        "facilities": "Facilities",
+        "regions": "Regions",
+        "apartments": "Apartments",
+        "schedule": "Schedule"
+      },
+      "notification_type": {
+        "_title": "Notification Type",
+        "title": "Title",
+        "category": "Category",
+        "email": "Email",
+        "sms": "SMS",
+        "facility": "Facility",
+        "region": "Region",
+        "apartment": "Apartment",
+        "email_subject": "Email Subject",
+        "email_message": "Email Message",
+        "sms_subject": "SMS Subject",
+        "sms_message": "SMS Message",
+        "space": "Space"
+      }
     }
   }
 }

@@ -1,10 +1,10 @@
-﻿<h4>Space</h4>
+﻿<h4>{{ 'form.admin.space._title'|translate }}</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="name" nzRequired>Name</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="name" nzRequired>{{ 'form.admin.space.name'|translate }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('name')?'error':null">
-      <input nz-input placeholder="Name" formControlName="name">
+      <input nz-input placeholder="{{ 'form.admin.space.name'|translate }}" formControlName="name">
       <nz-form-explain *ngIf="hasErrors('name')">
         <app-field-errors [errors]="fieldErrors('name')"></app-field-errors>
       </nz-form-explain>

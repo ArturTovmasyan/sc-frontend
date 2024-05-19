@@ -60,13 +60,13 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_role');
 
     this.phone_types = [
-      {id: PhoneType.HOME, name: 'HOME'},
-      {id: PhoneType.MOBILE, name: 'MOBILE'},
-      {id: PhoneType.WORK, name: 'WORK'},
-      {id: PhoneType.OFFICE, name: 'OFFICE'},
-      {id: PhoneType.EMERGENCY, name: 'EMERGENCY'},
-      {id: PhoneType.FAX, name: 'FAX'},
-      {id: PhoneType.ROOM, name: 'ROOM'}
+      {id: PhoneType.HOME, name: 'list.phone_type.HOME'},
+      {id: PhoneType.MOBILE, name: 'list.phone_type.MOBILE'},
+      {id: PhoneType.WORK, name: 'list.phone_type.WORK'},
+      {id: PhoneType.OFFICE, name: 'list.phone_type.OFFICE'},
+      {id: PhoneType.EMERGENCY, name: 'list.phone_type.EMERGENCY'},
+      {id: PhoneType.FAX, name: 'list.phone_type.FAX'},
+      {id: PhoneType.ROOM, name: 'list.phone_type.ROOM'}
     ];
 
     this.postSubmit = (data: any) => {
