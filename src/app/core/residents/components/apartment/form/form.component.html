@@ -42,7 +42,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="phone">Phone</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('phone')?'error':null">
-      <input nz-input placeholder="Phone" formControlName="phone">
+      <input nz-input placeholder="(000) 000-0000" formControlName="phone" mask="(000) 000-0000">
       <nz-form-explain *ngIf="hasErrors('phone')">
         <app-field-errors [errors]="fieldErrors('phone')"></app-field-errors>
       </nz-form-explain>

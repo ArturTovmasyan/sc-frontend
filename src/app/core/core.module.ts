@@ -179,6 +179,7 @@ import {MinimaLight} from '@alyle/ui/themes/minima';
 import {ContractStatePipe} from './residents/pipes/contract-state.pipe';
 import {NgHttpLoaderModule} from 'ng-http-loader';
 import {ResidentSelectorPipe} from './residents/pipes/resident-selector.pipe';
+import {NgxMaskModule} from 'ngx-mask';
 
 registerLocaleData(en);
 
@@ -440,7 +441,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LyButtonModule,
     LyIconModule,
     CoreRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true},

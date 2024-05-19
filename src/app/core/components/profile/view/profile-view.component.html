@@ -36,7 +36,7 @@
                 <div nz-row [nzGutter]="4" *ngFor="let phone of user.phones">
                   <div nz-col [nzSpan]="6"><strong>{{ phone.type|phone_type }}:</strong></div>
                   <div nz-col [nzSpan]="12">
-                    <a href="tel:{{ phone.number }}">{{ phone.number }}</a>
+                    <a href="tel:{{ phone.number| mask: '(000) 000-0000' }}">{{ phone.number| mask: '(000) 000-0000' }}</a>
                     <ng-container *ngIf="phone.extension">, ext. {{ phone.extension }}</ng-container>
                   </div>
                   <div *ngIf="phone.primary" nz-col [nzSpan]="2">
