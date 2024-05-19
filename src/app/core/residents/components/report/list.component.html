@@ -13,7 +13,7 @@
 </ng-container>
 
 <ng-template #reportBody>
-  <nz-collapse>
+  <nz-collapse [nzNoAnimation]="true">
     <ng-container *ngFor="let group of reports|keyvalue:no_sort_order">
       <nz-collapse-panel *ngIf="group.value['show_in_' + this.mode + '_list']" [nzHeader]="group.value['title']">
         <ul class="reports-list">
