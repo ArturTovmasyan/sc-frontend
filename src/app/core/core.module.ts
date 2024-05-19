@@ -222,6 +222,8 @@ import {ListComponent as DashboardContactListComponent} from './leads/components
 import {ListComponent as DashboardChangeLogListComponent} from './leads/components/dashboard/change-log-list.component';
 import {ListComponent as LeadContactListComponent} from './leads/components/contact/list.component';
 import {FormComponent as LeadContactFormComponent} from './leads/components/contact/form/form.component';
+import {ViewComponent as LeadContactViewComponent} from './leads/components/contact/view/view.component';
+import {ListComponent as LeadContactActivityComponent} from './leads/components/contact/view/activity-list.component';
 import {FormComponent as ActivityStatusFormComponent} from './leads/components/activity-status/form/form.component';
 import {FormComponent as ActivityTypeFormComponent} from './leads/components/activity-type/form/form.component';
 import {FormComponent as ReferrerTypeFormComponent} from './leads/components/referrer-type/form/form.component';
@@ -511,6 +513,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     LeadContactListComponent,
     LeadContactFormComponent,
+    LeadContactViewComponent,
+    LeadContactActivityComponent,
 
     OrganizationListComponent,
     OrganizationFormComponent,

@@ -92,6 +92,7 @@ import {ListComponent as StageChangeReasonListComponent} from './leads/component
 import {ViewComponent as OutreachViewComponent} from './leads/components/outreach/view/view.component';
 import {ListComponent as OutreachListComponent} from './leads/components/outreach/list.component';
 import {ListComponent as OutreachTypeListComponent} from './leads/components/outreach-type/list.component';
+import {ViewComponent as LeadContactViewComponent} from './leads/components/contact/view/view.component';
 
 const routes: Routes = [
   {
@@ -126,6 +127,15 @@ const routes: Routes = [
             data: {
               title: 'Lead',
               permissions: ['persistence-lead-lead']
+            }
+          },
+          {
+            path: 'contact/:id',
+            component: LeadContactViewComponent,
+            canActivate: [AuthGuard],
+            data: {
+              title: 'Contact',
+              permissions: ['persistence-lead-contact']
             }
           },
           {

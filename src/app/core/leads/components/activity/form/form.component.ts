@@ -62,6 +62,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       organization_id: [null, Validators.compose([])],
 
       outreach_id: [null, Validators.compose([])],
+      contact_id: [null, Validators.compose([])],
     });
 
     this.form.get('facility_id').disable();

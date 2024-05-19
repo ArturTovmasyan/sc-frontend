@@ -34,5 +34,6 @@ export enum ActivityOwnerType {
   LEAD = 1,
   REFERRAL = 2,
   ORGANIZATION = 3,
-  OUTREACH = 4
+  OUTREACH = 4,
+  CONTACT = 5
 }
