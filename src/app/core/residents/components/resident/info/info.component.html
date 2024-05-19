@@ -6,16 +6,15 @@
           <div class="resident-photo">
             <img src="{{ resident.photo }}" class="img-thumbnail"
                  style="max-height: 25rem"
-                 alt="{{ residen|resident }}" title="{{ resident|resident }}" />
+                 alt="{{ residen|resident }}" title="{{ resident|resident }}"/>
             <div class="edit">
-              <button nz-button nzType="primary" (click)="show_modal_image_editor();"><i class="fas fa-pencil-alt"></i></button>
+              <button nz-button nzType="primary" (click)="show_modal_image_editor();"><i class="fas fa-pencil-alt"></i>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!--<app-resident-image-editor base64-url="{{ resident.photo }}"></app-resident-image-editor>-->
 
     <div nz-row>
       <div nz-col [nzSpan]="24">
@@ -47,25 +46,25 @@
       </div>
     </div>
 
-    <div nz-row [nzGutter]="4">
-      <div nz-col [nzSpan]="8"><strong>Date admitted:</strong></div>
-      <div nz-col [nzSpan]="16">{{ resident.option.date_admitted|date }}</div>
-    </div>
+    <ng-container *ngIf="contract" [ngSwitch]="contract.type">
+      <div nz-row [nzGutter]="4">
+        <div nz-col [nzSpan]="8"><strong>Date admitted:</strong></div>
+        <div nz-col [nzSpan]="16">{{ contract.start|date }}</div>
+      </div>
 
-    <div nz-row [nzGutter]="4">
-      <div nz-col [nzSpan]="8"><strong>State:</strong></div>
-      <div nz-col [nzSpan]="16">{{ resident.option.state }}</div>
-    </div>
+      <div nz-row [nzGutter]="4">
+        <div nz-col [nzSpan]="8"><strong>State:</strong></div>
+        <div nz-col [nzSpan]="16">{{ contract.option.state|contract_state }}</div>
+      </div>
 
-    <ng-container [ngSwitch]="resident.type">
       <template *ngSwitchCase="ResidentType.FACILITY"
-                [ngTemplateOutletContext]="{ option: resident.option }" [ngTemplateOutlet]="tplFacility">
+                [ngTemplateOutletContext]="{ option: contract.option }" [ngTemplateOutlet]="tplFacility">
       </template>
       <template *ngSwitchCase="ResidentType.APARTMENT"
-                [ngTemplateOutletContext]="{ option: resident.option }" [ngTemplateOutlet]="tplApartment">
+                [ngTemplateOutletContext]="{ option: contract.option }" [ngTemplateOutlet]="tplApartment">
       </template>
       <template *ngSwitchCase="ResidentType.REGION"
-                [ngTemplateOutletContext]="{ option: resident.option }" [ngTemplateOutlet]="tplRegion">
+                [ngTemplateOutletContext]="{ option: contract.option }" [ngTemplateOutlet]="tplRegion">
       </template>
     </ng-container>
 
@@ -82,6 +81,11 @@
         </button>
         <button nz-button nzType="danger" (click)="show_modal_remove(); $event.preventDefault();">
           <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
+        </button>
+      </nz-button-group>
+      <nz-button-group [nzSize]="'medium'" class="ml-auto">
+        <button nz-button nzType="default" (click)="show_modal_move(); $event.preventDefault();">
+          <i nz-icon type="swap"></i> {{ "grid.move"|translate }}
         </button>
       </nz-button-group>
     </div>
@@ -115,15 +119,15 @@
     <div nz-col [nzSpan]="16">{{ option.dining_room.title }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Room:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.room.number }}</div>
+    <div nz-col [nzSpan]="8"><strong>Room/Bed:</strong></div>
+    <div nz-col [nzSpan]="16">{{ option.bed.room.number }} ({{ option.bed.number }})</div>
   </div>
 </ng-template>
 
 <ng-template #tplApartment let-option="option">
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Room:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.room.number }}</div>
+    <div nz-col [nzSpan]="8"><strong>Room/Bed:</strong></div>
+    <div nz-col [nzSpan]="16">{{ option.bed.room.number }} ({{ option.bed.number }})</div>
   </div>
 </ng-template>
 

@@ -6,7 +6,7 @@ export class ValidationPatterns {
 
   public static FLOOR = /(^[1-9][0-9]*$)/;
 
-  public static RENT_AMOUNT = /(^0$)|(^[1-9][0-9]*$)|(^[0-9]+(\.[0-9]{1,2})$)/;
+  public static PAYMENT_AMOUNT = /(^0$)|(^[1-9][0-9]*$)|(^[0-9]+(\.[0-9]{1,2})$)/;
 
   public static GROUP_CAPACITY = /(^[1-9][0-9]*$)/;
   public static STATE_ABBR = /\b([A-Z]{2})\b/;

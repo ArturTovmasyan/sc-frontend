@@ -3,6 +3,7 @@
     "add": "Add",
     "edit": "Edit",
     "remove": "Remove",
+    "move": "Move/Transfer",
     "pdf": "PDF",
     "user-list": {
       "id": "ID",
@@ -136,6 +137,13 @@
       "space": "Space",
       "csz_str": "CSZ"
     },
+    "resident-list": {
+      "id": "ID",
+      "full_name": "Full Name",
+      "gender": "Gender",
+      "birthday": "Birthday",
+      "space": "Space"
+    },
     "facility-list": {
       "id": "ID",
       "name": "Name",
@@ -253,14 +261,21 @@
       "date": "Date",
       "notes": "Notes"
     },
-    "resident-rent-list": {
+    "resident-contract-list": {
       "id": "ID",
+      "period": "Period",
+      "start": "Start date",
+      "end": "End date",
       "type": "Type",
-      "notes": "Notes",
-      "start": "Start",
-      "end": "End",
-      "amount": "Amount",
+      "space": "Space"
+    },
+    "resident-payment-list": {
+      "id": "ID",
       "resident": "Resident",
+      "date": "Date",
+      "amount": "Amount",
+      "notes": "Notes",
+      "sources": "Sources",
       "space": "Space"
     },
     "event-definition-list": {

@@ -21,4 +21,19 @@ export class ResidentService extends GridService<Resident> {
   public put_photo(data: any): Observable<any> {
     return this.http.put<Message>(this.SEVICE_URL_BASE + `/${data.id}/photo`, data);
   }
+
+  public move(data: any): Observable<any> { // TODO(haykg): review when backend will be ready
+    const request_data = {id: data.id};
+
+    if (data.group_id) {
+      request_data['group_type'] = data.group_type;
+      request_data['group_id'] = data.group_id;
+    }
+
+    if (data.bed_id) {
+      request_data['bed_id'] = data.bed_id;
+    }
+
+    return this.http.put<Message>(this.SEVICE_URL_BASE + `/${data.id}/move`, request_data);
+  }
 }

@@ -6,6 +6,7 @@ import {FormComponent} from './form/form.component';
 import {ResidentAssessmentService} from '../../../services/resident-assessment.service';
 import {AssessmentReportType, ResidentAssessment} from '../../../models/resident-assessment';
 import {ActivatedRoute} from '@angular/router';
+import {ReportService} from '../../../services/report.service';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
@@ -13,7 +14,7 @@ import {ActivatedRoute} from '@angular/router';
   providers: [ResidentAssessmentService]
 })
 export class ListComponent extends GridComponent<ResidentAssessment, ResidentAssessmentService> implements OnInit {
-  constructor(service$: ResidentAssessmentService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute) {
+  constructor(service$: ResidentAssessmentService, title$: TitleService, modal$: NzModalService, private route$: ActivatedRoute, private report$: ReportService) {
     super(service$, title$, modal$);
 
     this.card = false;
@@ -37,8 +38,9 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
         faIcon: 'far fa-file',
         click: (ids: number[]) => {
           this.loading = true;
-          this.service$.report(ids[0], AssessmentReportType.FILLED, () => {
+          this.report$.report('assessment', 'blank', 'pdf', {id: ids[0]}, () => {
             this.loading = false;
+          }, (error) => {
           });
         }
       }
@@ -53,8 +55,9 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
         faIcon: 'far fa-file-alt',
         click: (ids: number[]) => {
           this.loading = true;
-          this.service$.report(ids[0], AssessmentReportType.BLANK, () => {
+          this.report$.report('assessment', 'filled', 'pdf', {id: ids[0]}, () => {
             this.loading = false;
+          }, (error) => {
           });
         }
       }

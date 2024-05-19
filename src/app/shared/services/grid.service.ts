@@ -12,8 +12,17 @@ export class GridService<T extends IdInterface> {
   protected constructor(protected http: HttpClient) {
   }
 
-  all(): Observable<T[]> {
-    return this.http.get<T[]>(this.SEVICE_URL_BASE);
+  all(params?: { key: string, value: string }[]): Observable<T[]> {
+    let query = new HttpParams();
+    if (params) {
+      params.forEach(param => {
+        query = query.append(param.key, param.value);
+      });
+    }
+
+    return this.http.get<T[]>(this.SEVICE_URL_BASE, {
+      params: query
+    });
   }
 
   public options(): Observable<any> {

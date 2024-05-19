@@ -56,7 +56,7 @@ export class AbstractForm {
         let params = control.errors[error];
         return {
           error: error,
-          params: params === true || params == {} ? null : params
+          params: params === true || params === {} ? null : params
         };
       });
   }
@@ -94,6 +94,8 @@ export class AbstractForm {
 
     fields.forEach((field) => {
       const control = this.findFieldControl(field);
+
+      control.markAsDirty();
       control.setErrors({backend: data[field]});
     });
 

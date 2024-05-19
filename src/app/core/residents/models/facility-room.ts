@@ -1,5 +1,5 @@
 import {Facility} from './facility';
-import {RoomType} from './room-type.enum';
+import {Resident} from './resident';
 
 export class FacilityRoom implements IdInterface {
   id: number;
@@ -8,9 +8,22 @@ export class FacilityRoom implements IdInterface {
   floor: number;
 
   disabled: boolean;
-  shared: boolean;
   notes: string;
 
-  type: RoomType;
+  beds: FacilityBed[];
+
   facility: Facility;
 }
+
+export class FacilityBed implements IdInterface {
+  id: number;
+
+  number: string;
+
+  disabled: boolean;
+
+  resident: Resident;
+
+  resident_id?: number;
+}
+

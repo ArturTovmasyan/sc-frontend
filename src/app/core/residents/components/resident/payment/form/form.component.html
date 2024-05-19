@@ -1,33 +1,10 @@
 ﻿<form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type" nzRequired>Type</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="type">
-        <ng-container *ngFor="let type of types">
-          <nz-option [nzLabel]="(type.name)|translate" [nzValue]="type.id"></nz-option>
-        </ng-container>
-      </nz-select>
-      <nz-form-explain *ngIf="hasErrors('type')">
-        <app-field-errors [errors]="fieldErrors('type')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="start" nzRequired>Start Date</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('start')?'error':null">
-      <nz-date-picker formControlName="start"></nz-date-picker>
-      <nz-form-explain *ngIf="hasErrors('start')">
-        <app-field-errors [errors]="fieldErrors('start')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="end" nzRequired>End Date</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('end')?'error':null">
-      <nz-date-picker formControlName="end"></nz-date-picker>
-      <nz-form-explain *ngIf="hasErrors('end')">
-        <app-field-errors [errors]="fieldErrors('end')"></app-field-errors>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+      <nz-date-picker formControlName="date"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date')">
+        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

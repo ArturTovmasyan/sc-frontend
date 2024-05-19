@@ -37,32 +37,25 @@ import {ListComponent as FacilityRoomListComponent} from './residents/components
 import {ListComponent as FacilityDiningRoomListComponent} from './residents/components/facility-dining-room/list.component';
 import {ListComponent as RegionListComponent} from './residents/components/region/list.component';
 
-import {ResidentComponent} from './residents/components/resident/resident.component';
-import {InfoComponent as ResidentInfoComponent} from './residents/components/resident/info/info.component';
-import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
-import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
-import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
-import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
-import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
-
-import {HistoryComponent as ResidentHistoryComponent} from './residents/components/resident/history/history.component';
-
-// import {ListComponent as ResidentDiagnoseListComponent} from './residents/components/diagnose/list.component';
-// import {ListComponent as ResidentAllergyMedicationListComponent} from './residents/components/allergy-medication/list.component';
-// import {ListComponent as ResidentAllergyOtherListComponent} from './residents/components/allergy-other/list.component';
-// import {ListComponent as ResidentMedicalHistoryListComponent} from './residents/components/medical-history/list.component';
-import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
-import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
-// import {ListComponent as ResidentReportListComponent} from './residents/components/resident/report/list.component';
-
-
 import {ListComponent as PaymentSourceListComponent} from './residents/components/payment-source/list.component';
 import {ListComponent as EventDefinitionListComponent} from './residents/components/event-definition/list.component';
-
 import {ListComponent as AssessmentCategoryListComponent} from './residents/components/assessment/category/list.component';
 import {ListComponent as AssessmentFormListComponent} from './residents/components/assessment/form/list.component';
 import {ListComponent as AssessmentCareLevelListComponent} from './residents/components/assessment/care-level/list.component';
 import {ListComponent as AssessmentCareLevelGroupListComponent} from './residents/components/assessment/care-level-group/list.component';
+
+import {ListComponent as ResidentListComponent} from './residents/components/resident/list.component';
+import {ViewComponent as ResidentViewComponent} from './residents/components/resident/view/view.component';
+import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
+import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
+import {ListComponent as ResidentContractListComponent} from './residents/components/resident/contract/list.component';
+import {ListComponent as ResidentPaymentListComponent} from './residents/components/resident/payment/list.component';
+import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
+import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
+import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
+import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
+import {ListComponent as ResidentReportListComponent} from './residents/components/resident/report/list.component';
+import {HistoryComponent as ResidentHistoryComponent} from './residents/components/resident/history/history.component';
 
 
 const routes: Routes = [
@@ -82,6 +75,14 @@ const routes: Routes = [
       {
         path: 'roles', component: RoleListComponent, data: {
           title: 'Roles',
+          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+        },
+        canActivate: [AuthGuard]
+      },
+
+      {
+        path: 'residents', component: ResidentListComponent, data: {
+          title: 'Residents',
           roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
         },
         canActivate: [AuthGuard]
@@ -298,7 +299,7 @@ const routes: Routes = [
       },
       {
         path: 'resident/:id',
-        component: ResidentComponent,
+        component: ResidentViewComponent,
         canActivate: [AuthGuard],
         data: {title: 'Resident', roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']},
         children: [
@@ -325,12 +326,23 @@ const routes: Routes = [
             canActivate: [AuthGuard]
           },
           {
-            path: 'rent',
-            component: ResidentRentListComponent,
+            path: 'contracts',
+            component: ResidentContractListComponent,
             outlet: 'resident-details',
             pathMatch: 'full',
             data: {
-              title: 'Room Rent',
+              title: 'Contracts',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'payments',
+            component: ResidentPaymentListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Payments',
               roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
             },
             canActivate: [AuthGuard]
@@ -392,17 +404,17 @@ const routes: Routes = [
             },
             canActivate: [AuthGuard]
           },
-          // {
-          //   path: 'reports',
-          //   component: ResidentReportListComponent,
-          //   outlet: 'resident-details',
-          //   pathMatch: 'full',
-          //   data: {
-          //     title: 'Reports',
-          //     roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
-          //   },
-          //   canActivate: [AuthGuard]
-          // },
+          {
+            path: 'reports',
+            component: ResidentReportListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Reports',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+            },
+            canActivate: [AuthGuard]
+          },
 
         ]
       }

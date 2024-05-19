@@ -95,9 +95,11 @@ import {FormComponent as RegionFormComponent} from './residents/components/regio
 
 import {ResidentSelectorComponent} from './residents/components/resident-selector/resident-selector.component';
 
-import {ResidentComponent} from './residents/components/resident/resident.component';
-import {InfoComponent as ResidentInfoComponent} from './residents/components/resident/info/info.component';
-import {FormComponent as ResidentFormComponent} from './residents/components/resident/info/form/form.component';
+import {ListComponent        as ResidentListComponent} from './residents/components/resident/list.component';
+import {FormComponent        as ResidentFormComponent} from './residents/components/resident/form/form.component';
+import {ViewComponent        as ResidentViewComponent} from './residents/components/resident/view/view.component';
+import {InfoComponent        as ResidentInfoComponent} from './residents/components/resident/info/info.component';
+import {FormComponent        as ResidentMoveComponent} from './residents/components/resident/move/form.component';
 import {ImageEditorComponent as ResidentImageEditorComponent} from './residents/components/resident/info/img-editor/image-editor.component';
 
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
@@ -129,15 +131,17 @@ import {FormComponent as ResidentDietFormComponent} from './residents/components
 import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
 import {FormComponent as ResidentEventFormComponent} from './residents/components/resident/event/form/form.component';
 
-import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
-import {FormComponent as ResidentRentFormComponent} from './residents/components/resident/rent/form/form.component';
+import {ListComponent as ResidentContractListComponent} from './residents/components/resident/contract/list.component';
+import {FormComponent as ResidentContractFormComponent} from './residents/components/resident/contract/form/form.component';
+
+import {ListComponent as ResidentPaymentListComponent} from './residents/components/resident/payment/list.component';
+import {FormComponent as ResidentPaymentFormComponent} from './residents/components/resident/payment/form/form.component';
 
 import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
 import {FormComponent as ResidentAssessmentFormComponent} from './residents/components/resident/assessment/form/form.component';
 
-// import {ListComponent as ResidentReportListComponent} from './residents/components/resident/report/list.component';
-// import {FormComponent as ResidentReportFormComponent} from './residents/components/resident/report/form/form.component';
-
+import {ListComponent as ResidentReportListComponent} from './residents/components/resident/report/list.component';
+import {FormComponent as ResidentReportFormComponent} from './residents/components/resident/report/form/form.component';
 
 import {ListComponent as PaymentSourceListComponent} from './residents/components/payment-source/list.component';
 import {FormComponent as PaymentSourceFormComponent} from './residents/components/payment-source/form/form.component';
@@ -158,8 +162,6 @@ import {FormComponent as AssessmentCareLevelGroupFormComponent} from './resident
 // import {FormComponent as FormComponent} from './residents/components//form/form.component';
 
 
-
-
 import {CityStateZipPipe} from './residents/pipes/csz.pipe';
 import {PhysicianPipe} from './residents/pipes/physician.pipe';
 import {ResidentPipe} from './residents/pipes/resident.pipe';
@@ -173,6 +175,7 @@ import {LyButtonModule} from '@alyle/ui/button';
 import {LyIconModule} from '@alyle/ui/icon';
 import {LY_THEME, LyThemeModule} from '@alyle/ui';
 import {MinimaLight} from '@alyle/ui/themes/minima';
+import {ContractStatePipe} from './residents/pipes/contract-state.pipe';
 
 registerLocaleData(en);
 
@@ -184,6 +187,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [
     GenderPipe,
     PhoneTypePipe,
+    ContractStatePipe,
     CityStateZipPipe,
     PhysicianPipe,
     ResidentPipe,
@@ -271,10 +275,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentSelectorComponent,
 
-    ResidentComponent,
-    ResidentInfoComponent,
+    ResidentListComponent,
     ResidentFormComponent,
+    ResidentViewComponent,
+    ResidentInfoComponent,
     ResidentImageEditorComponent,
+    ResidentMoveComponent,
 
     ResidentDietListComponent,
     ResidentDietFormComponent,
@@ -288,8 +294,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentEventListComponent,
     ResidentEventFormComponent,
 
-    ResidentRentListComponent,
-    ResidentRentFormComponent,
+    ResidentContractListComponent,
+    ResidentContractFormComponent,
+
+    ResidentPaymentListComponent,
+    ResidentPaymentFormComponent,
 
     ResidentPhysicianListComponent,
     ResidentPhysicianFormComponent,
@@ -311,8 +320,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentAssessmentListComponent,
     ResidentAssessmentFormComponent,
 
-    // ResidentReportListComponent,
-    // ResidentReportFormComponent,
+    ResidentReportListComponent,
+    ResidentReportFormComponent,
 
     PaymentSourceListComponent,
     PaymentSourceFormComponent,
@@ -372,21 +381,22 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentFormComponent,
     ResidentImageEditorComponent,
+    ResidentMoveComponent,
 
     ResidentDietFormComponent,
     ResidentMedicationFormComponent,
 
     ResidentResponsiblePersonFormComponent,
     ResidentEventFormComponent,
-    ResidentRentFormComponent,
+    ResidentContractFormComponent,
+    ResidentPaymentFormComponent,
     ResidentPhysicianFormComponent,
     ResidentDiagnoseFormComponent,
     ResidentAllergyMedicationFormComponent,
     ResidentAllergyOtherFormComponent,
     ResidentMedicalHistoryFormComponent,
     ResidentAssessmentFormComponent,
-    // ResidentReportFormComponent,
-
+    ResidentReportFormComponent,
 
     PaymentSourceFormComponent,
     EventDefinitionFormComponent,

@@ -1,13 +1,13 @@
 import {ActivatedRoute} from '@angular/router';
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {ResidentService} from '../../services/resident.service';
-import {Resident} from '../../models/resident';
-import {TitleService} from '../../../services/title.service';
+import {ResidentService} from '../../../services/resident.service';
+import {Resident} from '../../../models/resident';
+import {TitleService} from '../../../../services/title.service';
 
 @Component({
-  templateUrl: './resident.component.html'
+  templateUrl: './view.component.html'
 })
-export class ResidentComponent implements OnInit {
+export class ViewComponent implements OnInit {
   public title: string = null;
 
   resident: Resident;

@@ -58,56 +58,34 @@ $sc-font-size-base: 14px;
   &-admin:before {
     content: "\61";
   }
-
-  &-assessment:before {
+  &-assessments:before {
     content: "\62";
   }
-
-  &-dietary:before {
+  &-contracts:before {
     content: "\63";
   }
-
-  &-events:before {
+  &-dietary:before {
     content: "\64";
   }
-
-  &-leads:before {
+  &-events:before {
     content: "\65";
   }
-
   &-medical-history:before {
     content: "\66";
   }
-
   &-medications:before {
     content: "\67";
   }
-
-  &-physician:before {
+  &-payments:before {
     content: "\68";
   }
-
-  &-rent:before {
+  &-physicians:before {
     content: "\69";
   }
-
   &-reports:before {
     content: "\6a";
   }
-
   &-resident:before {
     content: "\6b";
-  }
-
-  &-responsible-persons:before {
-    content: "\6c";
-  }
-
-  &-staffing:before {
-    content: "\6d";
-  }
-
-  &-transportation:before {
-    content: "\6e";
   }
 }

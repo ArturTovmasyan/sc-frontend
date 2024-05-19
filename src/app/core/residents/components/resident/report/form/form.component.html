@@ -1,0 +1,83 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item *ngIf="show.date">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+      <nz-date-picker formControlName="date" [nzFormat]="format_date"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date')">
+        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="show.date_from">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date_from" nzRequired>Date from</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date_from')?'error':null">
+      <nz-date-picker formControlName="date_from" [nzFormat]="format_date_from"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date_from')">
+        <app-field-errors [errors]="fieldErrors('date_from')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="show.date_to">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date_to" nzRequired>Date to</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date_to')?'error':null">
+      <nz-date-picker formControlName="date_to" [nzFormat]="format_date_to"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date_to')">
+        <app-field-errors [errors]="fieldErrors('date_to')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="show.group">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group" nzRequired>Group</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group')?'error':null" class="sc-select-all">
+      <nz-select nzShowSearch formControlName="group">
+        <nz-option-group nzLabel="FFC - Facilities">
+          <ng-container *ngFor="let facility of facilities">
+            <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
+          </ng-container>
+        </nz-option-group>
+        <nz-option-group nzLabel="IHC - Regions">
+          <ng-container *ngFor="let region of regions">
+            <nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>
+          </ng-container>
+        </nz-option-group>
+        <nz-option-group nzLabel="IL - Apartments">
+          <ng-container *ngFor="let apartment of apartments">
+            <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
+          </ng-container>
+        </nz-option-group>
+      </nz-select>
+      <label *ngIf="show.group_all" nz-checkbox formControlName="group_all">All</label>
+      <nz-form-explain *ngIf="hasErrors('group')">
+        <app-field-errors [errors]="fieldErrors('group')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="show.resident">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="resident_id" nzRequired>Resident</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('resident_id')?'error':null" class="sc-select-all">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="resident_id">
+        <ng-container *ngFor="let resident of residents">
+          <nz-option [nzLabel]="resident|resident" [nzValue]="resident.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <label *ngIf="show.resident_all" nz-checkbox formControlName="resident_all">All</label>
+      <nz-form-explain *ngIf="hasErrors('resident_id')">
+        <app-field-errors [errors]="fieldErrors('resident_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

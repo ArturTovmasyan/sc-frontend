@@ -10,14 +10,19 @@
     <i class="seniorcare seniorcare-3x seniorcare-events"></i>
   </a>
   <a nz-button [routerLinkActiveOptions]="{ __cdh__: resident_id }" [routerLinkActive]="['active-link']"
-     [routerLink]="routeInfo('rent')"
-     title="Rent">
-    <i class="seniorcare seniorcare-3x seniorcare-rent"></i>
+     [routerLink]="routeInfo('contracts')"
+     title="Contracts">
+    <i class="seniorcare seniorcare-3x seniorcare-contracts"></i>
+  </a>
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: resident_id }" [routerLinkActive]="['active-link']"
+     [routerLink]="routeInfo('payments')"
+     title="Payments">
+    <i class="seniorcare seniorcare-3x seniorcare-payments"></i>
   </a>
   <a nz-button [routerLinkActiveOptions]="{ __cdh__: resident_id }" [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('physicians')"
      title="Physicians">
-    <i class="seniorcare seniorcare-3x seniorcare-physician"></i>
+    <i class="seniorcare seniorcare-3x seniorcare-physicians"></i>
   </a>
   <a nz-button [routerLinkActiveOptions]="{ __cdh__: resident_id }" [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('medications')"
@@ -37,11 +42,10 @@
   <a nz-button [routerLinkActiveOptions]="{ __cdh__: resident_id }" [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('assessments')"
      title="Assessments">
-    <i class="seniorcare seniorcare-3x seniorcare-assessment"></i>
+    <i class="seniorcare seniorcare-3x seniorcare-assessments"></i>
   </a>
   <a nz-button [routerLinkActiveOptions]="{ __cdh__: resident_id }" [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('reports')"
-     [nzType]="'dashed'"
      title="Reports">
     <i class="seniorcare seniorcare-3x seniorcare-reports"></i>
   </a>

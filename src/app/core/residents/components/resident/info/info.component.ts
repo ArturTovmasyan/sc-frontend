@@ -6,9 +6,14 @@ import {Resident} from '../../../models/resident';
 import {ResidentType} from '../../../models/resident-type.enum';
 import {Observable} from 'rxjs';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
-import {FormComponent} from './form/form.component';
+import {FormComponent} from '../form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
 import {ImageEditorComponent} from './img-editor/image-editor.component';
+import {ResidentContractService} from '../../../services/resident-contract.service';
+import {ResidentContract} from '../../../models/resident-contract';
+import {FacilityRoom} from '../../../models/facility-room';
+import {FormComponent as ResidentMoveComponent} from '../move/form.component';
+import {FormArray} from '@angular/forms';
 
 @Component({
   selector: 'app-resident-info',
@@ -19,17 +24,18 @@ export class InfoComponent implements OnInit {
   ResidentType = ResidentType;
 
   resident: Resident;
+  contract: ResidentContract;
 
   today: Date = new Date();
 
   loading: boolean;
   protected loading_edit_modal: boolean = false;
 
-
   resident_id: number;
 
   constructor(private el: ElementRef,
               private resident$: ResidentService,
+              private contract$: ResidentContractService,
               protected modal$: NzModalService,
               private route$: ActivatedRoute) {
   }
@@ -44,6 +50,12 @@ export class InfoComponent implements OnInit {
         this.loading = false;
         if (res) {
           this.resident = res;
+        }
+      });
+
+      this.contract$.active(this.resident_id).pipe(first()).subscribe(res => {
+        if (res) {
+          this.contract = res;
         }
       });
     });
@@ -179,9 +191,6 @@ export class InfoComponent implements OnInit {
       if (component instanceof FormComponent) {
         const form = component.formObject;
 
-        component.type = this.resident.type;
-        component.init_subform();
-
         if (result !== null) {
           component.loaded.subscribe(v => {
             if (v) {
@@ -215,5 +224,89 @@ export class InfoComponent implements OnInit {
         });
       }
     });
+  }
+
+
+  show_modal_move(): void {
+    let valid = false;
+    let loading = false;
+
+    const modal = this.modal$.create({
+      nzClosable: false,
+      nzMaskClosable: false,
+      nzTitle: null,
+      nzContent: ResidentMoveComponent,
+      nzFooter: [
+        {
+          label: 'Cancel',
+          onClick: () => {
+            modal.close();
+          }
+        },
+        {
+          type: 'primary',
+          label: 'Move',
+          loading: () => loading,
+          disabled: () => !valid,
+          onClick: () => {
+            loading = true;
+
+            const component = <AbstractForm>modal.getContentComponent();
+            const form_data = component.formObject.value;
+            component.submitted = true;
+            component.before_submit();
+
+            this.resident$.move(form_data).subscribe(
+              res => {
+                this.resident$.get(this.resident_id).pipe(first()).subscribe(next => {
+                  this.loading = false;
+                  if (next) {
+                    this.resident = next;
+                  }
+                  modal.close();
+                });
+              },
+              error => {
+                loading = false;
+
+                component.handleSubmitError(error);
+                component.postSubmit(null);
+                // console.error(error);
+              });
+          }
+        }
+      ]
+    });
+
+    modal.afterOpen.subscribe(() => {
+      const component = <ResidentMoveComponent>modal.getContentComponent();
+
+      component.resident = this.resident;
+      component.current_room = null;
+      component.show_group = true;
+
+      if (component instanceof AbstractForm) {
+        const form = component.formObject;
+
+        component.loaded.subscribe(v => {
+          if (v) {
+            component.before_set_form_data();
+            component.set_form_data(component, form, {
+              id: this.resident.id,
+              group_type: null,
+              group_id: null,
+              bed_id: null
+            });
+            component.after_set_form_data();
+          }
+        });
+
+        valid = form.valid;
+        form.valueChanges.subscribe(val => {
+          valid = form.valid;
+        });
+      }
+    });
+
   }
 }

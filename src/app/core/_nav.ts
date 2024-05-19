@@ -16,6 +16,11 @@ export const navItems = [
     name: 'Space???',
   },
   {
+    url: '/residents',
+    name: 'Residents',
+    icon: 'icon-people',
+  },
+  {
     url: '/facilities',
     name: 'Facilities',
     icon: 'icon-people',

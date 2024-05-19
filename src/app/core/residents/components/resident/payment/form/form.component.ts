@@ -1,13 +1,11 @@
-﻿import {Component, OnInit, ViewChild} from '@angular/core';
+﻿import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {PaymentSource} from '../../../../models/payment-source';
 import {PaymentSourceService} from '../../../../services/payment-source.service';
 import {ActivatedRoute} from '@angular/router';
-import {RentType} from '../../../../models/rent-type.enum';
 import {ValidationPatterns} from '../../../../../../shared/constants/validation.patterns';
-import {RoomType} from '../../../../models/room-type.enum';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -16,11 +14,9 @@ export class FormComponent extends AbstractForm implements OnInit {
   source_selector: number = null;
 
   payment_sources: PaymentSource[];
-  types: { id: RentType, name: string }[];
   resident_id: number;
 
   sources: { id: number, amount: number }[] = [];
-
 
   constructor(private formBuilder: FormBuilder, private payment_source$: PaymentSourceService, private route$: ActivatedRoute) {
     super();
@@ -32,12 +28,10 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
 
-      type: ['', Validators.compose([Validators.required])],
-      notes: ['', Validators.compose([Validators.max(512)])],
-      amount: [0, Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.RENT_AMOUNT)])],
+      date: [new Date(), Validators.required],
 
-      start: [new Date(), Validators.required],
-      end: [new Date()],
+      notes: ['', Validators.compose([Validators.max(512)])],
+      amount: [0, Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.PAYMENT_AMOUNT)])],
 
       source: this.formBuilder.array([]),
 
@@ -53,12 +47,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
     });
 
-    this.types = [
-      {id: RentType.MONTHLY, name: 'Monthly'},
-      {id: RentType.WEEKLY, name: 'Weekly'},
-      {id: RentType.DAILY, name: 'Daily'},
-      {id: RentType.HOURLY, name: 'Hourly'}
-    ];
   }
 
   add_source() {
