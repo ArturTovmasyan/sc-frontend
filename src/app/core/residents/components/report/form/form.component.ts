@@ -11,6 +11,8 @@ import {ResidentSelectorService} from '../../../services/resident-selector.servi
 import {GroupHelper} from '../../../helper/group-helper';
 import {ResidentAdmissionService} from '../../../services/resident-admission.service';
 import {DateHelper} from '../../../../../shared/helpers/date-helper';
+import {ResidentAssessment} from '../../../models/resident-assessment';
+import {ResidentAssessmentService} from '../../../services/resident-assessment.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -21,6 +23,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   protected group_helper: GroupHelper;
 
   residents: Resident[];
+  assessments: ResidentAssessment[];
 
   format_date: string = 'MM/dd/yyyy';
   format_date_from: string = 'MM/yyyy';
@@ -31,7 +34,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   show: {
     group: boolean, group_all: boolean,
     resident: boolean, resident_all: boolean,
-    date: boolean, date_from: boolean, date_to: boolean, discontinued: boolean
+    date: boolean, date_from: boolean, date_to: boolean, discontinued: boolean,
+    assessment: boolean
   } = {
     group: false,
     group_all: false,
@@ -40,7 +44,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     date: false,
     date_from: false,
     date_to: false,
-    discontinued: false
+    discontinued: false,
+    assessment: false
   };
 
   private static php2js_date_format(format: string) {
@@ -58,6 +63,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private facility$: FacilityService,
     private apartment$: ApartmentService,
     private region$: RegionService,
+    private residentAssessment$: ResidentAssessmentService,
     private residentAdmission$: ResidentAdmissionService,
     private residentSelector$: ResidentSelectorService,
   ) {
@@ -75,6 +81,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       resident_id: [null, Validators.required],
       resident_all: [false, Validators.required],
+
+      assessment_id: [null, Validators.required],
 
       date: [new Date(), Validators.required],
 
@@ -103,6 +111,16 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'list_resident_assessment':
+        this.$subscriptions[key] = this.residentAssessment$.all([{
+          key: 'resident_id',
+          value: params.resident_id
+        }]).pipe(first()).subscribe(res => {
+          if (res) {
+            this.assessments = res;
+          }
+        });
+        break;
       case 'list_facility':
         this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
           if (res) {
@@ -152,6 +170,8 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {
             this.form.get('resident_id').setValue(next);
+
+            this.subscribe('list_resident_assessment', {resident_id: next});
           }
         });
         break;
@@ -189,6 +209,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
       case 'vc_group_all':
         this.$subscriptions[key] = this.form.get('group_all').valueChanges.subscribe(next => {
+          this.form.get('group').setValue(GroupType.FACILITY); // TODO: review this when enabling apartment and region
           if (next) {
             this.form.get('group_id').disable();
             this.form.get('group_list').disable();
@@ -205,11 +226,20 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   public init_report_parameters(title: string, parameters: any) {
     this.title = title;
+
+    if (parameters.hasOwnProperty('assessment')) {
+      this.show.assessment = true;
+      this.form.get('assessment_id').enable();
+    }
+
     if (parameters.hasOwnProperty('resident')) {
       const parameter_config = parameters['resident'];
       this.show.resident = true;
       this.form.get('resident_id').enable();
       this.form.get('resident_id').setValue(this.residentSelector$.resident.value);
+
+      this.subscribe('list_resident_assessment', {resident_id: this.residentSelector$.resident.value});
+
       if (parameter_config.select_all) {
         this.show.resident_all = true;
         this.form.get('resident_all').enable();
@@ -265,9 +295,11 @@ export class FormComponent extends AbstractForm implements OnInit {
   before_set_form_data(data: any, previous_data?: any): void {
     super.before_set_form_data(data, previous_data);
 
-    data.date = DateHelper.convertUTC(data.date);
-    data.date_from = DateHelper.convertUTC(data.date_from);
-    data.date_to = DateHelper.convertUTC(data.date_to);
+    if (this.edit_mode) {
+      data.date = DateHelper.convertUTC(data.date);
+      data.date_from = DateHelper.convertUTC(data.date_from);
+      data.date_to = DateHelper.convertUTC(data.date_to);
+    }
   }
 
 }

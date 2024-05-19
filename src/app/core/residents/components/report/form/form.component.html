@@ -5,7 +5,8 @@
   <nz-form-item *ngIf="show.date">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
-      <nz-date-picker formControlName="date" [nzFormat]="format_date"></nz-date-picker>
+      <nz-date-picker *ngIf="format_date === 'MM/dd/yyyy'" formControlName="date" [nzFormat]="format_date"></nz-date-picker>
+      <nz-month-picker *ngIf="format_date === 'MM/yyyy'" formControlName="date" [nzFormat]="format_date"></nz-month-picker>
       <nz-form-explain *ngIf="hasErrors('date')">
         <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
       </nz-form-explain>
@@ -47,7 +48,8 @@
           Apartment
         </ng-container>
         <ng-container *ngSwitchDefault>
-          Group
+<!--          Group-->
+          Facility
         </ng-container>
       </ng-container>
     </nz-form-label>
@@ -91,6 +93,20 @@
       <label *ngIf="show.group_all" nz-checkbox formControlName="group_all">All</label>
       <nz-form-explain *ngIf="hasErrors('group_id')">
         <app-field-errors [errors]="fieldErrors('group_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="show.assessment">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="assessment_id" nzRequired>Assessment</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('assessment_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="assessment_id">
+        <ng-container *ngFor="let assessment of assessments">
+          <nz-option [nzLabel]="assessment.form.title" [nzValue]="assessment.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('assessment_id')">
+        <app-field-errors [errors]="fieldErrors('assessment_id')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
