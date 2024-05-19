@@ -547,7 +547,7 @@
         "all": "All",
         "report": "Report",
         "spam": "Show Spam",
-        "not_spam": "Show Not Spam"
+        "not_spam": "Hide Spam"
       },
       "id": "ID",
       "date": "Date",
