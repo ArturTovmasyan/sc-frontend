@@ -129,8 +129,8 @@
   <nz-form-item *ngIf="form.get('amount').enabled">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="amount" nzRequired>Amount</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('amount')?'error':null">
-      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Amount"
-                       formControlName="amount"></nz-input-number>
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" [nzFormatter]="formatterDollar"
+                       nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
       <nz-form-explain *ngIf="hasErrors('amount')">
         <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
       </nz-form-explain>

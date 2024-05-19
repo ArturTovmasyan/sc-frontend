@@ -18,6 +18,7 @@ import {FormComponent as ActivityStatusFormComponent} from '../../activity-statu
 import {FormComponent as ContactFormComponent} from '../../contact/form/form.component';
 import {Contact} from '../../../models/contact';
 import {ContactService} from '../../../services/contact.service';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -28,6 +29,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   users: User[];
   facilities: Facility[];
   contacts: Contact[];
+
+  formatterDollar = (value: number) => (new CurrencyPipe('en-US')).transform(value, 'USD', 'symbol-narrow', '1.2-2');
 
   constructor(
     protected modal$: ModalFormService,
