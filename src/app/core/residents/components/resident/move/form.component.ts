@@ -10,7 +10,7 @@ import {ResidentService} from '../../../services/resident.service';
 import {Resident} from '../../../models/resident';
 import {Apartment} from '../../../models/apartment';
 import {Region} from '../../../models/region';
-import {ApartmentRoom} from '../../../models/apartment-room';
+import {ApartmentBed, ApartmentRoom} from '../../../models/apartment-room';
 import {ApartmentService} from '../../../services/apartment.service';
 import {RegionService} from '../../../services/region.service';
 import {ResidentType} from '../../../models/resident-type.enum';
@@ -32,7 +32,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   private _show_group: boolean = false;
   private _show_bed: boolean = false;
 
-  private _current_room: { id: number, number: string, beds: FacilityBed[] };
+  private _current_room: { id: number, number: string, beds: ApartmentBed[]|FacilityBed[] };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,11 +54,11 @@ export class FormComponent extends AbstractForm implements OnInit {
     this._resident = value;
   }
 
-  get current_room(): { id: number, number: string, beds: FacilityBed[] } {
+  get current_room(): { id: number, number: string, beds: ApartmentBed[]|FacilityBed[] } {
     return this._current_room;
   }
 
-  set current_room(value: { id: number, number: string, beds: FacilityBed[] }) {
+  set current_room(value: { id: number, number: string, beds: ApartmentBed[]|FacilityBed[] }) {
     this._current_room = value;
   }
 
@@ -143,7 +143,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form.get('bed_id').reset(null);
     this.rooms = [];
 
-    let service: GridService<FacilityRoom | ApartmentRoom>;
+    let service: any; // FacilityRoomService|ApartmentRoomService
     let key: string;
 
     switch (group_type) {

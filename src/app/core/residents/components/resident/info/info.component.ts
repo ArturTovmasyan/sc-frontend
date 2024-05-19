@@ -10,8 +10,9 @@ import {FormComponent} from '../form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
 import {ImageEditorComponent} from './img-editor/image-editor.component';
 import {ResidentContractService} from '../../../services/resident-contract.service';
-import {ResidentContract} from '../../../models/resident-contract';
+import {ContractOptionApartment, ContractOptionFacility, ContractOptionRegion, ResidentContract} from '../../../models/resident-contract';
 import {FormComponent as ResidentMoveComponent} from '../move/form.component';
+import {ResidentSelectorService} from '../../../services/resident-selector.service';
 
 @Component({
   selector: 'app-resident-info',
@@ -31,11 +32,14 @@ export class InfoComponent implements OnInit {
 
   resident_id: number;
 
-  constructor(private el: ElementRef,
-              private resident$: ResidentService,
-              private contract$: ResidentContractService,
-              protected modal$: NzModalService,
-              private route$: ActivatedRoute) {
+  constructor(
+    private el: ElementRef,
+    private resident$: ResidentService,
+    private contract$: ResidentContractService,
+    protected modal$: NzModalService,
+    private route$: ActivatedRoute,
+    private residentSelector$: ResidentSelectorService
+  ) {
   }
 
   ngOnInit(): void {
@@ -48,12 +52,36 @@ export class InfoComponent implements OnInit {
         this.loading = false;
         if (res) {
           this.resident = res;
+          this.residentSelector$.resident.next(this.resident.id);
         }
       });
 
       this.contract$.active(this.resident_id).pipe(first()).subscribe(res => {
-        if (res) {
+        if (res != null && !Array.isArray(res)) {
           this.contract = res;
+
+          this.residentSelector$.type.next(this.contract.type);
+
+          let group_id = null;
+
+          switch (this.contract.type) {
+            case ResidentType.FACILITY:
+              group_id = (<ContractOptionFacility>this.contract.option).bed.room.facility.id;
+              break;
+            case ResidentType.REGION:
+              group_id = (<ContractOptionRegion>this.contract.option).region.id;
+              break;
+            case ResidentType.APARTMENT:
+              group_id = (<ContractOptionApartment>this.contract.option).bed.room.apartment.id;
+              break;
+          }
+
+          this.residentSelector$.type.next(this.contract.type);
+          this.residentSelector$.group.next(group_id);
+        } else {
+          this.contract = null;
+          this.residentSelector$.type.next(null);
+          this.residentSelector$.group.next(null);
         }
       }, error => {
         this.contract = null;

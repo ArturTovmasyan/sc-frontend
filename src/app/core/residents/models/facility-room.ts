@@ -24,6 +24,8 @@ export class FacilityBed implements IdInterface {
 
   resident: Resident;
 
+  room?: FacilityRoom;
+
   resident_id?: number;
 }
 

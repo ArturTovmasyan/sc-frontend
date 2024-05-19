@@ -19,8 +19,8 @@ export class ReportService {
   public report(group_alias, report_alias, format, params, callback: any, error_callback: any) {
     let request_params = new HttpParams().append('format', format);
 
-    if (params.group_type) {
-      request_params = request_params.append('type', params.group_type);
+    if (params.group) {
+      request_params = request_params.append('type', params.group);
     }
     if (params.group_id) {
       request_params = request_params.append('type_id', params.group_id);
@@ -42,9 +42,6 @@ export class ReportService {
     }
     if (params.date_to) {
       request_params = request_params.append('date_to', params.date_to.toISOString());
-    }
-    if (params.id) {
-      request_params = request_params.append('id', params.id);
     }
 
     return this.http

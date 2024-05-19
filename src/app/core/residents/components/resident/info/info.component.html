@@ -8,7 +8,7 @@
                  style="max-height: 25rem"/>
             <img *ngIf="resident.photo" src="{{ resident.photo }}" class="img-thumbnail"
                  style="max-height: 25rem"
-                 alt="{{ residen|resident }}" title="{{ resident|resident }}"/>
+                 alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
             <div *ngIf="resident.photo" class="edit">
               <button nz-button nzType="primary" (click)="show_modal_image_editor();"><i class="fas fa-pencil-alt"></i>
               </button>
@@ -38,7 +38,7 @@
       <div nz-col [nzSpan]="16">{{ resident.gender|gender }}</div>
     </div>
 
-    <div nz-row [nzGutter]="4">
+    <div *ngIf="resident.phones && resident.phones.length > 0" nz-row [nzGutter]="4">
       <div nz-col [nzSpan]="24"><strong>Phone Numbers:</strong></div>
       <div nz-col [nzOffset]="4" [nzSpan]="20">
         <div nz-row [nzGutter]="4" *ngFor="let phone of resident.phones">

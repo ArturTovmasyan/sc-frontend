@@ -70,7 +70,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
 
       start: [new Date(), Validators.required],
-      end: [new Date(), Validators.required],
+      end: [null],
 
       group_id: [null, Validators.required],
       type: [null, Validators.required],

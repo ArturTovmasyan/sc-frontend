@@ -1,7 +1,7 @@
 import {Resident} from './resident';
 import {ResidentType} from './resident-type.enum';
 import {ApartmentBed, ApartmentRoom} from './apartment-room';
-import {FacilityRoom} from './facility-room';
+import {FacilityBed, FacilityRoom} from './facility-room';
 import {FacilityDiningRoom} from './facility-dining-room';
 import {CareLevel} from './care-level';
 import {Region} from './region';
@@ -40,7 +40,7 @@ export class ContractOptionFacility implements IdInterface {
   state: State;
 
   room?: FacilityRoom;
-  bed?: ApartmentBed;
+  bed?: FacilityBed;
 
   dining_room: FacilityDiningRoom;
 

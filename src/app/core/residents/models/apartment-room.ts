@@ -24,6 +24,8 @@ export class ApartmentBed implements IdInterface {
 
   resident: Resident;
 
+  room?: ApartmentRoom;
+
   resident_id?: number;
 }
 
