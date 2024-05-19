@@ -68,8 +68,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       beds: this.formBuilder.array([]),
 
-      private_type_id: [null, CoreValidator.notNullOneOf(['private_type_id', 'shared_type_id'], 'Please select at least one of the room types.')],
-      shared_type_id: [null, CoreValidator.notNullOneOf(['private_type_id', 'shared_type_id'], 'Please select at least one of the room types.')],
+      private_type_id: [null, CoreValidator.notNullOneOf(['private_type_id', 'shared_type_id'], 'No room type selected.')],
+      shared_type_id: [null, CoreValidator.notNullOneOf(['private_type_id', 'shared_type_id'], 'No room type selected.')],
       facility_id: [null, Validators.required]
     });
 
