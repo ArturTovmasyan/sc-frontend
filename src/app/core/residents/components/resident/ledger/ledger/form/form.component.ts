@@ -43,6 +43,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     private query_params: Params;
 
     public isThirdParty: boolean;
+    public currentDiscountItemId: number;
+    public currentCreditItemId: number;
 
     formatterDollar = (value: number) => (new CurrencyPipe('en-US')).transform(value, 'USD', 'symbol-narrow', '1.2-2');
 
@@ -268,5 +270,57 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
 
     return result;
+  }
+
+  public get_discount_amount_disable(idx: number) {
+    const control = this.get_form_array('resident_discount_items').controls[idx];
+
+    let discount_item = null;
+
+    if (control && this.discount_items) {
+      discount_item = this.discount_items.filter(item => item.id === control.get('discount_item_id').value).pop();
+    }
+
+    return discount_item ? discount_item.amount > 0 ? !discount_item.can_be_changed : false : true;
+  }
+
+  public setDiscountItemAmount(val, idx: number) {
+    this.currentDiscountItemId = val;
+
+    const control = this.get_form_array('resident_discount_items').controls[idx];
+
+    let discount_item = null;
+
+    if (control && this.discount_items) {
+      discount_item = this.discount_items.filter(item => item.id === this.currentDiscountItemId).pop();
+
+      control.get('amount').setValue(discount_item && discount_item.amount > 0 ? discount_item.amount : 0);
+    }
+  }
+
+  public get_credit_amount_disable(idx: number) {
+    const control = this.get_form_array('resident_credit_items').controls[idx];
+
+    let credit_item = null;
+
+    if (control && this.credit_items) {
+      credit_item = this.credit_items.filter(item => item.id === control.get('credit_item_id').value).pop();
+    }
+
+    return credit_item ? credit_item.amount > 0 ? !credit_item.can_be_changed : false : true;
+  }
+
+  public setCreditItemAmount(val, idx: number) {
+    this.currentCreditItemId = val;
+
+    const control = this.get_form_array('resident_credit_items').controls[idx];
+
+    let credit_item = null;
+
+    if (control && this.credit_items) {
+      credit_item = this.credit_items.filter(item => item.id === this.currentCreditItemId).pop();
+
+      control.get('amount').setValue(credit_item && credit_item.amount > 0 ? credit_item.amount : 0);
+    }
   }
 }

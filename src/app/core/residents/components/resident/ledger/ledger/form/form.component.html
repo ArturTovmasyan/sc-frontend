@@ -48,7 +48,7 @@
                 <nz-form-item>
                   <nz-form-control [nzSm]="16" [nzXs]="24"
                                    [nzValidateStatus]="hasErrors('resident_credit_items.'+i+'.credit_item_id')?'error':null">
-                    <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="credit_item_id">
+                    <nz-select (ngModelChange)="setCreditItemAmount($event, i)" nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="credit_item_id">
                       <ng-container *ngFor="let credit_item of credit_items">
                         <nz-option [nzLabel]="credit_item.title" [nzValue]="credit_item.id"></nz-option>
                       </ng-container>
@@ -63,7 +63,7 @@
                 <nz-form-item>
                   <nz-form-control [nzSm]="16" [nzXs]="24"
                                    [nzValidateStatus]="hasErrors('resident_credit_items.'+i+'.amount')?'error':null">
-                    <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
+                    <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar" [nzDisabled]="get_credit_amount_disable(i)"
                                      nzSize="small" nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
                     <nz-form-explain *ngIf="hasErrors('resident_credit_items.'+i+'.amount')">
                       <app-field-errors [errors]="fieldErrors('resident_credit_items.'+i+'.amount')"></app-field-errors>
@@ -148,7 +148,7 @@
                 <nz-form-item>
                   <nz-form-control [nzSm]="16" [nzXs]="24"
                                    [nzValidateStatus]="hasErrors('resident_discount_items.'+i+'.discount_item_id')?'error':null">
-                    <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="discount_item_id">
+                    <nz-select (ngModelChange)="setDiscountItemAmount($event, i)" nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="discount_item_id">
                       <ng-container *ngFor="let discount_item of discount_items">
                         <nz-option [nzLabel]="discount_item.title" [nzValue]="discount_item.id"></nz-option>
                       </ng-container>
@@ -163,7 +163,7 @@
                 <nz-form-item>
                   <nz-form-control [nzSm]="16" [nzXs]="24"
                                    [nzValidateStatus]="hasErrors('resident_discount_items.'+i+'.amount')?'error':null">
-                    <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
+                    <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar" [nzDisabled]="get_discount_amount_disable(i)"
                                      nzSize="small" nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
                     <nz-form-explain *ngIf="hasErrors('resident_discount_items.'+i+'.amount')">
                       <app-field-errors [errors]="fieldErrors('resident_discount_items.'+i+'.amount')"></app-field-errors>
