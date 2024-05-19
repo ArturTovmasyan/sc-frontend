@@ -715,15 +715,15 @@ const routes: Routes = [
       //   },
       //   canActivate: [AuthGuard]
       // },
-      {
-        path: 'roles', component: RoleListComponent,
-        data: {
-          nav: {show: true, group: 'Administration'},
-          title: 'Roles',
-          permissions: ['persistence-security-role']
-        },
-        canActivate: [AuthGuard]
-      },
+      // {
+      //   path: 'roles', component: RoleListComponent,
+      //   data: {
+      //     nav: {show: true, group: 'Administration'},
+      //     title: 'Roles',
+      //     permissions: ['persistence-security-role']
+      //   },
+      //   canActivate: [AuthGuard]
+      // },
 
       {
         path: 'profile',
