@@ -264,6 +264,8 @@ import {ViewComponent as OrganizationViewComponent} from './leads/components/org
 import {ViewComponent as ReferralViewComponent} from './leads/components/referral/view/view.component';
 import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/view.component';
 import {ListComponent as LeadActivityListComponent} from './leads/components/lead/view/activity-list.component';
+import {ListComponent as LeadAssessmentListComponent} from './leads/components/lead/assessment/list.component';
+import {FormComponent as LeadAssessmentFormComponent} from './leads/components/lead/assessment/form/form.component';
 import {ListComponent as ReferralActivityListComponent} from './leads/components/referral/view/activity-list.component';
 import {ListComponent as OrganizationActivityListComponent} from './leads/components/organization/view/activity-list.component';
 import {ListComponent as OrganizationReferralListComponent} from './leads/components/organization/view/referral-list.component';
@@ -570,6 +572,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     OrganizationActivityListComponent,
     LeadActivityListComponent,
     ReferralActivityListComponent,
+    LeadAssessmentListComponent,
+    LeadAssessmentFormComponent,
 
     ReferralReportFormComponent,
     LeadReportFormComponent,
@@ -711,6 +715,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     OutreachTypeFormComponent,
 
     LeadContactFormComponent,
+    LeadAssessmentFormComponent,
 
     ReferralReportFormComponent,
     LeadReportFormComponent,

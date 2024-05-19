@@ -1,0 +1,101 @@
+﻿<h4>Assessment</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-tabset [nzSelectedIndex]="tabSelected.value" (nzSelectedIndexChange)="tabChanged($event);">
+    <nz-tab nzTitle="Assessment Information">
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="form_id" nzRequired>Assessment Form</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('form_id')?'error':null">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="form_id">
+            <ng-container *ngFor="let assessment_form of assessment_forms">
+              <nz-option [nzLabel]="assessment_form.title" [nzValue]="assessment_form.id"></nz-option>
+            </ng-container>
+          </nz-select>
+          <nz-form-explain *ngIf="hasErrors('form_id')">
+            <app-field-errors [errors]="fieldErrors('form_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+          <nz-date-picker formControlName="date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+          <nz-form-explain *ngIf="hasErrors('date')">
+            <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="performed_by" nzRequired>Performed By</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('performed_by')?'error':null">
+          <input nz-input placeholder="Performed By" formControlName="performed_by">
+          <nz-form-explain *ngIf="hasErrors('performed_by')">
+            <app-field-errors [errors]="fieldErrors('performed_by')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
+          <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
+          <nz-form-explain *ngIf="hasErrors('notes')">
+            <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+    <nz-tab nzTitle="Assessment Data" [nzDisabled]="tab_data_disabled">
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="score" nzRequired>Score</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('score')?'error':null">
+          <input nz-input placeholder="Performed By" formControlName="score">
+          <nz-form-explain *ngIf="hasErrors('score')">
+            <app-field-errors [errors]="fieldErrors('score')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-progress nzSize="small" [nzShowInfo]="false"
+                   [nzPercent]="(category_selected + 1) * 100/categories.length"></nz-progress>
+
+      <div *ngIf="rows_controls().length > 0" class="assessment" formArrayName="rows">
+        <ng-container *ngFor="let control of form.get('rows').controls; let i = index">
+          <div class="assessment-content" [hidden]="category_selected != i">
+            <p><strong>{{ categories[i].title }}</strong></p>
+            <nz-radio-group *ngIf="!categories[i].multi_item" [formControlName]="i">
+              <label nz-radio *ngFor="let row of categories[i].rows" [nzValue]="row.id">
+                {{ row.title }} ({{ row.score }})
+              </label>
+            </nz-radio-group>
+
+            <nz-checkbox-group *ngIf="categories[i].multi_item"
+                               [(ngModel)]="categories[i].check_group"
+                               [ngModelOptions]="{standalone: true}"
+                               (ngModelChange)="update_multi_rows(i);">
+            </nz-checkbox-group>
+          </div>
+        </ng-container>
+        <nz-button-group nzSize="small">
+          <button type="button" class="btn-prev" nz-button nzType="default" (click)="pre()" *ngIf="category_selected > 0">
+            <i nz-icon nzType="left"></i> Previous
+          </button>
+          <button type="button" class="btn-next" nz-button nzType="default" [disabled]="!is_valid_row()"  (click)="next()"
+                  *ngIf="category_selected < (categories.length - 1)">
+            Next <i nz-icon nzType="right"></i></button>
+        </nz-button-group>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
