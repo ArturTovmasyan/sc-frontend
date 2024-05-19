@@ -157,6 +157,8 @@ import {FormComponent as ResidentMedicalHistoryFormComponent} from './residents/
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
 import {FormComponent as ResidentDietFormComponent} from './residents/components/resident/dietary-restriction/form/form.component';
 
+import {CalendarComponent as ResidentCalendarComponent} from './residents/components/resident/calendar/calendar.component';
+
 import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
 import {FormComponent as ResidentEventFormComponent} from './residents/components/resident/event/form/form.component';
 
@@ -298,6 +300,9 @@ import {UserPipe} from './residents/pipes/user.pipe';
 import {LeadContactPipe} from './residents/pipes/lead-contact.pipe';
 import {LeadPipe} from './residents/pipes/lead.pipe';
 import {EmbedVideo} from 'ngx-embed-video/dist';
+import {FullCalendarModule} from '@fullcalendar/angular';
+import {PaymentPeriodPipe} from './residents/pipes/payment-period.pipe';
+import {RentIncreaseReasonPipe} from './residents/pipes/rent-increase-reason.pipe';
 
 registerLocaleData(en);
 
@@ -321,6 +326,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LeadStatePipe,
     ChangeLogPipe,
     ActivityTypePipe,
+    PaymentPeriodPipe,
+    RentIncreaseReasonPipe,
 
     CoreComponent,
 
@@ -451,6 +458,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentAdmissionListComponent,
     ResidentAdmissionFormComponent,
+
+    ResidentCalendarComponent,
 
     ResidentEventListComponent,
     ResidentEventFormComponent,
@@ -753,7 +762,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     VgOverlayPlayModule,
     VgBufferingModule,
     EmbedVideo.forRoot(),
-    NgChartjsModule.registerPlugin([])
+    NgChartjsModule.registerPlugin([]),
+    FullCalendarModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true},

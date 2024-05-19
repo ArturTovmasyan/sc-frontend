@@ -61,7 +61,7 @@ $sc-font-size-base: 14px;
   &-assessments:before {
     content: "\e001";
   }
-  &-contracts:before {
+  &-admissions:before {
     content: "\e002";
   }
   &-dietary:before {
@@ -93,5 +93,8 @@ $sc-font-size-base: 14px;
   }
   &-resident:before {
     content: "\e00c";
+  }
+  &-calendar:before {
+    content: "\e00d";
   }
 }

@@ -98,6 +98,7 @@ import {ListComponent as DocumentCategoryListComponent} from './documents/compon
 import {DashboardComponent as ResidentDashboardComponent} from './residents/components/dashboard/dashboard.component';
 import {DashboardDetailComponent as ResidentDashboardDetailComponent} from './residents/components/dashboard/dashboard-detail.component';
 import {ListComponent as FacilityDocumentListComponent} from './residents/components/facility-document/list.component';
+import {CalendarComponent as ResidentCalendarComponent} from './residents/components/resident/calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -794,6 +795,17 @@ const routes: Routes = [
             data: {
               title: 'Admission and Room Assignments',
               permissions: ['persistence-resident-admission']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'calendar',
+            component: ResidentCalendarComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Calendar',
+              permissions: ['persistence-resident-resident_calendar'] // TODO: change to calendar
             },
             canActivate: [AuthGuard]
           },

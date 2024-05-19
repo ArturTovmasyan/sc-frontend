@@ -3,6 +3,12 @@
 
 // Import styles
 @import "~@coreui/coreui/scss/coreui";
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
+@import '~@fullcalendar/list/main.css';
+@import '~@fullcalendar/bootstrap/main.css';
 
 // If you want to add something do it here
 @import "custom";
+

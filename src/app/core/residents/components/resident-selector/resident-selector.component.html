@@ -17,6 +17,12 @@
      title="Health Insurance">
     <i class="seniorcare seniorcare-3x seniorcare-insurance"></i>
   </a>
+  <a *ngIf="addIfHasPermission('persistence-resident-resident_calendar')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+     [routerLinkActive]="['active-link']"
+     [routerLink]="routeInfo('calendar')"
+     title="Calendar">
+    <i class="seniorcare seniorcare-3x seniorcare-calendar"></i>
+  </a>
   <a *ngIf="addIfHasPermission('persistence-resident-resident_event')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
      [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('events')"
@@ -27,7 +33,7 @@
      [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('admissions')"
      title="Admission and Room Assignments">
-    <i class="seniorcare seniorcare-3x seniorcare-contracts"></i>
+    <i class="seniorcare seniorcare-3x seniorcare-admissions"></i>
   </a>
   <a *ngIf="addIfHasPermission('persistence-resident-resident_rent')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
      [routerLinkActive]="['active-link']"
