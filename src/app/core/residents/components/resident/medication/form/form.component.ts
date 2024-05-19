@@ -1,6 +1,7 @@
-﻿import {Component, ElementRef, OnInit} from '@angular/core';
+﻿import * as _ from 'lodash';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {first} from 'rxjs/operators';
+import {first, pairwise} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {Medication} from '../../../../models/medication';
 import {MedicationService} from '../../../../services/medication.service';
@@ -14,6 +15,7 @@ import {FormComponent as MedicationFormFactorFormComponent} from '../../../medic
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as PhysicianFormComponent} from '../../../physician/form/form.component';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {ResidentMedicationService} from '../../../../services/resident-medication.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -28,6 +30,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private formBuilder: FormBuilder,
     private _el: ElementRef,
     private medication$: MedicationService,
+    private residentMedication$: ResidentMedicationService,
     private form_factor$: MedicationFormFactorService,
     private physician$: PhysicianService,
     private modal$: NzModalService,
@@ -78,6 +81,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
     };
 
+    this.subscribe('vc_medication_id');
     this.subscribe('rs_resident');
     this.subscribe('list_medication');
     this.subscribe('list_form_factor');
@@ -86,6 +90,22 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'vc_medication_id':
+        this.$subscriptions[key] = this.form.get('medication_id').valueChanges.pipe(pairwise())
+          .subscribe(([prev, next]: [any, any]) => {
+            console.log(prev, next);
+            if (next) {
+              this.residentMedication$.all([
+                {key: 'resident_id', value: this.form.get('resident_id').value},
+                {key: 'medication_id', value: next}
+              ]).subscribe(res => {
+                if (_.isArray(res) && res.length > 0) {
+                  this.show_medication_confirm(prev);
+                }
+              });
+            }
+          });
+        break;
       case 'list_medication':
         this.$subscriptions[key] = this.medication$.all().pipe(first()).subscribe(res => {
           if (res) {
@@ -93,6 +113,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             if (params) {
               this.form.get('medication_id').setValue(params.medication_id);
+            } else {
+              this.form.get('medication_id').setValue(this.form.get('medication_id').value);
             }
           }
         });
@@ -166,5 +188,30 @@ export class FormComponent extends AbstractForm implements OnInit {
       default:
         break;
     }
+  }
+
+  show_medication_confirm(prev: any): void {
+    const modal = this.modal$.create({
+      nzClosable: false,
+      nzMaskClosable: false,
+      nzTitle: null,
+      nzContent: `<p class="modal-confirm"><i class="fa fa-info text-info"></i> This medication already added for this resident.<br/>Are you sure to add one more?</p>`,
+      nzFooter: [
+        {
+          label: 'No',
+          onClick: () => {
+            this.form.get('medication_id').setValue(prev);
+            modal.close();
+          }
+        },
+        {
+          type: 'primary',
+          label: 'Yes',
+          onClick: () => {
+            modal.close();
+          }
+        }
+      ]
+    });
   }
 }
