@@ -20,11 +20,6 @@
           <div nz-col [nzSpan]="24">
             <p class="text-center m-1">
               <strong style="font-size: large;">{{ rph.physician|physician }}</strong>
-              <button type="button" class="pull-right" nz-button nzSize="small" nzType="default"
-                      (click)="subscribe('md_p_edit', {id: rph.physician.id}); $event.preventDefault();"
-                      *ngIf="addIfHasPermission('persistence-common-physician', 5)">
-                <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
-              </button>
             </p>
           </div>
         </div>

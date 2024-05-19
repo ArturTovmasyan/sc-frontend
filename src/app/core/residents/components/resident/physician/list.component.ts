@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Observable, Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
@@ -19,7 +19,7 @@ import {ResidentPhysician} from '../../../models/resident-physician';
   templateUrl: './list.component.html',
   providers: [ResidentPhysicianService]
 })
-export class ListComponent implements OnInit, OnDestroy {
+export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   _FormComponent = FormComponent;
 
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
@@ -55,6 +55,14 @@ export class ListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribe('title');
     this.subscribe('resident_id');
+  }
+
+  ngAfterViewInit(): void {
+    const edit_btn = this._btnBar.buttons_crud.filter(v => v.name === 'edit').pop();
+
+    if (edit_btn) {
+      edit_btn.title = 'Change Physician';
+    }
   }
 
   ngOnDestroy(): void {

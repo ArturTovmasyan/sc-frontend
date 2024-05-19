@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Observable, Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
@@ -19,7 +19,7 @@ import {ResidentResponsiblePerson} from '../../../models/resident-responsible-pe
   templateUrl: './list.component.html',
   providers: [ResidentResponsiblePersonService]
 })
-export class ListComponent implements OnInit, OnDestroy {
+export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   _FormComponent = FormComponent;
 
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
@@ -59,6 +59,14 @@ export class ListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
+  }
+
+  ngAfterViewInit(): void {
+    const edit_btn = this._btnBar.buttons_crud.filter(v => v.name === 'edit').pop();
+
+    if (edit_btn) {
+      edit_btn.title = 'Change Responsible Person';
+    }
   }
 
   unsubscribe(key: string): void {
