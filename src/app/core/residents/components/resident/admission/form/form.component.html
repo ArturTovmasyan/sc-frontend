@@ -20,7 +20,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Effective Date</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
-          <nz-date-picker formControlName="date"></nz-date-picker>
+          <nz-date-picker formControlName="date" nzFormat="MM/dd/yyyy"></nz-date-picker>
           <nz-form-explain *ngIf="hasErrors('date')">
             <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
           </nz-form-explain>
