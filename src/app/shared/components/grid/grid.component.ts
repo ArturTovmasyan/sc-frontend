@@ -122,7 +122,6 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
     if (update_flag) {
       this.reload_data(true);
-      this.checkbox_refresh();
     }
   }
 
@@ -142,7 +141,6 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
     if (JSON.stringify(clone_filter) !== JSON.stringify(this.filter)) {
       this.reload_data(true);
-      this.checkbox_refresh();
     }
   }
 
@@ -158,7 +156,6 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     }
 
     this.reload_data();
-    this.checkbox_refresh();
   }
 
   current_page_data_change($event: Array<any>): void {
@@ -176,12 +173,13 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   }
 
   checkbox_refresh(): void {
-    const allChecked = this.checkbox_config.data.filter(value => !value.disabled)
-      .every(value => value.checked === true);
-    const allUnChecked = this.checkbox_config.data.filter(value => !value.disabled)
-      .every(value => !value.checked);
+    const allChecked = this.checkbox_config.data.length > 0
+      && this.checkbox_config.data.filter(value => !value.disabled).every(value => value.checked === true);
+    const someChecked = this.checkbox_config.data.length > 0
+      && this.checkbox_config.data.filter(value => !value.disabled).some(value => value.checked === true);
+
     this.checkbox_config.all = allChecked;
-    this.checkbox_config.indeterminate = (!allChecked) && (!allUnChecked);
+    this.checkbox_config.indeterminate = !allChecked && someChecked;
 
     this.checkbox_config.ids = this.checkbox_config.data.filter(v => v.checked).map(v => v.id);
   }
@@ -198,6 +196,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
       this.page_config.total = data.total;
       this.data = data.data;
+      this.checkbox_refresh();
     });
   }
 
@@ -258,7 +257,6 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
                   loading = false;
 
                   this.reload_data();
-                  this.checkbox_refresh();
 
                   modal.close();
                 },
@@ -310,7 +308,6 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
               loading = false;
 
               this.reload_data();
-              this.checkbox_refresh();
 
               modal.close();
             },
@@ -345,7 +342,6 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
               loading = false;
 
               this.reload_data();
-              this.checkbox_refresh();
 
               modal.close();
 
