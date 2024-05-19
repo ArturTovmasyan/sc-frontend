@@ -127,12 +127,12 @@ export const navItems = [
   },
   {
     url: '/diets',
-    name: 'Diets',
+    name: 'Dietary Restriction Categories',
     icon: 'icon-people'
   },
   {
     url: '/medical-history-conditions',
-    name: 'Medical History Condition',
+    name: 'Medical History Conditions',
     icon: 'icon-people'
   },
   {

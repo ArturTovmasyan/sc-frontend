@@ -194,7 +194,7 @@ const routes: Routes = [
       },
       {
         path: 'diets', component: DietListComponent, data: {
-          title: 'Diets',
+          title: 'Dietary Restriction Category',
           roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
         },
         canActivate: [AuthGuard]

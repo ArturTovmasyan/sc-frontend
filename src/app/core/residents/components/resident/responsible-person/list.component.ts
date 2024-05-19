@@ -115,47 +115,88 @@ export class ListComponent implements OnInit {
     let valid = false;
     let loading = false;
 
+    const footer = [
+      {
+        label: 'Cancel',
+        onClick: () => {
+          modal.close();
+        }
+      },
+      {
+        type: 'primary',
+        label: 'Save',
+        loading: () => loading,
+        disabled: () => !valid,
+        onClick: () => {
+          loading = true;
+
+          const component = <AbstractForm>modal.getContentComponent();
+          component.before_submit();
+          const form_data = component.formObject.value;
+
+          component.submitted = true;
+
+          submit(form_data).subscribe(
+            res => {
+              loading = false;
+
+              this.reload_data();
+
+              modal.close();
+            },
+            error => {
+              loading = false;
+
+              component.handleSubmitError(error);
+              component.postSubmit(null);
+              // console.error(error);
+            });
+        }
+      },
+    ];
+
+    if (result === null) {
+      footer.push({
+        type: 'primary',
+        label: 'Save & Add',
+        loading: () => loading,
+        disabled: () => !valid,
+        onClick: () => {
+          loading = true;
+
+          const component = <AbstractForm>modal.getContentComponent();
+          component.before_submit();
+          const form_data = component.formObject.value;
+
+          component.submitted = true;
+
+          submit(form_data).subscribe(
+            res => {
+              loading = false;
+
+              this.reload_data();
+
+              modal.close();
+
+              this.create_modal(submit, result, form_data);
+            },
+            error => {
+              loading = false;
+
+              component.handleSubmitError(error);
+              component.postSubmit(null);
+              // console.error(error);
+            });
+        }
+      });
+    }
+
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
       nzTitle: null,
       nzContent: form_component,
-      nzFooter: [
-        {
-          label: 'Cancel',
-          onClick: () => {
-            modal.close();
-          }
-        },
-        {
-          type: 'primary',
-          label: 'Save',
-          loading: () => loading,
-          disabled: () => !valid,
-          onClick: () => {
-            loading = true;
-
-            const component = <AbstractForm>modal.getContentComponent();
-            const form_data = component.formObject.value;
-
-            component.submitted = true;
-
-            submit(form_data).subscribe(
-              res => {
-                loading = false;
-                this.reload_data();
-                modal.close();
-              },
-              error => {
-                loading = false;
-
-                component.handleSubmitError(error);
-                component.postSubmit(null);
-                // console.error(error);
-              });
-          }
-        }
-      ]
+      nzFooter: footer
     });
 
     modal.afterOpen.subscribe(() => {
