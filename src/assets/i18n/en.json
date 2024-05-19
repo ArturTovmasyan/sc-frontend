@@ -120,7 +120,7 @@
       "il": "IL",
       "physician": "Physician",
       "responsible_person": "Responsible Person",
-      "additional_date": "Additional Date",
+      "additional_date": "Date Added",
       "space": "Space"
     },
     "assessment-form-list": {
@@ -311,7 +311,7 @@
       "definition": "Type",
       "notes": "Notes",
       "date": "Date",
-      "additional_date": "Additional Date",
+      "additional_date": "Date Added",
       "amount": "Amount",
       "physician": "Physician",
       "responsible_person": "Responsible Person"
