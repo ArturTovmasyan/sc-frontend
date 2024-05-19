@@ -8,8 +8,10 @@ import {Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 import {ResidentAdmissionService} from '../../services/resident-admission.service';
 import {FormComponent as ResidentSwapFormComponent} from '../resident/swap-form/form.component';
+import {FormComponent as ResidentFormComponent} from '../resident/resident/form/form.component';
 import {ModalFormService} from '../../../../shared/services/modal-form.service';
 import {GroupHelper} from '../../helper/group-helper';
+import {ResidentService} from '../../services/resident.service';
 
 @Component({
   selector: 'app-resident-selector',
@@ -29,6 +31,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     private router$: Router,
     private auth_$: AuthGuard,
     private residentAdmission$: ResidentAdmissionService,
+    private resident$: ResidentService,
     public residentSelector$: ResidentSelectorService
   ) {
     this.$subscriptions = {};
@@ -123,5 +126,17 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
       window.location.reload();
     };
     modal.create(data => this.residentAdmission$.swap(data), null, null);
+  }
+
+  show_add_modal() {
+    const modal = this.modal$.create_sub(ResidentFormComponent);
+    modal.modal_callback = (res) => {
+      if (res != null && Array.isArray(res) && res.length === 1) {
+        this.router$.navigate(
+          ['/resident', res[0], {outlets: {'primary': null, 'resident-details': ['responsible-persons']}}]
+        ).then();
+      }
+    };
+    modal.create(data => this.resident$.add(data), null, null);
   }
 }

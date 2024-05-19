@@ -102,35 +102,43 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
 ">
         <nz-divider nzText="Reports"></nz-divider>
         <ul class="reports-list">
-          <li *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-resident-profile-no-admission':'report-resident-profile')">
-            <a [routerLink]="" (click)="show_report('resident', (state===ResidentState.NO_ADMISSION?'profile-no-admission':'profile'));">
+          <li
+            *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-resident-profile-no-admission':'report-resident-profile')">
+            <a [routerLink]=""
+               (click)="show_report('resident', (state===ResidentState.NO_ADMISSION?'profile-no-admission':'profile'));">
               <i class="fas fa-file-download"></i> Profile
             </a>
           </li>
-          <li *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-resident-profile-no-admission':'report-resident-profile')">
+          <li
+            *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-resident-profile-no-admission':'report-resident-profile')">
             <a [routerLink]=""
                (click)="show_report('resident', (state===ResidentState.NO_ADMISSION?'profile-no-admission':'profile'), {discontinued: true});">
               <i class="fas fa-file-download"></i> Profile (with discontinued medications)
             </a>
           </li>
-          <li *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-resident-face-sheet-no-admission':'report-resident-face-sheet')">
-            <a [routerLink]="" (click)="show_report('resident', (state===ResidentState.NO_ADMISSION?'face-sheet-no-admission':'face-sheet'));">
+          <li
+            *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-resident-face-sheet-no-admission':'report-resident-face-sheet')">
+            <a [routerLink]=""
+               (click)="show_report('resident', (state===ResidentState.NO_ADMISSION?'face-sheet-no-admission':'face-sheet'));">
               <i class="fas fa-file-download"></i> FACE Sheet
             </a>
           </li>
-          <li *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-chart-no-admission':'report-form-medication-chart')">
+          <li
+            *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-chart-no-admission':'report-form-medication-chart')">
             <a [routerLink]=""
                (click)="show_report('form', (state===ResidentState.NO_ADMISSION?'medication-chart-no-admission':'medication-chart'));">
               <i class="fas fa-file-download"></i> MAR Chart
             </a>
           </li>
-          <li *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-list-resident-no-admission':'report-form-medication-list-resident')">
+          <li
+            *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-list-resident-no-admission':'report-form-medication-list-resident')">
             <a [routerLink]=""
                (click)="show_report('form', (state===ResidentState.NO_ADMISSION?'medication-list-resident-no-admission':'medication-list-resident'));">
               <i class="fas fa-file-download"></i> Medication List
             </a>
           </li>
-          <li *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-list-resident-no-admission':'report-form-medication-list-resident')">
+          <li
+            *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-list-resident-no-admission':'report-form-medication-list-resident')">
             <a [routerLink]=""
                (click)="show_report('form', (state===ResidentState.NO_ADMISSION?'medication-list-resident-no-admission':'medication-list-resident'), {discontinued: true});">
               <i class="fas fa-file-download"></i> Medication List (with discontinued medications)
@@ -151,22 +159,23 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
         </ul>
       </ng-container>
 
-      <nz-divider></nz-divider>
-
-      <div class="d-flex">
-        <nz-button-group [nzSize]="'small'" class="ml-auto">
-          <button type="button" nz-button nzType="primary" (click)="show_modal_add(); $event.preventDefault();">
-            <i nz-icon nzType="plus"></i> {{ "grid.add"|translate }}
-          </button>
-          <button type="button" nz-button nzType="default" [nzLoading]="loading_edit_modal"
-                  (click)="show_modal_edit(); $event.preventDefault();">
-            <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
-          </button>
-          <button type="button" nz-button nzType="danger" (click)="show_modal_remove(); $event.preventDefault();">
-            <i nz-icon nzType="delete"></i> {{ "grid.remove"|translate }}
-          </button>
-        </nz-button-group>
+      <nz-divider *ngIf="addIfHasPermission('persistence-resident-resident_responsible_person', 2)"></nz-divider>
+      <div class="d-flex" *ngIf="addIfHasPermission('persistence-resident-resident_responsible_person', 2)">
+        <app-button-bar
+          #btnBar
+          [permission]="'persistence-resident-resident_responsible_person'"
+          [service]="resident$"
+          [component]="_FormComponent"
+          [modal_callback]="modal_callback"
+          [remove_modal_callback]="remove_modal_callback"
+          [ids]="[resident.id]"
+          [single_select]="true"
+          [multi_select]="false"
+          [exclude]="['add']"
+          class="ml-auto"
+        ></app-button-bar>
       </div>
+
     </div>
   </div>
 </div>
@@ -200,14 +209,19 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
   <div *ngIf="option.facility_bed && option.facility_bed.room && option.facility_bed.room.facility" nz-row
        [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Facility:</strong></div>
-    <div nz-col [nzSpan]="16"><a [routerLink]="['/facility', option.facility_bed.room.facility.id]">{{ option.facility_bed.room.facility.name }}</a></div>
+    <div nz-col [nzSpan]="16"><a
+      [routerLink]="['/facility', option.facility_bed.room.facility.id]">{{ option.facility_bed.room.facility.name }}</a>
+    </div>
   </div>
   <div *ngIf="option.facility_bed && option.facility_bed.room" nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Room/Bed:</strong></div>
     <div nz-col [nzSpan]="16">
-      <ng-container *ngIf="!option.facility_bed.room.private"><strong>{{ option.facility_bed.room.number }}</strong> ({{ option.facility_bed.number }})</ng-container>
-      <ng-container *ngIf="option.facility_bed.room.private"><strong>{{ option.facility_bed.room.number }}</strong></ng-container>
-     </div>
+      <ng-container *ngIf="!option.facility_bed.room.private"><strong>{{ option.facility_bed.room.number }}</strong>
+        ({{ option.facility_bed.number }})
+      </ng-container>
+      <ng-container *ngIf="option.facility_bed.room.private"><strong>{{ option.facility_bed.room.number }}</strong>
+      </ng-container>
+    </div>
   </div>
 </ng-template>
 
@@ -215,12 +229,16 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
   <div *ngIf="option.apartment_bed && option.apartment_bed.room && option.apartment_bed.room.apartment" nz-row
        [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Apartment:</strong></div>
-    <div nz-col [nzSpan]="16"><a [routerLink]="['/apartment', option.apartment_bed.room.apartment.id]">{{ option.apartment_bed.room.apartment.name }}</a></div>
+    <div nz-col [nzSpan]="16"><a
+      [routerLink]="['/apartment', option.apartment_bed.room.apartment.id]">{{ option.apartment_bed.room.apartment.name }}</a>
+    </div>
   </div>
   <div *ngIf="option.apartment_bed && option.apartment_bed.room" nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Room/Bed:</strong></div>
     <div nz-col [nzSpan]="16">
-      <ng-container *ngIf="!option.apartment_bed.room.private">{{ option.apartment_bed.room.number }} ({{ option.apartment_bed.number }})</ng-container>
+      <ng-container *ngIf="!option.apartment_bed.room.private">{{ option.apartment_bed.room.number }}
+        ({{ option.apartment_bed.number }})
+      </ng-container>
       <ng-container *ngIf="option.apartment_bed.room.private">{{ option.apartment_bed.room.number }}</ng-container>
     </div>
   </div>

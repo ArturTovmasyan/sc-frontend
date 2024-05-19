@@ -91,10 +91,13 @@ $sc-font-size-base: 14px;
   &-reports:before {
     content: "\e00b";
   }
-  &-resident:before {
+  &-responsible-person:before {
     content: "\e00c";
   }
   &-calendar:before {
     content: "\e00d";
+  }
+  &-plus:before {
+    content: "\e00e";
   }
 }

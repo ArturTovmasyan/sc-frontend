@@ -17,6 +17,7 @@ export class ModalFormComponent {
 
   private _preset_modal_form_data: (form: FormGroup) => void;
   private _modal_callback: (data: any) => void;
+  private _remove_modal_callback: (data: any) => void;
 
   set component(value: Type<any>) {
     this._component = value;
@@ -28,6 +29,10 @@ export class ModalFormComponent {
 
   set modal_callback(value: (data: any) => void) {
     this._modal_callback = value;
+  }
+
+  set remove_modal_callback(value: (data: any) => void) {
+    this._remove_modal_callback = value;
   }
 
   protected modal: NzModalRef<any>;
@@ -115,7 +120,11 @@ export class ModalFormComponent {
               res => {
                 loading = false;
 
-                this._modal_callback(null);
+                if (this._remove_modal_callback !== null) {
+                  this._remove_modal_callback(null);
+                } else {
+                  this._modal_callback(null);
+                }
 
                 modal.close();
               },

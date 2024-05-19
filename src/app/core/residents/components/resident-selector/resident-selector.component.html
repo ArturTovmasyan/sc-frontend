@@ -1,12 +1,17 @@
 <div class="row" style="width: 100%;">
   <div class="col-xxl-8 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center">
     <nz-button-group [nzSize]="'large'" class="resident-pages" *ngIf="residentSelector$.resident.value !== null">
+      <a *ngIf="addIfHasPermission('persistence-resident-resident')" nz-button
+         (click)="show_add_modal()"
+         title="Add resident">
+        <i class="seniorcare seniorcare-3x seniorcare-plus"></i>
+      </a>
       <a *ngIf="addIfHasPermission('persistence-resident-resident_responsible_person')" nz-button
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
          [routerLink]="routeInfo('responsible-persons')"
          title="Responsible Persons">
-        <i class="seniorcare seniorcare-3x seniorcare-resident"></i>
+        <i class="seniorcare seniorcare-3x seniorcare-responsible-person"></i>
       </a>
       <a *ngIf="addIfHasPermission('persistence-resident-resident_document')" nz-button
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"

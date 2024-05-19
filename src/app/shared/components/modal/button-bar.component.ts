@@ -69,6 +69,8 @@ export class ButtonBarComponent implements OnInit {
   private _service$: GridService<any>;
   private _preset_modal_form_data: (form: FormGroup) => void;
   private _modal_callback: (data: any) => void;
+  private _remove_modal_callback: (data: any) => void = null;
+  private _exclude: string[] = [];
 
   @Input() set ids(value: number[]) {
     this._ids = value;
@@ -82,8 +84,16 @@ export class ButtonBarComponent implements OnInit {
     this._modal_callback = value;
   }
 
+  @Input() set remove_modal_callback(value: (data: any) => void) {
+    this._remove_modal_callback = value;
+  }
+
   @Input() set service(value: GridService<any>) {
     this._service$ = value;
+  }
+
+  @Input() set exclude(values: string[]) {
+    this._exclude = values;
   }
 
   buttons_crud: Button[] = [];
@@ -99,7 +109,7 @@ export class ButtonBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.addIfHasPermission(this.permission, 3)) {
+    if (this.addIfHasPermission(this.permission, 3) && this._exclude.filter(v => v === 'add').length === 0) {
       this.buttons_crud.push(new Button(
         'add',
         'grid.add',
@@ -113,7 +123,7 @@ export class ButtonBarComponent implements OnInit {
       ));
     }
 
-    if (this.addIfHasPermission(this.permission, 2)) {
+    if (this.addIfHasPermission(this.permission, 2) && this._exclude.filter(v => v === 'edit').length === 0) {
       this.buttons_crud.push(new Button(
         'edit',
         'grid.edit',
@@ -127,7 +137,7 @@ export class ButtonBarComponent implements OnInit {
       ));
     }
 
-    if (this.addIfHasPermission(this.permission, 4)) {
+    if (this.addIfHasPermission(this.permission, 4) && this._exclude.filter(v => v === 'remove').length === 0) {
       this.buttons_crud.push(new Button(
         'remove',
         'grid.remove',
@@ -192,6 +202,12 @@ export class ButtonBarComponent implements OnInit {
                        remove?: { submit: (ids: number[]) => Observable<any>, relation_count: number, ids: number[] }) {
     const modal = this.modal$.create(this.component);
     modal.modal_callback = (data) => this._modal_callback(data);
+
+    if (this._remove_modal_callback !== null) {
+      modal.remove_modal_callback = (data) => this._remove_modal_callback(data);
+    } else {
+      modal.remove_modal_callback = null;
+    }
 
     if (this._preset_modal_form_data) {
       modal.preset_modal_form_data = (form: FormGroup) => this._preset_modal_form_data(form);
