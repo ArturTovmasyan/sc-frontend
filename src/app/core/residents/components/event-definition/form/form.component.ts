@@ -39,6 +39,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       additional_date: [false, Validators.required],
     });
 
+    this.subscribe('vc_physician');
+    this.subscribe('vc_physician_optional');
+    this.subscribe('vc_responsible_person');
+    this.subscribe('vc_responsible_person_optional');
+    this.subscribe('vc_responsible_person_multi');
+    this.subscribe('vc_responsible_person_multi_optional');
+
     this.add_space();
   }
 
@@ -47,13 +54,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       this.form.addControl('space_id', new FormControl(null, [Validators.required]));
       this.subscribe('list_space');
     }
-  }
-
-  after_set_form_data(): void {
-    this.subscribe('vc_responsible_person');
-    this.subscribe('vc_responsible_person_multi');
-
-    super.after_set_form_data();
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -66,10 +66,35 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
+      case 'vc_physician':
+        this.$subscriptions[key] = this.form.get('physician').valueChanges.subscribe(res => {
+          if (res) {
+            this.form.get('physician_optional').setValue(false);
+          }
+        });
+        break;
+      case 'vc_physician_optional':
+        this.$subscriptions[key] = this.form.get('physician_optional').valueChanges.subscribe(res => {
+          if (res) {
+            this.form.get('physician').setValue(false);
+          }
+        });
+        break;
       case 'vc_responsible_person':
         this.$subscriptions[key] = this.form.get('responsible_person').valueChanges.subscribe(res => {
           if (res) {
+            this.form.get('responsible_person_optional').setValue(false);
             this.form.get('responsible_person_multi').setValue(false);
+            this.form.get('responsible_person_multi_optional').setValue(false);
+          }
+        });
+        break;
+      case 'vc_responsible_person_optional':
+        this.$subscriptions[key] = this.form.get('responsible_person_optional').valueChanges.subscribe(res => {
+          if (res) {
+            this.form.get('responsible_person').setValue(false);
+            this.form.get('responsible_person_multi').setValue(false);
+            this.form.get('responsible_person_multi_optional').setValue(false);
           }
         });
         break;
@@ -77,6 +102,17 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.form.get('responsible_person_multi').valueChanges.subscribe(res => {
           if (res) {
             this.form.get('responsible_person').setValue(false);
+            this.form.get('responsible_person_optional').setValue(false);
+            this.form.get('responsible_person_multi_optional').setValue(false);
+          }
+        });
+        break;
+      case 'vc_responsible_person_multi_optional':
+        this.$subscriptions[key] = this.form.get('responsible_person_multi_optional').valueChanges.subscribe(res => {
+          if (res) {
+            this.form.get('responsible_person').setValue(false);
+            this.form.get('responsible_person_optional').setValue(false);
+            this.form.get('responsible_person_multi').setValue(false);
           }
         });
         break;

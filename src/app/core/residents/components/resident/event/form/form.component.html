@@ -40,9 +40,8 @@
     </nz-form-control>
   </nz-form-item>
 
-
   <nz-form-item *ngIf="this.form.get('physician_id').enabled">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician_id" nzRequired>Physician</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician_id" [nzRequired]="required.physician_id">Physician</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('physician_id')?'error':null">
       <div class="add-select-container">
         <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
@@ -63,7 +62,7 @@
   </nz-form-item>
 
   <nz-form-item *ngIf="this.form.get('responsible_persons').enabled">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_persons" nzRequired>{{ rp_single ? 'Responsible Person' : 'Responsible Person(s)' }}</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_persons" [nzRequired]="required.responsible_persons">{{ rp_single ? 'Responsible Person' : 'Responsible Person(s)' }}</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_persons')?'error':null">
       <div class="add-select-container">
         <nz-select nzShowSearch

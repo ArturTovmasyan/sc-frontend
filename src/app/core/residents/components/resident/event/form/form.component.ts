@@ -27,6 +27,11 @@ export class FormComponent extends AbstractForm implements OnInit {
   Infinity = Infinity;
   rp_single: boolean = false;
 
+  required = {
+    physician_id: false,
+    responsible_persons: false,
+  };
+
   constructor(
     private formBuilder: FormBuilder,
     private medication$: MedicationService,
@@ -132,7 +137,6 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.form.get('definition_id').valueChanges.subscribe(next => {
           if (next) {
             const definition = this.definitions.filter(item => item.id === next).pop();
-
             if (definition) {
               if (definition.additional_date) {
                 this.form.get('additional_date').enable();
@@ -140,19 +144,38 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('additional_date').disable();
               }
 
-              if (definition.physician) {
+              if (definition.physician || definition.physician_optional) {
                 this.form.get('physician_id').enable();
+                this.form.get('physician_id').clearValidators();
+
+                if (definition.physician) {
+                  this.required.physician_id = true;
+                  console.log(this.required);
+                  this.form.get('physician_id').setValidators([Validators.required]);
+                } else {
+                  this.required.physician_id = false;
+                }
               } else {
                 this.form.get('physician_id').disable();
               }
 
-              if (definition.responsible_person || definition.responsible_person_multi) {
+              if (definition.responsible_person || definition.responsible_person_optional
+                || definition.responsible_person_multi || definition.responsible_person_multi_optional) {
+
                 this.form.get('responsible_persons').enable();
+                this.form.get('responsible_persons').clearValidators();
 
                 if (definition.responsible_person) {
                   this.rp_single = true;
                 } else {
                   this.rp_single = false;
+                }
+
+                if (definition.responsible_person || definition.responsible_person_multi) {
+                  this.required.responsible_persons = true;
+                  this.form.get('responsible_persons').setValidators([Validators.required]);
+                } else {
+                  this.required.responsible_persons = false;
                 }
               } else {
                 this.form.get('responsible_persons').disable();
