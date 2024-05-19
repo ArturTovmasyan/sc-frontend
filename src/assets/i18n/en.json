@@ -467,6 +467,14 @@
       "amount": "Amount",
       "notes": "Notes"
     },
+    "resident-payment-received-item-list": {
+      "id": "ID",
+      "payment_type": "Payment Type",
+      "date": "Date",
+      "amount": "Amount",
+      "transaction_number": "Check/Transaction #",
+      "notes": "Notes"
+    },
     "resident-rent-increase-list": {
       "id": "ID",
       "resident": "Resident",
