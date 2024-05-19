@@ -225,27 +225,23 @@
     },
     "facility-room-list": {
       "id": "ID",
-      "number": "Number",
-      "floor": "Floor",
-      "type": "Type",
-      "disabled": "Disabled",
-      "shared": "Shared",
-      "notes": "Notes",
       "facility": "Facility",
       "shorthand": "Shorthand",
-      "bed_count": "Bed Count"
+      "floor": "Floor",
+      "number": "Number",
+      "private": "Private",
+      "bed_count": "Bed Count",
+      "notes": "Notes"
     },
     "apartment-room-list": {
       "id": "ID",
-      "number": "Number",
-      "floor": "Floor",
-      "type": "Type",
-      "disabled": "Disabled",
-      "shared": "Shared",
-      "notes": "Notes",
       "apartment": "Apartment",
       "shorthand": "Shorthand",
-      "bed_count": "Bed Count"
+      "floor": "Floor",
+      "number": "Number",
+      "private": "Private",
+      "bed_count": "Bed Count",
+      "notes": "Notes"
     },
     "resident-dietary-restriction-list": {
       "id": "ID",
