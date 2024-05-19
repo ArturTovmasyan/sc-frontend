@@ -72,7 +72,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form.get('responsible_persons').disable();
     this.form.get('physician_id').disable();
 
-    this.subscribe('list_definition');
     this.subscribe('rs_resident');
   }
 
@@ -82,13 +81,16 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.definition$.all([{
           key: 'view',
           value: CalendarEventType.RESIDENT.toString()
+        }, {
+          key: 'type',
+          value: params.type
         }]).pipe(first()).subscribe(res => {
           if (res) {
             this.definitions = res;
 
             this.subscribe('vc_definition_id');
 
-            if (params) {
+            if (params && params.definition_id) {
               this.form.get('definition_id').setValue(params.definition_id);
             } else {
               this.form.get('definition_id').setValue(this.form.get('definition_id').value);
@@ -159,6 +161,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get('resident_id').setValue(next);
 
             this.subscribe('list_resident', {facility_id: this.residentSelector$.group.value});
+            this.subscribe('list_definition', {type: this.residentSelector$.type.value});
             this.subscribe('list_resident_physician');
             this.subscribe('list_resident_responsible_person');
           }
