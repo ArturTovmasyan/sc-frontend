@@ -97,6 +97,8 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.role$.all(/** TODO: add space filter **/).pipe(first()).subscribe(res => {
           if (res) {
             this.roles = res;
+
+            //this.form.get('roles').setValue(this.form.get('roles').value);
           }
         });
         break;
