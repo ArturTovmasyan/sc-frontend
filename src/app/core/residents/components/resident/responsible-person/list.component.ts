@@ -320,6 +320,6 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   addIfHasPermission(permission: string, level: number) {
-    return this.auth_$.checkPermission([permission], level, true);
+    return this.auth_$.checkPermission([permission], level);
   }
 }
