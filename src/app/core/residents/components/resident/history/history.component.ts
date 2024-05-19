@@ -6,8 +6,7 @@ import {Resident} from '../../../models/resident';
 
 @Component({
   selector: 'app-resident-history',
-  templateUrl: './history.component.html',
-  styleUrls: ['./history.component.scss']
+  templateUrl: './history.component.html'
 })
 export class HistoryComponent implements OnInit {
   resident: Resident;

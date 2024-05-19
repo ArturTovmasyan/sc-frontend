@@ -9,8 +9,7 @@ import {RoomType} from '../../../../../models/room-type.enum';
 import {DiagnoseType} from '../../../../../models/diagnose-type.enum';
 
 @Component({
-  templateUrl: 'form.component.html',
-  styleUrls: ['../../history.component.scss']
+  templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
   sub_form_enabled: boolean = false;

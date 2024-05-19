@@ -19,9 +19,9 @@
   </nz-form-item>
 
   <fieldset [hidden]="sub_form_enabled" [formGroup]="form.get('allergen')">
-    <legend>Add Allergen
-      <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="toggle_sub_form();"><i nz-icon
-                                                                                                        type="close"></i>
+    <legend class="senior-care-legend">Add Allergen
+      <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="toggle_sub_form();">
+        <i nz-icon type="close"></i>
       </button>
     </legend>
     <nz-form-control [nzSm]="24" [nzXs]="24" [nzValidateStatus]="hasErrors('allergen')?'error':null">

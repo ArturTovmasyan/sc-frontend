@@ -29,6 +29,7 @@ import {ListComponent as SalutationListComponent} from './residents/components/s
 import {ListComponent as PhysicianSpecialityListComponent} from './residents/components/physician-speciality/list.component';
 
 import {ListComponent as PhysicianListComponent} from './residents/components/physician/list.component';
+import {ListComponent as ResponsiblePersonListComponent} from './residents/components/responsible-person/list.component';
 import {ListComponent as ApartmentListComponent} from './residents/components/apartment/list.component';
 import {ListComponent as ApartmentRoomListComponent} from './residents/components/apartment-room/list.component';
 import {ListComponent as FacilityListComponent} from './residents/components/facility/list.component';
@@ -38,10 +39,10 @@ import {ListComponent as RegionListComponent} from './residents/components/regio
 
 import {ResidentComponent} from './residents/components/resident/resident.component';
 import {InfoComponent as ResidentInfoComponent} from './residents/components/resident/info/info.component';
-// import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/responsible-person/list.component';
-// import {ListComponent as ResidentEventListComponent} from './residents/components/event/list.component';
-// import {ListComponent as ResidentRentListComponent} from './residents/components/rent/list.component';
-// import {ListComponent as ResidentPhysicianListComponent} from './residents/components/physician/list.component';
+import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
+import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
+import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
+import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
 import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
 
 import {HistoryComponent as ResidentHistoryComponent} from './residents/components/resident/history/history.component';
@@ -51,8 +52,17 @@ import {HistoryComponent as ResidentHistoryComponent} from './residents/componen
 // import {ListComponent as ResidentAllergyOtherListComponent} from './residents/components/allergy-other/list.component';
 // import {ListComponent as ResidentMedicalHistoryListComponent} from './residents/components/medical-history/list.component';
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
-// import {ListComponent as ResidentAssessmentListComponent} from './residents/components/assessment/list.component';
-// import {ListComponent as ResidentReportListComponent} from './residents/components/report/list.component';
+import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
+// import {ListComponent as ResidentReportListComponent} from './residents/components/resident/report/list.component';
+
+
+import {ListComponent as PaymentSourceListComponent} from './residents/components/payment-source/list.component';
+import {ListComponent as EventDefinitionListComponent} from './residents/components/event-definition/list.component';
+
+import {ListComponent as AssessmentCategoryListComponent} from './residents/components/assessment/category/list.component';
+import {ListComponent as AssessmentFormListComponent} from './residents/components/assessment/form/list.component';
+import {ListComponent as AssessmentCareLevelListComponent} from './residents/components/assessment/care-level/list.component';
+import {ListComponent as AssessmentCareLevelGroupListComponent} from './residents/components/assessment/care-level-group/list.component';
 
 
 const routes: Routes = [
@@ -136,6 +146,14 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'responsible-persons', component: ResponsiblePersonListComponent,
+        data: {
+          title: 'Responsible Persons',
+          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'allergens', component: AllergensListComponent, data: {
           title: 'Allergens',
           roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
@@ -206,6 +224,53 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'payment-sources', component: PaymentSourceListComponent, data: {
+          title: 'Payment Sources',
+          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'event-definitions', component: EventDefinitionListComponent, data: {
+          title: 'Event Definitions',
+          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'assessment', data: {title: 'Assessment'},
+        children: [
+          {
+            path: 'categories', component: AssessmentCategoryListComponent, data: {
+              title: 'Categories',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'forms', component: AssessmentFormListComponent, data: {
+              title: 'Forms',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'care-levels', component: AssessmentCareLevelListComponent, data: {
+              title: 'Care Levels',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'care-level-groups', component: AssessmentCareLevelGroupListComponent, data: {
+              title: 'Care Level Groups',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+            },
+            canActivate: [AuthGuard]
+          }
+        ]
+      },
+      {
         path: 'profile', data: {title: 'Profile'},
         children: [
           {
@@ -237,50 +302,50 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {title: 'Resident', roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']},
         children: [
-          // {
-          //   path: 'responsible-persons',
-          //   component: ResidentDietListComponent,
-          //   outlet: 'resident-details',
-          //   pathMatch: 'full',
-          //   data: {
-          //     title: 'Responsible Persons',
-          //     roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
-          //   },
-          //   canActivate: [AuthGuard]
-          // },
-          // {
-          //   path: 'events',
-          //   component: ResidentEventListComponent,
-          //   outlet: 'resident-details',
-          //   pathMatch: 'full',
-          //   data: {
-          //     title: 'Events',
-          //     roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
-          //   },
-          //   canActivate: [AuthGuard]
-          // },
-          // {
-          //   path: 'rent',
-          //   component: ResidentRentListComponent,
-          //   outlet: 'resident-details',
-          //   pathMatch: 'full',
-          //   data: {
-          //     title: 'Room Rent',
-          //     roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
-          //   },
-          //   canActivate: [AuthGuard]
-          // },
-          // {
-          //   path: 'physicians',
-          //   component: ResidentPhysicianListComponent,
-          //   outlet: 'resident-details',
-          //   pathMatch: 'full',
-          //   data: {
-          //     title: 'Physicians',
-          //     roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
-          //   },
-          //   canActivate: [AuthGuard]
-          // },
+          {
+            path: 'responsible-persons',
+            component: ResidentResponsiblePersonListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Responsible Persons',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'events',
+            component: ResidentEventListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Events',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'rent',
+            component: ResidentRentListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Room Rent',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'physicians',
+            component: ResidentPhysicianListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Physicians',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+            },
+            canActivate: [AuthGuard]
+          },
           {
             path: 'medications',
             component: ResidentMedicationListComponent,
@@ -316,17 +381,17 @@ const routes: Routes = [
             },
             canActivate: [AuthGuard]
           },
-          // {
-          //   path: 'assessments',
-          //   component: ResidentAssessmentListComponent,
-          //   outlet: 'resident-details',
-          //   pathMatch: 'full',
-          //   data: {
-          //     title: 'Assessments',
-          //     roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
-          //   },
-          //   canActivate: [AuthGuard]
-          // },
+          {
+            path: 'assessments',
+            component: ResidentAssessmentListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Assessments',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+            },
+            canActivate: [AuthGuard]
+          },
           // {
           //   path: 'reports',
           //   component: ResidentReportListComponent,

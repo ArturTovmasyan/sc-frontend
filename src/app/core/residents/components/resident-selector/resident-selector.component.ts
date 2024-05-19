@@ -6,11 +6,11 @@ import {FacilityService} from '../../services/facility.service';
 import {ApartmentService} from '../../services/apartment.service';
 import {RegionService} from '../../services/region.service';
 import {Region} from '../../models/region';
-import {Replace} from '../../../../shared/utils/replace.function';
-import {ActivatedRoute, Route, Router} from '@angular/router';
-import {DietService} from '../../services/diet.service';
 import {Resident} from '../../models/resident';
 import {ResidentService} from '../../services/resident.service';
+import {ResidentType} from '../../models/resident-type.enum';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-resident-selector',
@@ -26,6 +26,9 @@ export class ResidentSelectorComponent implements OnInit {
   inactive_residents: Resident[];
 
   group_id: number;
+  active_resident_id: number;
+  inactive_resident_id: number;
+
   resident_id: number;
 
   constructor(
@@ -34,18 +37,23 @@ export class ResidentSelectorComponent implements OnInit {
     private apartment$: ApartmentService,
     private region$: RegionService,
     private resident$: ResidentService,
-    private router$: Router
+    private router$: Router,
+    private route$: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
-    this.resident_id = 0;
+    if (this.route$.firstChild) {
+      this.route$.firstChild.params.subscribe(params => {
+        this.resident_id = +params['id'];
+      });
+    }
 
     this.facility$.all().pipe(first()).subscribe(res => {
       if (res) {
         this.facilities = res;
         this.facilities.forEach((v, i) => {
-          this.facilities[i]['type'] = 0;
+          this.facilities[i]['type'] = ResidentType.FACILITY;
         });
       }
     });
@@ -54,7 +62,7 @@ export class ResidentSelectorComponent implements OnInit {
       if (res) {
         this.apartments = res;
         this.apartments.forEach((v, i) => {
-          this.apartments[i]['type'] = 1;
+          this.apartments[i]['type'] = ResidentType.APARTMENT;
         });
       }
     });
@@ -63,7 +71,7 @@ export class ResidentSelectorComponent implements OnInit {
       if (res) {
         this.regions = res;
         this.regions.forEach((v, i) => {
-          this.regions[i]['type'] = 2;
+          this.regions[i]['type'] = ResidentType.REGION;
         });
       }
     });
@@ -73,23 +81,24 @@ export class ResidentSelectorComponent implements OnInit {
     this.resident$.list_by_options(value.id, value.type, 1).pipe(first()).subscribe(res => {
       if (res) {
         this.active_residents = res;
+        this.active_resident_id = null;
       }
     });
     this.resident$.list_by_options(value.id, value.type, 2).pipe(first()).subscribe(res => {
       if (res) {
         this.inactive_residents = res;
+        this.inactive_resident_id = null;
       }
     });
   }
 
   residentChanged(value: string): void {
     this.resident_id = +value;
-
-    this.router$.navigate(this.routeInfo('medications'));
+    this.router$.navigate(this.routeInfo('responsible-persons'));
   }
 
   routeInfo(route_name: string) {
-    return ['/resident', this.resident_id, { outlets: { 'resident-details': [route_name] } }];
+    return ['/resident', this.resident_id, {outlets: {'resident-details': [route_name]}}];
   }
 
 }

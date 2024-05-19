@@ -7,6 +7,9 @@ import {FacilityDiningRoom} from './facility-dining-room';
 import {CityStateZip} from './city-state-zip';
 import {Region} from './region';
 import {CareLevel} from './care-level';
+import {ResponsiblePerson} from './responsible-person';
+import {Physician} from './physician';
+import {ResidentType} from './resident-type.enum';
 
 export class Resident implements IdInterface {
   id: number;
@@ -21,10 +24,13 @@ export class Resident implements IdInterface {
   photo: string;
   gender: Gender;
 
-  phone: Phone[];
+  phones: Phone[];
 
-  options: ResidentApartmentOption | ResidentFacilityOption | ResidentRegionOption;
+  type: ResidentType;
+  option: ResidentApartmentOption | ResidentFacilityOption | ResidentRegionOption;
 
+  responsible_persons?: ResponsiblePerson[];
+  physicians?: Physician[];
 }
 
 export class ResidentApartmentOption implements IdInterface, ResidentStatus {
@@ -39,7 +45,7 @@ export class ResidentFacilityOption implements IdInterface, ResidentStatus, Resi
   id: number;
 
   room: FacilityRoom;
-  dinig_room: FacilityDiningRoom;
+  dining_room: FacilityDiningRoom;
 
   date_admitted: Date;
   state: State;
@@ -68,7 +74,7 @@ export class ResidentRegionOption implements IdInterface, ResidentStatus, Reside
   polst: boolean;
 }
 
-enum State {
+export enum State {
   ACTIVE = 1,
   INACTIVE = 2,
 }

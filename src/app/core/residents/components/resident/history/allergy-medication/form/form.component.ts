@@ -7,8 +7,7 @@ import {MedicationService} from '../../../../../services/medication.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  templateUrl: 'form.component.html',
-  styleUrls: ['../../history.component.scss']
+  templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
   sub_form_enabled: boolean = false;

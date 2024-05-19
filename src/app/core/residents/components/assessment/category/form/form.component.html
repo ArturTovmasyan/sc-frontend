@@ -1,0 +1,103 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
+      <input nz-input placeholder="Title" formControlName="title">
+      <nz-form-explain *ngIf="hasErrors('title')">
+        <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="multi_item" nzRequired>Multiple Choice</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="multi_item"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('multi_item')">
+        <app-field-errors [errors]="fieldErrors('multi_item')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <fieldset formArrayName="rows">
+    <legend class="senior-care-legend">
+      Row(s)
+      <button [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="add_field('rows');">
+        <i nz-icon type="plus"></i>
+      </button>
+    </legend>
+    <table class="senior-care-form-table table table-hover table-bordered table-sm" *ngIf="get_form_array('rows').controls.length > 0">
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th class="w-75">
+          <nz-form-label nzRequired>Title</nz-form-label>
+        </th>
+        <th class="w-25">
+          <nz-form-label nzRequired>Score</nz-form-label>
+        </th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody dnd-sortable-container [sortableData]="get_form_array('rows').controls">
+      <ng-container *ngFor="let item of get_form_array('rows').controls;let i = index">
+        <tr [formGroupName]="i" dnd-sortable [sortableIndex]="i">
+          <td>
+            <i nz-icon type="drag" theme="outline" dnd-sortable-handle></i>
+          </td>
+          <td>
+
+            <nz-form-item>
+              <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('rows.'+i+'.title')?'error':null">
+                <input nz-input nzSize="small" placeholder="Title" formControlName="title">
+                <nz-form-explain *ngIf="hasErrors('rows.'+i+'.title')">
+                  <app-field-errors [errors]="fieldErrors('rows.'+i+'.title')"></app-field-errors>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </td>
+          <td>
+            <nz-form-item>
+              <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('rows.'+i+'.score')?'error':null">
+                <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="0.1" nzSize="small" placeholder="Score" formControlName="score"></nz-input-number>
+                <nz-form-explain *ngIf="hasErrors('rows.'+i+'.score')">
+                  <app-field-errors [errors]="fieldErrors('rows.'+i+'.score')"></app-field-errors>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </td>
+          <td class="text-center">
+            <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_field('rows', i);">
+              <i nz-icon type="minus"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </fieldset>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+        <ng-container *ngFor="let space of spaces">
+          <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('space_id')">
+        <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

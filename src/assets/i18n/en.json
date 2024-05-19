@@ -74,10 +74,13 @@
     },
     "physician-speciality-list": {
       "id": "ID",
-      "title": "Title"
+      "title": "Title",
+      "space": "Space"
     },
     "physician-list": {
       "id": "ID",
+      "speciality": "Speciality",
+      "salutation": "Salutation",
       "first_name": "First Name",
       "middle_name": "Middle Name",
       "last_name": "Last Name",
@@ -90,6 +93,35 @@
       "website_url": "Website URL",
       "space": "Space",
       "csz_str": "CSZ"
+    },
+    "payment-source-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
+    "assessment-form-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
+    "assessment-category-list": {
+      "id": "ID",
+      "title": "Title",
+      "multi_item": "Multiple choice",
+      "space": "Space"
+    },
+    "assessment-care-level-list": {
+      "id": "ID",
+      "title": "Title",
+      "level_low": "Level Low",
+      "level_high": "Level High",
+      "care_level_group": "Care Level Group",
+      "space": "Space"
+    },
+    "assessment-care-level-group-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
     },
     "apartment-list": {
       "id": "ID",
@@ -172,6 +204,84 @@
       "treatment": "TR",
       "notes": "Notes",
       "prescription_number": "Prescription #"
+    },
+    "responsible-person-list": {
+      "id": "ID",
+      "salutation": "Salutation",
+      "first_name": "First Name",
+      "middle_name": "Middle Name",
+      "last_name": "Last Name",
+      "email": "E-Mail",
+      "address_1": "Address 1",
+      "address_2": "Address 2",
+      "financially": "Financially",
+      "emergency": "Emergency",
+      "space": "Space",
+      "csz_str": "CSZ"
+    },
+    "resident-physician-list": {
+      "id": "ID",
+      "resident": "Resident",
+      "physician": "Physician",
+      "primary": "Primary"
+    },
+    "resident-responsible-person-list": {
+      "id": "ID",
+      "resident": "Resident",
+      "responsible_person": "Responsible Person",
+      "relationship": "Relationship"
+    },
+    "resident-diagnoses-list": {
+      "id": "ID",
+      "diagnosis": "Diagnosis",
+      "type": "Type",
+      "notes": "Notes"
+    },
+    "resident-allergy-medication-list": {
+      "id": "ID",
+      "medication": "Medication",
+      "notes": "Notes"
+    },
+    "resident-allergy-other-list": {
+      "id": "ID",
+      "allergen": "Allergen",
+      "notes": "Notes"
+    },
+    "resident-medical-history-list": {
+      "id": "ID",
+      "condition": "Condition",
+      "date": "Date",
+      "notes": "Notes"
+    },
+    "resident-rent-list": {
+      "id": "ID",
+      "type": "Type",
+      "notes": "Notes",
+      "start": "Start",
+      "end": "End",
+      "amount": "Amount",
+      "resident": "Resident",
+      "space": "Space"
+    },
+    "event-definition-list": {
+      "id": "ID",
+      "title": "Title",
+      "ffc": "FFC",
+      "ihc": "IHC",
+      "il": "IL",
+      "physician": "Physician",
+      "responsible_person": "Responsible Person",
+      "additional_date": "Additional Date"
+    },
+    "resident-event-list": {
+      "id": "ID",
+      "definition": "Definition",
+      "notes": "Notes",
+      "date": "Date",
+      "additional_date": "Additional Date",
+      "amount": "Amount",
+      "physician": "Physician",
+      "responsible_person": "Responsible Person"
     }
   }
 }

@@ -3,9 +3,9 @@ import {OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {TitleService} from '../../../core/services/title.service';
 import {NzModalService} from 'ng-zorro-antd';
-import {AbstractForm} from '../abstract-form/abstract-form';
 import {GridService} from '../../services/grid.service';
-import {FormGroup} from '@angular/forms';
+import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {AbstractForm} from '../abstract-form/abstract-form';
 
 // @Component({
 //   templateUrl: './grid.component.html',
@@ -13,7 +13,8 @@ import {FormGroup} from '@angular/forms';
 // })
 export class GridComponent<T extends IdInterface, Service extends GridService<T>>
   implements OnInit {
-  protected card:boolean = true; // TODO(haykg): review to convert Input
+  protected card: boolean = true; // TODO(haykg): review to convert Input
+  protected loading_edit_modal: boolean = false;
 
   protected loading = false;
 
@@ -58,6 +59,14 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
               Object.entries(field.values).forEach(
                 ([key, value]) => {
                   field.enum.push({label: key, value: value});
+                }
+              );
+
+              field.enum_map = {};
+
+              Object.entries(field.values).forEach(
+                ([key, value]) => {
+                  Object.defineProperty(field.enum_map, <number> value, {value: key});
                 }
               );
 
@@ -180,11 +189,15 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   }
 
   show_modal_edit(): void {
+    this.loading_edit_modal = true;
     this.load_data(this.checkbox_config.ids[0]).subscribe(
       res => {
+        this.loading_edit_modal = false;
+
         this.create_modal(data => this.edit_data(data), res);
       },
       error => {
+        this.loading_edit_modal = false;
         // console.error(error);
       });
   }
@@ -263,7 +276,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
           onClick: () => {
             loading = true;
 
-            const component = <AbstractForm> modal.getContentComponent();
+            const component = <AbstractForm>modal.getContentComponent();
+            component.before_submit();
             const form_data = component.formObject.value;
 
             component.submitted = true;
@@ -295,7 +309,11 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
         const form = component.formObject;
 
         if (result !== null) {
-          this.set_form_data(form, result);
+          component.loaded.subscribe(v => {
+            if (v) {
+              this.set_form_data(component, form, result);
+            }
+          });
         }
 
         valid = form.valid;
@@ -337,23 +355,63 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     return this.service$.removeBulk(ids);
   }
 
-  protected set_form_data(form: FormGroup, result: any) {
+  protected set_form_data(component: AbstractForm, form: FormGroup, result: any) {
     const form_controls = Object.keys(form.controls);
     const data = result;
 
     Object.keys(data).forEach((key) => {
       if (form_controls.includes(key) === false && form_controls.includes(key + '_id') === false) {
+        // console.log('NF', key);
         delete data[key];
       } else if (form_controls.includes(key + '_id')) {
+        // console.log('ID', key);
         data[key + '_id'] = data[key] ? data[key].id : null;
         delete data[key];
-      } else if (data[key] instanceof Array) {
+
+        form.get(key + '_id').setValue(data[key + '_id']);
+      } else if ((data[key] instanceof Array) && !(form.get(key) instanceof FormArray)) {
+        // console.log('AR', key);
         if (data[key].length > 0 && data[key][0] != null && data[key][0].hasOwnProperty('id')) {
           data[key] = data[key].map(v => v.id);
+        }
+        form.get(key).setValue(data[key]);
+      } else if ((data[key] instanceof Array) && (form.get(key) instanceof FormArray)) {
+        // console.log('FA', key);
+        // console.log('FA', data[key]);
+
+        const form_array = <FormArray>form.get(key);
+
+        form_array.controls = [];
+        for (let i = 0; i < data[key].length; i++) {
+          const skeleton = component.get_form_array_skeleton(key);
+          if (skeleton instanceof FormGroup) {
+            // skeleton.setValue(data[key]);
+            this.set_form_data(component, skeleton, data[key][i]);
+            form_array.push(skeleton);
+          } else if (skeleton instanceof FormControl) {
+            // console.log('FC', key);
+            // console.log('FC', data[key][i]);
+
+            skeleton.setValue(data[key][i].category.id); // TODO(haykg): review
+
+            form_array.push(skeleton);
+          }
+        }
+
+        delete data[key];
+      } else if (form.get(key) instanceof FormGroup) {
+        // console.log('FG', key);
+        this.set_form_data(component, <FormGroup>form.get(key), data[key]);
+
+        delete data[key];
+      } else {
+        // console.log('ELSE', key);
+        if (form.get(key) !== null) {
+          form.get(key).setValue(data[key]);
         }
       }
     });
 
-    form.setValue(data);
+    component.after_set_form_data();
   }
 }

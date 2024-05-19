@@ -1,0 +1,98 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
+      <input nz-input placeholder="Title" formControlName="title">
+      <nz-form-explain *ngIf="hasErrors('title')">
+        <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_level_groups" nzRequired>Care Level Groups</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_level_groups')?'error':null">
+      <nz-select nzMode="multiple" nzPlaceHolder="Please select" formControlName="care_level_groups">
+        <ng-container *ngFor="let care_level_group of care_level_groups">
+          <nz-option [nzLabel]="care_level_group.title" [nzValue]="care_level_group.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('care_level_groups')">
+        <app-field-errors [errors]="fieldErrors('care_level_groups')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <fieldset formArrayName="categories">
+    <table class="senior-care-form-table table table-hover table-bordered table-sm">
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>
+          <nz-form-label nzRequired>Title</nz-form-label>
+        </th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody dnd-sortable-container [sortableData]="get_form_array('categories').controls">
+      <tr>
+        <td class="w-50">
+          <nz-form-label>Category</nz-form-label>
+        </td>
+        <td class="w-50">
+          <nz-select nzSize="small" nzMode="default" nzPlaceHolder="Select category" [(ngModel)]="category_selector"
+                     [ngModelOptions]="{standalone: true}">
+            <nz-option *ngFor="let category of categories"
+                       [nzLabel]="category.title"
+                       [nzValue]="category.id"
+                       [nzDisabled]="category.disabled">
+            </nz-option>
+          </nz-select>
+        </td>
+        <td>
+          <button [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
+                  (click)="add_category();">
+            <i nz-icon type="plus"></i>
+          </button>
+        </td>
+      </tr>
+      <tr  *ngFor="let item of get_form_array('categories').controls;let i = index" [formGroupName]="i" dnd-sortable [sortableIndex]="i">
+        <td>
+          <i nz-icon type="drag" theme="outline" dnd-sortable-handle></i>
+        </td>
+        <td>
+          {{ get_title(i) }}
+        </td>
+        <td class="text-center">
+          <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_category(i);">
+            <i nz-icon type="minus"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </fieldset>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+        <ng-container *ngFor="let space of spaces">
+          <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('space_id')">
+        <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

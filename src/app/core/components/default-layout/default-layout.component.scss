@@ -34,4 +34,107 @@
   nz-alert {
     margin: 1rem 0;
   }
+
+
+  .ant-calendar-picker {
+    width: 100%;
+  }
+
+  .ant-input-number {
+    width: 100%;
+  }
+
+  fieldset {
+    position: relative;
+    //background-color: #f5f5f5;
+
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+
+    border: 1px solid #ddd !important;
+    border-radius: 0.3rem;
+
+    legend.senior-care-legend {
+      font-size: 14px;
+      font-weight: bold;
+
+      text-align: center;
+
+      background-color: #ffffff;
+
+      padding: 0.2rem 1.5rem;
+      margin-bottom: 0;
+
+      color: #000;
+      border: 1px solid #ddd;
+      border-radius: 0.3rem;
+
+      button {
+        float: right;
+        line-height: 0;
+      }
+    }
+  }
+
+  .senior-care-form-table, .add-select-container {
+    button {
+      float: right;
+      line-height: 0;
+      margin-top: 0.5rem;
+    }
+
+    nz-select {
+      width: 90%;
+    }
+  }
+
+  .senior-care-form-table {
+    nz-form-label {
+      margin: 0;
+      line-height: 0;
+
+      :after {
+        content: none;
+      }
+
+      &.ant-form-item-label {
+        label {
+          margin-bottom: 0.25rem;
+
+          &:not(.ant-form-item-required) {
+
+            &:before {
+              display: inline-block;
+              margin-right: 4px;
+              content: "*";
+              font-family: SimSun;
+              line-height: 1;
+              font-size: 14px;
+              color: transparent;
+            }
+          }
+        }
+      }
+    }
+
+    .has-error .ant-form-explain {
+      font-size: 0.75rem;
+    }
+
+    nz-form-control {
+      width: 100%;
+
+      nz-select {
+        min-width: 5rem;
+      }
+    }
+
+    th {
+      text-align: center;
+    }
+
+    td {
+      line-height: 2.5;
+    }
+  }
 }

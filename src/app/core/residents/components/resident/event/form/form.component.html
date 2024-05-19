@@ -1,0 +1,84 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="definition_id" nzRequired>Definition</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('definition_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="definition_id">
+        <ng-container *ngFor="let definition of definitions">
+          <nz-option [nzLabel]="definition.title" [nzValue]="definition.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('definition_id')">
+        <app-field-errors [errors]="fieldErrors('definition_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+      <nz-date-picker formControlName="date"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date')">
+        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="show.date">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="additional_date" nzRequired>End Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('additional_date')?'error':null">
+      <nz-date-picker formControlName="additional_date"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('additional_date')">
+        <app-field-errors [errors]="fieldErrors('additional_date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item *ngIf="show.physician">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician_id" nzRequired>Physician</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('physician_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
+        <ng-container *ngFor="let physician of physicians">
+          <nz-option [nzLabel]="physician|physician" [nzValue]="physician.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('physician_id')">
+        <app-field-errors [errors]="fieldErrors('physician_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="show.responsible_person">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_person_id" nzRequired>Responsible Person</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_person_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
+        <ng-container *ngFor="let responsible_person of responsible_persons">
+          <nz-option [nzLabel]="responsible_person|responsible_person" [nzValue]="responsible_person.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('responsible_person_id')">
+        <app-field-errors [errors]="fieldErrors('responsible_person_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
+      <textarea formControlName="notes" nz-input rows="4" placeholder="Description"></textarea>
+      <nz-form-explain *ngIf="hasErrors('notes')">
+        <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

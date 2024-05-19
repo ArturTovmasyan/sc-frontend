@@ -1,0 +1,69 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-tabset [nzSelectedIndex]="tab_selected">
+    <nz-tab nzTitle="Assessment Information">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="assessment_form_id" nzRequired>Assessment Form</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('assessment_form_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="assessment_form_id">
+        <ng-container *ngFor="let assessment_form of assessment_forms">
+          <nz-option [nzLabel]="assessment_form.title" [nzValue]="assessment_form.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('assessment_form_id')">
+        <app-field-errors [errors]="fieldErrors('assessment_form_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+      <nz-date-picker formControlName="date"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date')">
+        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="performed_by" nzRequired>Performed By</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('performed_by')?'error':null">
+      <input nz-input placeholder="Performed By" formControlName="performed_by">
+      <nz-form-explain *ngIf="hasErrors('performed_by')">
+        <app-field-errors [errors]="fieldErrors('performed_by')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
+      <textarea formControlName="notes" nz-input rows="4" placeholder="Description"></textarea>
+      <nz-form-explain *ngIf="hasErrors('notes')">
+        <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+    </nz-tab>
+    <nz-tab nzTitle="Assessment Data" [nzDisabled]="tab_data_disabled">
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="score" nzRequired>Score</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('score')?'error':null">
+          <input nz-input placeholder="Performed By" formControlName="score">
+          <nz-form-explain *ngIf="hasErrors('score')">
+            <app-field-errors [errors]="fieldErrors('score')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+  </nz-tabset>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

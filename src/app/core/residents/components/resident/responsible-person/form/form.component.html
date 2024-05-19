@@ -1,0 +1,37 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_person_id" nzRequired>Responsible Person</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_person_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
+        <ng-container *ngFor="let responsible_person of responsible_persons">
+          <nz-option [nzLabel]="responsible_person|responsible_person" [nzValue]="responsible_person.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('responsible_person_id')">
+        <app-field-errors [errors]="fieldErrors('responsible_person_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="relationship_id" nzRequired>Relationship</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('relationship_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="relationship_id">
+        <ng-container *ngFor="let relationship of relationships">
+          <nz-option [nzLabel]="relationship.name" [nzValue]="relationship.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('relationship_id')">
+        <app-field-errors [errors]="fieldErrors('relationship_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

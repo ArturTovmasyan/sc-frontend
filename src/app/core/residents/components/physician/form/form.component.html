@@ -13,6 +13,42 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item [hidden]="!sub_form_enabled">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="speciality_id" nzRequired>Speciality</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('speciality_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="speciality_id">
+          <ng-container *ngFor="let speciality of specialities">
+            <nz-option [nzLabel]="speciality.title" [nzValue]="speciality.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="toggle_sub_form();"><i nz-icon
+                                                                                                           type="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('salutation_id')">
+        <app-field-errors [errors]="fieldErrors('salutation_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <fieldset [hidden]="sub_form_enabled" [formGroup]="form.get('speciality')">
+    <legend class="senior-care-legend">Add Speciality
+      <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="toggle_sub_form();">
+        <i nz-icon type="close"></i>
+      </button>
+    </legend>
+    <nz-form-control [nzSm]="24" [nzXs]="24" [nzValidateStatus]="hasErrors('speciality')?'error':null">
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('speciality.title')?'error':null">
+        <input nz-input placeholder="Title" formControlName="title">
+        <nz-form-explain *ngIf="hasErrors('speciality.title')">
+          <app-field-errors [errors]="fieldErrors('speciality.title')"></app-field-errors>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-control>
+  </fieldset>
+
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('first_name')?'error':null">

@@ -1,12 +1,16 @@
-<nz-button-group [nzSize]="'large'" class="resident-pages">
+<nz-button-group [nzSize]="'large'" class="resident-pages" *ngIf="resident_id">
   <a nz-button [routerLinkActiveOptions]="{ __cdh__: resident_id }" [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('responsible-persons')"
      title="Responsible Persons">
     <i class="seniorcare seniorcare-3x seniorcare-resident"></i>
   </a>
   <a nz-button [routerLinkActiveOptions]="{ __cdh__: resident_id }" [routerLinkActive]="['active-link']"
+     [routerLink]="routeInfo('events')"
+     title="Events">
+    <i class="seniorcare seniorcare-3x seniorcare-events"></i>
+  </a>
+  <a nz-button [routerLinkActiveOptions]="{ __cdh__: resident_id }" [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('rent')"
-     [nzType]="'dashed'"
      title="Rent">
     <i class="seniorcare seniorcare-3x seniorcare-rent"></i>
   </a>
@@ -32,7 +36,6 @@
   </a>
   <a nz-button [routerLinkActiveOptions]="{ __cdh__: resident_id }" [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('assessments')"
-     [nzType]="'dashed'"
      title="Assessments">
     <i class="seniorcare seniorcare-3x seniorcare-assessment"></i>
   </a>
@@ -47,7 +50,7 @@
   <i class="fa fa-home"></i>
   <nz-select nzShowSearch [(ngModel)]="group_id" (ngModelChange)="load_residents_list($event);">
     <nz-option-group nzLabel="FFC - Facilities">
-      <ng-container nzLabel="FFC - Facilities" *ngFor="let facility of facilities">
+      <ng-container *ngFor="let facility of facilities">
         <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
       </ng-container>
     </nz-option-group>
@@ -63,13 +66,13 @@
     </nz-option-group>
   </nz-select>
   <i class="fa fa-users"></i>
-  <nz-select [nzDisabled]="active_residents == null || active_residents.length == 0" nzShowSearch [(ngModel)]="resident_id" (ngModelChange)="residentChanged($event);">
+  <nz-select [nzDisabled]="active_residents == null || active_residents.length == 0" nzShowSearch [(ngModel)]="active_resident_id" (ngModelChange)="residentChanged($event);">
     <ng-container *ngFor="let resident of active_residents">
       <nz-option [nzLabel]="resident|resident" [nzValue]="resident.id"></nz-option>
     </ng-container>
   </nz-select>
   <i class="fa fa-ban"></i>
-  <nz-select [nzDisabled]="inactive_residents == null || inactive_residents.length == 0" nzShowSearch [(ngModel)]="resident_id" (ngModelChange)="residentChanged($event);">
+  <nz-select [nzDisabled]="inactive_residents == null || inactive_residents.length == 0" nzShowSearch [(ngModel)]="inactive_resident_id" (ngModelChange)="residentChanged($event);">
     <ng-container *ngFor="let resident of inactive_residents">
       <nz-option [nzLabel]="resident|resident" [nzValue]="resident.id"></nz-option>
     </ng-container>

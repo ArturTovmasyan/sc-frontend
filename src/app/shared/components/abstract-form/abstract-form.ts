@@ -1,6 +1,6 @@
-import {AbstractControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
 import {FormError} from '../../models/form-error';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 export class AbstractForm {
   protected form: FormGroup;
@@ -9,15 +9,21 @@ export class AbstractForm {
   protected error: string = null;
   protected message: string = null;
 
+  private _loaded: BehaviorSubject<boolean>;
+
   protected submit: (data: any) => Observable<any>;
   public postSubmit: (data: any) => void = (data: any) => {
   };
+
+  constructor() {
+    this._loaded = new BehaviorSubject<boolean>(true);
+  }
 
   public get f() {
     return this.form.controls;
   }
 
-  public get formObject() {
+  public get formObject(): FormGroup {
     return this.form;
   }
 
@@ -62,12 +68,12 @@ export class AbstractForm {
 
   protected hasErrors(name: string) {
     const control = this.findFieldControl(name);
+
     return control != null && !(control instanceof FormGroup) && (control.dirty || control.touched) && control.errors != null;
   }
 
   public fieldErrors(name: string): FormError[] {
     let control = this.findFieldControl(name);
-
     if (control != null && !(control instanceof FormGroup) && (control.dirty || control.touched) && control.errors != null) {
       return this.getErrors(control);
     } else {
@@ -104,11 +110,11 @@ export class AbstractForm {
     } else if (field.match(/_id$/) && this.form.contains(field.substring(0, field.length - 3))) {
       control = this.form.get(field.substring(0, field.length - 3));
     } else if (field.indexOf('.') > 0) {
-      let group = this.form;
+      let group: (FormGroup | FormArray) = this.form;
       field.split('.').forEach((f) => {
-        if (group.contains(f)) {
+        if ((!(group instanceof FormArray) && group.contains(f)) || (group instanceof FormArray && group.get(f) != null)) {
           control = group.get(f);
-          if (control instanceof FormGroup) {
+          if (control instanceof FormGroup || control instanceof FormArray) {
             group = control;
           }
         } else {
@@ -137,5 +143,50 @@ export class AbstractForm {
     Object.keys(this.form.controls).forEach(key => {
       this.form.controls[key].markAsDirty();
     });
+  }
+
+  get loaded(): BehaviorSubject<boolean> {
+    return this._loaded;
+  }
+
+  public add_field(key: string, value?: any): void {
+    const form_array = this.get_form_array(key);
+    if (form_array) {
+      const item = this.get_form_array_skeleton(key);
+      if (item instanceof FormGroup && value) {
+        item.patchValue(value);
+      } else if (item instanceof FormControl && value) {
+        item.patchValue(value);
+      }
+
+      form_array.push(item);
+    }
+  }
+
+  public remove_field(key: string, i: number): void {
+    const form_array = this.get_form_array(key);
+    if (form_array) {
+      form_array.removeAt(i);
+    }
+  }
+
+  public get_form_array(key: string): FormArray {
+    const control = this.form.get(key);
+
+    if (control instanceof FormArray) {
+      return control as FormArray;
+    }
+
+    return null;
+  }
+
+  public get_form_array_skeleton(key: string): FormGroup | FormControl {
+    return null;
+  }
+
+  public before_submit(): void {
+  }
+
+  public after_set_form_data(): void {
   }
 }

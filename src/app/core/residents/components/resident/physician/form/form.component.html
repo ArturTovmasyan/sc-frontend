@@ -1,0 +1,33 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician_id" nzRequired>Physician</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('physician_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
+        <ng-container *ngFor="let physician of physicians">
+          <nz-option [nzLabel]="physician|physician" [nzValue]="physician.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('physician_id')">
+        <app-field-errors [errors]="fieldErrors('physician_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="primary" nzRequired>Primary</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      <nz-switch formControlName="primary"></nz-switch>
+      <nz-form-explain *ngIf="hasErrors('primary')">
+        <app-field-errors [errors]="fieldErrors('primary')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

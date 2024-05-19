@@ -1,15 +1,11 @@
 import {ActivatedRoute} from '@angular/router';
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {first} from 'rxjs/operators';
 import {ResidentService} from '../../services/resident.service';
 import {Resident} from '../../models/resident';
-import {Replace} from '../../../../shared/utils/replace.function';
-import {ResidentDietService} from '../../services/resident-diet.service';
 import {TitleService} from '../../../services/title.service';
 
 @Component({
-  templateUrl: './resident.component.html',
-  styleUrls: ['./resident.component.scss']
+  templateUrl: './resident.component.html'
 })
 export class ResidentComponent implements OnInit {
   protected title: string = null;
@@ -23,7 +19,7 @@ export class ResidentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    Replace(this.el);
+    // Replace(this.el);
 
     this.route$.params.subscribe(params => {
       // console.log(params);

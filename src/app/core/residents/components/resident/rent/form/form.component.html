@@ -1,0 +1,130 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type" nzRequired>Type</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="type">
+        <ng-container *ngFor="let type of types">
+          <nz-option [nzLabel]="(type.name)|translate" [nzValue]="type.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('type')">
+        <app-field-errors [errors]="fieldErrors('type')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="start" nzRequired>Start Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('start')?'error':null">
+      <nz-date-picker formControlName="start"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('start')">
+        <app-field-errors [errors]="fieldErrors('start')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="end" nzRequired>End Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('end')?'error':null">
+      <nz-date-picker formControlName="end"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('end')">
+        <app-field-errors [errors]="fieldErrors('end')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="amount" nzRequired>Amount</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('amount')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" placeholder="Amount"
+                       formControlName="amount"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('amount')">
+        <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
+      <textarea formControlName="notes" nz-input rows="4" placeholder="Description"></textarea>
+      <nz-form-explain *ngIf="hasErrors('notes')">
+        <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <fieldset formArrayName="source">
+    <table class="senior-care-form-table table table-hover table-bordered table-sm">
+      <thead>
+      <tr>
+        <th class="w-50">
+          <nz-form-label>Title</nz-form-label>
+        </th>
+        <th class="w-50">
+          <nz-form-label nzRequired>Amount</nz-form-label>
+        </th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <nz-form-label>Source(s)</nz-form-label>
+        </td>
+        <td>
+          <nz-select nzSize="small" nzMode="default" nzPlaceHolder="Select source" [(ngModel)]="source_selector"
+                     [ngModelOptions]="{standalone: true}">
+            <nz-option *ngFor="let payment_source of payment_sources"
+                       [nzLabel]="payment_source.title"
+                       [nzValue]="payment_source.id"
+                       [nzDisabled]="payment_source.disabled">
+            </nz-option>
+          </nz-select>
+        </td>
+        <td>
+          <button [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
+                  (click)="add_source();">
+            <i nz-icon type="plus"></i>
+          </button>
+        </td>
+      </tr>
+      <tr *ngFor="let item of get_form_array('source').controls;let i = index" [formGroupName]="i">
+        <td>
+          <input type="hidden" formControlName="id">
+          {{ get_title(i) }}
+        </td>
+        <td>
+          <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="0.01" nzSize="small" placeholder="Amount"
+                           formControlName="amount"></nz-input-number>
+        </td>
+        <td class="text-center">
+          <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_source(i);">
+            <i nz-icon type="minus"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td>
+          Remaining
+        </td>
+        <td colspan="2">
+          {{ remaining() }}
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </fieldset>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

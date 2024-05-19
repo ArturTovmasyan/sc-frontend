@@ -5,11 +5,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import en from '@angular/common/locales/en';
-import {en_US, NgZorroAntdModule, NZ_I18N} from 'ng-zorro-antd';
+import {en_US, NgZorroAntdModule, NZ_I18N, NzFormExplainComponent, NzFormItemComponent, NzFormModule} from 'ng-zorro-antd';
 import {AppAsideModule, AppBreadcrumbModule, AppFooterModule, AppHeaderModule, AppSidebarModule} from '@coreui/angular';
 import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {BsDropdownModule, TabsModule} from 'ngx-bootstrap';
 import {ColorPickerModule} from 'ngx-color-picker';
+import {DndModule} from '@beyerleinf/ngx-dnd';
 
 import {CoreRoutingModule} from './core-routing.module';
 
@@ -71,6 +72,9 @@ import {FormComponent as PhysicianSpecialityFormComponent} from './residents/com
 import {ListComponent as PhysicianListComponent} from './residents/components/physician/list.component';
 import {FormComponent as PhysicianFormComponent} from './residents/components/physician/form/form.component';
 
+import {ListComponent as ResponsiblePersonListComponent} from './residents/components/responsible-person/list.component';
+import {FormComponent as ResponsiblePersonFormComponent} from './residents/components/responsible-person/form/form.component';
+
 import {ListComponent as ApartmentListComponent} from './residents/components/apartment/list.component';
 import {FormComponent as ApartmentFormComponent} from './residents/components/apartment/form/form.component';
 
@@ -93,18 +97,13 @@ import {ResidentSelectorComponent} from './residents/components/resident-selecto
 
 import {ResidentComponent} from './residents/components/resident/resident.component';
 import {InfoComponent as ResidentInfoComponent} from './residents/components/resident/info/info.component';
+import {FormComponent as ResidentFormComponent} from './residents/components/resident/form/form.component';
 
-// import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
-// import {FormComponent as ResidentResponsiblePersonFormComponent} from './residents/components/resident/responsible-person/form/form.component';
-//
-// import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
-// import {FormComponent as ResidentEventFormComponent} from './residents/components/resident/event/form/form.component';
-//
-// import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
-// import {FormComponent as ResidentRentFormComponent} from './residents/components/resident/rent/form/form.component';
-//
-// import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
-// import {FormComponent as ResidentPhysicianFormComponent} from './residents/components/resident/physician/form/form.component';
+import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
+import {FormComponent as ResidentResponsiblePersonFormComponent} from './residents/components/resident/responsible-person/form/form.component';
+
+import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
+import {FormComponent as ResidentPhysicianFormComponent} from './residents/components/resident/physician/form/form.component';
 
 import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
 import {FormComponent as ResidentMedicationFormComponent} from './residents/components/resident/medication/form/form.component';
@@ -126,12 +125,36 @@ import {FormComponent as ResidentMedicalHistoryFormComponent} from './residents/
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
 import {FormComponent as ResidentDietFormComponent} from './residents/components/resident/dietary-restriction/form/form.component';
 
-// import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
-// import {FormComponent as ResidentAssessmentFormComponent} from './residents/components/resident/assessment/form/form.component';
-//
+import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
+import {FormComponent as ResidentEventFormComponent} from './residents/components/resident/event/form/form.component';
+
+import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
+import {FormComponent as ResidentRentFormComponent} from './residents/components/resident/rent/form/form.component';
+
+import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
+import {FormComponent as ResidentAssessmentFormComponent} from './residents/components/resident/assessment/form/form.component';
+
 // import {ListComponent as ResidentReportListComponent} from './residents/components/resident/report/list.component';
 // import {FormComponent as ResidentReportFormComponent} from './residents/components/resident/report/form/form.component';
 
+
+import {ListComponent as PaymentSourceListComponent} from './residents/components/payment-source/list.component';
+import {FormComponent as PaymentSourceFormComponent} from './residents/components/payment-source/form/form.component';
+
+import {ListComponent as EventDefinitionListComponent} from './residents/components/event-definition/list.component';
+import {FormComponent as EventDefinitionFormComponent} from './residents/components/event-definition/form/form.component';
+
+import {ListComponent as AssessmentFormListComponent} from './residents/components/assessment/form/list.component';
+import {FormComponent as AssessmentFormFormComponent} from './residents/components/assessment/form/form/form.component';
+import {ListComponent as AssessmentCategoryListComponent} from './residents/components/assessment/category/list.component';
+import {FormComponent as AssessmentCategoryFormComponent} from './residents/components/assessment/category/form/form.component';
+import {ListComponent as AssessmentCareLevelListComponent} from './residents/components/assessment/care-level/list.component';
+import {FormComponent as AssessmentCareLevelFormComponent} from './residents/components/assessment/care-level/form/form.component';
+import {ListComponent as AssessmentCareLevelGroupListComponent} from './residents/components/assessment/care-level-group/list.component';
+import {FormComponent as AssessmentCareLevelGroupFormComponent} from './residents/components/assessment/care-level-group/form/form.component';
+
+// import {ListComponent as ListComponent} from './residents/components//list.component';
+// import {FormComponent as FormComponent} from './residents/components//form/form.component';
 
 
 
@@ -139,6 +162,11 @@ import {FormComponent as ResidentDietFormComponent} from './residents/components
 import {CityStateZipPipe} from './residents/pipes/csz.pipe';
 import {PhysicianPipe} from './residents/pipes/physician.pipe';
 import {ResidentPipe} from './residents/pipes/resident.pipe';
+import {ResponsiblePersonPipe} from './residents/pipes/responsible-person.pipe';
+import {MomentModule} from 'ngx-moment';
+import {GenderPipe} from './residents/pipes/gender.pipe';
+import {PhoneType} from './residents/models/phone-type.enum';
+import {PhoneTypePipe} from './residents/pipes/phone-type.pipe';
 
 registerLocaleData(en);
 
@@ -148,9 +176,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 @NgModule({
   declarations: [
+    GenderPipe,
+    PhoneTypePipe,
     CityStateZipPipe,
     PhysicianPipe,
     ResidentPipe,
+    ResponsiblePersonPipe,
 
     CoreComponent,
 
@@ -211,6 +242,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PhysicianListComponent,
     PhysicianFormComponent,
 
+    ResponsiblePersonListComponent,
+    ResponsiblePersonFormComponent,
+
     ApartmentListComponent,
     ApartmentFormComponent,
 
@@ -233,6 +267,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentComponent,
     ResidentInfoComponent,
+    ResidentFormComponent,
 
     ResidentDietListComponent,
     ResidentDietFormComponent,
@@ -240,17 +275,17 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentMedicationListComponent,
     ResidentMedicationFormComponent,
 
-    // ResidentResponsiblePersonListComponent,
-    // ResidentResponsiblePersonFormComponent,
+    ResidentResponsiblePersonListComponent,
+    ResidentResponsiblePersonFormComponent,
 
-    // ResidentEventListComponent,
-    // ResidentEventFormComponent,
+    ResidentEventListComponent,
+    ResidentEventFormComponent,
 
-    // ResidentRentListComponent,
-    // ResidentRentFormComponent,
+    ResidentRentListComponent,
+    ResidentRentFormComponent,
 
-    // ResidentPhysicianListComponent,
-    // ResidentPhysicianFormComponent,
+    ResidentPhysicianListComponent,
+    ResidentPhysicianFormComponent,
 
     ResidentHistoryComponent,
 
@@ -266,11 +301,29 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentMedicalHistoryListComponent,
     ResidentMedicalHistoryFormComponent,
 
-    // ResidentAssessmentListComponent,
-    // ResidentAssessmentFormComponent,
+    ResidentAssessmentListComponent,
+    ResidentAssessmentFormComponent,
 
     // ResidentReportListComponent,
     // ResidentReportFormComponent,
+
+    PaymentSourceListComponent,
+    PaymentSourceFormComponent,
+
+    AssessmentCategoryListComponent,
+    AssessmentCategoryFormComponent,
+
+    AssessmentFormListComponent,
+    AssessmentFormFormComponent,
+
+    AssessmentCareLevelListComponent,
+    AssessmentCareLevelFormComponent,
+
+    AssessmentCareLevelGroupListComponent,
+    AssessmentCareLevelGroupFormComponent,
+
+    EventDefinitionListComponent,
+    EventDefinitionFormComponent,
 
   ],
   entryComponents: [
@@ -300,6 +353,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     PhysicianFormComponent,
 
+    ResponsiblePersonFormComponent,
+
     ApartmentFormComponent,
     ApartmentRoomFormComponent,
 
@@ -309,19 +364,30 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     RegionFormComponent,
 
+    ResidentFormComponent,
+
     ResidentDietFormComponent,
     ResidentMedicationFormComponent,
 
-    // ResidentResponsiblePersonFormComponent,
-    // ResidentEventFormComponent,
-    // ResidentRentFormComponent,
-    // ResidentPhysicianFormComponent,
+    ResidentResponsiblePersonFormComponent,
+    ResidentEventFormComponent,
+    ResidentRentFormComponent,
+    ResidentPhysicianFormComponent,
     ResidentDiagnoseFormComponent,
     ResidentAllergyMedicationFormComponent,
     ResidentAllergyOtherFormComponent,
     ResidentMedicalHistoryFormComponent,
-    // ResidentAssessmentFormComponent,
+    ResidentAssessmentFormComponent,
     // ResidentReportFormComponent,
+
+
+    PaymentSourceFormComponent,
+    EventDefinitionFormComponent,
+
+    AssessmentCategoryFormComponent,
+    AssessmentFormFormComponent,
+    AssessmentCareLevelFormComponent,
+    AssessmentCareLevelGroupFormComponent,
 
   ],
   imports: [
@@ -340,14 +406,19 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     NgZorroAntdModule,
+    NzFormModule,
     ColorPickerModule,
+    MomentModule,
+    DndModule.forRoot(),
     CoreRoutingModule,
     SharedModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: NZ_I18N, useValue: en_US}
+    {provide: NZ_I18N, useValue: en_US},
+    {provide: NzFormItemComponent},
+    {provide: NzFormExplainComponent},
   ],
   exports: [
     CityStateZipPipe

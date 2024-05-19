@@ -16,111 +16,153 @@ export const navItems = [
     name: 'Space???',
   },
   {
-    name: 'Facilities',
     url: '/facilities',
+    name: 'Facilities',
     icon: 'icon-people',
     children: [
       {
-        name: 'List',
         url: '/facilities',
+        name: 'List',
         icon: 'icon-puzzle'
       },
       {
-        name: 'Dining Rooms',
         url: '/facility-dining-rooms',
+        name: 'Dining Rooms',
         icon: 'icon-puzzle'
       },
       {
-        name: 'Rooms',
         url: '/facility-rooms',
+        name: 'Rooms',
         icon: 'icon-puzzle'
       },
     ]
   },
   {
-    name: 'Apartments',
     url: '/apartments',
+    name: 'Apartments',
     icon: 'icon-people',
     children: [
       {
-        name: 'List',
         url: '/apartments',
+        name: 'List',
         icon: 'icon-puzzle'
       },
       {
-        name: 'Rooms',
         url: '/apartment-rooms',
+        name: 'Rooms',
         icon: 'icon-puzzle'
       },
     ]
   },
   {
-    name: 'Regions',
     url: '/regions',
+    name: 'Regions',
     icon: 'icon-people'
   },
   {
-    name: 'Physicians',
+    url: '/responsible-persons',
+    name: 'Responsible Persons',
+    icon: 'icon-people'
+  },
+  {
     url: '/physicians',
+    name: 'Physicians',
     icon: 'icon-people'
   },
   {
-    name: 'Physician Specialities',
     url: '/physician-specialities',
+    name: 'Physician Specialities',
     icon: 'icon-people'
+  },
+  {
+    url: '/assessment',
+    name: 'Assessments',
+    icon: 'icon-people',
+    children: [
+      {
+        url: '/assessment/categories',
+        name: 'Categories',
+        icon: 'icon-puzzle'
+      },
+      {
+        url: '/assessment/forms',
+        name: 'Forms',
+        icon: 'icon-puzzle'
+      },
+      {
+        url: '/assessment/care-levels',
+        name: 'Care Levels',
+        icon: 'icon-puzzle'
+      },
+      {
+        url: '/assessment/care-level-groups',
+        name: 'Care Level Groups',
+        icon: 'icon-puzzle'
+      }
+    ]
   },
   {
     title: true,
     name: 'Common',
   },
   {
-    name: 'Allergens',
     url: '/allergens',
+    name: 'Allergens',
     icon: 'icon-people'
   },
   {
-    name: 'Diagnoses',
     url: '/diagnoses',
+    name: 'Diagnoses',
     icon: 'icon-people'
   },
   {
-    name: 'Diets',
     url: '/diets',
+    name: 'Diets',
     icon: 'icon-people'
   },
   {
-    name: 'Medical History Condition',
     url: '/medical-history-conditions',
+    name: 'Medical History Condition',
     icon: 'icon-people'
   },
   {
-    name: 'Medications',
     url: '/medications',
+    name: 'Medications',
     icon: 'icon-people'
   },
   {
-    name: 'Medication Form Factors',
     url: '/medication-form-factors',
+    name: 'Medication Form Factors',
     icon: 'icon-people'
   },
   {
-    name: 'Relationships',
     url: '/relationships',
+    name: 'Relationships',
     icon: 'icon-people'
   },
   {
-    name: 'Care Levels',
     url: '/care-levels',
+    name: 'Care Levels',
     icon: 'icon-people'
   },
   {
-    name: 'City/State/Zip',
     url: '/city-state-zips',
+    name: 'City/State/Zip',
     icon: 'icon-people'
   },
   {
-    name: 'Salutations',
     url: '/salutations',
+    name: 'Salutations',
+    icon: 'icon-people'
+  },
+  {
+    url: '/payment-sources',
+    name: 'Payment Sources',
+    icon: 'icon-people'
+  },
+  {
+    url: '/event-definitions',
+    name: 'Event Definitions',
     icon: 'icon-people'
   },
   {
@@ -128,13 +170,13 @@ export const navItems = [
     name: 'Administration',
   },
   {
-    name: 'Roles',
     url: '/roles',
+    name: 'Roles',
     icon: 'icon-people'
   },
   {
-    name: 'Users',
     url: '/users',
+    name: 'Users',
     icon: 'icon-user'
   }
 ];

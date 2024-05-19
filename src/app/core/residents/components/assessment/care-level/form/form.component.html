@@ -1,0 +1,68 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
+      <input nz-input placeholder="Title" formControlName="title">
+      <nz-form-explain *ngIf="hasErrors('title')">
+        <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="level_low" nzRequired>Level Low</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('level_low')?'error':null">
+      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" placeholder="Level Low" formControlName="level_low"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('level_low')">
+        <app-field-errors [errors]="fieldErrors('level_low')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="level_high">Level High</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('level_high')?'error':null">
+      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" placeholder="Level High" formControlName="level_high"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('level_high')">
+        <app-field-errors [errors]="fieldErrors('level_high')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_level_group_id" nzRequired>Care Level Group</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_level_group_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="care_level_group_id">
+        <ng-container *ngFor="let care_level_group of care_level_groups">
+          <nz-option [nzLabel]="care_level_group.title" [nzValue]="care_level_group.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('care_level_group_id')">
+        <app-field-errors [errors]="fieldErrors('care_level_group_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+        <ng-container *ngFor="let space of spaces">
+          <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('space_id')">
+        <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
