@@ -165,7 +165,7 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
     this.document = document;
 
     if (this.document) {
-      this.url = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.document.file}&embedded=true`);
+      this.url = this.sanitizer.bypassSecurityTrustResourceUrl(`https://view.officeapps.live.com/op/view.aspx?src=${this.document.file}`);
       // setTimeout(() => PDFObject.embed(this.document.file, '#documentsPDFViewer'), 250);
     }
   }
