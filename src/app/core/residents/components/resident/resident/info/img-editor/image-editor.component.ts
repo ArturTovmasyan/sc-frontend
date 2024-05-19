@@ -36,6 +36,14 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
     });
   }
 
+  exportImage(event) {
+    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+  }
+
+  readyImage(event) {
+    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+  }
+
   rotate(turn: string): void {
     this.angularCropper.cropper.rotate(turn === 'left' ? -45 : 45);
 

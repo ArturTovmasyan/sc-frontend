@@ -38,7 +38,10 @@
   <angular-cropper *ngIf="imageUrl"
                    #angularCropper
                    [cropperOptions]="cropperConfig"
-                   [imageUrl]="imageUrl">
+                   [imageUrl]="imageUrl"
+                   (ready)="readyImage($event)"
+                   (export)="exportImage($event)"
+  >
   </angular-cropper>
 
   <nz-form-item *ngIf="formErrors()">
