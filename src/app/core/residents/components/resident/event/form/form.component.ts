@@ -118,7 +118,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('responsible_persons').setValue([id]);
               } else {
                 const rps = this.form.get('responsible_persons').value;
-                rps.push(params.role_id);
+                rps.push(id);
                 this.form.get('responsible_persons').setValue(rps);
               }
 
