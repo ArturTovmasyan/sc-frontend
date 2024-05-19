@@ -21,7 +21,7 @@ export class ListComponent extends GridComponent<Discount, DiscountService> impl
 
     this.component = FormComponent;
     this.permission = 'persistence-common-discount';
-    this.name = 'credit-discount';
+    this.name = 'discount-list';
   }
 
   ngOnInit(): void {
