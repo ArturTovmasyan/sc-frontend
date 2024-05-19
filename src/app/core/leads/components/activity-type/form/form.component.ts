@@ -40,7 +40,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       editable: [true, Validators.required],
       deletable: [true, Validators.required],
 
-      status_id: [null, Validators.required]
+      default_status_id: [null, Validators.required]
     });
 
     this.subscribe('list_activity_status');

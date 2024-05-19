@@ -12,15 +12,15 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="status_id" nzRequired>Default status</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('status_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="status_id">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="default_status_id" nzRequired>Default status</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('default_status_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="default_status_id">
         <ng-container *ngFor="let activity_status of activity_statuses">
           <nz-option [nzLabel]="activity_status.title" [nzValue]="activity_status.id"></nz-option>
         </ng-container>
       </nz-select>
-      <nz-form-explain *ngIf="hasErrors('status_id')">
-        <app-field-errors [errors]="fieldErrors('status_id')"></app-field-errors>
+      <nz-form-explain *ngIf="hasErrors('default_status_id')">
+        <app-field-errors [errors]="fieldErrors('default_status_id')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
