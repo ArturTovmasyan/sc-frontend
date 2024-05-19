@@ -15,6 +15,8 @@ import {FormComponent as MedicalHistoryConditionFormComponent} from '../../../..
 export class FormComponent extends AbstractForm implements OnInit {
   conditions: MedicalHistoryCondition[];
 
+  private old_date: Date = null;
+
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
@@ -68,9 +70,17 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
+  after_set_form_data(): void {
+    this.old_date = this.form.get('date').value;
+  }
+
   formValue(): void {
     const value = super.formValue();
-    value.date = DateHelper.makeUTCDateOnly(value.date);
+
+    if (this.old_date === null || value.date.getTime() !== this.old_date.getTime()) {
+      value.date = DateHelper.makeUTCDateOnly(value.date);
+    }
+
     return value;
   }
 

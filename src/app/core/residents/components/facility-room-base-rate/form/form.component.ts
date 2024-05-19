@@ -18,6 +18,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   room_types: FacilityRoomType[];
   care_levels: CareLevel[];
 
+  private old_date: Date = null;
+
   formatterDollar = (value: number) => (new CurrencyPipe('en-US')).transform(value, 'USD', 'symbol-narrow', '1.2-2');
 
   constructor(
@@ -103,9 +105,17 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
+  after_set_form_data(): void {
+    this.old_date = this.form.get('date').value;
+  }
+
   formValue(): void {
     const value = super.formValue();
-    value.date = DateHelper.makeUTCDateOnly(value.date);
+
+    if (this.old_date === null || value.date.getTime() !== this.old_date.getTime()) {
+      value.date = DateHelper.makeUTCDateOnly(value.date);
+    }
+
     return value;
   }
 

@@ -47,6 +47,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   disabledDate: (date: Date) => boolean;
 
+  private old_birthday: Date = null;
+
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
@@ -170,7 +172,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get('csz_id').setValue(res.csz ? res.csz.id : null);
 
 
-            switch(this.group_type) {
+            switch (this.group_type) {
               case GroupType.FACILITY:
                 this.form.get('dnr').enable();
                 this.form.get('polst').enable();
@@ -269,6 +271,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   after_set_form_data(): void {
     super.after_set_form_data();
 
+    this.old_birthday = this.form.get('birthday').value;
+
     if (this.edit_mode) {
       this.subscribe('last_admission');
       this.photo_file_name = '(Loaded)';
@@ -285,7 +289,11 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   formValue(): void {
     const value = super.formValue();
-    value.birthday = DateHelper.makeUTCDateOnly(value.birthday);
+
+    if (this.old_birthday === null || value.birthday.getTime() !== this.old_birthday.getTime()) {
+      value.birthday = DateHelper.makeUTCDateOnly(value.birthday);
+    }
+
     return value;
   }
 
