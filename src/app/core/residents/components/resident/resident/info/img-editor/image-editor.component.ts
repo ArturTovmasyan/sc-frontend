@@ -17,7 +17,7 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
     scalable: true,
     zoomable: true,
     viewMode: 2,
-    checkCrossOrigin: false,
+    checkCrossOrigin: true,
     cropend: (event) => {
       this.exportImage();
     }
