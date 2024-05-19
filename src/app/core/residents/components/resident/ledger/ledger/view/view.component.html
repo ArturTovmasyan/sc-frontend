@@ -177,7 +177,7 @@
                       <tr class="text-center">
                         <td style="width: 15% !important;">{{ ledger.date_created|date:'MM/01/y' }}</td>
                         <td style="width: 20% !important;">Prior Balance</td>
-                        <td style="width: 15% !important;">{{ get_prior_date()|date:'MMMM' }}</td>
+                        <td style="width: 15% !important;"></td>
                         <td style="width: 15% !important;"></td>
                         <td style="width: 20% !important;"></td>
                         <td style="width: 15% !important; color:#FF0000">
@@ -258,7 +258,7 @@
                       <td style="width: 15% !important;"></td>
                       <td style="width: 20% !important;"><strong>Balance Due</strong></td>
                       <td
-                        style="width: 15% !important;"><strong>{{ledger.private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}}</strong></td>
+                        style="width: 15% !important;"><strong>{{ledger.private_pay_balance_due + ledger.prior_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}}</strong></td>
                     </tr>
                   </table>
                 </div>
@@ -321,7 +321,7 @@
                         <tr class="text-center">
                           <td style="width: 15% !important;">{{ ledger.date_created|date:'MM/01/y' }}</td>
                           <td style="width: 20% !important;">Prior Balance</td>
-                          <td style="width: 15% !important;">{{ get_prior_date()|date:'MMMM' }}</td>
+                          <td style="width: 15% !important;"></td>
                           <td style="width: 15% !important;"></td>
                           <td style="width: 20% !important;"></td>
                           <td style="width: 15% !important; color:#FF0000">
@@ -364,7 +364,7 @@
                         <td style="width: 15% !important;"></td>
                         <td style="width: 20% !important;"><strong>Balance Due</strong></td>
                         <td
-                          style="width: 15% !important;"><strong>{{ledger.not_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}}</strong></td>
+                          style="width: 15% !important;"><strong>{{ledger.not_private_pay_balance_due + ledger.prior_not_private_pay_balance_due|currency:'USD':'symbol-narrow':'1.2-2'}}</strong></td>
                       </tr>
                     </table>
                   </div>
