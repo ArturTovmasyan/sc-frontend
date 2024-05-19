@@ -306,7 +306,7 @@
       "period": "Period",
       "amount": "Amount",
       "notes": "Notes",
-      "sources": "Sources",
+      "info": "Sources",
       "space": "Space"
     },
     "resident-event-list": {
