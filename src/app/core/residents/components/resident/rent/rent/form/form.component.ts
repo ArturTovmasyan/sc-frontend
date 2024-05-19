@@ -256,4 +256,14 @@ export class FormComponent extends AbstractForm implements OnInit {
     return 0;
   }
 
+  formValue(): void {
+    const value = super.formValue();
+    value.start = DateHelper.makeUTCDateTimeOnly(value.start);
+
+    if (value.end) {
+      value.end = DateHelper.makeUTCDateTimeOnly(value.end);
+    }
+
+    return value;
+  }
 }
