@@ -174,7 +174,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
         );
 
         this.header = this.header.map(header_row => Object.values(header_row));
-        this.header_helper = new Array(this.header[0].length);
+        this.header_helper = new Array(this.header[0].filter(v => v.field.hasOwnProperty('hidden') && v.field.hidden === false).length);
 
         this.reload_data(reset);
       }

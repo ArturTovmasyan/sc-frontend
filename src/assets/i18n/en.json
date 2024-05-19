@@ -134,6 +134,11 @@
     "payment-source-list": {
       "id": "ID",
       "title": "Title",
+      "amount": "Amount",
+      "period": "Period",
+      "away_reduction": "Away Reduction",
+      "care_level_adjustment": "Care Level Adjustment",
+      "base_rates": "Base Rates",
       "space": "Space"
     },
     "event-definition-list": {
