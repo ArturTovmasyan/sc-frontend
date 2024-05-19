@@ -429,6 +429,7 @@
       "id": "ID",
       "date": "Date",
       "contacts": "Contacts",
+      "users": "Users",
       "type": "Type",
       "organization": "Organization",
       "notes": "Notes"
