@@ -14,6 +14,7 @@ import {DateHelper} from '../../../../../shared/helpers/date-helper';
 import {AssessmentForm} from '../../../models/assessment-form';
 import {AssessmentFormService} from '../../../services/assessment-form.service';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {differenceInCalendarDays} from 'date-fns';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -31,6 +32,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   format_date_to: string = 'MM/dd/yyyy';
 
   title: string;
+
+  disabled: boolean;
 
   show: {
     group: boolean, group_multi: boolean, group_all: boolean,
@@ -64,6 +67,16 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   disabledDate = (current: Date): boolean => {
     return current > DateHelper.newDate();
+  };
+
+  disabledEndDate = (current: Date): boolean => {
+    this.disabled = current > DateHelper.newDate();
+
+    if (this.form.get('date_to').enabled && this.form.get('date_from').enabled) {
+      this.disabled = current > DateHelper.newDate() || differenceInCalendarDays(current, this.form.get('date_from').value) < 0;
+    }
+
+    return this.disabled;
   };
 
   constructor(

@@ -29,7 +29,7 @@
   <nz-form-item *ngIf="show.date_to">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date_to" nzRequired>Date to</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date_to')?'error':null">
-      <nz-date-picker *ngIf="format_date_to === 'MM/dd/yyyy'" formControlName="date_to" [nzFormat]="format_date_to" [nzDisabledDate]="disabledDate"></nz-date-picker>
+      <nz-date-picker *ngIf="format_date_to === 'MM/dd/yyyy'" formControlName="date_to" [nzFormat]="format_date_to" [nzDisabledDate]="disabledEndDate"></nz-date-picker>
       <nz-month-picker *ngIf="format_date_to === 'MM/yyyy'" formControlName="date_to" [nzFormat]="format_date_to" [nzDisabledDate]="disabledDate"></nz-month-picker>
       <nz-year-picker *ngIf="format_date_to === 'yyyy'" formControlName="date_to" [nzFormat]="format_date_to" [nzDisabledDate]="disabledDate"></nz-year-picker>
       <nz-form-explain *ngIf="hasErrors('date_to')">
