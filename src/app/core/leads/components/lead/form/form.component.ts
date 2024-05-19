@@ -415,6 +415,17 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
       data.state_effective_date = DateHelper.convertUTC(data.state_effective_date);
 
       this.form.get('initial_contact_date').disable();
+
+      if (data.referral === null) {
+        data.referral = {
+          id: '',
+          type_id: null,
+          organization_id: null,
+          contact_id: null,
+          notes: ''
+        };
+      }
+
     } else {
       this.form.get('initial_contact_date').enable();
     }
