@@ -60,16 +60,19 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
   }
 
   load_admissions() {
-    if (this.residentSelector$.resident.value !== null && this.residentSelector$.type.value !== null) {
+    const resident = this.residentSelector$.resident ? this.residentSelector$.resident.value : null;
+    const type = this.residentSelector$.type ? this.residentSelector$.type.value : null;
+
+    if (resident !== null && type !== null) {
       const param_resident = this.params.filter(v => v.key === 'resident_id').pop();
 
       if (param_resident) {
-        this.params.push({key: 'resident_id', value: this.residentSelector$.resident.value.toString()});
+        this.params.push({key: 'resident_id', value: resident.toString()});
       } else {
-        param_resident.value = this.residentSelector$.resident.value.toString();
+        param_resident.value = resident.toString();
       }
 
-      if (this.residentSelector$.type.value === GroupType.APARTMENT) {
+      if (type === GroupType.APARTMENT) {
         this.params.push({key: 'apartment', value: '1'});
       }
 
