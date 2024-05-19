@@ -229,7 +229,6 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
       case 'vc_group_all':
         this.$subscriptions[key] = this.form.get('group_all').valueChanges.subscribe(next => {
-          this.form.get('group').setValue(GroupType.FACILITY); // TODO: review this when enabling apartment and region
           if (next) {
             this.form.get('group_id').disable();
             this.form.get('group_ids').disable();
@@ -242,6 +241,9 @@ export class FormComponent extends AbstractForm implements OnInit {
             }
             this.form.get('group_list').enable();
           }
+
+          this.form.get('group').setValue(GroupType.FACILITY); // TODO: review this when enabling apartment and region
+          this.form.get('group').updateValueAndValidity();
         });
         break;
       default:
