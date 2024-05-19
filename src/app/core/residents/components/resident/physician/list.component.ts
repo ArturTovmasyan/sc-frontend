@@ -94,6 +94,7 @@ export class ListComponent implements OnInit {
               this.service$.removeBulk([this.physicians[this.selected_tab].id]).subscribe(
                 res => {
                   loading = false;
+                  this.selected_tab = 0;
                   this.reload_data();
                   modal.close();
                 },
