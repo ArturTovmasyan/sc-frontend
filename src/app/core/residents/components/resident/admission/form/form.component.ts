@@ -30,6 +30,7 @@ import {ModalFormService} from '../../../../../../shared/services/modal-form.ser
 })
 export class FormComponent extends AbstractForm implements OnInit {
   GROUP_TYPE = GroupType;
+  ADMISSION_TYPE = AdmissionType;
 
   public group_helper: GroupHelper;
 
@@ -97,6 +98,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       admission_type: [null, Validators.required],
 
       date: [DateHelper.newDate(), Validators.required],
+      bill_through_date: [DateHelper.newDate(), Validators.required],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
       resident_id: [null, Validators.required],
@@ -120,10 +122,12 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.form.get('group').disable();
     this.form.get('group_type').disable();
+    this.form.get('bill_through_date').disable();
     this.init_subform(null);
 
     this.subscribe('rs_resident');
     this.subscribe('vc_admission_type');
+    this.subscribe('vc_effective_date');
     this.subscribe('vc_group');
 
     this.postSubmit = (data: any) => {
@@ -151,12 +155,24 @@ export class FormComponent extends AbstractForm implements OnInit {
               case AdmissionType.ROOM_CHANGE:
                 this.form.get('group').enable();
                 this.form.get('group_type').enable();
+                this.form.get('bill_through_date').disable();
                 break;
               case AdmissionType.TEMPORARY_DISCHARGE:
+                this.form.get('group').disable();
+                this.form.get('group_type').disable();
+                this.form.get('bill_through_date').disable();
+                this.tabSelected.next(0);
+                break;
               case AdmissionType.PENDING_DISCHARGE:
+                this.form.get('group').disable();
+                this.form.get('group_type').disable();
+                this.form.get('bill_through_date').disable();
+                this.tabSelected.next(0);
+                break;
               case AdmissionType.DISCHARGE:
                 this.form.get('group').disable();
                 this.form.get('group_type').disable();
+                this.form.get('bill_through_date').enable();
                 this.tabSelected.next(0);
                 break;
             }
@@ -164,6 +180,36 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (this.edit_mode === false && (next === AdmissionType.READMIT || next === AdmissionType.ROOM_CHANGE)) {
               this.subscribe('resident_data');
             }
+          }
+
+          this.form.get('date').setValue(this.form.get('date').value);
+        });
+        break;
+      case 'vc_effective_date':
+        this.$subscriptions[key] = this.form.get('date').valueChanges.subscribe(next => {
+          if (next) {
+              const group = this.form.get('group').value;
+              const resident_id = this.form.get('resident_id').value;
+              if (group && resident_id) {
+                  switch (group.type) {
+                    case GroupType.FACILITY:
+                      this.subscribe('list_facility_room', {
+                          'group_id': group.id,
+                          'vacant': 1,
+                          'date': next.toISOString(),
+                          'resident_id': resident_id
+                      });
+                      break;
+                    case GroupType.APARTMENT:
+                      this.subscribe('list_apartment_room', {
+                          'group_id': group.id,
+                          'vacant': 1,
+                          'date': next.toISOString(),
+                          'resident_id': resident_id
+                      });
+                      break;
+                  }
+              }
           }
         });
         break;
@@ -252,14 +298,18 @@ export class FormComponent extends AbstractForm implements OnInit {
               default:
                 break;
             }
+
+            this.form.get('date').setValue(this.form.get('date').value);
           }
         });
         break;
       case 'list_apartment_room':
-        this.$subscriptions[key] = this.apartment_room$.all([{key: 'apartment_id', value: params['group_id']}, {
-          key: 'vacant',
-          value: 1
-        }]).pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.apartment_room$.all([
+          {key: 'resident_id', value: params.resident_id},
+          {key: 'apartment_id', value: params.group_id},
+          {key: 'vacant', value: params.vacant},
+          {key: 'date', value: params.date}
+        ]).pipe(first()).subscribe(res => {
           if (res) {
             this.apartment_rooms = res;
 
@@ -291,10 +341,12 @@ export class FormComponent extends AbstractForm implements OnInit {
         });
         break;
       case 'list_facility_room':
-        this.$subscriptions[key] = this.facility_room$.all([{key: 'facility_id', value: params['group_id']}, {
-          key: 'vacant',
-          value: 1
-        }]).pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.facility_room$.all([
+            {key: 'resident_id', value: params.resident_id},
+            {key: 'facility_id', value: params.group_id},
+            {key: 'vacant', value: params.vacant},
+            {key: 'date', value: params.date}
+            ]).pipe(first()).subscribe(res => {
           if (res) {
             this.facility_rooms = res;
 
@@ -326,7 +378,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         });
         break;
       case 'list_dining_room':
-        this.$subscriptions[key] = this.dining_room$.all([{key: 'facility_id', value: params['group_id']}])
+        this.$subscriptions[key] = this.dining_room$.all([{key: 'facility_id', value: params.group_id}])
           .pipe(first()).subscribe(res => {
             if (res) {
               this.dining_rooms = res;

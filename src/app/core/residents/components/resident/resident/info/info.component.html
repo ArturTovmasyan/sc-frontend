@@ -81,6 +81,11 @@
           <div nz-col [nzSpan]="16">{{ admission.admission_type|admission_type:(admission.group_type) }}</div>
         </div>
 
+        <div nz-row [nzGutter]="4" *ngIf="admission.bill_through_date !== null">
+          <div nz-col [nzSpan]="8" class="text-right"><strong>Bill Through Date:</strong></div>
+          <div nz-col [nzSpan]="16">{{ admission.bill_through_date|date:'MMM d, y' }}</div>
+        </div>
+
         <ng-container [ngSwitch]="admission.group_type">
           <template *ngSwitchCase="GroupType.FACILITY"
                     [ngTemplateOutletContext]="{ option: admission }" [ngTemplateOutlet]="tplFacility">

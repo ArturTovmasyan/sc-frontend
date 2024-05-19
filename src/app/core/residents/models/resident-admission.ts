@@ -12,6 +12,7 @@ export class ResidentAdmission implements IdInterface {
 
   admission_type: AdmissionType;
   date: Date;
+  bill_through_date: Date;
   notes: string;
 
   resident: Resident;

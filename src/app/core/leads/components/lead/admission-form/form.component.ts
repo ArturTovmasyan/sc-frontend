@@ -51,17 +51,15 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     disabledDate: (date: Date) => boolean;
 
-    constructor(
-        protected modal$: ModalFormService,
-        private formBuilder: FormBuilder,
-        private salutation$: SalutationService,
-        private facility$: FacilityService,
-        private dining_room$: FacilityDiningRoomService,
-        private facility_room$: FacilityRoomService,
-        private care_level$: CareLevelService,
-        private user$: UserService,
-        private _el: ElementRef
-    ) {
+    constructor(protected modal$: ModalFormService,
+                private formBuilder: FormBuilder,
+                private salutation$: SalutationService,
+                private facility$: FacilityService,
+                private dining_room$: FacilityDiningRoomService,
+                private facility_room$: FacilityRoomService,
+                private care_level$: CareLevelService,
+                private user$: UserService,
+                private _el: ElementRef) {
         super(modal$);
 
         this.group_helper = new GroupHelper();
@@ -84,8 +82,14 @@ export class FormComponent extends AbstractForm implements OnInit {
     ngOnInit(): void {
         this.form = this.formBuilder.group({
             id: [''],
-            first_name: [{value: '', disabled: true}, Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
-            last_name: [{value: '', disabled: true}, Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
+            first_name: [{
+                value: '',
+                disabled: true
+            }, Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
+            last_name: [{
+                value: '',
+                disabled: true
+            }, Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
             birthday: [DateHelper.newDate(), Validators.required],
             gender: [null, Validators.required],
 
@@ -113,6 +117,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
         this.subscribe('list_salutation');
         this.subscribe('vc_admission_type');
+        this.subscribe('vc_effective_date');
         this.subscribe('vc_group');
 
         // TODO: review
@@ -151,6 +156,26 @@ export class FormComponent extends AbstractForm implements OnInit {
                                 break;
                         }
                     }
+
+                    this.form.get('date').setValue(this.form.get('date').value);
+                });
+                break;
+            case 'vc_effective_date':
+                this.$subscriptions[key] = this.form.get('date').valueChanges.subscribe(next => {
+                    if (next) {
+                        const group = this.form.get('group').value;
+                        if (group) {
+                            switch (group.type) {
+                                case GroupType.FACILITY:
+                                    this.subscribe('list_facility_room', {
+                                        'group_id': group.id,
+                                        'vacant': 1,
+                                        'date': next.toISOString()
+                                    });
+                                    break;
+                            }
+                        }
+                    }
                 });
                 break;
             case 'list_facility':
@@ -173,14 +198,17 @@ export class FormComponent extends AbstractForm implements OnInit {
                         this.form.get('group_type').setValue(next.type);
 
                         this.init_subform(next);
+
+                        this.form.get('date').setValue(this.form.get('date').value);
                     }
                 });
                 break;
             case 'list_facility_room':
-                this.$subscriptions[key] = this.facility_room$.all([{key: 'facility_id', value: params['group_id']}, {
-                    key: 'vacant',
-                    value: 1
-                }]).pipe(first()).subscribe(res => {
+                this.$subscriptions[key] = this.facility_room$.all([
+                    {key: 'facility_id', value: params.group_id},
+                    {key: 'vacant', value: params.vacant},
+                    {key: 'date', value: params.date}
+                ]).pipe(first()).subscribe(res => {
                     if (res) {
                         this.facility_rooms = res;
 
@@ -210,7 +238,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 });
                 break;
             case 'list_dining_room':
-                this.$subscriptions[key] = this.dining_room$.all([{key: 'facility_id', value: params['group_id']}])
+                this.$subscriptions[key] = this.dining_room$.all([{key: 'facility_id', value: params.group_id}])
                     .pipe(first()).subscribe(res => {
                         if (res) {
                             this.dining_rooms = res;

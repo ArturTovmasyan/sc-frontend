@@ -54,6 +54,16 @@
         </nz-form-control>
       </nz-form-item>
 
+      <nz-form-item *ngIf="this.form.get('bill_through_date').enable && form.get('admission_type').value === ADMISSION_TYPE.DISCHARGE">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="bill_through_date" nzRequired>Bill Through Date</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('bill_through_date')?'error':null">
+          <nz-date-picker formControlName="bill_through_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+          <nz-form-explain *ngIf="hasErrors('bill_through_date')">
+            <app-field-errors [errors]="fieldErrors('bill_through_date')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
