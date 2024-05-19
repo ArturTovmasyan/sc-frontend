@@ -17,8 +17,8 @@ import {FormComponent as InsuranceCompanyFormComponent} from '../../../insurance
 export class FormComponent extends AbstractForm implements OnInit {
   companies: InsuranceCompany[];
 
-  @ViewChild('first_file', {static: false}) el_first_file: ElementRef;
-  @ViewChild('second_file', {static: false}) el_second_file: ElementRef;
+  @ViewChild('first_file', {static: true}) el_first_file: ElementRef;
+  @ViewChild('second_file', {static: true}) el_second_file: ElementRef;
 
   files: FileModel[];
 

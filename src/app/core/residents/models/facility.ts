@@ -10,7 +10,11 @@ export class Facility implements IdInterface {
   phone: string;
   fax: string;
   license: string;
+
+  number_of_floors: number;
   license_capacity: number;
+  capacity_yellow: number;
+  capacity_red: number;
 
   capacity: number;
   occupation: number;

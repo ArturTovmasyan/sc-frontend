@@ -39,6 +39,7 @@ import {ListComponent as ResponsiblePersonListComponent} from './residents/compo
 import {ListComponent as ApartmentListComponent} from './residents/components/apartment/list.component';
 import {ListComponent as ApartmentRoomListComponent} from './residents/components/apartment-room/list.component';
 import {ListComponent as FacilityListComponent} from './residents/components/facility/list.component';
+import {ViewComponent as FacilityViewComponent} from './residents/components/facility/view/view.component';
 import {ListComponent as FacilityRoomListComponent} from './residents/components/facility-room/list.component';
 import {ListComponent as FacilityDiningRoomListComponent} from './residents/components/facility-dining-room/list.component';
 import {ListComponent as RegionListComponent} from './residents/components/region/list.component';
@@ -96,6 +97,7 @@ import {ViewComponent as LeadContactViewComponent} from './leads/components/cont
 import {ListComponent as DocumentCategoryListComponent} from './documents/components/category/list.component';
 import {DashboardComponent as ResidentDashboardComponent} from './residents/components/dashboard/dashboard.component';
 import {DashboardDetailComponent as ResidentDashboardDetailComponent} from './residents/components/dashboard/dashboard-detail.component';
+import {ListComponent as FacilityDocumentListComponent} from './residents/components/facility-document/list.component';
 
 const routes: Routes = [
   {
@@ -434,7 +436,7 @@ const routes: Routes = [
           {
             path: 'rooms', component: FacilityRoomListComponent,
             data: {
-              nav: {show: true, group: 'Residents'},
+              nav: {show: true, group: 'Residents', title: 'Rooms'},
               title: 'Facility Rooms',
               permissions: ['persistence-facility_room']
             },
@@ -443,11 +445,29 @@ const routes: Routes = [
           {
             path: 'dining-rooms', component: FacilityDiningRoomListComponent,
             data: {
-              nav: {show: true, group: 'Residents'},
+              nav: {show: true, group: 'Residents', title: 'Dining Rooms'},
               title: 'Facility Dining Rooms',
               permissions: ['persistence-dining_room']
             },
             canActivate: [AuthGuard]
+          },
+          {
+            path: 'documents', component: FacilityDocumentListComponent,
+            data: {
+              nav: {show: true, group: 'Residents', title: 'Documents'},
+              title: 'Facility Documents',
+              permissions: ['persistence-facility_document']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: ':id',
+            component: FacilityViewComponent,
+            canActivate: [AuthGuard],
+            data: {
+              title: 'Facility',
+              permissions: ['persistence-facility']
+            }
           },
         ],
         canActivate: [AuthGuard]
@@ -473,7 +493,7 @@ const routes: Routes = [
           {
             path: 'rooms', component: ApartmentRoomListComponent,
             data: {
-              nav: {show: true, group: 'Residents'},
+              nav: {show: true, group: 'Residents', title: 'Rooms'},
               title: 'Apartment Rooms',
               permissions: ['persistence-apartment_room']
             },

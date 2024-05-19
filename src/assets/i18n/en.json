@@ -220,6 +220,16 @@
       "fax": "Fax",
       "space": "Space"
     },
+    "facility-document-list": {
+      "id": "ID",
+      "title": "Title",
+      "date": "Date",
+      "user": "Uploaded By",
+      "facility": "Facility",
+      "button": {
+        "download": "Download"
+      }
+    },
     "facility-dining-room-list": {
       "id": "ID",
       "title": "Title",

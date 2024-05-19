@@ -11,7 +11,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="show_facility">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facility_id" nzRequired>Facility</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('facility_id')?'error':null">
       <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="facility_id">
@@ -24,6 +24,7 @@
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item *ngIf="formErrors()">
     <nz-form-control [nzSm]="24" [nzXs]="24">
       <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>

@@ -34,7 +34,9 @@
 
 <ng-template #tplResidentList let-group_data="data" let-type="type">
   <ng-container *ngFor="let data of group_data; let last = last;">
-    <h3 style="margin: 1rem;text-align: center">{{ data.name }}</h3>
+    <h3 style="margin: 1rem;text-align: center">
+      <a [routerLink]="['/facility', data.id]">{{ data.name }}</a>
+    </h3>
     <div class="row justify-content-center">
       <div class="col" *ngFor="let resident of data.residents">
         <div class="row">

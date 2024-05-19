@@ -1,10 +1,11 @@
 ﻿import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
-import {ResidentSelectorService} from '../../../../services/resident-selector.service';
-import {FileModel} from '../../../../../models/file-model';
-import {StringUtil} from '../../../../../../shared/utils/string-util';
-import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
+import {FileModel} from '../../../../models/file-model';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {FacilityService} from '../../../services/facility.service';
+import {Facility} from '../../../models/facility';
+import {StringUtil} from '../../../../../shared/utils/string-util';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -14,10 +15,22 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   files: FileModel[];
 
+  facilities: Facility[];
+
+  private _show_facility: boolean = true;
+
+  get show_facility(): boolean {
+    return this._show_facility;
+  }
+
+  set show_facility(value: boolean) {
+    this._show_facility = value;
+  }
+
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private residentSelector$: ResidentSelectorService
+    private facility$: FacilityService
   ) {
     super(modal$);
   }
@@ -34,21 +47,18 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       file: [null],
 
-      resident_id: [null, Validators.required]
+      facility_id: [null, Validators.required]
     });
 
-    this.subscribe('rs_resident');
+    this.subscribe('list_facility');
   }
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
-      case 'rs_resident':
-        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
-          if (next) {
-            this.form.get('resident_id').setValue(next);
-
-            this.subscribe('list_resident_physician');
-            this.subscribe('list_resident_responsible_person');
+      case 'list_facility':
+        this.$subscriptions[key] = this.facility$.all().subscribe(res => {
+          if (res) {
+            this.facilities = res;
           }
         });
         break;

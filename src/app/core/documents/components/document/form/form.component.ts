@@ -21,7 +21,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   categories: Category[];
   facilities: Facility[];
 
-  @ViewChild('file', {static: false}) el_file: ElementRef;
+  @ViewChild('file', {static: true}) el_file: ElementRef;
 
   files: FileModel[];
 

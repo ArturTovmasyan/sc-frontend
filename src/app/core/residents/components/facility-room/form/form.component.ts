@@ -19,6 +19,16 @@ import {NzModalService} from 'ng-zorro-antd';
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
+  private _show_facility: boolean = true;
+
+  get show_facility(): boolean {
+    return this._show_facility;
+  }
+
+  set show_facility(value: boolean) {
+    this._show_facility = value;
+  }
+
   facilities: Facility[];
 
   facility: Facility = null;
