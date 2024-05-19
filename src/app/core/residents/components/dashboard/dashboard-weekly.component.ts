@@ -57,7 +57,8 @@ export class DashboardWeeklyComponent implements OnInit, OnDestroy {
       case 'list_dashboard':
         this.$subscriptions[key] = this.facilityDashboard$.all([
           {key: 'facility_id', value: params.facility_id },
-          {key: 'date_from', value: moment(params.date).format('YYYY-MM-DD')}
+          {key: 'date_from', value: moment(params.date).format('YYYY-MM-DD')},
+          {key: 'type', value: '2'}
         ]).pipe(first()).subscribe(res => {
           if (res) {
             this.dashboardData = res[0];
