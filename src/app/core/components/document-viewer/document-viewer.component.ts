@@ -118,7 +118,7 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
         }
 
         if (params) {
-          if (params.hasOwnProperty('category_id')) {
+          if (params.hasOwnProperty('category_id') && params.category_id !== null) {
             list_params.push({key: 'category_id', value: params.category_id});
           }
         }
