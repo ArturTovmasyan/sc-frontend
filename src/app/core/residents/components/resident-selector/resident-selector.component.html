@@ -72,3 +72,12 @@
     <i class="seniorcare seniorcare-3x seniorcare-reports"></i>
   </a>
 </nz-button-group>
+<div class="group-selector" *ngIf="residents">
+  <nz-form-label>Resident</nz-form-label>
+  <nz-select nzShowSearch [nzDropdownMatchSelectWidth]="false"
+             [(ngModel)]="resident_id" (ngModelChange)="resident_changed()">
+    <ng-container *ngFor="let resident of residents">
+      <nz-option [nzLabel]="resident|resident" [nzValue]="resident.id"></nz-option>
+    </ng-container>
+  </nz-select>
+</div>

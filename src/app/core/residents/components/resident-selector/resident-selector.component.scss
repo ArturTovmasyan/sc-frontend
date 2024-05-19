@@ -27,3 +27,12 @@
     }
   }
 }
+
+.group-selector {
+  margin-right: auto;
+  line-height: 5rem;
+
+  nz-select {
+    width: 10rem;
+  }
+}
