@@ -139,7 +139,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     const modal = this.modal$.create({
       nzClosable: false,
       nzMaskClosable: false,
-      nzWidth: '60rem',
+      nzWidth: '65rem',
       nzTitle: null,
       nzContent: form_component,
       nzFooter: [
