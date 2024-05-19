@@ -24,6 +24,9 @@ import {GroupHelper} from '../../../../helper/group-helper';
 import {ResidentService} from '../../../../services/resident.service';
 import {DateHelper} from '../../../../../../shared/helpers/date-helper';
 import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {NzModalService} from 'ng-zorro-antd';
+import {FormComponent as RentRemoveComponent} from '../../admission/remove/form.component';
+import {ResidentRentService} from '../../../../services/resident-rent.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -63,6 +66,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     private csz$: CityStateZipService,
     private residentSelector$: ResidentSelectorService,
     private resident$: ResidentService,
+    protected residentRent$: ResidentRentService,
+    private nzModal$: NzModalService,
     private _el: ElementRef
   ) {
     super(modal$);
@@ -188,28 +193,28 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'vc_effective_date':
         this.$subscriptions[key] = this.form.get('date').valueChanges.subscribe(next => {
           if (next) {
-              const group = this.form.get('group').value;
-              const resident_id = this.form.get('resident_id').value;
-              if (group && resident_id) {
-                  switch (group.type) {
-                    case GroupType.FACILITY:
-                      this.subscribe('list_facility_room', {
-                          'group_id': group.id,
-                          'vacant': 1,
-                          'date': next.toISOString(),
-                          'resident_id': resident_id
-                      });
-                      break;
-                    case GroupType.APARTMENT:
-                      this.subscribe('list_apartment_room', {
-                          'group_id': group.id,
-                          'vacant': 1,
-                          'date': next.toISOString(),
-                          'resident_id': resident_id
-                      });
-                      break;
-                  }
+            const group = this.form.get('group').value;
+            const resident_id = this.form.get('resident_id').value;
+            if (group && resident_id) {
+              switch (group.type) {
+                case GroupType.FACILITY:
+                  this.subscribe('list_facility_room', {
+                    'group_id': group.id,
+                    'vacant': 1,
+                    'date': next.toISOString(),
+                    'resident_id': resident_id
+                  });
+                  break;
+                case GroupType.APARTMENT:
+                  this.subscribe('list_apartment_room', {
+                    'group_id': group.id,
+                    'vacant': 1,
+                    'date': next.toISOString(),
+                    'resident_id': resident_id
+                  });
+                  break;
               }
+            }
           }
         });
         break;
@@ -335,18 +340,18 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('apartment_bed_id').setValue(null);
               }
             } else {
-                this.form.get('apartment_bed_id').setValue(null);
+              this.form.get('apartment_bed_id').setValue(null);
             }
           }
         });
         break;
       case 'list_facility_room':
         this.$subscriptions[key] = this.facility_room$.all([
-            {key: 'resident_id', value: params.resident_id},
-            {key: 'facility_id', value: params.group_id},
-            {key: 'vacant', value: params.vacant},
-            {key: 'date', value: params.date}
-            ]).pipe(first()).subscribe(res => {
+          {key: 'resident_id', value: params.resident_id},
+          {key: 'facility_id', value: params.group_id},
+          {key: 'vacant', value: params.vacant},
+          {key: 'date', value: params.date}
+        ]).pipe(first()).subscribe(res => {
           if (res) {
             this.facility_rooms = res;
 
@@ -372,7 +377,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('facility_bed_id').setValue(null);
               }
             } else {
-                this.form.get('facility_bed_id').setValue(null);
+              this.form.get('facility_bed_id').setValue(null);
             }
           }
         });
@@ -457,6 +462,15 @@ export class FormComponent extends AbstractForm implements OnInit {
               this.form.get('group').enable();
               this.form.get('group_type').enable();
             }
+          }
+        });
+        break;
+      case 'get_last_rent':
+        this.$subscriptions[key] = this.residentRent$.getResidentLastRent(params.resident_id).pipe(first()).subscribe(res => {
+
+          // tslint:disable-next-line:max-line-length
+          if (res && !this.edit_mode && this.form.get('admission_type').value === AdmissionType.DISCHARGE && this.form.get('date').value <= res.start) {
+            this.show_modal_remove(res.id);
           }
         });
         break;
@@ -553,7 +567,68 @@ export class FormComponent extends AbstractForm implements OnInit {
   formValue(): void {
     const value = super.formValue();
     value.date = DateHelper.makeUTCDateOnly(value.date);
+
+    if (value.bill_through_date) {
+      value.bill_through_date = DateHelper.makeUTCDateOnly(value.bill_through_date);
+    }
+
     return value;
+  }
+
+  before_submit(): void {
+    this.subscribe('get_last_rent', {resident_id: this.form.get('resident_id').value});
+  }
+
+  show_modal_remove(rent_id: number): void {
+    let loading = false;
+
+    const modal = this.nzModal$.create({
+      nzClosable: false,
+      nzMaskClosable: false,
+      nzWidth: '45rem',
+      nzTitle: null,
+      nzContent: RentRemoveComponent,
+      nzFooter: [
+        {
+          label: 'Cancel',
+          onClick: () => {
+            modal.close();
+          }
+        },
+        {
+          type: 'primary',
+          label: 'Remove',
+          loading: () => loading,
+          onClick: () => {
+            loading = true;
+
+            const component = <AbstractForm>modal.getContentComponent();
+            component.before_submit();
+            const form_data = component.formValue();
+            component.submitted = true;
+
+            this.residentRent$.remove(form_data).subscribe(
+              res => {
+                loading = false;
+                modal.close();
+              },
+              error => {
+                loading = false;
+
+                component.handleSubmitError(error);
+                component.postSubmit(null);
+              });
+          }
+        }
+      ]
+    });
+
+    modal.afterOpen.subscribe(() => {
+      const component = <RentRemoveComponent>modal.getContentComponent();
+      component.form.get('id').setValue(rent_id);
+
+      this.unsubscribe('get_last_rent');
+    });
   }
 
   after_submit(): void {

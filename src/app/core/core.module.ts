@@ -145,6 +145,7 @@ import {FormComponent as ResidentFormComponent} from './residents/components/res
 import {ViewComponent as ResidentViewComponent} from './residents/components/resident/resident/view/view.component';
 import {InfoComponent as ResidentInfoComponent} from './residents/components/resident/resident/info/info.component';
 import {FormComponent as ResidentMoveComponent} from './residents/components/resident/resident/move/form.component';
+import {FormComponent as RentRemoveComponent} from './residents/components/resident/admission/remove/form.component';
 import {FormComponent as ResidentSwapFormComponent} from './residents/components/resident/swap-form/form.component';
 import {
   ImageEditorComponent,
@@ -554,6 +555,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentMoveComponent,
     ResidentSwapFormComponent,
 
+    RentRemoveComponent,
+
     ResidentDietListComponent,
     ResidentDietFormComponent,
 
@@ -904,6 +907,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentMoveComponent,
     ResidentSwapFormComponent,
+
+    RentRemoveComponent,
 
     ActivityStatusFormComponent,
     ActivityTypeFormComponent,
