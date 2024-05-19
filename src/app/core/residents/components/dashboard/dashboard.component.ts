@@ -127,4 +127,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.subscribe('list_dashboard', {from: fromDate, to: this.currentDate});
   }
+
+  getCsvReport(): void {
+      const fromDate = moment(this.currentDate).startOf('month').utc(true).format('YYYY-MM-DD');
+      const toDate = moment(this.currentDate).endOf('month').utc(true).format('YYYY-MM-DD');
+
+      if (this.facilityDashboard$ !== null) {
+          this.facilityDashboard$.getCsvReport(fromDate, toDate, () => {
+          }, (error) => {
+            console.error(error);
+          });
+      }
+  }
 }
