@@ -358,7 +358,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.show_modal_edit($event.event.id);
         break;
       case CalendarEventType.RESIDENT:
-        this.show_modal_edit($event.event.id);
+        this.show_modal_view($event.event.id);
         break;
       default:
         break;
