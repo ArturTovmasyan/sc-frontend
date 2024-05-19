@@ -1,0 +1,135 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('first_name')?'error':null">
+      <input nz-input placeholder="First Name" formControlName="first_name">
+      <nz-form-explain *ngIf="hasErrors('first_name')">
+        <app-field-errors [errors]="fieldErrors('first_name')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="middle_name">Middle Name</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('middle_name')?'error':null">
+      <input nz-input placeholder="Middle Name" formControlName="middle_name">
+      <nz-form-explain *ngIf="hasErrors('middle_name')">
+        <app-field-errors [errors]="fieldErrors('middle_name')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="last_name" nzRequired>Last Name</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('last_name')?'error':null">
+      <input nz-input placeholder="Last Name" formControlName="last_name">
+      <nz-form-explain *ngIf="hasErrors('last_name')">
+        <app-field-errors [errors]="fieldErrors('last_name')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="address_1" nzRequired>Address 1</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('address_1')?'error':null">
+      <input nz-input placeholder="Address 1" formControlName="address_1">
+      <nz-form-explain *ngIf="hasErrors('address_1')">
+        <app-field-errors [errors]="fieldErrors('address_1')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="address_2">Address 2</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('address_2')?'error':null">
+      <input nz-input placeholder="Address 2" formControlName="address_2">
+      <nz-form-explain *ngIf="hasErrors('address_2')">
+        <app-field-errors [errors]="fieldErrors('address_2')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="office_phone" nzRequired>Office Phone</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('office_phone')?'error':null">
+      <input nz-input placeholder="Office Phone" formControlName="office_phone">
+      <nz-form-explain *ngIf="hasErrors('office_phone')">
+        <app-field-errors [errors]="fieldErrors('office_phone')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="fax">Fax</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('fax')?'error':null">
+      <input nz-input placeholder="Fax" formControlName="fax">
+      <nz-form-explain *ngIf="hasErrors('fax')">
+        <app-field-errors [errors]="fieldErrors('fax')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emergency_phone">Emergency Phone</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('emergency_phone')?'error':null">
+      <input nz-input placeholder="Emergency Phone" formControlName="emergency_phone">
+      <nz-form-explain *ngIf="hasErrors('emergency_phone')">
+        <app-field-errors [errors]="fieldErrors('emergency_phone')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">E-Mail</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email')?'error':null">
+      <input nz-input placeholder="E-Mail" formControlName="email">
+      <nz-form-explain *ngIf="hasErrors('email')">
+        <app-field-errors [errors]="fieldErrors('email')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="website_url">Website URL</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('website_url')?'error':null">
+      <input nz-input placeholder="Website URL" formControlName="website_url">
+      <nz-form-explain *ngIf="hasErrors('website_url')">
+        <app-field-errors [errors]="fieldErrors('website_url')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>CSZ</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('csz_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="csz_id">
+        <ng-container *ngFor="let city_state_zip of city_state_zips">
+          <nz-option [nzLabel]="city_state_zip|csz" [nzValue]="city_state_zip.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('csz_id')">
+        <app-field-errors [errors]="fieldErrors('csz_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+        <ng-container *ngFor="let space of spaces">
+          <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('space_id')">
+        <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

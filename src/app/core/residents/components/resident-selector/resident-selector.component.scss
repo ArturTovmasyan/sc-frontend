@@ -1,0 +1,44 @@
+:host {
+  transition: left 0.25s, right 0.25s, width 0.25s;
+  position: relative;
+  border-radius: 0;
+  border-bottom: 1px solid #c8ced3;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  list-style: none;
+  background-color: #fff;
+}
+
+//::ng-deep {
+.resident-pages {
+  margin-left: auto;
+  a {
+    &.ant-btn {
+      height: 75px;
+      padding: 0.5rem;
+    }
+
+    &.active-link {
+      z-index: 1;
+      color: #40a9ff;
+      border-color: #40a9ff;
+    }
+  }
+}
+
+.facility-selector {
+  margin-left: auto;
+  line-height: 5rem;
+
+  i.fa {
+    padding: 0 1rem;
+  }
+
+  nz-select {
+    width: 8rem;
+  }
+}
+
+//}

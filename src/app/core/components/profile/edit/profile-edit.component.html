@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card mx-4">
+        <form [formGroup]="form" (ngSubmit)="submitForm()">
+          <div class="card-header">
+            <strong>Edit Profile</strong>
+          </div>
+          <div class="card-body">
+            <div class="clearfix">
+              <nz-upload
+                nzListType="picture-card"
+                [(nzFileList)]="fileList"
+                [nzShowButton]="fileList.length < 1">
+                <i nz-icon type="plus"></i>
+                <div class="ant-upload-text">Upload</div>
+              </nz-upload>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-lock"></i></span>
+              </div>
+              <input type="password" class="form-control" placeholder="Current Password" formControlName="password"
+                     [ngClass]="{'is-invalid': fieldErrors('password')}"/>
+              <app-field-errors [errors]="fieldErrors('password')" class="invalid-feedback"></app-field-errors>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-user"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="First Name" formControlName="firstName"
+                     [ngClass]="{'is-invalid': fieldErrors('firstName')}"/>
+              <app-field-errors [errors]="fieldErrors('firstName')" class="invalid-feedback"></app-field-errors>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-user"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName"
+                     [ngClass]="{'is-invalid': fieldErrors('lastName')}"/>
+              <app-field-errors [errors]="fieldErrors('lastName')" class="invalid-feedback"></app-field-errors>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i nz-icon theme="outline" type="mail"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="E-Mail" formControlName="email"
+                     [ngClass]="{'is-invalid': fieldErrors('email') }"/>
+              <app-field-errors [errors]="fieldErrors('email')" class="invalid-feedback"></app-field-errors>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i nz-icon theme="outline" type="mail"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Phone" formControlName="phone"
+                     [ngClass]="{'is-invalid': fieldErrors('phone') }"/>
+              <app-field-errors [errors]="fieldErrors('phone')" class="invalid-feedback"></app-field-errors>
+            </div>
+            <!-- Status -->
+            <div class="row" *ngIf="formErrors()">
+              <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                  <app-form-errors [errors]="formErrors()"></app-form-errors>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="message">
+              <div class="col-12">
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+              </div>
+            </div>
+            <div class="row">
+            </div>
+          </div>
+          <div class="card-footer">
+            <button [disabled]="loading" type="submit" class="btn btn-primary px-4">
+              <i *ngIf="loading" nz-icon theme="outline" type="loading-3-quarters"></i>
+              Change Password
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

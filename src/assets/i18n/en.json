@@ -1,0 +1,161 @@
+{
+  "grid": {
+    "add": "Add",
+    "edit": "Edit",
+    "remove": "Remove",
+    "pdf": "PDF",
+    "user-list": {
+      "id": "ID",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "username": "Username",
+      "email": "E-Mail",
+      "phone": "Phone",
+      "enabled": "Enabled",
+      "completed": "Completed",
+      "last_activity_at": "Last Activity At"
+    },
+    "role-list": {
+      "id": "ID",
+      "name": "Name",
+      "space": "Space",
+      "default": "Default",
+      "space_default": "Default for Space"
+    },
+    "allergen-list": {
+      "id": "ID",
+      "title": "Title",
+      "description": "Description"
+    },
+    "diagnosis-list": {
+      "id": "ID",
+      "title": "Title",
+      "acronym": "Acronym",
+      "description": "Description"
+    },
+    "diet-list": {
+      "id": "ID",
+      "title": "Title",
+      "color": "Color"
+    },
+    "medical-history-condition-list": {
+      "id": "ID",
+      "title": "Title",
+      "description": "Description"
+    },
+    "medication-list": {
+      "id": "ID",
+      "name": "Name"
+    },
+    "medication-form-factor-list": {
+      "id": "ID",
+      "title": "Title"
+    },
+    "relationship-list": {
+      "id": "ID",
+      "name": "Name"
+    },
+    "care-level-list": {
+      "id": "ID",
+      "title": "Title",
+      "description": "Description"
+    },
+    "city-state-zip-list": {
+      "id": "ID",
+      "state_full": "State (Full)",
+      "state_abbr": "State (Abbr)",
+      "city": "City",
+      "zip_main": "Zip (Main)",
+      "zip_sub": "Zip (Sub)"
+    },
+    "salutation-list": {
+      "id": "ID",
+      "title": "Title"
+    },
+    "physician-speciality-list": {
+      "id": "ID",
+      "title": "Title"
+    },
+    "physician-list": {
+      "id": "ID",
+      "first_name": "First Name",
+      "middle_name": "Middle Name",
+      "last_name": "Last Name",
+      "email": "E-Mail",
+      "address_1": "Address 1",
+      "address_2": "Address 2",
+      "office_phone": "Official Phone",
+      "fax": "Fax",
+      "emergency_phone": "Emergency Name",
+      "website_url": "Website URL",
+      "space": "Space",
+      "csz_str": "CSZ"
+    },
+    "apartment-list": {
+      "id": "ID",
+      "name": "Name",
+      "shorthand": "Shorthand",
+      "description": "Description",
+      "address": "Address",
+      "license": "License",
+      "capacity": "Capacity",
+      "phone": "Phone",
+      "fax": "Fax",
+      "space": "Space",
+      "csz_str": "CSZ"
+    },
+    "facility-list": {
+      "id": "ID",
+      "name": "Name",
+      "shorthand": "Shorthand",
+      "description": "Description",
+      "address": "Address",
+      "license": "License",
+      "capacity": "Capacity",
+      "phone": "Phone",
+      "fax": "Fax",
+      "space": "Space",
+      "csz_str": "CSZ"
+    },
+    "region-list": {
+      "id": "ID",
+      "name": "Name",
+      "shorthand": "Shorthand",
+      "description": "Description",
+      "phone": "Phone",
+      "fax": "Fax",
+      "space": "Space"
+    },
+    "facility-dining-room-list": {
+      "id": "ID",
+      "title": "Title",
+      "facility": "Facility"
+    },
+    "facility-room-list": {
+      "id":  "ID",
+      "number": "Number",
+      "floor":  "Floor",
+      "type": "Type",
+      "disabled":  "Disabled",
+      "shared": "Shared",
+      "notes":  "Notes",
+      "facility": "Facility"
+    },
+    "apartment-room-list": {
+      "id":  "ID",
+      "number": "Number",
+      "floor":  "Floor",
+      "type": "Type",
+      "disabled":  "Disabled",
+      "shared": "Shared",
+      "notes":  "Notes",
+      "apartment": "Apartment"
+    },
+    "resident-diet-list": {
+      "id": "ID",
+      "diet_title": "Category",
+      "diet_color": "Color",
+      "description": "Description"
+    }
+  }
+}

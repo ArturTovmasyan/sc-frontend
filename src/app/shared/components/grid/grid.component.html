@@ -1,0 +1,248 @@
+<div class="card">
+  <div class="card-header">
+    {{ title }}
+  </div>
+  <div class="card-body">
+    <div class="d-flex">
+      <nz-button-group [nzSize]="'medium'">
+        <button nz-button nzType="primary" [disabled]="checkbox_config.ids.length != 0"
+                (click)="show_modal_add(); $event.preventDefault();">
+          <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
+        </button>
+        <button nz-button nzType="default" [disabled]="checkbox_config.ids.length != 1"
+                (click)="show_modal_edit(); $event.preventDefault();">
+          <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+        </button>
+        <button nz-button nzType="danger" [disabled]="checkbox_config.ids.length == 0"
+                (click)="show_modal_remove(); $event.preventDefault();">
+          <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
+        </button>
+      </nz-button-group>
+
+      <nz-button-group [nzSize]="'medium'" class="ml-auto">
+        {{ checkbox_config.ids }}
+      </nz-button-group>
+
+      <nz-button-group [nzSize]="'medium'" class="ml-auto">
+        <button nz-button nzType="dashed" (click)="download_pdf()">
+          <i nz-icon type="file-pdf"></i> {{ "grid.pdf"|translate }}
+        </button>
+      </nz-button-group>
+    </div>
+    <nz-table
+      *ngIf="fields != null"
+      nzShowSizeChanger
+      nzShowQuickJumper
+      nzHideOnSinglePage
+      [nzLoading]="loading"
+      [nzFrontPagination]="false"
+      [(nzPageIndex)]="page_config.page"
+      [(nzPageSize)]="page_config.per_page"
+      [nzTotal]="page_config.total"
+
+      [nzData]="data"
+      (nzCurrentPageDataChange)="current_page_data_change($event)"
+      (nzPageIndexChange)="reload_data()"
+      (nzPageSizeChange)="reload_data(true)">
+      <thead (nzSortChange)="update_sort($event)">
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="checkbox_config.all" [nzIndeterminate]="checkbox_config.indeterminate"
+            (nzCheckedChange)="checkbox_all($event)"></th>
+        <ng-template ngFor let-field [ngForOf]="fields" let-first="first">
+          <th *ngIf="field.sortable && !field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id">
+            {{ ("grid." + name + "." + field.id)|translate }}
+          </th>
+          <th *ngIf="!field.sortable && field.filterable" nzCustomFilter [ngSwitch]="field.type">
+            {{ ("grid." + name + "." + field.id)|translate }}
+            <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                      *ngSwitchCase="'string'" [ngTemplateOutlet]="filterString"></template>
+            <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                      *ngSwitchCase="'number'" [ngTemplateOutlet]="filterNumber"></template>
+            <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                      *ngSwitchCase="'date'" [ngTemplateOutlet]="filterDate"></template>
+            <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                      *ngSwitchCase="'enum'" [ngTemplateOutlet]="filterEnum"></template>
+            <strong *ngSwitchDefault>?</strong>
+          </th>
+          <th *ngIf="field.sortable && field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id"
+              nzCustomFilter [ngSwitch]="field.type">
+            {{ ("grid." + name + "." + field.id)|translate }}
+            <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                      *ngSwitchCase="'string'" [ngTemplateOutlet]="filterString"></template>
+            <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                      *ngSwitchCase="'number'" [ngTemplateOutlet]="filterNumber"></template>
+            <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                      *ngSwitchCase="'date'" [ngTemplateOutlet]="filterDate"></template>
+            <template [ngTemplateOutletContext]="{ field: field, first: first }"
+                      *ngSwitchCase="'enum'" [ngTemplateOutlet]="filterEnum"></template>
+            <strong *ngSwitchDefault>?</strong>
+          </th>
+          <th *ngIf="!field.sortable && !field.filterable">{{ ("grid." + name + "." + field.id)|translate }}</th>
+        </ng-template>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of data">
+        <td nzShowCheckbox [(nzChecked)]="row.checked" (nzCheckedChange)="checkbox_refresh()"></td>
+        <td *ngFor="let field of fields">
+          {{ row[field.id] }}
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<ng-template #filterEnum let-field="field" let-first="first">
+  <nz-dropdown [nzPlacement]="first ? 'bottomLeft' : 'bottomRight'" nzTrigger="click" [nzClickHide]="false">
+    <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+    <div class="custom-filter-dropdown">
+      <div class="custom-filter-dropdown-header">
+        <nz-checkbox-group [(ngModel)]="field.enum"></nz-checkbox-group>
+      </div>
+      <div class="ant-table-filter-dropdown-btns">
+        <a class="ant-table-filter-dropdown-link confirm" (click)="update_filter(field)"><span>OK</span></a>
+        <a class="ant-table-filter-dropdown-link clear" (click)="reset_filter(field)"><span>Reset</span></a>
+      </div>
+    </div>
+  </nz-dropdown>
+</ng-template>
+<ng-template #filterString let-field="field" let-first="first">
+  <nz-dropdown [nzPlacement]="first ? 'bottomLeft' : 'bottomRight'" nzTrigger="click" [nzClickHide]="false">
+    <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+    <div class="custom-filter-dropdown">
+      <div class="custom-filter-dropdown-header">
+        <div nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <label>Condition:</label>
+          </div>
+          <div nz-col [nzSpan]="16">
+            <nz-select [nzSize]="'small'" [(ngModel)]="filter[field.id].condition">
+              <nz-option [nzLabel]="'Equals'" [nzValue]="0"></nz-option>
+              <nz-option [nzLabel]="'Like'" [nzValue]="1"></nz-option>
+              <nz-option [nzLabel]="'Regexp'" [nzValue]="2"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <label>Value:</label>
+          </div>
+          <div nz-col [nzSpan]="16">
+            <input nz-input [nzSize]="'small'" placeholder="Value" [(ngModel)]="filter[field.id].value[0]">
+          </div>
+        </div>
+      </div>
+      <div class="ant-table-filter-dropdown-btns">
+        <a class="ant-table-filter-dropdown-link confirm" (click)="update_filter(field)"><span>OK</span></a>
+        <a class="ant-table-filter-dropdown-link clear" (click)="reset_filter(field)"><span>Reset</span></a>
+      </div>
+    </div>
+  </nz-dropdown>
+</ng-template>
+<ng-template #filterNumber let-field="field" let-first="first">
+  <nz-dropdown [nzPlacement]="first ? 'bottomLeft' : 'bottomRight'" nzTrigger="click" [nzClickHide]="false">
+    <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+    <div class="custom-filter-dropdown">
+      <div class="custom-filter-dropdown-header">
+        <div nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <label>Condition:</label>
+          </div>
+          <div nz-col [nzSpan]="16">
+            <nz-select [nzSize]="'small'" [(ngModel)]="filter[field.id].condition">
+              <nz-option [nzLabel]="'='" [nzValue]="0"></nz-option>
+              <nz-option [nzLabel]="'!='" [nzValue]="1"></nz-option>
+              <nz-option [nzLabel]="'<'" [nzValue]="2"></nz-option>
+              <nz-option [nzLabel]="'>'" [nzValue]="3"></nz-option>
+              <nz-option [nzLabel]="'>='" [nzValue]="4"></nz-option>
+              <nz-option [nzLabel]="'<='" [nzValue]="5"></nz-option>
+              <nz-option [nzLabel]="'><'" [nzValue]="6"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+        <div *ngIf="filter[field.id].condition < 4" nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <label>Value:</label>
+          </div>
+          <div nz-col [nzSpan]="16">
+            <nz-input-number [nzSize]="'small'" [(ngModel)]="filter[field.id].value[0]"></nz-input-number>
+          </div>
+        </div>
+        <div *ngIf="filter[field.id].condition > 3" nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <label>From:</label>
+          </div>
+          <div nz-col [nzSpan]="16">
+            <nz-input-number [nzSize]="'small'" [(ngModel)]="filter[field.id].value[0]"></nz-input-number>
+          </div>
+        </div>
+        <div *ngIf="filter[field.id].condition > 3" nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <label>To:</label>
+          </div>
+          <div nz-col [nzSpan]="16">
+            <nz-input-number [nzSize]="'small'" [(ngModel)]="filter[field.id].value[1]"></nz-input-number>
+          </div>
+        </div>
+      </div>
+      <div class="ant-table-filter-dropdown-btns">
+        <a class="ant-table-filter-dropdown-link confirm" (click)="update_filter(field)"><span>OK</span></a>
+        <a class="ant-table-filter-dropdown-link clear" (click)="reset_filter(field)"><span>Reset</span></a>
+      </div>
+    </div>
+  </nz-dropdown>
+</ng-template>
+<ng-template #filterDate let-field="field" let-first="first">
+  <nz-dropdown [nzPlacement]="first ? 'bottomLeft' : 'bottomRight'" nzTrigger="click" [nzClickHide]="false">
+    <i nz-icon type="filter" theme="outline" class="ant-table-filter-icon" nz-dropdown></i>
+    <div class="custom-filter-dropdown">
+      <div class="custom-filter-dropdown-header">
+        <div nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <label>Condition:</label>
+          </div>
+          <div nz-col [nzSpan]="16">
+            <nz-select [nzSize]="'small'" [(ngModel)]="filter[field.id].condition">
+              <nz-option [nzLabel]="'='" [nzValue]="0"></nz-option>
+              <nz-option [nzLabel]="'>='" [nzValue]="1"></nz-option>
+              <nz-option [nzLabel]="'<='" [nzValue]="2"></nz-option>
+              <nz-option [nzLabel]="'><'" [nzValue]="3"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+        <div *ngIf="filter[field.id].condition < 3" nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <label>Value:</label>
+          </div>
+          <div nz-col [nzSpan]="16">
+            <nz-date-picker [nzSize]="'small'" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"
+                            nzPlaceHolder="Select Time" [(ngModel)]="filter[field.id].value[0]"></nz-date-picker>
+          </div>
+        </div>
+        <div *ngIf="filter[field.id].condition > 2" nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <label>From:</label>
+          </div>
+          <div nz-col [nzSpan]="16">
+            <nz-date-picker [nzSize]="'small'" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"
+                            nzPlaceHolder="Select Time" [(ngModel)]="filter[field.id].value[0]"></nz-date-picker>
+          </div>
+        </div>
+        <div *ngIf="filter[field.id].condition > 2" nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <label>To:</label>
+          </div>
+          <div nz-col [nzSpan]="16">
+            <nz-date-picker [nzSize]="'small'" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"
+                            nzPlaceHolder="Select Time" [(ngModel)]="filter[field.id].value[1]"></nz-date-picker>
+          </div>
+        </div>
+      </div>
+      <div class="ant-table-filter-dropdown-btns">
+        <a class="ant-table-filter-dropdown-link confirm" (click)="update_filter(field)"><span>OK</span></a>
+        <a class="ant-table-filter-dropdown-link clear" (click)="reset_filter(field)"><span>Reset</span></a>
+      </div>
+    </div>
+  </nz-dropdown>
+</ng-template>

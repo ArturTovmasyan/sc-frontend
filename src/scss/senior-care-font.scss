@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+$sc-font-path: "../assets/fonts";
+$sc-css-prefix: "seniorcare";
+$sc-font-size-base: 14px;
+
+@font-face {
+  font-family: "seniorcare";
+  src: url("#{$sc-font-path}/seniorcare.eot");
+  src: url("#{$sc-font-path}/seniorcare.eot?#iefix") format("embedded-opentype"),
+  url("#{$sc-font-path}/seniorcare.woff") format("woff"),
+  url("#{$sc-font-path}/seniorcare.ttf") format("truetype"),
+  url("#{$sc-font-path}/seniorcare.svg#seniorcare") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.#{$sc-css-prefix} {
+  display: inline-block;
+  font: normal normal normal $sc-font-size-base/1 "seniorcare"; // shortening font declaration
+  font-size: inherit; // can't have font-size inherit on line above, so need to override
+  text-rendering: auto; // optimizelegibility throws things off #1094
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0); // ensures no half-pixel rendering in firefox
+}
+
+.#{$sc-css-prefix} {
+  &-lg {
+    font-size: (4em / 3);
+    line-height: (3em / 4);
+    vertical-align: -15%;
+  }
+
+  &-2x {
+    font-size: 2em;
+  }
+
+  &-3x {
+    font-size: 3em;
+  }
+
+  &-4x {
+    font-size: 4em;
+  }
+
+  &-5x {
+    font-size: 5em;
+  }
+
+  &-fw {
+    width: (18em / 14);
+    text-align: center;
+  }
+}
+
+.#{$sc-css-prefix} {
+  &-admin:before {
+    content: "\61";
+  }
+
+  &-assessment:before {
+    content: "\62";
+  }
+
+  &-dietary:before {
+    content: "\63";
+  }
+
+  &-events:before {
+    content: "\64";
+  }
+
+  &-leads:before {
+    content: "\65";
+  }
+
+  &-medical-history:before {
+    content: "\66";
+  }
+
+  &-medications:before {
+    content: "\67";
+  }
+
+  &-physician:before {
+    content: "\68";
+  }
+
+  &-rent:before {
+    content: "\69";
+  }
+
+  &-reports:before {
+    content: "\6a";
+  }
+
+  &-resident:before {
+    content: "\6b";
+  }
+
+  &-responsible-persons:before {
+    content: "\6c";
+  }
+
+  &-staffing:before {
+    content: "\6d";
+  }
+
+  &-transportation:before {
+    content: "\6e";
+  }
+}

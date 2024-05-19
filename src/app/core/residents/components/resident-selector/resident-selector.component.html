@@ -1,0 +1,68 @@
+<nz-button-group [nzSize]="'large'" class="resident-pages">
+  <a nz-button routerLinkActive="active-link" [routerLink]="['/resident', resident_id, 'info']"
+     title="Resident">
+    <i class="seniorcare seniorcare-3x seniorcare-resident"></i>
+  </a>
+  <a nz-button [nzType]="'dashed'" routerLinkActive="active-link" [routerLink]="['/resident', resident_id, 'rent']"
+     title="Rent">
+    <i class="seniorcare seniorcare-3x seniorcare-rent"></i>
+  </a>
+  <a nz-button routerLinkActive="active-link" [routerLink]="['/resident', resident_id, 'physicians']"
+     title="Physicians">
+    <i class="seniorcare seniorcare-3x seniorcare-physician"></i>
+  </a>
+  <a nz-button routerLinkActive="active-link" [routerLink]="['/resident', resident_id, 'medications']"
+     title="Medications">
+    <i class="seniorcare seniorcare-3x seniorcare-medications"></i>
+  </a>
+  <a nz-button routerLinkActive="active-link" [routerLink]="['/resident', resident_id, 'history']"
+     title="History">
+    <i class="seniorcare seniorcare-3x seniorcare-medical-history"></i>
+  </a>
+  <a nz-button routerLinkActive="active-link" [routerLink]="['/resident', resident_id, 'diets']"
+     title="Diet">
+    <i class="seniorcare seniorcare-3x seniorcare-dietary"></i>
+  </a>
+  <a nz-button [nzType]="'dashed'" routerLinkActive="active-link" [routerLink]="['/resident', resident_id, 'assessments']"
+     title="Assessments">
+    <i class="seniorcare seniorcare-3x seniorcare-assessment"></i>
+  </a>
+  <a nz-button [nzType]="'dashed'" routerLinkActive="active-link" [routerLink]="['/resident', resident_id, 'reports']"
+     title="Reports">
+    <i class="seniorcare seniorcare-3x seniorcare-reports"></i>
+  </a>
+</nz-button-group>
+<div class="facility-selector">
+  <i class="fa fa-home"></i>
+  <nz-select [nzShowSearch]="true" (ngModelChange)="groupChanged($event)">
+    <nz-option-group nzLabel="FFC - Facilities">
+      <ng-container nzLabel="FFC - Facilities" *ngFor="let facility of facilities">
+        <nz-option [nzLabel]="facility.name" [nzValue]="facility.id"></nz-option>
+      </ng-container>
+    </nz-option-group>
+    <nz-option-group nzLabel="IHC - Regions">
+      <ng-container *ngFor="let region of regions">
+        <nz-option [nzLabel]="region.name" [nzValue]="region.id"></nz-option>
+      </ng-container>
+    </nz-option-group>
+    <nz-option-group nzLabel="IL - Apartments">
+      <ng-container *ngFor="let apartment of apartments">
+        <nz-option [nzLabel]="apartment.name" [nzValue]="apartment.id"></nz-option>
+      </ng-container>
+    </nz-option-group>
+  </nz-select>
+  <i class="fa fa-users"></i>
+  <nz-select [nzShowSearch]="true">
+    <nz-option [nzValue]="0" [nzLabel]="'p1'"></nz-option>
+    <nz-option [nzValue]="1" [nzLabel]="'p2'"></nz-option>
+    <nz-option [nzValue]="2" [nzLabel]="'p3'"></nz-option>
+    <nz-option [nzValue]="3" [nzLabel]="'p4'"></nz-option>
+  </nz-select>
+  <i class="fa fa-ban"></i>
+  <nz-select [nzShowSearch]="true">
+    <nz-option [nzValue]="0" [nzLabel]="'p1'"></nz-option>
+    <nz-option [nzValue]="1" [nzLabel]="'p2'"></nz-option>
+    <nz-option [nzValue]="2" [nzLabel]="'p3'"></nz-option>
+    <nz-option [nzValue]="3" [nzLabel]="'p4'"></nz-option>
+  </nz-select>
+</div>

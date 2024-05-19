@@ -1,0 +1,71 @@
+<div class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="card-group">
+            <div class="card p-4">
+              <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="submitForm()">
+                  <h1>Login</h1>
+                  <p class="text-muted">Sign In to your account</p>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i nz-icon theme="outline" type="user"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Username or e-mail" formControlName="username"
+                           [ngClass]="{'is-invalid': fieldErrors('username') }"/>
+                    <app-field-errors [errors]="fieldErrors('username')" class="invalid-feedback"></app-field-errors>
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-lock"></i></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" formControlName="password"
+                           [ngClass]="{'is-invalid': fieldErrors('password')}"/>
+                    <app-field-errors [errors]="fieldErrors('password')" class="invalid-feedback"></app-field-errors>
+                  </div>
+
+                  <!-- Status -->
+                  <div class="row" *ngIf="formErrors()">
+                    <div class="col-12">
+                      <div class="alert alert-danger" role="alert">
+                        <app-form-errors [errors]="formErrors()"></app-form-errors>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="message">
+                    <div class="col-12">
+                      <div class="alert alert-success" role="alert">{{ message }}</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <button [disabled]="loading" type="submit" class="btn btn-primary px-4">
+                        <i *ngIf="loading" nz-icon theme="outline" type="loading-3-quarters"></i>
+                        Login
+                      </button>
+                    </div>
+                    <div class="col-6 text-right">
+                      <a routerLink="/forgot-password" class="btn btn-link px-0">Forgot password?</a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+              <div class="card-body text-center">
+                <div>
+                  <h2>Sign up</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua.</p>
+                  <a routerLink="/sign-up" class="btn btn-primary active mt-3">Register Now!</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

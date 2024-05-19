@@ -1,0 +1,55 @@
+.custom-filter-dropdown {
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+
+  .custom-filter-dropdown-header {
+    margin: 5px;
+    min-width: 100px;
+  }
+  .custom-filter-dropdown-footer {
+    margin: 5px;
+    text-align: center;
+  }
+
+  ::ng-deep .ant-calendar-picker {
+    width: 100% !important;
+  }
+}
+
+nz-checkbox-group {
+  display: block;
+  ::ng-deep .ant-checkbox-wrapper {
+    margin-left: 0;
+    display: block;
+  }
+}
+
+nz-select, nz-input-number {
+  width: 100%;
+}
+
+[nz-button] {
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+
+nz-button-group [nz-button] {
+  margin-right: 0;
+}
+
+.ant-btn > .anticon {
+  vertical-align: baseline;
+}
+
+::ng-deep p.modal-confirm {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 2;
+  margin: 0;
+
+  i {
+    margin-right: 1rem;
+  }
+}

@@ -1,0 +1,58 @@
+﻿<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state_full" nzRequired>State (Full)</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state_full')?'error':null">
+      <input nz-input placeholder="State (Full)" formControlName="state_full">
+      <nz-form-explain *ngIf="hasErrors('state_full')">
+        <app-field-errors [errors]="fieldErrors('state_full')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state_abbr" nzRequired>State (Abbr)</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state_abbr')?'error':null">
+      <input nz-input placeholder="State (Abbr)" formControlName="state_abbr">
+      <nz-form-explain *ngIf="hasErrors('state_abbr')">
+        <app-field-errors [errors]="fieldErrors('state_abbr')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="city" nzRequired>City</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('city')?'error':null">
+      <input nz-input placeholder="City" formControlName="city">
+      <nz-form-explain *ngIf="hasErrors('city')">
+        <app-field-errors [errors]="fieldErrors('city')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="zip_main" nzRequired>Zip (Main)</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('zip_main')?'error':null">
+      <input nz-input placeholder="Zip (Main)" formControlName="zip_main">
+      <nz-form-explain *ngIf="hasErrors('zip_main')">
+        <app-field-errors [errors]="fieldErrors('zip_main')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="zip_sub" nzRequired>Zip (Sub)</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('zip_sub')?'error':null">
+      <input nz-input placeholder="Zip (Sub)" formControlName="zip_sub">
+      <nz-form-explain *ngIf="hasErrors('zip_sub')">
+        <app-field-errors [errors]="fieldErrors('zip_sub')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
