@@ -374,7 +374,7 @@
 </ng-template>
 
 <ng-template #json_horizontal_field let-data="data" let-sorted="sorted">
-  <table style="margin: 0; border-radius: 0; border-collapse: collapse;border:none;">
+  <table style="width:100%;margin: 0; border-radius: 0; border-collapse: collapse;border:none;">
     <tr>
       <ng-container *ngFor="let item of data|str2json:true|keyvalue:sort_order_func(sorted); let last=last">
         <th *ngIf="check_empty(item.value)" class="text-center" [style.border-right]="last? 'none': '1px solid #e8e8e8'" [style.borderBottom]="'1px solid #e8e8e8'">{{ item.key }}</th>
