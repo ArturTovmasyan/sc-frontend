@@ -66,7 +66,8 @@
 
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facilities" nzRequired>Facilities</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('facilities')?'error':null">
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('facilities')?'error':null"
+                     class="sc-select-all">
       <nz-select *ngIf="show_facilities" nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="facilities">
         <ng-container *ngFor="let facility of facilities">
           <nz-option [nzLabel]="facility.name" [nzValue]="facility.id"></nz-option>

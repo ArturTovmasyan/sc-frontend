@@ -65,6 +65,7 @@ import {ListComponent as ResidentMedicationListComponent} from './residents/comp
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
 import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
 import {ListComponent as ReportListComponent} from './residents/components/report/list.component';
+import {CSVComponent as ReportCSVComponent} from './residents/components/report/csv.component';
 import {HistoryComponent as ResidentHistoryComponent} from './residents/components/resident/history/history.component';
 import {HomeComponent} from './residents/components/home/home.component';
 import {InvitationComponent} from './components/account/invitation/invitation.component';
@@ -648,6 +649,13 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Residents'},
           title: 'Reports',
+          permissions: ['report-group']
+        }
+      },
+      {
+        path: 'report-csv', component: ReportCSVComponent,
+        data: {
+          title: 'Report - CSV',
           permissions: ['report-group']
         }
       },
