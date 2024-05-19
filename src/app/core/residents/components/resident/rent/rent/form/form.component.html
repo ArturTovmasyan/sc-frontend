@@ -89,7 +89,7 @@
 
 
   <fieldset formArrayName="source">
-    <table class="table table-hover table-bordered table-sm">
+    <table class="senior-care-form-table table table-hover table-bordered table-sm">
       <thead>
       <tr>
         <th class="w-50">
@@ -107,7 +107,7 @@
           Source(s)
         </td>
         <td>
-          <nz-select nzSize="small" nzMode="default" nzPlaceHolder="Select source" [(ngModel)]="source_selector"
+          <nz-select class="sc-wide" nzSize="small" nzMode="default" nzPlaceHolder="Select source" [(ngModel)]="source_selector"
                      [ngModelOptions]="{standalone: true}">
             <nz-option *ngFor="let payment_source of payment_sources"
                        [nzLabel]="payment_source.title"
