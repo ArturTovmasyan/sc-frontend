@@ -40,18 +40,7 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
     switch (key) {
       case 'rs_type':
         this.$subscriptions[key] = this.residentSelector$.type.subscribe(next => {
-          if (this.first) {
-            this.subscribe('rs_resident');
-          } else {
-            this.load_admissions();
-          }
-        });
-        break;
-      case 'rs_resident':
-        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
-          if (next) {
-            this.load_admissions();
-          }
+          this.load_admissions();
         });
         break;
       default:
@@ -63,7 +52,7 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
     const resident = this.residentSelector$.resident ? this.residentSelector$.resident.value : null;
     const type = this.residentSelector$.type ? this.residentSelector$.type.value : null;
 
-    if (resident !== null && type !== null) {
+    if (resident !== null) {
       const param_resident = this.params.filter(v => v.key === 'resident_id').pop();
 
       if (!param_resident) {

@@ -47,6 +47,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   admission_types: { id: AdmissionType, name: string }[];
   facility_admission_types: { id: AdmissionType, name: string }[];
   apartment_admission_types: { id: AdmissionType, name: string }[];
+  resident_state: string;
 
   constructor(
     protected modal$: ModalFormService,
@@ -66,6 +67,25 @@ export class FormComponent extends AbstractForm implements OnInit {
     super(modal$);
 
     this.group_helper = new GroupHelper();
+
+    this.facility_admission_types = [
+      {id: AdmissionType.LONG_ADMIT, name: 'Long-Term Admit'},
+      {id: AdmissionType.SHORT_ADMIT, name: 'Short-Term Admit'},
+      {id: AdmissionType.READMIT, name: 'Re-Admit/Assign Room'},
+      {id: AdmissionType.TEMPORARY_DISCHARGE, name: 'Temporary Discharge'},
+      {id: AdmissionType.PENDING_DISCHARGE, name: 'Pending Discharge'},
+      {id: AdmissionType.DISCHARGE, name: 'Discharge'}
+    ];
+
+    this.apartment_admission_types = [
+      {id: AdmissionType.LONG_ADMIT, name: 'Long-Term Rental'},
+      {id: AdmissionType.SHORT_ADMIT, name: 'Short-Term Rental'},
+      {id: AdmissionType.READMIT, name: 'Re-admit'},
+      {id: AdmissionType.PENDING_DISCHARGE, name: 'Notice to Vacate'},
+      {id: AdmissionType.DISCHARGE, name: 'Move Out'}
+    ];
+
+    this.admission_types = [];
   }
 
   ngOnInit(): void {
@@ -96,31 +116,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       csz_id: [null, [Validators.required]]
     });
 
+    this.form.get('group').disable();
+    this.form.get('group_type').disable();
     this.init_subform(null);
 
     this.subscribe('rs_resident');
     this.subscribe('vc_admission_type');
     this.subscribe('vc_group');
-
-    // TODO: review
-    this.facility_admission_types = [
-      {id: AdmissionType.LONG_ADMIT, name: 'Long-Term Admit'},
-      {id: AdmissionType.SHORT_ADMIT, name: 'Short-Term Admit'},
-      {id: AdmissionType.READMIT, name: 'Re-Admit/Assign Room'},
-      {id: AdmissionType.TEMPORARY_DISCHARGE, name: 'Temporary Discharge'},
-      {id: AdmissionType.PENDING_DISCHARGE, name: 'Pending Discharge'},
-      {id: AdmissionType.DISCHARGE, name: 'Discharge'}
-    ];
-
-    this.apartment_admission_types = [
-      {id: AdmissionType.LONG_ADMIT, name: 'Long-Term Rental'},
-      {id: AdmissionType.SHORT_ADMIT, name: 'Short-Term Rental'},
-      {id: AdmissionType.READMIT, name: 'Re-admit'},
-      {id: AdmissionType.PENDING_DISCHARGE, name: 'Notice to Vacate'},
-      {id: AdmissionType.DISCHARGE, name: 'Move Out'}
-    ];
-
-    this.admission_types = [];
 
     this.postSubmit = (data: any) => {
       const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
@@ -356,6 +358,46 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {
             this.form.get('resident_id').setValue(next);
+
+            this.subscribe('rs_type');
+            this.subscribe('rs_state');
+          }
+        });
+        break;
+      case 'rs_type':
+        this.$subscriptions[key] = this.residentSelector$.type.subscribe(next => {
+          if (next) {
+            switch (next) {
+              case GroupType.FACILITY:
+                this.admission_types = this.facility_admission_types;
+                this.subscribe('list_facility');
+                break;
+              case GroupType.APARTMENT:
+                this.admission_types = this.apartment_admission_types;
+                this.subscribe('list_apartment');
+                break;
+              case GroupType.REGION:
+                this.subscribe('list_region');
+                break;
+              default:
+                break;
+            }
+          }
+        });
+        break;
+      case 'rs_state':
+        this.$subscriptions[key] = this.residentSelector$.state.subscribe(next => {
+          if (next) {
+            this.resident_state = next;
+
+            if (this.resident_state === 'no-admission') {
+              this.subscribe('list_facility');
+              this.subscribe('list_apartment');
+              this.subscribe('list_region');
+
+              this.form.get('group').enable();
+              this.form.get('group_type').enable();
+            }
           }
         });
         break;
@@ -447,10 +489,6 @@ export class FormComponent extends AbstractForm implements OnInit {
           break;
       }
     }
-
-    this.subscribe('list_facility');
-    this.subscribe('list_apartment');
-    this.subscribe('list_region');
   }
 
   formValue(): void {
