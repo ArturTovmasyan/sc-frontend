@@ -38,7 +38,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   show: {
     group: boolean, group_multi: boolean, group_all: boolean,
     resident: boolean, resident_all: boolean,
-    date: boolean, date_from: boolean, date_to: boolean, discontinued: boolean,
+    date: boolean, date_from: boolean, date_to: boolean, discontinued: boolean, special: boolean,
     assessment: boolean
   } = {
     group: false,
@@ -50,6 +50,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     date_from: false,
     date_to: false,
     discontinued: false,
+    special: false,
     assessment: false
   };
 
@@ -229,6 +230,15 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
+      case 'active_resident_list_admission':
+        this.$subscriptions[key] = this.residentAdmission$
+          .list_by_state('active', this.form.get('group').value, this.form.get('group_id').value)
+          .pipe(first()).subscribe(res => {
+            if (res) {
+              this.residents = res;
+            }
+          });
+        break;
       case 'vc_group_list':
         this.$subscriptions[key] = this.form.get('group_list').valueChanges.subscribe(next => {
           if (next) {
@@ -240,6 +250,14 @@ export class FormComponent extends AbstractForm implements OnInit {
             } else {
               this.form.get('group').setValue(next.type);
               this.form.get('group_id').setValue(next.id);
+
+              if (this.show.special) {
+                this.show.resident = true;
+                if (this.form.get('group').value !== null && this.form.get('group_id').value !== null) {
+                  this.form.get('resident_id').setValue(null);
+                  this.subscribe('active_resident_list_admission');
+                }
+              }
             }
           }
         });
@@ -298,6 +316,11 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
       this.form.get('discontinued').enable();
       this.form.get('discontinued').setValue(false);
+    }
+
+    if (parameters.hasOwnProperty('special')) {
+      this.show.resident = false;
+      this.show.special = true;
     }
 
     if (parameters.hasOwnProperty('group')) {
