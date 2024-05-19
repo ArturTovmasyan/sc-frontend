@@ -41,6 +41,8 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
   }
 
   readyImage(event) {
+    this.move(0, 0);
+
     this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
   }
 
@@ -85,7 +87,6 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
   after_set_form_data(): void {
     if (this.form.get('photo').value) {
       this.imageUrl = this.form.get('photo').value;
-      this.move(0, 0);
     }
   }
 }
