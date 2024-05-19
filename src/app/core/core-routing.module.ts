@@ -52,6 +52,7 @@ import {ListComponent as ExpenseItemListComponent} from './residents/components/
 import {ListComponent as CreditItemListComponent} from './residents/components/credit-item/list.component';
 import {ListComponent as DiscountItemListComponent} from './residents/components/discount-item/list.component';
 import {ListComponent as KeyFinanceDatesListComponent} from './residents/components/key-finance-dates/list.component';
+import {ListComponent as LatePaymentListComponent} from './residents/components/late-payment/list.component';
 import {ListComponent as AssessmentCategoryListComponent} from './residents/components/assessment/category/list.component';
 import {ListComponent as AssessmentFormListComponent} from './residents/components/assessment/form/list.component';
 import {ListComponent as AssessmentCareLevelListComponent} from './residents/components/assessment/care-level/list.component';
@@ -669,6 +670,15 @@ const routes: Routes = [
           nav: {show: true, group: 'Reference'},
           title: 'Key Finance Dates',
           permissions: ['activity-reference', 'persistence-common-key_finance_dates']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'late-payment', component: LatePaymentListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Late Payments',
+          permissions: ['activity-reference', 'persistence-common-late_payment']
         },
         canActivate: [AuthGuard]
       },

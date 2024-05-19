@@ -190,6 +190,11 @@
       "description": "Description",
       "space": "Space"
     },
+    "late-payment-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "event-definition-list": {
       "id": "ID",
       "type": "Type",

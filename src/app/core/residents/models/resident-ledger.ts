@@ -5,11 +5,14 @@ import {ResidentCreditItem} from './resident-credit-item';
 import {ResidentDiscountItem} from './resident-discount-item';
 import {ResidentPaymentReceivedItem} from './resident-payment-received-item';
 import {ResidentAwayDays} from './resident-away-days';
+import {LatePayment} from './late-payment';
 
 export class ResidentLedger implements IdInterface {
   id: number;
 
   resident: Resident;
+
+  late_payment: LatePayment;
 
   date_created: Date;
 

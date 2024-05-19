@@ -22,6 +22,8 @@ import {ResidentResponsiblePerson} from '../../../../models/resident-responsible
 import {ResidentResponsiblePersonService} from '../../../../services/resident-responsible-person.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import moment from 'moment';
+import {LatePayment} from '../../../../models/late-payment';
+import {LatePaymentService} from '../../../../services/late-payment.service';
 
 @Component({
     templateUrl: 'form.component.html'
@@ -38,6 +40,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     discount_items: DiscountItem[];
     payment_types: RpPaymentType[];
     responsible_persons: ResidentResponsiblePerson[];
+
+    late_payments: LatePayment[];
 
     private query_params: Params;
 
@@ -65,6 +69,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         private discount_item$: DiscountItemService,
         private payment_type$: RpPaymentTypeService,
         private responsible_person$: ResidentResponsiblePersonService,
+        private late_payment$: LatePaymentService,
     ) {
         super(modal$);
 
@@ -87,6 +92,8 @@ export class FormComponent extends AbstractForm implements OnInit {
             resident_payment_received_items: this.formBuilder.array([]),
             resident_away_days: this.formBuilder.array([]),
 
+            late_payment_id: [null, Validators.compose([])],
+
             resident_id: [null, Validators.required]
         });
 
@@ -98,6 +105,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.subscribe('list_discount_item');
         this.subscribe('list_payment_type');
         this.subscribe('list_resident_responsible_person');
+        this.subscribe('list_late_payment');
     }
 
     protected subscribe(key: string, params?: any): void {
@@ -172,6 +180,17 @@ export class FormComponent extends AbstractForm implements OnInit {
 
                   if (params) {
                     this.form.get('responsible_person_id').setValue(params.responsible_person_id);
+                  }
+                }
+              });
+              break;
+            case 'list_late_payment':
+              this.$subscriptions[key] = this.late_payment$.all().pipe(first()).subscribe(res => {
+                if (res) {
+                  this.late_payments = res;
+
+                  if (params) {
+                    this.form.get('late_payment_id').setValue(params.late_payment_id);
                   }
                 }
               });

@@ -520,6 +520,24 @@
         </nz-form-control>
       </nz-form-item>
     </nz-tab>
+
+    <nz-tab nzTitle="Late Payment" *ngIf="!isThirdParty">
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="late_payment_id">Late Payment</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('late_payment_id')?'error':null">
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="late_payment_id">
+              <ng-container *ngFor="let late_payment of late_payments">
+                <nz-option [nzLabel]="late_payment.title" [nzValue]="late_payment.id"></nz-option>
+              </ng-container>
+            </nz-select>
+          </div>
+          <nz-form-explain *ngIf="hasErrors('late_payment_id')">
+            <app-field-errors [errors]="fieldErrors('late_payment_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
   </nz-tabset>
 
   <nz-form-item *ngIf="formErrors()">
