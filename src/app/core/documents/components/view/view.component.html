@@ -50,7 +50,7 @@
       </div>
       <div class="card-body">
         <nz-empty *ngIf="!document" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
-        <ngx-extended-pdf-viewer *ngIf="!(!document)"
+        <ngx-extended-pdf-viewer *ngIf="document !== null"
                                  [src]="document.file"
                                  useBrowserLocale="true"
                                  [showPresentationModeButton]="true"

@@ -53,6 +53,8 @@ export class ViewComponent implements OnInit, OnDestroy {
     private auth_$: AuthGuard
   ) {
     this.$subscriptions = {};
+
+    this.document = null;
   }
 
   ngOnInit(): void {
