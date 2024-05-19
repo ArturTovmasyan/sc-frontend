@@ -6,8 +6,8 @@
       </div>
       <div class="card-body">
         <nz-empty *ngIf="!documents" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
-        <nz-list *ngIf="documents" [nzDataSource]="documents" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
-          <ng-template #item let-item>
+        <nz-list *ngIf="documents" [nzDataSource]="documents" [nzRenderItem]="tplItem" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+          <ng-template #tplItem let-item>
             <nz-list-item>
               <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="item.description">
                 <ng-template #nzTitle>

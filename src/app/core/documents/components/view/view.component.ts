@@ -64,7 +64,7 @@ export class ViewComponent implements OnInit, OnDestroy {
             this.documents.sort((a, b) => a.title.localeCompare(b.title));
 
             if (params) {
-              this.openPDF(this.documents.filter(v => v.id = params.document_id).pop());
+              this.openPDF(this.documents.filter(v => v.id === params.document_id).pop());
             } else {
               this.openPDF(this.documents[0]);
             }
