@@ -701,7 +701,8 @@
       "LEAD_CHANGE_LOG": "Lead Change Log",
       "FACILITY_ACTIVITY": "Facility Activity",
       "CORPORATE_ACTIVITY": "Corporate Activity",
-      "RESIDENT_RENT_INCREASE": "Resident Rent Increase"
+      "RESIDENT_RENT_INCREASE": "Resident Rent Increase",
+      "DATABASE_USER_LOGIN_ACTIVITY": "Database User Login Activity"
     },
     "grant_level": {
       "NONE":"None",
