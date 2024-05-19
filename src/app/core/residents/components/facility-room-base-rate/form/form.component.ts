@@ -38,7 +38,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
 
       date: [DateHelper.newDate(), Validators.required],
-      base_rates: this.formBuilder.array([]),
+      levels: this.formBuilder.array([]),
       room_type_id: [null, Validators.compose([Validators.required])]
     });
 
@@ -66,11 +66,11 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             if (!this.edit_mode) {
               this.care_levels.forEach(value => {
-                this.add_field('base_rates', {care_level_id: value.id, amount: 0});
+                this.add_field('levels', {care_level_id: value.id, amount: 0});
               });
             } else {
-              if (this.get_form_array('base_rates').length !== this.care_levels.length) {
-                const edit_ids = this.get_form_array('base_rates').value.map(val => val.care_level_id);
+              if (this.get_form_array('levels').length !== this.care_levels.length) {
+                const edit_ids = this.get_form_array('levels').value.map(val => val.care_level_id);
                 const all_ids = this.care_levels.map(val => val.id);
                 const remaining_ids = all_ids.filter(n => !edit_ids.includes(n));
 
@@ -78,7 +78,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                   const care_levels = this.care_levels.filter(val => remaining_ids.includes(val.id));
 
                   care_levels.forEach(value => {
-                    this.add_field('base_rates', {care_level_id: value.id, amount: 0});
+                    this.add_field('levels', {care_level_id: value.id, amount: 0});
                   });
                 }
               }
@@ -93,7 +93,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   public get_form_array_skeleton(key: string): FormGroup {
     switch (key) {
-      case 'base_rates':
+      case 'levels':
         return this.formBuilder.group({
           care_level_id: [null, Validators.required],
           amount: [null, Validators.required],

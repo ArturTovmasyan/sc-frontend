@@ -30,12 +30,12 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item *ngIf="this.care_levels && this.care_levels.length > 0 && get_form_array('base_rates').controls.length > 0">
+  <nz-form-item *ngIf="this.care_levels && this.care_levels.length > 0 && get_form_array('levels').controls.length > 0">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Base Rates</nz-form-label>
     <div nz-col [nzSpan]="16">
       <table
              class="senior-care-form-table table table-hover table-bordered table-sm"
-             formArrayName="base_rates">
+             formArrayName="levels">
         <thead>
         <tr>
           <th style="width:50%;">Care Level</th>
@@ -43,17 +43,17 @@
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let base_rate of get_form_array('base_rates').controls;let i = index">
+        <ng-container *ngFor="let base_rate of get_form_array('levels').controls;let i = index">
           <tr [formGroupName]="i.toString()">
             <td>{{ this.care_levels[i].title }}</td>
             <td>
               <nz-form-item>
                 <nz-form-control [nzSm]="16" [nzXs]="24"
-                                 [nzValidateStatus]="hasErrors('base_rates.'+i+'.amount')?'error':null">
+                                 [nzValidateStatus]="hasErrors('levels.'+i+'.amount')?'error':null">
                   <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" [nzFormatter]="formatterDollar"
                                    nzSize="small" nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
-                  <nz-form-explain *ngIf="hasErrors('base_rates.'+i+'.amount')">
-                    <app-field-errors [errors]="fieldErrors('base_rates.'+i+'.amount')"></app-field-errors>
+                  <nz-form-explain *ngIf="hasErrors('levels.'+i+'.amount')">
+                    <app-field-errors [errors]="fieldErrors('levels.'+i+'.amount')"></app-field-errors>
                   </nz-form-explain>
                 </nz-form-control>
               </nz-form-item>
