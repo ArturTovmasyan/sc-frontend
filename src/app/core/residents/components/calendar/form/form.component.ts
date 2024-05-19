@@ -45,6 +45,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   repeatTypes: { id: RepeatType, name: string }[];
 
   rp_single: boolean;
+  show_facilities: boolean = true;
+
 
   required = {
     physician_id: false,
@@ -127,7 +129,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       repeat_end: [DateHelper.convertUTC(new Date())],
       no_repeat_end: [true, Validators.required],
 
-      facilities: [[], Validators.required],
+      facilities: [[]],
+      facilities_all: [false, Validators.required],
+
       roles: [[], Validators.required],
       done: [false, Validators.required],
     });
@@ -164,6 +168,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_user');
     this.subscribe('list_facility');
     this.subscribe('list_role');
+    this.subscribe('vc_facilities_all');
     this.subscribe('vc_all_day');
     this.subscribe('vc_no_repeat_end');
   }
@@ -256,6 +261,16 @@ export class FormComponent extends AbstractForm implements OnInit {
             } else {
               // this.form.get('responsible_persons').setValue(this.form.get('responsible_persons').value);
             }
+          }
+        });
+        break;
+      case 'vc_facilities_all':
+        this.$subscriptions[key] = this.form.get('facilities_all').valueChanges.subscribe(next => {
+          if (next) {
+            this.form.get('facilities').setValue([]);
+            this.show_facilities = false;
+          } else {
+            this.show_facilities = true;
           }
         });
         break;

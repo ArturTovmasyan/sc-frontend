@@ -347,11 +347,11 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.form.get('rsvp').disable();
               }
 
-              if (definition.done) {
-                this.form.get('done').enable();
-              } else {
-                this.form.get('done').disable();
-              }
+              // if (definition.done) {
+              //   this.form.get('done').enable();
+              // } else {
+              //   this.form.get('done').disable();
+              // }
 
               this.form.get('additional_date').updateValueAndValidity();
               this.form.get('physician_id').updateValueAndValidity();
