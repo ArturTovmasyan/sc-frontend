@@ -171,6 +171,11 @@
       "title": "Title",
       "space": "Space"
     },
+    "discount-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "event-definition-list": {
       "id": "ID",
       "type": "Type",

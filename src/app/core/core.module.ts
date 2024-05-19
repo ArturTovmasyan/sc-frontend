@@ -217,6 +217,9 @@ import {FormComponent as PaymentTypeFormComponent} from './residents/components/
 import {ListComponent as ExpenseListComponent} from './residents/components/expense/list.component';
 import {FormComponent as ExpenseFormComponent} from './residents/components/expense/form/form.component';
 
+import {ListComponent as DiscountListComponent} from './residents/components/discount/list.component';
+import {FormComponent as DiscountFormComponent} from './residents/components/discount/form/form.component';
+
 import {ListComponent as CreditListComponent} from './residents/components/credit/list.component';
 import {FormComponent as CreditFormComponent} from './residents/components/credit/form/form.component';
 
@@ -591,6 +594,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CreditListComponent,
     CreditFormComponent,
 
+    DiscountListComponent,
+    DiscountFormComponent,
+
     AssessmentCategoryListComponent,
     AssessmentCategoryFormComponent,
 
@@ -802,6 +808,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PaymentTypeFormComponent,
     ExpenseFormComponent,
     CreditFormComponent,
+    DiscountFormComponent,
 
     AssessmentCategoryFormComponent,
 
