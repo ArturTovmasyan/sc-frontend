@@ -200,6 +200,8 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.form.get('group').valueChanges.subscribe(next => {
           if (next) {
             this.form.get('group_type').setValue(next.type);
+            this.form.get('dining_room_id').setValue(null);
+
             this.init_subform(next);
 
             if (next.type === GroupType.REGION) {
