@@ -55,7 +55,7 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
   categories: DocumentCategory[];
   category: DocumentCategory;
 
-  documents: Document[] | FacilityDocument[] | ResidentDocument[];
+  documents: any[];
   document: Document | FacilityDocument | ResidentDocument;
 
   officeUrl: any = null;
@@ -146,7 +146,8 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
 
             if (res.length > 0) {
               if (params && params.hasOwnProperty('document_id')) {
-                this.open(this.documents.filter(v => v.id === params.document_id).pop());
+                const document = this.documents.filter(v => v.id === params.document_id).pop();
+                this.open(document);
               } else {
                 this.open(this.documents[0]);
               }
