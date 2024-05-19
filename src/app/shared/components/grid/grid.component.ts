@@ -390,6 +390,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
               loading = false;
 
               this.reload_data();
+              component.after_submit();
 
               modal.close();
             },
@@ -424,6 +425,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
               loading = false;
 
               this.reload_data();
+              component.after_submit();
 
               modal.close();
 

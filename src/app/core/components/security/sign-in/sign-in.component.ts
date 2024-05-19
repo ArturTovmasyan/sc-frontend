@@ -30,7 +30,7 @@ export class SignInComponent extends AbstractForm implements OnInit {
     this.postSubmit = (data: Message) => {
       profile$.me().subscribe(user => {
           localStorage.setItem('user', btoa(JSON.stringify(user)));
-          this.router.navigate([this.returnUrl]);
+          this.router.navigateByUrl(this.returnUrl);
         }
       );
     };
