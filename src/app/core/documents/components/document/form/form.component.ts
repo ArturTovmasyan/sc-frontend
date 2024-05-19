@@ -39,6 +39,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.modal_map = [
       {key: 'category', component: CategoryFormComponent}
     ];
+
+    this.show_facilities = true;
   }
 
   ngOnInit(): void {

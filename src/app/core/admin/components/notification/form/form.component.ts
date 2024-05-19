@@ -36,6 +36,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     private user$: UserService,
   ) {
     super(modal$);
+
+    this.show_facilities = true;
   }
 
   ngOnInit(): void {
