@@ -1,5 +1,5 @@
 import * as normalize from 'normalize-path';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {Route, Router} from '@angular/router';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from '@ng-idle/core';
 import {Subscription} from 'rxjs';
@@ -13,7 +13,7 @@ import {AuthenticationService} from '../../services/auth.service';
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss']
 })
-export class DefaultLayoutComponent implements OnInit, OnDestroy {
+export class DefaultLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   public navItems = [];
   public sidebarMinimized = true;
   private changes: MutationObserver;
@@ -38,7 +38,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
     });
 
-    this.changes.observe(<Element>this.element, { attributes: true });
+    this.changes.observe(<Element>this.element, {attributes: true});
   }
 
   ngOnInit(): void {
@@ -47,6 +47,36 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     this.subscribe('get_profile');
 
     this.generateNavigation(this.router.config[0]);
+  }
+
+  ngAfterViewInit(): void {
+    const nav_ref = document.querySelector('.sc-reference-nav');
+    nav_ref.addEventListener('click', () => {
+      this.toggleRef(nav_ref);
+    });
+
+    this.toggleRef(nav_ref, true);
+  }
+
+  toggleRef(nav_ref: Element, first: boolean = false) {
+    if (!first) {
+      if (nav_ref.classList.contains('sc-reference-nav-open')) {
+        nav_ref.classList.remove('sc-reference-nav-open');
+      } else {
+        nav_ref.classList.add('sc-reference-nav-open');
+      }
+    }
+
+    let next_el = nav_ref.nextElementSibling;
+    while (next_el.tagName.toLowerCase() === 'app-sidebar-nav-link') {
+      if (next_el.classList.contains('d-none')) {
+        next_el.classList.remove('d-none');
+      } else {
+        next_el.classList.add('d-none');
+      }
+
+      next_el = next_el.nextElementSibling;
+    }
   }
 
   ngOnDestroy(): void {
@@ -100,7 +130,8 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
         if (temp_flat.length > 0) {
           nav_flat.push({
             title: true,
-            name: v
+            name: v,
+            attributes: v === 'Reference' ? {class: 'sc-reference-nav'} : {}
           });
           nav_flat.push(...temp_flat);
         }
