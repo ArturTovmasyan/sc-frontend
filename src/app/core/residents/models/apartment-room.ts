@@ -10,6 +10,8 @@ export class ApartmentRoom implements IdInterface {
   disabled: boolean;
   notes: string;
 
+  private: boolean;
+
   beds: ApartmentBed[];
 
   apartment: Apartment;

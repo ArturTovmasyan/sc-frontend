@@ -10,6 +10,8 @@ export class FacilityRoom implements IdInterface {
   disabled: boolean;
   notes: string;
 
+  private: boolean;
+
   beds: FacilityBed[];
 
   facility: Facility;

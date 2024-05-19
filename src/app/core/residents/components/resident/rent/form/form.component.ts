@@ -94,15 +94,21 @@ export class FormComponent extends AbstractForm implements OnInit {
             if (admission.group_type) {
               switch (admission.group_type) {
                 case GroupType.FACILITY:
-                  this.group_title = admission.facility_bed.room.facility.name + ' - #' + admission.facility_bed.room.number
-                    + ' (' + admission.facility_bed.number + ')';
+                  this.group_title = admission.facility_bed.room.facility.name + ' - #' +
+                    (admission.facility_bed.room.private ?
+                      admission.facility_bed.room.number :
+                      (admission.facility_bed.room.number + ' (' + admission.facility_bed.number + ')')
+                    );
                   break;
                 case GroupType.REGION:
                   this.group_title = admission.region.name;
                   break;
                 case GroupType.APARTMENT:
-                  this.group_title = admission.apartment_bed.room.apartment.name + ' - #' + admission.apartment_bed.room.number
-                    + ' (' + admission.apartment_bed.number + ')';
+                  this.group_title = admission.apartment_bed.room.apartment.name + ' - #' +
+                    (admission.apartment_bed.room.private ?
+                        admission.apartment_bed.room.number :
+                        (admission.apartment_bed.room.number + ' (' + admission.apartment_bed.number + ')')
+                    );
                   break;
               }
             }

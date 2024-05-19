@@ -192,7 +192,10 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
   </div>
   <div *ngIf="option.facility_bed && option.facility_bed.room" nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Room/Bed:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.facility_bed.room.number }} ({{ option.facility_bed.number }})</div>
+    <div nz-col [nzSpan]="16">
+      <ng-container *ngIf="!option.facility_bed.room.private"><strong>{{ option.facility_bed.room.number }}</strong> ({{ option.facility_bed.number }})</ng-container>
+      <ng-container *ngIf="option.facility_bed.room.private"><strong>{{ option.facility_bed.room.number }}</strong></ng-container>
+     </div>
   </div>
 </ng-template>
 
@@ -204,7 +207,10 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
   </div>
   <div *ngIf="option.apartment_bed && option.apartment_bed.room" nz-row [nzGutter]="4">
     <div nz-col [nzSpan]="8" class="text-right"><strong>Room/Bed:</strong></div>
-    <div nz-col [nzSpan]="16">{{ option.apartment_bed.room.number }} ({{ option.apartment_bed.number }})</div>
+    <div nz-col [nzSpan]="16">
+      <ng-container *ngIf="!option.apartment_bed.room.private">{{ option.apartment_bed.room.number }} ({{ option.apartment_bed.number }})</ng-container>
+      <ng-container *ngIf="option.apartment_bed.room.private">{{ option.apartment_bed.room.number }}</ng-container>
+    </div>
   </div>
 </ng-template>
 

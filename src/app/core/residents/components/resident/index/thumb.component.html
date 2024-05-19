@@ -55,7 +55,8 @@
           <ng-container *ngIf="route_options.state !== 'no-admission'">
             <br/>
             <span *ngIf="resident.group_type == GROUP_TYPE.FACILITY || resident.group_type == GROUP_TYPE.APARTMENT">
-              {{ resident.room_number }} ({{ resident.bed_number }})
+                <ng-container *ngIf="resident.bed_number !== ''">{{ resident.room_number }} ({{ resident.bed_number }})</ng-container>
+                <ng-container *ngIf="resident.bed_number === ''">{{ resident.room_number }}</ng-container>
             </span>
             <span *ngIf="resident.group_type == GROUP_TYPE.REGION">
               {{ resident.address }} ({{ resident.csz_str }})

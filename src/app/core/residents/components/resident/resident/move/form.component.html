@@ -35,8 +35,9 @@
       <nz-select nzShowSearch nzPlaceHolder="Please select" formControlName="bed_id">
         <ng-container *ngFor="let room of rooms">
           <ng-container *ngFor="let bed of room.beds">
-            <nz-option nzCustomContent [nzValue]="bed.id" nzLabel="{{ room.number }} ({{ bed.number }})">
-              <strong>{{ room.number }}</strong> {{ bed.number }}
+            <nz-option nzCustomContent [nzValue]="bed.id" [nzLabel]="room.private ? room.number : (room.number + ' (' + bed.number + ')')">
+              <ng-container *ngIf="!room.private"><strong>{{ room.number }}</strong> ({{ bed.number }})</ng-container>
+              <ng-container *ngIf="room.private"><strong>{{ room.number }}</strong></ng-container>
             </nz-option>
           </ng-container>
         </ng-container>
