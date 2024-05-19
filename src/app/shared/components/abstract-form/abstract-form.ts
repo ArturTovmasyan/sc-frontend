@@ -184,7 +184,7 @@ export class AbstractForm implements OnDestroy {
     return this._loaded;
   }
 
-  public add_field(key: string, value?: any, valueChangesCallback?: (data: any) => void): void {
+  public add_field(key: string, value?: any, valueChangesCallback?: (data: any) => void): AbstractControl {
     const form_array = this.get_form_array(key);
     if (form_array) {
       const item = this.get_form_array_skeleton(key);
@@ -199,7 +199,11 @@ export class AbstractForm implements OnDestroy {
       }
 
       form_array.push(item);
+
+      return item;
     }
+
+    return null;
   }
 
   public remove_field(key: string, i: number): void {

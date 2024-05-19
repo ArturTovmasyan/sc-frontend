@@ -92,11 +92,14 @@
     <table class="senior-care-form-table table table-hover table-bordered table-sm">
       <thead>
       <tr>
-        <th class="w-50">
+        <th class="w-25">
           <nz-form-label>Title</nz-form-label>
         </th>
-        <th class="w-50">
+        <th class="w-25">
           <nz-form-label nzRequired>Amount</nz-form-label>
+        </th>
+        <th class="w-50">
+          <nz-form-label nzRequired>Responsible Person</nz-form-label>
         </th>
         <th>&nbsp;</th>
       </tr>
@@ -106,7 +109,7 @@
         <td>
           Source(s)
         </td>
-        <td>
+        <td colspan="2">
           <nz-select class="sc-wide" nzSize="small" nzMode="default" nzPlaceHolder="Select source" [(ngModel)]="source_selector"
                      [ngModelOptions]="{standalone: true}">
             <nz-option *ngFor="let payment_source of payment_sources"
@@ -132,6 +135,13 @@
             <nz-input-number [nzMin]="0" [nzStep]="0.01" [nzFormatter]="formatterDollar"
                              nzSize="small" nzPlaceHolder="Amount" formControlName="amount"></nz-input-number>
         </td>
+        <td>
+          <nz-select *ngIf="get_form_array('source').get(i.toString()).get('responsible_person_id').enabled" nzShowSearch nzMode="default" nzSize="small" nzPlaceHolder="Please select" formControlName="responsible_person_id">
+            <ng-container *ngFor="let residentResponsiblePerson of residentResponsiblePersons">
+              <nz-option [nzLabel]="residentResponsiblePerson.responsible_person|responsible_person" [nzValue]="residentResponsiblePerson.id"></nz-option>
+            </ng-container>
+          </nz-select>
+        </td>
         <td class="text-center">
           <button type="button" nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_source(i);">
             <i nz-icon nzType="minus"></i>
@@ -144,7 +154,7 @@
         <td>
           Remaining
         </td>
-        <td colspan="2">
+        <td colspan="3">
           {{ remaining()|currency:'USD':'symbol-narrow':'1.2-2' }}
         </td>
       </tr>

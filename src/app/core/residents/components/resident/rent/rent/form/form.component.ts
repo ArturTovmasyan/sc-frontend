@@ -16,6 +16,8 @@ import {RentReason} from '../../../../../models/rent-reason';
 import {RentReasonService} from '../../../../../services/rent-reason.service';
 import {FormComponent as RentReasonFormComponent} from '../../../../rent-reason/form/form.component';
 import {CurrencyPipe} from '@angular/common';
+import {ResidentResponsiblePerson} from '../../../../../models/resident-responsible-person';
+import {ResidentResponsiblePersonService} from '../../../../../services/resident-responsible-person.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -29,6 +31,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   reasons: RentReason[];
 
   admission: ResidentAdmission;
+  residentResponsiblePersons: ResidentResponsiblePerson[];
 
   sources: { id: number, amount: number }[] = [];
 
@@ -40,7 +43,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     private payment_source$: PaymentSourceService,
     private reason$: RentReasonService,
     public residentSelector$: ResidentSelectorService,
-    private admission$: ResidentAdmissionService
+    private admission$: ResidentAdmissionService,
+    private residentResponsiblePerson$: ResidentResponsiblePersonService
   ) {
     super(modal$);
     this.modal_map = [
@@ -66,7 +70,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       reason_id: [null],
       use_base_rate: [false, Validators.required],
-  });
+    });
 
     this.subscribe('rs_resident');
     this.subscribe('vc_use_base_rate');
@@ -98,12 +102,21 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {
             this.form.get('resident_id').setValue(next);
-            this.subscribe('get_resident_admission');
+            this.subscribe('list_resident_responsible_person', {resident_id: next});
+            this.subscribe('get_resident_admission', {resident_id: next});
           }
         });
         break;
+      case 'list_resident_responsible_person':
+        this.$subscriptions[key] = this.residentResponsiblePerson$
+          .all([{key: 'resident_id', value: params.resident_id}]).subscribe(res => {
+            if (res) {
+              this.residentResponsiblePersons = res;
+            }
+          });
+        break;
       case 'get_resident_admission':
-        this.$subscriptions[key] = this.admission$.active(this.form.get('resident_id').value).pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.admission$.active(params.resident_id).pipe(first()).subscribe(res => {
           if (res) {
             this.admission = res;
           } else {
@@ -131,7 +144,17 @@ export class FormComponent extends AbstractForm implements OnInit {
       source.disabled = true;
       source = Object.assign(new PaymentSource(), source); // TODO: review
 
-      this.add_field('source', {id: source.id, amount: source.get_amount(this.admission.care_level)});
+      const control = this.add_field('source', {
+        id: source.id,
+        amount: source.get_amount(this.admission.care_level),
+        responsible_person_id: null
+      });
+
+      if (source.private_pay) {
+        control.get('responsible_person_id').enable();
+      } else {
+        control.get('responsible_person_id').disable();
+      }
 
       this.source_selector = null;
     }
@@ -161,6 +184,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         return this.formBuilder.group({
           id: [null, Validators.required],
           amount: [null, Validators.required],
+          responsible_person_id: [null, Validators.required]
         });
       default:
         return null;
@@ -174,6 +198,12 @@ export class FormComponent extends AbstractForm implements OnInit {
       Object.keys(controls).forEach(idx => {
         const source = this.payment_sources.filter(item => item.id === controls[idx].get('id').value).pop();
         source.disabled = true;
+
+        if (source.private_pay) {
+          controls[idx].get('responsible_person_id').enable();
+        } else {
+          controls[idx].get('responsible_person_id').disable();
+        }
       });
     }
   }
