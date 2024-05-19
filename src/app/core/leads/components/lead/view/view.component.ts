@@ -222,7 +222,8 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
 
   broadcast_reload_event($event) {
-    this.broadcast_reload = $event;
+      this.subscribe('get_lead', {lead_id: this.lead.id});
+      this.broadcast_reload = $event;
   }
 
   mark_spam(state: boolean) {
