@@ -19,6 +19,8 @@ export class DashboardWeeklyComponent implements OnInit, OnDestroy {
 
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
+  title: string;
+
   public lineChartData: Array<any>;
   public lineChartLabels: Array<any>;
 
@@ -50,6 +52,7 @@ export class DashboardWeeklyComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.route$.paramMap.subscribe(route_params => {
           if (route_params.has('id') && route_params.has('key')) {
             const date = DateHelper.getDateForKey(route_params.get('key'));
+            this.title = route_params.get('key');
             this.subscribe('list_dashboard', {facility_id: route_params.get('id'), date: date});
           }
         });
