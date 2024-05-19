@@ -25,7 +25,7 @@ import {rgba} from 'ng-chartjs';
   providers: []
 })
 export class CalendarComponent implements OnInit, OnDestroy {
-  @Input() facility_id: Number;
+  @Input() facility_id: number;
 
   calendarPlugins = [dayGridPlugin, listPlugin, bootstrapPlugin]; // important!
   calendarCustomButtons = {

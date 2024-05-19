@@ -14,7 +14,7 @@ import {FacilityRoom} from '../../../models/facility-room';
   providers: [FacilityRoomService, ModalFormService]
 })
 export class ListComponent extends GridComponent<FacilityRoom, FacilityRoomService> implements OnInit, AfterViewInit {
-  @Input() facility_id: Number;
+  @Input() facility_id: number;
 
   constructor(
     protected service$: FacilityRoomService,

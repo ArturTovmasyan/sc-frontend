@@ -16,7 +16,7 @@ import {NzMessageService} from 'ng-zorro-antd';
   providers: [FacilityDocumentService, ModalFormService]
 })
 export class ListComponent extends GridComponent<FacilityDocument, FacilityDocumentService> implements OnInit, AfterViewInit {
-  @Input() facility_id: Number;
+  @Input() facility_id: number;
 
   constructor(
     protected service$: FacilityDocumentService,

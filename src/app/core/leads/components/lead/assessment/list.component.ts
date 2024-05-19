@@ -15,7 +15,7 @@ import {FormGroup} from '@angular/forms';
   providers: [LeadAssessmentService, ModalFormService]
 })
 export class ListComponent extends GridComponent<LeadAssessment, LeadAssessmentService> implements OnInit, AfterViewInit {
-  @Input() lead_id: Number;
+  @Input() lead_id: number;
 
   constructor(
     protected service$: LeadAssessmentService,

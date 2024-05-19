@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {TitleService} from '../../../../services/title.service';
 import {FormComponent} from '../funnel-stage-form/form.component';
@@ -14,7 +14,8 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
   providers: [LeadFunnelStageService, ModalFormService]
 })
 export class ListComponent extends GridComponent<LeadFunnelStage, LeadFunnelStageService> implements OnInit, AfterViewInit {
-  @Input() lead_id: Number;
+  @Input() lead_id: number;
+  @Output() reload: EventEmitter<number> = new EventEmitter();
 
   constructor(
     protected service$: LeadFunnelStageService,
@@ -39,5 +40,9 @@ export class ListComponent extends GridComponent<LeadFunnelStage, LeadFunnelStag
     this._btnBar.preset_modal_form_data = (form: FormGroup) => {
       form.get('lead_id').setValue(this.lead_id);
     };
+  }
+
+  on_reload() {
+    this.reload.emit(Math.random());
   }
 }

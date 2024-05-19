@@ -14,7 +14,7 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
   providers: [ReferralService, ModalFormService]
 })
 export class ListComponent extends GridComponent<Referral, ReferralService> implements OnInit, AfterViewInit {
-  @Input() organization_id: Number = -1;
+  @Input() organization_id: number = -1;
 
   constructor(
     protected service$: ReferralService,

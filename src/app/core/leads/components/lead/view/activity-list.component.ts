@@ -14,7 +14,10 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
   providers: [ActivityService, ModalFormService]
 })
 export class ListComponent extends GridComponent<Activity, ActivityService> implements OnInit, AfterViewInit {
-  @Input() lead_id: Number;
+  @Input() lead_id: number;
+  @Input() set reload(value: number) {
+    this.reload_data();
+  };
 
   constructor(
     protected service$: ActivityService,

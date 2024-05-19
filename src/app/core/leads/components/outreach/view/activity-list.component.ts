@@ -14,7 +14,7 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
   providers: [ActivityService, ModalFormService]
 })
 export class ListComponent extends GridComponent<Activity, ActivityService> implements OnInit, AfterViewInit {
-  @Input() outreach_id: Number;
+  @Input() outreach_id: number;
 
   constructor(
     protected service$: ActivityService,

@@ -175,7 +175,7 @@
           <div class="card-body">
             <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
             <app-lead-lead-funnel-stage *ngIf="lead"
-                                        [lead_id]="lead.id"></app-lead-lead-funnel-stage>
+                                        [lead_id]="lead.id" (reload)="broadcast_reload_event($event)"></app-lead-lead-funnel-stage>
           </div>
         </div>
       </div>
@@ -187,7 +187,7 @@
           <div class="card-body">
             <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
             <app-lead-lead-temperature *ngIf="lead"
-                                        [lead_id]="lead.id"></app-lead-lead-temperature>
+                                        [lead_id]="lead.id" (reload)="broadcast_reload_event($event)"></app-lead-lead-temperature>
           </div>
         </div>
       </div>
@@ -211,7 +211,7 @@
           <div class="card-body">
             <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
             <app-lead-lead-activity *ngIf="lead"
-                                    [lead_id]="lead.id"></app-lead-lead-activity>
+                                    [lead_id]="lead.id" [reload]="broadcast_reload"></app-lead-lead-activity>
           </div>
         </div>
       </div>

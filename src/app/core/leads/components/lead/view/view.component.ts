@@ -21,6 +21,8 @@ import {AuthGuard} from '../../../../guards/auth.guard';
 export class ViewComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
+  broadcast_reload: number;
+
   lead: Lead;
   referral: Referral;
 
@@ -208,5 +210,9 @@ export class ViewComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  broadcast_reload_event($event) {
+    this.broadcast_reload = $event;
   }
 }

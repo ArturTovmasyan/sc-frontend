@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {TitleService} from '../../../../services/title.service';
 import {FormComponent} from '../temperature-form/form.component';
@@ -14,7 +14,8 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
   providers: [LeadTemperatureService, ModalFormService]
 })
 export class ListComponent extends GridComponent<LeadTemperature, LeadTemperatureService> implements OnInit, AfterViewInit {
-  @Input() lead_id: Number;
+  @Input() lead_id: number;
+  @Output() reload: EventEmitter<number> = new EventEmitter();
 
   constructor(
     protected service$: LeadTemperatureService,
@@ -43,4 +44,7 @@ export class ListComponent extends GridComponent<LeadTemperature, LeadTemperatur
     };
   }
 
+  on_reload() {
+    this.reload.emit(Math.random());
+  }
 }
