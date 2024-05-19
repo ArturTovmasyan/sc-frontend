@@ -25,6 +25,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   @ViewChild('photo_file') photo_file: ElementRef;
 
+  photo_file_name: string;
+
   disabledDate: (date: Date) => boolean;
 
   constructor(
@@ -145,10 +147,12 @@ export class FormComponent extends AbstractForm implements OnInit {
     const reader = new FileReader();
     if ($event.target.files && $event.target.files.length > 0) {
       const file = $event.target.files[0];
+      this.photo_file_name = FormComponent.truncate(file.name, 25);
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.form.get('photo').setValue(reader.result);
       };
+      (this.photo_file.nativeElement as HTMLInputElement).value = null;
     }
 
     return false;
@@ -156,5 +160,14 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   select_file() {
     (this.photo_file.nativeElement as HTMLInputElement).click();
+  }
+
+  clear_file() {
+    this.photo_file_name = null;
+    this.form.get('photo').setValue(null);
+  }
+
+  private static truncate(value: string, length: number) : string {
+    return value.length > length ? (value.slice(0, length - 3) + '...') : value;
   }
 }

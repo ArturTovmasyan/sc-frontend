@@ -79,8 +79,13 @@
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('photo')?'error':null">
       <input type="file" #photo_file (change)="onFileChange($event)"
              accept="image/*" style="display: none;">
-      <button nz-button (click)="select_file();">
-        <i nz-icon type="upload"></i><span>Select file...</span>
+      <button nz-button nzSize="small"  *ngIf="!(photo_file_name && photo_file_name !== '')" (click)="select_file();">
+        <i nz-icon type="upload"></i>
+        <span>Select file...</span>
+      </button>
+      <button nz-button nzSize="small" nzType="danger" *ngIf="photo_file_name && photo_file_name !== ''" (click)="clear_file();">
+        <i nz-icon type="close"></i>
+        {{ photo_file_name }}
       </button>
       <nz-form-explain *ngIf="hasErrors('photo')">
         <app-field-errors [errors]="fieldErrors('photo')"></app-field-errors>
