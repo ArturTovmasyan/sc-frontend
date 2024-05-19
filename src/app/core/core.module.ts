@@ -3,7 +3,7 @@ import {CommonModule, registerLocaleData} from '@angular/common';
 import {RouterModule, UrlSerializer} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import en from '@angular/common/locales/en';
 import {en_US, NgZorroAntdModule, NZ_I18N, NzFormExplainComponent, NzFormItemComponent} from 'ng-zorro-antd';
 import {AppAsideModule, AppBreadcrumbModule, AppFooterModule, AppHeaderModule, AppSidebarModule} from '@coreui/angular';
@@ -829,7 +829,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AppHeaderModule,
     AppSidebarModule,
     PerfectScrollbarModule,
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     NgZorroAntdModule,
