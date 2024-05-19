@@ -36,12 +36,16 @@ export class FormComponent extends AbstractForm implements OnInit {
       care_level_groups: [null, Validators.required],
 
       categories:  this.formBuilder.array([]),
-
-      space_id: [null, Validators.required],
     });
 
     this.subscribe('list_category');
     this.subscribe('list_care_level_group');
+
+    this.add_space();
+  }
+
+  private add_space() {
+    this.form.addControl('space_id', new FormControl(null, [Validators.required]));
     this.subscribe('list_space');
   }
 

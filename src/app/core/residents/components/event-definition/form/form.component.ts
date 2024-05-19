@@ -1,5 +1,5 @@
 ﻿import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {SpaceService} from '../../../../services/space.service';
@@ -27,10 +27,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       physician: [false, Validators.required],
       responsible_person: [false, Validators.required],
       additional_date: [false, Validators.required],
-
-      space_id: [null, Validators.required],
     });
 
+    this.add_space();
+  }
+
+  private add_space() {
+    this.form.addControl('space_id', new FormControl(null, [Validators.required]));
     this.subscribe('list_space');
   }
 

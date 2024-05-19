@@ -1,5 +1,5 @@
 ﻿import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {CityStateZipService} from '../../../services/city-state-zip.service';
@@ -52,14 +52,12 @@ export class FormComponent extends AbstractForm implements OnInit {
       financially: [false, Validators.required],
       salutation_id: [null, Validators.required],
       csz_id: [null, Validators.required],
-      space_id: [null, Validators.required],
 
       phones: this.formBuilder.array([]),
     });
 
     this.subscribe('list_salutation');
     this.subscribe('list_csz');
-    this.subscribe('list_space');
 
     // TODO: review
     this.phone_types = [
@@ -71,6 +69,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: PhoneType.FAX, name: 'FAX'},
       {id: PhoneType.ROOM, name: 'ROOM'}
     ];
+
+    this.add_space();
+  }
+
+  private add_space() {
+    this.form.addControl('space_id', new FormControl(null, [Validators.required]));
+    this.subscribe('list_space');
   }
 
   protected subscribe(key: string): void {

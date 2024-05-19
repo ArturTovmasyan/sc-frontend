@@ -1,5 +1,5 @@
 ﻿import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {Gender} from '../../../models/gender.enum';
@@ -53,13 +53,11 @@ export class FormComponent extends AbstractForm implements OnInit {
       photo: [null],
 
       salutation_id: [null, Validators.required],
-      space_id: [null, Validators.required],
 
       phones: this.formBuilder.array([]),
     });
 
     this.subscribe('list_salutation');
-    this.subscribe('list_space');
 
     // TODO: review
     this.genders = [
@@ -76,6 +74,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: PhoneType.FAX, name: 'FAX'},
       {id: PhoneType.ROOM, name: 'ROOM'}
     ];
+
+    this.add_space();
+  }
+
+  private add_space() {
+    this.form.addControl('space_id', new FormControl(null, [Validators.required]));
+    this.subscribe('list_space');
   }
 
   protected subscribe(key: string): void {

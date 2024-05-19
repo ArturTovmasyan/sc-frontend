@@ -1,5 +1,5 @@
 ﻿import {Component, ElementRef, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {SpaceService} from '../../../../services/space.service';
@@ -52,50 +52,10 @@ export class FormComponent extends AbstractForm implements OnInit {
       roles: [[]],
 
       grants: this.formBuilder.group({}),
-
-      space_id: [null],
     });
 
-    this.form.get('roles').valueChanges.subscribe(next => {
-      if (next != null && Array.isArray(next)) {
-        this.grant$.role(next).pipe(first()).subscribe(res => {
-          if (res) {
-            this.grant_lists = res;
-
-            if (Object.keys(res).length > 0) {
-              const items = this.form.get('grants') as FormGroup;
-
-              Object.keys(res).forEach(key => {
-                if (items.get(key) === null) {
-                  items.addControl(key, this.formBuilder.control([]));
-                }
-
-                if (res[key].hasOwnProperty('url')) {
-                  this.grant$.get(res[key].url).subscribe(res_ => {
-                    if (res_) {
-                      this.grant_lists[key]['items'] = res_;
-                    }
-                  });
-                }
-              });
-            }
-          }
-        });
-      }
-    });
-
-    this.role$.all(/** TODO: add space filter **/).pipe(first()).subscribe(res => {
-      if (res) {
-        this.roles = res;
-      }
-    });
-
-    this.space$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        res.sort((a, b) => a.name.localeCompare(b.name));
-        this.spaces = res;
-      }
-    });
+    this.subscribe('vc_role');
+    this.subscribe('list_role');
 
     this.phone_types = [
       {id: PhoneType.HOME, name: 'HOME'},
@@ -114,6 +74,64 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
       }
     };
+
+    this.add_space();
+  }
+
+  private add_space() {
+    this.form.addControl('space_id', new FormControl(null, [Validators.required]));
+    this.subscribe('list_space');
+  }
+
+  protected subscribe(key: string): void {
+    switch (key) {
+      case 'list_space':
+        this.$subscriptions[key] = this.space$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            res.sort((a, b) => a.name.localeCompare(b.name));
+            this.spaces = res;
+          }
+        });
+        break;
+      case 'list_role':
+        this.$subscriptions[key] = this.role$.all(/** TODO: add space filter **/).pipe(first()).subscribe(res => {
+          if (res) {
+            this.roles = res;
+          }
+        });
+        break;
+      case 'vc_role':
+        this.$subscriptions[key] = this.form.get('roles').valueChanges.subscribe(next => {
+          if (next != null && Array.isArray(next)) {
+            this.grant$.role(next).pipe(first()).subscribe(res => {
+              if (res) {
+                this.grant_lists = res;
+
+                if (Object.keys(res).length > 0) {
+                  const items = this.form.get('grants') as FormGroup;
+
+                  Object.keys(res).forEach(key => {
+                    if (items.get(key) === null) {
+                      items.addControl(key, this.formBuilder.control([]));
+                    }
+
+                    if (res[key].hasOwnProperty('url')) {
+                      this.grant$.get(res[key].url).subscribe(res_ => {
+                        if (res_) {
+                          this.grant_lists[key]['items'] = res_;
+                        }
+                      });
+                    }
+                  });
+                }
+              }
+            });
+          }
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   get grants(): FormGroup {
