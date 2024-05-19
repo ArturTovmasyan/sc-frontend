@@ -1,15 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {TitleService} from '../../../../services/title.service';
-import {ResidentRentService} from '../../../services/resident-rent.service';
-import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
-import {ResidentRent} from '../../../models/resident-rent';
-import {ResidentSelectorService} from '../../../services/resident-selector.service';
-import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {ResidentRentService} from '../../../../services/resident-rent.service';
+import {GridComponent} from '../../../../../../shared/components/grid/grid.component';
+import {ResidentRent} from '../../../../models/resident-rent';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {TitleService} from '../../../../../services/title.service';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 
 @Component({
-  templateUrl: '../../../../../shared/components/grid/grid.component.html',
-  styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
+  selector: 'app-resident-rent-room',
+  templateUrl: '../../../../../../shared/components/grid/grid.component.html',
+  styleUrls: ['../../../../../../shared/components/grid/grid.component.scss'],
   providers: [ResidentRentService, ModalFormService]
 })
 export class ListComponent extends GridComponent<ResidentRent, ResidentRentService> implements OnInit {

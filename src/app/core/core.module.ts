@@ -163,8 +163,11 @@ import {FormComponent as ResidentEventFormComponent} from './residents/component
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {FormComponent as ResidentAdmissionFormComponent} from './residents/components/resident/admission/form/form.component';
 
-import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
-import {FormComponent as ResidentRentFormComponent} from './residents/components/resident/rent/form/form.component';
+import {RentComponent as ResidentRentComponent} from './residents/components/resident/rent/rent.component';
+import {ListComponent as ResidentRentRoomListComponent} from './residents/components/resident/rent/rent/list.component';
+import {FormComponent as ResidentRentRoomFormComponent} from './residents/components/resident/rent/rent/form/form.component';
+import {ListComponent as ResidentRentIncreaseListComponent} from './residents/components/resident/rent/rent-increase/list.component';
+import {FormComponent as ResidentRentIncreaseFormComponent} from './residents/components/resident/rent/rent-increase/form/form.component';
 
 import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
 import {FormComponent as ResidentAssessmentFormComponent} from './residents/components/resident/assessment/form/form.component';
@@ -452,8 +455,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentEventListComponent,
     ResidentEventFormComponent,
 
-    ResidentRentListComponent,
-    ResidentRentFormComponent,
+    ResidentRentComponent,
+    ResidentRentRoomListComponent,
+    ResidentRentRoomFormComponent,
+    ResidentRentIncreaseListComponent,
+    ResidentRentIncreaseFormComponent,
 
     ResidentPhysicianListComponent,
     ResidentPhysicianFormComponent,
@@ -645,7 +651,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentEventFormComponent,
 
-    ResidentRentFormComponent,
+    ResidentRentRoomFormComponent,
+    ResidentRentIncreaseFormComponent,
 
     ResidentPhysicianFormComponent,
 

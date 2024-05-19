@@ -350,6 +350,14 @@
       "info": "Sources",
       "space": "Space"
     },
+    "resident-rent-increase-list": {
+      "id": "ID",
+      "resident": "Resident",
+      "effective_date": "Effective Date",
+      "notification_date": "Notification Date",
+      "reason": "Reason",
+      "amount": "Amount"
+    },
     "resident-event-list": {
       "id": "ID",
       "definition": "Type",

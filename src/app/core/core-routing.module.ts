@@ -57,7 +57,7 @@ import {ListComponent as ResidentHealthInsuranceListComponent} from './residents
 import {ListComponent as ResidentDocumentListComponent} from './residents/components/resident/document/list.component';
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
-import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
+import {RentComponent as ResidentRentComponent} from './residents/components/resident/rent/rent.component';
 import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
 import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
@@ -810,7 +810,7 @@ const routes: Routes = [
           },
           {
             path: 'rents',
-            component: ResidentRentListComponent,
+            component: ResidentRentComponent,
             outlet: 'resident-details',
             pathMatch: 'full',
             data: {

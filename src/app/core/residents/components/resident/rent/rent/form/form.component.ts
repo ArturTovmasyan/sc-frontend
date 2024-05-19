@@ -1,16 +1,16 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
-import {PaymentSource} from '../../../../models/payment-source';
-import {PaymentSourceService} from '../../../../services/payment-source.service';
-import {CoreValidator} from '../../../../../../shared/utils/core-validator';
-import {PaymentPeriod} from '../../../../models/payment-period.enum';
-import {ResidentSelectorService} from '../../../../services/resident-selector.service';
-import {GroupType} from '../../../../models/group-type.enum';
-import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
-import {DateHelper} from '../../../../../../shared/helpers/date-helper';
-import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
+import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
+import {PaymentSource} from '../../../../../models/payment-source';
+import {PaymentSourceService} from '../../../../../services/payment-source.service';
+import {CoreValidator} from '../../../../../../../shared/utils/core-validator';
+import {PaymentPeriod} from '../../../../../models/payment-period.enum';
+import {ResidentSelectorService} from '../../../../../services/resident-selector.service';
+import {GroupType} from '../../../../../models/group-type.enum';
+import {ResidentAdmissionService} from '../../../../../services/resident-admission.service';
+import {DateHelper} from '../../../../../../../shared/helpers/date-helper';
+import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -98,8 +98,8 @@ export class FormComponent extends AbstractForm implements OnInit {
                 case GroupType.FACILITY:
                   this.group_title = admission.facility_bed.room.facility.name + ' - #' +
                     (admission.facility_bed.room.private ?
-                      admission.facility_bed.room.number :
-                      (admission.facility_bed.room.number + ' (' + admission.facility_bed.number + ')')
+                        admission.facility_bed.room.number :
+                        (admission.facility_bed.room.number + ' (' + admission.facility_bed.number + ')')
                     );
                   break;
                 case GroupType.REGION:

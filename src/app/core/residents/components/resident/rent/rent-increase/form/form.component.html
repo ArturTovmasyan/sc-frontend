@@ -1,0 +1,71 @@
+﻿<h4>Scheduled Room Rent Increase</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item *ngIf="group_title && group_title !== ''">
+    <nz-form-label [nzSm]="8" [nzXs]="24">
+      <ng-container [ngSwitch]="residentSelector$.type.value">
+        <ng-container *ngSwitchCase="GROUP_TYPE.FACILITY">Facility</ng-container>
+        <ng-container *ngSwitchCase="GROUP_TYPE.APARTMENT">Apartment</ng-container>
+        <ng-container *ngSwitchCase="GROUP_TYPE.REGION">Region</ng-container>
+      </ng-container>
+    </nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24">
+      {{ group_title }}
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="reason" nzRequired>Reason</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('reason')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="reason">
+        <ng-container *ngFor="let reason of reasons">
+          <nz-option [nzLabel]="(reason.name)|translate" [nzValue]="reason.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('reason')">
+        <app-field-errors [errors]="fieldErrors('reason')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="effective_date" nzRequired>Effective Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('effective_date')?'error':null">
+      <nz-date-picker formControlName="effective_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('effective_date')">
+        <app-field-errors [errors]="fieldErrors('effective_date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notification_date" nzRequired>Notification Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notification_date')?'error':null">
+      <nz-date-picker formControlName="notification_date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('notification_date')">
+        <app-field-errors [errors]="fieldErrors('notification_date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="amount" nzRequired>Amount</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('amount')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" [nzPrecision]="2" nzPlaceHolder="Amount"
+                       formControlName="amount"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('amount')">
+        <app-field-errors [errors]="fieldErrors('amount')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
