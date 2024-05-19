@@ -80,6 +80,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.care_levels = res;
 
             if (!this.edit_mode) {
+              this.get_form_array('base_rates').clear();
               this.care_levels.forEach(value => {
                 this.add_field('base_rates', {care_level_id: value.id, amount: 0});
               });
