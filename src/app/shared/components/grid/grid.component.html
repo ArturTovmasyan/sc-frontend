@@ -56,6 +56,7 @@
     <ng-container *ngFor="let hrow of header;let hrowfirst=first;">
       <tr>
         <th *ngIf="hrowfirst"
+            [attr.class]="showCheckboxes()?'sc-table-th-checkbox':'sc-table-th-no-checkbox'"
             [nzShowCheckbox]="showCheckboxes()"
             [(nzChecked)]="checkbox_config.all"
             [nzIndeterminate]="checkbox_config.indeterminate"
@@ -122,9 +123,8 @@
     </thead>
     <tbody>
     <tr *ngFor="let row of data" [style.backgroundColor]="get_background_color(row)">
-      <td *ngIf="showCheckboxes()" nzShowCheckbox [(nzChecked)]="row.checked"
+      <td [nzShowCheckbox]="showCheckboxes()" [(nzChecked)]="row.checked"
           (nzCheckedChange)="checkbox_refresh()"></td>
-      <td *ngIf="!showCheckboxes()">&nbsp;</td>
       <td *ngFor="let field of fields| filter: 'hidden' : false" [ngSwitch]="field.type">
         <ng-container *ngSwitchCase="'id'">
           <span style="font-size: smaller;">{{ row[field.id] }}</span>

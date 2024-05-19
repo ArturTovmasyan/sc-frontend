@@ -31,8 +31,13 @@
   table-layout: fixed;
 }
 
-::ng-deep thead.ant-table-thead > tr:first-child > th:first-child {
-  width: 4rem;
+::ng-deep table.ant-table-fixed > thead.ant-table-thead > tr:first-child > th:first-child {
+  &.sc-table-th-checkbox{
+    width: 2rem;
+  }
+  &.sc-table-th-no-checkbox{
+    width: 0rem;
+  }
 }
 
 ::ng-deep {
