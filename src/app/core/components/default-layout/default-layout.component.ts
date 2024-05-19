@@ -51,7 +51,6 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
 
     DomHelper.checkElement('.sc-reference-nav')
       .then((element) => {
-        console.log(element);
         const nav_ref = document.querySelector('.sc-reference-nav');
         nav_ref.addEventListener('click', () => {
           this.toggleRef(nav_ref);
