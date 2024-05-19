@@ -6,6 +6,7 @@ import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../core/services/title.service';
 import {GridService} from '../../services/grid.service';
 import {AbstractForm} from '../abstract-form/abstract-form';
+import {MessageComponent} from './message.component';
 
 export class GridComponent<T extends IdInterface, Service extends GridService<T>> implements OnDestroy {
   _ = _;
@@ -248,51 +249,73 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   show_modal_remove(): void {
     let loading = false;
-    const modal = this.modal$.create({
-        nzClosable: false,
-        nzMaskClosable: false,
-        nzTitle: null,
-        nzContent: `<p class="modal-confirm text-center">
-                    <i class="fa fa-warning text-danger"></i>
-                     Are you sure you want to <strong>delete</strong> selected record(s)?
-                     </p>`,
-        nzFooter: [
-          {
-            label: 'No',
-            onClick: () => {
-              modal.close();
-            }
-          },
-          {
-            type: 'danger',
-            label: 'Yes',
-            loading: () => loading,
-            onClick: () => {
-              loading = true;
-              this.remove_data(this.checkbox_config.ids).subscribe(
-                res => {
-                  loading = false;
+    this.service$.relatedInfo(this.checkbox_config.ids).subscribe(value => {
+      if (value) {
+        let modal_title = '';
+        let modal_message = '';
 
-                  this.reload_data();
+        if (_.isArray(value) && value.length > 0) {
+          value = Object.keys(value[0])
+            .reduce((previousValue, currentValue, currentIndex) => (previousValue + value[0][currentValue].sum), 0);
 
-                  modal.close();
-                },
-                error => {
-                  loading = false;
-                  modal.close();
-
-                  this.modal$.error({
-                    nzTitle: 'Remove Error',
-                    nzContent: `${error.data.error}`
-                  });
-
-                  // console.error(error);
-                });
-            }
+          if (value > 0) {
+            modal_title = 'Attention!';
+            modal_message = `This may cause other data loss from database. There are ${value} connections found in database.`;
           }
-        ]
-      })
-    ;
+        }
+
+        const modal = this.modal$.create({
+          nzClosable: false,
+          nzMaskClosable: false,
+          nzTitle: null,
+          nzContent: MessageComponent,
+          nzFooter: [
+            {
+              label: 'No',
+              onClick: () => {
+                modal.close();
+              }
+            },
+            {
+              type: 'danger',
+              label: 'Yes',
+              loading: () => loading,
+              onClick: () => {
+                loading = true;
+
+                this.remove_data(this.checkbox_config.ids).subscribe(
+                  res => {
+                    loading = false;
+
+                    this.reload_data();
+
+                    modal.close();
+                  },
+                  error => {
+                    loading = false;
+                    modal.close();
+
+                    this.modal$.error({
+                      nzTitle: 'Remove Error',
+                      nzContent: `${error.data.error}`
+                    });
+
+                    // console.error(error);
+                  });
+              }
+            }
+          ]
+        });
+
+        modal.afterOpen.subscribe(() => {
+          const component = modal.getContentComponent();
+          if (component instanceof MessageComponent) {
+            component.title = modal_title;
+            component.message = modal_message;
+          }
+        });
+      }
+    });
   }
 
   private create_modal(submit: (data: any) => Observable<any>, result: any, previous_data?: any) {

@@ -4,7 +4,6 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {SpaceService} from '../../../../services/space.service';
 import {Space} from '../../../../models/space';
-import {NzModalService} from 'ng-zorro-antd';
 import {AuthGuard} from '../../../../guards/auth.guard';
 
 @Component({
@@ -46,6 +45,13 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
+  after_set_form_data(): void {
+    this.subscribe('vc_responsible_person');
+    this.subscribe('vc_responsible_person_multi');
+
+    super.after_set_form_data();
+  }
+
   protected subscribe(key: string, params?: any): void {
     switch (key) {
       case 'list_space':
@@ -53,6 +59,20 @@ export class FormComponent extends AbstractForm implements OnInit {
           if (res) {
             res.sort((a, b) => a.name.localeCompare(b.name));
             this.spaces = res;
+          }
+        });
+        break;
+      case 'vc_responsible_person':
+        this.$subscriptions[key] = this.form.get('responsible_person').valueChanges.subscribe(res => {
+          if (res) {
+            this.form.get('responsible_person_multi').setValue(false);
+          }
+        });
+        break;
+      case 'vc_responsible_person_multi':
+        this.$subscriptions[key] = this.form.get('responsible_person_multi').valueChanges.subscribe(res => {
+          if (res) {
+            this.form.get('responsible_person').setValue(false);
           }
         });
         break;

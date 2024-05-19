@@ -57,6 +57,10 @@ export class GridService<T extends IdInterface> {
       });
   }
 
+  public relatedInfo(ids: number[]) {
+    return this.http.post<any>(this.SERVICE_URL_BASE + `/related/info`, {ids: ids});
+  }
+
   public removeBulk(ids: number[]) {
     const options = {
       headers: new HttpHeaders({

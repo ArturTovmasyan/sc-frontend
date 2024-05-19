@@ -9,11 +9,13 @@ import {en_US, NgZorroAntdModule, NZ_I18N} from 'ng-zorro-antd';
 import {TranslateModule} from '@ngx-translate/core';
 import {StringPipe} from './pipes/string.pipe';
 import {String2JsonPipe} from './pipes/str2json.pipe';
+import {MessageComponent} from './components/grid/message.component';
 
 @NgModule({
   declarations: [
     FieldErrorsComponent,
     FormErrorsComponent,
+    MessageComponent,
     StringPipe,
     String2JsonPipe
   ],
@@ -25,6 +27,9 @@ import {String2JsonPipe} from './pipes/str2json.pipe';
     HttpClientModule,
     TranslateModule,
     NgZorroAntdModule
+  ],
+  entryComponents: [
+    MessageComponent
   ],
   providers: [
     {provide: NZ_I18N, useValue: en_US}
