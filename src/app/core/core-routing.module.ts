@@ -130,7 +130,7 @@ const routes: Routes = [
             canActivate: [AuthGuard],
             data: {
               nav: {show: true, group: 'Leads'},
-              title: 'Dashboard',
+              title: 'My Dashboard',
               permissions: ['persistence-lead-lead']
             }
           },
