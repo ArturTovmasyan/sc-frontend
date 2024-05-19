@@ -369,4 +369,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     console.log($event, this.show_resident);
     this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: this.show_resident});
   }
+
+  switch_change($event: any) {
+    this.subscribe('list_calendar', {definition_id: this.definition_id, show_resident: $event});
+  }
 }
