@@ -315,6 +315,8 @@ import {EmbedVideo} from 'ngx-embed-video/dist';
 import {FullCalendarModule} from '@fullcalendar/angular';
 import {PaymentPeriodPipe} from './residents/pipes/payment-period.pipe';
 import {RentIncreaseReasonPipe} from './residents/pipes/rent-increase-reason.pipe';
+import {ViewComponent as ResidentRentViewComponent} from './residents/components/resident/rent/rent/view/view.component';
+import {ViewComponent as ResidentRentIncreaseViewComponent} from './residents/components/resident/rent/rent-increase/view/view.component';
 
 registerLocaleData(en);
 
@@ -482,6 +484,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentEventFormComponent,
     FacilityEventFormComponent,
     CorporateEventFormComponent,
+
+    ResidentRentViewComponent,
+    ResidentRentIncreaseViewComponent,
 
     ResidentRentComponent,
     ResidentRentRoomListComponent,
@@ -686,6 +691,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentEventFormComponent,
     FacilityEventFormComponent,
     CorporateEventFormComponent,
+
+    ResidentRentViewComponent,
+    ResidentRentIncreaseViewComponent,
 
     ResidentRentRoomFormComponent,
     ResidentRentIncreaseFormComponent,

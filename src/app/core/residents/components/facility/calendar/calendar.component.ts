@@ -19,6 +19,8 @@ import {CalendarEventType, EventDefinition} from '../../../models/event-definiti
 import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
 import {EventDefinitionService} from '../../../services/event-definition.service';
 import {ViewComponent as ResidentEventViewComponent} from '../../resident/event/view/view.component';
+import {ViewComponent as ResidentRentViewComponent} from '../../resident/rent/rent/view/view.component';
+import {ViewComponent as ResidentRentIncreaseViewComponent} from '../../resident/rent/rent-increase/view/view.component';
 import {ResidentEventService} from '../../../services/resident-event.service';
 
 @Component({
@@ -204,10 +206,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
     });
   }
 
-  show_modal_view(id: number): void {
+  show_modal_view(id: number, component: any): void {
     this.residentEvent$.get(id).pipe(first()).subscribe(res => {
       if (res) {
-        this.create_modal_view(ResidentEventViewComponent, res);
+        this.create_modal_view(component, res);
       }
     });
   }
@@ -359,7 +361,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.show_modal_edit($event.event.id);
         break;
       case CalendarEventType.RESIDENT:
-        this.show_modal_view($event.event.id);
+        this.show_modal_view($event.event.id, ResidentEventViewComponent);
+        break;
+      case CalendarEventType.RENT:
+        this.show_modal_view($event.event.id, ResidentRentViewComponent);
+        break;
+      case CalendarEventType.RENT_INCREASE:
+        this.show_modal_view($event.event.id, ResidentRentIncreaseViewComponent);
         break;
       default:
         break;

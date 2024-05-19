@@ -1,0 +1,35 @@
+<nz-empty *ngIf="!event" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+<div *ngIf="event">
+  <h4>Resident Rent Increase</h4>
+  <nz-divider></nz-divider>
+  <div nz-row *ngIf="event.resident !== null">
+    <div nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Resident:</strong></div>
+      <div nz-col [nzSpan]="16">{{ event.resident|resident }}</div>
+    </div>
+  </div>
+  <div nz-row *ngIf="event.reason !== null">
+    <div nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Type:</strong></div>
+      <div nz-col [nzSpan]="16">{{ event.reason|rent_increase_reason }}</div>
+    </div>
+  </div>
+  <div nz-row *ngIf="event.effective_date !== null">
+    <div nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Effective Date:</strong></div>
+      <div nz-col [nzSpan]="16">{{ event.effective_date|date:'MM/dd/yyyy hh:mm aaa':'UTC'}}</div>
+    </div>
+  </div>
+  <div nz-row *ngIf="event.notification_date !== null">
+    <div nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Notification Date:</strong></div>
+      <div nz-col [nzSpan]="16">{{ event.notification_date|date:'MM/dd/yyyy hh:mm aaa':'UTC'}}</div>
+    </div>
+  </div>
+  <div nz-row *ngIf="event.amount !== null">
+    <div nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Amount:</strong></div>
+      <div nz-col [nzSpan]="16">{{ event.amount }}</div>
+    </div>
+  </div>
+</div>
