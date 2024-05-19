@@ -1,0 +1,55 @@
+<h6 style="font-size: large;text-align: center;padding-top: 1rem;margin: 0;">User Activity</h6>
+<ng-container *ngFor="let change_log of change_logs" [ngSwitch]="change_log.type">
+  <nz-divider style="margin: 20px 0;"></nz-divider>
+  <div class="log-item" *ngSwitchCase="ChangeLogType.NEW_LEAD">
+    <p><strong><a [routerLink]="['/lead/lead', change_log.content.lead_id]"><i
+      class="fas fa-pencil-alt"></i>&nbsp;{{ change_log.content.lead_name }}</a></strong></p>
+    <p><strong>{{ change_log.type|change_log}}</strong></p>
+    <p>The user <strong>{{ change_log.content.owner }}</strong> added new lead
+      <strong>{{ change_log.content.lead_name }}</strong>.</p>
+    <p><strong>Name:</strong> {{ change_log.content.lead_name }}</p>
+    <p><strong>Owner:</strong> {{ change_log.content.owner }}</p>
+    <p><strong>Primary Facility:</strong> {{change_log.content.primary_facility }}</p>
+
+    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss' }}</p>
+  </div>
+  <div class="log-item" *ngSwitchCase="ChangeLogType.LEAD_UPDATED">
+    <p><strong><i class="fas fa-pencil-alt"></i> &nbsp; <a
+      [routerLink]="['/lead/lead', change_log.content.lead_id]">{{ change_log.content.lead_name }}</a></strong></p>
+    <p><strong>{{ change_log.type|change_log}}</strong></p>
+    <p>The user <strong>{{ change_log.content.owner }}</strong> modified state in
+      <strong>{{ change_log.content.lead_name }}</strong> from
+      <strong>{{ change_log.content.old_state }}</strong> to <strong>{{ change_log.content.new_state }}</strong>.
+    </p>
+    <p><strong>Name:</strong> {{ change_log.content.lead_name }}</p>
+    <p><strong>Owner:</strong> {{ change_log.content.owner }}</p>
+    <p><strong>Primary Facility:</strong> {{change_log.content.primary_facility }}</p>
+
+    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss' }}</p>
+  </div>
+  <div class="log-item" *ngSwitchCase="ChangeLogType.NEW_TASK">
+    <p><strong><i class="fas fa-pencil-alt"></i> &nbsp; {{ change_log.content.type|activity_type }} : <a
+      [routerLink]="[('/lead/' + (change_log.content.type|activity_type:true)), change_log.content.id]">{{ change_log.content.owner}}</a></strong>
+    </p>
+    <p><strong>{{ change_log.type|change_log }}</strong></p>
+    <p>The user <strong>{{ change_log.content.user_name }}</strong> added new task <strong>{{ change_log.content.name}}</strong> activity.</p>
+    <p><strong>Name:</strong> {{ change_log.content.name }}</p>
+    <p><strong>Owner:</strong> {{ change_log.content.assign_to }}</p>
+    <p><strong>Due Date:</strong> {{ change_log.content.due_date|date:'MM/dd/yyyy'}}</p>
+    <p><strong>{{ change_log.content.type|activity_type }}:</strong> {{ change_log.content.owner }}</p>
+
+    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss' }}</p>
+  </div>
+  <div class="log-item" *ngSwitchCase="ChangeLogType.TASK_UPDATED">
+    <p><strong><i class="fas fa-pencil-alt"></i> &nbsp; {{ change_log.content.type|activity_type }} : <a [routerLink]="[('/lead/' + (change_log.content.type|activity_type:true)), change_log.content.id]">{{ change_log.content.owner}}</a></strong>
+    </p>
+    <p><strong>{{ change_log.type|change_log }}</strong></p>
+    <p>The user <strong>{{ change_log.content.user_name }}</strong> changed status in <strong>{{ change_log.content.name}}</strong> from <strong>{{ change_log.content.old_status }}</strong> to <strong>{{ change_log.content.new_status }}</strong>.</p>
+    <p><strong>Name:</strong> {{ change_log.content.name }}</p>
+    <p><strong>Owner:</strong> {{ change_log.content.assign_to }}</p>
+    <p><strong>Due Date:</strong> {{ change_log.content.due_date|date:'MM/dd/yyyy'}}</p>
+    <p><strong>{{ change_log.content.type|activity_type }}:</strong> {{ change_log.content.owner }}</p>
+
+    <p class="text-right" style="margin-top: 0.25rem;">{{ change_log.content.created_at|date:'MM/dd/yyyy HH:mm:ss' }}</p>
+  </div>
+</ng-container>

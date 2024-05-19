@@ -1,0 +1,184 @@
+<nz-modal *ngIf="showModal" nzTitle="Beta License Agreement"
+          nzClosable="false"
+          nzMaskClosable="false"
+          [nzVisible]="true"
+          nzWidth="45rem"
+          [nzContent]="modalContent"
+          [nzFooter]="modalFooter">
+  <ng-template #modalFooter>
+    <button type="button" nz-button nzType="primary" (click)="accept()">Accept</button>
+    <button type="button" nz-button nzType="default" (click)="decline()">Decline</button>
+  </ng-template>
+</nz-modal>
+
+<ng-template #modalContent>
+  <p style='text-align:center'><img src="assets/img/brand/logo_large.png" style="width: 75%;"/></p>
+  <h1 style="font-size:14pt;">TERMS</h1>
+  <p>This Beta License Software License Agreement (the “Agreement”) is entered into by the joint developers of the
+    software, CiminoCare Inc. and Intermotion Technology, Inc. (hereinafter &quot;Developers&quot;) and the
+    Licensee.</p>
+  <p>The Developers license this Beta Software Program Product to Licensee subject to the terms contained in this Beta
+    Testing License Agreement (this “Agreement”). Read the terms and conditions of this Agreement carefully before
+    installing, copying, and using this Beta Licensed Software and, if any, the accompanying documentation.</p>
+  <p>The Beta Licensed Software is copyrighted to the Developers and it is made available to Licensee under this
+    Agreement for testing purposes only, it is not sold to Licensee and should not be used in production environments.
+     This Beta Licensed Software has not been released for sale, distribution or usage for the general public and will
+    be referred to as “Beta Licensed Software” from here on.</p>
+  <p>By clicking the “I accept the terms...” checkbox on the login page, by executing a written copy of this Agreement,
+    by installing, copying or otherwise using the Beta Licensed Software, Licensee is considered to have read and
+    Licensee agrees to be bound by the terms of this Agreement. If Licensee is not willing to be bound by the terms of
+    this Agreement, do not install, copy or use the Beta Licensed Software.</p>
+  <p>The Developers reserve the right to update this Agreement at any time without any prior notice to Licensee. The
+    applicable and most current version of this Agreement is at Licensee’s disposal on <a
+      href="http://www.intermotiontech.com">http://www.intermotiontech.com<u>/beta_license</u></a>.</p>
+  <p>Licensee agrees and acknowledges that the terms and conditions in this Beta Testing License Agreement has no effect
+    nor any influence or any connection with – if any – any other Developers Software License Agreement which are
+    applicable to the Developers Program Products purchased by Licensee.</p>
+  <h1 style="font-size:14pt;">BETA DISCLAIMER</h1>
+  <p>THE BETA SOFTWARE LICENSED HEREUNDER IS STILL IN TESTING PHASE AND IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE”
+    BASIS AND IS BELIEVED TO CONTAIN DEFECTS AND A PRIMARY PURPOSE OF THIS BETA TESTING LICENSE IS TO OBTAIN FEEDBACK ON
+    SOFTWARE PERFORMANCE AND THE IDENTIFICATION OF DEFECTS. LICENSEE IS ADVISED TO SAFEGUARD IMPORTANT DATA, TO USE
+    CAUTION AND NOT TO RELY IN ANY WAY ON THE CORRECT FUNCTIONING OR PERFORMANCE OF THE BETA LICENSED SOFTWARE AND/OR
+    ACCOMPANYING MATERIALS.</p>
+  <h1 style="font-size:14pt;">CONFIDENTIALITY</h1>
+  <p>Licensee agrees that, unless otherwise specifically provided herein or agreed by the Developers in writing, the
+    Beta Licensed Software and, if any, the Documentation, provided to Licensee by the Developers constitute
+    confidential proprietary information of the Developers. Licensee shall permit only authorized users to use the Beta
+    Licensed Software or to view, if any, the Documentation. Licensee agrees not to transfer, copy, disclose, provide or
+    otherwise make available such confidential information in any form to any third party without the prior written
+    consent of the Developers.  Licensee agrees to implement reasonable security measures to protect such confidential
+    information, but without limitation to the foregoing, shall use best efforts to maintain the security of the Beta
+    Licensed Software provided to Licensee by the Developers. Licensee will use its best efforts to cooperate with and
+    assist the Developers in identifying and preventing any unauthorized use, copying, or disclosure of the Beta
+    Licensed Software, if any, Documentation, or any portion thereof.</p>
+  <p>This Beta Licensed Software can be accessible only to Licensees who are invited to test for using pre-release Beta
+    Licensed Software and providing feedback to the Developers. All information available concerning the Beta Licensed
+    Software is confidential information of the Developers. For a period of five years from the time Licensee accessed
+    this confidential information, Licensee may not disclose this confidential information to any third party. This
+    restriction will not apply to any information that is or becomes publicly available without a breach of this
+    restriction; was lawfully known to the receiver of the information without an obligation to keep it confidential; is
+    received from another source that can disclose it is lawfully and without an obligation to keep it confidential; or
+    is independently developed. Licensee may disclose this confidential information if required to comply with a court
+    order or other government demand that has the force of law. Before doing so, you must seek the highest level of
+    protection available and, when possible, give the Developers enough prior notice to provide a reasonable chance to
+    seek a protective order.</p>
+  <h1 style="font-size:14pt;">FEEDBACK</h1>
+  <p>It is expressly understood, acknowledged and agreed that Licensee shall, regardless of whether or not formally
+    requested to do, provide to the Developers reasonable suggestions, comments and feedback regarding the Beta Licensed
+    Software, including but not limited to usability, bug reports and test results (collectively, “Feedback”). If
+    Licensee provides such Feedback to the Developers, Licensee shall grant the Developers the following worldwide,
+    non-exclusive, perpetual, irrevocable, royalty free, fully paid up rights:</p>
+  <ul>
+    <li>to make, use, copy, modify, sell, distribute, sub-license, and create derivative works of, the Feedback as part
+      of any the Developers product, technology, service, specification or other documentation (individually and
+      collectively, &quot;the Developers Products&quot;);
+    </li>
+    <li>to publicly perform or display, import, broad cast, transmit, distribute, license, offer to sell, and sell,
+      rent, lease or lend copies of the Feedback (and derivative works thereof) as part of any the Developers Product;
+    </li>
+    <li>solely with respect to Licensee's copyright and trade secret rights, to sublicense to third parties the
+      foregoing rights, including the right to sublicense to further third parties; and
+    </li>
+    <li>to sublicense to third parties any claims of any patents owned or licensable by Licensee that are necessarily
+      infringed by a third-party product, tech nology or service that uses, interfaces, interoperates or communicates
+      with the feedback or portion thereof incorporated into the Developers Product, technology or service.
+    </li>
+  </ul>
+  <p>Further, Licensee warrants that its Feedback is not subject to any license terms that would purport to require the
+    Developers to comply with any additional obligations with respect to any the Developers Products that incorporate
+    any Feedback.</p>
+  <p>Should Licensee encounter any bugs, glitches, lack of functionality or other problems on the website, please let
+    the Developers know immediately so it can be rectified accordingly. Licensee can submit its requests and issues to
+    support@seniorcaresw.com. Licensee’s help in this regard is greatly appreciated.</p>
+  <h1 style="font-size:14pt;">GRANT OF LICENSE</h1>
+  <p>Subject to the terms and conditions of this Agreement, the Developers hereby grants to Licensee a non-exclusive,
+    non-transferable license (without the right to sublicense) (i) to use the Beta Licensed Software in accordance with,
+    if any, the Documentation solely for purposes of internal testing and evaluation, and (ii) to copy Beta Licensed
+    Software for archival or backup purposes, provided that all titles and trademarks, copyright, and restricted rights
+    notices are reproduced on such copies and provided that only one copy of the Beta Licensed Software may be used at a
+    time. 5. Restrictions on Grant 5.1. Except as otherwise specifically permitted in this Agreement, Licensee may
+    not:</p>
+  <ul>
+    <li>modify or create any derivative works of any Beta Licensed Software or documentation, including – without
+      limitation – translation or localization; (code written to published APIs (Application programming interfaces) for
+      the Beta Licensed Software shall not be deemed derivative works);
+    </li>
+    <li>copy the Beta Licensed Software except as provided in this Agreement or elsewhere by the Developers;</li>
+    <li>separate Beta Licensed Software, which is licensed as a single product, into its component parts;</li>
+    <li>reverse engineer, decompile, or disassemble or otherwise attempt to derive the source code for any Product of
+      the Beta Licensed Software (except to the extent applicable laws specifically prohibit such restriction);
+    </li>
+    <li>redistribute, encumber, sell, rent, lease, sublicense, use the Beta Licensed Software in a timesharing or
+      service bureau arrangement, or otherwise transfer rights to any Software. Licensee may NOT transfer the Beta
+      Licensed Software under any circumstances;
+    </li>
+    <li>remove or alter any trademark, logo, copyright or other proprietary notices, legends, symbols or labels in the
+      Developers Product(s); or
+    </li>
+    <li>publish or make public any results of benchmark tests run on any Software to a third party without the
+      Developers prior written consent.
+    </li>
+  </ul>
+  <h1 style="font-size:14pt;">BETA LICENSED SOFTWARE PRODUCT SUPPORT</h1>
+  <p>The Developers are under no obligation i) to provide any technical support under the terms of this license, ii) to
+    continue to develop, productize, support, repair, offer for sale or in any other way continue to provide or develop
+    Beta Licensed Software either to Licensee or to any other party, and iii) provides no assurance that any specific
+    errors or discrepancies in the Beta Licensed Software will be corrected.</p>
+  <h1 style="font-size:14pt;">OWNERSHIP AND COPYRIGHT OF BETA LICENSED SOFTWARE</h1>
+  <p>Title to the Beta Licensed Software and all copies thereof remain with the Developers. The Beta Licensed Software
+    is copyrighted to the Developers. Licensee will not remove copyright notices from the Beta Licensed Software.
+    Licensee agrees to prevent any unauthorized copying of the Beta Licensed Software. The Developers do not grant any
+    express or implied right to Licensee under the Developers patents, copyrights, trademarks, or trade secret
+    information.</p>
+  <h1 style="font-size:14pt;">TERM OF THIS AGREEMENT</h1>
+  <p>Licensee’s rights with respect to the Beta Licensed Software will terminate upon the earlier of</p>
+  <ul>
+    <li>the initial commercial release by the Developers of a generally available version of the Licensed Software; or
+    </li>
+    <li>3 months after the last date Licensee receives the Beta Licensed Software or any update thereto.</li>
+  </ul>
+  <p>Either party may terminate this Agreement at any time for any reason or no reason by providing the other party
+    advance written notice thereof. Upon any expiration or termination of this Agreement, the rights and licenses
+    granted to Licensee under this Agreement shall immediately terminate, and Licensee shall immediately cease using,
+    and will return to the Developers (or, at the Developers’ request, destroy), the Beta Licensed Software, if any, the
+    Documentation, and all other tangible items in Licensee’s possession or control that are proprietary to or contain
+    Confidential Information of the Developers.</p>
+  <h1 style="font-size:14pt;">DISCLAIMER OF WARRANTIES</h1>
+  <p>THE BETA LICENSED SOFTWARE AND, IF ANY, DOCUMENTATION ARE LICENSED “AS IS”, AND THE DEVELOPERS DISCLAIMS ANY AND
+    ALL OTHER WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES
+    OF MERCHANTABILITY, SUITABILITY, USABILITY OR FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABLE QUALITY, TITLE OR
+    NONINFRINGEMENT OF THIRD PARTY RIGHTS, TO THE EXTENT AUTHORIZED BY LAW.</p>
+  <p>WITHOUT LIMITATION OF THE FOREGOING, THE DEVELOPERS EXPRESSLY DOES NOT WARRANT THAT THE BETA LICENSED SOFTWARE WILL
+    MEET LICENSEE’S REQUIREMENTS OR THAT OPERATION OF THE BETA LICENSED SOFTWARE WILL BE UNINTERRUPTED OR ERROR FREE.
+    THE BETA LICENSED SOFTWARE IS BEING PROVIDED TO LICENSEE “AS IS” WITHOUT WARRANTY OF ANY KIND. LICENSEE ASSUMES ALL
+    RESPONSIBILITY FOR SELECTING THE BETA LICENSED SOFTWARE TO ACHIEVE ITS INTENDED RESULTS, AND FOR THE RESULTS
+    OBTAINED FROM ITS USE OF THE BETA LICENSED SOFTWARE. LICENSEE SHALL BEAR THE ENTIRE RISK AS TO THE QUALITY AND THE
+    PERFORMANCE OF THE BETA LICENSED SOFTWARE.</p>
+  <p>ANY DOWNLOAD AND USE OF THIS BETA LICENSED SOFTWARE PROGRAM PRODUCT IS DONE AT THE LICENSEE’S OWN RISK AND THE
+    LICENSEE WILL BE SOLELY RESPONSIBLE FOR ANY DAMAGE TO – WITHOUT LIMITATION – ANY COMPUTER SYSTEM OR LOSS OF DATA
+    THAT RESULTS FROM SUCH ACTIVITIES. SHOULD IT PROVE DEFECTIVE, LICENSEE ASSUMES THE COST OF ALL NECESSARY SERVICING,
+    REPAIR AND/OR CORRECTION. IT IS THEREFORE UP TO THE LICENSEE TO TAKE ADEQUATE PRECAUTION AGAINST POSSIBLE DAMAGES
+    RESULTING FROM THIS BETA LICENSED SOFTWARE. SOFTWARE IN BETA TESTING SHOULD FOR EXAMPLE NOT BE USED ON SENSITIVE
+    AND/OR VALUABLE DATA AND SHOULD NOT BE USED IN PRODUCTION SYSTEMS.</p>
+  <h1 style="font-size:14pt;">LIMIT OF LIABILITY</h1>
+  <p>IN NO EVENT WILL THE DEVELOPERS BE LIABLE TO LICENSEE OR ANY PARTY FOR – WITHOUT LIMITATION – ANY LOSS OF USE;
+    INTERRUPTION OF BUSINESS; OR ANY DIRECT; INDIRECT; SPECIAL; INCIDENTAL; EXEMPLARY OR PUNITIVE OR CONSEQUENTIAL
+    DAMAGES OF ANY KIND (INCLUDING LOST PROFITS) REGARDLESS OF THE FORM OF ACTION WHETHER IN CONTRACT; TORT (INCLUDING
+    NEGLIGENCE); STRICT PRODUCT LIABILITY OR OTHERWISE; WHETHER ARISING OUT OF THE USE OR INABILITY TO USE THE BETA
+    LICENSED SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED
+    BY LICENSEE OR THIRD PARTIES OR A FAILURE OF THE BETA LICENSED SOFTWARE TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF
+    THE DEVELOPERS HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+  <h1 style="font-size:14pt;">GOVERNING LAW AND CHOICE OF FORUM</h1>
+  <p>For other than the U.S. Government as a party, this Agreement shall be governed by and construed in accordance with
+    the laws of the State of California. as If performed wholly within the state and without giving effect to the
+    principles of conflict of law rules of any jurisdiction or the United Nations Convention on Contracts for the
+    International Sale of Goods, the application of which is expressly excluded. Any legal action or proceeding arising
+    under this Agreement will be brought exclusively in the federal or state courts located in San Francisco. California
+    and the parties hereby consent to personal Jurisdiction and venue therein.</p>
+  <h1 style="font-size:14pt;">ENTIRE AGREEMENT</h1>
+  <p>This Agreement is a legal agreement and constitutes the complete and exclusive agreement between Licensee and the
+    Developers with respect to the subject matter hereof and supersedes all prior or contemporaneous oral or written
+    communications, proposals, representations, understandings, or agreements not specifically incorporated herein. This
+    Agreement may not be amended except in a writing duly signed by Licensee and an authorized representative of the
+    Developers.</p>
+</ng-template>

@@ -10,7 +10,9 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   protected $subscriptions: { [key: string]: Subscription; };
 
-  constructor(private title$: TitleService) {
+  constructor(
+    private title$: TitleService
+  ) {
     this.$subscriptions = {};
   }
 

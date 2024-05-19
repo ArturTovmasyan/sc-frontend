@@ -1,16 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {User} from '../../models/user';
-import {ProfileService} from '../../services/profile.service';
-import {Route, Router} from '@angular/router';
-import {AuthGuard} from '../../guards/auth.guard';
 import * as normalize from 'normalize-path';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Route, Router} from '@angular/router';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from '@ng-idle/core';
-import {AuthenticationService} from '../../services/auth.service';
-import {ChangeLog} from '../../models/change-log';
-import {ChangeLogService} from '../../admin/services/change-log.service';
-import {ChangeLogType} from '../../models/change-log-type.enum';
 import {Subscription, timer} from 'rxjs';
-import {first} from 'rxjs/operators';
+import {User} from '../../models/user';
+import {AuthGuard} from '../../guards/auth.guard';
+import {ProfileService} from '../../services/profile.service';
+import {AuthenticationService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,16 +14,12 @@ import {first} from 'rxjs/operators';
   styleUrls: ['./default-layout.component.scss']
 })
 export class DefaultLayoutComponent implements OnInit, OnDestroy {
-  ChangeLogType = ChangeLogType;
-
   public navItems = [];
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
 
   public user: User;
-
-  public change_logs: ChangeLog[];
 
   public asideVisible: string | boolean = false;
   public licenseVisible: boolean = false;
@@ -39,7 +31,6 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     private profile$: ProfileService,
     private auth_$: AuthGuard,
     private auth$: AuthenticationService,
-    private change_log$: ChangeLogService,
     private idle$: Idle
   ) {
     this.$subscriptions = {};
@@ -49,19 +40,13 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
     });
 
-    this.changes.observe(<Element>this.element, {
-      attributes: true
-    });
+    this.changes.observe(<Element>this.element, { attributes: true });
   }
 
   ngOnInit(): void {
     this.initIdle();
 
     this.subscribe('get_profile');
-
-    if (this.addIfHasPermission('persistence-common-change_log')) {
-      this.subscribe('timer_change_log');
-    }
 
     this.generateNavigation(this.router.config[0]);
   }
@@ -79,24 +64,6 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
 
           this.licenseVisible = this.user && this.user.owner === true && this.user.license_accepted === false;
         });
-        break;
-      case 'list_change_log':
-        this.$subscriptions[key] = this.change_log$.all().subscribe(res => {
-          if (res) {
-            this.change_logs = res;
-
-            if (this.change_logs.length > 0) {
-              this.asideVisible = 'lg';
-            } else {
-              this.asideVisible = false;
-            }
-          }
-          // this.subscribe('timer_change_log');
-        });
-        break;
-      case 'timer_change_log':
-        this.$subscriptions[key] =
-          timer(5000).pipe(first()).subscribe(() => this.subscribe('list_change_log'));
         break;
     }
   }
@@ -195,19 +162,6 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     }
 
     return nav_tree;
-  }
-
-  accept() {
-    this.profile$.accept().subscribe(res => {
-      this.licenseVisible = false;
-    });
-  }
-
-  decline() {
-    this.profile$.decline().subscribe(res => {
-      this.licenseVisible = false;
-      this.router.navigate(['/sign-out']);
-    });
   }
 
   private initIdle() {

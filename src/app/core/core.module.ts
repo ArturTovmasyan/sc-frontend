@@ -27,6 +27,8 @@ import {P500Component} from './components/error/500.component';
 import {SharedModule} from '../shared/shared.module';
 import {CoreComponent} from './core.component';
 import {DefaultLayoutComponent} from './components/default-layout/default-layout.component';
+import {LicenseComponent} from './components/license/license.component';
+import {UserActivityComponent} from './components/user-activity/user-activity.component';
 import {ChangePasswordComponent} from './components/profile/change-password/change-password.component';
 import {ProfileViewComponent} from './components/profile/view/profile-view.component';
 import {ProfileEditComponent} from './components/profile/edit/profile-edit.component';
@@ -106,6 +108,9 @@ import {FormComponent as RegionFormComponent} from './residents/components/regio
 import {ResidentSelectorComponent} from './residents/components/resident-selector/resident-selector.component';
 
 import {ListComponent as ResidentListComponent} from './residents/components/resident/list.component';
+// import {ListComponent as ResidentListComponent} from './residents/components/resident/index/list.component';
+//import {IndexComponent as ResidentIndexComponent} from './residents/components/resident/index/index.component';
+//import {ThumbComponent as ResidentThumbComponent} from './residents/components/resident/index/thumb.component';
 import {FormComponent as ResidentFormComponent} from './residents/components/resident/resident/form/form.component';
 import {ViewComponent as ResidentViewComponent} from './residents/components/resident/resident/view/view.component';
 import {InfoComponent as ResidentInfoComponent} from './residents/components/resident/resident/info/info.component';
@@ -249,9 +254,6 @@ import {VgOverlayPlayModule} from 'videogular2/compiled/src/overlay-play/overlay
 import {VgControlsModule} from 'videogular2/compiled/src/controls/controls';
 import {VgCoreModule} from 'videogular2/compiled/src/core/core';
 
-// import {ListComponent as ListComponent} from './residents/components//list.component';
-// import {FormComponent as FormComponent} from './residents/components//form/form.component';
-
 registerLocaleData(en);
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -287,6 +289,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResetPasswordComponent,
 
     DefaultLayoutComponent,
+    LicenseComponent,
+    UserActivityComponent,
 
     ChangePasswordComponent,
     ProfileViewComponent,
@@ -366,7 +370,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentSelectorComponent,
 
+    //ResidentIndexComponent,
     ResidentListComponent,
+    //ResidentThumbComponent,
     ResidentFormComponent,
     ImageEditorComponent,
     ResidentViewComponent,

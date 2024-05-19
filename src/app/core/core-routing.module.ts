@@ -50,6 +50,7 @@ import {ListComponent as AssessmentCareLevelListComponent} from './residents/com
 import {ListComponent as AssessmentCareLevelGroupListComponent} from './residents/components/assessment/care-level-group/list.component';
 
 import {ListComponent as ResidentListComponent} from './residents/components/resident/list.component';
+// import {IndexComponent as ResidentIndexComponent} from './residents/components/resident/index/index.component';
 import {ViewComponent as ResidentViewComponent} from './residents/components/resident/resident/view/view.component';
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
 import {ListComponent as ResidentHealthInsuranceListComponent} from './residents/components/resident/health-insurance/list.component';
@@ -274,6 +275,7 @@ const routes: Routes = [
         children: [
           {
             path: ':type/:group', component: ResidentListComponent,
+            // path: ':type/:group', component: ResidentIndexComponent,
             data: {
               title: 'Residents',
               permissions: ['persistence-resident-resident']
@@ -282,6 +284,7 @@ const routes: Routes = [
           },
           {
             path: 'active', component: ResidentListComponent,
+            // path: 'active', component: ResidentIndexComponent,
             data: {
               nav: {show: true, group: 'Active'},
               title: 'Active',
@@ -290,6 +293,7 @@ const routes: Routes = [
           },
           {
             path: 'inactive', component: ResidentListComponent,
+            // path: 'inactive', component: ResidentIndexComponent,
             data: {
               nav: {show: true, group: 'Inactive'},
               title: 'Inactive',
@@ -298,6 +302,7 @@ const routes: Routes = [
           },
           {
             path: 'no-admission', component: ResidentListComponent,
+            // path: 'no-admission', component: ResidentIndexComponent,
             data: {
               nav: {show: true, group: 'Pre-Admit'},
               title: 'Pre-Admit',
