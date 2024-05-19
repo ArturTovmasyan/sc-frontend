@@ -279,7 +279,10 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     if (parameters.hasOwnProperty('discontinued')) {
       const parameter_config = parameters['discontinued'];
-      this.show.discontinued = true;
+      this.show.discontinued = false;
+      if (this.form.get('group').value === GroupType.FACILITY) {
+          this.show.discontinued = true;
+      }
       this.form.get('discontinued').enable();
       this.form.get('discontinued').setValue(false);
     }
