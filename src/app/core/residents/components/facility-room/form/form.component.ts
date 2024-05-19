@@ -11,7 +11,7 @@ import {ResidentService} from '../../../services/resident.service';
 import {Resident} from '../../../models/resident';
 import {FacilityRoom} from '../../../models/facility-room';
 import {FacilityRoomService} from '../../../services/facility-room.service';
-import {ResidentType} from '../../../models/resident-type.enum';
+import {GroupType} from '../../../models/group-type.enum';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -216,7 +216,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           if (v) {
             const result = {
               id: resident.id,
-              group_type: ResidentType.FACILITY,
+              group_type: GroupType.FACILITY,
               group_id: this.facility.id,
               bed_id: bed_id
             };

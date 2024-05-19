@@ -3,7 +3,7 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {first} from 'rxjs/operators';
 import {ResidentService} from '../../../services/resident.service';
 import {Resident} from '../../../models/resident';
-import {ResidentType} from '../../../models/resident-type.enum';
+import {GroupType} from '../../../models/group-type.enum';
 import {Observable} from 'rxjs';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {FormComponent} from '../form/form.component';
@@ -20,7 +20,7 @@ import {ResidentSelectorService} from '../../../services/resident-selector.servi
   styleUrls: ['./info.component.scss']
 })
 export class InfoComponent implements OnInit {
-  ResidentType = ResidentType;
+  GroupType = GroupType;
 
   resident: Resident;
   contract: ResidentContract;
@@ -66,13 +66,13 @@ export class InfoComponent implements OnInit {
           let group_id = null;
 
           switch (this.contract.type) {
-            case ResidentType.FACILITY:
+            case GroupType.FACILITY:
               group_id = (<ContractOptionFacility>this.contract.option).bed.room.facility.id;
               break;
-            case ResidentType.REGION:
+            case GroupType.REGION:
               group_id = (<ContractOptionRegion>this.contract.option).region.id;
               break;
-            case ResidentType.APARTMENT:
+            case GroupType.APARTMENT:
               group_id = (<ContractOptionApartment>this.contract.option).bed.room.apartment.id;
               break;
           }

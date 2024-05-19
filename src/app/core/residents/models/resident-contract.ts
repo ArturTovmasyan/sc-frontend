@@ -1,5 +1,5 @@
 import {Resident} from './resident';
-import {ResidentType} from './resident-type.enum';
+import {GroupType} from './group-type.enum';
 import {ApartmentBed, ApartmentRoom} from './apartment-room';
 import {FacilityBed, FacilityRoom} from './facility-room';
 import {FacilityDiningRoom} from './facility-dining-room';
@@ -13,7 +13,7 @@ export class ResidentContract implements IdInterface {
   start: Date;
   end: Date;
 
-  type: ResidentType;
+  type: GroupType;
   option: ContractOptionApartment | ContractOptionFacility | ContractOptionRegion;
 
   resident: Resident;

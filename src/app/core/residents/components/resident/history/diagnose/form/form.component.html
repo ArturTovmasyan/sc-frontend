@@ -15,10 +15,10 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="diagnose_id" nzRequired>Diagnose</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('diagnose_id')?'error':null">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="diagnosis_id" nzRequired>Diagnose</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('diagnosis_id')?'error':null">
       <div class="add-select-container">
-        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="diagnose_id">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="diagnosis_id">
           <ng-container *ngFor="let diagnose of diagnoses">
             <nz-option [nzLabel]="diagnose.title" [nzValue]="diagnose.id"></nz-option>
           </ng-container>
@@ -27,8 +27,8 @@
           <i nz-icon type="plus"></i>
         </button>
       </div>
-      <nz-form-explain *ngIf="hasErrors('diagnose_id')">
-        <app-field-errors [errors]="fieldErrors('diagnose_id')"></app-field-errors>
+      <nz-form-explain *ngIf="hasErrors('diagnosis_id')">
+        <app-field-errors [errors]="fieldErrors('diagnosis_id')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

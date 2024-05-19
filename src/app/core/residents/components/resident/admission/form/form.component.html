@@ -1,23 +1,37 @@
-﻿<h4>Contract</h4>
+﻿<h4>Admission</h4>
 <form nz-form [formGroup]="form">
   <nz-tabset [nzSelectedIndex]="selectedTab">
     <nz-tab nzTitle="General">
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="start" nzRequired>Start Date</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('start')?'error':null">
-          <nz-date-picker formControlName="start"></nz-date-picker>
-          <nz-form-explain *ngIf="hasErrors('start')">
-            <app-field-errors [errors]="fieldErrors('start')"></app-field-errors>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="admission_type" nzRequired>Type</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('admission_type')?'error':null">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="admission_type">
+            <ng-container *ngFor="let admission_type of admission_types">
+              <nz-option [nzLabel]="(admission_type.name)|translate" [nzValue]="admission_type.id"></nz-option>
+            </ng-container>
+          </nz-select>
+          <nz-form-explain *ngIf="hasErrors('admission_type')">
+            <app-field-errors [errors]="fieldErrors('admission_type')"></app-field-errors>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="end">End Date</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('end')?'error':null">
-          <nz-date-picker formControlName="end"></nz-date-picker>
-          <nz-form-explain *ngIf="hasErrors('end')">
-            <app-field-errors [errors]="fieldErrors('end')"></app-field-errors>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Effective Date</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+          <nz-date-picker formControlName="date"></nz-date-picker>
+          <nz-form-explain *ngIf="hasErrors('date')">
+            <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
+          <textarea formControlName="notes" nz-input rows="4" placeholder="Description"></textarea>
+          <nz-form-explain *ngIf="hasErrors('notes')">
+            <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
@@ -49,23 +63,7 @@
       </nz-form-item>
     </nz-tab>
 
-    <nz-tab *ngIf="form.get('type').value == GroupType.FACILITY && form.get('option') !== null && form.get('option').value !== null" formGroupName="option"
-            nzTitle="Facility Information">
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state" nzRequired>State</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="state">
-            <ng-container *ngFor="let state of states">
-              <nz-option [nzLabel]="(state.name)|translate" [nzValue]="state.id"></nz-option>
-            </ng-container>
-          </nz-select>
-          <nz-form-explain *ngIf="hasErrors('state')">
-            <app-field-errors [errors]="fieldErrors('state')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-
-
+    <nz-tab *ngIf="form.get('group_type').value === GROUP_TYPE.FACILITY" nzTitle="Facility Information">
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_group" nzRequired>Care Group</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_group')?'error':null">
@@ -119,9 +117,9 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="bed_id" nzRequired>Room/Bed</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('bed_id')?'error':null">
-          <nz-select nzShowSearch nzPlaceHolder="Please select" formControlName="bed_id">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facility_bed_id" nzRequired>Room/Bed</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('facility_bed_id')?'error':null">
+          <nz-select nzShowSearch nzPlaceHolder="Please select" formControlName="facility_bed_id">
             <ng-container *ngFor="let room of facility_rooms">
               <ng-container *ngFor="let bed of room.beds">
                 <nz-option nzCustomContent [nzValue]="bed.id" nzLabel="{{ room.number }} ({{ bed.number }})">
@@ -130,8 +128,8 @@
               </ng-container>
             </ng-container>
           </nz-select>
-          <nz-form-explain *ngIf="hasErrors('bed_id')">
-            <app-field-errors [errors]="fieldErrors('bed_id')"></app-field-errors>
+          <nz-form-explain *ngIf="hasErrors('facility_bed_id')">
+            <app-field-errors [errors]="fieldErrors('facility_bed_id')"></app-field-errors>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
@@ -150,26 +148,12 @@
         </nz-form-control>
       </nz-form-item>
     </nz-tab>
-    <nz-tab *ngIf="form.get('type').value == GroupType.APARTMENT && form.get('option') !== null && form.get('option').value !== null" formGroupName="option"
-            nzTitle="Apartment Information">
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state" nzRequired>State</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="state">
-            <ng-container *ngFor="let state of states">
-              <nz-option [nzLabel]="(state.name)|translate" [nzValue]="state.id"></nz-option>
-            </ng-container>
-          </nz-select>
-          <nz-form-explain *ngIf="hasErrors('state')">
-            <app-field-errors [errors]="fieldErrors('state')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
 
+    <nz-tab *ngIf="form.get('group_type').value === GROUP_TYPE.APARTMENT" nzTitle="Apartment Information">
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="bed_id" nzRequired>Room/Bed</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('bed_id')?'error':null">
-          <nz-select nzShowSearch nzPlaceHolder="Please select" formControlName="bed_id">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="apartment_bed_id" nzRequired>Room/Bed</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('apartment_bed_id')?'error':null">
+          <nz-select nzShowSearch nzPlaceHolder="Please select" formControlName="apartment_bed_id">
             <ng-container *ngFor="let room of apartment_rooms">
               <ng-container *ngFor="let bed of room.beds">
                 <nz-option nzCustomContent [nzValue]="bed.id" nzLabel="{{ room.number }} ({{ bed.number }})">
@@ -178,28 +162,14 @@
               </ng-container>
             </ng-container>
           </nz-select>
-          <nz-form-explain *ngIf="hasErrors('bed_id')">
-            <app-field-errors [errors]="fieldErrors('bed_id')"></app-field-errors>
+          <nz-form-explain *ngIf="hasErrors('apartment_bed_id')">
+            <app-field-errors [errors]="fieldErrors('apartment_bed_id')"></app-field-errors>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
     </nz-tab>
-    <nz-tab *ngIf="form.get('type').value == GroupType.REGION && form.get('option') !== null && form.get('option').value !== null" formGroupName="option"
-            nzTitle="IHC Region Information">
-      <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state" nzRequired>State</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state')?'error':null">
-          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="state">
-            <ng-container *ngFor="let state of states">
-              <nz-option [nzLabel]="(state.name)|translate" [nzValue]="state.id"></nz-option>
-            </ng-container>
-          </nz-select>
-          <nz-form-explain *ngIf="hasErrors('state')">
-            <app-field-errors [errors]="fieldErrors('state')"></app-field-errors>
-          </nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-
+    <nz-tab *ngIf="form.get('group_type').value === GROUP_TYPE.REGION" nzTitle="IHC Region Information">
+      <input nz-input formControlName="region_id">
 
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_group" nzRequired>Care Group</nz-form-label>
@@ -270,11 +240,11 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="street_address" nzRequired>Street Address</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('street_address')?'error':null">
-          <input nz-input placeholder="Street Address" formControlName="street_address">
-          <nz-form-explain *ngIf="hasErrors('street_address')">
-            <app-field-errors [errors]="fieldErrors('street_address')"></app-field-errors>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="address" nzRequired>Street Address</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('address')?'error':null">
+          <input nz-input placeholder="Street Address" formControlName="address">
+          <nz-form-explain *ngIf="hasErrors('address')">
+            <app-field-errors [errors]="fieldErrors('address')"></app-field-errors>
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>

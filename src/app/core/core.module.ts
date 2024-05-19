@@ -136,6 +136,9 @@ import {FormComponent as ResidentDietFormComponent} from './residents/components
 import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
 import {FormComponent as ResidentEventFormComponent} from './residents/components/resident/event/form/form.component';
 
+import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
+import {FormComponent as ResidentAdmissionFormComponent} from './residents/components/resident/admission/form/form.component';
+
 import {ListComponent as ResidentContractListComponent} from './residents/components/resident/contract/list.component';
 import {FormComponent as ResidentContractFormComponent} from './residents/components/resident/contract/form/form.component';
 
@@ -308,11 +311,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentResponsiblePersonListComponent,
     ResidentResponsiblePersonFormComponent,
 
+    ResidentAdmissionListComponent,
+    ResidentAdmissionFormComponent,
+
     ResidentEventListComponent,
     ResidentEventFormComponent,
 
-    ResidentContractListComponent,
-    ResidentContractFormComponent,
+   ResidentContractListComponent,
+   ResidentContractFormComponent,
 
     ResidentRentListComponent,
     ResidentRentFormComponent,
@@ -384,6 +390,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SalutationFormComponent,
 
     PhysicianSpecialityFormComponent,
+
     ResponsiblePersonRoleFormComponent,
 
     PhysicianFormComponent,
@@ -391,40 +398,58 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResponsiblePersonFormComponent,
 
     ApartmentFormComponent,
+
     ApartmentRoomFormComponent,
 
     FacilityFormComponent,
+
     FacilityRoomFormComponent,
+
     FacilityDiningRoomFormComponent,
 
     RegionFormComponent,
 
     ResidentFormComponent,
-    ResidentImageEditorComponent,
-    ResidentMoveComponent,
 
     ResidentDietFormComponent,
+
     ResidentMedicationFormComponent,
 
     ResidentResponsiblePersonFormComponent,
+
+    ResidentAdmissionFormComponent,
+
     ResidentEventFormComponent,
+
     ResidentContractFormComponent,
+
     ResidentRentFormComponent,
+
     ResidentPhysicianFormComponent,
+
     ResidentDiagnoseFormComponent,
+
     ResidentAllergyMedicationFormComponent,
+
     ResidentAllergyOtherFormComponent,
+
     ResidentMedicalHistoryFormComponent,
+
     ResidentAssessmentFormComponent,
+
     ResidentReportFormComponent,
 
     PaymentSourceFormComponent,
-    EventDefinitionFormComponent,
 
     AssessmentCategoryFormComponent,
+
     AssessmentFormFormComponent,
+
     AssessmentCareLevelFormComponent,
+
     AssessmentCareLevelGroupFormComponent,
+
+    EventDefinitionFormComponent,
 
   ],
   imports: [

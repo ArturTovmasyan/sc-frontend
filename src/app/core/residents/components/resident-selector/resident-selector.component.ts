@@ -8,7 +8,7 @@ import {RegionService} from '../../services/region.service';
 import {Region} from '../../models/region';
 import {Resident} from '../../models/resident';
 import {ResidentService} from '../../services/resident.service';
-import {ResidentType} from '../../models/resident-type.enum';
+import {GroupType} from '../../models/group-type.enum';
 import {Router} from '@angular/router';
 import {ResidentSelectorService} from '../../services/resident-selector.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -166,7 +166,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
           if (res) {
             this.facilities = res;
             this.facilities.forEach((v, i) => {
-              this.facilities[i]['type'] = ResidentType.FACILITY;
+              this.facilities[i]['type'] = GroupType.FACILITY;
             });
 
             this.residentSelector$.group.next(this.residentSelector$.group.value);
@@ -178,7 +178,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
           if (res) {
             this.apartments = res;
             this.apartments.forEach((v, i) => {
-              this.apartments[i]['type'] = ResidentType.APARTMENT;
+              this.apartments[i]['type'] = GroupType.APARTMENT;
             });
 
             this.residentSelector$.group.next(this.residentSelector$.group.value);
@@ -190,7 +190,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
           if (res) {
             this.regions = res;
             this.regions.forEach((v, i) => {
-              this.regions[i]['type'] = ResidentType.REGION;
+              this.regions[i]['type'] = GroupType.REGION;
             });
 
             this.residentSelector$.group.next(this.residentSelector$.group.value);
@@ -212,17 +212,17 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     let group = null;
 
     switch (this.residentSelector$.type.value) {
-      case ResidentType.FACILITY:
+      case GroupType.FACILITY:
         if (this.facilities) {
           group = this.facilities.filter(v => v.id === id).pop();
         }
         break;
-      case ResidentType.REGION:
+      case GroupType.REGION:
         if (this.regions) {
           group = this.regions.filter(v => v.id === id).pop();
         }
         break;
-      case ResidentType.APARTMENT:
+      case GroupType.APARTMENT:
         if (this.apartments) {
           group = this.apartments.filter(v => v.id === id).pop();
         }

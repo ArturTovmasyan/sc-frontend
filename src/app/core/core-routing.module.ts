@@ -50,6 +50,7 @@ import {ListComponent as AssessmentCareLevelGroupListComponent} from './resident
 import {ListComponent as ResidentListComponent} from './residents/components/resident/list.component';
 import {ViewComponent as ResidentViewComponent} from './residents/components/resident/view/view.component';
 import {ListComponent as ResidentResponsiblePersonListComponent} from './residents/components/resident/responsible-person/list.component';
+import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
 import {ListComponent as ResidentContractListComponent} from './residents/components/resident/contract/list.component';
 import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
@@ -320,6 +321,17 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Responsible Persons',
+              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'admissions',
+            component: ResidentAdmissionListComponent,
+            outlet: 'resident-details',
+            pathMatch: 'full',
+            data: {
+              title: 'Admissions',
               roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
             },
             canActivate: [AuthGuard]

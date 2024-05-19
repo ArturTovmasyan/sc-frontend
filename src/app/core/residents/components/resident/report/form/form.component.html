@@ -33,13 +33,13 @@
   <nz-form-item *ngIf="show.group">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group_id" nzRequired>
       <ng-container [ngSwitch]="form.get('group').value">
-        <ng-container *ngSwitchCase="ResidentType.FACILITY">
+        <ng-container *ngSwitchCase="GroupType.FACILITY">
           Facility
         </ng-container>
-        <ng-container *ngSwitchCase="ResidentType.REGION">
+        <ng-container *ngSwitchCase="GroupType.REGION">
           Region
         </ng-container>
-        <ng-container *ngSwitchCase="ResidentType.APARTMENT">
+        <ng-container *ngSwitchCase="GroupType.APARTMENT">
           Apartment
         </ng-container>
         <ng-container *ngSwitchDefault>
@@ -68,17 +68,17 @@
             </ng-container>
           </nz-option-group>
         </ng-container>
-        <ng-container *ngIf="form.get('group').value == ResidentType.FACILITY">
+        <ng-container *ngIf="form.get('group').value == GroupType.FACILITY">
           <ng-container *ngFor="let facility of facilities">
             <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="form.get('group').value == ResidentType.REGION">
+        <ng-container *ngIf="form.get('group').value == GroupType.REGION">
           <ng-container *ngFor="let region of regions">
             <nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="form.get('group').value == ResidentType.APARTMENT">
+        <ng-container *ngIf="form.get('group').value == GroupType.APARTMENT">
           <ng-container *ngFor="let apartment of apartments">
             <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
           </ng-container>

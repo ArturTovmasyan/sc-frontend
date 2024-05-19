@@ -7,7 +7,7 @@ import {FacilityService} from '../../../../services/facility.service';
 import {ApartmentService} from '../../../../services/apartment.service';
 import {RegionService} from '../../../../services/region.service';
 import {ResidentService} from '../../../../services/resident.service';
-import {ResidentType} from '../../../../models/resident-type.enum';
+import {GroupType} from '../../../../models/group-type.enum';
 import {Apartment} from '../../../../models/apartment';
 import {Facility} from '../../../../models/facility';
 import {Region} from '../../../../models/region';
@@ -18,7 +18,7 @@ import {ResidentSelectorService} from '../../../../services/resident-selector.se
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  ResidentType = ResidentType;
+  GroupType = GroupType;
 
   apartments: Apartment[];
   facilities: Facility[];
@@ -105,7 +105,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       if (res) {
         this.facilities = res;
         this.facilities.forEach((v, i) => {
-          this.facilities[i]['type'] = ResidentType.FACILITY;
+          this.facilities[i]['type'] = GroupType.FACILITY;
         });
 
         this.residentSelector$.group.next(this.residentSelector$.group.value);
@@ -115,7 +115,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       if (res) {
         this.apartments = res;
         this.apartments.forEach((v, i) => {
-          this.apartments[i]['type'] = ResidentType.APARTMENT;
+          this.apartments[i]['type'] = GroupType.APARTMENT;
         });
 
         this.residentSelector$.group.next(this.residentSelector$.group.value);
@@ -125,7 +125,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       if (res) {
         this.regions = res;
         this.regions.forEach((v, i) => {
-          this.regions[i]['type'] = ResidentType.REGION;
+          this.regions[i]['type'] = GroupType.REGION;
         });
 
         this.residentSelector$.group.next(this.residentSelector$.group.value);
@@ -217,17 +217,17 @@ export class FormComponent extends AbstractForm implements OnInit {
     let group = null;
 
     switch (this.form.get('group').value) {
-      case ResidentType.FACILITY:
+      case GroupType.FACILITY:
         if (this.facilities) {
           group = this.facilities.filter(v => v.id === id).pop();
         }
         break;
-      case ResidentType.REGION:
+      case GroupType.REGION:
         if (this.regions) {
           group = this.regions.filter(v => v.id === id).pop();
         }
         break;
-      case ResidentType.APARTMENT:
+      case GroupType.APARTMENT:
         if (this.apartments) {
           group = this.apartments.filter(v => v.id === id).pop();
         }

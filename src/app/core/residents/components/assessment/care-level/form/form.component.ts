@@ -27,7 +27,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       title: ['', Validators.compose([Validators.required, Validators.maxLength(255)])],
       level_low: [0, Validators.required],
       level_high: [0],
-      care_level_groups: [[], Validators.required],
+      care_level_group_id: [[], Validators.required],
     });
 
     this.subscribe('list_care_level_group');

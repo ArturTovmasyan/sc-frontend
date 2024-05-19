@@ -35,7 +35,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       type: ['', Validators.compose([Validators.required])],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
-      diagnose_id: [null, Validators.required],
+      diagnosis_id: [null, Validators.required],
 
       resident_id: [this.resident_id, Validators.required]
     });

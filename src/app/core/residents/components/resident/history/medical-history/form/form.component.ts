@@ -31,7 +31,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       id: [''],
       notes: ['', Validators.compose([Validators.maxLength(512)])],
 
-      date_occured: [new Date(), Validators.required],
+      date: [new Date(), Validators.required],
 
       condition_id: [null, Validators.required],
 

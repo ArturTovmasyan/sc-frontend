@@ -13,7 +13,7 @@ import {Region} from '../../../models/region';
 import {ApartmentBed, ApartmentRoom} from '../../../models/apartment-room';
 import {ApartmentService} from '../../../services/apartment.service';
 import {RegionService} from '../../../services/region.service';
-import {ResidentType} from '../../../models/resident-type.enum';
+import {GroupType} from '../../../models/group-type.enum';
 import {ApartmentRoomService} from '../../../services/apartment-room.service';
 import {GridService} from '../../../../../shared/services/grid.service';
 
@@ -105,7 +105,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         if (res) {
           this.facilities = res;
           this.facilities.forEach((v, i) => {
-            this.facilities[i]['type'] = ResidentType.FACILITY;
+            this.facilities[i]['type'] = GroupType.FACILITY;
           });
 
           if (this.form.get('group').value === null) {
@@ -118,7 +118,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         if (res) {
           this.apartments = res;
           this.apartments.forEach((v, i) => {
-            this.apartments[i]['type'] = ResidentType.APARTMENT;
+            this.apartments[i]['type'] = GroupType.APARTMENT;
           });
         }
       });
@@ -127,7 +127,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         if (res) {
           this.regions = res;
           this.regions.forEach((v, i) => {
-            this.regions[i]['type'] = ResidentType.REGION;
+            this.regions[i]['type'] = GroupType.REGION;
           });
         }
       });
@@ -147,19 +147,19 @@ export class FormComponent extends AbstractForm implements OnInit {
     let key: string;
 
     switch (group_type) {
-      case ResidentType.FACILITY:
+      case GroupType.FACILITY:
         service = this.facility_room$;
         key = 'facility_id';
         this._show_bed = true;
         this.form.get('bed_id').enable();
         break;
-      case ResidentType.APARTMENT:
+      case GroupType.APARTMENT:
         service = this.apartment_room$;
         key = 'apartment_id';
         this._show_bed = true;
         this.form.get('bed_id').enable();
         break;
-      case ResidentType.REGION:
+      case GroupType.REGION:
         service = null;
         key = null;
         this._show_bed = false;

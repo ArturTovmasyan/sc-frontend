@@ -36,7 +36,7 @@ export class AbstractForm implements OnDestroy {
     Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
   }
 
-  protected subscribe(key: string): void {
+  protected subscribe(key: string, params?: any): void {
   }
 
   protected unsubscribe(key: string): void {

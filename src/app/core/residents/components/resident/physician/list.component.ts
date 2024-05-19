@@ -178,7 +178,7 @@ export class ListComponent implements OnInit {
 
               modal.close();
 
-              this.create_modal(submit, result, form_data);
+              this.create_modal(form_component, submit, result);
             },
             error => {
               loading = false;

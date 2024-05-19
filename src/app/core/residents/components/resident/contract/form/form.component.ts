@@ -3,7 +3,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {ActivatedRoute} from '@angular/router';
-import {ResidentType} from '../../../../models/resident-type.enum';
+import {GroupType} from '../../../../models/group-type.enum';
 import {FacilityDiningRoomService} from '../../../../services/facility-dining-room.service';
 import {FacilityRoomService} from '../../../../services/facility-room.service';
 import {ApartmentRoomService} from '../../../../services/apartment-room.service';
@@ -27,7 +27,7 @@ import {CoreValidator} from '../../../../../../shared/utils/core-validator';
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  ResidentType = ResidentType;
+  GroupType = GroupType;
 
   apartments: Apartment[];
   facilities: Facility[];
@@ -86,7 +86,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.facility$.all().pipe(first()).subscribe(res => {
       if (res) {
         res.forEach((v, i) => {
-          res[i]['type'] = ResidentType.FACILITY;
+          res[i]['type'] = GroupType.FACILITY;
         });
 
         this.facilities = res;
@@ -99,7 +99,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.apartment$.all().pipe(first()).subscribe(res => {
       if (res) {
         res.forEach((v, i) => {
-          res[i]['type'] = ResidentType.APARTMENT;
+          res[i]['type'] = GroupType.APARTMENT;
         });
 
         this.apartments = res;
@@ -112,7 +112,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.region$.all().pipe(first()).subscribe(res => {
       if (res) {
         res.forEach((v, i) => {
-          res[i]['type'] = ResidentType.REGION;
+          res[i]['type'] = GroupType.REGION;
         });
 
         this.regions = res;
@@ -153,7 +153,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     const group_type = value.type;
 
     switch (group_type) {
-      case ResidentType.FACILITY:
+      case GroupType.FACILITY:
         option = this.formBuilder.group({
           state: [null, Validators.required],
 
@@ -182,7 +182,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
-      case ResidentType.APARTMENT:
+      case GroupType.APARTMENT:
         option = this.formBuilder.group({
           state: [null, Validators.required],
 
@@ -194,7 +194,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
-      case ResidentType.REGION:
+      case GroupType.REGION:
         option = this.formBuilder.group({
           state: [null, Validators.required],
 
@@ -241,13 +241,13 @@ export class FormComponent extends AbstractForm implements OnInit {
       this.form.get('type').setValue(data.type);
 
       switch (this.form.get('type').value) {
-        case ResidentType.FACILITY:
+        case GroupType.FACILITY:
           this.group_id = data.option.bed.room.facility.id;
           break;
-        case ResidentType.APARTMENT:
+        case GroupType.APARTMENT:
           this.group_id = data.option.bed.room.apartment.id;
           break;
-        case ResidentType.REGION:
+        case GroupType.REGION:
           this.group_id = data.option.region.id;
           break;
       }
@@ -258,17 +258,17 @@ export class FormComponent extends AbstractForm implements OnInit {
     let group = null;
 
     switch (this.form.get('type').value) {
-      case ResidentType.FACILITY:
+      case GroupType.FACILITY:
         if (this.facilities) {
           group = this.facilities.filter(v => v.id === id).pop();
         }
         break;
-      case ResidentType.REGION:
+      case GroupType.REGION:
         if (this.regions) {
           group = this.regions.filter(v => v.id === id).pop();
         }
         break;
-      case ResidentType.APARTMENT:
+      case GroupType.APARTMENT:
         if (this.apartments) {
           group = this.apartments.filter(v => v.id === id).pop();
         }
