@@ -800,7 +800,7 @@ const routes: Routes = [
         component: ResidentLedgerViewComponent,
         pathMatch: 'full',
         data: {
-          title: 'Ledgers',
+          title: 'Billing Statement Summary',
           permissions: ['persistence-resident-resident_ledger']
         },
         canActivate: [AuthGuard]
@@ -875,7 +875,7 @@ const routes: Routes = [
             outlet: 'resident-details',
             pathMatch: 'full',
             data: {
-              title: 'Ledgers',
+              title: 'Billing Statement Summary',
               permissions: ['persistence-resident-resident_ledger']
             },
             canActivate: [AuthGuard]

@@ -60,7 +60,7 @@
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
          [routerLink]="routeInfo('ledgers')"
-         title="Ledgers">
+         title="Billing Statement Summary">
         <i class="seniorcare seniorcare-3x seniorcare-ledgers"></i>
       </a>
       <a *ngIf="addIfHasPermission('persistence-resident-resident_physician') && residentSelector$.type.value === GROUP_TYPE.FACILITY" nz-button
