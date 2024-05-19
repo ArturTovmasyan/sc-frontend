@@ -53,7 +53,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_file">First File</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_file">Card Scan - Front</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('first_file')?'error':null">
       <input type="file" #first_file (change)="onFileChange(files[0], $event)" accept="image/*,application/pdf" style="display: none;">
       <button type="button" nz-button nzSize="small" *ngIf="form.get('first_file').value === null" (click)="select_file(files[0]);">
@@ -72,7 +72,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="second_file">Second File</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="second_file">Card Scan - Back</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('second_file')?'error':null">
       <input type="file" #second_file (change)="onFileChange(files[1], $event)" accept="image/*,application/pdf" style="display: none;">
       <button type="button" nz-button nzSize="small" *ngIf="form.get('second_file').value === null" (click)="select_file(files[1]);">
