@@ -73,14 +73,14 @@
     </nz-select>
     <i class="fa fa-users"></i>
     <nz-select nzShowSearch [nzDropdownMatchSelectWidth]="false" formControlName="active_resident_id"
-               [nzDisabled]="residentSelector$.group.value === null || active_residents == null || active_residents.length == 0">
+               [nzDisabled]="residentSelector$.group.value === null || active_residents === null || active_residents.length === 0">
       <ng-container *ngFor="let resident of active_residents">
         <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
       </ng-container>
     </nz-select>
     <i class="fa fa-ban"></i>
     <nz-select nzShowSearch [nzDropdownMatchSelectWidth]="false" formControlName="inactive_resident_id"
-               [nzDisabled]="inactive_residents == null || inactive_residents.length == 0">
+               [nzDisabled]="inactive_residents === null || inactive_residents.length === 0">
       <ng-container *ngFor="let resident of inactive_residents">
         <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
       </ng-container>

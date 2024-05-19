@@ -1,5 +1,5 @@
-import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
-import {first, debounceTime, throttleTime} from 'rxjs/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {first} from 'rxjs/operators';
 import {Apartment} from '../../models/apartment';
 import {Facility} from '../../models/facility';
 import {FacilityService} from '../../services/facility.service';
@@ -9,9 +9,9 @@ import {Region} from '../../models/region';
 import {Resident} from '../../models/resident';
 import {ResidentService} from '../../services/resident.service';
 import {ResidentType} from '../../models/resident-type.enum';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {ResidentSelectorService} from '../../services/resident-selector.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -38,151 +38,168 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     private region$: RegionService,
     private resident$: ResidentService,
     private router$: Router,
-    private route$: ActivatedRoute,
     public residentSelector$: ResidentSelectorService
   ) {
-
     this.$subscriptions = {};
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      group: [null],
+      group: [-1],
       active_resident_id: [null],
       inactive_resident_id: [null]
     });
 
-    this.$subscriptions['vc_group'] = this.form.get('group').valueChanges.subscribe(next => {
-      if (next) {
-        this.residentSelector$.type.next(next.type);
-        this.residentSelector$.group.next(next.id);
-      } else {
-        this.resident$.list_by_options(false, null, null).pipe(first()).subscribe(res => {
-          if (res) {
-            this.active_residents = null;
-            this.inactive_residents = res;
-            this.residentSelector$.resident.next(this.residentSelector$.resident.value);
+    this.subscribe('vc_group');
+    this.subscribe('vc_active_resident_id');
+    this.subscribe('vc_inactive_resident_id');
+
+    this.subscribe('rs_group');
+    this.subscribe('rs_resident');
+
+    this.subscribe('list_facility');
+    this.subscribe('list_apartment');
+    this.subscribe('list_region');
+  }
+
+  ngOnDestroy(): void {
+    Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
+  }
+
+  unsubscribe(key: string): void {
+    if (this.$subscriptions.hasOwnProperty(key)) {
+      this.$subscriptions[key].unsubscribe();
+    }
+  }
+
+  subscribe(key: string) {
+    switch (key) {
+      case 'vc_group':
+        this.$subscriptions[key] = this.form.get('group').valueChanges.subscribe(next => {
+          if (next === -1) {
+            return;
           }
-        });
-      }
-    });
 
-    this.$subscriptions['vc_active_resident_id'] = this.form.get('active_resident_id').valueChanges.subscribe(next => {
-      if (next) {
-        this.residentSelector$.resident.next(next);
-        this.router$.navigate(this.routeInfo('responsible-persons'));
-      }
-    });
-
-    this.$subscriptions['vc_inactive_resident_id'] = this.form.get('inactive_resident_id').valueChanges.subscribe(next => {
-      if (next) {
-        this.residentSelector$.resident.next(next);
-        this.router$.navigate(this.routeInfo('responsible-persons'));
-      }
-    });
-
-    this.$subscriptions['rs_group'] = this.residentSelector$.group.pipe(throttleTime(200)).subscribe(next => {
-      this.active_residents = [];
-      this.inactive_residents = [];
-      this.form.get('active_resident_id').setValue(null);
-      this.form.get('inactive_resident_id').setValue(null);
-
-      if (next) {
-        this.$subscriptions['vc_group'].unsubscribe();
-        this.form.get('group').setValue(this.get_group_data(next));
-        this.$subscriptions['vc_group'] = this.form.get('group').valueChanges.subscribe(next_ => {
-          if (next_) {
-            this.residentSelector$.type.next(next_.type);
-            this.residentSelector$.group.next(next_.id);
+          if (next) {
+            this.residentSelector$.type.next(next.type);
+            this.residentSelector$.group.next(next.id);
           } else {
             this.resident$.list_by_options(false, null, null).pipe(first()).subscribe(res => {
               if (res) {
+                this.active_residents = null;
                 this.inactive_residents = res;
+
                 this.residentSelector$.resident.next(this.residentSelector$.resident.value);
               }
             });
           }
         });
+        break;
+      case 'vc_active_resident_id':
+        this.$subscriptions[key] = this.form.get('active_resident_id').valueChanges.subscribe(next => {
+          if (next) {
+            this.residentSelector$.resident.next(next);
+            this.router$.navigate(this.routeInfo('responsible-persons'));
+          }
+        });
+        break;
+      case 'vc_inactive_resident_id':
+        this.$subscriptions[key] = this.form.get('inactive_resident_id').valueChanges.subscribe(next => {
+          if (next) {
+            this.residentSelector$.resident.next(next);
+            this.router$.navigate(this.routeInfo('responsible-persons'));
+          }
+        });
+        break;
+      case 'rs_group':
+        this.$subscriptions[key] = this.residentSelector$.group.subscribe(next => {
+          this.active_residents = [];
+          this.inactive_residents = [];
+          this.form.get('active_resident_id').setValue(null);
+          this.form.get('inactive_resident_id').setValue(null);
 
-        this.resident$
+          if (next) {
+            this.unsubscribe('vc_group');
+            this.form.get('group').setValue(this.get_group_data(next));
+            this.subscribe('vc_group');
+
+            this.subscribe('list_active_resident');
+            this.subscribe('list_inactive_resident');
+          }
+        });
+        break;
+      case 'rs_resident':
+        this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
+          if (next) {
+            this.unsubscribe('vc_active_resident_id');
+            this.form.get('active_resident_id').setValue(next);
+            this.subscribe('vc_active_resident_id');
+
+            this.unsubscribe('vc_inactive_resident_id');
+            this.form.get('inactive_resident_id').setValue(next);
+            this.subscribe('vc_inactive_resident_id');
+          }
+        });
+        break;
+      case 'list_active_resident':
+        this.$subscriptions[key] = this.resident$
           .list_by_options(true, this.residentSelector$.type.value, this.residentSelector$.group.value)
           .pipe(first()).subscribe(res => {
-          if (res) {
-            this.active_residents = res;
-            this.residentSelector$.resident.next(this.residentSelector$.resident.value);
-          }
-        });
-
-        this.resident$
+            if (res) {
+              this.active_residents = res;
+              this.residentSelector$.resident.next(this.residentSelector$.resident.value);
+            }
+          });
+        break;
+      case 'list_inactive_resident':
+        this.$subscriptions[key] = this.resident$
           .list_by_options(false, this.residentSelector$.type.value, this.residentSelector$.group.value)
           .pipe(first()).subscribe(res => {
+            if (res) {
+              this.inactive_residents = res;
+              this.residentSelector$.resident.next(this.residentSelector$.resident.value);
+            }
+          });
+        break;
+      case 'list_facility':
+        this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
           if (res) {
-            this.inactive_residents = res;
-            this.residentSelector$.resident.next(this.residentSelector$.resident.value);
+            this.facilities = res;
+            this.facilities.forEach((v, i) => {
+              this.facilities[i]['type'] = ResidentType.FACILITY;
+            });
+
+            this.residentSelector$.group.next(this.residentSelector$.group.value);
           }
         });
-      }
-    });
+        break;
+      case 'list_apartment':
+        this.$subscriptions[key] = this.apartment$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.apartments = res;
+            this.apartments.forEach((v, i) => {
+              this.apartments[i]['type'] = ResidentType.APARTMENT;
+            });
 
-    this.$subscriptions['rs_resident'] = this.residentSelector$.resident.subscribe(next => {
-      if (next) {
-        this.$subscriptions['vc_active_resident_id'].unsubscribe();
-        this.$subscriptions['vc_inactive_resident_id'].unsubscribe();
-
-        this.form.get('active_resident_id').setValue(next);
-        this.form.get('inactive_resident_id').setValue(next);
-
-        this.$subscriptions['vc_active_resident_id'] = this.form.get('active_resident_id').valueChanges.subscribe(next => {
-          if (next) {
-            this.residentSelector$.resident.next(next);
-            this.router$.navigate(this.routeInfo('responsible-persons'));
+            this.residentSelector$.group.next(this.residentSelector$.group.value);
           }
         });
-        this.$subscriptions['vc_inactive_resident_id'] = this.form.get('inactive_resident_id').valueChanges.subscribe(next => {
-          if (next) {
-            this.residentSelector$.resident.next(next);
-            this.router$.navigate(this.routeInfo('responsible-persons'));
+        break;
+      case 'list_region':
+        this.$subscriptions[key] = this.region$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.regions = res;
+            this.regions.forEach((v, i) => {
+              this.regions[i]['type'] = ResidentType.REGION;
+            });
+
+            this.residentSelector$.group.next(this.residentSelector$.group.value);
           }
         });
-      }
-    });
-
-    this.facility$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.facilities = res;
-        this.facilities.forEach((v, i) => {
-          this.facilities[i]['type'] = ResidentType.FACILITY;
-        });
-
-        this.residentSelector$.group.next(this.residentSelector$.group.value);
-      }
-    });
-
-    this.apartment$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.apartments = res;
-        this.apartments.forEach((v, i) => {
-          this.apartments[i]['type'] = ResidentType.APARTMENT;
-        });
-
-        this.residentSelector$.group.next(this.residentSelector$.group.value);
-      }
-    });
-
-    this.region$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        this.regions = res;
-        this.regions.forEach((v, i) => {
-          this.regions[i]['type'] = ResidentType.REGION;
-        });
-
-        this.residentSelector$.group.next(this.residentSelector$.group.value);
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
+        break;
+      default:
+        break;
+    }
   }
 
   routeInfo(route_name: string) {

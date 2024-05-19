@@ -195,20 +195,21 @@ export class InfoComponent implements OnInit {
                 loading = false;
 
                 // TODO(haykg): review add case
-                if (result === null) {
-                  this.resident_id = res[0];
-                }
-
-                this.loading = true;
-                this.resident$.get(this.resident_id).pipe(first()).subscribe(next => {
-                  this.loading = false;
-                  if (next) {
-                    this.resident = next;
-                    this.resident_id = this.resident.id;
-                    this.residentSelector$.resident.next(this.resident.id);
-                  }
+                if (result === null && res !== null && res.length > 0) {
                   modal.close();
-                });
+                  this.router$.navigate(['/resident', res[0]]);
+                } else {
+                  this.loading = true;
+                  this.resident$.get(this.resident_id).pipe(first()).subscribe(next => {
+                    this.loading = false;
+                    if (next) {
+                      this.resident = next;
+                      this.resident_id = this.resident.id;
+                      this.residentSelector$.resident.next(this.resident.id);
+                    }
+                    modal.close();
+                  });
+                }
               },
               error => {
                 loading = false;
@@ -246,7 +247,7 @@ export class InfoComponent implements OnInit {
         component.loaded.subscribe(v => {
           if (v) {
             const result_ = {
-              id: this.resident.id,
+              id: this.residentSelector$.resident.value,
               photo: this.resident.photo
             };
 
