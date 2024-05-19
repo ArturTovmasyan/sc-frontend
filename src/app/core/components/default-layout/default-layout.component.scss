@@ -1,4 +1,6 @@
 .sidebar {
+  z-index: 0;
+
   ::ng-deep .nav-title {
     font-size: 1rem;
   }
