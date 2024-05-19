@@ -60,7 +60,7 @@
       <nz-progress nzSize="small" [nzShowInfo]="false"
                    [nzPercent]="(category_selected + 1) * 100/categories.length"></nz-progress>
 
-      <div *ngIf="rows_controls.length > 0" class="assessment" formArrayName="rows">
+      <div *ngIf="rows_controls().length > 0" class="assessment" formArrayName="rows">
         <ng-container *ngFor="let control of form.get('rows').controls; let i = index">
           <div class="assessment-content" [hidden]="category_selected != i">
             <p><strong>{{ categories[i].title }}</strong></p>
