@@ -199,13 +199,15 @@ export class FormComponent extends AbstractForm implements OnInit {
 
         component.loaded.subscribe(v => {
           if (v) {
-            component.before_set_form_data();
-            component.set_form_data(component, form, {
+            const result = {
               id: resident.id,
               group_type: ResidentType.FACILITY,
               group_id: this.facility.id,
               bed_id: bed_id
-            });
+            };
+
+            component.before_set_form_data(result);
+            component.set_form_data(component, form, result);
             component.after_set_form_data();
           }
         });

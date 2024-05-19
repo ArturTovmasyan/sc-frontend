@@ -181,6 +181,7 @@ import {NgHttpLoaderModule} from 'ng-http-loader';
 import {ResidentSelectorPipe} from './residents/pipes/resident-selector.pipe';
 import {NgxMaskModule} from 'ngx-mask';
 import {FilterPipe} from '../shared/pipes/filter.pipe';
+import {KeysPipe} from '../shared/pipes/keys.pipe';
 
 registerLocaleData(en);
 
@@ -199,6 +200,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentSelectorPipe,
     ResponsiblePersonPipe,
     FilterPipe,
+    KeysPipe,
 
     CoreComponent,
 

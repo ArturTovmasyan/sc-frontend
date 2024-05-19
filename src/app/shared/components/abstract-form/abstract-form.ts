@@ -200,7 +200,7 @@ export class AbstractForm {
   }
 
   /** Set Data **/
-  public before_set_form_data(): void {
+  public before_set_form_data(data: any): void {
   }
 
   public after_set_form_data(): void {

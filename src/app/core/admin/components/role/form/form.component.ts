@@ -85,9 +85,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       name: ['', Validators.required],
-      default: [true, Validators.required],
+      default: [false, Validators.required],
       space_id: [null],
-      space_default: [true, Validators.required],
+      space_default: [false, Validators.required],
       grants: [[]]
     });
 

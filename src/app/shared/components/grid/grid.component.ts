@@ -336,14 +336,14 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
           component.edit_mode = true;
           component.loaded.subscribe(v => {
             if (v) {
-              component.before_set_form_data();
+              component.before_set_form_data(result);
               component.set_form_data(component, form, result);
               component.after_set_form_data();
             }
           });
         } else {
           component.edit_mode = false;
-          component.before_set_form_data(); // review
+          component.before_set_form_data(null); // review
         }
 
         valid = form.valid;

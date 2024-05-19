@@ -222,7 +222,7 @@ export class InfoComponent implements OnInit {
         if (result !== null) {
           component.loaded.subscribe(v => {
             if (v) {
-              component.before_set_form_data();
+              component.before_set_form_data(result);
               component.set_form_data(component, form, result);
               component.after_set_form_data();
             }
@@ -237,11 +237,13 @@ export class InfoComponent implements OnInit {
         const form = component.formObject;
         component.loaded.subscribe(v => {
           if (v) {
-            component.before_set_form_data();
-            component.set_form_data(component, form, {
+            const result_ = {
               id: this.resident.id,
               photo: this.resident.photo
-            });
+            };
+
+            component.before_set_form_data(result_);
+            component.set_form_data(component, form, result_);
             component.after_set_form_data();
           }
         });
@@ -318,13 +320,15 @@ export class InfoComponent implements OnInit {
 
         component.loaded.subscribe(v => {
           if (v) {
-            component.before_set_form_data();
-            component.set_form_data(component, form, {
+            const result = {
               id: this.resident.id,
               group_type: null,
               group_id: null,
               bed_id: null
-            });
+            };
+
+            component.before_set_form_data(result);
+            component.set_form_data(component, form, result);
             component.after_set_form_data();
           }
         });

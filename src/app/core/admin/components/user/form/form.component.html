@@ -126,7 +126,8 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="re_password" [nzRequired]="!this.edit_mode">Repeat Password</nz-form-label>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="re_password" [nzRequired]="!this.edit_mode">Repeat Password
+        </nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('re_password')?'error':null">
           <input nz-input type="password" id="re_password" formControlName="re_password">
           <nz-form-explain *ngIf="hasErrors('re_password')">
@@ -146,6 +147,40 @@
     </nz-tab>
     <nz-tab nzTitle="Role & Access Info">
       <blockquote>Under construction!</blockquote>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="roles" nzRequired>Role(s)</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('roles')?'error':null">
+          <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="roles">
+            <ng-container *ngFor="let role of roles">
+              <nz-option [nzLabel]="role.name" [nzValue]="role.id"></nz-option>
+            </ng-container>
+          </nz-select>
+          <nz-form-explain *ngIf="hasErrors('roles')">
+            <app-field-errors [errors]="fieldErrors('roles')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <ng-container *ngIf="grant_lists">
+        <ng-container formGroupName="grants" *ngFor="let grant_key of grant_lists|keys">
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="roles">{{ grant_lists[grant_key].title }}(s)
+            </nz-form-label>
+            <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('grants.' + grant_key)?'error':null">
+              <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" [formControlName]="grant_key">
+                <ng-container *ngFor="let item of grant_lists[grant_key].items">
+                  <nz-option [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+                </ng-container>
+              </nz-select>
+              <nz-form-explain *ngIf="hasErrors('grants.' + grant_key)">
+                <app-field-errors [errors]="fieldErrors('grants.' + grant_key)"></app-field-errors>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+      </ng-container>
+
     </nz-tab>
   </nz-tabset>
   <nz-form-item *ngIf="formErrors()">

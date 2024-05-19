@@ -8,6 +8,7 @@ import {Role} from '../../../../models/role';
 import {Space} from '../../../../models/space';
 import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {PhoneType} from '../../../../models/phone-type.enum';
+import {GrantService} from '../../../services/grant.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -18,11 +19,14 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   phone_types: { id: PhoneType, name: string }[];
 
+  grant_lists: {};
+
   selectedTab: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private role$: RoleService,
+    private grant$: GrantService,
     private space$: SpaceService,
     private _el: ElementRef
   ) {
@@ -45,11 +49,43 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       phones: this.formBuilder.array([]),
 
-      role_id: [null],
+      roles: [[]],
+
+      grants: this.formBuilder.group({}),
+
+      // role_id: [null],
       space_id: [null],
     });
 
-    this.role$.all().pipe(first()).subscribe(res => {
+    this.form.get('roles').valueChanges.subscribe(next => {
+      if (next != null && Array.isArray(next)) {
+        this.grant$.role(next).pipe(first()).subscribe(res => {
+          if (res) {
+            this.grant_lists = res;
+
+            if (Object.keys(res).length > 0) {
+              const items = this.form.get('grants') as FormGroup;
+
+              Object.keys(res).forEach(key => {
+                if (items.get(key) === null) {
+                  items.addControl(key, this.formBuilder.control([]));
+                }
+
+                if (res[key].hasOwnProperty('url')) {
+                  this.grant$.get(res[key].url).subscribe(res_ => {
+                    if (res_) {
+                      this.grant_lists[key]['items'] = res_;
+                    }
+                  });
+                }
+              });
+            }
+          }
+        });
+      }
+    });
+
+    this.role$.all(/** TODO: add space filter **/).pipe(first()).subscribe(res => {
       if (res) {
         this.roles = res;
       }
@@ -81,6 +117,10 @@ export class FormComponent extends AbstractForm implements OnInit {
     };
   }
 
+  get grants(): FormGroup {
+    return this.form.get('grants') as FormGroup;
+  }
+
   public get_form_array_skeleton(key: string): FormGroup {
     switch (key) {
       case 'phones':
@@ -97,7 +137,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  public before_set_form_data(): void {
+  public before_set_form_data(data: any): void {
     if (this.edit_mode) {
       this.form.get('password').setErrors(null);
       this.form.get('password').clearValidators();
@@ -106,6 +146,18 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       this.form.get('password').setValidators(CoreValidator.password);
       this.form.get('re_password').setValidators(CoreValidator.match_other('password', 'password'));
+
+      if (data !== null && data.hasOwnProperty('grants')) {
+        if (Object.keys(data.grants).length > 0) {
+          const items = this.form.get('grants') as FormGroup;
+
+          Object.keys(data.grants).forEach(key => {
+            if (items.get(key) === null) {
+              items.addControl(key, this.formBuilder.control([]));
+            }
+          });
+        }
+      }
     }
   }
 
