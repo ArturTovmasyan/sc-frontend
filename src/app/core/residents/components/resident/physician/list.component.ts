@@ -20,6 +20,8 @@ import {AuthGuard} from '../../../../guards/auth.guard';
   providers: [ResidentPhysicianService]
 })
 export class ListComponent implements OnInit, OnDestroy {
+  public title: string = null;
+
   physicians: ResidentPhysician[];
 
   selected_tab: number;
@@ -45,6 +47,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.subscribe('title');
     this.subscribe('resident_id');
   }
 
@@ -61,6 +64,9 @@ export class ListComponent implements OnInit, OnDestroy {
   subscribe(key: string) {
     this.unsubscribe(key);
     switch (key) {
+      case 'title':
+        this.$subscriptions[key] = this.title$.getTitle().subscribe(v => this.title = v);
+        break;
       case 'resident_id':
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {

@@ -21,7 +21,6 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
   ) {
     super(service$, title$, modal$);
 
-    this.card = false;
     this.searchable = false;
     this.component = FormComponent;
 

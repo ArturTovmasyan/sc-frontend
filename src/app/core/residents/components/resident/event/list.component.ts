@@ -8,6 +8,7 @@ import {ResidentSelectorService} from '../../../services/resident-selector.servi
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 
 @Component({
+  selector: 'app-resident-event',
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
   providers: [ResidentEventService, ModalFormService]

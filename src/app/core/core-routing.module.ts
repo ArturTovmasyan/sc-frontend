@@ -56,7 +56,7 @@ import {ListComponent as ResidentResponsiblePersonListComponent} from './residen
 import {ListComponent as ResidentHealthInsuranceListComponent} from './residents/components/resident/health-insurance/list.component';
 import {ListComponent as ResidentDocumentListComponent} from './residents/components/resident/document/list.component';
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
-import {ListComponent as ResidentEventListComponent} from './residents/components/resident/event/list.component';
+import {EventComponent as ResidentEventComponent} from './residents/components/resident/event/event.component';
 import {RentComponent as ResidentRentComponent} from './residents/components/resident/rent/rent.component';
 import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
 import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
@@ -98,7 +98,6 @@ import {ListComponent as DocumentCategoryListComponent} from './documents/compon
 import {DashboardComponent as ResidentDashboardComponent} from './residents/components/dashboard/dashboard.component';
 import {DashboardDetailComponent as ResidentDashboardDetailComponent} from './residents/components/dashboard/dashboard-detail.component';
 import {ListComponent as FacilityDocumentListComponent} from './residents/components/facility-document/list.component';
-import {CalendarComponent as ResidentCalendarComponent} from './residents/components/resident/calendar/calendar.component';
 import {CalendarComponent as CorporateCalendarComponent} from './residents/components/calendar/calendar.component';
 
 const routes: Routes = [
@@ -809,19 +808,8 @@ const routes: Routes = [
             canActivate: [AuthGuard]
           },
           {
-            path: 'calendar',
-            component: ResidentCalendarComponent,
-            outlet: 'resident-details',
-            pathMatch: 'full',
-            data: {
-              title: 'Calendar',
-              permissions: ['persistence-resident-resident_event']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
             path: 'events',
-            component: ResidentEventListComponent,
+            component: ResidentEventComponent,
             outlet: 'resident-details',
             pathMatch: 'full',
             data: {

@@ -22,7 +22,6 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
   ) {
     super(service$, title$, modal$);
 
-    this.card = false;
     this.component = FormComponent;
 
     this.name = 'resident-medication-list';

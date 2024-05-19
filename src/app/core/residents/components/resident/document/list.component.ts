@@ -24,7 +24,6 @@ export class ListComponent extends GridComponent<ResidentDocument, ResidentDocum
   ) {
     super(service$, title$, modal$);
 
-    this.card = false;
     this.component = FormComponent;
 
     this.name = 'resident-document-list';

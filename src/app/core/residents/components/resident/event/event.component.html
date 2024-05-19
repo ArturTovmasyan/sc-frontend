@@ -1,0 +1,15 @@
+<div class="card">
+  <div class="card-header">
+    {{ title }}
+    <div class="card-header-actions">
+          <span class="card-header-action" (click)="mode = !mode">
+            <i *ngIf="mode" style="vertical-align: baseline;" nz-icon nzType="appstore"></i>
+            <i *ngIf="!mode" style="vertical-align: baseline;" nz-icon nzType="unordered-list"></i>
+          </span>
+    </div>
+  </div>
+  <div class="card-body">
+    <app-resident-calendar *ngIf="!mode"></app-resident-calendar>
+    <app-resident-event *ngIf="mode"></app-resident-event>
+  </div>
+</div>

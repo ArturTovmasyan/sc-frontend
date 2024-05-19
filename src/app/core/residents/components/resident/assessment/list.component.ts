@@ -26,7 +26,6 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
   ) {
     super(service$, title$, modal$);
 
-    this.card = false;
     this.component = FormComponent;
     this.modal$.without_save_and_add = true;
 

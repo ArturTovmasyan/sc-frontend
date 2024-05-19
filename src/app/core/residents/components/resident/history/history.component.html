@@ -1,14 +1,22 @@
-<nz-tabset nzShowPagination>
-  <nz-tab nzTitle="Diagnoses">
-    <app-resident-history-diagnose></app-resident-history-diagnose>
-  </nz-tab>
-  <nz-tab nzTitle="Medication Allergies">
-    <app-resident-history-allergy-medication></app-resident-history-allergy-medication>
-  </nz-tab>
-  <nz-tab nzTitle="Other Allergies">
-    <app-resident-history-allergy-other></app-resident-history-allergy-other>
-  </nz-tab>
-  <nz-tab nzTitle="Medical History">
-    <app-resident-history-medical-history></app-resident-history-medical-history>
-  </nz-tab>
-</nz-tabset>
+<div class="card">
+  <div class="card-header">
+    {{ title }}
+  </div>
+  <div class="card-body">
+    <nz-tabset nzShowPagination>
+      <nz-tab nzTitle="Diagnoses">
+        <app-resident-history-diagnose></app-resident-history-diagnose>
+      </nz-tab>
+      <nz-tab nzTitle="Medication Allergies">
+        <app-resident-history-allergy-medication></app-resident-history-allergy-medication>
+      </nz-tab>
+      <nz-tab nzTitle="Other Allergies">
+        <app-resident-history-allergy-other></app-resident-history-allergy-other>
+      </nz-tab>
+      <nz-tab nzTitle="Medical History">
+        <app-resident-history-medical-history></app-resident-history-medical-history>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>
+

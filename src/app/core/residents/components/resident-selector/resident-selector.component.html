@@ -19,12 +19,6 @@
   </a>
   <a *ngIf="addIfHasPermission('persistence-resident-resident_event')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
      [routerLinkActive]="['active-link']"
-     [routerLink]="routeInfo('calendar')"
-     title="Calendar">
-    <i class="seniorcare seniorcare-3x seniorcare-calendar"></i>
-  </a>
-  <a *ngIf="addIfHasPermission('persistence-resident-resident_event')" nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
-     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('events')"
      title="Events">
     <i class="seniorcare seniorcare-3x seniorcare-events"></i>

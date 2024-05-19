@@ -35,7 +35,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.route$.snapshot.routeConfig.outlet) {
-      this.card = false;
+      this.card = true;
 
       this.mode = 'resident';
     } else {

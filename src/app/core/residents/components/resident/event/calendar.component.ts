@@ -15,13 +15,13 @@ import {ResidentSelectorService} from '../../../services/resident-selector.servi
 import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
 import {PaymentPeriodPipe} from '../../../pipes/payment-period.pipe';
 import {RentIncreaseReasonPipe} from '../../../pipes/rent-increase-reason.pipe';
-import {AdmissionType} from '../../../models/resident-admission';
 import {FormComponent} from '../event/form/form.component';
 import {FormComponent as FacilityEventFormComponent} from '../../facility/event-form/form.component';
 import {CalendarEventType} from '../../../models/event-definition';
 import {FacilityEventService} from '../../../services/facility-event.service';
 
 @Component({
+  selector: 'app-resident-calendar',
   templateUrl: './calendar.component.html',
   providers: []
 })
@@ -88,7 +88,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 id: admission.id,
                 event_type: CalendarEventType.ADMISSION,
                 start: moment(admission.start).format('YYYY-MM-DD'),
-                end: this.formatAdmissionEnd(admission),
+                end: admission.end === null ? null : moment(admission.end).format('YYYY-MM-DD'),
                 title: (new AdmissionTypePipe()).transform(admission.admission_type)
               });
             });
@@ -167,19 +167,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   addIfHasPermission(permission: string) {
     return this.auth_$.checkPermission([permission]);
-  }
-
-  formatAdmissionEnd(admission: any) {
-    if (admission.end === null) {
-      if (admission.admission_type === AdmissionType.DISCHARGE) {
-        return null;
-      } else {
-        return moment(new Date()).format('YYYY-MM-DD');
-      }
-    } else {
-      return moment(admission.end).format('YYYY-MM-DD');
-    }
-
   }
 
   show_modal_add(): void {

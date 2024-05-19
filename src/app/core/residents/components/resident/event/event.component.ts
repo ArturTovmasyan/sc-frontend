@@ -3,11 +3,11 @@ import {Subscription} from 'rxjs';
 import {TitleService} from '../../../../services/title.service';
 
 @Component({
-  selector: 'app-resident-rent',
-  templateUrl: './rent.component.html'
+  templateUrl: './event.component.html'
 })
-export class RentComponent implements OnInit, OnDestroy {
+export class EventComponent implements OnInit, OnDestroy {
   public title: string = null;
+  public mode: boolean = false;
 
   protected $subscriptions: { [key: string]: Subscription; };
 
