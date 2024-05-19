@@ -241,7 +241,8 @@
       "title": "Title",
       "category": "Category",
       "description": "Description",
-      "date": "Date",
+      "date_created": "Created At",
+      "date_modified": "Modified At",
       "user": "Uploaded By",
       "facility": "Facility",
       "button": {
@@ -562,7 +563,8 @@
     "resident-document-list": {
       "id": "ID",
       "title": "Title",
-      "date": "Date",
+      "date_created": "Created At",
+      "date_modified": "Modified At",
       "user": "User",
       "button": {
         "download": "Download"
