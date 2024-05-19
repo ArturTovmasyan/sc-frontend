@@ -239,9 +239,15 @@ export class IndexComponent implements OnInit, OnDestroy {
   }
 
   show_room_sort(): boolean {
-    return (this.options.state !== null && this.options.state !== undefined && this.options.state !== 'no-admission') ||
-      ((this.options.state === null || this.options.state === undefined) && (this.options.type !== null && this.options.type !== undefined
-        && this.options.type_id !== null && this.options.type_id !== undefined));
+    if (this.options.type !== null && this.options.type !== undefined && this.options.type_id !== null && this.options.type_id !== undefined) {
+      if (this.options.state !== null && this.options.state !== undefined) {
+        return this.options.state !== 'no-admission' && this.options.type !== GroupType.REGION;
+      } else {
+        return this.options.type !== GroupType.REGION;
+      }
+    }
+
+    return false;
   }
 
   show_title() {
