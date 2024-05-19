@@ -9,6 +9,6 @@ export class ResidentAllergyOtherService extends GridService<ResidentAllergyOthe
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/history/allergy/other`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/history/allergy/other`;
   }
 }

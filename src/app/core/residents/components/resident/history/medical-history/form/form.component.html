@@ -1,7 +1,7 @@
 ﻿<h4>Medical History</h4>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Occured Date</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Occurred Date</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
       <nz-date-picker formControlName="date"></nz-date-picker>
       <nz-form-explain *ngIf="hasErrors('date')">

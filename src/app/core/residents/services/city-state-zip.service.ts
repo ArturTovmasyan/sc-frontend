@@ -9,6 +9,6 @@ export class CityStateZipService extends GridService<CityStateZip> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/city/state/zip`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/city/state/zip`;
   }
 }

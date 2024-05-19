@@ -6,14 +6,14 @@ import {saveFile} from '../../../shared/helpers/file-download-helper';
 
 @Injectable({providedIn: 'root'})
 export class ReportService {
-  protected SEVICE_URL_BASE;
+  protected SERVICE_URL_BASE;
 
   constructor(protected http: HttpClient) {
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/report`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/report`;
   }
 
   public list() {
-    return this.http.get(this.SEVICE_URL_BASE + `/list`);
+    return this.http.get(this.SERVICE_URL_BASE + `/list`);
   }
 
   public report(group_alias, report_alias, format, params, callback: any, error_callback: any) {
@@ -48,7 +48,7 @@ export class ReportService {
     }
 
     return this.http
-      .get(this.SEVICE_URL_BASE + `/${group_alias}/${report_alias}`, {
+      .get(this.SERVICE_URL_BASE + `/${group_alias}/${report_alias}`, {
         responseType: 'blob',
         observe: 'response',
         params: request_params

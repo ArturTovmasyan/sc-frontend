@@ -11,7 +11,7 @@ export class ResidentAssessmentService extends GridService<ResidentAssessment> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/assessment`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/assessment`;
     this.REPORT_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/report/assessment`;
   }
 

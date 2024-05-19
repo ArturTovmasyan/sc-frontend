@@ -65,7 +65,7 @@ export class ListComponent implements OnInit, OnDestroy {
   private create_modal(form_component: any, group_alias: string, report_alias: string, result: any) {
     let valid = false;
 
-    let loading = Array(result.formats.length);
+    const loading = Array(result.formats.length);
 
     const footer_config: Array<ModalButtonOptions<any>> = [];
 

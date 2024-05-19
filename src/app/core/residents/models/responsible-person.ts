@@ -19,5 +19,5 @@ export class ResponsiblePerson implements IdInterface {
   csz: CityStateZip;
   space: Space;
 
-  phone: Phone[];
+  phones: Phone[];
 }

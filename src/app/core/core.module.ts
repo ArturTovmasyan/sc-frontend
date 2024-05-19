@@ -142,9 +142,6 @@ import {FormComponent as ResidentEventFormComponent} from './residents/component
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {FormComponent as ResidentAdmissionFormComponent} from './residents/components/resident/admission/form/form.component';
 
-import {ListComponent as ResidentContractListComponent} from './residents/components/resident/contract/list.component';
-import {FormComponent as ResidentContractFormComponent} from './residents/components/resident/contract/form/form.component';
-
 import {ListComponent as ResidentRentListComponent} from './residents/components/resident/rent/list.component';
 import {FormComponent as ResidentRentFormComponent} from './residents/components/resident/rent/form/form.component';
 
@@ -180,13 +177,13 @@ import {LyButtonModule} from '@alyle/ui/button';
 import {LyIconModule} from '@alyle/ui/icon';
 import {LY_THEME, LyThemeModule} from '@alyle/ui';
 import {MinimaLight} from '@alyle/ui/themes/minima';
-import {ContractStatePipe} from './residents/pipes/contract-state.pipe';
 import {NgHttpLoaderModule} from 'ng-http-loader';
 import {ResidentSelectorPipe} from './residents/pipes/resident-selector.pipe';
 import {NgxMaskModule} from 'ngx-mask';
 import {FilterPipe} from '../shared/pipes/filter.pipe';
 import {KeysPipe} from '../shared/pipes/keys.pipe';
 import {IconPickerModule} from 'ngx-icon-picker';
+import {AdmissionTypePipe} from './residents/pipes/admission-type.pipe';
 
 // import {ListComponent as ListComponent} from './residents/components//list.component';
 // import {FormComponent as FormComponent} from './residents/components//form/form.component';
@@ -201,7 +198,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [
     GenderPipe,
     PhoneTypePipe,
-    ContractStatePipe,
+    AdmissionTypePipe,
     CityStateZipPipe,
     PhysicianPipe,
     ResidentPipe,
@@ -320,9 +317,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentEventListComponent,
     ResidentEventFormComponent,
 
-    ResidentContractListComponent,
-    ResidentContractFormComponent,
-
     ResidentRentListComponent,
     ResidentRentFormComponent,
 
@@ -424,8 +418,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentAdmissionFormComponent,
 
     ResidentEventFormComponent,
-
-    ResidentContractFormComponent,
 
     ResidentRentFormComponent,
 

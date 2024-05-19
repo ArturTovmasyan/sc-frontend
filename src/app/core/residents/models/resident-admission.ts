@@ -10,7 +10,7 @@ import {CityStateZip} from './city-state-zip';
 export class ResidentAdmission implements IdInterface {
   id: number;
 
-  type: AdmissionType;
+  admission_type: AdmissionType;
   date: Date;
   notes: string;
 

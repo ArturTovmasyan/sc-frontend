@@ -9,6 +9,6 @@ export class PhysicianService extends GridService<Physician> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/physician`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/physician`;
   }
 }

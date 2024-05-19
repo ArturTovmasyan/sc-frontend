@@ -6,7 +6,7 @@ import {saveFile} from '../helpers/file-download-helper';
 import {Message} from '../../core/models/message';
 
 export class GridService<T extends IdInterface> {
-  protected SEVICE_URL_BASE;
+  protected SERVICE_URL_BASE;
   protected REPORT_URL_BASE;
 
   protected constructor(protected http: HttpClient) {
@@ -20,13 +20,13 @@ export class GridService<T extends IdInterface> {
       });
     }
 
-    return this.http.get<T[]>(this.SEVICE_URL_BASE, {
+    return this.http.get<T[]>(this.SERVICE_URL_BASE, {
       params: query
     });
   }
 
   public options(): Observable<any> {
-    return this.http.options(this.SEVICE_URL_BASE + '/grid');
+    return this.http.options(this.SERVICE_URL_BASE + '/grid');
   }
 
   public list(page: number,
@@ -37,7 +37,7 @@ export class GridService<T extends IdInterface> {
   ): Observable<T[]> {
 
     return this.http.get<T[]>(
-      this.SEVICE_URL_BASE + '/grid',
+      this.SERVICE_URL_BASE + '/grid',
       {
         params: this.build_query(page, per_page, sort, filter, params)
       });
@@ -45,7 +45,7 @@ export class GridService<T extends IdInterface> {
 
   public pdf(callback: any) {
     return this.http
-      .get(this.SEVICE_URL_BASE + '', {
+      .get(this.SERVICE_URL_BASE + '', {
         responseType: 'blob',
         observe: 'response',
         params: new HttpParams().append('pdf', '1')
@@ -65,19 +65,19 @@ export class GridService<T extends IdInterface> {
       body: {ids: ids},
     };
 
-    return this.http.delete(this.SEVICE_URL_BASE, options);
+    return this.http.delete(this.SERVICE_URL_BASE, options);
   }
 
   public get(id: number): Observable<T> {
-    return this.http.get<T>(this.SEVICE_URL_BASE + `/${id}`);
+    return this.http.get<T>(this.SERVICE_URL_BASE + `/${id}`);
   }
 
   public add(data: T): Observable<any> {
-    return this.http.post<Message>(this.SEVICE_URL_BASE, data);
+    return this.http.post<Message>(this.SERVICE_URL_BASE, data);
   }
 
   public edit(data: T): Observable<any> {
-    return this.http.put<Message>(this.SEVICE_URL_BASE + `/${data.id}`, data);
+    return this.http.put<Message>(this.SERVICE_URL_BASE + `/${data.id}`, data);
   }
 
   private build_query(page: number,

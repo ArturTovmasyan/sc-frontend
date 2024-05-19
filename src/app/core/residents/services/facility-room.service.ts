@@ -9,10 +9,10 @@ export class FacilityRoomService extends GridService<FacilityRoom> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/facility/room`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/facility/room`;
   }
 
   last_number(facility_id: number) {
-    return this.http.get(this.SEVICE_URL_BASE + `/${facility_id}/last`);
+    return this.http.get(this.SERVICE_URL_BASE + `/${facility_id}/last`);
   }
 }

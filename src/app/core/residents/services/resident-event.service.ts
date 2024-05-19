@@ -9,6 +9,6 @@ export class ResidentEventService extends GridService<ResidentEvent> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/event`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/event`;
   }
 }

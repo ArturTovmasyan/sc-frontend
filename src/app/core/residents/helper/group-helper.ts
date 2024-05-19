@@ -31,6 +31,10 @@ export class GroupHelper {
         break;
     }
 
+    if (group === undefined) {
+      group = null;
+    }
+
     return group;
   }
 }

@@ -9,6 +9,6 @@ export class ApartmentService extends GridService<Apartment> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/apartment`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/apartment`;
   }
 }

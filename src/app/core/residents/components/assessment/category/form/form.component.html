@@ -1,4 +1,4 @@
-﻿<h4>Assesment Category</h4>
+﻿<h4>Assessment Category</h4>
 <form nz-form [formGroup]="form">
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
@@ -45,7 +45,7 @@
       <ng-container *ngFor="let item of get_form_array('rows').controls;let i = index">
         <tr [formGroupName]="i" dnd-sortable [sortableIndex]="i">
           <td>
-            <i nz-icon type="drag" theme="outline" dnd-sortable-handle></i>
+            <i nz-icon type="drag" dnd-sortable-handle></i>
           </td>
           <td>
 

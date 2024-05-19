@@ -5,11 +5,11 @@ import {AbstractForm} from '../../../../../../shared/components/abstract-form/ab
 import {FacilityService} from '../../../../services/facility.service';
 import {ApartmentService} from '../../../../services/apartment.service';
 import {RegionService} from '../../../../services/region.service';
-import {ResidentService} from '../../../../services/resident.service';
 import {GroupType} from '../../../../models/group-type.enum';
 import {Resident} from '../../../../models/resident';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {GroupHelper} from '../../../../helper/group-helper';
+import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -56,7 +56,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private facility$: FacilityService,
     private apartment$: ApartmentService,
     private region$: RegionService,
-    private resident$: ResidentService,
+    private residentAdmission$: ResidentAdmissionService,
     private residentSelector$: ResidentSelectorService,
   ) {
     super();
@@ -127,11 +127,12 @@ export class FormComponent extends AbstractForm implements OnInit {
       }
     });
 
-    this.resident$.list_by_options(true, this.form.get('group').value, this.form.get('group_id').value).pipe(first()).subscribe(res => {
-      if (res) {
-        this.residents = res;
-      }
-    });
+    this.residentAdmission$.list_by_options(true, this.form.get('group').value, this.form.get('group_id').value).pipe(first())
+      .subscribe(res => {
+        if (res) {
+          this.residents = res;
+        }
+      });
 
     this.form.get('resident_all').valueChanges.subscribe(next => {
       if (next) {
@@ -193,7 +194,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       this.form.get('group_list').enable();
 
       this.form.get('group_id').setValue(this.residentSelector$.group.value);
-      this.form.get('group_list').setValue(this.group_helper.get_group_data(this.residentSelector$.group.value, this.form.get('group').value));
+      this.form.get('group_list').setValue(
+        this.group_helper.get_group_data(this.residentSelector$.group.value, this.form.get('group').value)
+      );
 
       if (parameter_config.select_all) {
         this.show.group_all = true;

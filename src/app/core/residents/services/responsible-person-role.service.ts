@@ -9,6 +9,6 @@ export class ResponsiblePersonRoleService extends GridService<ResponsiblePersonR
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/responsible-person-role`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/responsible-person-role`;
   }
 }

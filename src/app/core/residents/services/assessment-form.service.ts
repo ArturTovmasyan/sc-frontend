@@ -9,6 +9,6 @@ export class AssessmentFormService extends GridService<AssessmentForm> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/assessment/form`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/assessment/form`;
   }
 }

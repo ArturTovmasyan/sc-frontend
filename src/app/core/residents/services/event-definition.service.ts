@@ -9,6 +9,6 @@ export class EventDefinitionService extends GridService<EventDefinition> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/event/definition`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/event/definition`;
   }
 }

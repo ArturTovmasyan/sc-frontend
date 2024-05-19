@@ -6,18 +6,18 @@ import {GrantNodeInterface} from '../components/role/form/form.component';
 
 @Injectable({providedIn: 'root'})
 export class GrantService {
-  protected SEVICE_URL_BASE;
+  protected SERVICE_URL_BASE;
 
   constructor(protected http: HttpClient) {
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/grant`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/grant`;
   }
 
   all(): Observable<GrantNodeInterface[]> {
-    return this.http.get<GrantNodeInterface[]>(this.SEVICE_URL_BASE + '/all');
+    return this.http.get<GrantNodeInterface[]>(this.SERVICE_URL_BASE + '/all');
   }
 
   role(ids: number[]) {
-    return this.http.post(this.SEVICE_URL_BASE + '/role', {ids: ids});
+    return this.http.post(this.SERVICE_URL_BASE + '/role', {ids: ids});
   }
 
   get(url: string) {

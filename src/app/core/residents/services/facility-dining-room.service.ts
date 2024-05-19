@@ -9,6 +9,6 @@ export class FacilityDiningRoomService extends GridService<FacilityDiningRoom> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/facility/dining/room`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/facility/dining/room`;
   }
 }

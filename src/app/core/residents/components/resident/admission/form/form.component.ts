@@ -152,7 +152,6 @@ export class FormComponent extends AbstractForm implements OnInit {
             });
 
             this.group_helper.regions = res;
-
             if (this.form.get('group_type').value === GroupType.REGION && this.form.get('group').value === null) {
               this.form.get('group').setValue(this.group_helper.get_group_data(this.group_id, this.form.get('group_type').value));
             }
@@ -287,6 +286,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       this.edit_data = data;
 
       this.form.get('group_type').setValue(data.group_type);
+      this.form.get('group').setValue(null);
 
       switch (this.form.get('group_type').value) {
         case GroupType.FACILITY:

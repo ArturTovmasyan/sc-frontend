@@ -76,7 +76,7 @@
       </tr>
       </thead>
       <tbody>
-      <ng-container *ngFor="let phone of get_form_array('beds').controls;let i = index">
+      <ng-container *ngFor="let item of get_form_array('beds').controls;let i = index">
         <tr [formGroupName]="i">
           <td class="text-center">
             <nz-switch nzSize="small" formControlName="enabled"></nz-switch>

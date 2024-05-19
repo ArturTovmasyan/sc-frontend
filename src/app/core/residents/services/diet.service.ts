@@ -9,6 +9,6 @@ export class DietService extends GridService<Diet> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/diet`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/diet`;
   }
 }

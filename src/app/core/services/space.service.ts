@@ -9,18 +9,18 @@ import {Space} from '../models/space';
 
 @Injectable({providedIn: 'root'})
 export class SpaceService extends AbstractGridService {
-  static SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/space`;
+  static SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/space`;
 
   constructor(private http: HttpClient) {
     super();
   }
 
   all(): Observable<Space[]> {
-    return this.http.get<Space[]>(SpaceService.SEVICE_URL_BASE);
+    return this.http.get<Space[]>(SpaceService.SERVICE_URL_BASE);
   }
 
   options(): Observable<any> {
-    return this.http.options(SpaceService.SEVICE_URL_BASE);
+    return this.http.options(SpaceService.SERVICE_URL_BASE);
   }
 
   list(page: number,
@@ -28,16 +28,16 @@ export class SpaceService extends AbstractGridService {
        sort: { key: string, value: string }[],
        filter: { [id: string]: { condition: number, value: any[] } }): Observable<Space[]> {
 
-    return this.http.get<Space[]>(SpaceService.SEVICE_URL_BASE + '/grid', {params: this.build_query(page, per_page, sort, filter)});
+    return this.http.get<Space[]>(SpaceService.SERVICE_URL_BASE + '/grid', {params: this.build_query(page, per_page, sort, filter)});
   }
 
   get(id: number): Observable<Space> {
-    return this.http.get<Space>(SpaceService.SEVICE_URL_BASE + '/grid' + `/${id}`);
+    return this.http.get<Space>(SpaceService.SERVICE_URL_BASE + '/grid' + `/${id}`);
   }
 
   pdf(callback: any) {
     return this.http
-      .get(SpaceService.SEVICE_URL_BASE, {
+      .get(SpaceService.SERVICE_URL_BASE, {
         responseType: 'blob',
         observe: 'response',
         params: new HttpParams().append('pdf', '1')
@@ -57,7 +57,7 @@ export class SpaceService extends AbstractGridService {
       body: {ids: ids},
     };
 
-    return this.http.delete(SpaceService.SEVICE_URL_BASE, options);
+    return this.http.delete(SpaceService.SERVICE_URL_BASE, options);
   }
 
   add(data: Space): Observable<any> {

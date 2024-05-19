@@ -9,6 +9,6 @@ export class FacilityService extends GridService<Facility> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/facility`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/facility`;
   }
 }

@@ -37,7 +37,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO(haykg): add masked inputs to phones
     this.form = this.formBuilder.group({
       id: [''],
       first_name: ['', Validators.required],

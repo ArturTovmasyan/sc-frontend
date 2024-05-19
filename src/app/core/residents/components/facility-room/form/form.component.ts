@@ -12,6 +12,7 @@ import {Resident} from '../../../models/resident';
 import {FacilityRoom} from '../../../models/facility-room';
 import {FacilityRoomService} from '../../../services/facility-room.service';
 import {GroupType} from '../../../models/group-type.enum';
+import {ResidentAdmissionService} from '../../../services/resident-admission.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -33,7 +34,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     private facility$: FacilityService,
     private facility_room$: FacilityRoomService,
     protected modal$: NzModalService,
-    protected resident$: ResidentService
+    protected resident$: ResidentService,
+    protected residentAdmission$: ResidentAdmissionService
   ) {
     super();
 
@@ -170,7 +172,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             const form_data = component.formObject.value;
             component.submitted = true;
 
-            this.resident$.move(form_data).subscribe(
+            this.residentAdmission$.move(form_data).subscribe(
               res => {
                 this.facility_room$.get(room.id).pipe(first()).subscribe(next => {
                   loading = false;

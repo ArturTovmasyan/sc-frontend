@@ -9,6 +9,6 @@ export class MedicalHistoryConditionService extends GridService<MedicalHistoryCo
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/medical/history/condition`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/medical/history/condition`;
   }
 }

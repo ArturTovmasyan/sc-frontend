@@ -19,12 +19,6 @@
   </a>
   <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
      [routerLinkActive]="['active-link']"
-     [routerLink]="routeInfo('contracts')"
-     title="Contracts">
-    <i class="seniorcare seniorcare-3x seniorcare-contracts"></i>
-  </a>
-  <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
-     [routerLinkActive]="['active-link']"
      [routerLink]="routeInfo('rents')"
      title="Rents">
     <i class="seniorcare seniorcare-3x seniorcare-rents"></i>
@@ -70,7 +64,7 @@
   <div class="group-selector">
     <i class="fa fa-home"></i>
     <nz-select nzShowSearch [nzDropdownMatchSelectWidth]="false" formControlName="group">
-      <nz-option nzLabel="No Contract" [nzValue]="null"></nz-option>
+      <nz-option nzLabel="No Admission" [nzValue]="null"></nz-option>
       <nz-option-group nzLabel="FFC - Facilities">
         <ng-container *ngFor="let facility of group_helper.facilities">
           <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
@@ -89,7 +83,7 @@
     </nz-select>
     <i class="fa fa-users"></i>
     <nz-select nzShowSearch [nzDropdownMatchSelectWidth]="false" formControlName="active_resident_id"
-               [nzDisabled]="residentSelector$.group.value === null || active_residents === null || (active_residents !== null && active_residents.length === 0)">
+               [nzDisabled]="residentSelector$.group.value === null || active_residents === null || active_residents.length === 0">
       <ng-container *ngFor="let resident of active_residents">
         <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
       </ng-container>

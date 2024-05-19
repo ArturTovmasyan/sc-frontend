@@ -9,6 +9,6 @@ export class RelationshipService extends GridService<Relationship> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/relationship`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/relationship`;
   }
 }

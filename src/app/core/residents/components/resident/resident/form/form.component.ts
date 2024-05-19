@@ -35,7 +35,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   ) {
     super();
 
-    // TODO: review move to util
     this.disabledDate = (current: Date): boolean => {
       const today = new Date();
       return differenceInCalendarDays(current, today) > 0;

@@ -9,6 +9,6 @@ export class ResidentMedicalHistoryService extends GridService<ResidentMedicalHi
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/history/medical/history`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/history/medical/history`;
   }
 }

@@ -9,10 +9,10 @@ export class ResidentPhysicianService extends GridService<ResidentPhysician> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/physician`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/physician`;
   }
 
   get_primary(resident_id: number) {
-    return this.http.get<ResidentPhysician>(this.SEVICE_URL_BASE + `/${resident_id}/primary`);
+    return this.http.get<ResidentPhysician>(this.SERVICE_URL_BASE + `/${resident_id}/primary`);
   }
 }

@@ -9,6 +9,6 @@ export class DiagnosisService extends GridService<Diagnosis> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/diagnosis`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/diagnosis`;
   }
 }

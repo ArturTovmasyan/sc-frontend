@@ -4,13 +4,13 @@ import {FacilityService} from '../../services/facility.service';
 import {ApartmentService} from '../../services/apartment.service';
 import {RegionService} from '../../services/region.service';
 import {Resident} from '../../models/resident';
-import {ResidentService} from '../../services/resident.service';
 import {GroupType} from '../../models/group-type.enum';
 import {Router} from '@angular/router';
 import {ResidentSelectorService} from '../../services/resident-selector.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {GroupHelper} from '../../helper/group-helper';
+import {ResidentAdmissionService} from '../../services/resident-admission.service';
 
 @Component({
   selector: 'app-resident-selector',
@@ -32,7 +32,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
     private facility$: FacilityService,
     private apartment$: ApartmentService,
     private region$: RegionService,
-    private resident$: ResidentService,
+    private residentAdmission$: ResidentAdmissionService,
     private router$: Router,
     public residentSelector$: ResidentSelectorService
   ) {
@@ -82,7 +82,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
             this.residentSelector$.type.next(next.type);
             this.residentSelector$.group.next(next.id);
           } else {
-            this.resident$.list_by_options(false, null, null).pipe(first()).subscribe(res => {
+            this.residentAdmission$.list_by_options(false, null, null).pipe(first()).subscribe(res => {
               if (res) {
                 this.active_residents = null;
                 this.inactive_residents = res;
@@ -140,7 +140,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
         });
         break;
       case 'list_active_resident':
-        this.$subscriptions[key] = this.resident$
+        this.$subscriptions[key] = this.residentAdmission$
           .list_by_options(true, this.residentSelector$.type.value, this.residentSelector$.group.value)
           .pipe(first()).subscribe(res => {
             if (res) {
@@ -150,7 +150,7 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
           });
         break;
       case 'list_inactive_resident':
-        this.$subscriptions[key] = this.resident$
+        this.$subscriptions[key] = this.residentAdmission$
           .list_by_options(false, this.residentSelector$.type.value, this.residentSelector$.group.value)
           .pipe(first()).subscribe(res => {
             if (res) {

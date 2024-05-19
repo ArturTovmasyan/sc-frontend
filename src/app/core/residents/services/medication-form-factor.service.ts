@@ -9,6 +9,6 @@ export class MedicationFormFactorService extends GridService<MedicationFormFacto
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/medication/form/factor`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/medication/form/factor`;
   }
 }

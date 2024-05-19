@@ -9,6 +9,6 @@ export class MedicationService extends GridService<Medication> {
   constructor(http: HttpClient) {
     super(http);
 
-    this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/medication`;
+    this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/medication`;
   }
 }

@@ -9,16 +9,10 @@ import {AbstractForm} from '../../../../../../shared/components/abstract-form/ab
 import {FormComponent} from '../form/form.component';
 import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {ImageEditorComponent} from './img-editor/image-editor.component';
-import {ResidentContractService} from '../../../../services/resident-contract.service';
-import {
-  ContractOptionApartment,
-  ContractOptionFacility,
-  ContractOptionRegion,
-  ResidentContract
-} from '../../../../models/resident-contract';
-import {FormComponent as ResidentMoveComponent} from '../move/form.component';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import {ResidentAdmission} from '../../../../models/resident-admission';
+import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
 
 @Component({
   selector: 'app-resident-info',
@@ -30,7 +24,7 @@ export class InfoComponent implements OnInit {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   resident: Resident;
-  contract: ResidentContract;
+  admission: ResidentAdmission;
 
   today: Date = new Date();
 
@@ -43,7 +37,7 @@ export class InfoComponent implements OnInit {
     private el: ElementRef,
     private sanitizer: DomSanitizer,
     private resident$: ResidentService,
-    private contract$: ResidentContractService,
+    private admission$: ResidentAdmissionService,
     protected modal$: NzModalService,
     private router$: Router,
     private residentSelector$: ResidentSelectorService
@@ -69,34 +63,34 @@ export class InfoComponent implements OnInit {
           this.resident = null;
         });
 
-        this.contract$.active(this.resident_id).pipe(first()).subscribe(res => {
+        this.admission$.active(this.resident_id).pipe(first()).subscribe(res => {
           if (res != null && !Array.isArray(res)) {
-            this.contract = res;
+            this.admission = res;
 
             let group_id = null;
-            if (this.contract.option) {
-              switch (this.contract.type) {
+            if (this.admission.group_type) {
+              switch (this.admission.group_type) {
                 case GroupType.FACILITY:
-                  group_id = (<ContractOptionFacility>this.contract.option).bed.room.facility.id;
+                  group_id = this.admission.facility_bed.room.facility.id;
                   break;
                 case GroupType.REGION:
-                  group_id = (<ContractOptionRegion>this.contract.option).region.id;
+                  group_id = this.admission.region.id;
                   break;
                 case GroupType.APARTMENT:
-                  group_id = (<ContractOptionApartment>this.contract.option).bed.room.apartment.id;
+                  group_id = this.admission.apartment_bed.room.apartment.id;
                   break;
               }
             }
 
-            this.residentSelector$.type.next(this.contract.type);
+            this.residentSelector$.type.next(this.admission.group_type);
             this.residentSelector$.group.next(group_id);
           } else {
-            this.contract = null;
+            this.admission = null;
             this.residentSelector$.type.next(null);
             this.residentSelector$.group.next(null);
           }
         }, error => {
-          this.contract = null;
+          this.admission = null;
         });
       }
     });
@@ -279,89 +273,4 @@ export class InfoComponent implements OnInit {
     });
   }
 
-
-  show_modal_move(): void {
-    let valid = false;
-    let loading = false;
-
-    const modal = this.modal$.create({
-      nzClosable: false,
-      nzMaskClosable: false,
-      nzTitle: null,
-      nzContent: ResidentMoveComponent,
-      nzFooter: [
-        {
-          label: 'Cancel',
-          onClick: () => {
-            modal.close();
-          }
-        },
-        {
-          type: 'primary',
-          label: 'Move',
-          loading: () => loading,
-          disabled: () => !valid,
-          onClick: () => {
-            loading = true;
-
-            const component = <AbstractForm>modal.getContentComponent();
-            const form_data = component.formObject.value;
-            component.submitted = true;
-            component.before_submit();
-
-            this.resident$.move(form_data).subscribe(
-              res => {
-                this.resident$.get(this.resident_id).pipe(first()).subscribe(next => {
-                  this.loading = false;
-                  if (next) {
-                    this.resident = next;
-                  }
-                  modal.close();
-                });
-              },
-              error => {
-                loading = false;
-
-                component.handleSubmitError(error);
-                component.postSubmit(null);
-                // console.error(error);
-              });
-          }
-        }
-      ]
-    });
-
-    modal.afterOpen.subscribe(() => {
-      const component = <ResidentMoveComponent>modal.getContentComponent();
-
-      component.resident = this.resident;
-      component.current_room = null;
-      component.show_group = true;
-
-      if (component instanceof AbstractForm) {
-        const form = component.formObject;
-
-        component.loaded.subscribe(v => {
-          if (v) {
-            const result = {
-              id: this.resident.id,
-              group_type: null,
-              group_id: null,
-              bed_id: null
-            };
-
-            component.before_set_form_data(result);
-            component.set_form_data(component, form, result);
-            component.after_set_form_data();
-          }
-        });
-
-        valid = form.valid;
-        form.valueChanges.subscribe(val => {
-          valid = form.valid;
-        });
-      }
-    });
-
-  }
 }
