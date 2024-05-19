@@ -155,8 +155,8 @@ import {FormComponent as ResidentRentFormComponent} from './residents/components
 import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
 import {FormComponent as ResidentAssessmentFormComponent} from './residents/components/resident/assessment/form/form.component';
 
-import {ListComponent as ResidentReportListComponent} from './residents/components/report/list.component';
-import {FormComponent as ResidentReportFormComponent} from './residents/components/report/form/form.component';
+import {ListComponent as ReportListComponent} from './residents/components/report/list.component';
+import {FormComponent as ReportFormComponent} from './residents/components/report/form/form.component';
 
 import {ListComponent as PaymentSourceListComponent} from './residents/components/payment-source/list.component';
 import {FormComponent as PaymentSourceFormComponent} from './residents/components/payment-source/form/form.component';
@@ -409,8 +409,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentAssessmentListComponent,
     ResidentAssessmentFormComponent,
 
-    ResidentReportListComponent,
-    ResidentReportFormComponent,
+    ReportListComponent,
+    ReportFormComponent,
 
     PaymentSourceListComponent,
     PaymentSourceFormComponent,
@@ -563,7 +563,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentAssessmentFormComponent,
 
-    ResidentReportFormComponent,
+    ReportFormComponent,
 
     PaymentSourceFormComponent,
 
