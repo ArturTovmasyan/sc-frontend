@@ -103,13 +103,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  before_set_form_data(data: any, previous_data?: any): void {
-    if (this.edit_mode) {
-      data.date = DateHelper.convertToUTC(data.date);
-    }
-  }
-
-  before_submit(): void {
+  after_set_form_data(): void {
     const date = this.form.get('date').value;
     this.form.get('date').setValue(DateHelper.convertFromUTC(date));
   }
