@@ -13,18 +13,49 @@ export class CoreValidator {
     GROUP_CAPACITY: /(^[1-9][0-9]*$)/,
     STATE_ABBR: /\b([A-Z]{2})\b/,
     ZIP_MAIN: /^[0-9]{5}([- ]?[0-9]{4})?$/,
-    PHONE: /(\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$)/,
+    PHONE: /^\([0-9]{3}\)\s?[0-9]{3}-[0-9]{4}$/,
   };
 
-  public static password: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.PASSWORD, {pattern_validator_password: 'The password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character (non-word characters).'});
-  public static phone: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.PHONE, {pattern_validator_phone: 'Invalid number format. Valid format is +XXXXXXXXXXXXX.'});
-  public static dosage: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.DOSAGE, {pattern_validator_dosage: 'Try to add something like \'2, 0.5, 10/15, 0.4-4\'.'});
-  public static dosage_unit: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.DOSAGE_UNIT, {pattern_validator_dosage_unit: 'Available symbols are: \'%, +, /\'.'});
-  public static floor: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.FLOOR, {pattern_validator_floor: 'The value should be numeric and more than zero.'});
-  public static payment_amount: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.PAYMENT_AMOUNT, {pattern_validator_payment_amount: 'Try to add something like \'2000, 0.55, 100.34\'.'});
-  public static group_capacity: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.GROUP_CAPACITY, {pattern_validator_group_capacity: 'The value should be numeric and more than zero.'});
-  public static state_abbr: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.STATE_ABBR, {pattern_validator_state_abbr: 'Invalid abbreviation.'});
-  public static zip_main: ValidatorFn = CoreValidator.patternValidate(CoreValidator.Patterns.ZIP_MAIN, {pattern_validator_zip_main: 'Invalid ZIP code.'});
+  public static password: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.PASSWORD,
+    {pattern_validator_password: 'The password must be at least 8 characters long and ' +
+        'contain at least one lowercase letter, ' +
+        'one uppercase letter, ' +
+        'one number and ' +
+        'one special character (non-word characters).'}
+  );
+  public static phone: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.PHONE,
+    {pattern_validator_phone: 'Invalid phone number format. Valid format is (XXX) XXX-XXXX.'}
+  );
+  public static dosage: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.DOSAGE,
+    {pattern_validator_dosage: 'Try to add something like \'2, 0.5, 10/15, 0.4-4\'.'}
+  );
+  public static dosage_unit: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.DOSAGE_UNIT,
+    {pattern_validator_dosage_unit: 'Available symbols are: \'%, +, /\'.'}
+  );
+  public static floor: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.FLOOR,
+    {pattern_validator_floor: 'The value should be numeric and more than zero.'}
+  );
+  public static payment_amount: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.PAYMENT_AMOUNT,
+    {pattern_validator_payment_amount: 'Try to add something like \'2000, 0.55, 100.34\'.'}
+  );
+  public static group_capacity: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.GROUP_CAPACITY,
+    {pattern_validator_group_capacity: 'The value should be numeric and more than zero.'}
+  );
+  public static state_abbr: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.STATE_ABBR,
+    {pattern_validator_state_abbr: 'Invalid abbreviation.'}
+  );
+  public static zip_main: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.ZIP_MAIN,
+    {pattern_validator_zip_main: 'Invalid ZIP code.'}
+  );
 
   public static match_other(otherName: string, label: string) {
     let me: FormControl;

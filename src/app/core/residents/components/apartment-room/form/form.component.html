@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="apartment_id" nzRequired>Apartment</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('apartment_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="apartment_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="apartment_id">
         <ng-container *ngFor="let apartment of facilities">
           <nz-option [nzLabel]="apartment.name" [nzValue]="apartment.id"></nz-option>
         </ng-container>

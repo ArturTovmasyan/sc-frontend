@@ -12,7 +12,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
         <ng-container *ngFor="let space of spaces">
           <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
         </ng-container>

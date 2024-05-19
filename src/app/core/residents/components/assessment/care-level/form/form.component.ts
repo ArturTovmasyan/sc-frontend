@@ -1,8 +1,6 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
-import {Space} from '../../../../../models/space';
-import {SpaceService} from '../../../../../services/space.service';
 import {first} from 'rxjs/operators';
 import {AssessmentCareLevelGroup} from '../../../../models/assessment-care-level-group';
 import {AssessmentCareLevelGroupService} from '../../../../services/assessment-care-level-group.service';
@@ -11,10 +9,9 @@ import {AssessmentCareLevelGroupService} from '../../../../services/assessment-c
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  spaces: Space[];
   care_level_groups: AssessmentCareLevelGroup[];
 
-  constructor(private formBuilder: FormBuilder, private care_level_group$: AssessmentCareLevelGroupService, private space$: SpaceService) {
+  constructor(private formBuilder: FormBuilder, private care_level_group$: AssessmentCareLevelGroupService) {
     super();
   }
 
@@ -25,14 +22,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       level_low: [0, Validators.required],
       level_high: [0],
       care_level_group_id: [null, Validators.required],
-      space_id: [null, Validators.required],
-    });
-
-    this.space$.all().pipe(first()).subscribe(res => {
-      if (res) {
-        res.sort((a, b) => a.name.localeCompare(b.name));
-        this.spaces = res;
-      }
     });
 
     this.care_level_group$.all().pipe(first()).subscribe(res => {

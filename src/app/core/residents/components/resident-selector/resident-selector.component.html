@@ -71,13 +71,16 @@
     </nz-option-group>
   </nz-select>
   <i class="fa fa-users"></i>
-  <nz-select [nzDisabled]="group_id == null || active_residents == null || active_residents.length == 0" nzShowSearch [(ngModel)]="active_resident_id" (ngModelChange)="residentChanged($event);">
+  <nz-select nzShowSearch nzAllowClear
+             [nzDisabled]="group_id == null || active_residents == null || active_residents.length == 0"
+             [(ngModel)]="active_resident_id" (ngModelChange)="residentChanged($event);">
     <ng-container *ngFor="let resident of active_residents">
       <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
     </ng-container>
   </nz-select>
   <i class="fa fa-ban"></i>
-  <nz-select [nzDisabled]="inactive_residents == null || inactive_residents.length == 0" nzShowSearch [(ngModel)]="inactive_resident_id" (ngModelChange)="residentChanged($event);">
+  <nz-select nzShowSearch [nzDisabled]="inactive_residents == null || inactive_residents.length == 0"
+             [(ngModel)]="inactive_resident_id" (ngModelChange)="residentChanged($event);">
     <ng-container *ngFor="let resident of inactive_residents">
       <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
     </ng-container>

@@ -12,7 +12,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facility_id" nzRequired>Facility</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('facility_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="facility_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="facility_id">
         <ng-container *ngFor="let facility of facilities">
           <nz-option [nzLabel]="facility.name" [nzValue]="facility.id"></nz-option>
         </ng-container>

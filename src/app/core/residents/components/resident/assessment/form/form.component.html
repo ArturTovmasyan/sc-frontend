@@ -4,7 +4,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="form_id" nzRequired>Assessment Form</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('form_id')?'error':null">
-          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="form_id">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="form_id">
             <ng-container *ngFor="let assessment_form of assessment_forms">
               <nz-option [nzLabel]="assessment_form.title" [nzValue]="assessment_form.id"></nz-option>
             </ng-container>

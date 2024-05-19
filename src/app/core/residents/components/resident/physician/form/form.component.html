@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician_id" nzRequired>Physician</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('physician_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
         <ng-container *ngFor="let physician of physicians">
           <nz-option [nzLabel]="physician|physician" [nzValue]="physician.id"></nz-option>
         </ng-container>

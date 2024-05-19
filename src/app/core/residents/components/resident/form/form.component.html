@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="salutation_id" nzRequired>Salutation</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('salutation_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="salutation_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="salutation_id">
         <ng-container *ngFor="let salutation of salutations">
           <nz-option [nzLabel]="salutation.title" [nzValue]="salutation.id"></nz-option>
         </ng-container>
@@ -56,7 +56,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="gender" nzRequired>Gender</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('gender')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="gender">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="gender">
         <ng-container *ngFor="let gender of genders">
           <nz-option [nzLabel]="(gender.name)|translate" [nzValue]="gender.id"></nz-option>
         </ng-container>
@@ -131,7 +131,8 @@
             <nz-form-item>
               <nz-form-control [nzSm]="16" [nzXs]="24"
                                [nzValidateStatus]="hasErrors('phones.'+i+'.number')?'error':null">
-                <input nz-input nzSize="small" placeholder="(000) 000-0000" formControlName="number" mask="(000) 000-0000">
+                <input nz-input nzSize="small" placeholder="(000) 000-0000" formControlName="number"
+                       mask="(000) 000-0000" [showMaskTyped]="true" [dropSpecialCharacters]="false">
                 <nz-form-explain *ngIf="hasErrors('phones.'+i+'.number')">
                   <app-field-errors [errors]="fieldErrors('phones.'+i+'.number')"></app-field-errors>
                 </nz-form-explain>
@@ -153,7 +154,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
         <ng-container *ngFor="let space of spaces">
           <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
         </ng-container>

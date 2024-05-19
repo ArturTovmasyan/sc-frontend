@@ -3,7 +3,7 @@
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="medication_id" nzRequired>Medication</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('medication_id')?'error':null">
       <div class="add-select-container">
-        <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="medication_id">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="medication_id">
           <ng-container *ngFor="let medication of medications">
             <nz-option [nzLabel]="medication.title" [nzValue]="medication.id"></nz-option>
           </ng-container>

@@ -11,7 +11,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_level_groups" nzRequired>Care Level Groups</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_level_groups')?'error':null">
-      <nz-select nzMode="multiple" nzPlaceHolder="Please select" formControlName="care_level_groups">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="care_level_groups">
         <ng-container *ngFor="let care_level_group of care_level_groups">
           <nz-option [nzLabel]="care_level_group.title" [nzValue]="care_level_group.id"></nz-option>
         </ng-container>
@@ -39,7 +39,7 @@
           <nz-form-label>Category</nz-form-label>
         </td>
         <td class="w-50">
-          <nz-select nzSize="small" nzMode="default" nzPlaceHolder="Select category" [(ngModel)]="category_selector"
+          <nz-select nzShowSearch nzSize="small" nzMode="default" nzPlaceHolder="Select category" [(ngModel)]="category_selector"
                      [ngModelOptions]="{standalone: true}">
             <nz-option *ngFor="let category of categories"
                        [nzLabel]="category.title"
@@ -75,7 +75,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
         <ng-container *ngFor="let space of spaces">
           <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
         </ng-container>

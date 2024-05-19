@@ -53,7 +53,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state" nzRequired>State</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state')?'error':null">
-          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="state">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="state">
             <ng-container *ngFor="let state of states">
               <nz-option [nzLabel]="(state.name)|translate" [nzValue]="state.id"></nz-option>
             </ng-container>
@@ -78,7 +78,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_level_id" nzRequired>Care Level</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_level_id')?'error':null">
-          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="care_level_id">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="care_level_id">
             <ng-container *ngFor="let care_level of care_levels">
               <nz-option [nzLabel]="care_level.title" [nzValue]="care_level.id"></nz-option>
             </ng-container>
@@ -138,7 +138,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="dining_room_id" nzRequired>Dinning Room</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('dining_room_id')?'error':null">
-          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="dining_room_id">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="dining_room_id">
             <ng-container *ngFor="let dining_room of dining_rooms">
               <nz-option [nzLabel]="dining_room.title" [nzValue]="dining_room.id"></nz-option>
             </ng-container>
@@ -155,7 +155,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state" nzRequired>State</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state')?'error':null">
-          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="state">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="state">
             <ng-container *ngFor="let state of states">
               <nz-option [nzLabel]="(state.name)|translate" [nzValue]="state.id"></nz-option>
             </ng-container>
@@ -189,7 +189,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="state" nzRequired>State</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('state')?'error':null">
-          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="state">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="state">
             <ng-container *ngFor="let state of states">
               <nz-option [nzLabel]="(state.name)|translate" [nzValue]="state.id"></nz-option>
             </ng-container>
@@ -214,7 +214,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_level_id" nzRequired>Care Level</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_level_id')?'error':null">
-          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="care_level_id">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="care_level_id">
             <ng-container *ngFor="let care_level of care_levels">
               <nz-option [nzLabel]="care_level.title" [nzValue]="care_level.id"></nz-option>
             </ng-container>
@@ -258,7 +258,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="csz_id" nzRequired>CSZ</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('csz_id')?'error':null">
-          <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="csz_id">
+          <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="csz_id">
             <ng-container *ngFor="let city_state_zip of city_state_zips">
               <nz-option [nzLabel]="city_state_zip|csz" [nzValue]="city_state_zip.id"></nz-option>
             </ng-container>

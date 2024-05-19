@@ -13,7 +13,7 @@
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="condition_id" nzRequired>Condition</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('condition_id')?'error':null">
       <div class="add-select-container">
-        <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="condition_id">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="condition_id">
           <ng-container *ngFor="let condition of conditions">
             <nz-option [nzLabel]="condition.title" [nzValue]="condition.id"></nz-option>
           </ng-container>

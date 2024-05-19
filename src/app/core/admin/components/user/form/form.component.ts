@@ -69,8 +69,11 @@ export class FormComponent extends AbstractForm implements OnInit {
     ];
 
     this.postSubmit = (data: any) => {
-      const tab_el = this._el.nativeElement.querySelector(':not(form).ng-invalid').closest('.ant-tabs-tabpane');
-      this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
+      const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
+      if (invalid_el) {
+        const tab_el = invalid_el.closest('.ant-tabs-tabpane');
+        this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
+      }
     };
   }
 
@@ -80,7 +83,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         return this.formBuilder.group({
           id: [null],
           type: [null, Validators.required],
-          number: ['', Validators.required],
+          number: ['', Validators.compose([Validators.required, CoreValidator.phone])],
           primary: [false],
           sms_enabled: [false],
           compatibility: [null]

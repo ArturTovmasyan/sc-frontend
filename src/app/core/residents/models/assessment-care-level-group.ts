@@ -5,5 +5,4 @@ export class AssessmentCareLevelGroup implements IdInterface {
 
   title: string;
 
-  space: Space;
 }

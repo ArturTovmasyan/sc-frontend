@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="diet_id" nzRequired>Diet</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('diet_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="diet_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="diet_id">
         <ng-container *ngFor="let diet of diets">
           <nz-option [nzLabel]="diet.title" [nzValue]="diet.id"></nz-option>
         </ng-container>

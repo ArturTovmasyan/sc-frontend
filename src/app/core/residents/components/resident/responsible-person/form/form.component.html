@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_person_id" nzRequired>Responsible Person</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_person_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
         <ng-container *ngFor="let responsible_person of responsible_persons">
           <nz-option [nzLabel]="responsible_person|responsible_person" [nzValue]="responsible_person.id"></nz-option>
         </ng-container>
@@ -15,7 +15,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="relationship_id" nzRequired>Relationship</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('relationship_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="relationship_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="relationship_id">
         <ng-container *ngFor="let relationship of relationships">
           <nz-option [nzLabel]="relationship.title" [nzValue]="relationship.id"></nz-option>
         </ng-container>

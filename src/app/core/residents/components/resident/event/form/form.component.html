@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="definition_id" nzRequired>Definition</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('definition_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="definition_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="definition_id">
         <ng-container *ngFor="let definition of definitions">
           <nz-option [nzLabel]="definition.title" [nzValue]="definition.id"></nz-option>
         </ng-container>
@@ -37,7 +37,7 @@
   <nz-form-item *ngIf="show.physician">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician_id" nzRequired>Physician</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('physician_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
         <ng-container *ngFor="let physician of physicians">
           <nz-option [nzLabel]="physician|physician" [nzValue]="physician.id"></nz-option>
         </ng-container>
@@ -51,7 +51,7 @@
   <nz-form-item *ngIf="show.responsible_person">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_person_id" nzRequired>Responsible Person</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_person_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
         <ng-container *ngFor="let responsible_person of responsible_persons">
           <nz-option [nzLabel]="responsible_person|responsible_person" [nzValue]="responsible_person.id"></nz-option>
         </ng-container>
