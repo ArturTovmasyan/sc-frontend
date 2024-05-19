@@ -13,6 +13,8 @@ import {GridService} from '../../../shared/services/grid.service';
 import {Document} from '../../documents/models/document';
 import {FacilityDocument} from '../../residents/models/facility-document';
 import {ResidentDocument} from '../../residents/models/resident-document';
+import {Facility} from '../../residents/models/facility';
+import {FacilityService} from '../../residents/services/facility.service';
 
 @Component({
   selector: 'app-document-viewer',
@@ -29,6 +31,7 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
   @Input('component') component: Type<any>;
 
   @Input('show-category') show_category: boolean;
+  @Input('show-facility') show_facility: boolean;
 
   @Input('service') set service(value: GridService<any>) {
     this._service$ = value;
@@ -55,6 +58,9 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
   categories: DocumentCategory[];
   category: DocumentCategory;
 
+  facilities: Facility[];
+  facility: Facility;
+
   documents: any[];
   document: Document | FacilityDocument | ResidentDocument;
 
@@ -71,6 +77,7 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
     private title$: TitleService,
     private modal$: NzModalService,
     private category$: DocumentCategoryService,
+    private facility$: FacilityService,
     private sanitizer: DomSanitizer,
     private route$: ActivatedRoute,
     private auth_$: AuthGuard
@@ -79,8 +86,10 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
 
     this.document = null;
     this.category = null;
+    this.facility = null;
 
     this.show_category = true;
+    this.show_facility = true;
     this.resident_id = null;
     this.title = null;
   }
@@ -91,6 +100,7 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
 
     if (this.show_category) {
       this.subscribe('list_category');
+      this.subscribe('list_facility');
     }
   }
 
@@ -123,6 +133,13 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
           }
         });
         break;
+      case 'list_facility':
+        this.$subscriptions[key] = this.facility$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.facilities = res;
+          }
+        });
+        break;
       case 'list_document':
         this.document = null;
         this.loading = true;
@@ -136,6 +153,12 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
         if (params) {
           if (params.hasOwnProperty('category_id') && params.category_id !== null) {
             list_params.push({key: 'category_id', value: params.category_id});
+          }
+        }
+
+        if (params) {
+          if (params.hasOwnProperty('facility_id') && params.facility_id !== null) {
+            list_params.push({key: 'facility_id', value: params.facility_id});
           }
         }
 
@@ -170,11 +193,19 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
     this.subscribe('list_document', {category_id: this.category});
   }
 
+  facility_changes($event): void {
+    this.subscribe('list_document', {facility_id: this.facility});
+  }
+
   private reload_data(res: any): void {
     const params: any = {};
 
     if (this.category) {
       params.category_id = this.category;
+    }
+
+    if (this.facility) {
+      params.facility_id = this.facility;
     }
 
     if (res != null && Array.isArray(res) && res.length === 1) {
