@@ -42,6 +42,11 @@ export class ResidentSelectorService {
               this._state.next(res);
             }
           });
+        } else {
+          this._type.next(null);
+          this._group.next(null);
+          this._resident.next(null);
+          this._state.next(null);
         }
       }
     });
