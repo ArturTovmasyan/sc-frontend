@@ -143,7 +143,14 @@
           {{ row[field.id]|cron }}
         </ng-container>
         <ng-container *ngSwitchCase="'date'">
-          {{ row[field.id]|date:'MM/dd/yyyy' }}
+          <ng-container *ngIf="field.link">
+              <ng-container *ngIf="routeInfo(field.link, row) !== null">
+                <a [routerLink]="routeInfo(field.link, row)" [queryParams]="query_params()">
+                  {{ row[field.id]|date:'MM/dd/yyyy' }}
+                </a>
+              </ng-container>
+            </ng-container>
+          <span *ngIf="!field.link">{{ row[field.id]|date:'MM/dd/yyyy' }}</span>
         </ng-container>
         <ng-container *ngSwitchCase="'time'">
           {{ row[field.id]|date:'HH:mm:ss' }}
