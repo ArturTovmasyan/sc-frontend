@@ -98,8 +98,8 @@ export class ThumbComponent implements OnInit, OnDestroy {
       {key: 'state', value: this.route_options.state},
       {key: 'type', value: this.route_options.type},
       {key: 'type_id', value: this.route_options.type_id},
-      {key: 'resident', value: this.route_options.sort_resident},
-      {key: 'room', value: this.route_options.sort_room}
+      {key: 'resident', value: this.route_options.sort_resident !== null ? (this.route_options.sort_resident ? 'ASC' : 'DESC') : null},
+      {key: 'room', value: this.route_options.sort_room !== null ? (this.route_options.sort_room ? 'ASC' : 'DESC') : null}
     ]);
   }
 
