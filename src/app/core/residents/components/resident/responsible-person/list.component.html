@@ -22,6 +22,11 @@
           <div nz-col [nzSpan]="24">
             <p class="text-center m-1">
               <strong style="font-size: large;">{{ rrp.responsible_person|responsible_person }}</strong>
+              <button type="button" class="pull-right" nz-button nzSize="small" nzType="default"
+                      (click)="subscribe('md_rp_edit', {id: rrp.responsible_person.id}); $event.preventDefault();"
+                      *ngIf="addIfHasPermission('persistence-common-responsible_person', 2)">
+                <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
+              </button>
             </p>
           </div>
         </div>
