@@ -431,7 +431,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   before_submit(): void {
-    this.form.get('date').setValue(DateHelper.makeDateOnly(this.form.get('date').value)); // TODO: #846 - Review date/time fields in all system
+    this.form.get('date').setValue(DateHelper.makeUTCDateOnly(this.form.get('date').value)); // TODO: #846 - Review date/time fields in all system
   }
 
   after_submit(): void {

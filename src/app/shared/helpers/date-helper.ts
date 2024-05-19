@@ -27,6 +27,16 @@ export class DateHelper {
     return date;
   }
 
+  public static makeUTCDateOnly(input: string|Date): Date {
+    const date: Date = DateHelper.makeDateType(new Date(input));
+    date.setUTCFullYear(date.getFullYear());
+    date.setUTCMonth(date.getMonth());
+    date.setUTCDate(date.getDate());
+    date.setUTCHours(0, 0, 0, 0);
+
+    return date;
+  }
+
   public static convertUTCString(formated: string): Date {
     const groups = formated.match(DateHelper.REGEX_UTC);
 

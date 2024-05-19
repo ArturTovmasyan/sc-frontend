@@ -104,6 +104,7 @@ export class ListComponent implements OnInit, OnDestroy {
           loading[idx] = true;
 
           const component = <AbstractForm>modal.getContentComponent();
+          component.before_submit()
           const form_data = component.formObject.value;
 
           component.submitted = true;

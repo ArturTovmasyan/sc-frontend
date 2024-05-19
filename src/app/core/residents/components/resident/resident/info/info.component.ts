@@ -203,8 +203,8 @@ export class InfoComponent implements OnInit {
             loading = true;
 
             const component = <AbstractForm>modal.getContentComponent();
+            component.before_submit();
             const form_data = component.formObject.value;
-
             component.submitted = true;
 
             submit(form_data).subscribe(
