@@ -26,10 +26,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   repeatTypes: { id: RepeatType, name: string }[];
 
-  private old_start_date: Date = null;
-  private old_end_date: Date = null;
-  private old_repeat_end: Date = null;
-
   disabledEndDate = (value: Date): boolean => {
     if (!value || this.form.get('start_date').disabled) {
       return false;
@@ -304,27 +300,11 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  after_set_form_data(): void {
-    this.old_start_date = this.form.get('start_date').value;
-    this.old_end_date = this.form.get('end_date').value;
-    this.old_repeat_end = this.form.get('repeat_end').value;
-  }
-
   formValue(): void {
     const value = super.formValue();
-
-    if (this.old_start_date === null || value.start_date.getTime() !== this.old_start_date.getTime()) {
-      value.start_date = DateHelper.makeUTCDateOnly(value.start_date);
-    }
-
-    if (this.old_end_date === null || value.end_date.getTime() !== this.old_end_date.getTime()) {
-      value.end_date = DateHelper.makeUTCDateOnly(value.end_date);
-    }
-
-    if (this.old_repeat_end === null || value.repeat_end.getTime() !== this.old_repeat_end.getTime()) {
-      value.repeat_end = DateHelper.makeUTCDateOnly(value.repeat_end);
-    }
-
+    value.start_date = DateHelper.makeUTCDateOnly(value.start_date);
+    value.end_date = DateHelper.makeUTCDateOnly(value.end_date);
+    value.repeat_end = DateHelper.makeUTCDateOnly(value.repeat_end);
     return value;
   }
 

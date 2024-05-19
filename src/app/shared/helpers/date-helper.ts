@@ -28,13 +28,8 @@ export class DateHelper {
   }
 
   public static makeUTCDateOnly(input: string|Date): Date {
-    const date: Date = DateHelper.makeDateType(new Date(input));
-    date.setUTCFullYear(date.getFullYear());
-    date.setUTCMonth(date.getMonth());
-    date.setUTCDate(date.getDate());
-    date.setUTCHours(0, 0, 0, 0);
-
-    return date;
+    const date: Date = new Date(input);
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0));
   }
 
   public static convertUTCString(formated: string): Date {

@@ -27,8 +27,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   contacts: Contact[];
   users: User[];
 
-  private old_date: Date = null;
-
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
@@ -126,17 +124,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     }
   }
 
-  after_set_form_data(): void {
-    this.old_date = this.form.get('date').value;
-  }
-
   formValue(): void {
     const value = super.formValue();
-
-    if (value.date.getTime() !== this.old_date.getTime()) {
-      value.date = DateHelper.makeUTCDateOnly(value.date);
-    }
-
+    value.date = DateHelper.makeUTCDateOnly(value.date);
     return value;
   }
 
