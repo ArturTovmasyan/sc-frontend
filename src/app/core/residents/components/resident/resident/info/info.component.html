@@ -117,7 +117,7 @@ addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-form-medication-li
             </a>
           </li>
           <li
-            *ngIf="addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-resident-face-sheet-no-admission':'report-resident-face-sheet')">
+            *ngIf="admission.group_type === GroupType.FACILITY && addIfHasPermission(state===ResidentState.NO_ADMISSION?'report-resident-face-sheet-no-admission':'report-resident-face-sheet')">
             <a [routerLink]=""
                (click)="show_report('resident', (state===ResidentState.NO_ADMISSION?'face-sheet-no-admission':'face-sheet'));">
               <i class="fas fa-file-download"></i> FACE Sheet
