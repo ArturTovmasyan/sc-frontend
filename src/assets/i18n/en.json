@@ -12,7 +12,8 @@
       "email": "E-Mail",
       "phone": "Phone",
       "enabled": "Enabled",
-      "completed": "Completed",
+      "roles": "Roles",
+      "facilities": "Facilities",
       "last_activity_at": "Last Activity At"
     },
     "user-invite-list": {
