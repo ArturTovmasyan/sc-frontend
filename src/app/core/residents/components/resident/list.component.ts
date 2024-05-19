@@ -7,6 +7,8 @@ import {GridComponent} from '../../../../shared/components/grid/grid.component';
 import {FormComponent} from './resident/form/form.component';
 import {Resident} from '../../models/resident';
 import {RouterParams} from '../../../services/router-params';
+import {ActivatedRoute} from '@angular/router';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   templateUrl: '../../../../shared/components/grid/grid.component.html',
@@ -14,13 +16,18 @@ import {RouterParams} from '../../../services/router-params';
   providers: [ResidentService]
 })
 export class ListComponent extends GridComponent<Resident, ResidentService> implements OnInit, OnDestroy {
+  $init: BehaviorSubject<boolean>;
+
   constructor(
     protected service$: ResidentService,
     protected title$: TitleService,
     protected modal$: NzModalService,
+    protected route$: ActivatedRoute,
     protected route_params: RouterParams
   ) {
     super(service$, title$, modal$);
+
+    this.$init = new BehaviorSubject<boolean>(false);
 
     this.component = FormComponent;
 
@@ -29,6 +36,16 @@ export class ListComponent extends GridComponent<Resident, ResidentService> impl
 
   ngOnInit(): void {
     super.init();
+
+    this.$subscriptions['segment'] = this.route$.url.subscribe(value => {
+      if (value && value.length > 0) {
+        console.log();
+
+        this.params.push({key: 'state', value: value[0].path});
+
+        this.$init.next(true);
+      }
+    });
 
     this.$subscriptions['param'] = this.route_params.params.subscribe((params: Array<any>): void => {
       if (params) {
@@ -41,10 +58,16 @@ export class ListComponent extends GridComponent<Resident, ResidentService> impl
         if (params.length > 0) {
           this.params.push({key: 'type', value: params[0].params.type});
           this.params.push({key: 'type_id', value: params[0].params.group});
+
+          this.$init.next(true);
         }
       }
+    });
 
-      super.init();
+    this.$subscriptions['init'] = this.$init.subscribe(value => {
+      if (value) {
+        super.init();
+      }
     });
   }
 }

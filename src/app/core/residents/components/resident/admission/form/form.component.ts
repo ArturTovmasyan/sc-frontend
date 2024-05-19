@@ -103,7 +103,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     // TODO: review
     this.admission_types = [
       {id: AdmissionType.ADMIT, name: 'Admit'},
-      {id: AdmissionType.READMIT, name: 'Re-Admit'},
+      {id: AdmissionType.READMIT, name: 'Re-Admit/Assign Room'},
       {id: AdmissionType.TEMPORARY_DISCHARGE, name: 'Temporary Discharge'},
       {id: AdmissionType.DISCHARGE, name: 'Discharge'}
     ];

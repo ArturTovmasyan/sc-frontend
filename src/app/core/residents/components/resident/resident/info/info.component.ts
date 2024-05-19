@@ -13,6 +13,7 @@ import {ResidentSelectorService} from '../../../../services/resident-selector.se
 import {DomSanitizer} from '@angular/platform-browser';
 import {ResidentAdmission} from '../../../../models/resident-admission';
 import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
+import {ReportService} from '../../../../services/report.service';
 
 @Component({
   selector: 'app-resident-info',
@@ -29,6 +30,13 @@ export class InfoComponent implements OnInit {
   today: Date = new Date();
 
   loading: boolean;
+  protected loading_report: any = {
+    profile_no_admission: false,
+    face_sheet_no_admission: false,
+    medication_chart_no_admission: false,
+    medication_list_resident_no_admission: false
+  };
+
   protected loading_edit_modal: boolean = false;
 
   resident_id: number;
@@ -38,6 +46,7 @@ export class InfoComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private resident$: ResidentService,
     private admission$: ResidentAdmissionService,
+    private report$: ReportService,
     protected modal$: NzModalService,
     private router$: Router,
     private residentSelector$: ResidentSelectorService
@@ -274,4 +283,12 @@ export class InfoComponent implements OnInit {
     });
   }
 
+  show_report(group: string, alias: string): void {
+    this.loading_report[alias.replace('-', '_')] = true;
+    this.report$.report(group, alias, 'pdf', {resident_id: this.residentSelector$.resident.value}, () => {
+      this.loading_report[alias.replace('-', '_')] = false;
+    }, (error) => {
+      this.loading_report[alias.replace('-', '_')] = false;
+    });
+  }
 }

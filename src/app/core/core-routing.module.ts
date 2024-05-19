@@ -251,13 +251,39 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'residents', component: ResidentListComponent,
+        path: 'residents',
         data: {
           nav: {show: true, group: 'Residents'},
           title: 'Residents',
           permissions: ['persistence-resident-resident']
         },
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: 'active', component: ResidentListComponent,
+            data: {
+              nav: {show: true, group: 'Active'},
+              title: 'Active',
+              permissions: ['persistence-resident-resident']
+            }
+          },
+          {
+            path: 'inactive', component: ResidentListComponent,
+            data: {
+              nav: {show: true, group: 'Inactive'},
+              title: 'Inactive',
+              permissions: ['persistence-resident-resident']
+            }
+          },
+          {
+            path: 'no-admission', component: ResidentListComponent,
+            data: {
+              nav: {show: true, group: 'Pre-Admit'},
+              title: 'Pre-Admit',
+              permissions: ['persistence-resident-resident']
+            }
+          }
+        ]
       },
       {
         path: 'residents/:type/:group', component: ResidentListComponent,

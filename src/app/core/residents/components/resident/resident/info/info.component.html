@@ -65,6 +65,29 @@
         </div>
       </div>
 
+      <ng-container *ngIf="!admission">
+        <div class="d-flex justify-content-center" style="margin-top: 1.5rem;">
+          <nz-button-group [nzSize]="'small'">
+            <button nz-button nzType="default" [nzLoading]="loading_report.profile_no_admission"
+                    (click)="show_report('resident', 'profile-no-admission'); $event.preventDefault();">
+              <i class="far fa-file"></i> Profile
+            </button>
+            <button nz-button nzType="default" [nzLoading]="loading_report.face_sheet_no_admission"
+                    (click)="show_report('resident', 'face-sheet-no-admission'); $event.preventDefault();">
+              <i class="far fa-file"></i> FACE Sheet
+            </button>
+            <button nz-button nzType="default" [nzLoading]="loading_report.medication_chart_no_admission"
+                    (click)="show_report('form', 'medication-chart-no-admission'); $event.preventDefault();">
+              <i class="far fa-file"></i> MAR Chart
+            </button>
+            <button nz-button nzType="default" [nzLoading]="loading_report.medication_list_resident_no_admission"
+                    (click)="show_report('form', 'medication-list-resident-no-admission'); $event.preventDefault();">
+              <i class="far fa-file"></i> Medication List
+            </button>
+          </nz-button-group>
+        </div>
+      </ng-container>
+
       <ng-container *ngIf="admission" [ngSwitch]="admission.group_type">
         <div nz-row [nzGutter]="4">
           <div nz-col [nzSpan]="8" class="text-right"><strong>Effective Date:</strong></div>
