@@ -46,7 +46,7 @@
           <tr>
             <td>Starting Occ</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
-              <td class="text-center">{{item.value.starting_occupancy}}</td>
+              <td class="text-center" [ngStyle]="FacilityDashboard.getStartingStyle(item.value)">{{item.value.starting_occupancy}}</td>
             </ng-container>
           </tr>
           <tr>

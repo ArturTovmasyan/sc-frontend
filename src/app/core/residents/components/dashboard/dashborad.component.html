@@ -51,7 +51,7 @@
           <tr>
             <td>Starting Occ</td>
             <ng-container *ngFor="let facility of facilities">
-              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.starting_occupancy : '-' }}</td>
+              <td class="text-center" [ngStyle]="FacilityDashboard.getStartingStyle(dashboardData[facility.id])">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.starting_occupancy : '-' }}</td>
             </ng-container>
           </tr>
           <tr>
