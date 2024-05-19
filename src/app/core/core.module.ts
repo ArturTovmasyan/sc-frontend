@@ -211,6 +211,9 @@ import {FormComponent as PaymentSourceFormComponent} from './residents/component
 import {ListComponent as PaymentSourceBaseRateListComponent} from './residents/components/payment-source-base-rate/list.component';
 import {FormComponent as PaymentSourceBaseRateFormComponent} from './residents/components/payment-source-base-rate/form/form.component';
 
+import {ListComponent as PaymentTypeListComponent} from './residents/components/payment-type/list.component';
+import {FormComponent as PaymentTypeFormComponent} from './residents/components/payment-type/form/form.component';
+
 import {ListComponent as EventDefinitionListComponent} from './residents/components/event-definition/list.component';
 import {FormComponent as EventDefinitionFormComponent} from './residents/components/event-definition/form/form.component';
 
@@ -573,6 +576,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PaymentSourceBaseRateListComponent,
     PaymentSourceBaseRateFormComponent,
 
+    PaymentTypeListComponent,
+    PaymentTypeFormComponent,
+
     AssessmentCategoryListComponent,
     AssessmentCategoryFormComponent,
 
@@ -781,6 +787,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     PaymentSourceFormComponent,
     PaymentSourceBaseRateFormComponent,
+    PaymentTypeFormComponent,
 
     AssessmentCategoryFormComponent,
 

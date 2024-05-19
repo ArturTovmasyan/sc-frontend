@@ -156,6 +156,11 @@
       "date": "Effective Date",
       "base_rates": "Base Rates"
     },
+    "payment-type-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "event-definition-list": {
       "id": "ID",
       "type": "Type",

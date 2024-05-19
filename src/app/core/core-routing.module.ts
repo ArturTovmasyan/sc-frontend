@@ -47,6 +47,7 @@ import {ListComponent as FacilityDiningRoomListComponent} from './residents/comp
 import {ListComponent as RegionListComponent} from './residents/components/region/list.component';
 
 import {ListComponent as PaymentSourceListComponent} from './residents/components/payment-source/list.component';
+import {ListComponent as PaymentTypeListComponent} from './residents/components/payment-type/list.component';
 import {ListComponent as AssessmentCategoryListComponent} from './residents/components/assessment/category/list.component';
 import {ListComponent as AssessmentFormListComponent} from './residents/components/assessment/form/list.component';
 import {ListComponent as AssessmentCareLevelListComponent} from './residents/components/assessment/care-level/list.component';
@@ -597,6 +598,17 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
+
+      {
+        path: 'payment-types', component: PaymentTypeListComponent,
+        data: {
+            nav: {show: true, group: 'Reference'},
+            title: 'Payment Types',
+            permissions: ['activity-reference', 'persistence-common-payment_type']
+        },
+        canActivate: [AuthGuard]
+      },
+
       {
         path: 'city-state-zips', component: CityStateZipListComponent,
         data: {
