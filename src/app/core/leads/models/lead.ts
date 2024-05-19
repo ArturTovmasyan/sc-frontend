@@ -7,6 +7,7 @@ import {PaymentSource} from '../../residents/models/payment-source';
 import {User} from '../../models/user';
 import {CurrentResidence} from './current-residence';
 import {Hobby} from './hobby';
+import {CareLevel} from '../../residents/models/care-level';
 
 export class Lead implements IdInterface {
   id: number;
@@ -17,6 +18,7 @@ export class Lead implements IdInterface {
   last_name: string;
 
   care_type: CareType;
+  care_level: CareLevel;
   payment_type: PaymentSource;
   owner: User;
   initial_contact_date: Date;

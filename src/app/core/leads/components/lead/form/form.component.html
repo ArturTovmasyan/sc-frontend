@@ -43,6 +43,25 @@
       </nz-form-item>
 
       <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="care_type_id">Care Level</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('care_level_id')?'error':null">
+          <div class="add-select-container">
+            <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="care_level_id">
+              <ng-container *ngFor="let care_level of care_levels">
+                <nz-option [nzLabel]="care_level.title" [nzValue]="care_level.id"></nz-option>
+              </ng-container>
+            </nz-select>
+            <button level="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('care_level');">
+              <i nz-icon nzType="plus"></i>
+            </button>
+          </div>
+          <nz-form-explain *ngIf="hasErrors('care_level_id')">
+            <app-field-errors [errors]="fieldErrors('care_level_id')"></app-field-errors>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="payment_type_id">Payment Type</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('payment_type_id')?'error':null">
           <div class="add-select-container">

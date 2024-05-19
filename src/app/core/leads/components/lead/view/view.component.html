@@ -57,6 +57,10 @@
                     <div nz-col [nzSpan]="8" class="text-right"><strong>Care Type:</strong></div>
                     <div nz-col [nzSpan]="16">{{ lead.care_type.title }}</div>
                   </div>
+                  <div nz-row [nzGutter]="4" *ngIf="lead.care_level">
+                    <div nz-col [nzSpan]="8" class="text-right"><strong>Care Level:</strong></div>
+                    <div nz-col [nzSpan]="16">{{ lead.care_level.title }}</div>
+                  </div>
                   <div nz-row [nzGutter]="4" *ngIf="lead.payment_type">
                     <div nz-col [nzSpan]="8" class="text-right"><strong>Payment Type:</strong></div>
                     <div nz-col [nzSpan]="16">{{ lead.payment_type.title }}</div>

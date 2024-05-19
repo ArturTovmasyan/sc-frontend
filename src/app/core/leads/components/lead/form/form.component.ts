@@ -12,12 +12,14 @@ import {Organization} from '../../../models/organization';
 import {OrganizationService} from '../../../services/organization.service';
 import {CityStateZip} from '../../../../residents/models/city-state-zip';
 import {CareType} from '../../../models/care-type';
+import {CareLevel} from '../../../../residents/models/care-level';
 import {CurrentResidence} from '../../../models/current-residence';
 import {Hobby} from '../../../models/hobby';
 import {User} from '../../../../models/user';
 import {Facility} from '../../../../residents/models/facility';
 import {CityStateZipService} from '../../../../residents/services/city-state-zip.service';
 import {CareTypeService} from '../../../services/care-type.service';
+import {CareLevelService} from '../../../../residents/services/care-level.service';
 import {CurrentResidenceService} from '../../../services/current-residence.service';
 import {HobbyService} from '../../../services/hobby.service';
 import {FacilityService} from '../../../../residents/services/facility.service';
@@ -29,6 +31,7 @@ import {Contact} from '../../../models/contact';
 import {ContactService} from '../../../services/contact.service';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
 import {FormComponent as CareTypeFormComponent} from '../../care-type/form/form.component';
+import {FormComponent as CareLevelFormComponent} from '../../../../residents/components/care-level/form/form.component';
 import {FormComponent as CurrentResidenceFormComponent} from '../../current-residence/form/form.component';
 import {FormComponent as HobbyFormComponent} from '../../hobby/form/form.component';
 import {FormComponent as PaymentSourceFormComponent} from '../../../../residents/components/payment-source/form/form.component';
@@ -55,6 +58,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   users: User[];
 
   care_types: CareType[];
+  care_levels: CareLevel[];
 
   referrer_types: ReferrerType[];
 
@@ -85,6 +89,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private facility$: FacilityService,
     private hobby$: HobbyService,
     private care_type$: CareTypeService,
+    private care_level$: CareLevelService,
     private current_residence$: CurrentResidenceService,
     private organization$: OrganizationService,
     private contact$: ContactService,
@@ -95,6 +100,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     super(modal$);
     this.modal_map = [
          {key: 'care_type', component: CareTypeFormComponent},
+         {key: 'care_level', component: CareLevelFormComponent},
          {key: 'current_residence', component: CurrentResidenceFormComponent},
          {key: 'hobby', component: HobbyFormComponent},
          {key: 'payment_source', component: PaymentSourceFormComponent},
@@ -119,6 +125,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       first_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
       last_name: ['', Validators.compose([CoreValidator.notEmpty, Validators.maxLength(60)])],
       care_type_id: [null, Validators.compose([])],
+      care_level_id: [null, Validators.compose([])],
       payment_type_id: [null, Validators.compose([])],
       owner_id: [null, Validators.compose([Validators.required])],
 
@@ -186,6 +193,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('list_facility_all');
     this.subscribe('list_hobby');
     this.subscribe('list_care_type');
+    this.subscribe('list_care_level');
     this.subscribe('list_current_residence');
 
     this.subscribe('list_organization');
@@ -313,6 +321,17 @@ export class FormComponent extends AbstractForm implements OnInit {
               this.form.get('care_type_id').setValue(params.care_type_id);
             }
           }
+        });
+        break;
+      case 'list_care_level':
+        this.$subscriptions[key] = this.care_level$.all().pipe(first()).subscribe(res => {
+            if (res) {
+                this.care_levels = res;
+
+                if (params) {
+                    this.form.get('care_level_id').setValue(params.care_level_id);
+                }
+            }
         });
         break;
       case 'list_current_residence':
