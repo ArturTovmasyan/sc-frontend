@@ -1,4 +1,5 @@
-<nz-tabset *ngIf="(responsible_persons && responsible_persons.length > 0)" nzTabPosition="left" style="min-height: 250px"
+<nz-tabset *ngIf="(responsible_persons && responsible_persons.length > 0)" nzTabPosition="left"
+           style="min-height: 250px"
            [(nzSelectedIndex)]="selected_tab">
   <nz-tab *ngFor="let rrp of responsible_persons" [nzTitle]="nzTabHeading">
     <ng-template #nzTabHeading>
@@ -79,7 +80,7 @@
     </div>
   </nz-tab>
 </nz-tabset>
-<div *ngIf="!(responsible_persons && responsible_persons.length > 0)" class="no-data-placeholder">No data</div>
+<nz-empty *ngIf="!(responsible_persons && responsible_persons.length > 0)" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
 <nz-divider></nz-divider>
 
 <div class="d-flex">
@@ -87,7 +88,8 @@
     <button nz-button nzType="primary" (click)="show_modal_add(); $event.preventDefault();">
       <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
     </button>
-    <button *ngIf="(responsible_persons && responsible_persons.length > 0)" nz-button nzType="default" (click)="show_modal_edit(); $event.preventDefault();"
+    <button *ngIf="(responsible_persons && responsible_persons.length > 0)" nz-button nzType="default"
+            (click)="show_modal_edit(); $event.preventDefault();"
             [nzLoading]="loading_edit_modal">
       <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
     </button>

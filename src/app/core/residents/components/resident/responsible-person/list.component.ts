@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {NzModalService} from 'ng-zorro-antd';
+import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {ResidentResponsiblePersonService} from '../../../services/resident-responsible-person.service';
 import {ResidentResponsiblePerson} from '../../../models/resident-responsible-person';
@@ -9,6 +9,7 @@ import {Observable} from 'rxjs';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {first} from 'rxjs/operators';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   templateUrl: './list.component.html',
@@ -20,6 +21,7 @@ export class ListComponent implements OnInit {
   selected_tab: number;
 
   loading_edit_modal: boolean;
+  defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   constructor(
     private service$: ResidentResponsiblePersonService,
@@ -27,6 +29,7 @@ export class ListComponent implements OnInit {
     private modal$: NzModalService,
     private route$: ActivatedRoute,
     private residentSelector$: ResidentSelectorService,
+    private sanitizer: DomSanitizer,
   ) {
     this.selected_tab = 0;
   }

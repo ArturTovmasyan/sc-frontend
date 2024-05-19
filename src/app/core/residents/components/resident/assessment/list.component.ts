@@ -38,7 +38,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
         faIcon: 'far fa-file',
         click: (ids: number[]) => {
           this.loading = true;
-          this.report$.report('assessment', 'blank', 'pdf', {id: ids[0]}, () => {
+          this.report$.report('assessment', 'blank', 'pdf', {assessment_id: ids[0]}, () => {
             this.loading = false;
           }, (error) => {
           });
@@ -55,7 +55,7 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
         faIcon: 'far fa-file-alt',
         click: (ids: number[]) => {
           this.loading = true;
-          this.report$.report('assessment', 'filled', 'pdf', {id: ids[0]}, () => {
+          this.report$.report('assessment', 'filled', 'pdf', {assessment_id: ids[0]}, () => {
             this.loading = false;
           }, (error) => {
           });

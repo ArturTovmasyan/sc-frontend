@@ -103,6 +103,8 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
       case 'vc_form_id':
         this.$subscriptions[key] = this.form.get('form_id').valueChanges.subscribe(next => {
+          this.form.get('score').setValue(0);
+
           const assessment_form = this.assessment_forms.filter(item => item.id === this.form.get('form_id').value).pop();
 
           if (assessment_form) {
@@ -159,8 +161,13 @@ export class FormComponent extends AbstractForm implements OnInit {
         const selected_ids = [v.row];
         const selected_rows = v.rows.filter(r => r.id === selected_ids[0]);
 
+        const item_score = selected_rows.map(r => r.score);
+
         rows.push(...selected_ids);
-        score.push(selected_rows.map(r => r.score)[0]);
+
+        if (item_score.length === 1) {
+          score.push(item_score[0]);
+        }
       }
     });
     rows = Array.from(new Set(rows));

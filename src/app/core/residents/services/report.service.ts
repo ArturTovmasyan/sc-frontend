@@ -43,6 +43,9 @@ export class ReportService {
     if (params.date_to) {
       request_params = request_params.append('date_to', params.date_to.toISOString());
     }
+    if (params.assessment_id) {
+      request_params = request_params.append('assessment_id', params.assessment_id);
+    }
 
     return this.http
       .get(this.SEVICE_URL_BASE + `/${group_alias}/${report_alias}`, {
