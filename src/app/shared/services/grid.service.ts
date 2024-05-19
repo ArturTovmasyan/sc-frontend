@@ -35,7 +35,7 @@ export class GridService<T extends IdInterface> {
 
   public pdf(callback: any) {
     return this.http
-      .get(this.SEVICE_URL_BASE + '/list', {
+      .get(this.SEVICE_URL_BASE + '', {
         responseType: 'blob',
         observe: 'response',
         params: new HttpParams().append('pdf', '1')
