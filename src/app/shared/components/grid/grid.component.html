@@ -128,7 +128,7 @@
                     [ngTemplateOutlet]="filterEnum"></template>
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'boolean'"
                     [ngTemplateOutlet]="filterEnum"></template>
-          <strong *ngSwitchDefault>?</strong>
+          <strong *ngSwitchDefault></strong>
         </th>
         <th *ngIf="!field.hidden && field.sortable && field.filterable" [nzShowSort]="field.sortable"
             [nzSortKey]="field.id"

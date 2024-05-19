@@ -139,7 +139,7 @@ export class CoreValidator {
         return null;
       }
 
-      return Number(me.value) > Number(other.value) ? {'less_than': {value: other.value}} : null;
+      return Number(me.value) >= Number(other.value) ? {'less_than': {value: other.value}} : null;
     };
   }
 
@@ -169,7 +169,7 @@ export class CoreValidator {
         return null;
       }
 
-      return Number(me.value) < Number(other.value) ? {'greater_than': {value: other.value}} : null;
+      return Number(me.value) <= Number(other.value) ? {'greater_than': {value: other.value}} : null;
     };
   }
 
