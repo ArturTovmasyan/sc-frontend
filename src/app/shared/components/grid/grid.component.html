@@ -142,6 +142,9 @@
         <ng-container *ngSwitchCase="'cron'">
           {{ row[field.id]|cron }}
         </ng-container>
+        <ng-container *ngSwitchCase="'currency'">
+          {{ row[field.id]|currency:'USD':'symbol-narrow':'1.2-2' }}
+        </ng-container>
         <ng-container *ngSwitchCase="'date'">
           <ng-container *ngIf="field.link">
               <ng-container *ngIf="routeInfo(field.link, row) !== null">
