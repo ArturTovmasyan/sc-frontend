@@ -483,6 +483,11 @@
       "created_by": "Created By",
       "space": "Space"
     },
+    "document-category-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
     "admin-notification-list": {
       "id": "ID",
       "type": "Type",

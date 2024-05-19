@@ -2,20 +2,26 @@ import * as _ from 'lodash';
 import * as PDFObject from 'pdfobject';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
-import {Document} from '../../models/document';
-import {TitleService} from '../../../services/title.service';
-import {DocumentService} from '../../services/document.service';
 import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
-import {AuthGuard} from '../../../guards/auth.guard';
-import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {FormComponent} from '../form/form.component';
+import {TitleService} from '../../../../services/title.service';
+import {DocumentService} from '../../../services/document.service';
+import {AuthGuard} from '../../../../guards/auth.guard';
+import {Document} from '../../../models/document';
+import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
+import {Category} from '../../../models/category';
+import {CategoryService} from '../../../services/category.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   templateUrl: './view.component.html'
 })
 export class ViewComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
+
+  categories: Category[];
+  category: Category;
 
   documents: Document[];
   document: Document;
@@ -31,16 +37,19 @@ export class ViewComponent implements OnInit, OnDestroy {
     private title$: TitleService,
     private modal$: NzModalService,
     private service$: DocumentService,
+    private category$: CategoryService,
     private sanitizer: DomSanitizer,
     private auth_$: AuthGuard
   ) {
     this.$subscriptions = {};
 
     this.document = null;
+    this.category = null;
   }
 
   ngOnInit(): void {
     this.subscribe('title');
+    this.subscribe('list_category');
     this.subscribe('list_document');
   }
 
@@ -53,25 +62,35 @@ export class ViewComponent implements OnInit, OnDestroy {
       case 'title':
         this.$subscriptions[key] = this.title$.getTitle().subscribe(v => this.title = v);
         break;
+      case 'list_category':
+        this.$subscriptions[key] = this.category$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.categories = res;
+          }
+        });
+        break;
       case 'list_document':
         this.document = null;
         this.loading = true;
-        this.$subscriptions[key] = this.service$.all().subscribe(res => {
-          if (res) {
-            this.loading = false;
-            this.documents = res;
+        this.$subscriptions[key] = this.service$
+          .all((params && params.hasOwnProperty('category_id')) && params.category_id
+            ? [{key: 'category_id', value: params.category_id}] : [])
+          .subscribe(res => {
+            if (res) {
+              this.loading = false;
+              this.documents = res;
 
-            if (res.length > 0) {
-              this.documents.sort((a, b) => a.title.localeCompare(b.title));
+              if (res.length > 0) {
+                this.documents.sort((a, b) => a.title.localeCompare(b.title));
 
-              if (params) {
-                this.openPDF(this.documents.filter(v => v.id === params.document_id).pop());
-              } else {
-                this.openPDF(this.documents[0]);
+                if (params && params.hasOwnProperty('document_id')) {
+                  this.openPDF(this.documents.filter(v => v.id === params.document_id).pop());
+                } else {
+                  this.openPDF(this.documents[0]);
+                }
               }
             }
-          }
-        });
+          });
         break;
       default:
         break;
@@ -153,7 +172,7 @@ export class ViewComponent implements OnInit, OnDestroy {
                   res => {
                     loading = false;
 
-                    this.subscribe('list_document');
+                    this.reload_data(null);
 
                     modal.close();
                   },
@@ -205,11 +224,7 @@ export class ViewComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              if (res != null && Array.isArray(res) && res.length === 1) {
-                this.subscribe('list_document', {document_id: res[0]});
-              } else {
-                this.subscribe('list_document', {document_id: this.document.id});
-              }
+              this.reload_data(res);
 
               modal.close();
             },
@@ -243,11 +258,7 @@ export class ViewComponent implements OnInit, OnDestroy {
             res => {
               loading = false;
 
-              if (res != null && Array.isArray(res) && res.length === 1) {
-                this.subscribe('list_document', {document_id: res[0]});
-              } else {
-                this.subscribe('list_document', {document_id: this.document.id});
-              }
+              this.reload_data(res);
 
               modal.close();
 
@@ -296,4 +307,23 @@ export class ViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  category_changes($event): void {
+    this.subscribe('list_document', {category_id: this.category});
+  }
+
+  private reload_data(res: any): void {
+    const params: any = {};
+
+    if (this.category) {
+      params.category_id = this.category;
+    }
+
+    if (res != null && Array.isArray(res) && res.length === 1) {
+      params.document_id = res[0];
+    } else {
+      params.document_id = this.document.id;
+    }
+
+    this.subscribe('list_document', params);
+  }
 }

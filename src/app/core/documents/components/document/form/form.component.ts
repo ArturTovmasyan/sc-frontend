@@ -1,21 +1,21 @@
 ﻿import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
-import {SpaceService} from '../../../services/space.service';
-import {AuthGuard} from '../../../guards/auth.guard';
-import {Space} from '../../../models/space';
-import {FileModel} from '../../../models/file-model';
-import {FacilityService} from '../../../residents/services/facility.service';
-import {Facility} from '../../../residents/models/facility';
-import {StringUtil} from '../../../../shared/utils/string-util';
-import {ModalFormService} from '../../../../shared/services/modal-form.service';
+import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
+import {Facility} from '../../../../residents/models/facility';
+import {FileModel} from '../../../../models/file-model';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {FacilityService} from '../../../../residents/services/facility.service';
+import {StringUtil} from '../../../../../shared/utils/string-util';
+import {Category} from '../../../models/category';
+import {CategoryService} from '../../../services/category.service';
+import {FormComponent as CategoryFormComponent} from '../../category/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  spaces: Space[];
+  categories: Category[];
   facilities: Facility[];
 
   @ViewChild('file') el_file: ElementRef;
@@ -26,10 +26,13 @@ export class FormComponent extends AbstractForm implements OnInit {
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
     private facility$: FacilityService,
-    private space$: SpaceService,
-    private auth_$: AuthGuard
+    private category$: CategoryService
   ) {
     super(modal$);
+
+    this.modal_map = [
+      {key: 'category', component: CategoryFormComponent}
+    ];
   }
 
   ngOnInit(): void {
@@ -46,18 +49,12 @@ export class FormComponent extends AbstractForm implements OnInit {
       file: [null],
 
       facilities: [[], Validators.compose([Validators.required])],
+
+      category_id: [null, Validators.compose([Validators.required])]
     });
 
+    this.subscribe('list_category');
     this.subscribe('list_facility');
-
-    this.add_space();
-  }
-
-  private add_space() {
-    if (this.auth_$.checkPermission(['persistence-security-space'])) {
-      this.form.addControl('space_id', new FormControl(null, [Validators.required]));
-      this.subscribe('list_space');
-    }
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -74,11 +71,14 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
-      case 'list_space':
-        this.$subscriptions[key] = this.space$.all().pipe(first()).subscribe(res => {
+      case 'list_category':
+        this.$subscriptions[key] = this.category$.all().pipe(first()).subscribe(res => {
           if (res) {
-            res.sort((a, b) => a.name.localeCompare(b.name));
-            this.spaces = res;
+            this.categories = res;
+
+            if (params) {
+              this.form.get('category_id').setValue(params.category_id);
+            }
           }
         });
         break;

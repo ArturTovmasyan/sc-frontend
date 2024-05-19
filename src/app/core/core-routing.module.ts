@@ -82,7 +82,7 @@ import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/v
 import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
 import {ListComponent as InsuranceCompanyListComponent} from './residents/components/insurance-company/list.component';
-import {ViewComponent as DocumentViewComponent} from './documents/components/view/view.component';
+import {ViewComponent as DocumentViewComponent} from './documents/components/document/view/view.component';
 import {HelpComponent} from './components/help/help.component';
 import {DashboardComponent as LeadDashboardComponent} from './leads/components/dashboard/dashboard.component';
 import {ListComponent as LeadContactListComponent} from './leads/components/contact/list.component';
@@ -93,6 +93,7 @@ import {ViewComponent as OutreachViewComponent} from './leads/components/outreac
 import {ListComponent as OutreachListComponent} from './leads/components/outreach/list.component';
 import {ListComponent as OutreachTypeListComponent} from './leads/components/outreach-type/list.component';
 import {ViewComponent as LeadContactViewComponent} from './leads/components/contact/view/view.component';
+import {ListComponent as DocumentCategoryListComponent} from './documents/components/category/list.component';
 
 const routes: Routes = [
   {
@@ -540,6 +541,15 @@ const routes: Routes = [
         }
       },
       {
+        path: 'document-categories', component: DocumentCategoryListComponent,
+        data: {
+          nav: {show: true, group: 'Documents'},
+          title: 'Categories',
+          permissions: ['persistence-common-document_category']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'documents', component: DocumentViewComponent,
         data: {
           nav: {show: true, group: 'Documents'},
@@ -600,7 +610,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Salutations',
-          permissions: ['activity-reference', 'persistence-common-salutation']
+          permissions: ['activity-reference', 'persistence-common-category']
         },
         canActivate: [AuthGuard]
       },

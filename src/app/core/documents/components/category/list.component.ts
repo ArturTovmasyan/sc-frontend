@@ -1,19 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {TitleService} from '../../../services/title.service';
-import {SalutationService} from '../../services/salutation.service';
+import {CategoryService} from '../../services/category.service';
 import {GridComponent} from '../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
-import {Salutation} from '../../models/salutation';
+import {Category} from '../../models/category';
 import {ModalFormService} from '../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: '../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../shared/components/grid/grid.component.scss'],
-  providers: [SalutationService, ModalFormService]
+  providers: [CategoryService, ModalFormService]
 })
-export class ListComponent extends GridComponent<Salutation, SalutationService> implements OnInit {
+export class ListComponent extends GridComponent<Category, CategoryService> implements OnInit {
   constructor(
-    protected service$: SalutationService,
+    protected service$: CategoryService,
     protected title$: TitleService,
     protected modal$: ModalFormService
   ) {
@@ -21,7 +21,7 @@ export class ListComponent extends GridComponent<Salutation, SalutationService> 
 
     this.component = FormComponent;
 
-    this.name = 'category-list';
+    this.name = 'document-category-list';
   }
 
   ngOnInit(): void {

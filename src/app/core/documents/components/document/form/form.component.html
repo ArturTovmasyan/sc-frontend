@@ -1,6 +1,26 @@
 ﻿<h4>Document</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
+  <nz-form-item *ngIf="form.get('category_id')">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="category_id" nzRequired>Category</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('category_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="category_id">
+          <ng-container *ngFor="let category of categories">
+            <nz-option [nzLabel]="category.title" [nzValue]="category.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
+                (click)="open_sub_modal('category');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('category_id')">
+        <app-field-errors [errors]="fieldErrors('category_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
@@ -24,16 +44,20 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="file" nzRequired>File</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('file')?'error':null">
-      <input type="file" #file (change)="onFileChange(files[0], $event)" accept="application/pdf" style="display: none;">
-      <button type="button" nz-button nzSize="small" *ngIf="form.get('file').value === null" (click)="select_file(files[0]);">
+      <input type="file" #file (change)="onFileChange(files[0], $event)" accept="application/pdf"
+             style="display: none;">
+      <button type="button" nz-button nzSize="small" *ngIf="form.get('file').value === null"
+              (click)="select_file(files[0]);">
         <i nz-icon type="upload"></i>
         <span>Select file...</span>
       </button>
-      <button type="button" nz-button nzSize="small" nzType="danger" *ngIf="form.get('file').value !== null" (click)="clear_file(files[0]);">
+      <button type="button" nz-button nzSize="small" nzType="danger" *ngIf="form.get('file').value !== null"
+              (click)="clear_file(files[0]);">
         <i nz-icon type="close"></i>
         {{ (files[0].file_name && files[0].file_name !== '') ? files[0].file_name : 'Remove' }}
       </button>
-      <p style="font-size: smaller;line-height: 0.5;" [style.color]="files[0].size_exceed?'red':'inherit'">(Maximum file size is 10 MB.)</p>
+      <p style="font-size: smaller;line-height: 0.5;" [style.color]="files[0].size_exceed?'red':'inherit'">(Maximum file
+        size is 10 MB.)</p>
       <nz-form-explain *ngIf="hasErrors('file')">
         <app-field-errors [errors]="fieldErrors('file')"></app-field-errors>
       </nz-form-explain>
@@ -50,20 +74,6 @@
       </nz-select>
       <nz-form-explain *ngIf="hasErrors('facilities')">
         <app-field-errors [errors]="fieldErrors('facilities')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item *ngIf="form.get('space_id')">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
-        <ng-container *ngFor="let space of spaces">
-          <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
-        </ng-container>
-      </nz-select>
-      <nz-form-explain *ngIf="hasErrors('space_id')">
-        <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>

@@ -186,8 +186,10 @@ import {FormComponent as ResidentHealthInsuranceFormComponent} from './residents
 import {ListComponent as ResidentDocumentListComponent} from './residents/components/resident/document/list.component';
 import {FormComponent as ResidentDocumentFormComponent} from './residents/components/resident/document/form/form.component';
 
-import {ViewComponent as DocumentViewComponent} from './documents/components/view/view.component';
-import {FormComponent as DocumentFormComponent} from './documents/components/form/form.component';
+import {ViewComponent as DocumentViewComponent} from './documents/components/document/view/view.component';
+import {FormComponent as DocumentFormComponent} from './documents/components/document/form/form.component';
+import {ListComponent as DocumentCategoryListComponent} from './documents/components/category/list.component';
+import {FormComponent as DocumentCategoryFormComponent} from './documents/components/category/form/form.component';
 
 import {HelpComponent} from './components/help/help.component';
 import {FeedbackComponent} from './components/feedback/feedback.component';
@@ -556,7 +558,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentDocumentFormComponent,
 
     DocumentViewComponent,
-    DocumentFormComponent
+    DocumentFormComponent,
+    DocumentCategoryListComponent,
+    DocumentCategoryFormComponent
   ],
   entryComponents: [
     UserFormComponent,
@@ -681,6 +685,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentDocumentFormComponent,
 
     DocumentFormComponent,
+    DocumentCategoryFormComponent,
+
     FeedbackFormComponent
   ],
   imports: [
