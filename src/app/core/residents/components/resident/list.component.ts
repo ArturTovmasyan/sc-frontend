@@ -33,8 +33,8 @@ export class ListComponent extends GridComponent<Resident, ResidentService> impl
     this.$subscriptions['param'] = this.route_params.params.subscribe((params: Array<any>): void => {
       if (params) {
         params = params.filter(v =>
-          v.params.hasOwnProperty('type') !== -1 &&
-          v.params.hasOwnProperty('group') !== -1 &&
+          v.params.hasOwnProperty('type') &&
+          v.params.hasOwnProperty('group') &&
           _.indexOf(v.url, 'residents') !== -1
         );
 

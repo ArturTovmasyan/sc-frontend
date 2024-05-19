@@ -1,0 +1,67 @@
+<nz-empty *ngIf="!data" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+<ng-container *ngIf="data">
+  <div *ngIf="data.facility && data.facility.length > 0" class="card">
+    <div class="card-header">
+      Facilities
+    </div>
+    <div class="card-body">
+      <template [ngTemplateOutlet]="tplResidentList"
+                [ngTemplateOutletContext]="{ type: GROUP_TYPE.FACILITY, data: data.facility }">
+      </template>
+    </div>
+  </div>
+  <div *ngIf="data.apartment && data.apartment.length > 0" class="card">
+    <div class="card-header">
+      Apartments
+    </div>
+    <div class="card-body">
+      <template [ngTemplateOutlet]="tplResidentList"
+                [ngTemplateOutletContext]="{ type: GROUP_TYPE.APARTMENT, data: data.apartment }">
+      </template>
+    </div>
+  </div>
+  <div *ngIf="data.region && data.region.length > 0" class="card">
+    <div class="card-header">
+      Regions
+    </div>
+    <div class="card-body">
+      <template [ngTemplateOutlet]="tplResidentList"
+                [ngTemplateOutletContext]="{ type: GROUP_TYPE.REGION, data: data.region }">
+      </template>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #tplResidentList let-group_data="data" let-type="type">
+  <ng-container *ngFor="let data of group_data; let last = last;">
+    <h3 style="margin: 1rem;text-align: center">{{ data.name }}</h3>
+    <div class="row">
+      <div class="col-lg-2 col-md-4" *ngFor="let resident of data.residents">
+        <div class="row">
+          <div class="col-12 text-center">
+            <img *ngIf="!resident.photo" src="/assets/img/person_placeholder.png" class="img-thumbnail"
+                 style="max-height: 150px"
+                 alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
+            <img *ngIf="resident.photo" src="{{ resident.photo }}" class="img-thumbnail"
+                 style="max-height: 150px"
+                 alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <p class="text-center"><a [routerLink]="['resident', resident.id]">{{ resident|resident }}</a></p>
+            <p *ngIf="type === GROUP_TYPE.FACILITY || type === GROUP_TYPE.APARTMENT"
+               class="text-center">{{ resident.room_number }} ({{ resident.bed_number }})</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <p class="text-right"><a nz-button nzType="primary"
+                                 [routerLink]="['residents', type, data.id]">More...</a></p>
+      </div>
+    </div>
+    <nz-divider *ngIf="!last"></nz-divider>
+  </ng-container>
+</ng-template>

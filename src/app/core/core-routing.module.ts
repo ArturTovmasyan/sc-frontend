@@ -59,6 +59,7 @@ import {ListComponent as ResidentDietListComponent} from './residents/components
 import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
 import {ListComponent as ResidentReportListComponent} from './residents/components/resident/report/list.component';
 import {HistoryComponent as ResidentHistoryComponent} from './residents/components/resident/history/history.component';
+import {HomeComponent} from './residents/components/home/home.component';
 
 
 const routes: Routes = [
@@ -68,6 +69,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {title: 'Home', permissions: []},
     children: [
+      {
+        path: '', component: HomeComponent,
+        data: {
+          title: 'Home',
+          permissions: []
+        },
+        canActivate: [AuthGuard]
+      },
       {
         path: 'residents', component: ResidentListComponent,
         data: {
