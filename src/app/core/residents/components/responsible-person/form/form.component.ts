@@ -48,8 +48,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       address_1: ['', Validators.required],
       address_2: [''],
       email: ['', Validators.compose([Validators.email])],
-      emergency: [false, Validators.required],
-      financially: [false, Validators.required],
       salutation_id: [null, Validators.required],
       csz_id: [null, Validators.required],
 

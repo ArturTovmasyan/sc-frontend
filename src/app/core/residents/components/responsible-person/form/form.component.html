@@ -80,26 +80,6 @@
 
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emergency" nzRequired>Emergency</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
-      <nz-switch formControlName="emergency"></nz-switch>
-      <nz-form-explain *ngIf="hasErrors('emergency')">
-        <app-field-errors [errors]="fieldErrors('emergency')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="financially" nzRequired>Financially</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
-      <nz-switch formControlName="financially"></nz-switch>
-      <nz-form-explain *ngIf="hasErrors('financially')">
-        <app-field-errors [errors]="fieldErrors('financially')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="csz_id" nzRequired>CSZ</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('csz_id')?'error':null">
       <div class="add-select-container">

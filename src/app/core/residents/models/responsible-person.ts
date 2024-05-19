@@ -15,9 +15,6 @@ export class ResponsiblePerson implements IdInterface {
 
   email: string;
 
-  financially: boolean;
-  emergency: boolean;
-
   salutation: Salutation;
   csz: CityStateZip;
   space: Space;
