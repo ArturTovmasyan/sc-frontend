@@ -91,37 +91,42 @@
 
       <ng-container>
         <nz-divider nzText="Reports"></nz-divider>
-        <p style="margin:0;text-indent: 1rem;">
-          <a [routerLink]="" (click)="show_report('resident', (!admission?'profile-no-admission':'profile'));">
-            <i class="fas fa-file-download"></i> Profile
-          </a>
-        </p>
-        <p style="margin:0;text-indent: 1rem;">
-          <a [routerLink]="" (click)="show_report('resident', (!admission?'profile-no-admission':'profile'), {discontinued: true});">
-            <i class="fas fa-file-download"></i> Profile (with discontinued medications)
-          </a>
-        </p>
-        <p style="margin:0;text-indent: 1rem;">
-          <a [routerLink]="" (click)="show_report('resident', (!admission?'face-sheet-no-admission':'face-sheet'));">
-            <i class="fas fa-file-download"></i> FACE Sheet
-          </a>
-        </p>
-        <p style="margin:0;text-indent: 1rem;">
-          <a [routerLink]="" (click)="show_report('form', (!admission?'medication-chart-no-admission':'medication-chart'));">
-            <i class="fas fa-file-download"></i> MAR Chart
-          </a>
-        </p>
-        <p style="margin:0;text-indent: 1rem;">
-          <a [routerLink]="" (click)="show_report('form', (!admission?'medication-list-resident-no-admission':'medication-list-resident'));">
-            <i class="fas fa-file-download"></i> Medication List
-          </a>
-        </p>
-        <p style="margin:0;text-indent: 1rem;">
-          <a [routerLink]=""
-             (click)="show_report('form', (!admission?'medication-list-resident-no-admission':'medication-list-resident'), {discontinued: true});">
-            <i class="fas fa-file-download"></i> Medication List (with discontinued medications)
-          </a>
-        </p>
+        <ul class="reports-list">
+          <li>
+            <a [routerLink]="" (click)="show_report('resident', (!admission?'profile-no-admission':'profile'));">
+              <i class="fas fa-file-download"></i> Profile
+            </a>
+          </li>
+          <li>
+            <a [routerLink]=""
+               (click)="show_report('resident', (!admission?'profile-no-admission':'profile'), {discontinued: true});">
+              <i class="fas fa-file-download"></i> Profile (with discontinued medications)
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="" (click)="show_report('resident', (!admission?'face-sheet-no-admission':'face-sheet'));">
+              <i class="fas fa-file-download"></i> FACE Sheet
+            </a>
+          </li>
+          <li>
+            <a [routerLink]=""
+               (click)="show_report('form', (!admission?'medication-chart-no-admission':'medication-chart'));">
+              <i class="fas fa-file-download"></i> MAR Chart
+            </a>
+          </li>
+          <li>
+            <a [routerLink]=""
+               (click)="show_report('form', (!admission?'medication-list-resident-no-admission':'medication-list-resident'));">
+              <i class="fas fa-file-download"></i> Medication List
+            </a>
+          </li>
+          <li>
+            <a [routerLink]=""
+               (click)="show_report('form', (!admission?'medication-list-resident-no-admission':'medication-list-resident'), {discontinued: true});">
+              <i class="fas fa-file-download"></i> Medication List (with discontinued medications)
+            </a>
+          </li>
+        </ul>
       </ng-container>
 
       <nz-divider></nz-divider>
