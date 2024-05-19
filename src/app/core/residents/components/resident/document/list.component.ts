@@ -1,22 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {NzMessageService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {ResidentDocumentService} from '../../../services/resident-document.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {ResidentDocument} from '../../../models/resident-document';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {Button, ButtonMode} from '../../../../../shared/components/modal/button-bar.component';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
-  providers: [ResidentDocumentService]
+  providers: [ResidentDocumentService, ModalFormService]
 })
-export class ListComponent extends GridComponent<ResidentDocument, ResidentDocumentService> implements OnInit {
+export class ListComponent extends GridComponent<ResidentDocument, ResidentDocumentService> implements OnInit, AfterViewInit {
   constructor(
     protected service$: ResidentDocumentService,
     protected title$: TitleService,
-    protected modal$: NzModalService,
+    protected modal$: ModalFormService,
     private residentSelector$: ResidentSelectorService,
     private message$: NzMessageService
   ) {
@@ -29,27 +31,28 @@ export class ListComponent extends GridComponent<ResidentDocument, ResidentDocum
   }
 
   ngOnInit(): void {
-    this.buttons_center.push(
-      {
-        name: 'download',
-        type: 'default',
-        multiselect: false,
-        free: false,
-        nzIcon: null,
-        faIcon: 'far fa-file',
-        click: (ids: number[]) => {
-          this.loading = true;
-          this.service$.download(ids[0], () => {
-            this.loading = false;
-          }, (error) => {
-            this.loading = false;
-            this.message$.error(error.data.error, {nzDuration: 10000});
-          });
-        }
-      }
-    );
-
     this.subscribe('rs_resident');
+  }
+
+  ngAfterViewInit(): void {
+    this.add_button_center(new Button(
+      'download',
+      'grid.resident-document-list.button.download',
+      'default',
+      ButtonMode.SINGLE_SELECT,
+      null,
+      'far fa-file',
+      false,
+      true,
+      () => {
+        this.loading = true;
+        this.service$.download(this.checkbox_config.ids[0], () => {
+          this.loading = false;
+        }, (error) => {
+          this.loading = false;
+          this.message$.error(error.data.error, {nzDuration: 10000});
+        });
+      }));
   }
 
   protected subscribe(key: string, params?: any): void {

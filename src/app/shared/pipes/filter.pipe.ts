@@ -6,7 +6,7 @@ import {Injectable, Pipe, PipeTransform} from '@angular/core';
 
 @Injectable()
 export class FilterPipe implements PipeTransform {
-  transform(items: any[], field: string, value: string): any[] {
+  transform(items: any[], field: string, value: any): any[] {
     if (!items) {
       return [];
     } else {

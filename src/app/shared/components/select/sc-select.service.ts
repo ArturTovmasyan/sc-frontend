@@ -6,16 +6,16 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { BACKSPACE, DOWN_ARROW, ENTER, SPACE, TAB, UP_ARROW } from '@angular/cdk/keycodes';
-import { Injectable } from '@angular/core';
-import { combineLatest, merge, BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
-import { distinctUntilChanged, filter, map, share, skip, tap } from 'rxjs/operators';
+import {BACKSPACE, DOWN_ARROW, ENTER, SPACE, TAB, UP_ARROW} from '@angular/cdk/keycodes';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, combineLatest, merge, ReplaySubject, Subject} from 'rxjs';
+import {distinctUntilChanged, filter, map, share, skip, tap} from 'rxjs/operators';
 
-import { isNil, isNotNil } from 'ng-zorro-antd/core';
+import {isNil, isNotNil} from 'ng-zorro-antd/core';
 
-import { ScOptionGroupComponent } from './sc-option-group.component';
-import { ScOptionComponent } from './sc-option.component';
-import { defaultFilterOption, ScFilterOptionPipe, TFilterOption } from './sc-option.pipe';
+import {ScOptionGroupComponent} from './sc-option-group.component';
+import {ScOptionComponent} from './sc-option.component';
+import {defaultFilterOption, ScFilterOptionPipe, TFilterOption} from './sc-option.pipe';
 
 @Injectable()
 export class ScSelectService {

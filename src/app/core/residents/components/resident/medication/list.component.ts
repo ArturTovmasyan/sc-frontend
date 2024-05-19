@@ -1,22 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {NzModalService} from 'ng-zorro-antd';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {TitleService} from '../../../../services/title.service';
 import {ResidentMedicationService} from '../../../services/resident-medication.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {ResidentMedication} from '../../../models/resident-medication';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {Button, ButtonMode} from '../../../../../shared/components/modal/button-bar.component';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
-  providers: [ResidentMedicationService]
+  providers: [ResidentMedicationService, ModalFormService]
 })
-export class ListComponent extends GridComponent<ResidentMedication, ResidentMedicationService> implements OnInit {
+export class ListComponent extends GridComponent<ResidentMedication, ResidentMedicationService> implements OnInit, AfterViewInit {
   constructor(
     protected service$: ResidentMedicationService,
     protected title$: TitleService,
-    protected modal$: NzModalService,
+    protected modal$: ModalFormService,
     private residentSelector$: ResidentSelectorService
   ) {
     super(service$, title$, modal$);
@@ -30,7 +31,10 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
   ngOnInit(): void {
     this.subscribe('rs_resident');
 
-    this.buttons_center.push(this.get_show_hide_button());
+  }
+
+  ngAfterViewInit(): void {
+    this.add_button_center(this.get_show_hide_button());
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -63,27 +67,28 @@ export class ListComponent extends GridComponent<ResidentMedication, ResidentMed
     }
 
     if (value === '1') {
-      label = 'unhide';
+      label = 'grid.resident-medication-list.button.unhide';
     } else {
-      label = 'hide';
+      label = 'grid.resident-medication-list.button.hide';
     }
 
-    return {
-      name: label,
-      type: 'default',
-      multiselect: false,
-      free: true,
-      nzIcon: null,
-      faIcon: 'fas fa-medkit',
-      click: (ids: number[]) => {
+    return new Button(
+      'show_hide',
+      label,
+      'default',
+      ButtonMode.FREE_SELECT,
+      null,
+      'fas fa-medkit',
+      false,
+      true,
+      () => {
         this.loading = true;
         this.params = this.params.filter(v => v.key !== 'discontinued');
         this.params.push({key: 'discontinued', value: value});
         super.init(true);
 
-        this.buttons_center = [];
-        this.buttons_center.push(this.get_show_hide_button());
-      }
-    };
+        this.clear_button_center();
+        this.add_button_center(this.get_show_hide_button());
+      });
   }
 }

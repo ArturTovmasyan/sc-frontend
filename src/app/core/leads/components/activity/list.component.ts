@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../services/title.service';
 import {ActivityService} from '../../services/activity.service';
@@ -11,18 +11,21 @@ import {Observable} from 'rxjs';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {ReportService} from '../../../residents/services/report.service';
 import {ActivatedRoute} from '@angular/router';
+import {ModalFormService} from '../../../../shared/services/modal-form.service';
+import {Button, ButtonMode} from '../../../../shared/components/modal/button-bar.component';
 
 @Component({
   templateUrl: '../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../shared/components/grid/grid.component.scss'],
-  providers: [ActivityService]
+  providers: [ActivityService, ModalFormService]
 })
-export class ListComponent extends GridComponent<Activity, ActivityService> implements OnInit {
+export class ListComponent extends GridComponent<Activity, ActivityService> implements OnInit, AfterViewInit {
   constructor(
     protected service$: ActivityService,
     protected report$: ReportService,
     protected title$: TitleService,
-    protected modal$: NzModalService,
+    protected modal$: ModalFormService,
+    protected nzModal$: NzModalService,
     private route$: ActivatedRoute
   ) {
     super(service$, title$, modal$);
@@ -33,36 +36,12 @@ export class ListComponent extends GridComponent<Activity, ActivityService> impl
 
     this.grid_options_loaded.subscribe(next => {
       if (next) {
-        this.button_shows.add = false;
+        this._btnBar.buttons_crud.filter(v => v.name === 'add').pop().show = false; // TODO: review
       }
     });
   }
 
   ngOnInit(): void {
-    this.buttons_center.push(
-      {
-        name: 'report',
-        type: 'default',
-        multiselect: false,
-        free: true,
-        nzIcon: null,
-        faIcon: 'far fa-file',
-        click: (ids: number[]) => {
-          this.create_report_modal(this.modal$, ReportFormComponent, data => {
-            this.loading = true;
-            return this.report$.reportAsObservable('lead', 'activity', 'csv', {
-              assessment_id: 1,
-              date_from: data.date_from,
-              date_to: data.date_to
-            });
-          }, data => {
-            saveFile(data);
-            this.loading = false;
-          });
-        }
-      }
-    );
-
     if (this.route$.snapshot.url[0].path === 'my') {
       this.params.push({key: 'my', value: '1'});
     }
@@ -70,8 +49,32 @@ export class ListComponent extends GridComponent<Activity, ActivityService> impl
     super.init();
   }
 
+  ngAfterViewInit(): void {
+    this.add_button_center(new Button(
+      'report',
+      'grid.lead-activity-list.button.report',
+      'default',
+      ButtonMode.FREE_SELECT,
+      null,
+      'far fa-file',
+      false,
+      true,
+      () => {
+        this.create_report_modal(ReportFormComponent, data => {
+          this.loading = true;
+          return this.report$.reportAsObservable('lead', 'activity', 'csv', {
+            assessment_id: 1,
+            date_from: data.date_from,
+            date_to: data.date_to
+          });
+        }, data => {
+          saveFile(data);
+          this.loading = false;
+        });
+      }));
+  }
+
   protected create_report_modal(
-    modal$: NzModalService,
     form_component: any,
     submit: (data: any) => Observable<any>,
     callback: (data: any) => any
@@ -79,7 +82,7 @@ export class ListComponent extends GridComponent<Activity, ActivityService> impl
     let valid = false;
     let loading = false;
 
-    const modal = modal$.create({
+    const modal = this.nzModal$.create({
       nzClosable: false,
       nzMaskClosable: false,
       nzWidth: '45rem',

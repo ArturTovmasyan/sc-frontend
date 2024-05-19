@@ -1,22 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {NzMessageService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {ResidentHealthInsurance} from '../../../models/resident-health-insurance';
 import {ResidentHealthInsuranceService} from '../../../services/resident-health-insurance.service';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {Button, ButtonMode} from '../../../../../shared/components/modal/button-bar.component';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
-  providers: [ResidentHealthInsuranceService]
+  providers: [ResidentHealthInsuranceService, ModalFormService]
 })
-export class ListComponent extends GridComponent<ResidentHealthInsurance, ResidentHealthInsuranceService> implements OnInit {
+export class ListComponent extends GridComponent<ResidentHealthInsurance, ResidentHealthInsuranceService> implements OnInit, AfterViewInit {
   constructor(
     protected service$: ResidentHealthInsuranceService,
     protected title$: TitleService,
-    protected modal$: NzModalService,
+    protected modal$: ModalFormService,
     private residentSelector$: ResidentSelectorService,
     private message$: NzMessageService
   ) {
@@ -29,44 +31,48 @@ export class ListComponent extends GridComponent<ResidentHealthInsurance, Reside
   }
 
   ngOnInit(): void {
-    this.buttons_center.push(
-      {
-        name: 'download_first',
-        type: 'default',
-        multiselect: false,
-        free: false,
-        nzIcon: null,
-        faIcon: 'far fa-file',
-        click: (ids: number[]) => {
-          this.loading = true;
-          this.service$.download(ids[0], 1, () => {
-            this.loading = false;
-          }, (error) => {
-            this.loading = false;
-            this.message$.error(error.data.error, {nzDuration: 10000});
-          });
-        }
-      },
-      {
-        name: 'download_second',
-        type: 'default',
-        multiselect: false,
-        free: false,
-        nzIcon: null,
-        faIcon: 'far fa-file',
-        click: (ids: number[]) => {
-          this.loading = true;
-          this.service$.download(ids[0], 2, () => {
-            this.loading = false;
-          }, (error) => {
-            this.loading = false;
-            this.message$.error(error.data.error, {nzDuration: 10000});
-          });
-        }
-      }
-    );
-
     this.subscribe('rs_resident');
+  }
+
+  ngAfterViewInit(): void {
+    this.add_button_center(new Button(
+      'download_first',
+      'grid.resident-health-insurance-list.button.download_first',
+      'default',
+      ButtonMode.SINGLE_SELECT,
+      null,
+      'far fa-file',
+      false,
+      true,
+      () => {
+        this.loading = true;
+        this.service$.download(this.checkbox_config.ids[0], 1, () => {
+          this.loading = false;
+        }, (error) => {
+          this.loading = false;
+          this.message$.error(error.data.error, {nzDuration: 10000});
+        });
+      }
+    ));
+    this.add_button_center(new Button(
+      'download_second',
+      'grid.resident-health-insurance-list.button.download_second',
+      'default',
+      ButtonMode.SINGLE_SELECT,
+      null,
+      'far fa-file',
+      false,
+      true,
+      () => {
+        this.loading = true;
+        this.service$.download(this.checkbox_config.ids[0], 2, () => {
+          this.loading = false;
+        }, (error) => {
+          this.loading = false;
+          this.message$.error(error.data.error, {nzDuration: 10000});
+        });
+      }
+    ));
   }
 
   protected subscribe(key: string, params?: any): void {

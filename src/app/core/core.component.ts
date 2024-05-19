@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {filter, map, mergeMap} from 'rxjs/operators';
 import {TitleService} from './services/title.service';
@@ -22,7 +22,9 @@ export class CoreComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private title$: TitleService,
-    private translate$: TranslateService) {
+    private translate$: TranslateService,
+    public viewRef: ViewContainerRef
+  ) {
 
     this.changes = new MutationObserver((mutations) => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');

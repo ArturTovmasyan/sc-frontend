@@ -1,24 +1,27 @@
 import * as _ from 'lodash';
-import {OnDestroy, TemplateRef, ViewChild} from '@angular/core';
+import {OnDestroy, ViewChild} from '@angular/core';
 import {KeyValue} from '@angular/common';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {NzModalService} from 'ng-zorro-antd';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {TitleService} from '../../../core/services/title.service';
 import {GridService} from '../../services/grid.service';
-import {AbstractForm} from '../abstract-form/abstract-form';
-import {MessageComponent} from './message.component';
-import {FormGroup} from '@angular/forms';
+import {ModalFormService} from '../../services/modal-form.service';
+import {Button, ButtonBarComponent} from '../modal/button-bar.component';
 
 export class GridComponent<T extends IdInterface, Service extends GridService<T>> implements OnDestroy {
   _ = _;
 
-  @ViewChild('modalFooter') modalFooter: TemplateRef<any>;
+  protected _btnBar: ButtonBarComponent;
+
+  @ViewChild(ButtonBarComponent) set btnBar (btnBar: ButtonBarComponent) {
+    this._btnBar = btnBar;
+  }
+
+  public modal_callback: () => void = () => this.reload_data();
 
   protected grid_options_loaded: BehaviorSubject<boolean>;
 
   public card: boolean = true; // TODO(haykg): review to convert Input
   public searchable: boolean = true; // TODO(haykg): review to convert Input
-  protected loading_edit_modal: boolean = false;
 
   protected loading = false;
 
@@ -36,60 +39,10 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   };
 
   protected fields: any[] = null;
-
-  protected button_shows = {
-    override: true,
-    add: true,
-    edit: true,
-    remove: true
-  };
-
-  protected button_labels = {
-    add: 'grid.add',
-    edit: 'grid.edit',
-    remove: 'grid.remove'
-  };
-
-  protected button_icons = {
-    add: 'plus',
-    edit: 'edit',
-    remove: 'delete'
-  };
-
   protected data = [];
 
   protected title: string = null;
   protected name: string = null;
-
-  protected buttons_left: {
-    name: string,
-    type: string,
-    multiselect: boolean,
-    free: boolean,
-    nzIcon: string,
-    faIcon: string,
-    click: (ids: number[]) => void
-  }[] = [];
-
-  protected buttons_center: {
-    name: string,
-    type: string,
-    multiselect: boolean,
-    free: boolean,
-    nzIcon: string,
-    faIcon: string,
-    click: (ids: number[]) => void
-  }[] = [];
-
-  protected buttons_right: {
-    name: string,
-    type: string,
-    multiselect: boolean,
-    free: boolean,
-    nzIcon: string,
-    faIcon: string,
-    click: (ids: number[]) => void
-  }[] = [];
 
   protected search_query: string = '';
 
@@ -102,29 +55,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected $subscriptions: { [key: string]: Subscription; };
 
-  protected without_save_and_add: boolean = false;
-
-  protected modal_cancel: () => void;
-  protected modal_previous: () => void;
-  protected modal_next: () => void;
-  protected modal_save: () => void;
-  protected modal_save_add: () => void;
-  protected modal_save_add_show: () => boolean;
-  protected modal_previous_show: () => boolean;
-  protected modal_next_show: () => boolean;
-  protected modal_save_loading: () => boolean;
-  protected modal_save_disabled: () => boolean;
-
-
-  private static override_buttons(a: any, b: any): any {
-    return {
-      override: false,
-      add: (a.add === false || b.add === false) ? false : b.add,
-      edit: (a.edit === false || b.edit === false) ? false : b.edit,
-      remove: (a.remove === false || b.remove === false) ? false : b.remove
-    };
-  }
-  constructor(protected service$: Service, protected title$: TitleService, protected modal$: NzModalService) {
+  constructor(protected service$: Service, protected title$: TitleService, protected modal$: ModalFormService) {
     this.title$.getTitle().subscribe(v => this.title = v);
 
     this.grid_options_loaded = new BehaviorSubject<boolean>(false);
@@ -148,9 +79,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   init(reset: boolean = false): void {
     this.load_grid_fields().subscribe((data: any) => {
       if (data) {
-        this.button_shows = this.button_shows.override === true
-          ? data.buttons
-          : GridComponent.override_buttons(this.button_shows, data.buttons);
+        this._btnBar.override_crud_buttons(data.buttons);
+
         this.grid_options_loaded.next(true);
 
         this.fields = data.fields;
@@ -298,248 +228,6 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     });
   }
 
-  download_pdf() {
-    this.loading = true;
-    this.load_pdf(() => {
-      this.loading = false;
-    });
-  }
-
-  show_modal_add(): void {
-    this.create_modal(data => this.add_data(data), null, null);
-  }
-
-  show_modal_edit(): void {
-    this.open_edit_modal(this.checkbox_config.ids[0]);
-  }
-
-  open_edit_modal(id: number) {
-    this.loading_edit_modal = true;
-    this.load_data(id).subscribe(
-      res => {
-        this.loading_edit_modal = false;
-
-        this.create_modal(data => this.edit_data(data), res, null);
-      },
-      error => {
-        this.loading_edit_modal = false;
-        // console.error(error);
-      });
-  }
-
-  show_modal_remove(): void {
-    let loading = false;
-    this.service$.relatedInfo(this.checkbox_config.ids).subscribe(value => {
-      if (value) {
-        let modal_title = '';
-        let modal_message = '';
-
-        if (_.isArray(value) && value.length > 0) {
-          value = Object.keys(value[0])
-            .reduce((previousValue, currentValue, currentIndex) => (previousValue + value[0][currentValue].sum), 0);
-
-          if (value > 0) {
-            modal_title = 'Attention!';
-            modal_message = `This may cause other data loss from database. There are ${value} connections found in database.`;
-          }
-        }
-
-        const modal = this.modal$.create({
-          nzClosable: false,
-          nzMaskClosable: false,
-          nzTitle: null,
-          nzContent: MessageComponent,
-          nzFooter: [
-            {
-              label: 'No',
-              onClick: () => {
-                modal.close();
-              }
-            },
-            {
-              type: 'danger',
-              label: 'Yes',
-              loading: () => loading,
-              onClick: () => {
-                loading = true;
-
-                this.remove_data(this.checkbox_config.ids).subscribe(
-                  res => {
-                    loading = false;
-
-                    this.reload_data();
-
-                    modal.close();
-                  },
-                  error => {
-                    loading = false;
-                    modal.close();
-
-                    this.modal$.error({
-                      nzTitle: 'Remove Error',
-                      nzContent: `${error.data.error}`
-                    });
-
-                    // console.error(error);
-                  });
-              }
-            }
-          ]
-        });
-
-        modal.afterOpen.subscribe(() => {
-          const component = modal.getContentComponent();
-          if (component instanceof MessageComponent) {
-            component.title = modal_title;
-            component.message = modal_message;
-          }
-        });
-      }
-    });
-  }
-
-  private create_modal(submit: (data: any) => Observable<any>, result: any, previous_data?: any) {
-    let valid = false;
-    let loading = false;
-
-    const modal = this.modal$.create({
-      nzClosable: false,
-      nzMaskClosable: false,
-      nzWidth: '45rem',
-      nzTitle: null,
-      nzContent: this.component,
-      nzFooter: this.modalFooter
-    });
-
-    this.modal_cancel = () => {
-      modal.close();
-    };
-    this.modal_save = () => {
-      loading = true;
-
-      const component = <AbstractForm>modal.getContentComponent();
-      component.before_submit();
-      const form_data = component.formObject.value;
-
-      component.submitted = true;
-
-      submit(form_data).subscribe(
-        res => {
-          loading = false;
-
-          this.reload_data();
-          component.after_submit();
-
-          modal.close();
-        },
-        error => {
-          loading = false;
-
-          component.handleSubmitError(error);
-          component.postSubmit(null);
-          // console.error(error);
-        });
-    };
-
-    this.modal_save_add = () => {
-      loading = true;
-
-      const component = <AbstractForm>modal.getContentComponent();
-      component.before_submit();
-      const form_data = component.formObject.value;
-
-      component.submitted = true;
-
-      submit(form_data).subscribe(
-        res => {
-          loading = false;
-
-          this.reload_data();
-          component.after_submit();
-
-          modal.close();
-
-          this.create_modal(submit, result, form_data);
-        },
-        error => {
-          loading = false;
-
-          component.handleSubmitError(error);
-          component.postSubmit(null);
-          // console.error(error);
-        });
-    };
-
-    this.modal_previous = () => {
-      const component = modal.getContentComponent();
-      if (component instanceof AbstractForm) {
-        if (component.tabSelected.value > 0) {
-          if (component.tabSelected.value > 0) {
-            component.tabSelected.next(component.tabSelected.value - 1);
-          }
-        }
-      }
-    };
-
-    this.modal_next = () => {
-      const component = modal.getContentComponent();
-      if (component instanceof AbstractForm) {
-        if (component.tabSelected.value < component.tabCount) {
-            component.tabSelected.next(component.tabSelected.value + 1);
-        }
-      }
-    };
-
-    this.modal_previous_show = () => {
-      const component = modal.getContentComponent();
-      if (component instanceof AbstractForm) {
-        return component.tabCount > 0 && component.tabSelected.value > 0;
-      }
-      return false;
-    };
-
-    this.modal_next_show = () => {
-      const component = modal.getContentComponent();
-      if (component instanceof AbstractForm) {
-        // console.log(component.tabCount);
-        return component.tabCount > 0 && component.tabSelected.value < (component.tabCount - 1);
-      }
-      return false;
-    };
-
-    this.modal_save_add_show = () => result === null && this.without_save_and_add === false;
-    this.modal_save_loading = () => loading;
-    this.modal_save_disabled = () => !valid;
-
-    modal.afterOpen.subscribe(() => {
-      const component = modal.getContentComponent();
-      if (component instanceof AbstractForm) {
-        const form = component.formObject;
-
-        if (result !== null) {
-          component.edit_mode = true;
-          component.loaded.subscribe(v => {
-            if (v) {
-              component.before_set_form_data(result);
-              component.set_form_data(component, form, result);
-              component.after_set_form_data();
-            }
-          });
-        } else {
-          component.edit_mode = false;
-
-          this.preset_modal_form_data(form); // TODO: review
-          component.before_set_form_data(null, previous_data); // TODO: review
-        }
-
-        valid = form.valid;
-        form.valueChanges.subscribe(val => {
-          valid = form.valid;
-        });
-      }
-    });
-  }
-
   protected load_grid_fields() {
     return this.service$.options(this.params);
   }
@@ -549,30 +237,6 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
                       sort: { key: string, value: string }[],
                       filter: { [id: string]: { condition: number, value: any[] } }) {
     return this.service$.list(page, per_page, sort, filter, this.params);
-  }
-
-  protected load_pdf(callback: any) {
-    return this.service$.pdf(callback);
-  }
-
-  protected load_data(id: number) {
-    return this.service$.get(id);
-  }
-
-  protected add_data(data: T) {
-    return this.service$.add(data);
-  }
-
-  protected edit_data(data: T) {
-    return this.service$.edit(data);
-  }
-
-  protected remove_data(ids: number[]) {
-    return this.service$.removeBulk(ids);
-  }
-
-  protected button_action(button) {
-    button.click(this.checkbox_config.ids);
   }
 
   protected routeInfo(route: string, row: any) {
@@ -595,7 +259,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
     if (route_suffix !== null && route_suffix.length === 2) {
       route_suffix = route_suffix[1];
-    } else  {
+    } else {
       return null;
     }
 
@@ -644,9 +308,6 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     return 'inherit';
   }
 
-  protected preset_modal_form_data(form: FormGroup) {
-  }
-
   protected search() {
     this.add_param('query', this.search_query);
     this.reload_data(true);
@@ -660,4 +321,36 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   protected remove_param(key: string) {
     this.params = this.params.filter(v => v.key !== key);
   }
+
+  open_edit_modal(id: number) {
+    const btn = this._btnBar.buttons_crud.filter(v => v.name === 'edit').pop();
+    if (btn.show) {
+      this._btnBar.open_edit_modal(id);
+    }
+  }
+
+  public add_button_left(button: Button) {
+    this._btnBar.buttons_left.push(button);
+  }
+
+  public add_button_center(button: Button) {
+    this._btnBar.buttons_center.push(button);
+  }
+
+  public add_button_right(button: Button) {
+    this._btnBar.buttons_right.push(button);
+  }
+
+  public clear_button_left() {
+    this._btnBar.buttons_left = [];
+  }
+
+  public clear_button_center() {
+    this._btnBar.buttons_center = [];
+  }
+
+  public clear_button_right() {
+    this._btnBar.buttons_right = [];
+  }
+
 }

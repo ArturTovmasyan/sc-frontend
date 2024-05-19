@@ -16,6 +16,8 @@ import {String2JsonPipe} from './pipes/str2json.pipe';
 import {StringPipe} from './pipes/string.pipe';
 import {CronPipe} from './pipes/cron.pipe';
 import {ScSelectModule} from './components/select/sc-select.module';
+import {ModalFormComponent} from './components/modal/modal-form.component';
+import {ButtonBarComponent} from './components/modal/button-bar.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import {ScSelectModule} from './components/select/sc-select.module';
     FormErrorsComponent,
     InputCounterComponent,
     MessageComponent,
+    ModalFormComponent,
+    ButtonBarComponent,
 
     CronPipe,
     FilterPipe,
@@ -41,7 +45,8 @@ import {ScSelectModule} from './components/select/sc-select.module';
     ScSelectModule
   ],
   entryComponents: [
-    MessageComponent
+    MessageComponent,
+    ModalFormComponent
   ],
   providers: [
     {provide: NZ_I18N, useValue: en_US}
@@ -58,6 +63,8 @@ import {ScSelectModule} from './components/select/sc-select.module';
     FieldErrorsComponent,
     FormErrorsComponent,
     InputCounterComponent,
+    ModalFormComponent,
+    ButtonBarComponent,
 
     CronPipe,
     KeysPipe,

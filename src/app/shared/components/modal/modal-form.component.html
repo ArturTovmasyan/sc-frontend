@@ -1,0 +1,13 @@
+<ng-template #modalFooter>
+  <button nz-button type="button" nzType="default" (click)="btn_cancel();">Cancel</button>
+  <button *ngIf="show_previous()" nz-button type="button" nzType="default" (click)="btn_previous();">Previous</button>
+  <button *ngIf="show_next()" nz-button type="button" nzType="default" (click)="btn_next();">Next</button>
+  <button *ngIf="!show_next()" nz-button type="button" nzType="primary" (click)="btn_save();"
+          [nzLoading]="show_save_loading()" [disabled]="show_save_disabled()">
+    Save
+  </button>
+  <button *ngIf="!show_next() && show_save_add()" nz-button type="button" nzType="dashed" (click)="btn_save_add();"
+          [nzLoading]="show_save_loading()" [disabled]="show_save_disabled()">
+    Save & Add
+  </button>
+</ng-template>

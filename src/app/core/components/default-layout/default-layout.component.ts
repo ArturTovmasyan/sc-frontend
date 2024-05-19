@@ -2,7 +2,7 @@ import * as normalize from 'normalize-path';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Route, Router} from '@angular/router';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from '@ng-idle/core';
-import {Subscription, timer} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {User} from '../../models/user';
 import {AuthGuard} from '../../guards/auth.guard';
 import {ProfileService} from '../../services/profile.service';

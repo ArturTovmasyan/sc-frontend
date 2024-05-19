@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CronJobsConfig, CronJobsSelectOption, CronJobsValidationConfig, OptionType } from '../contracts/contracts';
+import {Injectable} from '@angular/core';
+import {CronJobsConfig, CronJobsSelectOption, CronJobsValidationConfig, OptionType} from '../contracts/contracts';
 
 @Injectable()
 export class DataService {

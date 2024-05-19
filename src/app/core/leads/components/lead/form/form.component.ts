@@ -139,7 +139,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     this.subscribe('list_referrer_type');
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.tabCountRecalculate(this._el);
   }
 

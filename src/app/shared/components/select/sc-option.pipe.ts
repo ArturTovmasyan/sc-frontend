@@ -6,9 +6,9 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
-import { ScOptionGroupComponent } from './sc-option-group.component';
-import { ScOptionComponent } from './sc-option.component';
+import {Pipe, PipeTransform} from '@angular/core';
+import {ScOptionGroupComponent} from './sc-option-group.component';
+import {ScOptionComponent} from './sc-option.component';
 
 export type TFilterOption = (input: string, option: ScOptionComponent) => boolean;
 

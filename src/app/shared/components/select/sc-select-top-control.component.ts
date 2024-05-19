@@ -21,13 +21,13 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
-import { zoomMotion, NzNoAnimationDirective } from 'ng-zorro-antd/core';
+import {NzNoAnimationDirective, zoomMotion} from 'ng-zorro-antd/core';
 
-import { ScOptionComponent } from './sc-option.component';
-import { ScSelectService } from './sc-select.service';
+import {ScOptionComponent} from './sc-option.component';
+import {ScSelectService} from './sc-select.service';
 
 @Component({
   selector: '[sc-select-top-control]',

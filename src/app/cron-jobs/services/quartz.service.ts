@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { PosixService } from './posix.service';
-import { DataService } from './data.service';
-import { CronJobsFrequency, CronJobsSelectOption } from '../contracts/contracts';
+import {Injectable} from '@angular/core';
+import {PosixService} from './posix.service';
+import {DataService} from './data.service';
+import {CronJobsFrequency, CronJobsSelectOption} from '../contracts/contracts';
 
 @Injectable()
 export class QuartzService extends PosixService {

@@ -85,7 +85,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     this.subscribe('list_physician');
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.tabCountRecalculate(this._el);
   }
 

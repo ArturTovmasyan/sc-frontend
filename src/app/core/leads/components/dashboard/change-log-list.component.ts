@@ -1,23 +1,23 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NzModalService} from 'ng-zorro-antd';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {GridComponent} from '../../../../shared/components/grid/grid.component';
 import {TitleService} from '../../../services/title.service';
 import {FormComponent} from '../activity/form/form.component';
 import {ChangeLogService} from '../../../admin/services/change-log.service';
 import {ChangeLog} from '../../../models/change-log';
+import {ModalFormService} from '../../../../shared/services/modal-form.service';
 
 @Component({
   selector: 'app-dashboard-change-log',
   templateUrl: '../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../shared/components/grid/grid.component.scss'],
-  providers: [ChangeLogService]
+  providers: [ChangeLogService, ModalFormService]
 })
-export class ListComponent extends GridComponent<ChangeLog, ChangeLogService> implements OnInit {
+export class ListComponent extends GridComponent<ChangeLog, ChangeLogService> implements OnInit, AfterViewInit {
   constructor(
     protected service$: ChangeLogService,
     protected title$: TitleService,
-    protected modal$: NzModalService
+    protected modal$: ModalFormService
   ) {
     super(service$, title$, modal$);
 
@@ -28,9 +28,9 @@ export class ListComponent extends GridComponent<ChangeLog, ChangeLogService> im
 
     this.grid_options_loaded.subscribe(next => {
       if (next) {
-        this.button_shows.add = false;
-        this.button_shows.edit = false;
-        this.button_shows.remove = true;
+        this._btnBar.buttons_crud.filter(v => v.name === 'add').pop().show = false; // TODO: review
+        this._btnBar.buttons_crud.filter(v => v.name === 'edit').pop().show = false; // TODO: review
+        this._btnBar.buttons_crud.filter(v => v.name === 'remove').pop().show = true; // TODO: review
       }
     });
   }
@@ -41,8 +41,10 @@ export class ListComponent extends GridComponent<ChangeLog, ChangeLogService> im
     super.init();
   }
 
-  protected preset_modal_form_data(form: FormGroup) {
-    // form.get('owner_type').setValue(ChangeLogOwnerType.REFERRAL);
-    // form.get('referral_id').setValue(this.referral_id);
+  ngAfterViewInit() {
+    this._btnBar.preset_modal_form_data = (form: FormGroup) => {
+      // form.get('owner_type').setValue(ChangeLogOwnerType.REFERRAL);
+      // form.get('referral_id').setValue(this.referral_id);
+    };
   }
 }

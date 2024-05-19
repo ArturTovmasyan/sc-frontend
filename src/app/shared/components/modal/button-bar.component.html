@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-between">
+  <template [ngTemplateOutlet]="tplButtonBar"
+            [ngTemplateOutletContext]="{buttons: buttons_crud}"></template>
+  <template [ngTemplateOutlet]="tplButtonBar"
+            [ngTemplateOutletContext]="{buttons: buttons_left}"></template>
+  <template [ngTemplateOutlet]="tplButtonBar"
+            [ngTemplateOutletContext]="{buttons: buttons_center}"></template>
+  <template [ngTemplateOutlet]="tplButtonBar"
+            [ngTemplateOutletContext]="{buttons: buttons_right}"></template>
+
+  <ng-content></ng-content>
+</div>
+
+<ng-template #tplButtonBar let-buttons="buttons">
+  <nz-button-group *ngIf="buttons" [nzSize]="'small'">
+    <ng-container *ngFor="let button of buttons">
+      <button *ngIf="button.show"
+              type="button" nz-button
+              [nzType]="button.type"
+              [disabled]="check_for_disable(button)"
+              (click)="button.click()"
+      >
+        <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
+        <i *ngIf="button.faIcon" [class]="button.faIcon"></i>
+        {{ button.title|translate }}
+      </button>
+    </ng-container>
+  </nz-button-group>
+</ng-template>

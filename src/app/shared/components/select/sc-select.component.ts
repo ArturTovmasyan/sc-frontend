@@ -6,11 +6,10 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { FocusMonitor } from '@angular/cdk/a11y';
-import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
-import { Platform } from '@angular/cdk/platform';
+import {FocusMonitor} from '@angular/cdk/a11y';
+import {CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange} from '@angular/cdk/overlay';
+import {Platform} from '@angular/cdk/platform';
 import {
-  forwardRef,
   AfterContentInit,
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -19,6 +18,7 @@ import {
   ContentChildren,
   ElementRef,
   EventEmitter,
+  forwardRef,
   Host,
   Input,
   OnDestroy,
@@ -31,24 +31,17 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { merge, EMPTY, Subject } from 'rxjs';
-import { flatMap, startWith, takeUntil } from 'rxjs/operators';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {EMPTY, merge, Subject} from 'rxjs';
+import {flatMap, startWith, takeUntil} from 'rxjs/operators';
 
-import {
-  isNotNil,
-  slideMotion,
-  toBoolean,
-  InputBoolean,
-  NzNoAnimationDirective,
-  NzSizeLDSType
-} from 'ng-zorro-antd/core';
+import {InputBoolean, isNotNil, NzNoAnimationDirective, NzSizeLDSType, slideMotion, toBoolean} from 'ng-zorro-antd/core';
 
-import { ScOptionGroupComponent } from './sc-option-group.component';
-import { ScOptionComponent } from './sc-option.component';
-import { TFilterOption } from './sc-option.pipe';
-import { ScSelectTopControlComponent } from './sc-select-top-control.component';
-import { ScSelectService } from './sc-select.service';
+import {ScOptionGroupComponent} from './sc-option-group.component';
+import {ScOptionComponent} from './sc-option.component';
+import {TFilterOption} from './sc-option.pipe';
+import {ScSelectTopControlComponent} from './sc-select-top-control.component';
+import {ScSelectService} from './sc-select.service';
 
 @Component({
   selector: 'sc-select',

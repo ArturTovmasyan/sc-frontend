@@ -23,12 +23,12 @@ import {
   ViewChildren,
   ViewEncapsulation
 } from '@angular/core';
-import { fromEvent, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { ScOptionGroupComponent } from './sc-option-group.component';
-import { ScOptionLiComponent } from './sc-option-li.component';
-import { ScOptionComponent } from './sc-option.component';
-import { ScSelectService } from './sc-select.service';
+import {fromEvent, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {ScOptionGroupComponent} from './sc-option-group.component';
+import {ScOptionLiComponent} from './sc-option-li.component';
+import {ScOptionComponent} from './sc-option.component';
+import {ScSelectService} from './sc-select.service';
 
 @Component({
   selector: '[sc-option-container]',

@@ -15,6 +15,8 @@ import {ProfileViewComponent} from './components/profile/view/profile-view.compo
 import {ProfileEditComponent} from './components/profile/edit/profile-edit.component';
 
 
+import {ListComponent as SpaceListComponent} from './admin/components/space/list.component';
+import {ListComponent as RoleListComponent} from './admin/components/role/list.component';
 import {ListComponent as UserListComponent} from './admin/components/user/list.component';
 import {ListComponent as UserInviteListComponent} from './admin/components/user-invite/list.component';
 
@@ -23,6 +25,7 @@ import {ListComponent as CareLevelListComponent} from './residents/components/ca
 import {ListComponent as CityStateZipListComponent} from './residents/components/city-state-zip/list.component';
 import {ListComponent as DiagnosisListComponent} from './residents/components/diagnosis/list.component';
 import {ListComponent as DietListComponent} from './residents/components/diet/list.component';
+import {ListComponent as EventDefinitionListComponent} from './residents/components/event-definition/list.component';
 import {ListComponent as MedicalHistoryConditionListComponent} from './residents/components/medical-history-condition/list.component';
 import {ListComponent as MedicationListComponent} from './residents/components/medication/list.component';
 import {ListComponent as MedicationFormFactorListComponent} from './residents/components/medication-form-factor/list.component';
@@ -473,7 +476,6 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
 
-      // TODO: review sidebar
       {
         path: 'assessment',
         data: {
@@ -532,7 +534,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Documents',
-          permissions: ['persistence-common-document']
+          permissions: ['permission-activity-reference', 'persistence-common-document']
         },
         canActivate: [AuthGuard]
       },
@@ -541,7 +543,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Relationships',
-          permissions: ['persistence-common-relationship']
+          permissions: ['permission-activity-reference', 'persistence-common-relationship']
         },
         canActivate: [AuthGuard]
       },
@@ -550,28 +552,27 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Care Levels',
-          permissions: ['persistence-common-care_level']
+          permissions: ['permission-activity-reference', 'persistence-common-care_level']
         },
         canActivate: [AuthGuard]
       },
-      // TODO: review roles
-      // {
-      //   path: 'event-types', component: EventDefinitionListComponent,
-      //   data: {
-      //     nav: {show: true, group: 'Reference'},
-      //     title: 'Event Types',
-      //     permissions: ['persistence-common-event_definition']
-      //   },
-      //   canActivate: [AuthGuard]
-      // },
 
+      {
+        path: 'event-types', component: EventDefinitionListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Event Types',
+          permissions: ['permission-activity-reference', 'permission-activity-event_definition', 'persistence-common-event_definition']
+        },
+        canActivate: [AuthGuard]
+      },
 
       {
         path: 'payment-sources', component: PaymentSourceListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Payment Sources',
-          permissions: ['persistence-common-payment_source']
+          permissions: ['permission-activity-reference', 'persistence-common-payment_source']
         },
         canActivate: [AuthGuard]
       },
@@ -580,7 +581,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'City, State, Zip Code',
-          permissions: ['persistence-common-city_state_zip']
+          permissions: ['permission-activity-reference', 'persistence-common-city_state_zip']
         },
         canActivate: [AuthGuard]
       },
@@ -589,7 +590,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Salutations',
-          permissions: ['persistence-common-salutation']
+          permissions: ['permission-activity-reference', 'persistence-common-salutation']
         },
         canActivate: [AuthGuard]
       },
@@ -600,7 +601,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Insurance Companies',
-          permissions: ['persistence-common-insurance_company']
+          permissions: ['permission-activity-reference', 'persistence-common-insurance_company']
         },
         canActivate: [AuthGuard]
       },
@@ -610,7 +611,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Medications',
-          permissions: ['persistence-common-medication']
+          permissions: ['permission-activity-reference', 'persistence-common-medication']
         },
         canActivate: [AuthGuard]
       },
@@ -619,7 +620,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Medication Form Factors',
-          permissions: ['persistence-common-medication_form_factor']
+          permissions: ['permission-activity-reference', 'persistence-common-medication_form_factor']
         },
         canActivate: [AuthGuard]
       },
@@ -628,7 +629,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Medical History Conditions',
-          permissions: ['persistence-common-medical_history_condition']
+          permissions: ['permission-activity-reference', 'persistence-common-medical_history_condition']
         },
         canActivate: [AuthGuard]
       },
@@ -637,7 +638,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Dietary Restriction Categories',
-          permissions: ['persistence-common-diet']
+          permissions: ['permission-activity-reference', 'persistence-common-diet']
         },
         canActivate: [AuthGuard]
       },
@@ -646,7 +647,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Diagnoses',
-          permissions: ['persistence-common-diagnosis']
+          permissions: ['permission-activity-reference', 'persistence-common-diagnosis']
         },
         canActivate: [AuthGuard]
       },
@@ -655,7 +656,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Allergens',
-          permissions: ['persistence-common-allergen']
+          permissions: ['permission-activity-reference', 'persistence-common-allergen']
         },
         canActivate: [AuthGuard]
       },
@@ -664,7 +665,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Physician Specialities',
-          permissions: ['persistence-common-speciality']
+          permissions: ['permission-activity-reference', 'persistence-common-speciality']
         },
         canActivate: [AuthGuard]
       },
@@ -673,11 +674,10 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Responsible Person Roles',
-          permissions: ['persistence-common-responsible-person-role']
+          permissions: ['permission-activity-reference', 'persistence-common-responsible-person-role']
         },
         canActivate: [AuthGuard]
       },
-
 
       {
         path: 'resident/:id',
@@ -864,25 +864,24 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
 
-      // TODO: review roles
-      // {
-      //   path: 'spaces', component: SpaceListComponent,
-      //   data: {
-      //     nav: {show: true, group: 'Administration'},
-      //     title: 'Spaces',
-      //     permissions: ['persistence-security-space']
-      //   },
-      //   canActivate: [AuthGuard]
-      // },
-      // {
-      //   path: 'roles', component: RoleListComponent,
-      //   data: {
-      //     nav: {show: true, group: 'Administration'},
-      //     title: 'Roles',
-      //     permissions: ['persistence-security-role']
-      //   },
-      //   canActivate: [AuthGuard]
-      // },
+      {
+        path: 'spaces', component: SpaceListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Spaces',
+          permissions: ['permission-activity-security-space', 'persistence-security-space']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'roles', component: RoleListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Roles',
+          permissions: ['permission-activity-security-space', 'persistence-security-role']
+        },
+        canActivate: [AuthGuard]
+      },
 
       {
         path: 'profile',

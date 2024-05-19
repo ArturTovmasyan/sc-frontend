@@ -1,24 +1,13 @@
-
-import {filter, takeUntil, map, publishReplay, refCount} from 'rxjs/operators';
-import {
-  Component, forwardRef, Injector, Input, OnChanges, OnDestroy, OnInit,
-  SimpleChanges
-} from '@angular/core';
-import {
-  CronJobsConfig, CronJobsFrequency, CronJobsSelectOption,
-  CronJobsValidationConfig,
-  OptionType
-} from '../contracts/contracts';
-import { DataService } from '../services/data.service';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Subject ,  Observable } from 'rxjs';
+import {filter, map, publishReplay, refCount, takeUntil} from 'rxjs/operators';
+import {Component, forwardRef, Injector, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {CronJobsConfig, CronJobsFrequency, CronJobsSelectOption, CronJobsValidationConfig, OptionType} from '../contracts/contracts';
+import {DataService} from '../services/data.service';
+import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Observable, Subject} from 'rxjs';
 
 
-
-
-
-import { PosixService } from '../services/posix.service';
-import { QuartzService } from '../services/quartz.service';
+import {PosixService} from '../services/posix.service';
+import {QuartzService} from '../services/quartz.service';
 
 @Component({
   selector: 'cron-jobs',

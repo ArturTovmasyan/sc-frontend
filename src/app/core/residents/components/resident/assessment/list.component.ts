@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {NzMessageService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../services/title.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
@@ -7,17 +7,19 @@ import {ResidentAssessmentService} from '../../../services/resident-assessment.s
 import {ResidentAssessment} from '../../../models/resident-assessment';
 import {ReportService} from '../../../services/report.service';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {Button, ButtonMode} from '../../../../../shared/components/modal/button-bar.component';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
-  providers: [ResidentAssessmentService]
+  providers: [ResidentAssessmentService, ModalFormService]
 })
-export class ListComponent extends GridComponent<ResidentAssessment, ResidentAssessmentService> implements OnInit {
+export class ListComponent extends GridComponent<ResidentAssessment, ResidentAssessmentService> implements OnInit, AfterViewInit {
   constructor(
     protected service$: ResidentAssessmentService,
     protected title$: TitleService,
-    protected modal$: NzModalService,
+    protected modal$: ModalFormService,
     private residentSelector$: ResidentSelectorService,
     private report$: ReportService,
     private message$: NzMessageService
@@ -26,53 +28,54 @@ export class ListComponent extends GridComponent<ResidentAssessment, ResidentAss
 
     this.card = false;
     this.component = FormComponent;
-    this.without_save_and_add = true;
+    this.modal$.without_save_and_add = true;
 
     this.name = 'resident-assessment-list';
   }
 
   ngOnInit(): void {
-    this.buttons_center.push(
-      {
-        name: 'blank',
-        type: 'default',
-        multiselect: false,
-        free: false,
-        nzIcon: null,
-        faIcon: 'far fa-file',
-        click: (ids: number[]) => {
-          this.loading = true;
-          this.report$.report('assessment', 'blank', 'pdf', {assessment_id: ids[0]}, () => {
-            this.loading = false;
-          }, (error) => {
-            this.loading = false;
-            this.message$.error(error.data.error, {nzDuration: 10000});
-          });
-        }
-      }
-    );
-
-    this.buttons_center.push(
-      {
-        name: 'filled',
-        type: 'default',
-        multiselect: false,
-        free: false,
-        nzIcon: null,
-        faIcon: 'far fa-file-alt',
-        click: (ids: number[]) => {
-          this.loading = true;
-          this.report$.report('assessment', 'filled', 'pdf', {assessment_id: ids[0]}, () => {
-            this.loading = false;
-          }, (error) => {
-            this.loading = false;
-            this.message$.error(error.data.error, {nzDuration: 10000});
-          });
-        }
-      }
-    );
-
     this.subscribe('rs_resident');
+  }
+
+  ngAfterViewInit(): void {
+    this.add_button_center(new Button(
+      'blank',
+      'grid.resident-assessment-list.button.blank',
+      'default',
+      ButtonMode.SINGLE_SELECT,
+      null,
+      'far fa-file',
+      false,
+      true,
+      () => {
+        this.loading = true;
+        this.report$.report('assessment', 'blank', 'pdf',
+          {assessment_id: this.checkbox_config.ids[0]}, () => {
+            this.loading = false;
+          }, (error) => {
+            this.loading = false;
+            this.message$.error(error.data.error, {nzDuration: 10000});
+          });
+      }));
+    this.add_button_center(new Button(
+      'filled',
+      'grid.resident-assessment-list.button.filled',
+      'default',
+      ButtonMode.SINGLE_SELECT,
+      null,
+      'far fa-file',
+      false,
+      true,
+      () => {
+        this.loading = true;
+        this.report$.report('assessment', 'filled', 'pdf',
+          {assessment_id: this.checkbox_config.ids[0]}, () => {
+            this.loading = false;
+          }, (error) => {
+            this.loading = false;
+            this.message$.error(error.data.error, {nzDuration: 10000});
+          });
+      }));
   }
 
   protected subscribe(key: string, params?: any): void {

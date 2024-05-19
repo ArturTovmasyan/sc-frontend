@@ -1,23 +1,23 @@
 import {Component, OnInit} from '@angular/core';
-import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../../../services/title.service';
 import {GridComponent} from '../../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {ResidentDiagnoseService} from '../../../../services/resident-diagnose.service';
 import {ResidentDiagnose} from '../../../../models/resident-diagnose';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 
 @Component({
   selector: 'app-resident-history-diagnose',
   templateUrl: '../../../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../../../shared/components/grid/grid.component.scss'],
-  providers: [ResidentDiagnoseService]
+  providers: [ResidentDiagnoseService, ModalFormService]
 })
 export class ListComponent extends GridComponent<ResidentDiagnose, ResidentDiagnoseService> implements OnInit {
   constructor(
     protected service$: ResidentDiagnoseService,
     protected title$: TitleService,
-    protected modal$: NzModalService,
+    protected modal$: ModalFormService,
     private residentSelector$: ResidentSelectorService
   ) {
     super(service$, title$, modal$);

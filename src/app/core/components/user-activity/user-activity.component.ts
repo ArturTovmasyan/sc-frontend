@@ -1,6 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ProfileService} from '../../services/profile.service';
-import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 import {ChangeLogService} from '../../admin/services/change-log.service';
 import {Subscription, timer} from 'rxjs';
 import {first} from 'rxjs/operators';

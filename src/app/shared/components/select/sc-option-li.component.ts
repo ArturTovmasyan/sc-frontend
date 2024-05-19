@@ -18,13 +18,13 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
-import { isNotNil } from 'ng-zorro-antd/core';
+import {isNotNil} from 'ng-zorro-antd/core';
 
-import { ScOptionComponent } from './sc-option.component';
-import { ScSelectService } from './sc-select.service';
+import {ScOptionComponent} from './sc-option.component';
+import {ScSelectService} from './sc-select.service';
 
 @Component({
   selector: '[sc-option-li]',

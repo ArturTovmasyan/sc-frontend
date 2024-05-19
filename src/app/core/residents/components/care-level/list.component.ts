@@ -1,21 +1,21 @@
 import {Component, OnInit} from '@angular/core';
-import {NzModalService} from 'ng-zorro-antd';
 import {TitleService} from '../../../services/title.service';
 import {CareLevelService} from '../../services/care-level.service';
 import {GridComponent} from '../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {CareLevel} from '../../models/care-level';
+import {ModalFormService} from '../../../../shared/services/modal-form.service';
 
 @Component({
   templateUrl: '../../../../shared/components/grid/grid.component.html',
   styleUrls: ['../../../../shared/components/grid/grid.component.scss'],
-  providers: [CareLevelService]
+  providers: [CareLevelService, ModalFormService]
 })
 export class ListComponent extends GridComponent<CareLevel, CareLevelService> implements OnInit {
   constructor(
     protected service$: CareLevelService,
     protected title$: TitleService,
-    protected modal$: NzModalService
+    protected modal$: ModalFormService
   ) {
     super(service$, title$, modal$);
 

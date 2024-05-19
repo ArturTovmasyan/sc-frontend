@@ -1,18 +1,3 @@
-<ng-template #modalFooter>
-  <button nz-button type="button" nzType="default" (click)="modal_cancel();">Cancel</button>
-  <button *ngIf="modal_previous_show()" nz-button type="button" nzType="default" (click)="modal_previous();">Previous</button>
-  <button *ngIf="modal_next_show()" nz-button type="button" nzType="default" (click)="modal_next();">Next</button>
-  <button *ngIf="!modal_next_show()" nz-button type="button" nzType="primary" (click)="modal_save();"
-          [nzLoading]="modal_save_loading()"
-          [disabled]="modal_save_disabled()">
-    Save
-  </button>
-  <button *ngIf="!modal_next_show() && modal_save_add_show()" nz-button type="button" nzType="dashed" (click)="modal_save_add();"
-          [nzLoading]="modal_save_loading()"
-          [disabled]="modal_save_disabled()">
-    Save & Add
-  </button>
-</ng-template>
 <ng-container *ngIf="card">
   <div class="card">
     <div class="card-header">
@@ -27,81 +12,25 @@
   <template [ngTemplateOutlet]="table"></template>
 </ng-container>
 <ng-template #table>
-  <div class="d-flex justify-content-between">
-    <nz-button-group *ngIf="component !== null" [nzSize]="'small'">
-      <button type="button" *ngIf="button_shows.add"
-              nz-button nzType="primary"
-              [disabled]="checkbox_config.ids.length != 0"
-              (click)="show_modal_add(); $event.preventDefault();">
-        <i nz-icon [type]="button_icons.add"></i> {{ button_labels.add|translate }}
-      </button>
-      <button type="button" *ngIf="button_shows.edit"
-              nz-button nzType="default" [nzLoading]="loading_edit_modal"
-              [disabled]="checkbox_config.ids.length != 1"
-              (click)="show_modal_edit(); $event.preventDefault();">
-        <i nz-icon [type]="button_icons.edit"></i> {{ button_labels.edit|translate }}
-      </button>
-      <button type="button" *ngIf="button_shows.remove"
-        nz-button nzType="danger"
-        [disabled]="checkbox_config.ids.length == 0"
-        (click)="show_modal_remove(); $event.preventDefault();">
-        <i nz-icon [type]="button_icons.remove"></i> {{ button_labels.remove|translate }}
-      </button>
-
-      <ng-container *ngIf="fields != null && buttons_left">
-        <ng-container *ngFor="let button of buttons_left">
-          <button type="button" nz-button [nzType]="button.type" (click)="button_action(button)"
-                  [disabled]="button.free === false && (button.multiselect == false && checkbox_config.ids.length != 1)
-                 || (button.multiselect == true && checkbox_config.ids.length == 0)">
-            <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
-            <i *ngIf="button.faIcon" [class]="button.faIcon"></i>
-            {{ ("grid." + name + ".button." + button.name)|translate }}
-          </button>
-        </ng-container>
-      </ng-container>
-    </nz-button-group>
-
-    <nz-button-group *ngIf="fields != null && buttons_center" [nzSize]="'small'">
-      <ng-container *ngFor="let button of buttons_center">
-        <button type="button" nz-button [nzType]="button.type" (click)="button_action(button)"
-                [disabled]="button.free === false && (button.multiselect == false && checkbox_config.ids.length != 1)
-                 || (button.multiselect == true && checkbox_config.ids.length == 0)">
-          <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
-          <i *ngIf="button.faIcon" [class]="button.faIcon"></i>
-          {{ ("grid." + name + ".button." + button.name)|translate }}
-        </button>
-      </ng-container>
-    </nz-button-group>
-
-    <nz-button-group *ngIf="fields != null && buttons_right" [nzSize]="'small'">
-      <ng-container *ngFor="let button of buttons_right">
-        <button type="button" nz-button [nzType]="button.type" (click)="button_action(button)"
-                [disabled]="button.free === false && (button.multiselect == false && checkbox_config.ids.length != 1)
-                 || (button.multiselect == true && checkbox_config.ids.length == 0)">
-          <i *ngIf="button.nzIcon" nz-icon [type]="button.nzIcon"></i>
-          <i *ngIf="button.faIcon" [class]="button.faIcon"></i>
-          {{ ("grid." + name + ".button." + button.name)|translate }}
-        </button>
-      </ng-container>
-    </nz-button-group>
-
+  <app-button-bar #btnBar
+    [service]="service$"
+    [component]="component"
+    [modal_callback]="modal_callback"
+    [ids]="checkbox_config.ids"
+    [single_select]="checkbox_config.ids.length === 1"
+    [multi_select]="checkbox_config.ids.length > 1">
     <ng-container *ngIf="searchable">
-      <nz-input-group [nzSize]="'small'" *ngIf="fields != null" nzCompact nzSearch [nzAddOnAfter]="suffixIconButton"
+      <nz-input-group *ngIf="fields != null" [nzSize]="'small'" nzCompact nzSearch [nzAddOnAfter]="suffixIconButton"
                       style="width: 25rem;">
         <input type="text" nz-input placeholder="Search..." [(ngModel)]="search_query" (change)="search();"/>
       </nz-input-group>
       <ng-template #suffixIconButton>
-        <button type="button" nz-button [nzSize]="'small'" nzType="primary" nzSearch (click)="search();"><i nz-icon
-                                                                                                            type="search"></i>
+        <button type="button" nz-button [nzSize]="'small'" nzType="primary" nzSearch (click)="search();">
+          <i nz-icon type="search"></i>
         </button>
       </ng-template>
     </ng-container>
-    <!--<nz-button-group [nzSize]="'small'">-->
-      <!--<button type="button" nz-button nzType="dashed" (click)="download_pdf()">-->
-      <!--<i nz-icon type="file-pdf"></i> {{ "grid.pdf"|translate }}-->
-      <!--</button>-->
-    <!--</nz-button-group>-->
-  </div>
+  </app-button-bar>
   <nz-table
     *ngIf="fields != null"
     nzShowSizeChanger
@@ -215,13 +144,10 @@
           <ng-container *ngIf="field.link">
             <ng-container [ngSwitch]="field.link">
               <ng-container *ngSwitchCase="':edit'">
-                <a *ngIf="button_shows.edit === true" href="javascript:void(0);" (click)="open_edit_modal(row.id)">
+                <a href="javascript:void(0);" (click)="open_edit_modal(row.id)">
                   {{ row[field.id] }}
                   <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i>
                 </a>
-                <ng-container *ngIf="button_shows.edit === false">
-                  {{ row[field.id] }}
-                </ng-container>
               </ng-container>
               <ng-container *ngIf="routeInfo(field.link, row) !== null">
                 <a *ngSwitchDefault [routerLink]="routeInfo(field.link, row)">

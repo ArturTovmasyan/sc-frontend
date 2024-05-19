@@ -49,7 +49,7 @@ export class InputCounterComponent implements AfterViewInit, ControlValueAccesso
   @Output()
   blur: EventEmitter<any> = new EventEmitter();
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.updateCounter();
   }
 
