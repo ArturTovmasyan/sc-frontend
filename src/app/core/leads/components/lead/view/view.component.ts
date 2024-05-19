@@ -12,6 +12,7 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {FormComponent as LeadFormComponent} from '../form/form.component';
 import {FormComponent as ReferralFormComponent} from '../../referral/form/form.component';
 import {ActivatedRoute} from '@angular/router';
+import {ActivityOwnerType} from '../../../models/activity';
 
 @Component({
   templateUrl: './view.component.html'
@@ -63,7 +64,9 @@ export class ViewComponent implements OnInit, OnDestroy {
           if (res) {
             this.lead = res;
 
-            this.subscribe('get_referral', {referral_id: res.referral.id});
+            if (res.referral) {
+              this.subscribe('get_referral', {referral_id: res.referral.id});
+            }
           }
         });
         break;
@@ -82,6 +85,19 @@ export class ViewComponent implements OnInit, OnDestroy {
   protected unsubscribe(key: string): void {
     if (this.$subscriptions.hasOwnProperty(key)) {
       this.$subscriptions[key].unsubscribe();
+    }
+  }
+
+  show_modal_add(name: string): void {
+    switch (name) {
+      case 'referral':
+        this.create_modal(ReferralFormComponent, data => this.referral$.add(data), {
+          owner_type: ActivityOwnerType.LEAD,
+          lead_id: this.lead.id
+        });
+        break;
+      default:
+        break;
     }
   }
 
