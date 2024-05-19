@@ -223,7 +223,8 @@
       "disabled": "Disabled",
       "shared": "Shared",
       "notes": "Notes",
-      "facility": "Facility"
+      "facility": "Facility",
+      "shorthand": "Shorthand"
     },
     "apartment-room-list": {
       "id": "ID",
@@ -233,7 +234,8 @@
       "disabled": "Disabled",
       "shared": "Shared",
       "notes": "Notes",
-      "apartment": "Apartment"
+      "apartment": "Apartment",
+      "shorthand": "Shorthand"
     },
     "resident-dietary-restriction-list": {
       "id": "ID",
