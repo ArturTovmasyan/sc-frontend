@@ -235,6 +235,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     if (parameters.hasOwnProperty('form')) {
       this.show.assessment = true;
       this.form.get('assessment_form_id').enable();
+    } else {
+      this.form.get('group').enable();
     }
 
     if (parameters.hasOwnProperty('resident')) {
