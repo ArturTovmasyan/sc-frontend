@@ -55,6 +55,6 @@ export enum CalendarEventType {
   FACILITY = 2,
   CORPORATE = 3,
   ADMISSION = 4,
-  RENT = 4,
-  RENT_INCREASE = 5,
+  RENT = 5,
+  RENT_INCREASE = 6,
 }

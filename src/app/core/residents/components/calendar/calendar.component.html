@@ -5,7 +5,8 @@
   <div class="card-body">
     <full-calendar
       [customButtons]="calendarCustomButtons"
-      [displayEventTime]="false"
+      [displayEventTime]="true"
+      [eventTimeFormat]="calendarTimeFormat"
       [header]="calendarHeader"
       [plugins]="calendarPlugins"
       [events]="calendarEvents"

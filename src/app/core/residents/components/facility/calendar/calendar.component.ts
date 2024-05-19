@@ -11,13 +11,12 @@ import {AuthGuard} from '../../../../guards/auth.guard';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {FacilityService} from '../../../services/facility.service';
 import {FacilityEventService} from '../../../services/facility-event.service';
-import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
 import {PaymentPeriodPipe} from '../../../pipes/payment-period.pipe';
 import {RentIncreaseReasonPipe} from '../../../pipes/rent-increase-reason.pipe';
 import {AdmissionType} from '../../../models/resident-admission';
 import {FormComponent} from '../event-form/form.component';
 import {CalendarEventType} from '../../../models/event-definition';
-import {rgba} from 'ng-chartjs';
+import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
 
 @Component({
   selector: 'app-facility-calendar',
@@ -36,7 +35,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   };
 
   calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listMonth'};
-  calendarTimeFormat = {hour: '2-digit', minute: '2-digit', second: '2-digit', meridiem: false};
+  calendarTimeFormat = {hour: 'numeric', minute: '2-digit', meridiem: 'narrow'};
   calendarEvents = [];
 
   protected $subscriptions: { [key: string]: Subscription; };
@@ -72,32 +71,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
           if (res) {
             this.calendarEvents = [];
 
-            // res.admissions.forEach(admission => {
-            //   this.calendarEvents.push({
-            //     borderColor: 'transparent',
-            //     backgroundColor: '#fac22b',
-            //     textColor: '#ffffff',
-            //     id: admission.id,
-            //     event_type: CalendarEventType.ADMISSION,
-            //     start: moment.utc(admission.start).format('YYYY-MM-DD'),
-            //     end: this.formatAdmissionEnd(admission),
-            //     title: (new AdmissionTypePipe()).transform(admission.admission_type)
-            //   });
-            // });
-
-            res.rents.forEach(rent => {
-              this.calendarEvents.push({
-                borderColor: 'transparent',
-                backgroundColor: '#009da1',
-                textColor: '#ffffff',
-                id: rent.id,
-                event_type: CalendarEventType.RENT,
-                start: moment.utc(rent.start).format('YYYY-MM-DD'),
-                end: rent.end ? moment.utc(rent.end).format('YYYY-MM-DD') : null,
-                title: (new PaymentPeriodPipe()).transform(rent.period)
-              });
-            });
-
             res.facility_events.forEach(event => {
               this.calendarEvents.push({
                 borderColor: 'transparent',
@@ -120,7 +93,33 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 event_type: CalendarEventType.RESIDENT,
                 start: moment.utc(event.start).format('YYYY-MM-DD HH:mm:ss'),
                 end: event.end ? moment.utc(event.end).format('YYYY-MM-DD HH:mm:ss') : null,
-                title: event.title
+                title: this.formatResident(CalendarEventType.RESIDENT, event),
+              });
+            });
+
+            // res.admissions.forEach(admission => {
+            //   this.calendarEvents.push({
+            //     borderColor: 'transparent',
+            //     backgroundColor: '#fac22b',
+            //     textColor: '#ffffff',
+            //     id: admission.id,
+            //     event_type: CalendarEventType.ADMISSION,
+            //     start: moment.utc(admission.start).format('YYYY-MM-DD'),
+            //     end: this.formatAdmissionEnd(admission),
+            //     title: this.formatResident(CalendarEventType.ADMISSION, admission)
+            //   });
+            // });
+
+            res.rents.forEach(rent => {
+              this.calendarEvents.push({
+                borderColor: 'transparent',
+                backgroundColor: '#009da1',
+                textColor: '#ffffff',
+                id: rent.id,
+                event_type: CalendarEventType.RENT,
+                start: moment.utc(rent.start).format('YYYY-MM-DD'),
+                end: rent.end ? moment.utc(rent.end).format('YYYY-MM-DD') : null,
+                title: this.formatResident(CalendarEventType.RENT, rent)
               });
             });
 
@@ -133,7 +132,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 event_type: CalendarEventType.RENT_INCREASE,
                 start: moment.utc(rent_increase.start).format('YYYY-MM-DD'),
                 end: rent_increase.end ? moment.utc(rent_increase.end).format('YYYY-MM-DD') : null,
-                title: (new RentIncreaseReasonPipe()).transform(rent_increase.reason)
+                title: this.formatResident(CalendarEventType.RENT_INCREASE, rent_increase),
               });
             });
           }
@@ -142,6 +141,26 @@ export class CalendarComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+  }
+
+  private formatResident(type: CalendarEventType, event: any): string {
+    let subValue: string = '';
+    switch (type) {
+      case CalendarEventType.RESIDENT:
+        subValue = event.title;
+        break;
+      case CalendarEventType.ADMISSION:
+        subValue = (new AdmissionTypePipe()).transform(event.admission_type);
+        break;
+      case CalendarEventType.RENT:
+        subValue = (new PaymentPeriodPipe()).transform(event.period);
+        break;
+      case CalendarEventType.RENT_INCREASE:
+        subValue = (new RentIncreaseReasonPipe()).transform(event.reason);
+        break;
+    }
+
+    return `${event.room_number} (${event.bed_number}) ${event.first_name} ${event.last_name} - ${subValue}`;
   }
 
   addIfHasPermission(permission: string) {

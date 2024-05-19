@@ -33,7 +33,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   };
 
   calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listMonth'};
-  calendarTimeFormat = {hour: '2-digit', minute: '2-digit', second: '2-digit', meridiem: false};
+  calendarTimeFormat = {hour: 'numeric', minute: '2-digit', meridiem: 'narrow'};
   calendarEvents = [];
 
   protected $subscriptions: { [key: string]: Subscription; };

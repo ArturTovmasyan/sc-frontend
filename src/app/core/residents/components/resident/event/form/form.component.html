@@ -86,7 +86,7 @@
       <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('start')?'error':null"
                        class="sc-select-all">
         <nz-date-picker nzPlaceHolder="Start" formControlName="start"
-                        nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" ></nz-date-picker>
+                        nzShowTime nzFormat="yyyy-MM-dd hh:mm aaa" ></nz-date-picker>
         <label nz-checkbox formControlName="all_day">All Day</label>
         <nz-form-explain *ngIf="hasErrors('start')">
           <app-field-errors [errors]="fieldErrors('start')"></app-field-errors>
@@ -99,7 +99,7 @@
                        class="sc-select-all">
         <nz-date-picker nzPlaceHolder="End" formControlName="end"
                         [nzDisabledDate]="disabledEndDate"
-                        nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"></nz-date-picker>
+                        nzShowTime nzFormat="yyyy-MM-dd hh:mm aaa"></nz-date-picker>
         <nz-form-explain *ngIf="hasErrors('end')">
           <app-field-errors [errors]="fieldErrors('end')"></app-field-errors>
         </nz-form-explain>
@@ -130,7 +130,7 @@
                        class="sc-select-all">
         <nz-date-picker nzPlaceHolder="End" formControlName="repeat_end"
                         [nzDisabledDate]="disabledRepeatEndDate"
-                        nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"></nz-date-picker>
+                        nzShowTime nzFormat="yyyy-MM-dd hh:mm aaa"></nz-date-picker>
         <nz-form-explain *ngIf="hasErrors('repeat_end')">
           <app-field-errors [errors]="fieldErrors('repeat_end')"></app-field-errors>
         </nz-form-explain>
