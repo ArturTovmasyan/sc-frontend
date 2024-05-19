@@ -18,12 +18,17 @@
     background-color: #3a4248;
 
     .nav-link {
-      margin-left: 1.25rem;
+      padding-left: 1.25rem;
+
+      &.active {
+        background-color: #858585;
+      }
     }
   }
 }
 
 ::ng-deep {
+
   .ant-modal {
     h4 {
       font-size: x-large;
