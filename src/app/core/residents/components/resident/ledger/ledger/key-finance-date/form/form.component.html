@@ -1,0 +1,54 @@
+﻿<h4>Key Finance Date</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item *ngIf="!edit_mode">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="key_finance_type_id" nzRequired>Key Finance Type</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('key_finance_type_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="key_finance_type_id">
+          <ng-container *ngFor="let key_finance_type of key_finance_types">
+            <nz-option [nzLabel]="key_finance_type.title" [nzValue]="key_finance_type.id"></nz-option>
+          </ng-container>
+        </nz-select>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('key_finance_type_id')">
+        <app-field-errors [errors]="fieldErrors('key_finance_type_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="edit_mode">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="key_finance_type_id" nzRequired>Key Finance Type</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('key_finance_type_id')?'error':null">
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" nzDisabled="true" formControlName="key_finance_type_id">
+          <ng-container *ngFor="let key_finance_type of key_finance_types">
+            <nz-option [nzLabel]="key_finance_type.title" [nzValue]="key_finance_type.id"></nz-option>
+          </ng-container>
+        </nz-select>
+      </div>
+      <nz-form-explain *ngIf="hasErrors('key_finance_type_id')">
+        <app-field-errors [errors]="fieldErrors('key_finance_type_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+      <nz-date-picker formControlName="date" nzFormat="MM/dd/yyyy"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date')">
+        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

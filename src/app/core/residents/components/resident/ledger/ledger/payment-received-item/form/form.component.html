@@ -2,7 +2,7 @@
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="payment_type_id" nzRequired>Payment type</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="payment_type_id" nzRequired>Payment Type</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('payment_type_id')?'error':null">
       <div class="add-select-container">
         <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="payment_type_id">
