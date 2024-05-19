@@ -534,7 +534,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Documents',
-          permissions: ['permission-activity-reference', 'persistence-common-document']
+          permissions: ['activity-reference', 'persistence-common-document']
         },
         canActivate: [AuthGuard]
       },
@@ -543,7 +543,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Relationships',
-          permissions: ['permission-activity-reference', 'persistence-common-relationship']
+          permissions: ['activity-reference', 'persistence-common-relationship']
         },
         canActivate: [AuthGuard]
       },
@@ -552,7 +552,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Care Levels',
-          permissions: ['permission-activity-reference', 'persistence-common-care_level']
+          permissions: ['activity-reference', 'persistence-common-care_level']
         },
         canActivate: [AuthGuard]
       },
@@ -562,7 +562,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Event Types',
-          permissions: ['permission-activity-reference', 'permission-activity-event_definition', 'persistence-common-event_definition']
+          permissions: ['activity-reference', 'activity-event_definition', 'persistence-common-event_definition']
         },
         canActivate: [AuthGuard]
       },
@@ -572,7 +572,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Payment Sources',
-          permissions: ['permission-activity-reference', 'persistence-common-payment_source']
+          permissions: ['activity-reference', 'persistence-common-payment_source']
         },
         canActivate: [AuthGuard]
       },
@@ -581,7 +581,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'City, State, Zip Code',
-          permissions: ['permission-activity-reference', 'persistence-common-city_state_zip']
+          permissions: ['activity-reference', 'persistence-common-city_state_zip']
         },
         canActivate: [AuthGuard]
       },
@@ -590,7 +590,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Salutations',
-          permissions: ['permission-activity-reference', 'persistence-common-salutation']
+          permissions: ['activity-reference', 'persistence-common-salutation']
         },
         canActivate: [AuthGuard]
       },
@@ -601,7 +601,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Insurance Companies',
-          permissions: ['permission-activity-reference', 'persistence-common-insurance_company']
+          permissions: ['activity-reference', 'persistence-common-insurance_company']
         },
         canActivate: [AuthGuard]
       },
@@ -611,7 +611,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Medications',
-          permissions: ['permission-activity-reference', 'persistence-common-medication']
+          permissions: ['activity-reference', 'persistence-common-medication']
         },
         canActivate: [AuthGuard]
       },
@@ -620,7 +620,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Medication Form Factors',
-          permissions: ['permission-activity-reference', 'persistence-common-medication_form_factor']
+          permissions: ['activity-reference', 'persistence-common-medication_form_factor']
         },
         canActivate: [AuthGuard]
       },
@@ -629,7 +629,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Medical History Conditions',
-          permissions: ['permission-activity-reference', 'persistence-common-medical_history_condition']
+          permissions: ['activity-reference', 'persistence-common-medical_history_condition']
         },
         canActivate: [AuthGuard]
       },
@@ -638,7 +638,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Dietary Restriction Categories',
-          permissions: ['permission-activity-reference', 'persistence-common-diet']
+          permissions: ['activity-reference', 'persistence-common-diet']
         },
         canActivate: [AuthGuard]
       },
@@ -647,7 +647,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Diagnoses',
-          permissions: ['permission-activity-reference', 'persistence-common-diagnosis']
+          permissions: ['activity-reference', 'persistence-common-diagnosis']
         },
         canActivate: [AuthGuard]
       },
@@ -656,7 +656,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Allergens',
-          permissions: ['permission-activity-reference', 'persistence-common-allergen']
+          permissions: ['activity-reference', 'persistence-common-allergen']
         },
         canActivate: [AuthGuard]
       },
@@ -665,7 +665,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Physician Specialities',
-          permissions: ['permission-activity-reference', 'persistence-common-speciality']
+          permissions: ['activity-reference', 'persistence-common-speciality']
         },
         canActivate: [AuthGuard]
       },
@@ -674,7 +674,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Reference'},
           title: 'Responsible Person Roles',
-          permissions: ['permission-activity-reference', 'persistence-common-responsible-person-role']
+          permissions: ['activity-reference', 'persistence-common-responsible-person-role']
         },
         canActivate: [AuthGuard]
       },
@@ -869,7 +869,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Administration'},
           title: 'Spaces',
-          permissions: ['permission-activity-security-space', 'persistence-security-space']
+          permissions: ['activity-security-space', 'persistence-security-space']
         },
         canActivate: [AuthGuard]
       },
@@ -878,7 +878,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Administration'},
           title: 'Roles',
-          permissions: ['permission-activity-security-space', 'persistence-security-role']
+          permissions: ['activity-security-space', 'persistence-security-role']
         },
         canActivate: [AuthGuard]
       },
