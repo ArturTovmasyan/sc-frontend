@@ -555,7 +555,7 @@ const routes: Routes = [
             data: {
               nav: {show: true, group: 'Residents'},
               title: 'Types',
-              permissions: ['persistence-assessment-type']
+              permissions: ['persistence-assessment-assessment_type']
             },
             canActivate: [AuthGuard]
           },
