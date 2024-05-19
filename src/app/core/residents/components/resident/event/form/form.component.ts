@@ -175,6 +175,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
               this.form.get('additional_date').updateValueAndValidity();
               this.form.get('physician_id').updateValueAndValidity();
+              this.form.get('hospice_provider_id').updateValueAndValidity();
               this.form.get('responsible_persons').updateValueAndValidity();
             }
           }
