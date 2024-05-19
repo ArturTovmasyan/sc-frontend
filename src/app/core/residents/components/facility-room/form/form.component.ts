@@ -26,7 +26,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       type: ['', Validators.compose([Validators.required])],
       disabled: [false, Validators.compose([Validators.required])],
       shared: [false, Validators.compose([Validators.required])],
-      notes: ['', Validators.compose([Validators.required, Validators.max(1000)])],
+      notes: ['', Validators.compose([Validators.max(1000)])],
       facility_id: [null, Validators.required]
     });
 

@@ -59,7 +59,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="capacity" nzRequired>Resident capacity Resident</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="capacity" nzRequired>Resident capacity</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('capacity')?'error':null">
       <input nz-input placeholder="Max Number of Residents" formControlName="capacity">
       <nz-form-explain *ngIf="hasErrors('capacity')">
