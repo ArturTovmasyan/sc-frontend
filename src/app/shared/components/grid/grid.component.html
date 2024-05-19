@@ -70,6 +70,13 @@
       </ng-container>
     </nz-button-group>
 
+
+    <nz-input-group *ngIf="fields != null" nzCompact nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 25rem;">
+      <input type="text" nz-input placeholder="Search..." [(ngModel)]="search_query" (change)="search();" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" nzSearch (click)="search();"><i nz-icon type="search"></i></button>
+    </ng-template>
     <!--<nz-button-group [nzSize]="'small'">-->
       <!--<button nz-button nzType="dashed" (click)="download_pdf()">-->
       <!--<i nz-icon type="file-pdf"></i> {{ "grid.pdf"|translate }}-->

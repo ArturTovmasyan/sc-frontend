@@ -7,7 +7,7 @@ import {TitleService} from '../../../core/services/title.service';
 import {GridService} from '../../services/grid.service';
 import {AbstractForm} from '../abstract-form/abstract-form';
 import {MessageComponent} from './message.component';
-import {Form, FormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 
 export class GridComponent<T extends IdInterface, Service extends GridService<T>> implements OnDestroy {
   _ = _;
@@ -32,7 +32,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     ids: []
   };
 
-  protected fields = null;
+  protected fields: any[] = null;
   protected button_shows = {
     add: false,
     edit: false,
@@ -73,6 +73,8 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     faIcon: string,
     click: (ids: number[]) => void
   }[] = [];
+
+  protected search_query: string = '';
 
   protected component: any;
 
@@ -551,5 +553,11 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   }
 
   protected preset_modal_form_data(form: FormGroup) {
+  }
+
+  protected search() {
+    this.params = this.params.filter(v => v.key !== 'query');
+    this.params.push({key: 'query', value: this.search_query});
+    this.reload_data();
   }
 }
