@@ -12,19 +12,15 @@ export class CorporateEvent implements IdInterface {
   definition: EventDefinition;
   notes: string;
 
-  date: Date;
-
-  additional_date: Date;
-  responsible_persons: ResponsiblePerson[];
-  physician: Physician;
-
   residents: Resident[];
   users: User[];
   rsvp: boolean;
 
   all_day: boolean;
-  start: Date;
-  end: Date;
+  start_date: Date;
+  start_time: Date;
+  end_date: Date;
+  end_time: Date;
 
   no_repeat_end: boolean;
   repeat: RepeatType;
