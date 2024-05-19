@@ -10,9 +10,9 @@
             <div class="row">
               <div class="col-12">
                 <div class="text-center m-0">
-                  <img *ngIf="!user.image || !user.image.photo_150_150" src="/assets/img/person_placeholder.png" class="img-thumbnail"
+                  <img *ngIf="!user.image || !user.image" src="/assets/img/person_placeholder.png" class="img-thumbnail"
                        style="max-height: 15rem"/>
-                  <img *ngIf="user.image && user.image.photo_150_150" src="{{ user.image.photo_150_150 }}" class="img-thumbnail"
+                  <img *ngIf="user.image && user.image" src="{{ user.image }}" class="img-thumbnail"
                        style="max-height: 15rem"/>
                 </div>
               </div>

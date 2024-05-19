@@ -11,9 +11,9 @@
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
          dropdownToggle (click)="false">
-        <img *ngIf="!user || !user.image || !user.image.photo_35_35" src="/assets/img/person_placeholder.png"
+        <img *ngIf="!user || !user.image || !user.image" src="/assets/img/person_placeholder.png"
              class="img-avatar"/>
-        <img *ngIf="user && user.image && user.image.photo_35_35" src="{{ user.image.photo_35_35 }}"
+        <img *ngIf="user && user.image && user.image" src="{{ user.image }}"
              class="img-avatar"/>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">

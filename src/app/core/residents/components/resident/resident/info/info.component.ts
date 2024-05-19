@@ -64,7 +64,6 @@ export class InfoComponent implements OnInit {
           this.loading = false;
           if (res) {
             this.resident = res;
-            this.resident.photo = this.sanitizer.bypassSecurityTrustUrl(this.resident.photo).toString();
           } else {
             this.resident = null;
           }
@@ -271,7 +270,7 @@ export class InfoComponent implements OnInit {
           if (v) {
             const result_ = {
               id: this.residentSelector$.resident.value,
-              photo: this.resident.image.photo
+              photo: this.resident.image
             };
 
             component.before_set_form_data(result_);
