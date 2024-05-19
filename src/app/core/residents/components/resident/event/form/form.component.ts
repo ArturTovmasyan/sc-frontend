@@ -397,7 +397,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       data.additional_date = DateHelper.convertUTC(data.additional_date);
       data.start = DateHelper.convertUTC(data.start);
       data.end = DateHelper.convertUTC(data.end);
-      data.repeat_end = DateHelper.convertUTC(data.end);
+      data.repeat_end = DateHelper.convertUTC(data.repeat_end);
     }
   }
 
