@@ -293,12 +293,12 @@ const routes: Routes = [
         ]
       },
       {
-          path: 'lead/reports', component: ReportListComponent,
-          data: {
-              nav: {show: true, group: 'Leads'},
-              title: 'Reports',
-              permissions: ['report-group']
-          }
+        path: 'lead/reports', component: ReportListComponent,
+        data: {
+          nav: {show: true, group: 'Leads'},
+          title: 'Reports',
+          permissions: ['report-group']
+        }
       },
       {
         path: 'residents/active', component: ResidentIndexComponent,
@@ -412,14 +412,14 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
-        {
-            path: 'facility/reports', component: ReportListComponent,
-            data: {
-                nav: {show: true, group: 'Facility'},
-                title: 'Reports',
-                permissions: ['report-group']
-            }
-        },
+      {
+        path: 'facility/reports', component: ReportListComponent,
+        data: {
+          nav: {show: true, group: 'Facility'},
+          title: 'Reports',
+          permissions: ['report-group']
+        }
+      },
       {
         path: 'rent-reasons', component: RentReasonListComponent,
         data: {
@@ -452,7 +452,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Apartment', title: 'List'},
           title: 'Apartments',
-          permissions: ['persistence-apartment']
+          permissions: ['activity-apartment', 'persistence-apartment']
         },
         canActivate: [AuthGuard]
       },
@@ -461,7 +461,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Apartment', title: 'Rooms'},
           title: 'Apartment Rooms',
-          permissions: ['persistence-apartment', 'persistence-apartment_room']
+          permissions: ['activity-apartment', 'persistence-apartment', 'persistence-apartment_room']
         },
         canActivate: [AuthGuard]
       },
@@ -470,19 +470,18 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Apartment', title: 'Beds'},
           title: 'Apartment Beds',
-          permissions: ['persistence-apartment', 'persistence-apartment_room', 'persistence-apartment_bed']
+          permissions: ['activity-apartment', 'persistence-apartment', 'persistence-apartment_room', 'persistence-apartment_bed']
         },
         canActivate: [AuthGuard]
       },
-
-        {
-            path: 'apartment/reports', component: ReportListComponent,
-            data: {
-                nav: {show: true, group: 'Apartment'},
-                title: 'Reports',
-                permissions: ['report-group']
-            }
-        },
+      {
+        path: 'apartment/reports', component: ReportListComponent,
+        data: {
+          nav: {show: true, group: 'Apartment'},
+          title: 'Reports',
+          permissions: ['activity-apartment', 'report-group']
+        }
+      },
       {
         path: 'regions', component: RegionListComponent,
         data: {
