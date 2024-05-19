@@ -209,13 +209,15 @@ export class ButtonBarComponent implements OnInit {
     const edit_button = this.buttons_crud.filter(v => v.name === 'edit').pop();
     const remove_button = this.buttons_crud.filter(v => v.name === 'remove').pop();
 
-    if (add_button.override) {
+    if (add_button && add_button.override) {
       add_button.show = (add_button.show === false || button_data.add === false) ? false : button_data.add;
     }
-    if (edit_button.override) {
+
+    if (edit_button && edit_button.override) {
       edit_button.show = (edit_button.show === false || button_data.edit === false) ? false : button_data.edit;
     }
-    if (remove_button.override) {
+
+    if (remove_button && remove_button.override) {
       remove_button.show = (remove_button.show === false || button_data.remove === false) ? false : button_data.remove;
     }
   }
