@@ -690,7 +690,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Administration'},
           title: 'Users',
-          permissions: ['persistence-common-notification_type']
+          permissions: ['persistence-security-user']
         },
         canActivate: [AuthGuard]
       },
@@ -715,15 +715,15 @@ const routes: Routes = [
       //   },
       //   canActivate: [AuthGuard]
       // },
-      // {
-      //   path: 'roles', component: RoleListComponent,
-      //   data: {
-      //     nav: {show: true, group: 'Administration'},
-      //     title: 'Roles',
-      //     permissions: ['persistence-security-role']
-      //   },
-      //   canActivate: [AuthGuard]
-      // },
+      {
+        path: 'roles', component: RoleListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Roles',
+          permissions: ['persistence-security-role']
+        },
+        canActivate: [AuthGuard]
+      },
 
       {
         path: 'profile',
