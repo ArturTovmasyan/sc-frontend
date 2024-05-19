@@ -140,7 +140,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('referral.notes')?'error':null">
-      <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
+      <input-counter formControlName="notes" placeholder="Notes" [maxlength]="2048"></input-counter>
       <nz-form-explain *ngIf="hasErrors('referral.notes')">
         <app-field-errors [errors]="fieldErrors('referral.notes')"></app-field-errors>
       </nz-form-explain>
