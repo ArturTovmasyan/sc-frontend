@@ -446,7 +446,7 @@ const routes: Routes = [
         data: {
           nav: {show: true, group: 'Residents'},
           title: 'Reports',
-          permissions: ['persistence-resident-resident']
+          permissions: ['report-group']
         }
       },
       {
