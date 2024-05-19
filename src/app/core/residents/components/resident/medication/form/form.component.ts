@@ -50,7 +50,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       medication_id: [null, Validators.required],
       form_factor_id: [null, Validators.required],
 
-      dosage: ['', Validators.compose([Validators.required, Validators.maxLength(10), CoreValidator.dosage])],
+      dosage: ['', Validators.compose([Validators.required, Validators.maxLength(25), CoreValidator.dosage])],
       dosage_unit: ['', Validators.compose([Validators.required, Validators.maxLength(100), CoreValidator.dosage_unit])],
 
       physician_id: [null, Validators.required],
