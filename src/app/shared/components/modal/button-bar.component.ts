@@ -38,7 +38,7 @@ export class Button {
     faIcon: string,
     override: boolean,
     show: boolean,
-    click: () => void
+    click: (params?: any[]) => void
   ) {
     this.name = name;
     this.title = title;
