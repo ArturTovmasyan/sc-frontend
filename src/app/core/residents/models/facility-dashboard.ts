@@ -26,12 +26,6 @@ export class FacilityDashboard {
   public static getEndingStyle(data: any) {
     let style;
 
-    console.log(data.ending_occupancy);
-    console.log(data.yellow_flag);
-    console.log(data.red_flag);
-    console.log('y', data.ending_occupancy <= data.yellow_flag && data.ending_occupancy > data.red_flag);
-    console.log('r', data.ending_occupancy < data.yellow_flag && data.ending_occupancy <= data.red_flag);
-
     if (data.ending_occupancy <= data.yellow_flag && data.ending_occupancy > data.red_flag) {
       style = {'background-color': '#ffdf7e'};
     } else if (data.ending_occupancy < data.yellow_flag && data.ending_occupancy <= data.red_flag) {
