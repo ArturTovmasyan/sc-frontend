@@ -88,6 +88,7 @@
         <i nz-icon type="close"></i>
         {{ photo_file_name }}
       </button>
+      <p style="font-size: smaller;line-height: 0.5;" [style.color]="photo_size_exceed?'red':'inherit'">(Maximum file size is 10 MB.)</p>
       <nz-form-explain *ngIf="hasErrors('photo')">
         <app-field-errors [errors]="fieldErrors('photo')"></app-field-errors>
       </nz-form-explain>

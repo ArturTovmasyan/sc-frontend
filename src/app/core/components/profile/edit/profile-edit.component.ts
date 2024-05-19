@@ -13,6 +13,9 @@ import {CoreValidator} from '../../../../shared/utils/core-validator';
 export class ProfileEditComponent extends AbstractForm implements OnInit {
   @ViewChild('avatar_file') avatar_file: ElementRef;
 
+  photo_file_name: string;
+  photo_size_exceed: boolean;
+
   phone_types: { id: PhoneType, name: string }[];
 
   constructor(
@@ -31,6 +34,8 @@ export class ProfileEditComponent extends AbstractForm implements OnInit {
 
       this.router.navigate(['profile/me']);
     };
+
+    this.photo_size_exceed = false;
   }
 
   ngOnInit(): void {
@@ -39,7 +44,7 @@ export class ProfileEditComponent extends AbstractForm implements OnInit {
       last_name: ['', Validators.compose([CoreValidator.notEmpty])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       phones: this.formBuilder.array([]),
-      avatar: [null, Validators.required],
+      avatar: [null],
     });
 
     this.profile$.get().subscribe(user => {
@@ -77,10 +82,27 @@ export class ProfileEditComponent extends AbstractForm implements OnInit {
     const reader = new FileReader();
     if ($event.target.files && $event.target.files.length > 0) {
       const file = $event.target.files[0];
+      this.photo_file_name = ProfileEditComponent.truncate(file.name, 25);
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.form.get('avatar').setValue(reader.result);
+        if (reader.result) {
+          const result = reader.result as string;
+          const suffix = result.substr(-2);
+          const y = suffix === '==' ? 2 : (suffix === '=' ? 1 : 0);
+
+          const max_file_size = (10 * 1024 * 1024 + 32);
+          const file_size = (result.length * (3 / 4)) - y;
+
+          if (file_size > max_file_size) {
+            this.photo_size_exceed = true;
+            this.form.get('avatar').setValue(null);
+          } else {
+            this.photo_size_exceed = false;
+            this.form.get('avatar').setValue(reader.result);
+          }
+        }
       };
+      (this.avatar_file.nativeElement as HTMLInputElement).value = null;
     }
 
     return false;
@@ -89,6 +111,14 @@ export class ProfileEditComponent extends AbstractForm implements OnInit {
   select_file() {
     (this.avatar_file.nativeElement as HTMLInputElement).click();
   }
+
+  clear_file() {
+    this.photo_file_name = null;
+    this.photo_size_exceed = false;
+    this.form.get('avatar').setValue(null);
+  }
+
+  private static truncate(value: string, length: number): string {
+    return value.length > length ? (value.slice(0, length - 3) + '...') : value;
+  }
 }
-
-

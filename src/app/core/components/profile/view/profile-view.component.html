@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6 mx-auto">
+    <div class="col-md-8 mx-auto">
       <div class="card mx-4">
         <div class="card-header">
           <strong>My Profile</strong>
@@ -19,20 +19,20 @@
             </div>
             <div class="m-2">&nbsp;</div>
             <div class="row">
-              <div class="col-6"><strong>First Name:</strong></div>
+              <div class="col-6 text-right"><strong>First Name:</strong></div>
               <div class="col-6">{{ user.first_name }}</div>
             </div>
             <div class="row">
-              <div class="col-6"><strong>Last Name:</strong></div>
+              <div class="col-6 text-right"><strong>Last Name:</strong></div>
               <div class="col-6">{{ user.last_name }}</div>
             </div>
             <div class="row">
-              <div class="col-6"><strong>E-Mail:</strong></div>
+              <div class="col-6 text-right"><strong>E-Mail:</strong></div>
               <div class="col-6"><a href="mailto:{{ user.email }}">{{ user.email }}</a></div>
             </div>
-            <div nz-row [nzGutter]="4">
-              <div nz-col [nzSpan]="24"><strong>Phone Numbers:</strong></div>
-              <div nz-col [nzOffset]="4" [nzSpan]="20">
+            <div class="row" *ngIf="user.phones && user.phones.length > 0">
+              <div class="col-6 text-right"><strong>Phone Numbers:</strong></div>
+              <div class="col-6">
                 <div nz-row [nzGutter]="4" *ngFor="let phone of user.phones">
                   <div nz-col [nzSpan]="6"><strong>{{ phone.type|phone_type }}:</strong></div>
                   <div nz-col [nzSpan]="12">

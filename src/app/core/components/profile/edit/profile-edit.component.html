@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6 mx-auto">
+    <div class="col-md-8 mx-auto">
       <div class="card mx-4">
         <form *ngIf="form" nz-form [formGroup]="form" (ngSubmit)="submitForm()">
           <div class="card-header">
@@ -113,13 +113,18 @@
             </fieldset>
 
             <nz-form-item>
-              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="avatar" nzRequired>Avatar</nz-form-label>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="avatar">Avatar</nz-form-label>
               <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('avatar')?'error':null">
                 <input type="file" #avatar_file (change)="onFileChange($event)"
                        accept="image/*" style="display: none;">
-                <button nz-button type="button" (click)="select_file();">
+                <button nz-button nzSize="small" *ngIf="!(photo_file_name && photo_file_name !== '')" type="button" (click)="select_file();">
                   <i nz-icon type="upload"></i><span>Select file...</span>
                 </button>
+                <button nz-button nzSize="small" nzType="danger" *ngIf="photo_file_name && photo_file_name !== ''" (click)="clear_file();">
+                  <i nz-icon type="close"></i>
+                  {{ photo_file_name }}
+                </button>
+                <p style="font-size: smaller;line-height: 0.5;" [style.color]="photo_size_exceed?'red':'inherit'">(Maximum file size is 10 MB.)</p>
                 <nz-form-explain *ngIf="hasErrors('avatar')">
                   <app-field-errors [errors]="fieldErrors('avatar')"></app-field-errors>
                 </nz-form-explain>

@@ -301,11 +301,13 @@ export class AbstractForm implements OnDestroy {
   public after_set_form_data(): void {
   }
 
-  public set_form_data(component: AbstractForm, form: FormGroup, result: any) {
+  public set_form_data(component: AbstractForm, form: FormGroup, result: any, parent_key: string = '') {
     const form_controls = Object.keys(form.controls);
     const data = result;
 
     Object.keys(data).forEach((key) => {
+      const full_key = parent_key !== '' ? parent_key + '.' + key : key;
+
       if (form_controls.includes(key) === false && form_controls.includes(key + '_id') === false) {
         // console.log('NF', key);
         delete data[key];
@@ -331,13 +333,20 @@ export class AbstractForm implements OnDestroy {
 
         form_array.controls = [];
         for (let i = 0; i < data[key].length; i++) {
-          const skeleton = component.get_form_array_skeleton(key);
+          let skeleton = component.get_form_array_skeleton(key);
+
+          if (skeleton === null) {
+            skeleton = component.get_form_array_skeleton(full_key);
+          }
+
           if (skeleton instanceof FormGroup) {
-            this.set_form_data(component, skeleton, data[key][i]);
+            // console.log('FA - FG', key);
+            // console.log('FA - FG', data[key][i]);
+            this.set_form_data(component, skeleton, data[key][i], full_key);
             form_array.push(skeleton);
           } else if (skeleton instanceof FormControl) {
-            // console.log('FC', key);
-            // console.log('FC', data[key][i]);
+            // console.log('FA - FC', key);
+            // console.log('FA - FC', data[key][i]);
 
             // TODO(haykg): temp solution
             if (data[key][i] != null && data[key][i].hasOwnProperty('id')) {
@@ -348,13 +357,15 @@ export class AbstractForm implements OnDestroy {
             skeleton.markAsTouched();
 
             form_array.push(skeleton);
+          } else {
+            // console.log('FA - ELSE', skeleton);
           }
         }
 
         delete data[key];
       } else if (form.get(key) instanceof FormGroup) {
         // console.log('FG', key);
-        this.set_form_data(component, <FormGroup>form.get(key), data[key]);
+        this.set_form_data(component, <FormGroup>form.get(key), data[key], full_key);
 
         delete data[key];
       } else {

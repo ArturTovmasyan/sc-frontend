@@ -346,11 +346,86 @@
       "performed_by": "Performed By",
       "notes": "Notes",
       "score": "Score",
-
       "button": {
         "blank": "Blank Report",
         "filled": "Filled Report"
       }
+    },
+    "lead-activity-status-list": {
+      "id": "ID",
+      "title": "Title",
+      "done": "Is Done?",
+      "space": "Space"
+    },
+    "lead-activity-type-list": {
+      "id": "ID",
+      "title": "Title",
+      "default_status": "Default Status",
+      "assign_to": "Assign To",
+      "due_date": "Due Date",
+      "reminder_date": "Reminder Date",
+      "cc": "CC",
+      "sms": "SMS",
+      "facility": "Facility",
+      "editable": "Editable",
+      "deletable": "Deletable"
+    },
+    "lead-care-type-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
+    "lead-referrer-type-list": {
+      "id": "ID",
+      "title": "Title",
+      "organization_required": "Organization Name Required",
+      "representative_required": "Representative Required",
+      "space": "Space"
+    },
+    "lead-state-change-reason-list": {
+      "id": "ID",
+      "title": "Title",
+      "state": "State",
+      "space": "Space"
+    },
+    "lead-organization-list": {
+      "id": "ID",
+      "title": "Title",
+      "category": "Category",
+      "address_1": "Address",
+      "address_2": "Address (Optional)",
+      "website_url": "Website URL",
+      "csz_str": "CSZ",
+      "space": "Space"
+    },
+    "lead-referral-list": {
+      "id": "ID",
+      "lead": "Lead",
+      "type": "Type",
+      "organization": "Organization",
+      "full_name": "Full Name",
+      "notes": "Notes"
+    },
+    "lead-lead-list": {
+      "id": "ID",
+      "date": "Date",
+      "full_name": "Full Name",
+      "owner": "Owner",
+      "state": "State",
+      "state_change_reason": "State Change Reason",
+      "effective_date": "Effective Date",
+      "referral": "Referral"
+    },
+    "lead-activity-list": {
+      "id": "ID",
+      "title": "Title",
+      "owner_type": "Owner Type",
+      "entered_by": "Entered by",
+      "type": "Activity Type",
+      "status": "Activity Status",
+      "date": "Due Date",
+      "notes": "Notes",
+      "info": "Info"
     }
   }
 }

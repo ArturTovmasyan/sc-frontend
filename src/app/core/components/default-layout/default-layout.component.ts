@@ -3,6 +3,7 @@ import {User} from '../../models/user';
 import {ProfileService} from '../../services/profile.service';
 import {Route, Router} from '@angular/router';
 import {AuthGuard} from '../../guards/auth.guard';
+import * as normalize from 'normalize-path';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,7 +43,7 @@ export class DefaultLayoutComponent {
   }
 
   private generateNavigation(route: Route) {
-    const nav_tree: any = this.collectRoutes(route, {}, false);
+    const nav_tree: any = this.collectRoutes('', route, {}, false);
     const nav_flat: any[] = [
       {
         divider: true
@@ -57,19 +58,10 @@ export class DefaultLayoutComponent {
           name: v
         });
 
-
         nav_tree[v].forEach(vv => {
-          vv.url = '/' + vv.url;
-
           if (vv.hasOwnProperty('children')) {
-            Object.keys(vv.children).forEach(vvv => {
-              if (vv.children[vvv]) {
-                vv.children[vvv] = vv.children[vvv].flat[0];
-                if (vv.children[vvv]) {
-                  vv.children[vvv].url = vv.url + '/' + vv.children[vvv].url;
-                }
-              }
-            });
+            vv.children = vv.children.filter(vvv => vvv.flat.length > 0);
+            Object.keys(vv.children).forEach(vvv => vv.children[vvv] = vv.children[vvv].flat[0]);
           }
 
           nav_flat.push(vv);
@@ -80,10 +72,10 @@ export class DefaultLayoutComponent {
     this.navItems = nav_flat;
   }
 
-  private collectRoutes(route: Route, nav_tree: any, child_mode: boolean) {
-    if (route.data.hasOwnProperty('nav') && route.data.nav.show === true) {
+  private collectRoutes(parent_path: string, route: Route, nav_tree: any, child_mode: boolean) {
+    if (route.data && route.data.hasOwnProperty('nav') && route.data.nav.show === true) {
       const group_data: any = {
-        url: route.path,
+        url: normalize('/' + parent_path + '/' + route.path),
         name: route.data.nav.hasOwnProperty('title') ? route.data.nav.title : route.data.title,
         icon: 'icon-people'
       };
@@ -91,7 +83,7 @@ export class DefaultLayoutComponent {
       if (route.children && route.children.length > 0) {
         const children = [];
         route.children.forEach(v => {
-          const child_routes = this.collectRoutes(v, {}, true);
+          const child_routes = this.collectRoutes(group_data.url, v, {}, true);
           if (child_routes) {
             children.push(child_routes);
           }
@@ -125,7 +117,7 @@ export class DefaultLayoutComponent {
       }
     } else {
       if (route.children && route.children.length > 0) {
-        route.children.forEach(v => this.collectRoutes(v, nav_tree, false));
+        route.children.forEach(v => this.collectRoutes(route.path, v, nav_tree, false));
       }
     }
 

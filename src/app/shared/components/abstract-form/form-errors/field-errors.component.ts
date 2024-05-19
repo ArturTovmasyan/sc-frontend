@@ -25,7 +25,7 @@ import {FormError} from '../../../models/form-error';
       <span *ngSwitchCase="'pattern_validator_care_group'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_state_abbr'">{{ e.params }}&nbsp;</span>
       <span *ngSwitchCase="'pattern_validator_zip_main'">{{ e.params }}&nbsp;</span>
-      <span *ngSwitchDefault>{{ e|json }}</span>
+      <!--<span *ngSwitchDefault>{{ e|json }}</span>-->
     </ng-container>
   `
 })

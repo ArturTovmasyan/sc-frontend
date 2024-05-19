@@ -28,6 +28,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   @ViewChild('photo_file') photo_file: ElementRef;
 
   photo_file_name: string;
+  photo_size_exceed: boolean;
 
   disabledDate: (date: Date) => boolean;
 
@@ -44,6 +45,8 @@ export class FormComponent extends AbstractForm implements OnInit {
       const today = new Date();
       return differenceInCalendarDays(current, today) > 0;
     };
+
+    this.photo_size_exceed = false;
   }
 
   ngOnInit(): void {
@@ -155,7 +158,22 @@ export class FormComponent extends AbstractForm implements OnInit {
       this.photo_file_name = FormComponent.truncate(file.name, 25);
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.form.get('photo').setValue(reader.result);
+        if (reader.result) {
+          const result = reader.result as string;
+          const suffix = result.substr(-2);
+          const y = suffix === '==' ? 2 : (suffix === '=' ? 1 : 0);
+
+          const max_file_size = (10 * 1024 * 1024 + 32);
+          const file_size = (result.length * (3 / 4)) - y;
+
+          if (file_size > max_file_size) {
+            this.photo_size_exceed = true;
+            this.form.get('photo').setValue(null);
+          } else {
+            this.photo_size_exceed = false;
+            this.form.get('photo').setValue(reader.result);
+          }
+        }
       };
       (this.photo_file.nativeElement as HTMLInputElement).value = null;
     }
@@ -169,6 +187,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   clear_file() {
     this.photo_file_name = null;
+    this.photo_size_exceed = false;
     this.form.get('photo').setValue(null);
   }
 
