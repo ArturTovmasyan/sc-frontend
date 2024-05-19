@@ -5,6 +5,7 @@ import {Resident} from '../models/resident';
 import {GridService} from '../../../shared/services/grid.service';
 import {Observable} from 'rxjs';
 import {Message} from '../../models/message';
+import {ResidentAdmission} from '../models/resident-admission';
 
 @Injectable({providedIn: 'root'})
 export class ResidentService extends GridService<Resident> {
@@ -16,6 +17,10 @@ export class ResidentService extends GridService<Resident> {
 
   public put_photo(data: any): Observable<any> {
     return this.http.put<Message>(this.SERVICE_URL_BASE + `/${data.id}/photo`, data);
+  }
+
+  public last_admission(id: number): Observable<ResidentAdmission> {
+    return this.http.get<ResidentAdmission>(this.SERVICE_URL_BASE + `/last/admission/${id}`);
   }
 
 }

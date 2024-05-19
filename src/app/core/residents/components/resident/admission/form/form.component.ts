@@ -20,6 +20,7 @@ import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 import {AdmissionType, ResidentAdmission} from '../../../../models/resident-admission';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {GroupHelper} from '../../../../helper/group-helper';
+import {ResidentService} from '../../../../services/resident.service';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -55,6 +56,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private care_level$: CareLevelService,
     private city_state_zip$: CityStateZipService,
     private residentSelector$: ResidentSelectorService,
+    private resident$: ResidentService,
     private _el: ElementRef
   ) {
     super();
@@ -135,7 +137,21 @@ export class FormComponent extends AbstractForm implements OnInit {
                 this.selectedTab = 0;
                 break;
             }
+
+            if (this.edit_mode === false && next === AdmissionType.READMIT) {
+              this.subscribe('resident_data');
+            }
           }
+        });
+        break;
+      case 'resident_data':
+        this.$subscriptions[key] = this.resident$.last_admission(this.form.get('resident_id').value).pipe(first()).subscribe(res => {
+            if (res) {
+              res.id = null;
+
+              this.before_set_form_data(res);
+              this.set_form_data(this, this.form, res);
+            }
         });
         break;
       case 'list_facility':
