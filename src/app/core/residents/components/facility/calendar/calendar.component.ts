@@ -17,6 +17,7 @@ import {RentIncreaseReasonPipe} from '../../../pipes/rent-increase-reason.pipe';
 import {AdmissionType} from '../../../models/resident-admission';
 import {FormComponent} from '../event-form/form.component';
 import {CalendarEventType} from '../../../models/event-definition';
+import {rgba} from 'ng-chartjs';
 
 @Component({
   selector: 'app-facility-calendar',
@@ -100,7 +101,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
             res.facility_events.forEach(event => {
               this.calendarEvents.push({
                 borderColor: 'transparent',
-                backgroundColor: '#1e75d7',
+                backgroundColor: event.rsvp ? '#5d99d7' : '#1e75d7',
                 textColor: '#ffffff',
                 id: event.id,
                 event_type: CalendarEventType.FACILITY,
