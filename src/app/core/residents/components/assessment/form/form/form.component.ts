@@ -8,6 +8,8 @@ import {AssessmentCareLevelGroup} from '../../../../models/assessment-care-level
 import {AssessmentCareLevelGroupService} from '../../../../services/assessment-care-level-group.service';
 import {AssessmentCategory} from '../../../../models/assessment-category';
 import {AssessmentCategoryService} from '../../../../services/assessment-category.service';
+import {NzModalService} from 'ng-zorro-antd';
+import {AuthGuard} from '../../../../../guards/auth.guard';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -19,11 +21,12 @@ export class FormComponent extends AbstractForm implements OnInit {
   care_level_groups: AssessmentCareLevelGroup[];
   spaces: Space[];
 
-  constructor
-  (private formBuilder: FormBuilder,
-   private category$: AssessmentCategoryService,
-   private care_level_group$: AssessmentCareLevelGroupService,
-   private space$: SpaceService
+  constructor(
+    private formBuilder: FormBuilder,
+    private category$: AssessmentCategoryService,
+    private care_level_group$: AssessmentCareLevelGroupService,
+    private space$: SpaceService,
+    private auth_$: AuthGuard
   ) {
     super();
   }
@@ -45,8 +48,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   private add_space() {
-    this.form.addControl('space_id', new FormControl(null, [Validators.required]));
-    this.subscribe('list_space');
+    if (this.auth_$.checkPermission(['persistence-security-space'])) {
+      this.form.addControl('space_id', new FormControl(null, [Validators.required]));
+      this.subscribe('list_space');
+    }
   }
 
   protected subscribe(key: string, params?: any): void {

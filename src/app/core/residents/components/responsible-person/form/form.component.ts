@@ -12,6 +12,7 @@ import {PhoneType} from '../../../../models/phone-type.enum';
 import {FormComponent as CSZFormComponent} from '../../city-state-zip/form/form.component';
 import {FormComponent as SalutationFormComponent} from '../../salutation/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
+import {AuthGuard} from '../../../../guards/auth.guard';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -32,7 +33,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     private city_state_zip$: CityStateZipService,
     private salutation$: SalutationService,
     private space$: SpaceService,
-    private modal$: NzModalService
+    private modal$: NzModalService,
+    private auth_$: AuthGuard
   ) {
     super();
     this.loaded.next(false);
@@ -71,8 +73,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   private add_space() {
-    this.form.addControl('space_id', new FormControl(null, [Validators.required]));
-    this.subscribe('list_space');
+    if (this.auth_$.checkPermission(['persistence-security-space'])) {
+      this.form.addControl('space_id', new FormControl(null, [Validators.required]));
+      this.subscribe('list_space');
+    }
   }
 
   protected subscribe(key: string, params?: any): void {

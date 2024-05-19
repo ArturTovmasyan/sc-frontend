@@ -16,20 +16,37 @@ export class AuthGuard implements CanActivate {
           this.router.navigate(['/sign-in'], {queryParams: {returnUrl: state.url}});
           return false;
         } else {
-          const expected_roles = route.data.roles || [];
+          const expected_permissions = route.data.permissions || [];
 
-          const user_info = JSON.parse(atob(localStorage.getItem('user')));
-          if (user_info != null) {
-            if (user_info.roles.every(v => expected_roles.indexOf(v) >= 0)) {
-              return true;
-            } else {
-              this.router.navigate(['/404']);
-              return false;
-            }
+          if (this.checkPermission(expected_permissions)) {
+            return true;
           } else {
+            this.router.navigate(['/404']);
             return false;
           }
         }
       }));
+  }
+
+  public checkPermission(expected_permissions: string[]): boolean {
+    if (!expected_permissions || expected_permissions.length === 0) {
+      return true;
+    }
+
+    const user_info = JSON.parse(atob(localStorage.getItem('user')));
+    if (user_info != null) {
+      const user_permissions = Object.keys(user_info.permissions);
+      //  .filter(v => v !== 'persistence-security-user' && v !== 'persistence-security-role');
+
+      if (expected_permissions.every(v => user_permissions.includes(v))) {
+        return true;
+      } else {
+        // console.log(expected_permissions);
+        // console.log(Object.keys(user_info.permissions));
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 }

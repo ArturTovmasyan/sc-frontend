@@ -11,6 +11,7 @@ import {SalutationService} from '../../../../services/salutation.service';
 import * as differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
 import {FormComponent as SalutationFormComponent} from '../../../salutation/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
+import {AuthGuard} from '../../../../../guards/auth.guard';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -33,7 +34,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     private formBuilder: FormBuilder,
     private salutation$: SalutationService,
     private space$: SpaceService,
-    private modal$: NzModalService
+    private modal$: NzModalService,
+    private auth_$: AuthGuard
   ) {
     super();
 
@@ -80,8 +82,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   private add_space() {
-    this.form.addControl('space_id', new FormControl(null, [Validators.required]));
-    this.subscribe('list_space');
+    if (this.auth_$.checkPermission(['persistence-security-space'])) {
+      this.form.addControl('space_id', new FormControl(null, [Validators.required]));
+      this.subscribe('list_space');
+    }
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -167,7 +171,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form.get('photo').setValue(null);
   }
 
-  private static truncate(value: string, length: number) : string {
+  private static truncate(value: string, length: number): string {
     return value.length > length ? (value.slice(0, length - 3) + '...') : value;
   }
 }

@@ -14,5 +14,5 @@ export class User {
   avatar: string;
   phones: Phone[];
 
-  roles: string[];
+  permissions: string[];
 }

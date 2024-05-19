@@ -66,252 +66,300 @@ const routes: Routes = [
     path: '',
     component: DefaultLayoutComponent,
     canActivate: [AuthGuard],
-    data: {title: 'Home', roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']},
+    data: {title: 'Home', permissions: []},
     children: [
       {
-        path: 'users', component: UserListComponent, data: {
-          title: 'Users',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'roles', component: RoleListComponent, data: {
-          title: 'Roles',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'residents', component: ResidentListComponent, data: {
+        path: 'residents', component: ResidentListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
           title: 'Residents',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+          permissions: ['persistence-resident-resident']
         },
         canActivate: [AuthGuard]
       },
-
       {
-        path: 'facilities', component: FacilityListComponent, data: {
+        path: 'facility',
+        data: {
+          nav: {show: true, group: 'Residents'},
           title: 'Facilities',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+          permissions: ['persistence-facility']
         },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'facility-rooms', component: FacilityRoomListComponent, data: {
-          title: 'Facility Rooms',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'facility-dining-rooms', component: FacilityDiningRoomListComponent, data: {
-          title: 'Facility Dining Rooms',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
+        children: [
+          {
+            path: 'list', component: FacilityListComponent,
+            data: {
+              nav: {show: true, group: 'Residents', title: 'List'},
+              title: 'Facilities',
+              permissions: ['persistence-facility']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'rooms', component: FacilityRoomListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
+              title: 'Facility Rooms',
+              permissions: ['persistence-facility_room']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'dining-rooms', component: FacilityDiningRoomListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
+              title: 'Facility Dining Rooms',
+              permissions: ['persistence-dining_room']
+            },
+            canActivate: [AuthGuard]
+          },
+        ],
         canActivate: [AuthGuard]
       },
 
       {
-        path: 'apartments', component: ApartmentListComponent, data: {
+        path: 'apartment',
+        data: {
+          nav: {show: true, group: 'Residents'},
           title: 'Apartments',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+          permissions: ['persistence-apartment']
         },
+        children: [
+          {
+            path: 'list', component: ApartmentListComponent,
+            data: {
+              nav: {show: true, group: 'Residents', title: 'List'},
+              title: 'Apartments',
+              permissions: ['persistence-facility']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'rooms', component: ApartmentRoomListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
+              title: 'Apartment Rooms',
+              permissions: ['persistence-apartment_room']
+            },
+            canActivate: [AuthGuard]
+          },
+        ],
         canActivate: [AuthGuard]
       },
       {
-        path: 'apartment-rooms', component: ApartmentRoomListComponent, data: {
-          title: 'Apartment Rooms',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'regions', component: RegionListComponent, data: {
+        path: 'regions', component: RegionListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
           title: 'Regions',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+          permissions: ['persistence-region']
         },
         canActivate: [AuthGuard]
       },
 
-      {
-        path: 'physicians', component: PhysicianListComponent, data: {
-          title: 'Physicians',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'physician-specialities', component: PhysicianSpecialityListComponent, data: {
-          title: 'Physician Specialities',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'responsible-person-roles', component: ResponsiblePersonRoleListComponent, data: {
-          title: 'Responsible Person Roles',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
       {
         path: 'responsible-persons', component: ResponsiblePersonListComponent,
         data: {
+          nav: {show: true, group: 'Residents'},
           title: 'Responsible Persons',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+          permissions: ['persistence-common-responsible_person']
         },
         canActivate: [AuthGuard]
       },
+
       {
-        path: 'allergens', component: AllergensListComponent, data: {
-          title: 'Allergens',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+        path: 'physicians', component: PhysicianListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Physicians',
+          permissions: ['persistence-common-physician']
         },
         canActivate: [AuthGuard]
       },
+
       {
-        path: 'care-levels', component: CareLevelListComponent, data: {
-          title: 'Care Levels',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+        path: 'responsible-person-roles', component: ResponsiblePersonRoleListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Responsible Person Roles',
+          permissions: ['persistence-common-responsible-person-role']
         },
         canActivate: [AuthGuard]
       },
+
       {
-        path: 'city-state-zips', component: CityStateZipListComponent, data: {
-          title: 'City/State/Zip',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+        path: 'physician-specialities', component: PhysicianSpecialityListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Physician Specialities',
+          permissions: ['persistence-common-speciality']
         },
         canActivate: [AuthGuard]
       },
+
       {
-        path: 'diagnoses', component: DiagnosisListComponent, data: {
-          title: 'Diagnoses',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+        path: 'assessment',
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Assessment'
         },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'diets', component: DietListComponent, data: {
-          title: 'Dietary Restriction Category',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'medical-history-conditions', component: MedicalHistoryConditionListComponent, data: {
-          title: 'Medical History Condition',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'medications', component: MedicationListComponent, data: {
-          title: 'Medications',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'medication-form-factors', component: MedicationFormFactorListComponent, data: {
-          title: 'Medication Form Factors',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'relationships', component: RelationshipListComponent, data: {
-          title: 'Relationships',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'salutations', component: SalutationListComponent, data: {
-          title: 'Salutations',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'payment-sources', component: PaymentSourceListComponent, data: {
-          title: 'Payment Sources',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'event-types', component: EventDefinitionListComponent, data: {
-          title: 'Event Types',
-          roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'assessment', data: {title: 'Assessment'},
         children: [
           {
-            path: 'categories', component: AssessmentCategoryListComponent, data: {
+            path: 'categories', component: AssessmentCategoryListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
               title: 'Categories',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+              permissions: ['persistence-assessment-category']
             },
             canActivate: [AuthGuard]
           },
           {
-            path: 'forms', component: AssessmentFormListComponent, data: {
+            path: 'forms', component: AssessmentFormListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
               title: 'Forms',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+              permissions: ['persistence-assessment-form']
             },
             canActivate: [AuthGuard]
           },
           {
-            path: 'care-levels', component: AssessmentCareLevelListComponent, data: {
+            path: 'care-levels', component: AssessmentCareLevelListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
               title: 'Care Levels',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+              permissions: ['persistence-assessment-care_level']
             },
             canActivate: [AuthGuard]
           },
           {
-            path: 'care-level-groups', component: AssessmentCareLevelGroupListComponent, data: {
+            path: 'care-level-groups', component: AssessmentCareLevelGroupListComponent,
+            data: {
+              nav: {show: true, group: 'Residents'},
               title: 'Care Level Groups',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN']
+              permissions: ['persistence-assessment-care_level_group']
             },
             canActivate: [AuthGuard]
           }
         ]
+      },
+
+      {
+        path: 'allergens', component: AllergensListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Allergens',
+          permissions: ['persistence-common-allergen']
+        },
+        canActivate: [AuthGuard]
       },
       {
-        path: 'profile', data: {title: 'Profile'},
-        children: [
-          {
-            path: 'edit', component: ProfileEditComponent, data: {
-              title: 'Edit Profile',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'me', component: ProfileViewComponent, data: {
-              title: 'My Profile',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
-            },
-            canActivate: [AuthGuard]
-          },
-          {
-            path: 'change-password', component: ChangePasswordComponent, data: {
-              title: 'Change Password',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
-            },
-            canActivate: [AuthGuard]
-          }
-        ]
+        path: 'diagnoses', component: DiagnosisListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Diagnoses',
+          permissions: ['persistence-common-diagnosis']
+        },
+        canActivate: [AuthGuard]
       },
+      {
+        path: 'diets', component: DietListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Dietary Restriction Category',
+          permissions: ['persistence-common-diet']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'medical-history-conditions', component: MedicalHistoryConditionListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Medical History Condition',
+          permissions: ['persistence-common-medical_history_condition']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'medications', component: MedicationListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Medications',
+          permissions: ['persistence-common-medication']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'medication-form-factors', component: MedicationFormFactorListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Medication Form Factors',
+          permissions: ['persistence-common-medication_form_factor']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'relationships', component: RelationshipListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Relationships',
+          permissions: ['persistence-common-relationship']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'salutations', component: SalutationListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Salutations',
+          permissions: ['persistence-common-salutation']
+        },
+        canActivate: [AuthGuard]
+      },
+
+      {
+        path: 'care-levels', component: CareLevelListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Care Levels',
+          permissions: ['persistence-common-care_level']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'city-state-zips', component: CityStateZipListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'City/State/Zip',
+          permissions: ['persistence-common-city_state_zip']
+        },
+        canActivate: [AuthGuard]
+      },
+
+      {
+        path: 'payment-sources', component: PaymentSourceListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Payment Sources',
+          permissions: ['persistence-common-payment_source']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'event-types', component: EventDefinitionListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Event Types',
+          permissions: ['persistence-common-event_definition']
+        },
+        canActivate: [AuthGuard]
+      },
+
       {
         path: 'resident/:id',
         component: ResidentViewComponent,
         canActivate: [AuthGuard],
-        data: {title: 'Resident', roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']},
+        data: {
+          title: 'Resident',
+          permissions: ['persistence-resident-resident']
+        },
         children: [
           {
             path: 'responsible-persons',
@@ -320,7 +368,7 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Responsible Persons',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+              permissions: ['persistence-resident-resident_responsible_person']
             },
             canActivate: [AuthGuard]
           },
@@ -331,7 +379,7 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Admissions',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+              permissions: ['persistence-resident-admission']
             },
             canActivate: [AuthGuard]
           },
@@ -342,7 +390,7 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Events',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+              permissions: ['persistence-resident-resident_event']
             },
             canActivate: [AuthGuard]
           },
@@ -353,7 +401,7 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Rents',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+              permissions: ['persistence-resident-resident_rent']
             },
             canActivate: [AuthGuard]
           },
@@ -364,7 +412,7 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Physicians',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+              permissions: ['persistence-resident-resident_physician']
             },
             canActivate: [AuthGuard]
           },
@@ -375,7 +423,7 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Medications',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+              permissions: ['persistence-resident-resident_medication']
             },
             canActivate: [AuthGuard]
           },
@@ -386,7 +434,7 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'History',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+              permissions: ['persistence-resident-resident_medical_history_condition']
             },
             canActivate: [AuthGuard],
             children: []
@@ -398,7 +446,7 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Dietary Restrictions',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+              permissions: ['persistence-resident-resident_diet']
             },
             canActivate: [AuthGuard]
           },
@@ -409,7 +457,7 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Assessments',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+              permissions: ['persistence-resident-assessment-assessment']
             },
             canActivate: [AuthGuard]
           },
@@ -420,11 +468,61 @@ const routes: Routes = [
             pathMatch: 'full',
             data: {
               title: 'Reports',
-              roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
+              permissions: []
             },
             canActivate: [AuthGuard]
           },
 
+        ]
+      },
+
+      {
+        path: 'users', component: UserListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Users',
+          permissions: ['persistence-security-user']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'roles', component: RoleListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Roles',
+          permissions: ['persistence-security-role']
+        },
+        canActivate: [AuthGuard]
+      },
+
+      {
+        path: 'profile',
+        data: {title: 'Profile'},
+        children: [
+          {
+            path: 'edit', component: ProfileEditComponent,
+            data: {
+              title: 'Edit Profile',
+              permissions: []
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'me', component: ProfileViewComponent,
+            data: {
+              title: 'My Profile',
+              permissions: []
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'change-password', component: ChangePasswordComponent,
+            data: {
+              title: 'Change Password',
+              permissions: []
+            },
+            canActivate: [AuthGuard]
+          }
         ]
       }
     ]

@@ -4,6 +4,8 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {Space} from '../../../../models/space';
 import {SpaceService} from '../../../../services/space.service';
 import {first} from 'rxjs/operators';
+import {NzModalService} from 'ng-zorro-antd';
+import {AuthGuard} from '../../../../guards/auth.guard';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -13,7 +15,11 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   iconPicked: string = '';
 
-  constructor(private formBuilder: FormBuilder, private space$: SpaceService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private space$: SpaceService,
+    private auth_$: AuthGuard
+  ) {
     super();
   }
 
@@ -28,8 +34,10 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   private add_space() {
-    this.form.addControl('space_id', new FormControl(null, [Validators.required]));
-    this.subscribe('list_space');
+    if (this.auth_$.checkPermission(['persistence-security-space'])) {
+      this.form.addControl('space_id', new FormControl(null, [Validators.required]));
+      this.subscribe('list_space');
+    }
   }
 
   protected subscribe(key: string, params?: any): void {

@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {navItems} from './_nav';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {filter, map, mergeMap} from 'rxjs/operators';
 import {TitleService} from './services/title.service';
@@ -15,7 +14,6 @@ import {Spinkit} from 'ng-http-loader';
 })
 export class CoreComponent {
   public spinkit = Spinkit;
-  public navItems = navItems;
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
