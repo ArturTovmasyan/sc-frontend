@@ -54,6 +54,8 @@ export class FormComponent extends AbstractForm implements OnInit {
       return 'MM/dd/yyyy';
     } else if (format === 'm/Y') {
       return 'MM/yyyy';
+    } else if (format === 'Y') {
+      return 'yyyy';
     }
 
     return null;
