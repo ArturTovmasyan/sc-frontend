@@ -92,8 +92,6 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.subscribe('rs_resident');
         this.subscribe('query_map');
         this.subscribe('list_payment_source');
-        this.subscribe('list_credit_item');
-        this.subscribe('list_discount_item');
         this.subscribe('list_payment_type');
         this.subscribe('list_resident_responsible_person');
         this.subscribe('list_late_payment');
@@ -121,24 +119,16 @@ export class FormComponent extends AbstractForm implements OnInit {
               });
               break;
             case 'list_credit_item':
-              this.$subscriptions[key] = this.credit_item$.all().pipe(first()).subscribe(res => {
+              this.$subscriptions[key] = this.credit_item$.all([{key: 'ledger_id', value: params.ledger_id}]).pipe(first()).subscribe(res => {
                 if (res) {
                   this.credit_items = res;
-
-                  if (params) {
-                    this.form.get('credit_item_id').setValue(params.credit_item_id);
-                  }
                 }
               });
               break;
             case 'list_discount_item':
-              this.$subscriptions[key] = this.discount_item$.all().pipe(first()).subscribe(res => {
+              this.$subscriptions[key] = this.discount_item$.all([{key: 'ledger_id', value: params.ledger_id}]).pipe(first()).subscribe(res => {
                 if (res) {
                   this.discount_items = res;
-
-                  if (params) {
-                    this.form.get('discount_item_id').setValue(params.discount_item_id);
-                  }
                 }
               });
              break;
@@ -178,6 +168,11 @@ export class FormComponent extends AbstractForm implements OnInit {
             default:
                 break;
         }
+    }
+
+    public after_set_form_data(): void {
+      this.subscribe('list_credit_item', {ledger_id: this.form.get('id').value});
+      this.subscribe('list_discount_item', {ledger_id: this.form.get('id').value});
     }
 
   public get_form_array_skeleton(key: string): FormGroup {
