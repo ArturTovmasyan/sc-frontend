@@ -82,6 +82,32 @@ export class ModalFormComponent {
 
         this.valid = form.valid;
         form.valueChanges.subscribe(val => this.valid = form.valid);
+
+        component.submitParent.subscribe(next => {
+          if (component.isSubmitParent) {
+            component.before_submit();
+
+            const form_data = component.formValue();
+            component.submitted = true;
+
+            submit(form_data).subscribe(
+              res => {
+                this.loading = false;
+
+                this._modal_callback(res);
+                component.after_submit();
+
+                this.modal.close();
+              },
+              error => {
+                this.loading = false;
+
+                component.handleSubmitError(error);
+                component.postSubmit(null);
+                // console.error(error);
+              });
+          }
+        });
       }
     });
   }
@@ -93,8 +119,8 @@ export class ModalFormComponent {
     let modal_message = '';
 
     if (relation_count > 0) {
-        modal_title = 'Attention!';
-        modal_message = `This may cause other data loss from database. There are ${relation_count} connections found in database.`;
+      modal_title = 'Attention!';
+      modal_message = `This may cause other data loss from database. There are ${relation_count} connections found in database.`;
     }
 
     const modal = this.modal$.create({

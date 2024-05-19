@@ -611,6 +611,9 @@ export class FormComponent extends AbstractForm implements OnInit {
               res => {
                 loading = false;
                 modal.close();
+
+                this.isSubmitParent = true;
+                this.submitParent.next(true);
               },
               error => {
                 loading = false;
@@ -626,8 +629,6 @@ export class FormComponent extends AbstractForm implements OnInit {
     modal.afterOpen.subscribe(() => {
       const component = <RentRemoveComponent>modal.getContentComponent();
       component.form.get('id').setValue(rent_id);
-
-      this.unsubscribe('get_last_rent');
     });
   }
 

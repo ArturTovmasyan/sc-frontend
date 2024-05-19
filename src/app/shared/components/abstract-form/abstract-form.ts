@@ -24,6 +24,9 @@ export class AbstractForm implements OnDestroy {
 
   private _loaded: BehaviorSubject<boolean>;
 
+  public submitParent: BehaviorSubject<boolean>;
+  public isSubmitParent: boolean;
+
   protected $subscriptions: { [key: string]: Subscription; };
 
   protected submit: (data: any) => Observable<any>;
@@ -37,6 +40,9 @@ export class AbstractForm implements OnDestroy {
     this._loaded = new BehaviorSubject<boolean>(true);
 
     this.$subscriptions = {};
+
+    this.isSubmitParent = false;
+    this.submitParent = new BehaviorSubject(null);
   }
 
   ngOnDestroy(): void {
