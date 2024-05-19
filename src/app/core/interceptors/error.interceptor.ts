@@ -39,7 +39,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           }
 
           const error = {'code': err.status, 'statusText': err.statusText, 'data': err.error};
-          return throwError(err);
+          return throwError(error);
         }
       })
     );

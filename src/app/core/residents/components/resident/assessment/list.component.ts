@@ -4,7 +4,7 @@ import {TitleService} from '../../../../services/title.service';
 import {GridComponent} from '../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {ResidentAssessmentService} from '../../../services/resident-assessment.service';
-import {AssessmentReportType, ResidentAssessment} from '../../../models/resident-assessment';
+import {ResidentAssessment} from '../../../models/resident-assessment';
 import {ActivatedRoute} from '@angular/router';
 import {ReportService} from '../../../services/report.service';
 

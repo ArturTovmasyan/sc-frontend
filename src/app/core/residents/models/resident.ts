@@ -1,6 +1,6 @@
 import {Salutation} from './salutation';
 import {Gender} from './gender.enum';
-import {Phone} from './phone';
+import {Phone} from '../../models/phone';
 import {ResponsiblePerson} from './responsible-person';
 import {Physician} from './physician';
 

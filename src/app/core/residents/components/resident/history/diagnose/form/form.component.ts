@@ -5,7 +5,6 @@ import {AbstractForm} from '../../../../../../../shared/components/abstract-form
 import {Diagnosis} from '../../../../../models/diagnosis';
 import {DiagnosisService} from '../../../../../services/diagnosis.service';
 import {ActivatedRoute} from '@angular/router';
-import {RoomType} from '../../../../../models/room-type.enum';
 import {DiagnoseType} from '../../../../../models/diagnose-type.enum';
 
 @Component({

@@ -4,12 +4,12 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {ApartmentService} from '../../../services/apartment.service';
 import {Apartment} from '../../../models/apartment';
-import {ValidationPatterns} from '../../../../../shared/constants/validation.patterns';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as ResidentMoveComponent} from '../../resident/move/form.component';
 import {ResidentService} from '../../../services/resident.service';
 import {Resident} from '../../../models/resident';
-import {ApartmentBed, ApartmentRoom} from '../../../models/apartment-room';
+import {ApartmentRoom} from '../../../models/apartment-room';
 import {ApartmentRoomService} from '../../../services/apartment-room.service';
 import {ResidentType} from '../../../models/resident-type.enum';
 
@@ -40,7 +40,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       number: ['', Validators.compose([Validators.required])],
-      floor: ['', Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.FLOOR)])],
+      floor: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.FLOOR)])],
       notes: ['', Validators.compose([Validators.max(1000)])],
 
       beds: this.formBuilder.array([]),

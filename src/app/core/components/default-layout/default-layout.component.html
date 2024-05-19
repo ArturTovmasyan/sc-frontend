@@ -9,11 +9,11 @@
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
          dropdownToggle (click)="false">
-        <i class="fa fa-user" style="font-size: 3rem;"></i>
-        <!--<img src="assets/img/avatars/placeholder-50x50.png" class="img-avatar"/>-->
+        <img *ngIf="!user || !user.avatar" src="/assets/img/person_placeholder.png" class="img-avatar"/>
+        <img *ngIf="user && user.avatar" src="{{ user.avatar }}" class="img-avatar"/>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
-        <a class="dropdown-item" [routerLink]="['/profile/my']"><i class="fa fa-user"></i> Profile</a>
+        <a class="dropdown-item" [routerLink]="['/profile/me']"><i class="fa fa-user"></i> Profile</a>
         <a class="dropdown-item" [routerLink]="['/profile/change-password']"><i class="fa fa-key"></i> Change
           Password</a>
         <!--<div class="divider"></div>-->

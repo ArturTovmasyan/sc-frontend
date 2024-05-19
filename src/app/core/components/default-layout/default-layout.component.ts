@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {navItems} from '../../_nav';
+import {User} from '../../models/user';
+import {ProfileService} from '../../services/profile.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +14,9 @@ export class DefaultLayoutComponent {
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
 
-  constructor() {
+  public user: User;
+
+  constructor(private profile$: ProfileService) {
     this.changes = new MutationObserver((mutations) => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
     });
@@ -20,5 +24,7 @@ export class DefaultLayoutComponent {
     this.changes.observe(<Element>this.element, {
       attributes: true
     });
+
+    this.profile$.get().subscribe(user => this.user = user);
   }
 }

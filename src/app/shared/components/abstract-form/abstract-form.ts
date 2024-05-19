@@ -1,6 +1,6 @@
 import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
 import {FormError} from '../../models/form-error';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 export class AbstractForm {
   public form: FormGroup;

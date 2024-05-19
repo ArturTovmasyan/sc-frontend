@@ -6,7 +6,6 @@ import {RoleService} from '../../services/role.service';
 import {GridComponent} from '../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
 import {Role} from '../../../models/role';
-import {Space} from '../../../models/space';
 
 @Component({
   templateUrl: '../../../../shared/components/grid/grid.component.html',

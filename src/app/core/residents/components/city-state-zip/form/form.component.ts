@@ -1,7 +1,7 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
-import {ValidationPatterns} from '../../../../../shared/constants/validation.patterns';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {SpaceService} from '../../../../services/space.service';
 import {first} from 'rxjs/operators';
 import {Space} from '../../../../models/space';
@@ -20,9 +20,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       state_full: ['', Validators.compose([Validators.required, Validators.max(100)])],
-      state_abbr: ['', Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.STATE_ABBR)])],
+      state_abbr: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.STATE_ABBR)])],
       city: ['', Validators.compose([Validators.required, Validators.max(100)])],
-      zip_main: ['', Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.ZIP_MAIN)])],
+      zip_main: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.ZIP_MAIN)])],
       zip_sub: ['', Validators.compose([Validators.max(100)])],
 
       space_id: [null, Validators.required],

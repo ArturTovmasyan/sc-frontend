@@ -4,7 +4,7 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {SpaceService} from '../../../../services/space.service';
 import {Space} from '../../../../models/space';
-import {ValidationPatterns} from '../../../../../shared/constants/validation.patterns';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -22,8 +22,8 @@ export class FormComponent extends AbstractForm implements OnInit {
       name: ['', Validators.compose([Validators.required, Validators.max(100)])],
       shorthand: ['', Validators.compose([Validators.required, Validators.max(100)])],
       description: ['', Validators.compose([Validators.required, Validators.max(1000)])],
-      phone: ['', Validators.pattern(ValidationPatterns.PHONE)],
-      fax: ['', Validators.pattern(ValidationPatterns.PHONE)],
+      phone: ['', Validators.pattern(CoreValidator.Patterns.PHONE)],
+      fax: ['', Validators.pattern(CoreValidator.Patterns.PHONE)],
       space_id: [null, Validators.required],
     });
 

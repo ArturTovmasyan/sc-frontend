@@ -5,7 +5,7 @@ import {AbstractForm} from '../../../../../../shared/components/abstract-form/ab
 import {PaymentSource} from '../../../../models/payment-source';
 import {PaymentSourceService} from '../../../../services/payment-source.service';
 import {ActivatedRoute} from '@angular/router';
-import {ValidationPatterns} from '../../../../../../shared/constants/validation.patterns';
+import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -31,7 +31,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       date: [new Date(), Validators.required],
 
       notes: ['', Validators.compose([Validators.max(512)])],
-      amount: [0, Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.PAYMENT_AMOUNT)])],
+      amount: [0, Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.PAYMENT_AMOUNT)])],
 
       source: this.formBuilder.array([]),
 

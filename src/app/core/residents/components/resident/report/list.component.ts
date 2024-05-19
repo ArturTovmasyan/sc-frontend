@@ -3,7 +3,6 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {ReportService} from '../../../services/report.service';
 import {TitleService} from '../../../../services/title.service';
 import {KeyValue} from '@angular/common';
-import {Observable} from 'rxjs';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {ModalButtonOptions, NzModalService} from 'ng-zorro-antd';
 import {FormComponent} from './form/form.component';

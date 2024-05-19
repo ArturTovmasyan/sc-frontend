@@ -78,10 +78,10 @@
           </div>
         </ng-container>
         <nz-button-group nzSize="small">
-          <button class="btn-prev"nz-button nzType="default" (click)="pre()" *ngIf="category_selected > 0">
+          <button class="btn-prev" nz-button nzType="default" (click)="pre()" *ngIf="category_selected > 0">
             <i nz-icon type="left"></i> Previous
           </button>
-          <button class="btn-next"nz-button nzType="default" (click)="next()" *ngIf="category_selected < (categories.length - 1)">
+          <button class="btn-next" nz-button nzType="default" (click)="next()" *ngIf="category_selected < (categories.length - 1)">
             Next <i nz-icon type="right"></i></button>
         </nz-button-group>
       </div>

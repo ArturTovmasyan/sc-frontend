@@ -4,7 +4,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {AccountService} from '../../../services/account.service';
 import {Message} from '../../../models/message';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
-import {ValidationPatterns} from '../../../../shared/constants/validation.patterns';
+import {CoreValidator} from '../../../../shared/utils/core-validator';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,7 +33,7 @@ export class SignUpComponent extends AbstractForm implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      phone: ['', Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.PHONE)])],
+      phone: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.PHONE)])],
       password: ['', Validators.required],
       rePassword: ['', Validators.required, /** TODO: Validation service match*/]
     });

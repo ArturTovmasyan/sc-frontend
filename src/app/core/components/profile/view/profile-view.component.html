@@ -8,8 +8,16 @@
         <div class="card-body">
           <ng-container *ngIf="user!=null">
             <div class="row">
-              <div class="col-12"><img class="img-fluid" src="assets/img/avatars/placeholder-300x300.png"></div>
+              <div class="col-12">
+                <div class="text-center m-0">
+                  <img *ngIf="!user.avatar" src="/assets/img/person_placeholder.png" class="img-thumbnail"
+                       style="max-height: 15rem"/>
+                  <img *ngIf="user.avatar" src="{{ user.avatar }}" class="img-thumbnail"
+                       style="max-height: 15rem"/>
+                </div>
+              </div>
             </div>
+            <div class="m-2">&nbsp;</div>
             <div class="row">
               <div class="col-6"><strong>First Name:</strong></div>
               <div class="col-6">{{ user.first_name }}</div>
@@ -22,14 +30,28 @@
               <div class="col-6"><strong>E-Mail:</strong></div>
               <div class="col-6"><a href="mailto:{{ user.email }}">{{ user.email }}</a></div>
             </div>
-            <div class="row">
-              <div class="col-6"><strong>Phone:</strong></div>
-              <div class="col-6"><a href="tel:{{ user.phone }}">{{ user.phone }}</a></div>
+            <div nz-row [nzGutter]="4">
+              <div nz-col [nzSpan]="24"><strong>Phone Numbers:</strong></div>
+              <div nz-col [nzOffset]="4" [nzSpan]="20">
+                <div nz-row [nzGutter]="4" *ngFor="let phone of user.phones">
+                  <div nz-col [nzSpan]="6"><strong>{{ phone.type|phone_type }}:</strong></div>
+                  <div nz-col [nzSpan]="12">
+                    <a href="tel:{{ phone.number }}">{{ phone.number }}</a>
+                    <ng-container *ngIf="phone.extension">, ext. {{ phone.extension }}</ng-container>
+                  </div>
+                  <div *ngIf="phone.primary" nz-col [nzSpan]="2">
+                    <i class="fas fa-key" title="Primary"></i>
+                  </div>
+                  <div *ngIf="phone.sms_enabled" nz-col [nzSpan]="2">
+                    <i class="fas fa-sms" title="SMS Enabled"></i>
+                  </div>
+                </div>
+              </div>
             </div>
           </ng-container>
         </div>
-        <div class="card-footer">
-          <a class="btn btn-primary px-4" [routerLink]="['/profile/edit']">
+        <div class="card-footer text-right">
+          <a nz-button nzType="primary" class="btn btn-primary" [routerLink]="['/profile/edit']">
             Edit
           </a>
         </div>

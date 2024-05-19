@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild, Input} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ImgCropperConfig, ImgCropperEvent, LyResizingCroppingImages} from '@alyle/ui/resizing-cropping-images';
 import {LyTheme2, ThemeVariables} from '@alyle/ui';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
@@ -22,7 +22,6 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
     autoCrop: true,
     width: 150, // Default `250`
     height: 150, // Default `200`
-    type: 'image/jpeg'
   };
 
   constructor(private formBuilder: FormBuilder, private theme: LyTheme2) {

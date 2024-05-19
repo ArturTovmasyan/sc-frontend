@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {PhoneType} from '../models/phone-type.enum';
+import {PhoneType} from '../../models/phone-type.enum';
 
 @Pipe({name: 'phone_type'})
 export class PhoneTypePipe implements PipeTransform {

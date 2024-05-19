@@ -1,3 +1,5 @@
+import {Phone} from './phone';
+
 export class User {
   id: number;
   username: string;
@@ -5,10 +7,12 @@ export class User {
   first_name: string;
   last_name: string;
   email: string;
-  phone: string;
   enabled: boolean;
   completed: boolean;
   last_activity_at: Date;
+
+  avatar: string;
+  phones: Phone[];
 
   roles: string[];
 }

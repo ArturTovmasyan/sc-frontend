@@ -6,7 +6,7 @@ import {CityStateZipService} from '../../../services/city-state-zip.service';
 import {SpaceService} from '../../../../services/space.service';
 import {Space} from '../../../../models/space';
 import {CityStateZip} from '../../../models/city-state-zip';
-import {ValidationPatterns} from '../../../../../shared/constants/validation.patterns';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -25,11 +25,11 @@ export class FormComponent extends AbstractForm implements OnInit {
       name: ['', Validators.compose([Validators.required, Validators.max(100)])],
       shorthand: ['', Validators.compose([Validators.required, Validators.max(100)])],
       description: ['', Validators.compose([Validators.required, Validators.max(1000)])],
-      phone: ['', Validators.pattern(ValidationPatterns.PHONE)],
-      fax: ['', Validators.pattern(ValidationPatterns.PHONE)],
+      phone: ['', Validators.pattern(CoreValidator.Patterns.PHONE)],
+      fax: ['', Validators.pattern(CoreValidator.Patterns.PHONE)],
       license: ['', Validators.compose([Validators.max(20)])],
-      license_capacity: ['', Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.GROUP_CAPACITY)])],
-      capacity: ['', Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.GROUP_CAPACITY)])],
+      license_capacity: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.GROUP_CAPACITY)])],
+      capacity: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.GROUP_CAPACITY)])],
       address: ['', Validators.compose([Validators.required, Validators.max(100)])],
       csz_id: [null, Validators.required],
       space_id: [null, Validators.required],

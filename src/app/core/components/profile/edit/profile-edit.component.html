@@ -2,81 +2,162 @@
   <div class="row">
     <div class="col-md-6 mx-auto">
       <div class="card mx-4">
-        <form [formGroup]="form" (ngSubmit)="submitForm()">
+        <form *ngIf="form" nz-form [formGroup]="form" (ngSubmit)="submitForm()">
           <div class="card-header">
             <strong>Edit Profile</strong>
           </div>
           <div class="card-body">
-            <div class="clearfix">
-              <nz-upload
-                nzListType="picture-card"
-                [(nzFileList)]="fileList"
-                [nzShowButton]="fileList.length < 1">
-                <i nz-icon type="plus"></i>
-                <div class="ant-upload-text">Upload</div>
-              </nz-upload>
-            </div>
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" nzRequired>Current Password</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('password')?'error':null">
+                <input nz-input type="password" id="password" formControlName="password">
+                <nz-form-explain *ngIf="hasErrors('password')">
+                  <app-field-errors [errors]="fieldErrors('password')"></app-field-errors>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
 
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-lock"></i></span>
-              </div>
-              <input type="password" class="form-control" placeholder="Current Password" formControlName="password"
-                     [ngClass]="{'is-invalid': fieldErrors('password')}"/>
-              <app-field-errors [errors]="fieldErrors('password')" class="invalid-feedback"></app-field-errors>
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-user"></i></span>
-              </div>
-              <input type="text" class="form-control" placeholder="First Name" formControlName="firstName"
-                     [ngClass]="{'is-invalid': fieldErrors('firstName')}"/>
-              <app-field-errors [errors]="fieldErrors('firstName')" class="invalid-feedback"></app-field-errors>
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-user"></i></span>
-              </div>
-              <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName"
-                     [ngClass]="{'is-invalid': fieldErrors('lastName')}"/>
-              <app-field-errors [errors]="fieldErrors('lastName')" class="invalid-feedback"></app-field-errors>
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i nz-icon theme="outline" type="mail"></i></span>
-              </div>
-              <input type="text" class="form-control" placeholder="E-Mail" formControlName="email"
-                     [ngClass]="{'is-invalid': fieldErrors('email') }"/>
-              <app-field-errors [errors]="fieldErrors('email')" class="invalid-feedback"></app-field-errors>
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i nz-icon theme="outline" type="mail"></i></span>
-              </div>
-              <input type="text" class="form-control" placeholder="Phone" formControlName="phone"
-                     [ngClass]="{'is-invalid': fieldErrors('phone') }"/>
-              <app-field-errors [errors]="fieldErrors('phone')" class="invalid-feedback"></app-field-errors>
-            </div>
-            <!-- Status -->
-            <div class="row" *ngIf="formErrors()">
-              <div class="col-12">
-                <div class="alert alert-danger" role="alert">
-                  <app-form-errors [errors]="formErrors()"></app-form-errors>
+
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="first_name" nzRequired>First Name</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('first_name')?'error':null">
+                <input nz-input placeholder="First Name" formControlName="first_name">
+                <nz-form-explain *ngIf="hasErrors('first_name')">
+                  <app-field-errors [errors]="fieldErrors('first_name')"></app-field-errors>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="last_name" nzRequired>Last Name</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('last_name')?'error':null">
+                <input nz-input placeholder="Last Name" formControlName="last_name">
+                <nz-form-explain *ngIf="hasErrors('last_name')">
+                  <app-field-errors [errors]="fieldErrors('last_name')"></app-field-errors>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">E-Mail</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email')?'error':null">
+                <input nz-input placeholder="E-Mail" formControlName="email">
+                <nz-form-explain *ngIf="hasErrors('email')">
+                  <app-field-errors [errors]="fieldErrors('email')"></app-field-errors>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+
+            <fieldset formArrayName="phones">
+              <legend class="senior-care-legend">
+                Phone Number(s)
+                <button [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
+                        (click)="add_field('phones');">
+                  <i nz-icon type="plus"></i>
+                </button>
+              </legend>
+              <table class="senior-care-form-table table table-hover table-bordered table-sm"
+                     *ngIf="get_form_array('phones').controls.length > 0">
+                <thead>
+                <tr>
+                  <th class="w-20 text-center">
+                    <nz-form-label>Primary</nz-form-label>
+                  </th>
+                  <th class="w-20 text-center">
+                    <nz-form-label>SMS</nz-form-label>
+                  </th>
+                  <th class="w-20">
+                    <nz-form-label nzRequired>Type</nz-form-label>
+                  </th>
+                  <th class="w-40">
+                    <nz-form-label nzRequired>Number</nz-form-label>
+                  </th>
+                  <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container *ngFor="let phone of get_form_array('phones').controls;let i = index">
+                  <tr [formGroupName]="i">
+                    <td class="text-center">
+                      <nz-switch nzSize="small" formControlName="primary"></nz-switch>
+                    </td>
+                    <td class="text-center">
+                      <nz-switch nzSize="small" formControlName="sms_enabled"></nz-switch>
+                    </td>
+                    <td>
+                      <nz-form-item>
+                        <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('phones.'+i+'.type')?'error':null">
+                          <nz-select nzSize="small" nzMode="default" nzPlaceHolder="Select Type" formControlName="type">
+                            <ng-container *ngFor="let type of phone_types">
+                              <nz-option [nzLabel]="(type.name)|translate" [nzValue]="type.id"></nz-option>
+                            </ng-container>
+                          </nz-select>
+                          <nz-form-explain *ngIf="hasErrors('phones.'+i+'.type')">
+                            <app-field-errors [errors]="fieldErrors('phones.'+i+'.type')"></app-field-errors>
+                          </nz-form-explain>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </td>
+                    <td>
+                      <nz-form-item>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                                         [nzValidateStatus]="hasErrors('phones.'+i+'.number')?'error':null">
+                          <input nz-input nzSize="small" placeholder="Number" formControlName="number">
+                          <nz-form-explain *ngIf="hasErrors('phones.'+i+'.number')">
+                            <app-field-errors [errors]="fieldErrors('phones.'+i+'.number')"></app-field-errors>
+                          </nz-form-explain>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </td>
+                    <td class="text-center">
+                      <button nz-button nzType="danger" nzSize="small" nzShape="circle" (click)="remove_field('phones', i);">
+                        <i nz-icon type="minus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+                </tbody>
+              </table>
+            </fieldset>
+
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="avatar" nzRequired>Avatar</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('avatar')?'error':null">
+                <input type="file" #avatar_file (change)="onFileChange($event)"
+                       accept="image/*" style="display: none;">
+                <button nz-button (click)="select_file();">
+                  <i nz-icon type="upload"></i><span>Select file...</span>
+                </button>
+                <nz-form-explain *ngIf="hasErrors('avatar')">
+                  <app-field-errors [errors]="fieldErrors('avatar')"></app-field-errors>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item *ngIf="this.form.get('avatar').value" nz-row>
+              <div nz-col nzSpan="24">
+                <div class="text-center m-0">
+                  <img src="{{ this.form.get('avatar').value }}" class="img-thumbnail"
+                       style="max-height: 15rem"/>
                 </div>
               </div>
-            </div>
-            <div class="row" *ngIf="message">
-              <div class="col-12">
-                <div class="alert alert-success" role="alert">{{ message }}</div>
-              </div>
-            </div>
-            <div class="row">
-            </div>
+            </nz-form-item>
+
+            <nz-form-item *ngIf="formErrors()">
+              <nz-form-control [nzSm]="24" [nzXs]="24">
+                <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item *ngIf="message">
+              <nz-form-control [nzSm]="24" [nzXs]="24">
+                <nz-alert nzShowIcon nzType="success" [nzMessage]="message"></nz-alert>
+              </nz-form-control>
+            </nz-form-item>
           </div>
-          <div class="card-footer">
-            <button [disabled]="loading" type="submit" class="btn btn-primary px-4">
-              <i *ngIf="loading" nz-icon theme="outline" type="loading-3-quarters"></i>
-              Change Password
+          <div class="card-footer text-right">
+            <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="form.invalid" type="submit" class="btn btn-primary">
+              Save
             </button>
           </div>
         </form>
@@ -84,3 +165,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>

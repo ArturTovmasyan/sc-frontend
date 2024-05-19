@@ -8,7 +8,7 @@ import {Space} from '../../../../models/space';
 import {CityStateZip} from '../../../models/city-state-zip';
 import {Salutation} from '../../../models/salutation';
 import {SalutationService} from '../../../services/salutation.service';
-import {PhoneType} from '../../../models/phone-type.enum';
+import {PhoneType} from '../../../../models/phone-type.enum';
 
 @Component({
   templateUrl: 'form.component.html'

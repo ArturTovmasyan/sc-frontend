@@ -1,6 +1,5 @@
 import {ActivatedRoute} from '@angular/router';
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {first} from 'rxjs/operators';
 import {ResidentService} from '../../../services/resident.service';
 import {Resident} from '../../../models/resident';
 

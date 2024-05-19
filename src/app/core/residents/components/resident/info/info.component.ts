@@ -11,9 +11,7 @@ import {NzModalService} from 'ng-zorro-antd';
 import {ImageEditorComponent} from './img-editor/image-editor.component';
 import {ResidentContractService} from '../../../services/resident-contract.service';
 import {ResidentContract} from '../../../models/resident-contract';
-import {FacilityRoom} from '../../../models/facility-room';
 import {FormComponent as ResidentMoveComponent} from '../move/form.component';
-import {FormArray} from '@angular/forms';
 
 @Component({
   selector: 'app-resident-info',

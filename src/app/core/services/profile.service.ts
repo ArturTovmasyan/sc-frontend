@@ -16,20 +16,21 @@ export class ProfileService {
   }
 
   edit(data: any): Observable<Message> {
-    return this.http.post<Message>(`${environment.apiUrl}/api/v1.0/profile/edit`, {
+    return this.http.put<Message>(`${environment.apiUrl}/api/v1.0/profile/edit`, {
       'password': data.password,
       'email': data.email,
-      'phone': data.phone,
-      'first_name': data.firstName,
-      'last_name': data.lastName
+      'phones': data.phones,
+      'first_name': data.first_name,
+      'last_name': data.last_name,
+      'avatar': data.avatar
     });
   }
 
   changePassword(data: any): Observable<Message> {
     return this.http.put<Message>(`${environment.apiUrl}/api/v1.0/profile/change-password`, {
       'password': data.password,
-      'new_password': data.newPassword,
-      're_new_password': data.reNewPassword,
+      'new_password': data.new_password,
+      're_new_password': data.re_new_password,
     });
   }
 

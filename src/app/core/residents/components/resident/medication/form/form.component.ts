@@ -9,8 +9,7 @@ import {MedicationFormFactor} from '../../../../models/medication-form-factor';
 import {Physician} from '../../../../models/physician';
 import {PhysicianService} from '../../../../services/physician.service';
 import {MedicationFormFactorService} from '../../../../services/medication-form-factor.service';
-import {ValidationPatterns} from '../../../../../../shared/constants/validation.patterns';
-import {$e} from 'codelyzer/angular/styles/chars';
+import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -45,8 +44,8 @@ export class FormComponent extends AbstractForm implements OnInit {
       medication_id: [null, Validators.required],
       form_factor_id: [null, Validators.required],
 
-      dosage: ['', Validators.compose([Validators.required, Validators.max(10), Validators.pattern(ValidationPatterns.DOSAGE)])],
-      dosage_unit: ['', Validators.compose([Validators.required, Validators.max(20), Validators.pattern(ValidationPatterns.DOSAGE_UNIT)])],
+      dosage: ['', Validators.compose([Validators.required, Validators.max(10), Validators.pattern(CoreValidator.Patterns.DOSAGE)])],
+      dosage_unit: ['', Validators.compose([Validators.required, Validators.max(20), Validators.pattern(CoreValidator.Patterns.DOSAGE_UNIT)])],
 
       physician_id: [null, Validators.required],
 

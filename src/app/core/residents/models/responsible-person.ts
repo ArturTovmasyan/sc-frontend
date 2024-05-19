@@ -1,5 +1,5 @@
 import {Salutation} from './salutation';
-import {Phone} from './phone';
+import {Phone} from '../../models/phone';
 import {CityStateZip} from './city-state-zip';
 import {Space} from '../../models/space';
 

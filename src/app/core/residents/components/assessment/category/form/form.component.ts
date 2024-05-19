@@ -1,5 +1,5 @@
 ﻿import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {Space} from '../../../../../models/space';
 import {SpaceService} from '../../../../../services/space.service';

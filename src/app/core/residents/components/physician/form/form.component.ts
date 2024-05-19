@@ -6,7 +6,7 @@ import {CityStateZipService} from '../../../services/city-state-zip.service';
 import {SpaceService} from '../../../../services/space.service';
 import {Space} from '../../../../models/space';
 import {CityStateZip} from '../../../models/city-state-zip';
-import {ValidationPatterns} from '../../../../../shared/constants/validation.patterns';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {Salutation} from '../../../models/salutation';
 import {SalutationService} from '../../../services/salutation.service';
 import {PhysicianSpeciality} from '../../../models/physician-speciality';
@@ -42,9 +42,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       last_name: ['', Validators.required],
       address_1: ['', Validators.required],
       address_2: [''],
-      office_phone: ['', Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.PHONE)])],
-      fax: ['', Validators.compose([Validators.pattern(ValidationPatterns.PHONE)])],
-      emergency_phone: ['', Validators.compose([Validators.pattern(ValidationPatterns.PHONE)])],
+      office_phone: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.PHONE)])],
+      fax: ['', Validators.compose([Validators.pattern(CoreValidator.Patterns.PHONE)])],
+      emergency_phone: ['', Validators.compose([Validators.pattern(CoreValidator.Patterns.PHONE)])],
       email: ['', Validators.compose([Validators.email])],
       website_url: [''],
 

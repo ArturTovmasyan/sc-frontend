@@ -1,26 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {Message} from '../../../models/message';
 import {ProfileService} from '../../../services/profile.service';
-import {UploadFile} from 'ng-zorro-antd';
+import {PhoneType} from '../../../models/phone-type.enum';
 
 @Component({
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.scss']
 })
 export class ProfileEditComponent extends AbstractForm implements OnInit {
-  fileList = [
-    {
-      uid: -1,
-      name: 'xxx.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }
-  ];
-  previewImage = '';
-  previewVisible = false;
+  @ViewChild('avatar_file') avatar_file: ElementRef;
+
+  phone_types: { id: PhoneType, name: string }[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,25 +28,67 @@ export class ProfileEditComponent extends AbstractForm implements OnInit {
 
     this.postSubmit = (data: Message) => {
       this.message = 'Your data have been successfully saved.';
+
+      this.router.navigate(['profile/me']);
     };
   }
 
   ngOnInit(): void {
-    this.profile$.get().subscribe(user => {
-      this.form = this.formBuilder.group({
-        password: ['', Validators.required],
-        firstName: [user.first_name, Validators.required],
-        lastName: [user.last_name, Validators.required],
-        email: [user.email, Validators.compose([Validators.required, Validators.email])],
-        phone: [user.phone, Validators.compose([Validators.required])],
-      });
+    this.form = this.formBuilder.group({
+      password: ['', Validators.required],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      phones: this.formBuilder.array([]),
+      avatar: [null, Validators.required],
     });
+
+    this.profile$.get().subscribe(user => {
+      this.set_form_data(this, this.form, user);
+    });
+
+    this.phone_types = [
+      {id: PhoneType.HOME, name: 'HOME'},
+      {id: PhoneType.MOBILE, name: 'MOBILE'},
+      {id: PhoneType.WORK, name: 'WORK'},
+      {id: PhoneType.OFFICE, name: 'OFFICE'},
+      {id: PhoneType.EMERGENCY, name: 'EMERGENCY'},
+      {id: PhoneType.FAX, name: 'FAX'},
+      {id: PhoneType.ROOM, name: 'ROOM'}
+    ];
   }
 
+  public get_form_array_skeleton(key: string): FormGroup {
+    switch (key) {
+      case 'phones':
+        return this.formBuilder.group({
+          id: [null],
+          type: [null, Validators.required],
+          number: ['', Validators.required],
+          primary: [false],
+          sms_enabled: [false],
+          compatibility: [null]
+        });
+      default:
+        return null;
+    }
+  }
 
-  handlePreview = (file: UploadFile) => {
-    this.previewImage = file.url || file.thumbUrl;
-    this.previewVisible = true;
+  onFileChange($event) {
+    const reader = new FileReader();
+    if ($event.target.files && $event.target.files.length > 0) {
+      const file = $event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.form.get('avatar').setValue(reader.result);
+      };
+    }
+
+    return false;
+  }
+
+  select_file() {
+    (this.avatar_file.nativeElement as HTMLInputElement).click();
   }
 }
 

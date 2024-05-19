@@ -4,12 +4,12 @@ import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {FacilityService} from '../../../services/facility.service';
 import {Facility} from '../../../models/facility';
-import {ValidationPatterns} from '../../../../../shared/constants/validation.patterns';
+import {CoreValidator} from '../../../../../shared/utils/core-validator';
 import {NzModalService} from 'ng-zorro-antd';
 import {FormComponent as ResidentMoveComponent} from '../../resident/move/form.component';
 import {ResidentService} from '../../../services/resident.service';
 import {Resident} from '../../../models/resident';
-import {FacilityBed, FacilityRoom} from '../../../models/facility-room';
+import {FacilityRoom} from '../../../models/facility-room';
 import {FacilityRoomService} from '../../../services/facility-room.service';
 import {ResidentType} from '../../../models/resident-type.enum';
 
@@ -42,7 +42,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
       number: ['', Validators.compose([Validators.required])],
-      floor: ['', Validators.compose([Validators.required, Validators.pattern(ValidationPatterns.FLOOR)])],
+      floor: ['', Validators.compose([Validators.required, Validators.pattern(CoreValidator.Patterns.FLOOR)])],
       notes: ['', Validators.compose([Validators.max(1000)])],
 
       beds: this.formBuilder.array([]),
@@ -57,11 +57,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.form.get('beds').valueChanges.subscribe(next => {
           this.room_curr_occupation = next.length;
 
-          if ((this.room_curr_occupation + this.other_occupation) >= this.facility.capacity) {
-            this.btn_add_bed.el.disabled = true;
-          } else {
-            this.btn_add_bed.el.disabled = false;
-          }
+          this.btn_add_bed.el.disabled = (this.room_curr_occupation + this.other_occupation) >= this.facility.capacity;
         });
 
         this.form.get('facility_id').valueChanges.subscribe(next => {

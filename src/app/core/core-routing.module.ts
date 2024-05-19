@@ -1,15 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from './components/security/login';
-import {LogoutComponent} from './components/security/logout';
-import {SignUpComponent} from './components/account/sign-up';
+import {AuthGuard} from './guards/auth.guard';
+import {DefaultLayoutComponent} from './components/default-layout/default-layout.component';
 import {P404Component} from './components/error/404.component';
 import {P500Component} from './components/error/500.component';
-import {ForgotPasswordComponent} from './components/account/forgot-password';
-import {AuthGuard} from './guards/auth.guard';
-import {DefaultLayoutComponent} from './components/default-layout';
-import {ProfileViewComponent} from './components/profile/view/profile-view.component';
+import {LoginComponent} from './components/security/login/login.component';
+import {LogoutComponent} from './components/security/logout/logout.component';
+import {SignUpComponent} from './components/account/sign-up/sign-up.component';
+import {ForgotPasswordComponent} from './components/account/forgot-password/forgot-password.component';
 import {ChangePasswordComponent} from './components/profile/change-password/change-password.component';
+import {ProfileViewComponent} from './components/profile/view/profile-view.component';
 import {ProfileEditComponent} from './components/profile/edit/profile-edit.component';
 
 
@@ -282,7 +282,7 @@ const routes: Routes = [
             canActivate: [AuthGuard]
           },
           {
-            path: 'my', component: ProfileViewComponent, data: {
+            path: 'me', component: ProfileViewComponent, data: {
               title: 'My Profile',
               roles: ['ROLE_ADMIN', 'ROLE_SPACE_ADMIN', 'ROLE_USER']
             },

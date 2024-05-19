@@ -4,6 +4,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {Message} from '../../../models/message';
 import {ProfileService} from '../../../services/profile.service';
+import {CoreValidator} from '../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: './change-password.component.html',
@@ -22,18 +23,17 @@ export class ChangePasswordComponent extends AbstractForm implements OnInit {
     };
 
     this.postSubmit = (data: Message) => {
-      this.message = data.message;
+      this.message = 'Your password has been successfully changed.';
     };
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       password: ['', Validators.required],
-      newPassword: ['', Validators.required],
-      reNewPassword: ['', Validators.required, /** Validation service match*/]
+      new_password: ['', Validators.compose([Validators.required, CoreValidator.password])],
+      re_new_password: ['', Validators.compose([Validators.required, CoreValidator.match_other('new_password', 'new password')])]
     });
   }
 
 }
-
 

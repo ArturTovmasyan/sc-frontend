@@ -1,4 +1,4 @@
-﻿import {Component, ElementRef, OnInit} from '@angular/core';
+﻿import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
