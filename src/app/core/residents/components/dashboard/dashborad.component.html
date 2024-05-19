@@ -19,15 +19,33 @@
             </ng-container>
           </tr>
           <tr>
-            <td>Total Capacity</td>
+            <td>Beds - Licensed</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.beds_licensed : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Beds - Target</td>
             <ng-container *ngFor="let facility of facilities">
               <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.beds_target : '-' }}</td>
             </ng-container>
           </tr>
           <tr>
-            <td>Break Even</td>
+            <td>Beds - Configured</td>
             <ng-container *ngFor="let facility of facilities">
-              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.break_even : '-' }}</td>
+              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.beds_configured : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Yellow Flag Warning</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.yellow_flag : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Red Flag Warning</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.red_flag : '-' }}</td>
             </ng-container>
           </tr>
           <tr>

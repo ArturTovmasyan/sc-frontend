@@ -14,9 +14,9 @@ export class FacilityDashboard {
 
     if (data.ending_occupancy > data.yellow_flag) {
       style = {'background-color': '#a2ddb7'};
-    } else if (data.ending_occupancy > data.break_even && data.ending_occupancy <= data.yellow_flag) {
+    } else if (data.ending_occupancy > data.red_flag && data.ending_occupancy <= data.yellow_flag) {
       style = {'background-color': '#ffdf7e'};
-    } else if (data.ending_occupancy <= data.break_even) {
+    } else if (data.ending_occupancy <= data.red_flag) {
       style = {'background-color': '#ed969e', 'color': 'white', 'font-weight': 'bold'};
     }
 
@@ -26,7 +26,7 @@ export class FacilityDashboard {
 
 class FacilityDashboardData {
   average_room_rent: number;
-  break_even: number;
+  red_flag: number;
   yellow_flag: number;
   ending_occupancy: number;
   events_per_month: number;
@@ -40,6 +40,8 @@ class FacilityDashboardData {
   projected_near_term_occupancy: number;
   qualified_inquiries: number;
   starting_occupancy: number;
+  beds_licensed: number;
+  beds_target: number;
   beds_configured: number;
   total_inquiries: number;
   tours_per_month: number;
