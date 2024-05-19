@@ -53,3 +53,25 @@ nz-button-group [nz-button] {
     margin-right: 1rem;
   }
 }
+
+
+dl.grid-definition-list {
+  dt {
+    float: left;
+    margin-right: 10%;
+    max-width: 40%;
+    font-weight: bold;
+  }
+
+  dd {
+    color: grey;
+    margin-left: 50%;
+    margin-bottom: .5em;
+  }
+
+  dd::after {
+    content: " ";
+    display: block;
+    clear: left;
+  }
+}

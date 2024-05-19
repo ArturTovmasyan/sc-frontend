@@ -1,15 +1,13 @@
 import * as _ from 'lodash';
-import {Observable} from 'rxjs';
+import {OnDestroy} from '@angular/core';
+import {KeyValue} from '@angular/common';
+import {Observable, Subscription} from 'rxjs';
 import {TitleService} from '../../../core/services/title.service';
 import {NzModalService} from 'ng-zorro-antd';
 import {GridService} from '../../services/grid.service';
 import {AbstractForm} from '../abstract-form/abstract-form';
 
-// @Component({
-//   templateUrl: './grid.component.html',
-//   styleUrls: ['./grid.component.scss']
-// })
-export class GridComponent<T extends IdInterface, Service extends GridService<T>> {
+export class GridComponent<T extends IdInterface, Service extends GridService<T>> implements OnDestroy {
   public card: boolean = true; // TODO(haykg): review to convert Input
   protected loading_edit_modal: boolean = false;
 
@@ -50,8 +48,25 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
 
   protected params: { key: string, value: string }[] = [];
 
+  protected $subscriptions: { [key: string]: Subscription; };
+
   constructor(protected service$: Service, protected title$: TitleService, protected modal$: NzModalService) {
-    title$.getTitle().subscribe(v => this.title = v);
+    this.title$.getTitle().subscribe(v => this.title = v);
+
+    this.$subscriptions = {};
+  }
+
+  ngOnDestroy(): void {
+    Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
+  }
+
+  protected subscribe(key: string, params?: any): void {
+  }
+
+  protected unsubscribe(key: string): void {
+    if (this.$subscriptions.hasOwnProperty(key)) {
+      this.$subscriptions[key].unsubscribe();
+    }
   }
 
   init(): void {
@@ -440,5 +455,17 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
     }
 
     return route_params;
+  }
+
+  protected replace_known_value(value: any) {
+    if (typeof value === 'boolean') {
+      return value ? 'Yes' : 'No';
+    } else {
+      return value;
+    }
+  }
+
+  protected no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {
+    return 0;
   }
 }

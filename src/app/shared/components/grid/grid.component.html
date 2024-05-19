@@ -146,11 +146,22 @@
         <ng-container *ngSwitchCase="'datetime'">
           {{ row[field.id]|date:'MM/dd/yyyy HH:mm:ss' }}
         </ng-container>
+        <ng-container *ngSwitchCase="'json'">
+          <template [ngTemplateOutletContext]="{ data: row[field.id] }"
+                    [ngTemplateOutlet]="json_field"></template>
+        </ng-container>
         <ng-container *ngSwitchDefault>
           <ng-container *ngIf="field.link">
             <ng-container [ngSwitch]="field.link">
-              <a *ngSwitchCase="':edit'" href="javascript:void(0);" (click)="open_edit_modal(row.id)">{{ row[field.id] }} <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i></a>
-              <a *ngSwitchDefault [routerLink]="routeInfo(field.link, row.id)">{{ row[field.id] }} <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i></a>
+              <a *ngSwitchCase="':edit'" href="javascript:void(0);"
+                 (click)="open_edit_modal(row.id)">
+                {{ row[field.id] }}
+                <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i>
+              </a>
+              <a *ngSwitchDefault [routerLink]="routeInfo(field.link, row.id)">
+                {{ row[field.id] }}
+                <i *ngIf="!row[field.id]" class="fas fa-external-link-alt"></i>
+              </a>
             </ng-container>
           </ng-container>
           <span *ngIf="!field.link">{{ row[field.id] }}</span>
@@ -312,4 +323,17 @@
       </div>
     </div>
   </nz-dropdown>
+</ng-template>
+
+<ng-template #json_field let-data="data">
+  <dl class="grid-definition-list">
+    <ng-container *ngFor="let entry of data|str2json">
+      <ng-container *ngFor="let item of entry|str2json|keyvalue:no_sort_order">
+        <ng-container *ngIf="item.value !== null">
+          <dt>{{ item.key }}:</dt>
+          <dd>{{ replace_known_value(item.value) }}</dd>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </dl>
 </ng-template>

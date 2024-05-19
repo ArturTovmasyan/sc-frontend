@@ -8,12 +8,14 @@ import {FieldErrorsComponent} from './components/abstract-form/form-errors/field
 import {en_US, NgZorroAntdModule, NZ_I18N} from 'ng-zorro-antd';
 import {TranslateModule} from '@ngx-translate/core';
 import {StringPipe} from './pipes/string.pipe';
+import {String2JsonPipe} from './pipes/str2json.pipe';
 
 @NgModule({
   declarations: [
     FieldErrorsComponent,
     FormErrorsComponent,
-    StringPipe
+    StringPipe,
+    String2JsonPipe
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import {StringPipe} from './pipes/string.pipe';
     TranslateModule,
     FieldErrorsComponent,
     FormErrorsComponent,
-    StringPipe
+    StringPipe,
+    String2JsonPipe
   ]
 })
 

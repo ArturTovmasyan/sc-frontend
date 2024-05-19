@@ -292,7 +292,8 @@
     "resident-admission-list": {
       "id": "ID",
       "admission_type": "Admission Type",
-      "date": "Effective date"
+      "date": "Effective date",
+      "info": "Info"
     },
     "resident-rent-list": {
       "id": "ID",
