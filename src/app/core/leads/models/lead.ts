@@ -34,7 +34,10 @@ export class Lead implements IdInterface {
   notes: string;
   phones: Phone[];
 
+  web_lead: boolean;
   spam: boolean;
+  next_lead_id: number;
+  previous_lead_id: number;
 }
 
 export enum LeadState {

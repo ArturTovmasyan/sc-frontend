@@ -11,7 +11,7 @@ import {ReferralService} from '../../../services/referral.service';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {FormComponent as LeadFormComponent} from '../form/form.component';
 import {FormComponent as ReferralFormComponent} from '../../referral/form/form.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ActivityOwnerType} from '../../../models/activity';
 import {AuthGuard} from '../../../../guards/auth.guard';
 
@@ -37,6 +37,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     private lead$: LeadService,
     private referral$: ReferralService,
     private route$: ActivatedRoute,
+    private router$: Router,
     private auth_$: AuthGuard
   ) {
     this.$subscriptions = {};
@@ -223,5 +224,24 @@ export class ViewComponent implements OnInit, OnDestroy {
         this.subscribe('get_lead', {lead_id: this.lead.id});
       });
     }
+  }
+
+  show(direction: string) {
+    switch (direction) {
+      case 'previous':
+        return this.lead.previous_lead_id === null;
+      case 'next':
+        return this.lead.next_lead_id === null;
+    }
+
+    return null;
+  }
+
+  getPreviousLead() {
+    this.router$.navigate(['lead/lead', this.lead.previous_lead_id]).then();
+  }
+
+  getNextLead() {
+    this.router$.navigate(['lead/lead', this.lead.next_lead_id]).then();
   }
 }
