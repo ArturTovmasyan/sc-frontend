@@ -197,26 +197,6 @@ const routes: Routes = [
       },
 
       {
-        path: 'responsible-person-roles', component: ResponsiblePersonRoleListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Responsible Person Roles',
-          permissions: ['persistence-common-responsible-person-role']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'physician-specialities', component: PhysicianSpecialityListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Physician Specialities',
-          permissions: ['persistence-common-speciality']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
         path: 'assessment',
         data: {
           nav: {show: true, group: 'Residents'},
@@ -261,61 +241,6 @@ const routes: Routes = [
           }
         ]
       },
-
-      {
-        path: 'allergens', component: AllergensListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Allergens',
-          permissions: ['persistence-common-allergen']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'diagnoses', component: DiagnosisListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Diagnoses',
-          permissions: ['persistence-common-diagnosis']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'diets', component: DietListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Dietary Restriction Category',
-          permissions: ['persistence-common-diet']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'medical-history-conditions', component: MedicalHistoryConditionListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Medical History Condition',
-          permissions: ['persistence-common-medical_history_condition']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'medications', component: MedicationListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Medications',
-          permissions: ['persistence-common-medication']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'medication-form-factors', component: MedicationFormFactorListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Medication Form Factors',
-          permissions: ['persistence-common-medication_form_factor']
-        },
-        canActivate: [AuthGuard]
-      },
       {
         path: 'relationships', component: RelationshipListComponent,
         data: {
@@ -326,40 +251,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'salutations', component: SalutationListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Salutations',
-          permissions: ['persistence-common-salutation']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
         path: 'care-levels', component: CareLevelListComponent,
         data: {
           nav: {show: true, group: 'Residents'},
           title: 'Care Levels',
           permissions: ['persistence-common-care_level']
-        },
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'city-state-zips', component: CityStateZipListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'City/State/Zip',
-          permissions: ['persistence-common-city_state_zip']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'payment-sources', component: PaymentSourceListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Payment Sources',
-          permissions: ['persistence-common-payment_source']
         },
         canActivate: [AuthGuard]
       },
@@ -372,6 +268,108 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
+
+
+      {
+        path: 'payment-sources', component: PaymentSourceListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Payment Sources',
+          permissions: ['persistence-common-payment_source']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'city-state-zips', component: CityStateZipListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'City State Zip Code',
+          permissions: ['persistence-common-city_state_zip']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'salutations', component: SalutationListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Salutations',
+          permissions: ['persistence-common-salutation']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'medications', component: MedicationListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Medications',
+          permissions: ['persistence-common-medication']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'medication-form-factors', component: MedicationFormFactorListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Medication Form Factors',
+          permissions: ['persistence-common-medication_form_factor']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'medical-history-conditions', component: MedicalHistoryConditionListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Medical History Conditions',
+          permissions: ['persistence-common-medical_history_condition']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'diets', component: DietListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Dietary Restriction Categories',
+          permissions: ['persistence-common-diet']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'diagnoses', component: DiagnosisListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Diagnoses',
+          permissions: ['persistence-common-diagnosis']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'allergens', component: AllergensListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Allergens',
+          permissions: ['persistence-common-allergen']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'physician-specialities', component: PhysicianSpecialityListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Physician Specialities',
+          permissions: ['persistence-common-speciality']
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'responsible-person-roles', component: ResponsiblePersonRoleListComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Responsible Person Roles',
+          permissions: ['persistence-common-responsible-person-role']
+        },
+        canActivate: [AuthGuard]
+      },
+
 
       {
         path: 'resident/:id',
@@ -498,16 +496,6 @@ const routes: Routes = [
       },
 
       {
-        path: 'spaces', component: SpaceListComponent,
-        data: {
-          nav: {show: true, group: 'Administration'},
-          title: 'Spaces',
-          permissions: ['persistence-security-space']
-        },
-        canActivate: [AuthGuard]
-      },
-
-      {
         path: 'users', component: UserListComponent,
         data: {
           nav: {show: true, group: 'Administration'},
@@ -527,6 +515,16 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
 
+
+      {
+        path: 'spaces', component: SpaceListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Spaces',
+          permissions: ['persistence-security-space']
+        },
+        canActivate: [AuthGuard]
+      },
       {
         path: 'roles', component: RoleListComponent,
         data: {
