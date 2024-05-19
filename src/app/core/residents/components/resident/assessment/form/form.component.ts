@@ -225,4 +225,8 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.data_loaded = true;
   }
 
+  rows_controls() {
+    return (<FormArray>this.form.get('rows')).controls;
+  }
+
 }
