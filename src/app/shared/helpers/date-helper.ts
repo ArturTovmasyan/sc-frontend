@@ -38,17 +38,20 @@ export class DateHelper {
   }
 
   public static convertUTCString(formated: string): Date {
-    const groups = formated.match(DateHelper.REGEX_UTC);
+    const date = new Date(formated);
+    return new Date( date.getTime() - date.getTimezoneOffset() * -60000 );
 
-    return new Date(Date.UTC(
-      parseInt(groups[1], 10),
-      parseInt(groups[2], 10) - 1,
-      parseInt(groups[3], 10),
-      parseInt(groups[4], 10),
-      parseInt(groups[5], 10),
-      parseInt(groups[6], 10),
-      parseInt(groups[7], 10),
-    ));
+    // const groups = formated.match(DateHelper.REGEX_UTC);
+    //
+    // return new Date(Date.UTC(
+    //   parseInt(groups[1], 10),
+    //   parseInt(groups[2], 10) - 1,
+    //   parseInt(groups[3], 10),
+    //   parseInt(groups[4], 10),
+    //   parseInt(groups[5], 10),
+    //   parseInt(groups[6], 10),
+    //   parseInt(groups[7], 10),
+    // ));
   }
 
   public static formatMoment(date: Date, format: string, utc: boolean = false): string {
