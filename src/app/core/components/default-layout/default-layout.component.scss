@@ -19,6 +19,14 @@
 }
 
 ::ng-deep {
+  .ant-tabs .ant-tabs-left-bar .ant-tabs-tab {
+    text-align: left;
+  }
+
+  .ant-tabs-nav .ant-tabs-tab-active {
+    font-weight: 400;
+  }
+
   .ant-dropdown:before {
     content: none;
   }

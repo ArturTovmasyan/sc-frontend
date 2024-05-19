@@ -5,7 +5,7 @@ import {Physician} from '../models/physician';
 export class PhysicianPipe implements PipeTransform {
   transform(value: Physician) {
     if (value) {
-      return (value.salutation ? (value.salutation.title + ', ') : '') + value.first_name + ' ' + value.last_name;
+      return (value.salutation && value.salutation.title ? (value.salutation.title + ' ') : '') + value.first_name + ' ' + value.last_name;
     } else {
       return null;
     }

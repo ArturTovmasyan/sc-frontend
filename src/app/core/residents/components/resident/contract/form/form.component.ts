@@ -21,6 +21,7 @@ import {Region} from '../../../../models/region';
 import {FacilityService} from '../../../../services/facility.service';
 import {ApartmentService} from '../../../../services/apartment.service';
 import {RegionService} from '../../../../services/region.service';
+import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -156,7 +157,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         option = this.formBuilder.group({
           state: [null, Validators.required],
 
-          care_group: [null, Validators.required],
+          care_group: [null, Validators.compose([Validators.required, CoreValidator.care_group])],
           care_level_id: [null, Validators.required],
           ambulatory: [false, Validators.required],
           dnr: [false, Validators.required],
@@ -197,7 +198,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         option = this.formBuilder.group({
           state: [null, Validators.required],
 
-          care_group: [null, Validators.required],
+          care_group: [null, Validators.compose([Validators.required, CoreValidator.care_group])],
           care_level_id: [null, Validators.required],
           ambulatory: [false, Validators.required],
           dnr: [false, Validators.required],

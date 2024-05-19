@@ -5,7 +5,7 @@ import {ResponsiblePerson} from '../models/responsible-person';
 export class ResponsiblePersonPipe implements PipeTransform {
   transform(value: ResponsiblePerson) {
     if (value) {
-      return (value.salutation ? (value.salutation.title + ', ') : '') + value.first_name + ' ' + value.last_name;
+      return (value.salutation && value.salutation.title ? (value.salutation.title + ' ') : '') + value.first_name + ' ' + value.last_name;
     } else {
       return null;
     }

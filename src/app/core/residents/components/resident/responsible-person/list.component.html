@@ -1,0 +1,92 @@
+<nz-tabset *ngIf="responsible_persons" nzTabPosition="left" style="min-height: 250px" [(nzSelectedIndex)]="selected_tab">
+  <nz-tab *ngFor="let rrp of responsible_persons" [nzTitle]="nzTabHeading">
+    <ng-template #nzTabHeading>
+      <div nz-row [nzGutter]="4">
+        <div nz-col
+             [nzSpan]="20">{{ rrp.responsible_person.salutation.title }} {{ rrp.responsible_person.first_name }} {{ rrp.responsible_person.middle_name }} {{ rrp.responsible_person.last_name }}</div>
+        <div *ngIf="rrp.responsible_person.financially" nz-col [nzSpan]="2">
+          <i class="fas fa-usd" title="Financially"></i>
+        </div>
+        <div *ngIf="rrp.responsible_person.emergency" nz-col [nzSpan]="2">
+          <i class="fas fa-phone" title="Emergency"></i>
+        </div>
+      </div>
+    </ng-template>
+    <div nz-row>
+      <div nz-col [nzSpan]="24">
+        <p class="text-center m-1">
+          <strong
+            style="font-size: large;">{{ rrp.responsible_person.salutation.title }} {{ rrp.responsible_person.first_name }} {{ rrp.responsible_person.middle_name }} {{ rrp.responsible_person.last_name }}</strong>
+        </p>
+      </div>
+    </div>
+
+    <div nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Financially:</strong></div>
+      <div nz-col [nzSpan]="16">{{ rrp.responsible_person.financially ? 'Yes' : 'No' }}</div>
+    </div>
+
+    <div nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Emergency:</strong></div>
+      <div nz-col [nzSpan]="16">{{ rrp.responsible_person.emergency ? 'Yes' : 'No' }}</div>
+    </div>
+
+    <div nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Relationship:</strong></div>
+      <div nz-col [nzSpan]="16">{{ rrp.relationship.title }}</div>
+    </div>
+
+    <div nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Address Line 1:</strong></div>
+      <div nz-col [nzSpan]="16">{{ rrp.responsible_person.address_1 }}</div>
+    </div>
+
+    <div *ngIf="rrp.responsible_person.address_2" nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Address Line 2:</strong></div>
+      <div nz-col [nzSpan]="16">{{ rrp.responsible_person.address_2 }}</div>
+    </div>
+
+    <div nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>CSZ:</strong></div>
+      <div nz-col [nzSpan]="16">{{ rrp.responsible_person.csz|csz }}</div>
+    </div>
+
+    <div *ngIf="rrp.responsible_person.phones && rrp.responsible_person.phones.length > 0"
+         nz-row [nzGutter]="4">
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Phone Numbers:</strong></div>
+      <div nz-col [nzSpan]="16">
+        <div nz-col [nzSpan]="24">&nbsp;</div>
+        <div nz-row [nzGutter]="4" *ngFor="let phone of rrp.responsible_person.phones">
+          <div nz-col [nzSpan]="4"><strong>{{ phone.type|phone_type }}:</strong></div>
+          <div nz-col [nzSpan]="16">
+            <a href="tel:{{ phone.number| mask: '(000) 000-0000' }}">{{ phone.number| mask: '(000) 000-0000' }}</a>
+            <ng-container *ngIf="phone.extension">, ext. {{ phone.extension }}</ng-container>
+          </div>
+          <div *ngIf="phone.primary" nz-col [nzSpan]="2">
+            <i class="fas fa-key" title="Primary"></i>
+          </div>
+          <div *ngIf="phone.sms_enabled" nz-col [nzSpan]="2">
+            <i class="fas fa-sms" title="SMS Enabled"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nz-tab>
+</nz-tabset>
+
+<nz-divider></nz-divider>
+
+<div class="d-flex">
+  <nz-button-group [nzSize]="'medium'" class="ml-auto">
+    <button nz-button nzType="primary" (click)="show_modal_add(); $event.preventDefault();">
+      <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
+    </button>
+    <button nz-button nzType="default" (click)="show_modal_edit(); $event.preventDefault();"
+            [nzLoading]="loading_edit_modal">
+      <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+    </button>
+    <button nz-button nzType="danger" (click)="show_modal_remove(); $event.preventDefault();">
+      <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
+    </button>
+  </nz-button-group>
+</div>

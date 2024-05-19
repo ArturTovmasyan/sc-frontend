@@ -11,6 +11,7 @@ export class CoreValidator {
     PAYMENT_AMOUNT: /(^0$)|(^[1-9][0-9]*$)|(^[0-9]+(\.[0-9]{1,2})$)/,
 
     GROUP_CAPACITY: /(^[1-9][0-9]*$)/,
+    CARE_GROUP: /(^[1-9][0-9]*$)/,
     STATE_ABBR: /\b([A-Z]{2})\b/,
     ZIP_MAIN: /^[0-9]{5}([- ]?[0-9]{4})?$/,
     PHONE: /^\([0-9]{3}\)\s?[0-9]{3}-[0-9]{4}$/,
@@ -46,6 +47,10 @@ export class CoreValidator {
   );
   public static group_capacity: ValidatorFn = CoreValidator.patternValidate(
     CoreValidator.Patterns.GROUP_CAPACITY,
+    {pattern_validator_group_capacity: 'The value should be numeric and more than zero.'}
+  );
+  public static care_group: ValidatorFn = CoreValidator.patternValidate(
+    CoreValidator.Patterns.CARE_GROUP,
     {pattern_validator_group_capacity: 'The value should be numeric and more than zero.'}
   );
   public static state_abbr: ValidatorFn = CoreValidator.patternValidate(

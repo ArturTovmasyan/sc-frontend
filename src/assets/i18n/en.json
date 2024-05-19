@@ -258,9 +258,9 @@
     },
     "resident-responsible-person-list": {
       "id": "ID",
-      "resident": "Resident",
-      "responsible_person": "Responsible Person",
-      "relationship": "Relationship"
+      "full_name": "Full Name",
+      "relationship": "Relationship",
+      "address": "Address"
     },
     "resident-diagnoses-list": {
       "id": "ID",
