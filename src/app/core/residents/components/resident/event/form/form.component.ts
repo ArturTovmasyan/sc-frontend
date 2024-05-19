@@ -56,9 +56,9 @@ export class FormComponent extends AbstractForm implements OnInit {
       date: [new Date(), Validators.required],
       additional_date: [new Date(), Validators.required],
 
-      physician_id: [null, Validators.required],
+      physician_id: [null],
 
-      responsible_persons: [[], Validators.required],
+      responsible_persons: [null],
 
       resident_id: [null, Validators.required]
     });
@@ -138,6 +138,11 @@ export class FormComponent extends AbstractForm implements OnInit {
           if (next) {
             const definition = this.definitions.filter(item => item.id === next).pop();
             if (definition) {
+              this.required = {
+                physician_id: false,
+                responsible_persons: false,
+              };
+
               if (definition.additional_date) {
                 this.form.get('additional_date').enable();
               } else {
@@ -146,11 +151,11 @@ export class FormComponent extends AbstractForm implements OnInit {
 
               if (definition.physician || definition.physician_optional) {
                 this.form.get('physician_id').enable();
+                this.form.get('physician_id').reset(null);
                 this.form.get('physician_id').clearValidators();
 
                 if (definition.physician) {
                   this.required.physician_id = true;
-                  console.log(this.required);
                   this.form.get('physician_id').setValidators([Validators.required]);
                 } else {
                   this.required.physician_id = false;
@@ -163,6 +168,7 @@ export class FormComponent extends AbstractForm implements OnInit {
                 || definition.responsible_person_multi || definition.responsible_person_multi_optional) {
 
                 this.form.get('responsible_persons').enable();
+                this.form.get('responsible_persons').reset(null);
                 this.form.get('responsible_persons').clearValidators();
 
                 this.rp_single = definition.responsible_person || definition.responsible_person_optional;
@@ -176,6 +182,10 @@ export class FormComponent extends AbstractForm implements OnInit {
               } else {
                 this.form.get('responsible_persons').disable();
               }
+
+              this.form.get('additional_date').updateValueAndValidity();
+              this.form.get('physician_id').updateValueAndValidity();
+              this.form.get('responsible_persons').updateValueAndValidity();
             }
           }
         });

@@ -135,7 +135,7 @@
       <nz-form-item>
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" [nzRequired]="!this.edit_mode">Password</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('password')?'error':null">
-          <input nz-input type="password" id="password" formControlName="password">
+          <input nz-input type="password" formControlName="password">
           <nz-form-explain *ngIf="hasErrors('password')">
             <app-field-errors [errors]="fieldErrors('password')"></app-field-errors>
           </nz-form-explain>
@@ -145,7 +145,7 @@
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="re_password" [nzRequired]="!this.edit_mode">Repeat Password
         </nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('re_password')?'error':null">
-          <input nz-input type="password" id="re_password" formControlName="re_password">
+          <input nz-input type="password" formControlName="re_password">
           <nz-form-explain *ngIf="hasErrors('re_password')">
             <app-field-errors [errors]="fieldErrors('re_password')"></app-field-errors>
           </nz-form-explain>
