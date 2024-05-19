@@ -1,15 +1,15 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
-import {FacilityService} from '../../../../services/facility.service';
-import {ApartmentService} from '../../../../services/apartment.service';
-import {RegionService} from '../../../../services/region.service';
-import {GroupType} from '../../../../models/group-type.enum';
-import {Resident} from '../../../../models/resident';
-import {ResidentSelectorService} from '../../../../services/resident-selector.service';
-import {GroupHelper} from '../../../../helper/group-helper';
-import {ResidentAdmissionService} from '../../../../services/resident-admission.service';
+import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
+import {FacilityService} from '../../../services/facility.service';
+import {ApartmentService} from '../../../services/apartment.service';
+import {RegionService} from '../../../services/region.service';
+import {GroupType} from '../../../models/group-type.enum';
+import {Resident} from '../../../models/resident';
+import {ResidentSelectorService} from '../../../services/resident-selector.service';
+import {GroupHelper} from '../../../helper/group-helper';
+import {ResidentAdmissionService} from '../../../services/resident-admission.service';
 
 @Component({
   templateUrl: 'form.component.html'

@@ -1,0 +1,31 @@
+<ng-container *ngIf="card">
+  <div class="card">
+    <div class="card-header">
+      {{ title }}
+    </div>
+    <div class="card-body">
+      <template [ngTemplateOutlet]="reportBody"></template>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!card">
+  <template [ngTemplateOutlet]="reportBody"></template>
+</ng-container>
+
+<ng-template #reportBody>
+  <ng-container *ngFor="let group of reports|keyvalue:no_sort_order">
+    <div *ngIf="group.value['show_in_' + this.mode + '_list']">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ group.value['title'] }}</h5>
+      </div>
+      <ul class="reports-list">
+        <ng-container *ngFor="let report of group.value['reports']|keyvalue:no_sort_order">
+          <li *ngIf="report.value['show_in_' + this.mode + '_list']">
+            <a [routerLink]="" (click)="show_modal_report(group.key, report.key, report.value)"><i
+              class="fas fa-file-download"></i> {{ report.value['title'] }}</a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </ng-container>
+</ng-template>

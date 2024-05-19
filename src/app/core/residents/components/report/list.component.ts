@@ -1,25 +1,32 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ReportService} from '../../../services/report.service';
-import {TitleService} from '../../../../services/title.service';
+import {ReportService} from '../../services/report.service';
+import {TitleService} from '../../../services/title.service';
 import {KeyValue} from '@angular/common';
-import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
+import {AbstractForm} from '../../../../shared/components/abstract-form/abstract-form';
 import {ModalButtonOptions, NzModalService} from 'ng-zorro-antd';
 import {FormComponent} from './form/form.component';
 import {first} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   templateUrl: './list.component.html'
 })
 export class ListComponent implements OnInit, OnDestroy {
   protected title: string = null;
+
+  public card: boolean = null;
+
+  public mode: string = '';
+
   public reports = null;
   protected $subscriptions: { [key: string]: Subscription; };
 
   constructor(
     private report$: ReportService,
     private title$: TitleService,
-    protected modal$: NzModalService
+    protected modal$: NzModalService,
+    private route$: ActivatedRoute
   ) {
     this.title$.getTitle().subscribe(v => this.title = v);
 
@@ -27,6 +34,16 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (this.route$.snapshot.routeConfig.outlet) {
+      this.card = false;
+
+      this.mode = 'resident';
+    } else {
+      this.card = true;
+
+      this.mode = 'group';
+    }
+
     this.subscribe('list_report');
   }
 

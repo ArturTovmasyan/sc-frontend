@@ -61,7 +61,7 @@ import {ListComponent as ResidentPhysicianListComponent} from './residents/compo
 import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
 import {ListComponent as ResidentAssessmentListComponent} from './residents/components/resident/assessment/list.component';
-import {ListComponent as ResidentReportListComponent} from './residents/components/resident/report/list.component';
+import {ListComponent as ReportListComponent} from './residents/components/report/list.component';
 import {HistoryComponent as ResidentHistoryComponent} from './residents/components/resident/history/history.component';
 import {HomeComponent} from './residents/components/home/home.component';
 import {InvitationComponent} from './components/account/invitation/invitation.component';
@@ -92,6 +92,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {title: 'Home', permissions: []},
     children: [
+      {
+        path: '', component: HomeComponent,
+        data: {
+          title: 'Home',
+          permissions: []
+        },
+        canActivate: [AuthGuard]
+      },
       {
         path: 'lead',
         children: [
@@ -245,14 +253,6 @@ const routes: Routes = [
             ]
           }
         ]
-      },
-      {
-        path: '', component: HomeComponent,
-        data: {
-          title: 'Home',
-          permissions: []
-        },
-        canActivate: [AuthGuard]
       },
       {
         path: 'residents',
@@ -440,6 +440,14 @@ const routes: Routes = [
             canActivate: [AuthGuard]
           }
         ]
+      },
+      {
+        path: 'reports', component: ReportListComponent,
+        data: {
+          nav: {show: true, group: 'Residents'},
+          title: 'Reports',
+          permissions: ['persistence-resident-resident']
+        }
       },
       {
         path: 'documents', component: DocumentViewComponent,
@@ -726,7 +734,7 @@ const routes: Routes = [
           },
           {
             path: 'reports',
-            component: ResidentReportListComponent,
+            component: ReportListComponent,
             outlet: 'resident-details',
             pathMatch: 'full',
             data: {
