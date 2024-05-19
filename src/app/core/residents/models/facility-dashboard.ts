@@ -10,28 +10,28 @@ export class FacilityDashboard {
   data?: FacilityDashboardData;
 
   public static getStartingStyle(data: any) {
-    let style = {};
+    let style;
 
-    if (data.starting_occupancy > data.yellow_flag) {
-      style = {'background-color': '#a2ddb7'};
-    } else if (data.starting_occupancy > data.red_flag && data.starting_occupancy <= data.yellow_flag) {
+    if (data.starting_occupancy <= data.yellow_flag && data.starting_occupancy > data.red_flag) {
       style = {'background-color': '#ffdf7e'};
-    } else if (data.starting_occupancy <= data.red_flag) {
+    } else if (data.starting_occupancy < data.yellow_flag && data.starting_occupancy <= data.red_flag) {
       style = {'background-color': '#ed969e', 'color': 'white', 'font-weight': 'bold'};
+    } else {
+      style = {'background-color': '#a2ddb7'};
     }
 
     return style;
   }
 
   public static getEndingStyle(data: any) {
-    let style = {};
+    let style;
 
-    if (data.ending_occupancy > data.yellow_flag) {
-      style = {'background-color': '#a2ddb7'};
-    } else if (data.ending_occupancy > data.red_flag && data.ending_occupancy <= data.yellow_flag) {
+    if (data.ending_occupancy <= data.yellow_flag && data.ending_occupancy > data.red_flag) {
       style = {'background-color': '#ffdf7e'};
-    } else if (data.ending_occupancy <= data.red_flag) {
+    } else if (data.ending_occupancy < data.yellow_flag && data.ending_occupancy <= data.red_flag) {
       style = {'background-color': '#ed969e', 'color': 'white', 'font-weight': 'bold'};
+    } else {
+      style = {'background-color': '#a2ddb7'};
     }
 
     return style;
