@@ -1,15 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {TitleService} from '../../../../services/title.service';
-import {GridComponent} from '../../../../../shared/components/grid/grid.component';
+import {TitleService} from '../../../../../services/title.service';
+import {GridComponent} from '../../../../../../shared/components/grid/grid.component';
 import {FormComponent} from './form/form.component';
-import {ResidentLedgerService} from '../../../services/resident-ledger.service';
-import {ResidentLedger} from '../../../models/resident-ledger';
-import {ResidentSelectorService} from '../../../services/resident-selector.service';
-import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {ResidentLedgerService} from '../../../../services/resident-ledger.service';
+import {ResidentLedger} from '../../../../models/resident-ledger';
+import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {ModalFormService} from '../../../../../../shared/services/modal-form.service';
 
 @Component({
-    templateUrl: '../../../../../shared/components/grid/grid.component.html',
-    styleUrls: ['../../../../../shared/components/grid/grid.component.scss'],
+    selector: 'app-resident-ledger-ledger',
+    templateUrl: '../../../../../../shared/components/grid/grid.component.html',
+    styleUrls: ['../../../../../../shared/components/grid/grid.component.scss'],
     providers: [ResidentLedgerService, ModalFormService]
 })
 export class ListComponent extends GridComponent<ResidentLedger, ResidentLedgerService> implements OnInit {

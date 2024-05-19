@@ -1,20 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
-import {TitleService} from '../../../../../services/title.service';
-import {ResidentLedger} from '../../../../models/resident-ledger';
-import {ResidentLedgerService} from '../../../../services/resident-ledger.service';
+import {TitleService} from '../../../../../../services/title.service';
+import {ResidentLedger} from '../../../../../models/resident-ledger';
+import {ResidentLedgerService} from '../../../../../services/resident-ledger.service';
 import {first} from 'rxjs/operators';
 import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
 import {FormComponent as LedgerFormComponent} from '../form/form.component';
-import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
+import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {PaymentSource} from '../../../../models/payment-source';
-import {PaymentSourceService} from '../../../../services/payment-source.service';
+import {PaymentSource} from '../../../../../models/payment-source';
+import {PaymentSourceService} from '../../../../../services/payment-source.service';
 import {KeyValue} from '@angular/common';
-import {ResidentResponsiblePersonService} from '../../../../services/resident-responsible-person.service';
-import {ResidentResponsiblePerson} from '../../../../models/resident-responsible-person';
-import {PaymentPeriod} from '../../../../models/payment-period.enum';
+import {ResidentResponsiblePersonService} from '../../../../../services/resident-responsible-person.service';
+import {ResidentResponsiblePerson} from '../../../../../models/resident-responsible-person';
+import {PaymentPeriod} from '../../../../../models/payment-period.enum';
 
 @Component({
   templateUrl: './view.component.html'

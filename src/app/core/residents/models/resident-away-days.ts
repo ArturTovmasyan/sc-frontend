@@ -1,3 +1,5 @@
+import {Resident} from './resident';
+
 export class ResidentAwayDays implements IdInterface {
   id: number;
 
@@ -5,4 +7,6 @@ export class ResidentAwayDays implements IdInterface {
   end: Date;
 
   reason: string;
+
+  resident: Resident;
 }

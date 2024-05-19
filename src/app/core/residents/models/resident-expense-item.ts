@@ -1,4 +1,5 @@
 import {ExpenseItem} from './expense-item';
+import {Resident} from './resident';
 
 export class ResidentExpenseItem implements IdInterface {
   id: number;
@@ -9,4 +10,6 @@ export class ResidentExpenseItem implements IdInterface {
 
   amount: number;
   notes: string;
+
+  resident: Resident;
 }

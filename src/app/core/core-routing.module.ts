@@ -66,8 +66,7 @@ import {ViewComponent as ResidentDocumentViewComponent} from './residents/compon
 import {ListComponent as ResidentAdmissionListComponent} from './residents/components/resident/admission/list.component';
 import {EventComponent as ResidentEventComponent} from './residents/components/resident/event/event.component';
 import {RentComponent as ResidentRentComponent} from './residents/components/resident/rent/rent.component';
-import {ListComponent as ResidentLedgerListComponent} from './residents/components/resident/ledger/list.component';
-import {ViewComponent as ResidentLedgerViewComponent} from './residents/components/resident/ledger/view/view.component';
+import {ViewComponent as ResidentLedgerViewComponent} from './residents/components/resident/ledger/ledger/view/view.component';
 import {ListComponent as ResidentPhysicianListComponent} from './residents/components/resident/physician/list.component';
 import {ListComponent as ResidentMedicationListComponent} from './residents/components/resident/medication/list.component';
 import {ListComponent as ResidentDietListComponent} from './residents/components/resident/dietary-restriction/list.component';
@@ -126,6 +125,7 @@ import {ListComponent as FacilityRoomBaseRateListComponent} from './residents/co
 import {ListComponent as PaymentSourceBaseRateListComponent} from './residents/components/payment-source-base-rate/list.component';
 import {HotLeadsComponent as CorporateDashboardHotLeadsComponent} from './residents/components/dashboard/hot-leads/hot-leads.component';
 import {RoomSummaryComponent as CorporateDashboardRoomSummaryComponent} from './residents/components/dashboard/room-summary/room-summary.component';
+import {LedgerComponent} from './residents/components/resident/ledger/ledger.component';
 
 const routes: Routes = [
   {
@@ -881,7 +881,7 @@ const routes: Routes = [
           },
           {
             path: 'ledgers',
-            component: ResidentLedgerListComponent,
+            component: LedgerComponent,
             outlet: 'resident-details',
             pathMatch: 'full',
             data: {

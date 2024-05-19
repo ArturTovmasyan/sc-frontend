@@ -25,7 +25,7 @@ import {FormComponent as MonthPickerFormComponent} from '../../../../../shared/c
 import {ViewComponent as ResidentEventViewComponent} from '../../resident/event/view/view.component';
 import {ViewComponent as ResidentRentViewComponent} from '../../resident/rent/rent/view/view.component';
 import {ViewComponent as ResidentRentIncreaseViewComponent} from '../../resident/rent/rent-increase/view/view.component';
-import {ViewComponent as ResidentAwayDaysViewComponent} from '../../resident/ledger/ledger/away-days/view/view.component';
+import {ViewComponent as ResidentAwayDaysViewComponent} from '../../resident/ledger/away-days/view/view.component';
 
 @Component({
   selector: 'app-facility-calendar',
@@ -224,7 +224,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                     event_type: CalendarEventType.AWAY_DAYS,
                     start: DateHelper.formatMoment(away_day.start, 'YYYY-MM-DD'),
                     end: null,
-                    title: DateHelper.formatMoment(away_day.created_at, 'YYYY-MM-DD',  true)
+                    title: away_day.reason.length > 20 ? away_day.reason.substring(0, 20) + '...' : away_day.reason
                   });
 
                   this.calendarEvents.push({
@@ -235,7 +235,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                     event_type: CalendarEventType.AWAY_DAYS,
                     start: DateHelper.formatMoment(away_day.end, 'YYYY-MM-DD'),
                     end: DateHelper.formatMoment(away_day.end, 'YYYY-MM-DD'),
-                    title: DateHelper.formatMoment(away_day.created_at, 'YYYY-MM-DD',  true)
+                    title: away_day.reason.length > 20 ? away_day.reason.substring(0, 20) + '...' : away_day.reason
                   });
                 });
               }

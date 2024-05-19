@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
-import {ResidentAwayDays} from '../../../../../../models/resident-away-days';
+import {ResidentAwayDays} from '../../../../../models/resident-away-days';
 
 @Component({
   templateUrl: './view.component.html'
