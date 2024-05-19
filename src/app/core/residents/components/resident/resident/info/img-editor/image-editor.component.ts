@@ -85,6 +85,7 @@ export class ImageEditorComponent extends AbstractForm implements OnInit {
   after_set_form_data(): void {
     if (this.form.get('photo').value) {
       this.imageUrl = this.form.get('photo').value;
+      this.move(0, 0);
     }
   }
 }
