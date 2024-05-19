@@ -92,6 +92,15 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item>
+    <nz-form-control [nzSpan]="16" [nzOffset]="8">
+      <label nz-checkbox formControlName="notification">Send Email Notification</label>
+      <nz-form-explain *ngIf="hasErrors('notification')">
+        <app-field-errors [errors]="fieldErrors('notification')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item *ngIf="formErrors()">
     <nz-form-control [nzSm]="24" [nzXs]="24">
       <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
