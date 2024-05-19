@@ -21,7 +21,7 @@ export class FormComponent extends AbstractForm implements OnInit {
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private city_state_zip$: CityStateZipService,
+    private csz$: CityStateZipService,
     private space$: SpaceService,
     private auth_$: AuthGuard
   ) {
@@ -70,7 +70,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         });
         break;
       case 'list_csz':
-        this.$subscriptions[key] = this.city_state_zip$.all().pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.csz$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.city_state_zips = res;
 

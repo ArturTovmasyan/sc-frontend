@@ -98,7 +98,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             if (params) {
               const contacts = _.isArray(this.form.get('contacts').value) ? this.form.get('contacts').value : [];
-              contacts.push(params.role_id);
+              contacts.push(params.contact_id);
 
               this.form.get('contacts').setValue(contacts);
             }

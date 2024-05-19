@@ -52,7 +52,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     private formBuilder: FormBuilder,
     private resident$: ResidentService,
     private care_level$: CareLevelService,
-    private city_state_zip$: CityStateZipService,
+    private csz$: CityStateZipService,
     private salutation$: SalutationService,
     private space$: SpaceService,
     private auth_$: AuthGuard
@@ -199,7 +199,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         });
         break;
       case 'list_city_state_zip':
-        this.$subscriptions[key] = this.city_state_zip$.all().pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.csz$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.city_state_zips = res;
           }

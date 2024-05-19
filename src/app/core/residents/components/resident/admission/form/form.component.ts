@@ -56,7 +56,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
     private facility_room$: FacilityRoomService,
     private apartment_room$: ApartmentRoomService,
     private care_level$: CareLevelService,
-    private city_state_zip$: CityStateZipService,
+    private csz$: CityStateZipService,
     private residentSelector$: ResidentSelectorService,
     private resident$: ResidentService,
     private _el: ElementRef
@@ -325,7 +325,7 @@ export class FormComponent extends AbstractForm implements OnInit, AfterViewInit
         });
         break;
       case 'list_city_state_zip':
-        this.$subscriptions[key] = this.city_state_zip$.all().pipe(first()).subscribe(res => {
+        this.$subscriptions[key] = this.csz$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.city_state_zips = res;
           }
