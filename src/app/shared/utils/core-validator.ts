@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import {AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 
 export class CoreValidator {
@@ -92,6 +93,14 @@ export class CoreValidator {
 
       return other.value === me.value ? null : {pattern_validator_match_another: 'This value don\'t match with ' + label + '.'};
     };
+  }
+
+  public static notEmpty(control: AbstractControl): ValidationErrors | null {
+    return !(
+      CoreValidator.isEmptyInputValue(control.value) ||
+      (_.isString(control.value) && CoreValidator.isEmptyInputValue(_.trim(control.value)))
+    )
+      ? null : {not_empty: 'This field is required.'};
   }
 
   private static patternValidate(pattern: string | RegExp, error: ValidationErrors): ValidatorFn {
