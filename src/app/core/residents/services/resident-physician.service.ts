@@ -11,4 +11,8 @@ export class ResidentPhysicianService extends GridService<ResidentPhysician> {
 
     this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident/physician`;
   }
+
+  get_primary(resident_id: number) {
+    return this.http.get<ResidentPhysician>(this.SEVICE_URL_BASE + `/${resident_id}/primary`);
+  }
 }
