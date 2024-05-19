@@ -4,10 +4,10 @@
   </div>
   <div class="card-body">
     <nz-tabset nzShowPagination>
-      <nz-tab nzTitle="Room Rent">
+      <nz-tab *ngIf="addIfHasPermission('persistence-resident-rent')" nzTitle="Room Rent">
         <app-resident-rent-room></app-resident-rent-room>
       </nz-tab>
-      <nz-tab nzTitle="Scheduled Room Rent Increase">
+      <nz-tab *ngIf="addIfHasPermission('persistence-resident-rent_increase')" nzTitle="Scheduled Room Rent Increase">
         <app-resident-rent-increase></app-resident-rent-increase>
       </nz-tab>
     </nz-tabset>

@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {TitleService} from '../../../../services/title.service';
+import {AuthGuard} from '../../../../guards/auth.guard';
 
 @Component({
   selector: 'app-resident-rent',
@@ -12,7 +13,8 @@ export class RentComponent implements OnInit, OnDestroy {
   protected $subscriptions: { [key: string]: Subscription; };
 
   constructor(
-    private title$: TitleService
+    private title$: TitleService,
+    private auth_$: AuthGuard
   ) {
     this.$subscriptions = {};
   }
@@ -39,6 +41,10 @@ export class RentComponent implements OnInit, OnDestroy {
     if (this.$subscriptions.hasOwnProperty(key)) {
       this.$subscriptions[key].unsubscribe();
     }
+  }
+
+  addIfHasPermission(permission: string) {
+    return this.auth_$.checkPermission([permission]);
   }
 
 }
