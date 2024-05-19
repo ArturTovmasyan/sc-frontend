@@ -21,6 +21,10 @@
 }
 
 ::ng-deep {
+  .app-header {
+    z-index: 999 !important;
+  }
+
   .no-data-placeholder {
     position: relative;
     padding: 16px 16px;
