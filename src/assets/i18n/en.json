@@ -173,6 +173,12 @@
       "title": "Title",
       "space": "Space"
     },
+    "rent-reason-list": {
+      "id": "ID",
+      "title": "Title",
+      "notes": "Notes",
+      "space": "Space"
+    },
     "assessment-category-list": {
       "id": "ID",
       "title": "Title",
