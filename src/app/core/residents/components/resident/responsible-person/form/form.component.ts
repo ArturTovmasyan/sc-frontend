@@ -8,7 +8,9 @@ import {ResponsiblePersonService} from '../../../../services/responsible-person.
 import {RelationshipService} from '../../../../services/relationship.service';
 import {ActivatedRoute} from '@angular/router';
 import {NzModalService} from 'ng-zorro-antd';
+import {FormComponent as RelationshipFormComponent} from '../../../relationship/form/form.component';
 import {FormComponent as ResponsiblePersonFormComponent} from '../../../responsible-person/form/form.component';
+import {FormComponent as ResponsiblePersonRoleFormComponent} from '../../../responsible-person-role/form/form.component';
 import {ResponsiblePersonRole} from '../../../../models/responsible-person-role';
 import {ResponsiblePersonRoleService} from '../../../../services/responsible-person-role.service';
 
@@ -90,6 +92,36 @@ export class FormComponent extends AbstractForm implements OnInit {
               if (res) {
                 this.responsible_persons = res;
                 this.form.get('responsible_person_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
+        break;
+      case 'relationship':
+        this.create_modal(
+          this.modal$,
+          RelationshipFormComponent,
+          data => this.relationship$.add(data),
+          data => {
+            this.$subscriptions[key] = this.relationship$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.relationships = res;
+                this.form.get('relationship_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
+        break;
+      case 'role':
+        this.create_modal(
+          this.modal$,
+          ResponsiblePersonRoleFormComponent,
+          data => this.responsible_person_role$.add(data),
+          data => {
+            this.$subscriptions[key] = this.responsible_person_role$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.roles = res;
+                this.form.get('role_id').setValue(data[0]);
               }
             });
             return null;
