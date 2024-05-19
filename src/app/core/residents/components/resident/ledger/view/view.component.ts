@@ -239,7 +239,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
 
   get_source_title(id: number) {
-    let result = '(none)';
+    let result = 'N/A';
 
     if (this.payment_sources && this.payment_sources.length > 0) {
       const source = this.payment_sources.filter(v => v.id === id).pop();
@@ -253,7 +253,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
 
   get_resident_responsible_person_name(id: number) {
-    let result = '(none)';
+    let result = 'N/A';
 
     if (this.residentResponsiblePersons && this.residentResponsiblePersons.length > 0) {
       const item = this.residentResponsiblePersons.filter(v => v.id === id).pop();
