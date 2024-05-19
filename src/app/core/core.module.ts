@@ -35,6 +35,9 @@ import {ProfileEditComponent} from './components/profile/edit/profile-edit.compo
 import {ListComponent as UserListComponent} from './admin/components/user/list.component';
 import {FormComponent as UserFormComponent} from './admin/components/user/form/form.component';
 
+import {ListComponent as UserInviteListComponent} from './admin/components/user-invite/list.component';
+import {FormComponent as UserInviteFormComponent} from './admin/components/user-invite/form/form.component';
+
 import {ListComponent as RoleListComponent} from './admin/components/role/list.component';
 import {FormComponent as RoleFormComponent} from './admin/components/role/form/form.component';
 
@@ -236,6 +239,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     UserListComponent,
     UserFormComponent,
 
+    UserInviteListComponent,
+    UserInviteFormComponent,
+
     RoleListComponent,
     RoleFormComponent,
 
@@ -376,6 +382,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   entryComponents: [
     UserFormComponent,
+    UserInviteFormComponent,
     RoleFormComponent,
     SpaceFormComponent,
 

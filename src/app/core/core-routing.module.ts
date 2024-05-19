@@ -16,6 +16,7 @@ import {ProfileEditComponent} from './components/profile/edit/profile-edit.compo
 
 
 import {ListComponent as UserListComponent} from './admin/components/user/list.component';
+import {ListComponent as UserInviteListComponent} from './admin/components/user-invite/list.component';
 import {ListComponent as RoleListComponent} from './admin/components/role/list.component';
 import {ListComponent as SpaceListComponent} from './admin/components/space/list.component';
 
@@ -513,6 +514,17 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
+
+      {
+        path: 'user-invites', component: UserInviteListComponent,
+        data: {
+          nav: {show: true, group: 'Administration'},
+          title: 'Invitation',
+          permissions: ['persistence-security-user_invite']
+        },
+        canActivate: [AuthGuard]
+      },
+
       {
         path: 'roles', component: RoleListComponent,
         data: {

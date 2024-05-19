@@ -15,6 +15,15 @@
       "completed": "Completed",
       "last_activity_at": "Last Activity At"
     },
+    "user-invite-list": {
+      "id": "ID",
+      "space": "Space",
+      "roles": "Roles",
+      "owner": "As Owner",
+      "email": "E-Mail",
+      "invited_by": "Invited by",
+      "token": "Token"
+    },
     "role-list": {
       "id": "ID",
       "name": "Name",
