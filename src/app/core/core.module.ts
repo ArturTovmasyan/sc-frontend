@@ -11,7 +11,6 @@ import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfe
 import {BsDropdownModule, TabsModule} from 'ngx-bootstrap';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {DndModule} from '@beyerleinf/ngx-dnd';
-import {NgChartjsModule} from 'ng-chartjs';
 
 import {CoreRoutingModule} from './core-routing.module';
 // import {SignUpComponent} from './components/account/sign-up/sign-up.component';
@@ -348,6 +347,7 @@ import {ViewComponent as ResidentRentIncreaseViewComponent} from './residents/co
 import {EventRepeatPipe} from './residents/pipes/event-repeat.pipe';
 import {DateInterceptor} from './interceptors/date.interceptor';
 import {ListComponent as EmailLogListComponent} from './admin/components/email-log/list.component';
+import {ChartsModule} from 'ng2-charts';
 
 registerLocaleData(en);
 
@@ -865,7 +865,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     VgOverlayPlayModule,
     VgBufferingModule,
     EmbedVideo.forRoot(),
-    NgChartjsModule.registerPlugin([]),
+    ChartsModule,
     FullCalendarModule,
     AngularCropperjsModule
   ],
