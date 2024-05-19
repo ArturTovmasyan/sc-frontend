@@ -15,6 +15,7 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   protected grid_options_loaded: BehaviorSubject<boolean>;
 
   public card: boolean = true; // TODO(haykg): review to convert Input
+  public searchable: boolean = true; // TODO(haykg): review to convert Input
   protected loading_edit_modal: boolean = false;
 
   protected loading = false;

@@ -216,6 +216,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
     this.idle$.setInterrupts(DEFAULT_INTERRUPTSOURCES);
     this.idle$.onTimeout.subscribe(() => {
       this.auth$.sign_out();
+      location.reload(true);
     });
     this.idle$.watch();
   }
