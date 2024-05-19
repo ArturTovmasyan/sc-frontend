@@ -107,7 +107,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: event.id,
                 event_type: CalendarEventType.FACILITY,
-                start: event.all_day ? DateHelper.formatMoment(event.start, 'YYYY-MM-DD') : DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
+                start: event.all_day ? DateHelper.formatMoment(event.start, 'YYYY-MM-DD', true) : DateHelper.formatMoment(event.start, 'YYYY-MM-DD HH:mm:ss'),
                 end:  event.all_day ? null : DateHelper.formatMoment(event.end, 'YYYY-MM-DD HH:mm:ss'),
                 title: event.title
               });
@@ -133,7 +133,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: admission.id,
                 event_type: CalendarEventType.ADMISSION,
-                start: DateHelper.formatMoment(admission.start, 'YYYY-MM-DD'),
+                start: DateHelper.formatMoment(admission.start, 'YYYY-MM-DD', true),
                 end: null,
                 title: (new AdmissionTypePipe()).transform(admission.admission_type)
               });
@@ -146,8 +146,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: rent.id,
                 event_type: CalendarEventType.RENT,
-                start: DateHelper.formatMoment(rent.start, 'YYYY-MM-DD'),
-                end: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD'),
+                start: DateHelper.formatMoment(rent.start, 'YYYY-MM-DD', true),
+                end: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD', true),
                 title: (new CurrencyPipe('en-US')).transform(rent.amount, 'USD', 'symbol-narrow', '1.2-2')
               });
             });
@@ -159,8 +159,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 textColor: '#ffffff',
                 id: rent_increase.id,
                 event_type: CalendarEventType.RENT_INCREASE,
-                start: DateHelper.formatMoment(rent_increase.start, 'YYYY-MM-DD'),
-                end: DateHelper.formatMoment(rent_increase.end, 'YYYY-MM-DD'),
+                start: DateHelper.formatMoment(rent_increase.start, 'YYYY-MM-DD', true),
+                end: DateHelper.formatMoment(rent_increase.end, 'YYYY-MM-DD', true),
                 title: (new CurrencyPipe('en-US')).transform(rent_increase.amount, 'USD', 'symbol-narrow', '1.2-2')
               });
             });
