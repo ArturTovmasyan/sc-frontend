@@ -14,6 +14,8 @@ import {GroupType} from '../../../models/group-type.enum';
   providers: [ResidentAdmissionService, ModalFormService]
 })
 export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmissionService> implements OnInit {
+  first: boolean;
+
   constructor(
     protected service$: ResidentAdmissionService,
     protected title$: TitleService,
@@ -26,26 +28,29 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
     this.component = FormComponent;
     this.permission = 'persistence-resident-admission';
     this.name = 'resident-admission-list';
+
+    this.first = true;
   }
 
   ngOnInit(): void {
-    this.subscribe('rs_resident');
+    this.subscribe('rs_type');
   }
 
   protected subscribe(key: string, params?: any): void {
     switch (key) {
+      case 'rs_type':
+        this.$subscriptions[key] = this.residentSelector$.type.subscribe(next => {
+          if (this.first) {
+            this.subscribe('rs_resident');
+          } else {
+            this.load_admissions();
+          }
+        });
+        break;
       case 'rs_resident':
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {
-            if (this.params.filter(v => v.key === 'resident_id').length === 0) {
-              this.params.push({key: 'resident_id', value: next.toString()});
-
-              if (this.residentSelector$.type.value === GroupType.APARTMENT) {
-                this.params.push({key: 'apartment', value: '1'});
-              }
-
-              super.init();
-            }
+            this.load_admissions();
           }
         });
         break;
@@ -54,4 +59,21 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
     }
   }
 
+  load_admissions() {
+    if (this.residentSelector$.resident.value !== null && this.residentSelector$.type.value !== null) {
+      const param_resident = this.params.filter(v => v.key === 'resident_id').pop();
+
+      if (param_resident === null) {
+        this.params.push({key: 'resident_id', value: this.residentSelector$.resident.value.toString()});
+      } else {
+        param_resident.value = this.residentSelector$.resident.value.toString();
+      }
+
+      if (this.residentSelector$.type.value === GroupType.APARTMENT) {
+        this.params.push({key: 'apartment', value: '1'});
+      }
+
+      super.init();
+    }
+  }
 }
