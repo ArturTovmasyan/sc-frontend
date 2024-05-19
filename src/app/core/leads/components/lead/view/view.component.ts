@@ -12,6 +12,7 @@ import {AbstractForm} from '../../../../../shared/components/abstract-form/abstr
 import {FormComponent as LeadFormComponent} from '../form/form.component';
 import {FormComponent as ReferralFormComponent} from '../../referral/form/form.component';
 import {FormComponent as InterestFormComponent} from '../interest-form/form.component';
+import {FormComponent as QualificationFormComponent} from '../qualification-form/form.component';
 import {FormComponent as ResidentFormComponent} from '../resident-form/form.component';
 import {FormComponent as ResidentAdmissionFormComponent} from '../admission-form/form.component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
@@ -173,6 +174,14 @@ export class ViewComponent implements OnInit, OnDestroy {
           },
           error => {
           });
+        break;
+      case 'qualification':
+        this.lead$.get(this.lead.id).subscribe(
+            res => {
+                this.create_modal(QualificationFormComponent, data => this.lead$.qualification(data), res);
+            },
+            error => {
+            });
         break;
       default:
         break;

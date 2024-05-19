@@ -261,6 +261,16 @@
                       </ng-container>
                     </div>
                   </div>
+
+                  <nz-divider></nz-divider>
+                  <div class="d-flex">
+                    <nz-button-group [nzSize]="'small'" class="ml-auto">
+                      <button type="button" nz-button nzType="default"
+                              (click)="show_modal_edit('qualification')">
+                        <i nz-icon nzType="edit"></i> {{ "grid.edit"|translate }}
+                      </button>
+                    </nz-button-group>
+                  </div>
                 </div>
               </div>
             </nz-collapse-panel>

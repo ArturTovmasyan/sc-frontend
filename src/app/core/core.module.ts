@@ -272,6 +272,7 @@ import {ListComponent as DashboardChangeLogListComponent} from './leads/componen
 import {ListComponent as LeadContactListComponent} from './leads/components/contact/list.component';
 import {FormComponent as LeadContactFormComponent} from './leads/components/contact/form/form.component';
 import {FormComponent as LeadInterestFormComponent} from './leads/components/lead/interest-form/form.component';
+import {FormComponent as LeadQualificationFormComponent} from './leads/components/lead/qualification-form/form.component';
 import {FormComponent as LeadResidentFormComponent} from './leads/components/lead/resident-form/form.component';
 import {FormComponent as LeadAdmissionFormComponent} from './leads/components/lead/admission-form/form.component';
 import {ViewComponent as LeadContactViewComponent} from './leads/components/contact/view/view.component';
@@ -636,6 +637,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LeadContactListComponent,
     LeadContactFormComponent,
     LeadInterestFormComponent,
+    LeadQualificationFormComponent,
     LeadResidentFormComponent,
     LeadAdmissionFormComponent,
     LeadContactViewComponent,
@@ -816,6 +818,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     LeadContactFormComponent,
     LeadInterestFormComponent,
+    LeadQualificationFormComponent,
     LeadResidentFormComponent,
     LeadAdmissionFormComponent,
     LeadAssessmentFormComponent,

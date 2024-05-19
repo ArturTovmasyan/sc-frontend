@@ -21,6 +21,10 @@ export class LeadService extends GridService<Lead> {
         return this.http.put<Message>(this.SERVICE_URL_BASE + `/${data.id}/interest`, data);
     }
 
+    public qualification(data) {
+        return this.http.put<Message>(this.SERVICE_URL_BASE + `/${data.id}/qualification`, data);
+    }
+
     public expand(expand: boolean) {
         return this.http.put<any>(this.SERVICE_URL_BASE + `/expand`, {expand: expand});
     }
