@@ -2,11 +2,11 @@
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
-      <input nz-input placeholder="Title" formControlName="title">
-      <nz-form-explain *ngIf="hasErrors('title')">
-        <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="name" nzRequired>Organization Name</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('name')?'error':null">
+      <input nz-input placeholder="Title" formControlName="name">
+      <nz-form-explain *ngIf="hasErrors('name')">
+        <app-field-errors [errors]="fieldErrors('name')"></app-field-errors>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
@@ -80,7 +80,7 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emails" nzRequired>E-Mail(s)</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="emails">E-Mail(s)</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('emails')?'error':null">
       <nz-select nzShowSearch nzMode="tags" [nzTokenSeparators]="[' ', ',']" nzPlaceHolder="Please select" formControlName="emails">
       </nz-select>
