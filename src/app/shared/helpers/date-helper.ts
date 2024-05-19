@@ -27,6 +27,11 @@ export class DateHelper {
     return date;
   }
 
+  public static makeUTCDateTimeOnly(input: string|Date): Date {
+    const date: Date = new Date(input);
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), 0));
+  }
+
   public static makeUTCDateOnly(input: string|Date): Date {
     const date: Date = new Date(input);
     return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0));

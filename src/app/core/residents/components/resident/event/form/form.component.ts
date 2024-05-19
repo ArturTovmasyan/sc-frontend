@@ -15,7 +15,6 @@ import {ModalFormService} from '../../../../../../shared/services/modal-form.ser
 import {FormComponent as ResidentPhysicianFormComponent} from '../../physician/form/form.component';
 import {FormComponent as ResidentResponsiblePersonFormComponent} from '../../responsible-person/form/form.component';
 import {FormComponent as EventDefinitionFormComponent} from '../../../event-definition/form/form.component';
-import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -214,6 +213,17 @@ export class FormComponent extends AbstractForm implements OnInit {
       default:
         break;
     }
+  }
+
+  formValue(): void {
+    const value = super.formValue();
+    value.date = DateHelper.makeUTCDateTimeOnly(value.date);
+
+    if (value.additional_date) {
+      value.additional_date = DateHelper.makeUTCDateTimeOnly(value.additional_date);
+    }
+
+    return value;
   }
 
 }
