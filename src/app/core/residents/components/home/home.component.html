@@ -62,12 +62,10 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <p class="text-right"><a nz-button nzType="primary"
-                                 [routerLink]="['residents', type, data.id]">More...</a></p>
-      </div>
-    </div>
-    <nz-divider *ngIf="!last"></nz-divider>
+    <nz-divider [nzText]="tplMore" nzOrientation="right">
+      <ng-template #tplMore>
+        <a [routerLink]="['residents', type, data.id]">More...</a>
+      </ng-template>
+    </nz-divider>
   </ng-container>
 </ng-template>

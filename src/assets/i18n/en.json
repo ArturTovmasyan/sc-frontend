@@ -505,6 +505,40 @@
       "button": {
         "download": "Download"
       }
+    },
+    "lead-funnel-stage-list": {
+      "id": "ID",
+      "title": "Title",
+      "seq_no": "Sequence Number",
+      "open": "Is Open?",
+      "space": "Space"
+    },
+    "lead-temperature-list": {
+      "id": "ID",
+      "title": "Title",
+      "value": "Value",
+      "space": "Space"
+    },
+    "lead-stage-change-reason-list": {
+      "id": "ID",
+      "title": "Title",
+      "state": "State",
+      "space": "Space"
+    },
+    "lead-lead-funnel-stage-list": {
+      "id": "ID",
+      "stage": "Stage",
+      "reason": "Reason",
+      "notes": "Notes",
+      "date": "Date",
+      "created_by": "Created By"
+    },
+    "lead-lead-temperature-list": {
+      "id": "ID",
+      "temperature": "Temperature",
+      "notes": "Notes",
+      "date": "Date",
+      "created_by": "Created By"
     }
   },
   "list": {

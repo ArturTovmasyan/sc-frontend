@@ -254,6 +254,18 @@ import {ListComponent as NotificationListComponent} from './admin/components/not
 import {FormComponent as NotificationFormComponent} from './admin/components/notification/form/form.component';
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
 import {FormComponent as NotificationTypeFormComponent} from './admin/components/notification-type/form/form.component';
+import {FormComponent as TemperatureFormComponent} from './leads/components/temperature/form/form.component';
+import {ListComponent as TemperatureListComponent} from './leads/components/temperature/list.component';
+import {FormComponent as FunnelStageFormComponent} from './leads/components/funnel-stage/form/form.component';
+import {ListComponent as FunnelStageListComponent} from './leads/components/funnel-stage/list.component';
+import {FormComponent as LeadFunnelStageFormComponent} from './leads/components/lead/funnel-stage-form/form.component';
+import {ListComponent as LeadFunnelStageListComponent} from './leads/components/lead/view/funnel-stage-list.component';
+import {FormComponent as LeadTemperatureFormComponent} from './leads/components/lead/temperature-form/form.component';
+import {ListComponent as LeadTemperatureListComponent} from './leads/components/lead/view/temperature-list.component';
+import {FormComponent as StageChangeReasonFormComponent} from './leads/components/stage-change-reason/form/form.component';
+import {ListComponent as StageChangeReasonListComponent} from './leads/components/stage-change-reason/list.component';
+
+
 import {CronJobsModule} from '../cron-jobs/cron-jobs.module';
 import {ChangeLogPipe} from './pipes/change-log.pipe';
 import {ActivityTypePipe} from './leads/pipes/activity-type.pipe';
@@ -476,6 +488,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReferrerTypeFormComponent,
     CareTypeListComponent,
     CareTypeFormComponent,
+    TemperatureFormComponent,
+    TemperatureListComponent,
+    FunnelStageFormComponent,
+    FunnelStageListComponent,
+    LeadFunnelStageFormComponent,
+    LeadFunnelStageListComponent,
+    LeadTemperatureFormComponent,
+    LeadTemperatureListComponent,
+    StageChangeReasonListComponent,
+    StageChangeReasonFormComponent,
 
     LeadContactListComponent,
     LeadContactFormComponent,
@@ -627,6 +649,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReferralFormComponent,
     LeadFormComponent,
     ActivityFormComponent,
+    TemperatureFormComponent,
+    FunnelStageFormComponent,
+    LeadFunnelStageFormComponent,
+    LeadTemperatureFormComponent,
+    StageChangeReasonFormComponent,
 
     LeadContactFormComponent,
 

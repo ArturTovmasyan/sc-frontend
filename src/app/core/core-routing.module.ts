@@ -17,8 +17,6 @@ import {ProfileEditComponent} from './components/profile/edit/profile-edit.compo
 
 import {ListComponent as UserListComponent} from './admin/components/user/list.component';
 import {ListComponent as UserInviteListComponent} from './admin/components/user-invite/list.component';
-import {ListComponent as RoleListComponent} from './admin/components/role/list.component';
-import {ListComponent as SpaceListComponent} from './admin/components/space/list.component';
 
 import {ListComponent as AllergensListComponent} from './residents/components/allergen/list.component';
 import {ListComponent as CareLevelListComponent} from './residents/components/care-level/list.component';
@@ -43,7 +41,6 @@ import {ListComponent as FacilityDiningRoomListComponent} from './residents/comp
 import {ListComponent as RegionListComponent} from './residents/components/region/list.component';
 
 import {ListComponent as PaymentSourceListComponent} from './residents/components/payment-source/list.component';
-import {ListComponent as EventDefinitionListComponent} from './residents/components/event-definition/list.component';
 import {ListComponent as AssessmentCategoryListComponent} from './residents/components/assessment/category/list.component';
 import {ListComponent as AssessmentFormListComponent} from './residents/components/assessment/form/list.component';
 import {ListComponent as AssessmentCareLevelListComponent} from './residents/components/assessment/care-level/list.component';
@@ -87,6 +84,9 @@ import {ViewComponent as DocumentViewComponent} from './documents/components/vie
 import {HelpComponent} from './components/help/help.component';
 import {DashboardComponent as LeadDashboardComponent} from './leads/components/dashboard/dashboard.component';
 import {ListComponent as LeadContactListComponent} from './leads/components/contact/list.component';
+import {ListComponent as TemperatureListComponent} from './leads/components/temperature/list.component';
+import {ListComponent as FunnelStageListComponent} from './leads/components/funnel-stage/list.component';
+import {ListComponent as StageChangeReasonListComponent} from './leads/components/stage-change-reason/list.component';
 
 const routes: Routes = [
   {
@@ -244,7 +244,35 @@ const routes: Routes = [
               title: 'Admin Items',
               permissions: []
             },
-            children: [{
+            children: [
+              {
+                path: 'funnel-stage', component: FunnelStageListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Funnel Stage',
+                  permissions: ['persistence-lead-funnel_stage']
+                },
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'temperature', component: TemperatureListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Temperature',
+                  permissions: ['persistence-lead-temperature']
+                },
+                canActivate: [AuthGuard]
+              },
+              {
+                path: 'stage-change-reason', component: StageChangeReasonListComponent,
+                data: {
+                  nav: {show: true, group: 'Leads'},
+                  title: 'Stage Change Reasons',
+                  permissions: ['persistence-lead-stage_change_reason']
+                },
+                canActivate: [AuthGuard]
+              },
+              {
               path: 'activity-status', component: ActivityStatusListComponent,
               data: {
                 nav: {show: true, group: 'Leads'},
