@@ -10,7 +10,7 @@
             <nz-option [nzLabel]="salutation.title" [nzValue]="salutation.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('salutation');">
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('salutation');">
           <i nz-icon type="plus"></i>
         </button>
       </div>
@@ -98,7 +98,7 @@
   <fieldset formArrayName="phones">
     <legend class="senior-care-legend">
       Phone Number(s)
-      <button [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
+      <button [style.float]="'right'" type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
               (click)="add_field('phones');">
         <i nz-icon type="plus"></i>
       </button>

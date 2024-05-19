@@ -6,7 +6,7 @@
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('definition_id')?'error':null">
       <!--<div class="add-select-container">-->
         <!---->
-        <!--<button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('definition');">-->
+        <!--<button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('definition');">-->
           <!--<i nz-icon type="plus"></i>-->
         <!--</button>-->
       <!--</div>-->
@@ -51,7 +51,7 @@
                        [nzValue]="resident_physician.physician.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle"
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
                 (click)="open_sub_modal('resident_physician');">
           <i nz-icon type="plus"></i>
         </button>
@@ -75,7 +75,7 @@
                        [nzValue]="resident_responsible_person.responsible_person.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle"
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
                 (click)="open_sub_modal('resident_responsible_person');">
           <i nz-icon type="plus"></i>
         </button>

@@ -10,7 +10,7 @@
             <nz-option [nzLabel]="salutation.title" [nzValue]="salutation.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('salutation');">
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('salutation');">
           <i nz-icon type="plus"></i>
         </button>
       </div>
@@ -29,7 +29,7 @@
             <nz-option [nzLabel]="speciality.title" [nzValue]="speciality.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('speciality');">
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('speciality');">
           <i nz-icon type="plus"></i>
         </button>
       </div>
@@ -117,7 +117,7 @@
             <nz-option [nzLabel]="city_state_zip|csz" [nzValue]="city_state_zip.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('csz');">
+        <button type="button" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('csz');">
           <i nz-icon type="plus"></i>
         </button>
       </div>
@@ -131,7 +131,7 @@
   <fieldset formArrayName="phones">
     <legend class="senior-care-legend">
       <span style="display: inline-block;margin-right: 4px;color: #f5222d;font-size: 14px;font-family: SimSun,sans-serif;line-height: 1;">*</span> Phone Number(s)
-      <button [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle"
+      <button [style.float]="'right'" type="button" nz-button nzType="primary" nzSize="small" nzShape="circle"
               (click)="add_field('phones');">
         <i nz-icon type="plus"></i>
       </button>
