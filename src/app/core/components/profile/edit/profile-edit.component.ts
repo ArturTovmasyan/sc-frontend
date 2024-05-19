@@ -6,6 +6,7 @@ import {Message} from '../../../models/message';
 import {ProfileService} from '../../../services/profile.service';
 import {PhoneType} from '../../../models/phone-type.enum';
 import {CoreValidator} from '../../../../shared/utils/core-validator';
+import {StringUtil} from '../../../../shared/utils/string-util';
 
 @Component({
   templateUrl: './profile-edit.component.html'
@@ -82,7 +83,7 @@ export class ProfileEditComponent extends AbstractForm implements OnInit {
     const reader = new FileReader();
     if ($event.target.files && $event.target.files.length > 0) {
       const file = $event.target.files[0];
-      this.photo_file_name = ProfileEditComponent.truncate(file.name, 25);
+      this.photo_file_name = StringUtil.truncate(file.name, 25);
       reader.readAsDataURL(file);
       reader.onload = () => {
         if (reader.result) {
@@ -118,7 +119,4 @@ export class ProfileEditComponent extends AbstractForm implements OnInit {
     this.form.get('avatar').setValue(null);
   }
 
-  private static truncate(value: string, length: number): string {
-    return value.length > length ? (value.slice(0, length - 3) + '...') : value;
-  }
 }

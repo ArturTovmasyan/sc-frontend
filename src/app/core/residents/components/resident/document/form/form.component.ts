@@ -3,6 +3,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
 import {FileModel} from '../../../../../models/file-model';
+import {StringUtil} from '../../../../../../shared/utils/string-util';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -58,7 +59,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     const reader = new FileReader();
     if ($event.target.files && $event.target.files.length > 0) {
       const file = $event.target.files[0];
-      model.file_name = FileModel.truncate(file.name, 25);
+      model.file_name = StringUtil.truncate(file.name, 25);
       reader.readAsDataURL(file);
       reader.onload = () => {
         if (reader.result) {

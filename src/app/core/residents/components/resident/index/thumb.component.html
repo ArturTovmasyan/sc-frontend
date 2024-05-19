@@ -2,7 +2,7 @@
           [nzNotFoundImage]="defaultSvg"></nz-empty>
 <ng-container *ngIf="addIfHasPermission('persistence-resident-resident') && residents">
   <template [ngTemplateOutlet]="tplResidentList"
-            [ngTemplateOutletContext]="{ type: GROUP_TYPE.FACILITY, residents: residents }">
+            [ngTemplateOutletContext]="{ residents: residents }">
   </template>
 
   <nz-pagination *ngIf="residents" class="pull-right"
@@ -17,24 +17,24 @@
   ></nz-pagination>
 </ng-container>
 
-<ng-template #tplResidentList let-residents="residents" let-type="type">
+<ng-template #tplResidentList let-residents="residents">
   <ng-container *ngFor="let resident of residents; let index = index">
     <div *ngIf="index % 5 === 0" class="row justify-content-center">
       <template *ngIf="index + 0 < residents.length" [ngTemplateOutlet]="tplResident"
-                [ngTemplateOutletContext]="{ type: type, resident: residents[index + 0] }"></template>
+                [ngTemplateOutletContext]="{ resident: residents[index + 0] }"></template>
       <template *ngIf="index + 1 < residents.length" [ngTemplateOutlet]="tplResident"
-                [ngTemplateOutletContext]="{ type: type, resident: residents[index + 1] }"></template>
+                [ngTemplateOutletContext]="{ resident: residents[index + 1] }"></template>
       <template *ngIf="index + 2 < residents.length" [ngTemplateOutlet]="tplResident"
-                [ngTemplateOutletContext]="{ type: type, resident: residents[index + 2] }"></template>
+                [ngTemplateOutletContext]="{ resident: residents[index + 2] }"></template>
       <template *ngIf="index + 3 < residents.length" [ngTemplateOutlet]="tplResident"
-                [ngTemplateOutletContext]="{ type: type, resident: residents[index + 3] }"></template>
+                [ngTemplateOutletContext]="{ resident: residents[index + 3] }"></template>
       <template *ngIf="index + 4 < residents.length" [ngTemplateOutlet]="tplResident"
-                [ngTemplateOutletContext]="{ type: type, resident: residents[index + 4] }"></template>
+                [ngTemplateOutletContext]="{ resident: residents[index + 4] }"></template>
     </div>
   </ng-container>
 </ng-template>
 
-<ng-template #tplResident let-resident="resident" let-type="type">
+<ng-template #tplResident let-resident="resident">
   <div class="col-2">
     <div class="row">
       <div class="col-12 text-center">
@@ -52,9 +52,20 @@
           <a [routerLink]="['/resident', resident.id, {outlets: {'resident-details': ['responsible-persons']}}]">
             {{ resident|resident }}
           </a><br/>
-          <span *ngIf="route_options.state !== 'no-admission' && type === GROUP_TYPE.FACILITY || type === GROUP_TYPE.APARTMENT">
-            {{ resident.room_number }} ({{ resident.bed_number }})
-          </span>
+          <ng-container *ngIf="route_options.state !== 'no-admission'">
+            <span *ngIf="resident.group_type === GROUP_TYPE.FACILITY || resident.group_type === GROUP_TYPE.APARTMENT">
+              {{ resident.room_number }} ({{ resident.bed_number }})
+            </span>
+            <span *ngIf="resident.group_type === GROUP_TYPE.REGION">
+              {{ resident.address }} ({{ resident.csz_str }})
+            </span>
+            <ng-container *ngIf="resident.group !== null">
+              <br/>
+              <span>
+                {{ resident.group }})
+              </span>
+            </ng-container>
+          </ng-container>
         </p>
       </div>
     </div>

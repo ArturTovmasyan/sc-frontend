@@ -8,6 +8,7 @@ import {Space} from '../../../models/space';
 import {FileModel} from '../../../models/file-model';
 import {FacilityService} from '../../../residents/services/facility.service';
 import {Facility} from '../../../residents/models/facility';
+import {StringUtil} from '../../../../shared/utils/string-util';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -88,7 +89,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     const reader = new FileReader();
     if ($event.target.files && $event.target.files.length > 0) {
       const file = $event.target.files[0];
-      model.file_name = FileModel.truncate(file.name, 25);
+      model.file_name = StringUtil.truncate(file.name, 25);
       reader.readAsDataURL(file);
       reader.onload = () => {
         if (reader.result) {

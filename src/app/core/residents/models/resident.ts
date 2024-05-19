@@ -3,6 +3,7 @@ import {Gender} from './gender.enum';
 import {Phone} from '../../models/phone';
 import {ResponsiblePerson} from './responsible-person';
 import {Physician} from './physician';
+import {GroupType} from './group-type.enum';
 
 export class Resident implements IdInterface {
   id: number;
@@ -27,6 +28,8 @@ export class Resident implements IdInterface {
 
   room_number?: string;
   bed_number?: string;
+  group?: string;
+  group_type?: GroupType;
 }
 
 export class ResidentImage {
