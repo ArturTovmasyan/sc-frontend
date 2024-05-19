@@ -288,8 +288,15 @@ const routes: Routes = [
               }
             ]
           },
-
         ]
+      },
+      {
+          path: 'lead/reports', component: ReportListComponent,
+          data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Reports',
+              permissions: ['report-group']
+          }
       },
       {
         path: 'residents/active', component: ResidentIndexComponent,
@@ -341,15 +348,6 @@ const routes: Routes = [
           permissions: ['persistence-common-physician']
         },
         canActivate: [AuthGuard]
-      },
-
-      {
-        path: 'reports', component: ReportListComponent,
-        data: {
-          nav: {show: true, group: 'Residents'},
-          title: 'Reports',
-          permissions: ['report-group']
-        }
       },
       {
         path: 'report-csv', component: ReportCSVComponent,
@@ -412,6 +410,14 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
+        {
+            path: 'facility/reports', component: ReportListComponent,
+            data: {
+                nav: {show: true, group: 'Facility'},
+                title: 'Reports',
+                permissions: ['report-group']
+            }
+        },
       {
         path: 'rent-reasons', component: RentReasonListComponent,
         data: {
@@ -466,6 +472,15 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
+
+        {
+            path: 'apartment/reports', component: ReportListComponent,
+            data: {
+                nav: {show: true, group: 'Apartment'},
+                title: 'Reports',
+                permissions: ['report-group']
+            }
+        },
       {
         path: 'regions', component: RegionListComponent,
         data: {
