@@ -99,11 +99,14 @@ import {ListComponent as TemperatureListComponent} from './leads/components/temp
 import {ListComponent as FunnelStageListComponent} from './leads/components/funnel-stage/list.component';
 import {ListComponent as StageChangeReasonListComponent} from './leads/components/stage-change-reason/list.component';
 import {ViewComponent as OutreachViewComponent} from './leads/components/outreach/view/view.component';
+import {ViewComponent as WebEmailViewComponent} from './leads/components/web-email/view/view.component';
 import {ListComponent as OutreachListComponent} from './leads/components/outreach/list.component';
 import {ListComponent as OutreachTypeListComponent} from './leads/components/outreach-type/list.component';
 import {ListComponent as CurrentResidenceListComponent} from './leads/components/current-residence/list.component';
 import {ListComponent as HobbyListComponent} from './leads/components/hobby/list.component';
 import {ListComponent as QualificationRequirementListComponent} from './leads/components/qualification-requirement/list.component';
+import {ListComponent as EmailReviewTypeListComponent} from './leads/components/email-review-type/list.component';
+import {ListComponent as WebEmailListComponent} from './leads/components/web-email/list.component';
 import {ViewComponent as LeadContactViewComponent} from './leads/components/contact/view/view.component';
 import {ListComponent as DocumentCategoryListComponent} from './documents/components/category/list.component';
 import {DashboardComponent as CorporateDashboardComponent} from './residents/components/dashboard/dashboard.component';
@@ -171,6 +174,15 @@ const routes: Routes = [
               title: 'Outreach Events',
               permissions: ['persistence-lead-outreach']
             }
+          },
+          {
+              path: 'web-email/:id',
+              component: WebEmailViewComponent,
+              canActivate: [AuthGuard],
+              data: {
+                  title: 'Web Emails',
+                  permissions: ['persistence-lead-web_email']
+              }
           },
           {
             path: 'dashboard',
@@ -294,6 +306,15 @@ const routes: Routes = [
                 }
               }
             ]
+          },
+          {
+            path: 'web-email', component: WebEmailListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Web Emails',
+              permissions: ['persistence-lead-web_email']
+            },
+            canActivate: [AuthGuard]
           },
         ]
       },
@@ -1032,31 +1053,40 @@ const routes: Routes = [
             canActivate: [AuthGuard]
           },
           {
-              path: 'current-residence', component: CurrentResidenceListComponent,
-              data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Current Residences',
-                  permissions: ['activity-lead_admin', 'persistence-lead-current_residence']
-              },
-              canActivate: [AuthGuard]
+            path: 'current-residence', component: CurrentResidenceListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Current Residences',
+              permissions: ['activity-lead_admin', 'persistence-lead-current_residence']
+            },
+            canActivate: [AuthGuard]
           },
           {
-              path: 'hobby', component: HobbyListComponent,
-              data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Hobbies',
-                  permissions: ['activity-lead_admin', 'persistence-lead-hobby']
-              },
-              canActivate: [AuthGuard]
+            path: 'hobby', component: HobbyListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Hobbies',
+              permissions: ['activity-lead_admin', 'persistence-lead-hobby']
+            },
+            canActivate: [AuthGuard]
           },
           {
-              path: 'qualification-requirement', component: QualificationRequirementListComponent,
-              data: {
-                  nav: {show: true, group: 'Leads'},
-                  title: 'Qualification Requirements',
-                  permissions: ['activity-lead_admin', 'persistence-lead-qualification_requirement']
-              },
-              canActivate: [AuthGuard]
+            path: 'qualification-requirement', component: QualificationRequirementListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Qualification Requirements',
+              permissions: ['activity-lead_admin', 'persistence-lead-qualification_requirement']
+            },
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'email-review-type', component: EmailReviewTypeListComponent,
+            data: {
+              nav: {show: true, group: 'Leads'},
+              title: 'Email Review Types',
+              permissions: ['activity-lead_admin', 'persistence-lead-email_review_type']
+            },
+            canActivate: [AuthGuard]
           }
         ]
       },

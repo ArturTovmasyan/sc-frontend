@@ -578,6 +578,20 @@
       "use": "Use",
       "space": "Space"
     },
+    "lead-email-review-type-list": {
+      "id": "ID",
+      "title": "Title",
+      "space": "Space"
+    },
+    "lead-web-email-list": {
+      "id": "ID",
+      "date": "Date",
+      "facility": "Facility",
+      "review_type": "Reviewed Type",
+      "updated_by": "Reviewed By",
+      "subject": "Subject",
+      "space": "Space"
+    },
     "lead-lead-list": {
       "button": {
         "open": "Open",

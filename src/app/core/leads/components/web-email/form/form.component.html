@@ -1,0 +1,85 @@
+﻿<h4>Web Email</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="date" nzRequired>Date</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
+      <nz-date-picker formControlName="date" [nzDisabledDate]="disabledDate" nzFormat="MM/dd/yyyy"></nz-date-picker>
+      <nz-form-explain *ngIf="hasErrors('date')">
+        <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facility_id">Facility</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('facility_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="facility_id">
+        <ng-container *ngFor="let facility of facilities">
+          <nz-option [nzLabel]="facility.name" [nzValue]="facility.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('facility_id')">
+        <app-field-errors [errors]="fieldErrors('facility_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email_review_type_id">Review Type</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('email_review_type_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="email_review_type_id">
+        <ng-container *ngFor="let email_review_type of email_review_types">
+          <nz-option [nzLabel]="email_review_type.title" [nzValue]="email_review_type.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('email_review_type_id')">
+        <app-field-errors [errors]="fieldErrors('email_review_type_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="subject">Subject</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('subject')?'error':null">
+      <input-counter formControlName="subject" placeholder="Subject" [maxlength]="120"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('subject')">
+        <app-field-errors [errors]="fieldErrors('subject')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="body">Body</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('body')?'error':null">
+      <input-counter formControlName="body" placeholder="Body" [maxlength]="2048"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('body')">
+        <app-field-errors [errors]="fieldErrors('body')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('space_id')">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+        <ng-container *ngFor="let space of spaces">
+          <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('space_id')">
+        <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
