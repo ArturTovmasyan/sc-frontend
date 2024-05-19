@@ -363,7 +363,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       privat_pay_source.forEach(function (value) {
         // tslint:disable-next-line:triple-equals
         if (value.rent_id == rent_id) {
-          result += value.days;
+          result = value.days;
         }
       });
     }
@@ -391,7 +391,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       not_privat_pay_source.forEach(function (value) {
         // tslint:disable-next-line:triple-equals
         if (value.rent_id == rent_id) {
-          result += value.days;
+          result = value.days;
         }
       });
     }
@@ -405,7 +405,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       not_privat_pay_source.forEach(function (value) {
         // tslint:disable-next-line:triple-equals
         if (value.rent_id == rent_id) {
-          result += value.absent_days;
+          result = value.absent_days;
         }
       });
     }
