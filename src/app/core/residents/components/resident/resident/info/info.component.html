@@ -78,7 +78,7 @@
 
         <div nz-row [nzGutter]="4">
           <div nz-col [nzSpan]="8" class="text-right"><strong>Admission Type:</strong></div>
-          <div nz-col [nzSpan]="16">{{ admission.admission_type|admission_type }}</div>
+          <div nz-col [nzSpan]="16">{{ admission.admission_type|admission_type:(admission.group_type) }}</div>
         </div>
 
         <ng-container [ngSwitch]="admission.group_type">

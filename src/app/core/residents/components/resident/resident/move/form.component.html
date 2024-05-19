@@ -6,7 +6,7 @@
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group" nzRequired>Group</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group')?'error':null">
       <nz-select nzShowSearch formControlName="group">
-        <nz-option-group nzLabel="FFC - Facilities">
+        <nz-option-group nzLabel="AL - Facilities">
           <ng-container *ngFor="let facility of facilities">
             <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
           </ng-container>
@@ -16,11 +16,11 @@
             <!--<nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>-->
           <!--</ng-container>-->
         <!--</nz-option-group>-->
-        <!--<nz-option-group nzLabel="IL - Apartments">-->
-          <!--<ng-container *ngFor="let apartment of apartments">-->
-            <!--<nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>-->
-          <!--</ng-container>-->
-        <!--</nz-option-group>-->
+        <nz-option-group nzLabel="IL - Apartments">
+          <ng-container *ngFor="let apartment of apartments">
+            <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
+          </ng-container>
+        </nz-option-group>
       </nz-select>
       <nz-form-explain *ngIf="hasErrors('group')">
         <app-field-errors [errors]="fieldErrors('group')"></app-field-errors>

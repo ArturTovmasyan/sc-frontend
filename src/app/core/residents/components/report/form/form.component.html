@@ -61,7 +61,7 @@
                      class="sc-select-all">
       <nz-select nzShowSearch [nzMode]="show.group_multi ? 'multiple' : 'default'" formControlName="group_list">
         <ng-container *ngIf="!form.get('group').value">
-          <nz-option-group nzLabel="FFC - Facilities">
+          <nz-option-group nzLabel="AL - Facilities">
             <ng-container *ngFor="let facility of group_helper.facilities">
               <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
             </ng-container>
@@ -71,11 +71,11 @@
               <!--<nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>-->
             <!--</ng-container>-->
           <!--</nz-option-group>-->
-          <!--<nz-option-group nzLabel="IL - Apartments">-->
-            <!--<ng-container *ngFor="let apartment of group_helper.apartments">-->
-              <!--<nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>-->
-            <!--</ng-container>-->
-          <!--</nz-option-group>-->
+          <nz-option-group nzLabel="IL - Apartments">
+            <ng-container *ngFor="let apartment of group_helper.apartments">
+              <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
+            </ng-container>
+          </nz-option-group>
         </ng-container>
         <ng-container *ngIf="form.get('group').value == GroupType.FACILITY">
           <ng-container *ngFor="let facility of group_helper.facilities">

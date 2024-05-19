@@ -92,16 +92,6 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="license">License Number</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('license')?'error':null">
-      <input nz-input placeholder="License Number" formControlName="license">
-      <nz-form-explain *ngIf="hasErrors('license')">
-        <app-field-errors [errors]="fieldErrors('license')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="csz_id" nzRequired>City, State, Zip Code</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('csz_id')?'error':null">
       <div class="add-select-container">

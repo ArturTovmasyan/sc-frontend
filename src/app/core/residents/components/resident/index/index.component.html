@@ -28,7 +28,7 @@
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu>
             <li *ngIf="group_helper.facilities && group_helper.facilities.length > 0" nz-menu-group
-                nzTitle="FFC- Facilities">
+                nzTitle="AL- Facilities">
               <ul class="sc-dd-ul">
                 <ng-container *ngFor="let facility of group_helper.facilities">
                   <li *ngIf="type_name === facility.name" nz-menu-item

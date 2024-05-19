@@ -12,6 +12,7 @@ import {FormComponent as ResidentFormComponent} from '../resident/resident/form/
 import {ModalFormService} from '../../../../shared/services/modal-form.service';
 import {GroupHelper} from '../../helper/group-helper';
 import {ResidentService} from '../../services/resident.service';
+import {GroupType} from '../../models/group-type.enum';
 
 @Component({
   selector: 'app-resident-selector',
@@ -19,6 +20,8 @@ import {ResidentService} from '../../services/resident.service';
   styleUrls: ['./resident-selector.component.scss']
 })
 export class ResidentSelectorComponent implements OnInit, OnDestroy {
+  GROUP_TYPE = GroupType;
+
   residents: Resident[];
 
   resident_id: number;

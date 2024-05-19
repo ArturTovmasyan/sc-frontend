@@ -9,6 +9,8 @@ import {first} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '../../../../../environments/environment';
+import {ResidentSelectorService} from '../../services/resident-selector.service';
+import {GroupType} from '../../models/group-type.enum';
 
 @Component({
   templateUrl: './list.component.html'
@@ -19,6 +21,7 @@ export class ListComponent implements OnInit, OnDestroy {
   public card: boolean = null;
 
   public mode: string = '';
+  public mode_group: string = null;
 
   public reports = null;
   protected $subscriptions: { [key: string]: Subscription; };
@@ -28,7 +31,8 @@ export class ListComponent implements OnInit, OnDestroy {
     private title$: TitleService,
     protected modal$: NzModalService,
     private route$: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private residentSelector$: ResidentSelectorService
   ) {
     this.title$.getTitle().subscribe(v => this.title = v);
 
@@ -40,6 +44,7 @@ export class ListComponent implements OnInit, OnDestroy {
       this.card = true;
 
       this.mode = 'resident';
+      this.subscribe('rs_type');
     } else {
       this.card = true;
 
@@ -59,6 +64,24 @@ export class ListComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.report$.list().pipe(first()).subscribe(res => {
           if (res) {
             this.reports = res;
+          }
+        });
+        break;
+      case 'rs_type':
+        this.$subscriptions[key] = this.residentSelector$.type.subscribe(next => {
+          switch (next) {
+            case GroupType.FACILITY:
+              this.mode_group = 'al';
+              break;
+            case GroupType.APARTMENT:
+              this.mode_group = 'il';
+              break;
+            case GroupType.REGION:
+              this.mode_group = 'ihl';
+              break;
+            default:
+              this.mode_group = null;
+              break;
           }
         });
         break;

@@ -6,6 +6,7 @@ import {FormComponent} from './form/form.component';
 import {ResidentAdmission} from '../../../models/resident-admission';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {ModalFormService} from '../../../../../shared/services/modal-form.service';
+import {GroupType} from '../../../models/group-type.enum';
 
 @Component({
   templateUrl: '../../../../../shared/components/grid/grid.component.html',
@@ -38,6 +39,11 @@ export class ListComponent extends GridComponent<ResidentAdmission, ResidentAdmi
           if (next) {
             if (this.params.filter(v => v.key === 'resident_id').length === 0) {
               this.params.push({key: 'resident_id', value: next.toString()});
+
+              if (this.residentSelector$.type.value === GroupType.APARTMENT) {
+                this.params.push({key: 'apartment', value: '1'});
+              }
+
               super.init();
             }
           }

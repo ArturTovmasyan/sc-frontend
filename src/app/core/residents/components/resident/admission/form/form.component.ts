@@ -45,6 +45,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   /** TODO: review **/
 
   admission_types: { id: AdmissionType, name: string }[];
+  facility_admission_types: { id: AdmissionType, name: string }[];
+  apartment_admission_types: { id: AdmissionType, name: string }[];
 
   constructor(
     protected modal$: ModalFormService,
@@ -103,7 +105,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('vc_group');
 
     // TODO: review
-    this.admission_types = [
+    this.facility_admission_types = [
       {id: AdmissionType.LONG_ADMIT, name: 'Long-Term Admit'},
       {id: AdmissionType.SHORT_ADMIT, name: 'Short-Term Admit'},
       {id: AdmissionType.READMIT, name: 'Re-Admit/Assign Room'},
@@ -111,6 +113,16 @@ export class FormComponent extends AbstractForm implements OnInit {
       {id: AdmissionType.PENDING_DISCHARGE, name: 'Pending Discharge'},
       {id: AdmissionType.DISCHARGE, name: 'Discharge'}
     ];
+
+    this.apartment_admission_types = [
+      {id: AdmissionType.LONG_ADMIT, name: 'Long-Term Rental'},
+      {id: AdmissionType.SHORT_ADMIT, name: 'Short-Term Rental'},
+      {id: AdmissionType.READMIT, name: 'Re-admit'},
+      {id: AdmissionType.PENDING_DISCHARGE, name: 'Notice to Vacate'},
+      {id: AdmissionType.DISCHARGE, name: 'Move Out'}
+    ];
+
+    this.admission_types = this.facility_admission_types;
 
     this.postSubmit = (data: any) => {
       const invalid_el = this._el.nativeElement.querySelector(':not(form).ng-invalid');
@@ -225,6 +237,17 @@ export class FormComponent extends AbstractForm implements OnInit {
 
             if (next.type === GroupType.REGION) {
               this.form.get('region_id').setValue(next.id);
+            }
+
+            switch (next.type) {
+              case GroupType.FACILITY:
+                this.admission_types = this.facility_admission_types;
+                break;
+              case GroupType.APARTMENT:
+                this.admission_types = this.apartment_admission_types;
+                break;
+              default:
+                break;
             }
           }
         });
@@ -437,9 +460,11 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   after_submit(): void {
-    const rval = this.residentSelector$.resident.value;
-    this.residentSelector$.resident.next(null);
-    this.residentSelector$.resident.next(rval);
+    // const rval = this.residentSelector$.resident.value;
+    // this.residentSelector$.resident.next(null);
+    // this.residentSelector$.resident.next(rval);
+
+    location.reload();
   }
 
   get_admission_type() {

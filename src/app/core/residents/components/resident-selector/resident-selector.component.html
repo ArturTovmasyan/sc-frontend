@@ -21,7 +21,7 @@
          title="Documents">
         <i class="seniorcare seniorcare-3x seniorcare-documents"></i>
       </a>
-      <a *ngIf="addIfHasPermission('persistence-resident-resident_health_insurance')" nz-button
+      <a *ngIf="addIfHasPermission('persistence-resident-resident_health_insurance') && residentSelector$.type.value === GROUP_TYPE.FACILITY" nz-button
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
          [routerLink]="routeInfo('health-insurance')"
@@ -49,44 +49,45 @@
          title="Rents">
         <i class="seniorcare seniorcare-3x seniorcare-rents"></i>
       </a>
-      <a *ngIf="addIfHasPermission('persistence-resident-resident_physician')" nz-button
+      <a *ngIf="addIfHasPermission('persistence-resident-resident_physician') && residentSelector$.type.value === GROUP_TYPE.FACILITY" nz-button
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
          [routerLink]="routeInfo('physicians')"
          title="Physicians">
         <i class="seniorcare seniorcare-3x seniorcare-physicians"></i>
       </a>
-      <a *ngIf="addIfHasPermission('persistence-resident-resident_medication')" nz-button
+      <a *ngIf="addIfHasPermission('persistence-resident-resident_medication') && residentSelector$.type.value === GROUP_TYPE.FACILITY" nz-button
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
          [routerLink]="routeInfo('medications')"
          title="Medications">
         <i class="seniorcare seniorcare-3x seniorcare-medications"></i>
       </a>
-      <a *ngIf="addIfHasPermission('persistence-resident-resident_medical_history_condition')" nz-button
+      <a *ngIf="addIfHasPermission('persistence-resident-resident_medical_history_condition') && residentSelector$.type.value === GROUP_TYPE.FACILITY" nz-button
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
          [routerLink]="routeInfo('history')"
          title="History">
         <i class="seniorcare seniorcare-3x seniorcare-medical-history"></i>
       </a>
-      <a *ngIf="addIfHasPermission('persistence-resident-resident_diet')" nz-button
+      <a *ngIf="addIfHasPermission('persistence-resident-resident_diet') && residentSelector$.type.value === GROUP_TYPE.FACILITY" nz-button
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
          [routerLink]="routeInfo('diets')"
          title="Dietary Restrictions">
         <i class="seniorcare seniorcare-3x seniorcare-dietary"></i>
       </a>
-      <a *ngIf="addIfHasPermission('persistence-resident-assessment-assessment')" nz-button
+      <a *ngIf="addIfHasPermission('persistence-resident-assessment-assessment') && residentSelector$.type.value === GROUP_TYPE.FACILITY" nz-button
          [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
          [routerLink]="routeInfo('assessments')"
          title="Assessments">
         <i class="seniorcare seniorcare-3x seniorcare-assessments"></i>
       </a>
-      <a nz-button [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
+      <a *ngIf="residentSelector$.group.value !== null" nz-button
+         [routerLinkActiveOptions]="{ __cdh__: residentSelector$.resident.value }"
          [routerLinkActive]="['active-link']"
-         [routerLink]="routeInfo('reports')" *ngIf="residentSelector$.group.value !== null"
+         [routerLink]="routeInfo('reports')"
          title="Reports">
         <i class="seniorcare seniorcare-3x seniorcare-reports"></i>
       </a>

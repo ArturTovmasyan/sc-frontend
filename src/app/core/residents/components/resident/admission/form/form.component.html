@@ -42,7 +42,7 @@
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group" nzRequired>Facility</nz-form-label>
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group')?'error':null">
           <nz-select nzShowSearch formControlName="group">
-            <nz-option-group *ngIf="group_helper.facilities && group_helper.facilities.length > 0" nzLabel="FFC - Facilities">
+            <nz-option-group *ngIf="group_helper.facilities && group_helper.facilities.length > 0" nzLabel="AL - Facilities">
               <ng-container *ngFor="let facility of group_helper.facilities">
                 <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
               </ng-container>
@@ -52,11 +52,11 @@
                 <!--<nz-option [nzLabel]="region.name" [nzValue]="region"></nz-option>-->
               <!--</ng-container>-->
             <!--</nz-option-group>-->
-            <!--<nz-option-group *ngIf="group_helper.apartments && group_helper.apartments.length > 0" nzLabel="IL - Apartments">-->
-              <!--<ng-container *ngFor="let apartment of group_helper.apartments">-->
-                <!--<nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>-->
-              <!--</ng-container>-->
-            <!--</nz-option-group>-->
+            <nz-option-group *ngIf="group_helper.apartments && group_helper.apartments.length > 0" nzLabel="IL - Apartments">
+              <ng-container *ngFor="let apartment of group_helper.apartments">
+                <nz-option [nzLabel]="apartment.name" [nzValue]="apartment"></nz-option>
+              </ng-container>
+            </nz-option-group>
           </nz-select>
           <nz-form-explain *ngIf="hasErrors('group')">
             <app-field-errors [errors]="fieldErrors('group')"></app-field-errors>
