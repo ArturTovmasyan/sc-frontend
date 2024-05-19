@@ -83,7 +83,9 @@
           <tr>
             <td>Ending Occ</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
-              <td class="text-center" [ngStyle]="FacilityDashboard.getEndingStyle(item.value)">{{item.value.ending_occupancy}}</td>
+              <td class="text-center" [ngStyle]="FacilityDashboard.getEndingStyle(item.value)">
+                <a [routerLink]="['/dashboard', facilityId, 'room-summary', item.key]">{{item.value.ending_occupancy}}</a>
+              </td>
             </ng-container>
           </tr>
           <tr>
@@ -95,7 +97,7 @@
           <tr>
             <td>Hot Leads</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
-              <td class="text-center">{{item.value.hot_leads}}</td>
+              <td class="text-center"><a [routerLink]="['/dashboard', facilityId, 'hot-leads', item.key]">{{item.value.hot_leads}}</a></td>
             </ng-container>
           </tr>
           <tr>

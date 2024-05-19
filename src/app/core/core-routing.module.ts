@@ -98,9 +98,9 @@ import {ListComponent as OutreachListComponent} from './leads/components/outreac
 import {ListComponent as OutreachTypeListComponent} from './leads/components/outreach-type/list.component';
 import {ViewComponent as LeadContactViewComponent} from './leads/components/contact/view/view.component';
 import {ListComponent as DocumentCategoryListComponent} from './documents/components/category/list.component';
-import {DashboardComponent as ResidentDashboardComponent} from './residents/components/dashboard/dashboard.component';
-import {DashboardMonthlyComponent as ResidentDashboardMonthlyComponent} from './residents/components/dashboard/dashboard-monthly.component';
-import {DashboardWeeklyComponent as ResidentDashboardWeeklyComponent} from './residents/components/dashboard/dashboard-weekly.component';
+import {DashboardComponent as CorporateDashboardComponent} from './residents/components/dashboard/dashboard.component';
+import {DashboardMonthlyComponent as CorporateDashboardMonthlyComponent} from './residents/components/dashboard/dashboard-monthly.component';
+import {DashboardWeeklyComponent as CorporateDashboardWeeklyComponent} from './residents/components/dashboard/dashboard-weekly.component';
 import {ViewComponent as FacilityDocumentViewComponent} from './residents/components/facility-document/view/view.component';
 import {CalendarComponent as CorporateCalendarComponent} from './residents/components/calendar/calendar.component';
 import {ListComponent as AssessmentTypeListComponent} from './residents/components/assessment/type/list.component';
@@ -108,6 +108,8 @@ import {ListComponent as FacilityBedListComponent} from './residents/components/
 import {ListComponent as ApartmentBedListComponent} from './residents/components/apartment-bed/list.component';
 import {ListComponent as FacilityRoomBaseRateListComponent} from './residents/components/facility-room-base-rate/list.component';
 import {ListComponent as PaymentSourceBaseRateListComponent} from './residents/components/payment-source-base-rate/list.component';
+import {HotLeadsComponent as CorporateDashboardHotLeadsComponent} from './residents/components/dashboard/hot-leads/hot-leads.component';
+import {RoomSummaryComponent as CorporateDashboardRoomSummaryComponent} from './residents/components/dashboard/room-summary/room-summary.component';
 
 const routes: Routes = [
   {
@@ -365,7 +367,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: ResidentDashboardComponent,
+            component: CorporateDashboardComponent,
             data: {
               nav: {show: true, group: 'Corporate'},
               title: 'Dashboard',
@@ -374,22 +376,40 @@ const routes: Routes = [
           },
           {
             path: ':id/monthly',
-            component: ResidentDashboardMonthlyComponent,
+            component: CorporateDashboardMonthlyComponent,
             data: {
               nav: {show: false, group: 'Corporate'},
-              title: 'Dashboard',
+              title: 'Dashboard Montly',
               permissions: ['activity-corporate-dashboard']
             },
           },
           {
             path: ':id/weekly/:key',
-            component: ResidentDashboardWeeklyComponent,
+            component: CorporateDashboardWeeklyComponent,
             data: {
               nav: {show: false, group: 'Corporate'},
-              title: 'Dashboard',
+              title: 'Dashboard Weekly',
               permissions: ['activity-corporate-dashboard']
             }
-          }
+          },
+          {
+            path: ':id/hot-leads/:key',
+            component: CorporateDashboardHotLeadsComponent,
+            data: {
+              nav: {show: false, group: 'Corporate'},
+              title: 'Dashboard Hot Leads',
+              permissions: ['activity-corporate-dashboard']
+            },
+          },
+          {
+            path: ':id/room-summary/:key',
+            component: CorporateDashboardRoomSummaryComponent,
+            data: {
+              nav: {show: false, group: 'Corporate'},
+              title: 'Dashboard Room Summary',
+              permissions: ['activity-corporate-dashboard']
+            },
+          },
         ]
       },
       {

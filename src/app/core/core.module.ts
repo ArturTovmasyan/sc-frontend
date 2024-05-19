@@ -132,9 +132,11 @@ import {FormComponent as RegionFormComponent} from './residents/components/regio
 import {ResidentSelectorComponent} from './residents/components/resident-selector/resident-selector.component';
 
 import {IndexComponent as ResidentIndexComponent} from './residents/components/resident/index/index.component';
-import {DashboardComponent as ResidentDashboardComponent} from './residents/components/dashboard/dashboard.component';
-import {DashboardMonthlyComponent as ResidentDashboardMonthlyComponent} from './residents/components/dashboard/dashboard-monthly.component';
-import {DashboardWeeklyComponent as ResidentDashboardWeeklyComponent} from './residents/components/dashboard/dashboard-weekly.component';
+import {DashboardComponent as CorporateDashboardComponent} from './residents/components/dashboard/dashboard.component';
+import {DashboardMonthlyComponent as CorporateDashboardMonthlyComponent} from './residents/components/dashboard/dashboard-monthly.component';
+import {DashboardWeeklyComponent as CorporateDashboardWeeklyComponent} from './residents/components/dashboard/dashboard-weekly.component';
+import {HotLeadsComponent as CorporateDashboardHotLeadsComponent} from './residents/components/dashboard/hot-leads/hot-leads.component';
+import {RoomSummaryComponent as CorporateDashboardRoomSummaryComponent} from './residents/components/dashboard/room-summary/room-summary.component';
 import {ListComponent as ResidentListComponent} from './residents/components/resident/index/list.component';
 import {ThumbComponent as ResidentThumbComponent} from './residents/components/resident/index/thumb.component';
 import {FormComponent as ResidentFormComponent} from './residents/components/resident/resident/form/form.component';
@@ -478,9 +480,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     ResidentSelectorComponent,
 
-    ResidentDashboardComponent,
-    ResidentDashboardMonthlyComponent,
-    ResidentDashboardWeeklyComponent,
+    CorporateDashboardComponent,
+    CorporateDashboardMonthlyComponent,
+    CorporateDashboardWeeklyComponent,
+    CorporateDashboardHotLeadsComponent,
+    CorporateDashboardRoomSummaryComponent,
 
     ResidentIndexComponent,
     ResidentListComponent,

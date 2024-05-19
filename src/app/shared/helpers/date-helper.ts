@@ -68,6 +68,6 @@ export class DateHelper {
   static getDateForKey(key: string): Date {
     const parts = key.split('-');
 
-    return moment().month(parts[0]).year(parseInt('20' + parts[1], 10)).toDate();
+    return moment().month(parts[0]).year(parseInt('20' + parts[1], 10)).startOf('months').toDate();
   }
 }

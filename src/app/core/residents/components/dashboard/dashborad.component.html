@@ -97,7 +97,11 @@
             <td>Ending Occ</td>
             <ng-container *ngFor="let facility of facilities">
               <td class="text-center"
-                  [ngStyle]="FacilityDashboard.getEndingStyle(dashboardData[facility.id].data)">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.ending_occupancy : '-' }}</td>
+                  [ngStyle]="FacilityDashboard.getEndingStyle(dashboardData[facility.id].data)">
+                <a [routerLink]="['/dashboard', facility.id, 'room-summary', currentDate|date:'MMM-yy']">
+                  {{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.ending_occupancy : '-' }}
+                </a>
+              </td>
             </ng-container>
           </tr>
           <tr>
@@ -111,7 +115,7 @@
             <td>Hot Leads</td>
             <ng-container *ngFor="let facility of facilities">
               <td
-                class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.hot_leads : '-' }}</td>
+                class="text-center"><a [routerLink]="['/dashboard', facility.id, 'hot-leads', currentDate|date:'MMM-yy']">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.hot_leads : '-' }}</a></td>
             </ng-container>
           </tr>
           <tr>
