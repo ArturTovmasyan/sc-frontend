@@ -82,13 +82,13 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
               break;
             case 'boolean':
               field.enum = [
-                {label: 'True', value: 1},
-                {label: 'False', value: 0}
+                {label: 'Yes', value: 1},
+                {label: 'No', value: 0}
               ];
 
               field.enum_map = {
-                true: 'True',
-                false: 'False'
+                true: 'Yes',
+                false: 'No'
               };
 
               this.filter[field.id].value = new Array(1);

@@ -55,7 +55,8 @@
   <fieldset formArrayName="beds">
     <legend class="senior-care-legend">
       Bed(s)
-      <button [style.float]="'right'" #addBed nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="add_field('beds');">
+      <button [style.float]="'right'" #addBed nz-button nzType="primary" nzSize="small" nzShape="circle"
+              (click)="add_field('beds');" [disabled]="!form.get('facility_id').value">
         <i nz-icon type="plus"></i>
       </button>
     </legend>
@@ -64,7 +65,7 @@
       <thead>
       <tr>
         <th class="w-25 text-center">
-          <nz-form-label>Disabled</nz-form-label>
+          <nz-form-label>Enabled</nz-form-label>
         </th>
         <th class="w-75">
           <nz-form-label nzRequired>Number</nz-form-label>
@@ -76,7 +77,7 @@
       <ng-container *ngFor="let phone of get_form_array('beds').controls;let i = index">
         <tr [formGroupName]="i">
           <td class="text-center">
-            <nz-switch nzSize="small" formControlName="disabled"></nz-switch>
+            <nz-switch nzSize="small" formControlName="enabled"></nz-switch>
           </td>
           <td>
             <nz-form-item>
@@ -90,7 +91,8 @@
             </nz-form-item>
           </td>
           <td class="text-center">
-            <button nz-button nzType="danger" nzSize="small" nzShape="circle" [nzLoading]="button_loading[i]" (click)="remove_field('beds', i);">
+            <button nz-button nzType="danger" nzSize="small" nzShape="circle" [nzLoading]="button_loading[i]"
+                    (click)="remove_field('beds', i);">
               <i nz-icon type="minus"></i>
             </button>
           </td>
@@ -99,6 +101,13 @@
       </tbody>
     </table>
   </fieldset>
+  <nz-form-item>
+    <nz-form-control [nzSm]="24" [nzXs]="24" [nzValidateStatus]="hasErrors('beds')?'error':null">
+      <nz-form-explain *ngIf="hasErrors('beds')">
+        <app-field-errors [errors]="fieldErrors('beds')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
 
   <nz-form-item *ngIf="formErrors()">
     <nz-form-control [nzSm]="24" [nzXs]="24">

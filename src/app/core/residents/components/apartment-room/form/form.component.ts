@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+﻿import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
@@ -17,7 +17,7 @@ import {ResidentType} from '../../../models/resident-type.enum';
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
-  facilities: Apartment[];
+  apartments: Apartment[];
 
   apartment: Apartment = null;
   other_occupation: number;
@@ -25,6 +25,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   room_curr_occupation: number;
 
   button_loading: Array<boolean>;
+
+  @ViewChild('addBed') btn_add_bed;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,12 +36,17 @@ export class FormComponent extends AbstractForm implements OnInit {
     protected resident$: ResidentService
   ) {
     super();
+
+    this.room_orig_occupation = 0;
+    this.room_curr_occupation = 0;
+
+    this.button_loading = new Array<boolean>(100);
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      number: ['', Validators.compose([Validators.required])],
+      number: ['', Validators.compose([Validators.required, Validators.maxLength(10)])],
       floor: ['', Validators.compose([Validators.required, CoreValidator.floor])],
       notes: ['', Validators.compose([Validators.maxLength(1000)])],
 
@@ -50,21 +57,24 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.apartment$.all().pipe(first()).subscribe(res => {
       if (res) {
-        this.facilities = res;
+        this.apartments = res;
 
         this.form.get('beds').valueChanges.subscribe(next => {
           this.room_curr_occupation = next.length;
+
+          this.btn_add_bed.el.disabled = (this.room_curr_occupation + this.other_occupation) >= this.apartment.capacity;
         });
 
         this.form.get('apartment_id').valueChanges.subscribe(next => {
-          this.apartment = this.facilities.filter(v => v.id === next).pop();
-          this.other_occupation = this.apartment.occupation - this.room_orig_occupation;
+          if (next) {
+            this.apartment = this.apartments.filter(v => v.id === next).pop();
+            this.other_occupation = this.apartment.occupation - this.room_orig_occupation;
+          }
         });
 
         this.form.get('apartment_id').setValue(this.form.get('apartment_id').value);
       }
     });
-
   }
 
   public get_form_array_skeleton(key: string): FormGroup | FormControl {
@@ -73,7 +83,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         return this.formBuilder.group({
           id: [''],
           number: ['', Validators.compose([Validators.required])],
-          disabled: [false, Validators.compose([Validators.required])],
+          enabled: [true, Validators.compose([Validators.required])],
           resident_id: [null],
         });
       default:
@@ -90,8 +100,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.room_orig_occupation = (<FormArray>this.form.get('beds')).controls.length;
     this.room_curr_occupation = this.room_orig_occupation;
-
-    this.button_loading = new Array<boolean>(10 * (<FormArray>this.form.get('beds')).controls.length);
   }
 
   remove_field(key: string, i: number): void {
@@ -194,7 +202,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             component.before_set_form_data();
             component.set_form_data(component, form, {
               id: resident.id,
-              group_type: ResidentType.FACILITY,
+              group_type: ResidentType.APARTMENT,
               group_id: this.apartment.id,
               bed_id: bed_id
             });

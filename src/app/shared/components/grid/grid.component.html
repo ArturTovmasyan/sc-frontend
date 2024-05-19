@@ -73,10 +73,10 @@
       <th nzShowCheckbox [(nzChecked)]="checkbox_config.all" [nzIndeterminate]="checkbox_config.indeterminate"
           (nzCheckedChange)="checkbox_all($event)"></th>
       <ng-template ngFor let-field [ngForOf]="fields" let-first="first">
-        <th *ngIf="field.sortable && !field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id">
+        <th *ngIf="!field.hidden && field.sortable && !field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id">
           {{ ("grid." + name + "." + field.id)|translate }}
         </th>
-        <th *ngIf="!field.sortable && field.filterable" nzCustomFilter [ngSwitch]="field.type">
+        <th *ngIf="!field.hidden && !field.sortable && field.filterable" nzCustomFilter [ngSwitch]="field.type">
           {{ ("grid." + name + "." + field.id)|translate }}
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'id'" [ngTemplateOutlet]="filterNumber"></template>
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'string'" [ngTemplateOutlet]="filterString"></template>
@@ -88,7 +88,7 @@
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'boolean'" [ngTemplateOutlet]="filterEnum"></template>
           <strong *ngSwitchDefault>?</strong>
         </th>
-        <th *ngIf="field.sortable && field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id"
+        <th *ngIf="!field.hidden && field.sortable && field.filterable" [nzShowSort]="field.sortable" [nzSortKey]="field.id"
             nzCustomFilter [ngSwitch]="field.type">
           {{ ("grid." + name + "." + field.id)|translate }}
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'id'" [ngTemplateOutlet]="filterNumber"></template>
@@ -101,14 +101,14 @@
           <template [ngTemplateOutletContext]="{ field: field, first: first }" *ngSwitchCase="'boolean'" [ngTemplateOutlet]="filterEnum"></template>
           <strong *ngSwitchDefault>?</strong>
         </th>
-        <th *ngIf="!field.sortable && !field.filterable">{{ ("grid." + name + "." + field.id)|translate }}</th>
+        <th *ngIf="!field.hidden && !field.sortable && !field.filterable">{{ ("grid." + name + "." + field.id)|translate }}</th>
       </ng-template>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let row of data">
       <td nzShowCheckbox [(nzChecked)]="row.checked" (nzCheckedChange)="checkbox_refresh()"></td>
-      <td *ngFor="let field of fields" [ngSwitch]="field.type">
+      <td *ngFor="let field of fields| filter: 'hidden' : false" [ngSwitch]="field.type">
         <ng-container *ngSwitchCase="'id'">
           <span style="font-size: smaller;">{{ row[field.id] }}</span>
         </ng-container>

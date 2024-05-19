@@ -36,12 +36,17 @@ export class FormComponent extends AbstractForm implements OnInit {
     protected resident$: ResidentService
   ) {
     super();
+
+    this.room_orig_occupation = 0;
+    this.room_curr_occupation = 0;
+
+    this.button_loading = new Array<boolean>(100);
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       id: [''],
-      number: ['', Validators.compose([Validators.required])],
+      number: ['', Validators.compose([Validators.required, Validators.maxLength(10)])],
       floor: ['', Validators.compose([Validators.required, CoreValidator.floor])],
       notes: ['', Validators.compose([Validators.maxLength(1000)])],
 
@@ -61,14 +66,15 @@ export class FormComponent extends AbstractForm implements OnInit {
         });
 
         this.form.get('facility_id').valueChanges.subscribe(next => {
-          this.facility = this.facilities.filter(v => v.id === next).pop();
-          this.other_occupation = this.facility.occupation - this.room_orig_occupation;
+          if (next) {
+            this.facility = this.facilities.filter(v => v.id === next).pop();
+            this.other_occupation = this.facility.occupation - this.room_orig_occupation;
+          }
         });
 
         this.form.get('facility_id').setValue(this.form.get('facility_id').value);
       }
     });
-
   }
 
   public get_form_array_skeleton(key: string): FormGroup | FormControl {
@@ -77,7 +83,7 @@ export class FormComponent extends AbstractForm implements OnInit {
         return this.formBuilder.group({
           id: [''],
           number: ['', Validators.compose([Validators.required])],
-          disabled: [false, Validators.compose([Validators.required])],
+          enabled: [true, Validators.compose([Validators.required])],
           resident_id: [null],
         });
       default:
@@ -94,8 +100,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.room_orig_occupation = (<FormArray>this.form.get('beds')).controls.length;
     this.room_curr_occupation = this.room_orig_occupation;
-
-    this.button_loading = new Array<boolean>(10 * (<FormArray>this.form.get('beds')).controls.length);
   }
 
   remove_field(key: string, i: number): void {

@@ -180,6 +180,7 @@ import {ContractStatePipe} from './residents/pipes/contract-state.pipe';
 import {NgHttpLoaderModule} from 'ng-http-loader';
 import {ResidentSelectorPipe} from './residents/pipes/resident-selector.pipe';
 import {NgxMaskModule} from 'ngx-mask';
+import {FilterPipe} from '../shared/pipes/filter.pipe';
 
 registerLocaleData(en);
 
@@ -197,6 +198,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ResidentPipe,
     ResidentSelectorPipe,
     ResponsiblePersonPipe,
+    FilterPipe,
 
     CoreComponent,
 

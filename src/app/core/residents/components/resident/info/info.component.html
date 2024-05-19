@@ -21,20 +21,20 @@
     <div nz-row>
       <div nz-col [nzSpan]="24">
         <p class="text-center m-1">
-          <strong>{{ resident.salutation.title }} {{ resident.first_name }} {{ resident.middle_name }} {{ resident.last_name }}</strong>
+          <strong style="font-size: large;">{{ resident.salutation.title }} {{ resident.first_name }} {{ resident.middle_name }} {{ resident.last_name }}</strong>
         </p>
       </div>
     </div>
 
     <div nz-row [nzGutter]="4">
-      <div nz-col [nzSpan]="8"><strong>Birthday:</strong></div>
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Birthday:</strong></div>
       <div nz-col [nzSpan]="16">{{ resident.birthday|date }}
         ({{ today | amDifference: resident.birthday :'years' : false }} years)
       </div>
     </div>
 
     <div nz-row [nzGutter]="4">
-      <div nz-col [nzSpan]="8"><strong>Gender:</strong></div>
+      <div nz-col [nzSpan]="8" class="text-right"><strong>Gender:</strong></div>
       <div nz-col [nzSpan]="16">{{ resident.gender|gender }}</div>
     </div>
 
@@ -42,7 +42,7 @@
       <div nz-col [nzSpan]="24"><strong>Phone Numbers:</strong></div>
       <div nz-col [nzOffset]="4" [nzSpan]="20">
         <div nz-row [nzGutter]="4" *ngFor="let phone of resident.phones">
-          <div nz-col [nzSpan]="6"><strong>{{ phone.type|phone_type }}:</strong></div>
+          <div nz-col [nzSpan]="6" class="text-right"><strong>{{ phone.type|phone_type }}:</strong></div>
           <div nz-col [nzSpan]="12">
             <a href="tel:{{ phone.number| mask: '(000) 000-0000' }}">{{ phone.number| mask: '(000) 000-0000' }}</a>
             <ng-container *ngIf="phone.extension">, ext. {{ phone.extension }}</ng-container>
@@ -59,12 +59,12 @@
 
     <ng-container *ngIf="contract" [ngSwitch]="contract.type">
       <div nz-row [nzGutter]="4">
-        <div nz-col [nzSpan]="8"><strong>Date admitted:</strong></div>
+        <div nz-col [nzSpan]="8" class="text-right"><strong>Date admitted:</strong></div>
         <div nz-col [nzSpan]="16">{{ contract.start|date }}</div>
       </div>
 
       <div nz-row [nzGutter]="4">
-        <div nz-col [nzSpan]="8"><strong>State:</strong></div>
+        <div nz-col [nzSpan]="8" class="text-right"><strong>State:</strong></div>
         <div nz-col [nzSpan]="16">{{ contract.option.state|contract_state }}</div>
       </div>
 
@@ -105,71 +105,71 @@
 
 <ng-template #tplFacility let-option="option">
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Care Group:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Care Group:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.care_group }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Care Level:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Care Level:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.care_level.title }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Ambulatory:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Ambulatory:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.ambulatory }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>DNR:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>DNR:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.dnr }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>POLST:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>POLST:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.polst }}</div>
   </div>
 
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Dinning Room:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Dinning Room:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.dining_room.title }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Room/Bed:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Room/Bed:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.bed.room.number }} ({{ option.bed.number }})</div>
   </div>
 </ng-template>
 
 <ng-template #tplApartment let-option="option">
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Room/Bed:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Room/Bed:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.bed.room.number }} ({{ option.bed.number }})</div>
   </div>
 </ng-template>
 
 <ng-template #tplRegion let-option="option">
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Care Group:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Care Group:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.care_group }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Care Level:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Care Level:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.care_level.title }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Ambulatory:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Ambulatory:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.ambulatory }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>DNR:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>DNR:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.dnr }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>POLST:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>POLST:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.polst }}</div>
   </div>
 
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>CSZ:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>CSZ:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.street_address }}</div>
   </div>
   <div nz-row [nzGutter]="4">
-    <div nz-col [nzSpan]="8"><strong>Street Address:</strong></div>
+    <div nz-col [nzSpan]="8" class="text-right"><strong>Street Address:</strong></div>
     <div nz-col [nzSpan]="16">{{ option.csz|csz }}</div>
   </div>
 </ng-template>
