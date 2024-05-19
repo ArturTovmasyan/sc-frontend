@@ -176,6 +176,8 @@ import {LyIconModule} from '@alyle/ui/icon';
 import {LY_THEME, LyThemeModule} from '@alyle/ui';
 import {MinimaLight} from '@alyle/ui/themes/minima';
 import {ContractStatePipe} from './residents/pipes/contract-state.pipe';
+import {NgHttpLoaderModule} from 'ng-http-loader';
+import {ResidentSelectorPipe} from './residents/pipes/resident-selector.pipe';
 
 registerLocaleData(en);
 
@@ -191,6 +193,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CityStateZipPipe,
     PhysicianPipe,
     ResidentPipe,
+    ResidentSelectorPipe,
     ResponsiblePersonPipe,
 
     CoreComponent,
@@ -413,6 +416,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
+    NgHttpLoaderModule.forRoot(),
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
     AppFooterModule,

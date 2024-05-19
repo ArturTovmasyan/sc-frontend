@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+﻿import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
@@ -25,6 +25,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   room_curr_occupation: number;
 
   button_loading: Array<boolean>;
+
+  @ViewChild('addBed') btn_add_bed;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,6 +56,12 @@ export class FormComponent extends AbstractForm implements OnInit {
 
         this.form.get('beds').valueChanges.subscribe(next => {
           this.room_curr_occupation = next.length;
+
+          if ((this.room_curr_occupation + this.other_occupation) >= this.facility.capacity) {
+            this.btn_add_bed.el.disabled = true;
+          } else {
+            this.btn_add_bed.el.disabled = false;
+          }
         });
 
         this.form.get('facility_id').valueChanges.subscribe(next => {

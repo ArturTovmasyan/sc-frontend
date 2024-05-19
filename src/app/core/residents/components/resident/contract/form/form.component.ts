@@ -149,7 +149,7 @@ export class FormComponent extends AbstractForm implements OnInit {
           bed_id: [null, Validators.required],
           dining_room_id: [null, Validators.required],
         });
-        this.facility_room$.all([{key: 'facility_id', value: group_id}]).pipe(first()).subscribe(res => {
+        this.facility_room$.all([{key: 'facility_id', value: group_id}, {key: 'vacant', value: 1}]).pipe(first()).subscribe(res => {
           if (res) {
             this.facility_rooms = res;
           }
@@ -171,7 +171,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
           bed_id: [null, Validators.required],
         });
-        this.apartment_room$.all([{key: 'apartment_id', value: group_id}]).pipe(first()).subscribe(res => {
+        this.apartment_room$.all([{key: 'apartment_id', value: group_id}, {key: 'vacant', value: 1}]).pipe(first()).subscribe(res => {
           if (res) {
             this.apartment_rooms = res;
           }

@@ -83,7 +83,7 @@
           <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
         </button>
       </nz-button-group>
-      <nz-button-group [nzSize]="'medium'" class="ml-auto">
+      <nz-button-group *ngIf="contract" [nzSize]="'medium'" class="ml-auto">
         <button nz-button nzType="default" (click)="show_modal_move(); $event.preventDefault();">
           <i nz-icon type="swap"></i> {{ "grid.move"|translate }}
         </button>

@@ -6,7 +6,7 @@
         <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('medication_id')?'error':null">
           <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="medication_id">
             <ng-container *ngFor="let medication of medications">
-              <nz-option [nzLabel]="medication.name" [nzValue]="medication.id"></nz-option>
+              <nz-option [nzLabel]="medication.title" [nzValue]="medication.id"></nz-option>
             </ng-container>
           </nz-select>
           <nz-form-explain *ngIf="hasErrors('medication_id')">

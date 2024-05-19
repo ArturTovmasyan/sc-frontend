@@ -10,7 +10,6 @@ import {Resident} from '../../models/resident';
 import {ResidentService} from '../../services/resident.service';
 import {ResidentType} from '../../models/resident-type.enum';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-resident-selector',
@@ -78,13 +77,24 @@ export class ResidentSelectorComponent implements OnInit {
   }
 
   load_residents_list(value: any): void {
-    this.resident$.list_by_options(value.id, value.type, 1).pipe(first()).subscribe(res => {
-      if (res) {
-        this.active_residents = res;
-        this.active_resident_id = null;
-      }
-    });
-    this.resident$.list_by_options(value.id, value.type, 2).pipe(first()).subscribe(res => {
+    this.active_residents = [];
+    this.active_resident_id = null;
+    this.inactive_residents = [];
+    this.inactive_resident_id = null;
+
+    const type = value ? value.type : null;
+    const type_id = value ? value.id : null;
+
+    if (value != null) {
+      this.resident$.list_by_options(true, type, type_id).pipe(first()).subscribe(res => {
+        if (res) {
+          this.active_residents = res;
+          this.active_resident_id = null;
+        }
+      });
+    }
+
+    this.resident$.list_by_options(false, type, type_id).pipe(first()).subscribe(res => {
       if (res) {
         this.inactive_residents = res;
         this.inactive_resident_id = null;

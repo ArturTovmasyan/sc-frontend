@@ -14,8 +14,22 @@ export class ResidentService extends GridService<Resident> {
     this.SEVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/resident`;
   }
 
-  list_by_options(group_id: number, type: number, state: number): Observable<Resident[]> {
-    return this.http.get<Resident[]>(this.SEVICE_URL_BASE + `/type/${type}/${group_id}/state/${state}`);
+  list_by_options(state: boolean, type: number, type_id: number): Observable<Resident[]> {
+    let prefix = '';
+    let suffix = '';
+
+    if (type == null && type_id == null) {
+      prefix = 'no-contract';
+    } else {
+      if (state) {
+        prefix = 'active';
+      } else {
+        prefix = 'inactive';
+      }
+      suffix = `/${type}/${type_id}`;
+    }
+
+    return this.http.get<Resident[]>(this.SEVICE_URL_BASE + `/${prefix}${suffix}`);
   }
 
   public put_photo(data: any): Observable<any> {

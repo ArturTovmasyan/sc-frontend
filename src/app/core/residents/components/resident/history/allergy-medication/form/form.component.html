@@ -5,7 +5,7 @@
       <div class="add-select-container">
         <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="medication_id">
           <ng-container *ngFor="let medication of medications">
-            <nz-option [nzLabel]="medication.name" [nzValue]="medication.id"></nz-option>
+            <nz-option [nzLabel]="medication.title" [nzValue]="medication.id"></nz-option>
           </ng-container>
         </nz-select>
         <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="toggle_sub_form();"><i nz-icon
@@ -25,11 +25,11 @@
       </button>
     </legend>
     <nz-form-control [nzSm]="24" [nzXs]="24" [nzValidateStatus]="hasErrors('medication')?'error':null">
-      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="name" nzRequired>Name</nz-form-label>
-      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('medication.name')?'error':null">
-        <input nz-input placeholder="Name" formControlName="name">
-        <nz-form-explain *ngIf="hasErrors('medication.name')">
-          <app-field-errors [errors]="fieldErrors('medication.name')"></app-field-errors>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('medication.title')?'error':null">
+        <input nz-input placeholder="Title" formControlName="title">
+        <nz-form-explain *ngIf="hasErrors('medication.title')">
+          <app-field-errors [errors]="fieldErrors('medication.title')"></app-field-errors>
         </nz-form-explain>
       </nz-form-control>
     </nz-form-control>

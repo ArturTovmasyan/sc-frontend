@@ -53,6 +53,7 @@
 <div class="facility-selector">
   <i class="fa fa-home"></i>
   <nz-select nzShowSearch [(ngModel)]="group_id" (ngModelChange)="load_residents_list($event);">
+    <nz-option nzLabel="No Contract" [nzValue]="null"></nz-option>
     <nz-option-group nzLabel="FFC - Facilities">
       <ng-container *ngFor="let facility of facilities">
         <nz-option [nzLabel]="facility.name" [nzValue]="facility"></nz-option>
@@ -70,15 +71,15 @@
     </nz-option-group>
   </nz-select>
   <i class="fa fa-users"></i>
-  <nz-select [nzDisabled]="active_residents == null || active_residents.length == 0" nzShowSearch [(ngModel)]="active_resident_id" (ngModelChange)="residentChanged($event);">
+  <nz-select [nzDisabled]="group_id == null || active_residents == null || active_residents.length == 0" nzShowSearch [(ngModel)]="active_resident_id" (ngModelChange)="residentChanged($event);">
     <ng-container *ngFor="let resident of active_residents">
-      <nz-option [nzLabel]="resident|resident" [nzValue]="resident.id"></nz-option>
+      <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
     </ng-container>
   </nz-select>
   <i class="fa fa-ban"></i>
   <nz-select [nzDisabled]="inactive_residents == null || inactive_residents.length == 0" nzShowSearch [(ngModel)]="inactive_resident_id" (ngModelChange)="residentChanged($event);">
     <ng-container *ngFor="let resident of inactive_residents">
-      <nz-option [nzLabel]="resident|resident" [nzValue]="resident.id"></nz-option>
+      <nz-option [nzLabel]="resident|resident_selector" [nzValue]="resident.id"></nz-option>
     </ng-container>
   </nz-select>
 </div>

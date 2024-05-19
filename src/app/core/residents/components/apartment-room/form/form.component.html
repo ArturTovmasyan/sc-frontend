@@ -1,5 +1,29 @@
 ﻿<form nz-form [formGroup]="form">
   <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="apartment_id" nzRequired>Apartment</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('apartment_id')?'error':null">
+      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="apartment_id">
+        <ng-container *ngFor="let apartment of facilities">
+          <nz-option [nzLabel]="apartment.name" [nzValue]="apartment.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('apartment_id')">
+        <app-field-errors [errors]="fieldErrors('apartment_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="apartment">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="number" nzRequired>Occupation/Capacity</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('number')?'error':null">
+      {{ (room_curr_occupation + other_occupation) }} / {{ apartment.capacity }}
+      <nz-form-explain *ngIf="hasErrors('number')">
+        <app-field-errors [errors]="fieldErrors('number')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="number" nzRequired>Number</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('number')?'error':null">
       <input nz-input placeholder="Number" formControlName="number">
@@ -17,37 +41,6 @@
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="disabled" nzRequired>Disabled</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
-      <nz-switch formControlName="disabled"></nz-switch>
-      <nz-form-explain *ngIf="hasErrors('disabled')">
-        <app-field-errors [errors]="fieldErrors('disabled')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="shared" nzRequired>Shared</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24">
-      <nz-switch formControlName="shared"></nz-switch>
-      <nz-form-explain *ngIf="hasErrors('shared')">
-        <app-field-errors [errors]="fieldErrors('shared')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="type" nzRequired>Type</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('type')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="type">
-        <ng-container *ngFor="let type of types">
-          <nz-option [nzLabel]="(type.name)|translate" [nzValue]="type.id"></nz-option>
-        </ng-container>
-      </nz-select>
-      <nz-form-explain *ngIf="hasErrors('type')">
-        <app-field-errors [errors]="fieldErrors('type')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
@@ -59,19 +52,54 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="apartment_id" nzRequired>Apartment</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('apartment_id')?'error':null">
-      <nz-select nzMode="default" nzPlaceHolder="Please select" formControlName="apartment_id">
-        <ng-container *ngFor="let apartment of apartments">
-          <nz-option [nzLabel]="apartment.name" [nzValue]="apartment.id"></nz-option>
-        </ng-container>
-      </nz-select>
-      <nz-form-explain *ngIf="hasErrors('apartment_id')">
-        <app-field-errors [errors]="fieldErrors('apartment_id')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
+  <fieldset formArrayName="beds">
+    <legend class="senior-care-legend">
+      Bed(s)
+      <button [style.float]="'right'" nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="add_field('beds');">
+        <i nz-icon type="plus"></i>
+      </button>
+    </legend>
+    <table class="senior-care-form-table table table-hover table-bordered table-sm"
+           *ngIf="get_form_array('beds').controls.length > 0">
+      <thead>
+      <tr>
+        <th class="w-25 text-center">
+          <nz-form-label>Disabled</nz-form-label>
+        </th>
+        <th class="w-75">
+          <nz-form-label nzRequired>Number</nz-form-label>
+        </th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let phone of get_form_array('beds').controls;let i = index">
+        <tr [formGroupName]="i">
+          <td class="text-center">
+            <nz-switch nzSize="small" formControlName="disabled"></nz-switch>
+          </td>
+          <td>
+            <nz-form-item>
+              <nz-form-control [nzSm]="16" [nzXs]="24"
+                               [nzValidateStatus]="hasErrors('beds.'+i+'.number')?'error':null">
+                <input nz-input nzSize="small" placeholder="Number" formControlName="number">
+                <nz-form-explain *ngIf="hasErrors('beds.'+i+'.number')">
+                  <app-field-errors [errors]="fieldErrors('beds.'+i+'.number')"></app-field-errors>
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </td>
+          <td class="text-center">
+            <button nz-button nzType="danger" nzSize="small" nzShape="circle" [nzLoading]="button_loading[i]" (click)="remove_field('beds', i);">
+              <i nz-icon type="minus"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </fieldset>
+
   <nz-form-item *ngIf="formErrors()">
     <nz-form-control [nzSm]="24" [nzXs]="24">
       <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>

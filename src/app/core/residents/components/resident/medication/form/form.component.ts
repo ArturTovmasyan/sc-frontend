@@ -90,5 +90,6 @@ export class FormComponent extends AbstractForm implements OnInit {
       const tab_el = this._el.nativeElement.querySelector(':not(form).ng-invalid').closest('.ant-tabs-tabpane');
       this.selectedTab = [].indexOf.call(tab_el.parentElement.querySelectorAll('.ant-tabs-tabpane'), tab_el);
     };
+
   }
 }

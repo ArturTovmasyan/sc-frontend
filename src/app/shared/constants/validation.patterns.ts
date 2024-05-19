@@ -1,8 +1,8 @@
 export class ValidationPatterns {
   public static PASSWORD = /(\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*)/;
 
-  public static DOSAGE = /[^0-9\.\-\/]/;
-  public static DOSAGE_UNIT = /[^a-zA-Z0-9\%\+\/]/;
+  public static DOSAGE = /[0-9\.\-\/]+/;
+  public static DOSAGE_UNIT = /[a-zA-Z0-9\%\+\/]+/;
 
   public static FLOOR = /(^[1-9][0-9]*$)/;
 

@@ -4,13 +4,17 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {filter, map, mergeMap} from 'rxjs/operators';
 import {TitleService} from './services/title.service';
 import {TranslateService} from '@ngx-translate/core';
+import { Spinkit } from 'ng-http-loader';
 
 @Component({
   selector: 'body',
   template: `
-    <router-outlet></router-outlet>`
+    <router-outlet></router-outlet>
+    <ng-http-loader [spinner]="spinkit.skWave"></ng-http-loader>
+  `
 })
 export class CoreComponent {
+  public spinkit = Spinkit;
   public navItems = navItems;
   public sidebarMinimized = true;
   private changes: MutationObserver;

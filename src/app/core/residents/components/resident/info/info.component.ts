@@ -57,6 +57,8 @@ export class InfoComponent implements OnInit {
         if (res) {
           this.contract = res;
         }
+      }, error => {
+        this.contract = null;
       });
     });
   }

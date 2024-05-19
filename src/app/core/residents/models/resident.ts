@@ -21,4 +21,7 @@ export class Resident implements IdInterface {
 
   responsible_persons?: ResponsiblePerson[];
   physicians?: Physician[];
+
+  room_number?: string;
+  bed_number?: string;
 }

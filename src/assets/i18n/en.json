@@ -26,40 +26,48 @@
     "allergen-list": {
       "id": "ID",
       "title": "Title",
-      "description": "Description"
+      "description": "Description",
+      "space": "Space"
     },
     "diagnosis-list": {
       "id": "ID",
       "title": "Title",
       "acronym": "Acronym",
-      "description": "Description"
+      "description": "Description",
+      "space": "Space"
     },
     "diet-list": {
       "id": "ID",
       "title": "Title",
-      "color": "Color"
+      "color": "Color",
+      "space": "Space"
     },
     "medical-history-condition-list": {
       "id": "ID",
       "title": "Title",
-      "description": "Description"
+      "description": "Description",
+      "space": "Space"
     },
     "medication-list": {
       "id": "ID",
-      "name": "Name"
+      "title": "Title",
+      "space": "Space"
     },
     "medication-form-factor-list": {
       "id": "ID",
-      "title": "Title"
+      "title": "Title",
+      "space": "Space"
     },
     "relationship-list": {
       "id": "ID",
-      "name": "Name"
+      "title": "Title",
+      "space": "Space"
     },
     "care-level-list": {
       "id": "ID",
       "title": "Title",
-      "description": "Description"
+      "description": "Description",
+      "space": "Space"
     },
     "city-state-zip-list": {
       "id": "ID",
@@ -67,11 +75,13 @@
       "state_abbr": "State (Abbr)",
       "city": "City",
       "zip_main": "Zip (Main)",
-      "zip_sub": "Zip (Sub)"
+      "zip_sub": "Zip (Sub)",
+      "space": "Space"
     },
     "salutation-list": {
       "id": "ID",
-      "title": "Title"
+      "title": "Title",
+      "space": "Space"
     },
     "physician-speciality-list": {
       "id": "ID",
@@ -98,6 +108,17 @@
     "payment-source-list": {
       "id": "ID",
       "title": "Title",
+      "space": "Space"
+    },
+    "event-definition-list": {
+      "id": "ID",
+      "title": "Title",
+      "ffc": "FFC",
+      "ihc": "IHC",
+      "il": "IL",
+      "physician": "Physician",
+      "responsible_person": "Responsible Person",
+      "additional_date": "Additional Date",
       "space": "Space"
     },
     "assessment-form-list": {
@@ -131,6 +152,7 @@
       "description": "Description",
       "address": "Address",
       "license": "License",
+      "license_capacity": "License Capacity",
       "capacity": "Capacity",
       "phone": "Phone",
       "fax": "Fax",
@@ -151,6 +173,7 @@
       "description": "Description",
       "address": "Address",
       "license": "License",
+      "license_capacity": "License Capacity",
       "capacity": "Capacity",
       "phone": "Phone",
       "fax": "Fax",
@@ -277,16 +300,6 @@
       "notes": "Notes",
       "sources": "Sources",
       "space": "Space"
-    },
-    "event-definition-list": {
-      "id": "ID",
-      "title": "Title",
-      "ffc": "FFC",
-      "ihc": "IHC",
-      "il": "IL",
-      "physician": "Physician",
-      "responsible_person": "Responsible Person",
-      "additional_date": "Additional Date"
     },
     "resident-event-list": {
       "id": "ID",
