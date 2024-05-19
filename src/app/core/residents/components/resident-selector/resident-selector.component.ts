@@ -86,8 +86,6 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
               if (res) {
                 this.active_residents = null;
                 this.inactive_residents = res;
-
-                // this.residentSelector$.resident.next(this.residentSelector$.resident.value);
               }
             });
           }
@@ -145,7 +143,10 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
           .pipe(first()).subscribe(res => {
             if (res) {
               this.active_residents = res;
-              // this.residentSelector$.resident.next(this.residentSelector$.resident.value);
+
+              this.unsubscribe('vc_active_resident_id');
+              this.form.get('active_resident_id').setValue(this.residentSelector$.resident.value);
+              this.subscribe('vc_active_resident_id');
             }
           });
         break;
@@ -155,7 +156,10 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
           .pipe(first()).subscribe(res => {
             if (res) {
               this.inactive_residents = res;
-              // this.residentSelector$.resident.next(this.residentSelector$.resident.value);
+
+              this.unsubscribe('vc_inactive_resident_id');
+              this.form.get('inactive_resident_id').setValue(this.residentSelector$.resident.value);
+              this.subscribe('vc_inactive_resident_id');
             }
           });
         break;
@@ -166,8 +170,6 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
             this.group_helper.facilities.forEach((v, i) => {
               this.group_helper.facilities[i]['type'] = GroupType.FACILITY;
             });
-
-            // this.residentSelector$.group.next(this.residentSelector$.group.value);
           }
         });
         break;
@@ -178,8 +180,6 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
             this.group_helper.apartments.forEach((v, i) => {
               this.group_helper.apartments[i]['type'] = GroupType.APARTMENT;
             });
-
-            // this.residentSelector$.group.next(this.residentSelector$.group.value);
           }
         });
         break;
@@ -190,8 +190,6 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
             this.group_helper.regions.forEach((v, i) => {
               this.group_helper.regions[i]['type'] = GroupType.REGION;
             });
-
-            // this.residentSelector$.group.next(this.residentSelector$.group.value);
           }
         });
         break;
