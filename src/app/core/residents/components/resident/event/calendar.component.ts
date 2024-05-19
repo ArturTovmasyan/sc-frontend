@@ -12,8 +12,6 @@ import {ResidentService} from '../../../services/resident.service';
 import {ResidentEventService} from '../../../services/resident-event.service';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
-import {PaymentPeriodPipe} from '../../../pipes/payment-period.pipe';
-import {RentIncreaseReasonPipe} from '../../../pipes/rent-increase-reason.pipe';
 import {FormComponent} from './form/form.component';
 import {FormComponent as FacilityEventFormComponent} from '../../facility/event-form/form.component';
 import {CalendarEventType} from '../../../models/event-definition';
@@ -25,6 +23,7 @@ import {ViewComponent as ResidentRentIncreaseViewComponent} from '../rent/rent-i
 import {ResidentRentService} from '../../../services/resident-rent.service';
 import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
 import {DateHelper} from '../../../../../shared/helpers/date-helper';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'app-resident-calendar',
@@ -40,8 +39,21 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
   };
 
-  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listMonth'};
+  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listAll'};
   calendarTimeFormat = {hour: 'numeric', minute: '2-digit', meridiem: 'narrow'};
+  calendarViews = {
+    listAll: {
+      type: 'list',
+      visibleRange: (currentDate) => {
+        const eventDates = this.calendarEvents.map(v => new Date(v.start));
+        const startDate = eventDates.reduce((a, b) => a < b ? a : b);
+        const endDate = eventDates.reduce((a, b) => a > b ? a : b);
+
+        return {start: startDate, end: endDate};
+      },
+      buttonText: 'list'
+    }
+  };
   calendarEvents = [];
 
   protected $subscriptions: { [key: string]: Subscription; };
@@ -136,7 +148,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 event_type: CalendarEventType.RENT,
                 start: DateHelper.formatMoment(rent.start, 'YYYY-MM-DD'),
                 end: DateHelper.formatMoment(rent.end, 'YYYY-MM-DD'),
-                title: (new PaymentPeriodPipe()).transform(rent.period)
+                title: (new CurrencyPipe('en-US')).transform(rent.amount, 'USD', 'symbol-narrow', '1.2-2')
               });
             });
 
@@ -149,7 +161,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 event_type: CalendarEventType.RENT_INCREASE,
                 start: DateHelper.formatMoment(rent_increase.start, 'YYYY-MM-DD'),
                 end: DateHelper.formatMoment(rent_increase.end, 'YYYY-MM-DD'),
-                title: (new RentIncreaseReasonPipe()).transform(rent_increase.reason)
+                title: (new CurrencyPipe('en-US')).transform(rent_increase.amount, 'USD', 'symbol-narrow', '1.2-2')
               });
             });
           }

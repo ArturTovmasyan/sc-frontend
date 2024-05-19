@@ -10,9 +10,6 @@ import {AuthGuard} from '../../../../guards/auth.guard';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {FacilityService} from '../../../services/facility.service';
 import {FacilityEventService} from '../../../services/facility-event.service';
-import {PaymentPeriodPipe} from '../../../pipes/payment-period.pipe';
-import {RentIncreaseReasonPipe} from '../../../pipes/rent-increase-reason.pipe';
-import {AdmissionType} from '../../../models/resident-admission';
 import {FormComponent} from '../event-form/form.component';
 import {CalendarEventType, EventDefinition} from '../../../models/event-definition';
 import {AdmissionTypePipe} from '../../../pipes/admission-type.pipe';
@@ -24,6 +21,7 @@ import {ResidentEventService} from '../../../services/resident-event.service';
 import {ResidentRentIncreaseService} from '../../../services/resident-rent-increase.service';
 import {ResidentRentService} from '../../../services/resident-rent.service';
 import {DateHelper} from '../../../../../shared/helpers/date-helper';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'app-facility-calendar',
@@ -43,8 +41,22 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
   };
 
-  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listMonth'};
+  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listAll'};
   calendarTimeFormat = {hour: 'numeric', minute: '2-digit', meridiem: 'narrow'};
+  calendarViews = {
+    listAll: {
+      type: 'list',
+      visibleRange: (currentDate) => {
+        const eventDates = this.calendarEvents.map(v => new Date(v.start));
+        const startDate = eventDates.reduce((a, b) => a < b ? a : b);
+        const endDate = eventDates.reduce((a, b) => a > b ? a : b);
+
+        return {start: startDate, end: endDate};
+      },
+      buttonText: 'list'
+    }
+  };
+
   calendarEvents = [];
 
   event_definitions: EventDefinition[];
@@ -171,10 +183,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
         subValue = (new AdmissionTypePipe()).transform(event.admission_type);
         break;
       case CalendarEventType.RENT:
-        subValue = (new PaymentPeriodPipe()).transform(event.period);
+        subValue = (new CurrencyPipe('en-US')).transform(event.amount, 'USD', 'symbol-narrow', '1.2-2');
         break;
       case CalendarEventType.RENT_INCREASE:
-        subValue = (new RentIncreaseReasonPipe()).transform(event.reason);
+        subValue = (new CurrencyPipe('en-US')).transform(event.amount, 'USD', 'symbol-narrow', '1.2-2');
         break;
     }
 

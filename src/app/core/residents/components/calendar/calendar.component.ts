@@ -31,8 +31,21 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
   };
 
-  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listMonth'};
+  calendarHeader = {left: 'prev,next today add_event', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay,listAll'};
   calendarTimeFormat = {hour: 'numeric', minute: '2-digit', meridiem: 'narrow'};
+  calendarViews = {
+    listAll: {
+      type: 'list',
+      visibleRange: (currentDate) => {
+        const eventDates = this.calendarEvents.map(v => new Date(v.start));
+        const startDate = eventDates.reduce((a, b) => a < b ? a : b);
+        const endDate = eventDates.reduce((a, b) => a > b ? a : b);
+
+        return {start: startDate, end: endDate};
+      },
+      buttonText: 'list'
+    }
+  };
   calendarEvents = [];
 
   protected $subscriptions: { [key: string]: Subscription; };
