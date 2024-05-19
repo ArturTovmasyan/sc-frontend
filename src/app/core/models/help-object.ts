@@ -9,9 +9,13 @@ export class HelpObject implements IdInterface {
   type: HelpObjectType;
 
   url: string;
+  vimeo_url: string;
+  youtube_url: string;
 }
 
 export enum HelpObjectType {
   PDF = 1,
-  VIDEO = 2
+  VIDEO = 2,
+  VIMEO = 3,
+  YOUTUBE = 4
 }

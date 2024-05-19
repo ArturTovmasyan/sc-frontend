@@ -28,6 +28,8 @@
                 <source [src]="object.url" type="video/mp4">
               </video>
             </vg-player>
+            <div *ngSwitchCase="HelpObjectType.VIMEO" [innerHtml]="iframe_html"></div>
+            <div *ngSwitchCase="HelpObjectType.YOUTUBE" [innerHtml]="iframe_html"></div>
           </ng-container>
         </ng-container>
       </div>

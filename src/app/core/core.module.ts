@@ -284,6 +284,7 @@ import {VgCoreModule} from 'videogular2/compiled/src/core/core';
 import {UserPipe} from './residents/pipes/user.pipe';
 import {LeadContactPipe} from './residents/pipes/lead-contact.pipe';
 import {LeadPipe} from './residents/pipes/lead.pipe';
+import {EmbedVideo} from 'ngx-embed-video/dist';
 
 registerLocaleData(en);
 
@@ -721,7 +722,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,
-    VgBufferingModule
+    VgBufferingModule,
+    EmbedVideo.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true},
