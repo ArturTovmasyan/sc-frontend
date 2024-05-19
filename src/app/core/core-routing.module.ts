@@ -82,6 +82,7 @@ import {ViewComponent as LeadViewComponent} from './leads/components/lead/view/v
 import {ListComponent as NotificationListComponent} from './admin/components/notification/list.component';
 import {ListComponent as NotificationTypeListComponent} from './admin/components/notification-type/list.component';
 import {ListComponent as InsuranceCompanyListComponent} from './residents/components/insurance-company/list.component';
+import {ViewComponent as DocumentViewComponent} from './documents/components/view/view.component';
 
 const routes: Routes = [
   {
@@ -438,6 +439,15 @@ const routes: Routes = [
             canActivate: [AuthGuard]
           }
         ]
+      },
+      {
+        path: 'documents', component: DocumentViewComponent,
+        data: {
+          nav: {show: true, group: 'Reference'},
+          title: 'Documents',
+          permissions: ['persistence-common-document']
+        },
+        canActivate: [AuthGuard]
       },
       {
         path: 'relationships', component: RelationshipListComponent,

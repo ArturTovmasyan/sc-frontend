@@ -179,6 +179,8 @@ import {FormComponent as InsuranceCompanyFormComponent} from './residents/compon
 import {ListComponent as ResidentHealthInsuranceListComponent} from './residents/components/resident/health-insurance/list.component';
 import {FormComponent as ResidentHealthInsuranceFormComponent} from './residents/components/resident/health-insurance/form/form.component';
 
+import {ViewComponent as DocumentViewComponent} from './documents/components/view/view.component';
+import {FormComponent as DocumentFormComponent} from './documents/components/form/form.component';
 
 import {HomeComponent} from './residents/components/home/home.component';
 
@@ -237,6 +239,7 @@ import {FormComponent as NotificationTypeFormComponent} from './admin/components
 import {CronJobsModule} from '../cron-jobs/cron-jobs.module';
 import {ChangeLogPipe} from './pipes/change-log.pipe';
 import {ActivityTypePipe} from './leads/pipes/activity-type.pipe';
+import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer';
 
 // import {ListComponent as ListComponent} from './residents/components//list.component';
 // import {FormComponent as FormComponent} from './residents/components//form/form.component';
@@ -473,7 +476,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     InsuranceCompanyListComponent,
     InsuranceCompanyFormComponent,
     ResidentHealthInsuranceListComponent,
-    ResidentHealthInsuranceFormComponent
+    ResidentHealthInsuranceFormComponent,
+
+
+    DocumentViewComponent,
+    DocumentFormComponent
   ],
   entryComponents: [
     UserFormComponent,
@@ -586,8 +593,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NotificationTypeFormComponent,
 
     InsuranceCompanyFormComponent,
-    ResidentHealthInsuranceFormComponent
+    ResidentHealthInsuranceFormComponent,
 
+    DocumentFormComponent
   ],
   imports: [
     CommonModule,
@@ -616,6 +624,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CoreRoutingModule,
     SharedModule,
     IconPickerModule,
+    NgxExtendedPdfViewerModule,
     NgxMaskModule.forRoot(),
     CronJobsModule
   ],

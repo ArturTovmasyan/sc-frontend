@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="card">
+      <div class="card-header">
+        Documents
+      </div>
+      <div class="card-body">
+        <nz-list [nzDataSource]="documents" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+          <ng-template #item let-item>
+            <nz-list-item>
+              <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="item.description">
+                <ng-template #nzTitle>
+                  <a [routerLink]="" (click)="openPDF(item)">{{ item.title }}</a>
+                </ng-template>
+              </nz-list-item-meta>
+            </nz-list-item>
+          </ng-template>
+        </nz-list>
+        <nz-divider *ngIf="addIfHasPermission('persistence-common-document', 2)"></nz-divider>
+        <div class="d-flex" *ngIf="addIfHasPermission('persistence-common-document', 2)">
+          <nz-button-group [nzSize]="'small'" class="ml-auto">
+            <button *ngIf="addIfHasPermission('persistence-common-document', 3)" type="button"
+                    nz-button nzType="primary" (click)="show_modal_add(); $event.preventDefault();">
+              <i nz-icon type="plus"></i> {{ "grid.add"|translate }}
+            </button>
+            <button *ngIf="addIfHasPermission('persistence-common-document', 2) && document"
+                    type="button"
+                    nz-button nzType="default" (click)="show_modal_edit(); $event.preventDefault();"
+                    [nzLoading]="loading_edit_modal">
+              <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+            </button>
+            <button *ngIf="addIfHasPermission('persistence-common-document', 4) && document"
+                    type="button"
+                    nz-button nzType="danger" (click)="show_modal_remove(); $event.preventDefault();">
+              <i nz-icon type="delete"></i> {{ "grid.remove"|translate }}
+            </button>
+          </nz-button-group>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-8">
+    <div class="card">
+      <div *ngIf="document" class="card-header">
+        {{ document.title }}
+      </div>
+      <div class="card-body">
+        <nz-empty *ngIf="!document" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+        <ngx-extended-pdf-viewer *ngIf="document"
+                                 [src]="document.file"
+                                 useBrowserLocale="true"
+                                 [showPresentationModeButton]="true"
+                                 [showSidebarButton]="false"
+                                 [showOpenFileButton]="false"
+                                 [showBookmarkButton]="false"
+                                 [showFindButton]="false"
+                                 [showSecondaryToolbarButton]="false"
+                                 [handTool]="true"
+                                 height="80vh">
+        </ngx-extended-pdf-viewer>
+      </div>
+    </div>
+  </div>
+</div>

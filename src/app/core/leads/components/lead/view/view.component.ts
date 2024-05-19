@@ -151,7 +151,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
                 component.handleSubmitError(error);
                 component.postSubmit(null);
-                console.error(error);
+                // console.error(error);
               });
           }
         }

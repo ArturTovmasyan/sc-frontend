@@ -52,6 +52,13 @@ nz-button-group [nz-button] {
   }
 }
 
+//::ng-deep table.ant-table-fixed {
+//  table-layout: fixed;
+//}
+//::ng-deep thead.ant-table-thead > tr:first-child > th:first-child {
+//        width: 4rem;
+//}
+
 dl.grid-definition-list {
   //width: 25rem; // TODO: review
   margin: 0;

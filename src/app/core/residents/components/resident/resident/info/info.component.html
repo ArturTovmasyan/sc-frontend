@@ -89,7 +89,12 @@
         </ng-container>
       </ng-container>
 
-      <ng-container>
+      <ng-container *ngIf="
+addIfHasPermission(!admission?'report-resident-profile-no-admission':'report-resident-profile') ||
+addIfHasPermission(!admission?'report-resident-face-sheet-no-admission':'report-resident-face-sheet') ||
+addIfHasPermission(!admission?'report-form-medication-chart-no-admission':'report-form-medication-chart') ||
+addIfHasPermission(!admission?'report-form-medication-list-resident-no-admission':'report-form-medication-list-resident')
+">
         <nz-divider nzText="Reports"></nz-divider>
         <ul class="reports-list">
           <li *ngIf="addIfHasPermission(!admission?'report-resident-profile-no-admission':'report-resident-profile')">

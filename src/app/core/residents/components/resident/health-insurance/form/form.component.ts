@@ -8,13 +8,7 @@ import {ResidentSelectorService} from '../../../../services/resident-selector.se
 import {CoreValidator} from '../../../../../../shared/utils/core-validator';
 import {InsuranceCompanyService} from '../../../../services/insurance-company.service';
 import {InsuranceCompany} from '../../../../models/insurance-company';
-
-class FileModel {
- file_name: string;
- size_exceed: boolean;
- form_item: string;
- element: ElementRef;
-}
+import {FileModel} from '../../../../../models/file-model';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -26,10 +20,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   @ViewChild('second_file') el_second_file: ElementRef;
 
   files: FileModel[];
-
-  private static truncate(value: string, length: number): string {
-    return value.length > length ? (value.slice(0, length - 3) + '...') : value;
-  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,9 +39,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.form = this.formBuilder.group({
       id: [''],
 
-      medical_record_number: ['', Validators.compose([CoreValidator.insurance_number, Validators.maxLength(512)])],
+      medical_record_number: ['', Validators.compose([CoreValidator.insurance_number, Validators.maxLength(32)])],
       group_number: ['', Validators.compose([CoreValidator.insurance_number, Validators.maxLength(32)])],
-      notes: ['', Validators.compose([Validators.maxLength(32)])],
+      notes: ['', Validators.compose([Validators.maxLength(512)])],
 
       first_file: [null],
       second_file: [null],
@@ -110,7 +100,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     const reader = new FileReader();
     if ($event.target.files && $event.target.files.length > 0) {
       const file = $event.target.files[0];
-      model.file_name = FormComponent.truncate(file.name, 25);
+      model.file_name = FileModel.truncate(file.name, 25);
       reader.readAsDataURL(file);
       reader.onload = () => {
         if (reader.result) {
@@ -137,8 +127,6 @@ export class FormComponent extends AbstractForm implements OnInit {
   }
 
   select_file(model: FileModel) {
-    console.log(model);
-
     (model.element.nativeElement as HTMLInputElement).click();
   }
 

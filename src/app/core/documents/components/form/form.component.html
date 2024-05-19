@@ -1,0 +1,81 @@
+﻿<h4>Document</h4>
+<nz-divider></nz-divider>
+<form nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('title')?'error':null">
+      <input nz-input placeholder="Title" formControlName="title">
+      <nz-form-explain *ngIf="hasErrors('title')">
+        <app-field-errors [errors]="fieldErrors('title')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="description">Description</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('description')?'error':null">
+      <input-counter formControlName="description" placeholder="Description" [maxlength]="512"></input-counter>
+      <nz-form-explain *ngIf="hasErrors('description')">
+        <app-field-errors [errors]="fieldErrors('description')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="file" nzRequired>File</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('file')?'error':null">
+      <input type="file" #file (change)="onFileChange(files[0], $event)"
+             accept="image/*,application/pdf" style="display: none;">
+      <button type="button" nz-button nzSize="small"  *ngIf="!(files[0].file_name && files[0].file_name !== '')" (click)="select_file(files[0]);">
+        <i nz-icon type="upload"></i>
+        <span>Select file...</span>
+      </button>
+      <button type="button" nz-button nzSize="small" nzType="danger" *ngIf="files[0].file_name && files[0].file_name !== ''" (click)="clear_file(files[0]);">
+        <i nz-icon type="close"></i>
+        {{ files[0].file_name }}
+      </button>
+      <p style="font-size: smaller;line-height: 0.5;" [style.color]="files[0].size_exceed?'red':'inherit'">(Maximum file size is 10 MB.)</p>
+      <nz-form-explain *ngIf="hasErrors('file')">
+        <app-field-errors [errors]="fieldErrors('file')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facilities">Facilities</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('facilities')?'error':null">
+      <nz-select nzShowSearch nzMode="multiple" nzPlaceHolder="Please select" formControlName="facilities">
+        <ng-container *ngFor="let facility of facilities">
+          <nz-option [nzLabel]="facility.name" [nzValue]="facility.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('facilities')">
+        <app-field-errors [errors]="fieldErrors('facilities')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.get('space_id')">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+        <ng-container *ngFor="let space of spaces">
+          <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('space_id')">
+        <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="formErrors()">
+    <nz-form-control [nzSm]="24" [nzXs]="24">
+      <nz-alert nzShowIcon nzType="error" [nzMessage]="tplFormErrors"></nz-alert>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #tplFormErrors>
+  <app-form-errors [errors]="formErrors()"></app-form-errors>
+</ng-template>
