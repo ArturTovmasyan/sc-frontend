@@ -38,6 +38,7 @@ export class ListComponent extends GridComponent<FacilityDiningRoom, FacilityDin
   ngAfterViewInit() {
     this._btnBar.preset_modal_form_data = (form: FormGroup) => {
       form.get('facility_id').setValue(this.facility_id);
+      form.get('facility_id').disable();
     };
   }
 

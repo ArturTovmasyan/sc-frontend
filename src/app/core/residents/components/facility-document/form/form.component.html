@@ -1,7 +1,7 @@
 ﻿<h4>Facility Document</h4>
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
-  <nz-form-item *ngIf="show_facility">
+  <nz-form-item *ngIf="form.get('facility_id').enabled">
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="facility_id" nzRequired>Facility</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('facility_id')?'error':null">
       <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="facility_id">

@@ -17,16 +17,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   facilities: Facility[];
 
-  private _show_facility: boolean = true;
-
-  get show_facility(): boolean {
-    return this._show_facility;
-  }
-
-  set show_facility(value: boolean) {
-    this._show_facility = value;
-  }
-
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
@@ -105,6 +95,10 @@ export class FormComponent extends AbstractForm implements OnInit {
     model.file_name = null;
     model.size_exceed = false;
     this.form.get(model.form_item).setValue(null);
+  }
+
+  before_submit(): void {
+    this.form.get('facility_id').enable();
   }
 
 }
