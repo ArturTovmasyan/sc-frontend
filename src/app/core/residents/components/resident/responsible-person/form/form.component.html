@@ -2,11 +2,16 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="responsible_person_id" nzRequired>Responsible Person</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('responsible_person_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
-        <ng-container *ngFor="let responsible_person of responsible_persons">
-          <nz-option [nzLabel]="responsible_person|responsible_person" [nzValue]="responsible_person.id"></nz-option>
-        </ng-container>
-      </nz-select>
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="responsible_person_id">
+          <ng-container *ngFor="let responsible_person of responsible_persons">
+            <nz-option [nzLabel]="responsible_person|responsible_person" [nzValue]="responsible_person.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('responsible_person');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
       <nz-form-explain *ngIf="hasErrors('responsible_person_id')">
         <app-field-errors [errors]="fieldErrors('responsible_person_id')"></app-field-errors>
       </nz-form-explain>

@@ -2,11 +2,16 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="physician_id" nzRequired>Physician</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('physician_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
-        <ng-container *ngFor="let physician of physicians">
-          <nz-option [nzLabel]="physician|physician" [nzValue]="physician.id"></nz-option>
-        </ng-container>
-      </nz-select>
+      <div class="add-select-container">
+        <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="physician_id">
+          <ng-container *ngFor="let physician of physicians">
+            <nz-option [nzLabel]="physician|physician" [nzValue]="physician.id"></nz-option>
+          </ng-container>
+        </nz-select>
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="open_sub_modal('physician');">
+          <i nz-icon type="plus"></i>
+        </button>
+      </div>
       <nz-form-explain *ngIf="hasErrors('physician_id')">
         <app-field-errors [errors]="fieldErrors('physician_id')"></app-field-errors>
       </nz-form-explain>
@@ -15,7 +20,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="primary" nzRequired>Primary</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24">
-      <nz-switch formControlName="primary" ></nz-switch>
+      <nz-switch formControlName="primary"></nz-switch>
       <nz-form-explain *ngIf="hasErrors('primary')">
         <app-field-errors [errors]="fieldErrors('primary')"></app-field-errors>
       </nz-form-explain>

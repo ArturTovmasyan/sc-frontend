@@ -36,6 +36,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             // auto logout if 401 response returned from api
             this.auth$.sign_out();
             // TODO(haykg) location.reload(true);
+          } else if (err.status === 403) {
+            console.log('FORBIDDEN');
           }
 
           const error = {'code': err.status, 'statusText': err.statusText, 'data': err.error};

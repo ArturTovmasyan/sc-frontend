@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy, OnInit} from '@angular/core';
+﻿import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
@@ -6,17 +6,15 @@ import {Physician} from '../../../../models/physician';
 import {PhysicianService} from '../../../../services/physician.service';
 import {ActivatedRoute} from '@angular/router';
 import {ResidentPhysicianService} from '../../../../services/resident-physician.service';
-import {Subscription} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd';
+import {FormComponent as PhysicianFormComponent} from '../../../physician/form/form.component';
 
 @Component({
   templateUrl: 'form.component.html'
 })
-export class FormComponent extends AbstractForm implements OnInit, OnDestroy {
+export class FormComponent extends AbstractForm implements OnInit {
   physicians: Physician[];
   resident_id: number;
-
-  private $subscriptions: { [key: string]: Subscription; };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,8 +24,6 @@ export class FormComponent extends AbstractForm implements OnInit, OnDestroy {
     private route$: ActivatedRoute
   ) {
     super();
-
-    this.$subscriptions = {};
   }
 
   ngOnInit(): void {
@@ -35,35 +31,21 @@ export class FormComponent extends AbstractForm implements OnInit, OnDestroy {
 
     this.form = this.formBuilder.group({
       id: [''],
+
       physician_id: [null, Validators.required],
       primary: [false, Validators.required],
 
       resident_id: [this.resident_id, Validators.required]
     });
 
-    this.physician$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
-      if (res) {
-        this.physicians = res;
-      }
-    });
-
-    this.resubscribe('vc_primary');
+    this.subscribe('list_physician');
+    this.subscribe('vc_primary');
   }
 
-  ngOnDestroy(): void {
-    Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
-  }
-
-  unsubscribe(key: string): void {
-    if (this.$subscriptions.hasOwnProperty(key)) {
-      this.$subscriptions[key].unsubscribe();
-    }
-  }
-
-  resubscribe(key: string): void {
+  protected subscribe(key: string): void {
     switch (key) {
       case 'vc_primary':
-        this.$subscriptions['vc_primary'] = this.form.get('primary').valueChanges.subscribe(next => {
+        this.$subscriptions[key] = this.form.get('primary').valueChanges.subscribe(next => {
           this.resident_physician$.get_primary(this.resident_id).subscribe(res => {
             if (res) {
               if (res.id !== this.form.get('id').value && next) {
@@ -80,6 +62,35 @@ export class FormComponent extends AbstractForm implements OnInit, OnDestroy {
             }
           });
         });
+        break;
+      case 'list_physician':
+        this.$subscriptions[key] = this.physician$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+          if (res) {
+            this.physicians = res;
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  public open_sub_modal(key: string): void {
+    switch (key) {
+      case 'physician':
+        this.create_modal(
+          this.modal$,
+          PhysicianFormComponent,
+          data => this.physician$.add(data),
+          data => {
+            this.$subscriptions[key] = this.physician$.all(/** TODO: by space **/).pipe(first()).subscribe(res => {
+              if (res) {
+                this.physicians = res;
+                this.form.get('physician_id').setValue(data[0]);
+              }
+            });
+            return null;
+          });
         break;
       default:
         break;
@@ -98,7 +109,7 @@ export class FormComponent extends AbstractForm implements OnInit, OnDestroy {
           onClick: () => {
             this.unsubscribe('vc_primary');
             this.form.get('primary').setValue(!next);
-            this.resubscribe('vc_primary');
+            this.subscribe('vc_primary');
             modal.close();
           }
         },
@@ -112,5 +123,4 @@ export class FormComponent extends AbstractForm implements OnInit, OnDestroy {
       ]
     });
   }
-
 }

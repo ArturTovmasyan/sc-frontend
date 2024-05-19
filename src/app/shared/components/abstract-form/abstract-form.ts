@@ -1,8 +1,10 @@
 import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
 import {FormError} from '../../models/form-error';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {OnDestroy} from '@angular/core';
+import {NzModalService} from 'ng-zorro-antd';
 
-export class AbstractForm {
+export class AbstractForm implements OnDestroy {
   public form: FormGroup;
 
   public edit_mode: boolean = false;
@@ -17,13 +19,105 @@ export class AbstractForm {
 
   private _loaded: BehaviorSubject<boolean>;
 
+  protected $subscriptions: { [key: string]: Subscription; };
+
   protected submit: (data: any) => Observable<any>;
+
   public postSubmit: (data: any) => void = (data: any) => {
   };
 
   constructor() {
     this._loaded = new BehaviorSubject<boolean>(true);
+
+    this.$subscriptions = {};
   }
+
+  ngOnDestroy(): void {
+    Object.keys(this.$subscriptions).forEach(key => this.$subscriptions[key].unsubscribe());
+  }
+
+  protected subscribe(key: string): void {
+  }
+
+  protected unsubscribe(key: string): void {
+    if (this.$subscriptions.hasOwnProperty(key)) {
+      this.$subscriptions[key].unsubscribe();
+    }
+  }
+
+  public open_sub_modal(key: string): void {
+  }
+
+  protected create_modal(
+    modal$: NzModalService,
+    form_component: any,
+    submit: (data: any) => Observable<any>,
+    callback: (data: any) => any
+  ) {
+    let valid = false;
+    let loading = false;
+
+    const modal = modal$.create({
+      nzClosable: false,
+      nzMaskClosable: false,
+      nzTitle: null,
+      nzContent: form_component,
+      nzFooter: [
+        {
+          label: 'Cancel',
+          onClick: () => {
+            modal.close();
+          }
+        },
+        {
+          type: 'primary',
+          label: 'Save',
+          loading: () => loading,
+          disabled: () => !valid,
+          onClick: () => {
+            loading = true;
+
+            const component = <AbstractForm>modal.getContentComponent();
+            component.before_submit();
+            const form_data = component.formObject.value;
+
+            component.submitted = true;
+
+            submit(form_data).subscribe(
+              res => {
+                loading = false;
+
+                callback(res);
+
+                modal.close();
+              },
+              error => {
+                loading = false;
+
+                component.handleSubmitError(error);
+                component.postSubmit(null);
+              });
+          }
+        }
+      ]
+    });
+
+    modal.afterOpen.subscribe(() => {
+      const component = modal.getContentComponent();
+      if (component instanceof AbstractForm) {
+        const form = component.formObject;
+
+        component.edit_mode = false;
+        component.before_set_form_data(null); // review
+
+        valid = form.valid;
+        form.valueChanges.subscribe(val => {
+          valid = form.valid;
+        });
+      }
+    });
+  }
+
 
   public get f() {
     return this.form.controls;

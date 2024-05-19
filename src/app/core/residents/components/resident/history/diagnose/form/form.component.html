@@ -22,8 +22,8 @@
             <nz-option [nzLabel]="diagnose.title" [nzValue]="diagnose.id"></nz-option>
           </ng-container>
         </nz-select>
-        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="toggle_sub_form();"><i nz-icon
-                                                                                                           type="plus"></i>
+        <button nz-button nzType="primary" nzSize="small" nzShape="circle" (click)="toggle_sub_form();">
+          <i nz-icon type="plus"></i>
         </button>
       </div>
       <nz-form-explain *ngIf="hasErrors('diagnose_id')">
