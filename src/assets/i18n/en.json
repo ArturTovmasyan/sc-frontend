@@ -203,6 +203,8 @@
       "license": "License",
       "license_capacity": "License Capacity",
       "capacity": "Capacity",
+      "capacity_yellow": "Yellow Flag",
+      "capacity_red": "Red Flag",
       "number_of_floors": "Number of floors",
       "phone": "Phone",
       "fax": "Fax",

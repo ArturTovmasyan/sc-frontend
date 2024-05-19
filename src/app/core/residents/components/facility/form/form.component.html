@@ -96,6 +96,28 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="capacity_yellow" nzRequired>Capacity Yellow Flag Warning</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('capacity_yellow')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Capacity Yellow Flag Warning"
+                       formControlName="capacity_yellow"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('capacity_yellow')">
+        <app-field-errors [errors]="fieldErrors('capacity_yellow')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="capacity_red" nzRequired>Capacity Red Flag Warning</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('capacity_red')?'error':null">
+      <nz-input-number [nzMin]="0" [nzStep]="1" nzSize="small" nzPlaceHolder="Capacity Red Flag Warning"
+                       formControlName="capacity_red"></nz-input-number>
+      <nz-form-explain *ngIf="hasErrors('capacity_red')">
+        <app-field-errors [errors]="fieldErrors('capacity_red')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="license">License Number</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('license')?'error':null">
       <input nz-input placeholder="License Number" formControlName="license">
