@@ -20,12 +20,18 @@
         <nz-list *ngIf="documents" [nzDataSource]="documents" [nzRenderItem]="tplItem" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
           <ng-template #tplItem let-item>
             <nz-list-item>
-              <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="item.description">
+              <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
                 <ng-template #nzTitle>
                   <a [routerLink]="" (click)="openPDF(item)" style="font-size: 16px;">
                     <strong *ngIf="document && (document.id === item.id)">{{ item.title }}</strong>
                     <ng-container *ngIf="!document || (document && document.id !== item.id)">{{ item.title }}</ng-container>
                   </a>
+                </ng-template>
+                <ng-template #nzDescription>
+                  <p>{{item.description}}</p>
+                  <p class="text-muted" style="font-size: smaller;">
+                    <span>{{item.date_uploaded|date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</span> <span class="pull-right">by {{ item.owner }}</span>
+                  </p>
                 </ng-template>
               </nz-list-item-meta>
             </nz-list-item>
