@@ -180,14 +180,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.create_modal(FormComponent, data => this.residentEvent$.add(data), null);
   }
 
-  show_modal_edit(id: number, form_component: any): void {
-    this.residentEvent$.get(id).pipe(first()).subscribe(res => {
+  show_modal_edit(id: number, service$: any, form_component: any): void {
+    service$.get(id).pipe(first()).subscribe(res => {
       if (res) {
-        this.create_modal(form_component, data => this.residentEvent$.edit(data), res);
+        this.create_modal(form_component, data => service$.edit(data), res);
       }
     });
   }
-
 
   show_modal_view(id: number, service$: any, component: any): void {
     service$.get(id).pipe(first()).subscribe(res => {
@@ -347,12 +346,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
       case CalendarEventType.FACILITY:
         this.facilityEvent$.isEditable($event.event.id).subscribe(res => {
           if (res) {
-            this.show_modal_edit($event.event.id, FacilityEventFormComponent);
+            this.show_modal_edit($event.event.id, this.facilityEvent$, FacilityEventFormComponent);
           }
         });
         break;
       case CalendarEventType.RESIDENT:
-        this.show_modal_edit($event.event.id, FormComponent);
+        this.show_modal_edit($event.event.id, this.residentEvent$, FormComponent);
         break;
       case CalendarEventType.RENT:
         this.show_modal_view($event.event.id, this.residentRent$, ResidentRentViewComponent);
