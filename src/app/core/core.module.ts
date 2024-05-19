@@ -238,11 +238,7 @@ import {ResponsiblePersonPipe} from './residents/pipes/responsible-person.pipe';
 import {MomentModule} from 'ngx-moment';
 import {GenderPipe} from './residents/pipes/gender.pipe';
 import {PhoneTypePipe} from './residents/pipes/phone-type.pipe';
-import {LyResizingCroppingImageModule} from '@alyle/ui/resizing-cropping-images';
-import {LyButtonModule} from '@alyle/ui/button';
-import {LyIconModule} from '@alyle/ui/icon';
-import {LY_THEME, LyThemeModule} from '@alyle/ui';
-import {MinimaLight} from '@alyle/ui/themes/minima';
+import {AngularCropperjsModule} from 'angular-cropperjs';
 import {NgHttpLoaderModule} from 'ng-http-loader';
 import {ResidentSelectorPipe} from './residents/pipes/resident-selector.pipe';
 import {NgxMaskModule} from 'ngx-mask';
@@ -806,10 +802,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ColorPickerModule,
     MomentModule,
     DndModule,
-    LyThemeModule.setTheme('minima-light'),
-    LyResizingCroppingImageModule,
-    LyButtonModule,
-    LyIconModule,
     CoreRoutingModule,
     SharedModule,
     IconPickerModule,
@@ -821,7 +813,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     VgBufferingModule,
     EmbedVideo.forRoot(),
     NgChartjsModule.registerPlugin([]),
-    FullCalendarModule
+    FullCalendarModule,
+    AngularCropperjsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BearerInterceptor, multi: true},
@@ -830,7 +823,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {provide: NZ_I18N, useValue: en_US},
     {provide: NzFormItemComponent},
     {provide: NzFormExplainComponent},
-    {provide: LY_THEME, useClass: MinimaLight, multi: true}, // name: `minima-light`
   ],
   exports: [
     CityStateZipPipe

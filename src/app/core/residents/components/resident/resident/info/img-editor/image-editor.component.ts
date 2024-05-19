@@ -1,9 +1,8 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ImgCropperConfig, ImgCropperEvent, LyResizingCroppingImages} from '@alyle/ui/resizing-cropping-images';
-import {LyTheme2, ThemeVariables} from '@alyle/ui';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractForm} from '../../../../../../../shared/components/abstract-form/abstract-form';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ModalFormService} from '../../../../../../../shared/services/modal-form.service';
+import {CropperComponent} from 'angular-cropperjs';
 
 @Component({
   selector: 'app-resident-image-editor',
@@ -11,60 +10,73 @@ import {ModalFormService} from '../../../../../../../shared/services/modal-form.
   styleUrls: ['./image-editor.component.scss']
 })
 export class ImageEditorComponent extends AbstractForm implements OnInit {
-  @ViewChild('cropping', {static: false}) cropping: ElementRef<LyResizingCroppingImages>;
+  imageUrl: any;
 
-  classes = this.theme.addStyleSheet((theme: ThemeVariables) => ({
-    cropping: {
-      maxWidth: '400px',
-      height: '400px'
-    }
-  }));
-  cropper_config: ImgCropperConfig = {
-    autoCrop: true,
-    width: 300, // Default `250`
-    height: 300, // Default `200`
+  cropperConfig: object = {
+    movable: true,
+    scalable: true,
+    zoomable: true,
+    viewMode: 2,
+    checkCrossOrigin: true
   };
+
+  @ViewChild('angularCropper', {static: false}) public angularCropper: CropperComponent;
 
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
-    private theme: LyTheme2
   ) {
     super(modal$);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.form = this.formBuilder.group({
       id: ['', Validators.required],
       photo: [null, Validators.required],
     });
   }
 
-  onCropped(e: ImgCropperEvent) {
-    this.form.get('photo').setValue(e.dataURL);
+  rotate(turn: string): void {
+    this.angularCropper.cropper.rotate(turn === 'left' ? -45 : 45);
+
+    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
   }
 
-  onLoaded(e: ImgCropperEvent) {
-    // @ts-ignore
-    this.cropping.setScale(1);
-    // @ts-ignore
-    this.cropping.center();
+  zoom(status: string): void {
+    this.angularCropper.cropper.zoom(status === 'positive' ? 0.1 : -0.1);
+
+    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
   }
 
-  onError(e: ImgCropperEvent) {
-    this.form.get('photo').setValue(null);
-    this.handleSubmitError({
-      data: {
-        error: 'Crop Error.'
-      }
-    });
-    console.log(e);
+  move(offsetX: number, offsetY: number): void {
+    this.angularCropper.cropper.move(offsetX, offsetY);
+
+    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+  }
+
+  flip(direction: string): void {
+    if (direction === 'x') {
+      this.angularCropper.cropper.scaleX(-1);
+    } else {
+      this.angularCropper.cropper.scaleY(-1);
+    }
+
+    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+  }
+
+  reset() {
+    this.angularCropper.cropper.reset();
+
+    this.updateRes(this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/png'));
+  }
+
+  updateRes(data: string) {
+    this.form.get('photo').setValue(data);
   }
 
   after_set_form_data(): void {
     if (this.form.get('photo').value) {
-      // @ts-ignore
-      this.cropping.setImageUrl(this.form.get('photo').value);
+      this.imageUrl = this.form.get('photo').value;
     }
   }
 }
