@@ -150,6 +150,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     this.subscribe('vc_facilities_all');
     this.subscribe('vc_all_day');
     this.subscribe('vc_no_repeat_end');
+    this.subscribe('vc_start_date');
+    this.subscribe('vc_end_date');
+    this.subscribe('vc_repeat_end');
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -176,6 +179,37 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.user$.all().pipe(first()).subscribe(res => {
           if (res) {
             this.users = res;
+          }
+        });
+        break;
+      case 'vc_start_date':
+        this.$subscriptions[key] = this.form.get('start_date').valueChanges.subscribe(next => {
+          if (next) {
+            const value: Date = this.form.get('start_time').value;
+            value.setFullYear(next.getFullYear());
+            value.setMonth(next.getMonth());
+            value.setDate(next.getDate());
+            this.form.get('start_time').setValue(value);
+          }
+        });
+        break;
+      case 'vc_end_date':
+        this.$subscriptions[key] = this.form.get('end_date').valueChanges.subscribe(next => {
+          if (next) {
+            const value: Date = this.form.get('end_time').value;
+            value.setFullYear(next.getFullYear());
+            value.setMonth(next.getMonth());
+            value.setDate(next.getDate());
+            this.form.get('end_time').setValue(value);
+          }
+        });
+        break;
+      case 'vc_repeat_end':
+        this.$subscriptions[key] = this.form.get('repeat_end').valueChanges.subscribe(next => {
+          if (next && next.getHours() !== 23 && next.getMinutes() !== 59 && next.getSeconds() !== 59) {
+            const value: Date = this.form.get('repeat_end').value;
+            value.setHours(23, 59, 59);
+            this.form.get('repeat_end').setValue(value);
           }
         });
         break;
