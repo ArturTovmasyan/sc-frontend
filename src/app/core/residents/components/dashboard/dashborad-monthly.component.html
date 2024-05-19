@@ -156,20 +156,20 @@
     </div>
   </div>
 </div>
-<!--<div class="card">-->
-  <!--<div class="card-header">-->
-    <!--{{ facilityName }} Monthly Chart-->
-  <!--</div>-->
-  <!--<div class="card-body">-->
-    <!--<nz-empty *ngIf="!lineChartData" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>-->
-    <!--<div *ngIf="lineChartData" class="d-flex justify-content-center">-->
-      <!--<canvas ngChartjs-->
-              <!--[datasets]="lineChartData"-->
-              <!--[labels]="lineChartLabels"-->
-              <!--[options]="{ responsive: true }"-->
-              <!--[legend]="true"-->
-              <!--[chartType]="'line'">-->
-      <!--</canvas>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
+<div class="card">
+  <div class="card-header">
+    {{ facilityName }} Monthly Chart
+  </div>
+  <div class="card-body">
+    <nz-empty *ngIf="!lineChartData" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
+    <div *ngIf="lineChartData" class="d-flex justify-content-center">
+      <canvas ngChartjs
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="{ responsive: true }"
+              [legend]="true"
+              [chartType]="'line'">
+      </canvas>
+    </div>
+  </div>
+</div>
