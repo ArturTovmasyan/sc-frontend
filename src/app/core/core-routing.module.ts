@@ -536,7 +536,7 @@ const routes: Routes = [
         path: 'city-state-zips', component: CityStateZipListComponent,
         data: {
           nav: {show: true, group: 'Reference'},
-          title: 'City State Zip Code',
+          title: 'City, State, Zip Code',
           permissions: ['persistence-common-city_state_zip']
         },
         canActivate: [AuthGuard]

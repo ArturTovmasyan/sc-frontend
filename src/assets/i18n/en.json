@@ -121,7 +121,7 @@
       "emergency_phone": "Emergency Name",
       "website_url": "Website URL",
       "space": "Space",
-      "csz_str": "CSZ"
+      "csz_str": "City, State, Zip Code"
     },
     "payment-source-list": {
       "id": "ID",
@@ -180,7 +180,7 @@
       "phone": "Phone",
       "fax": "Fax",
       "space": "Space",
-      "csz_str": "CSZ"
+      "csz_str": "City, State, Zip Code"
     },
     "resident-list": {
       "id": "ID",
@@ -204,7 +204,7 @@
       "phone": "Phone",
       "fax": "Fax",
       "space": "Space",
-      "csz_str": "CSZ"
+      "csz_str": "City, State, Zip Code"
     },
     "region-list": {
       "id": "ID",
@@ -277,7 +277,7 @@
       "address_1": "Address 1",
       "address_2": "Address 2",
       "space": "Space",
-      "csz_str": "CSZ"
+      "csz_str": "City, State, Zip Code"
     },
     "resident-physician-list": {
       "id": "ID",
@@ -411,7 +411,7 @@
       "address_1": "Address",
       "address_2": "Address (Optional)",
       "website_url": "Website URL",
-      "csz_str": "CSZ",
+      "csz_str": "City, State, Zip Code",
       "referrals": "Referrals",
       "space": "Space"
     },
