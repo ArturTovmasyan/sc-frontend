@@ -173,10 +173,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
                 if (this.filter_chooser.type === 'all' || this.filter_chooser.type === 'rent_increase') {
                   res.rent_increases.forEach(rent_increase => {
-                    if (rent_increase.end) {
-                      rent_increase.end.setTime(rent_increase.end.getTime() + 24 * 60 * 60 * 1000);
-                    }
-
                     this.calendarEvents.push({
                       borderColor: 'transparent',
                       backgroundColor: '#603e95',
@@ -184,7 +180,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
                       id: rent_increase.id,
                       event_type: CalendarEventType.RENT_INCREASE,
                       start: DateHelper.formatMoment(rent_increase.start, 'YYYY-MM-DD', true),
-                      end: DateHelper.formatMoment(rent_increase.end, 'YYYY-MM-DD', true),
+                      end: null,
                       title: this.formatResident(CalendarEventType.RENT_INCREASE, rent_increase),
                     });
                   });
