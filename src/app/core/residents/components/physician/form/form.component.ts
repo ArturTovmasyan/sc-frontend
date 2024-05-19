@@ -1,5 +1,5 @@
 ﻿import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {CityStateZipService} from '../../../services/city-state-zip.service';
@@ -16,6 +16,7 @@ import {FormComponent as CSZFormComponent} from '../../city-state-zip/form/form.
 import {FormComponent as SpecialityFormComponent} from '../../physician-speciality/form/form.component';
 import {FormComponent as SalutationFormComponent} from '../../salutation/form/form.component';
 import {AuthGuard} from '../../../../guards/auth.guard';
+import {PhoneType} from '../../../../models/phone-type.enum';
 
 @Component({
   templateUrl: 'form.component.html'
@@ -25,6 +26,8 @@ export class FormComponent extends AbstractForm implements OnInit {
   city_state_zips: CityStateZip[];
   spaces: Space[];
   specialities: PhysicianSpeciality[];
+
+  phone_types: { id: PhoneType, name: string }[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,20 +49,30 @@ export class FormComponent extends AbstractForm implements OnInit {
       last_name: ['', Validators.required],
       address_1: ['', Validators.required],
       address_2: [''],
-      office_phone: ['', Validators.compose([Validators.required, CoreValidator.phone])],
-      fax: ['', Validators.compose([CoreValidator.phone])],
-      emergency_phone: ['', Validators.compose([CoreValidator.phone])],
       email: ['', Validators.compose([Validators.email])],
       website_url: [''],
 
       speciality_id: [null, Validators.required],
       salutation_id: [null, Validators.required],
       csz_id: [null, Validators.required],
+
+      phones: this.formBuilder.array([], Validators.required),
     });
 
     this.subscribe('list_salutation');
     this.subscribe('list_speciality');
     this.subscribe('list_csz');
+
+    // TODO: review
+    this.phone_types = [
+      {id: PhoneType.HOME, name: 'HOME'},
+      {id: PhoneType.MOBILE, name: 'MOBILE'},
+      {id: PhoneType.WORK, name: 'WORK'},
+      {id: PhoneType.OFFICE, name: 'OFFICE'},
+      {id: PhoneType.EMERGENCY, name: 'EMERGENCY'},
+      {id: PhoneType.FAX, name: 'FAX'},
+      {id: PhoneType.ROOM, name: 'ROOM'}
+    ];
 
     this.add_space();
   }
@@ -153,6 +166,23 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
       default:
         break;
+    }
+  }
+
+  public get_form_array_skeleton(key: string): FormGroup {
+    switch (key) {
+      case 'phones':
+        return this.formBuilder.group({
+          id: [null],
+          type: [null, Validators.required],
+          number: ['', Validators.required],
+          extension: [''],
+          primary: [false],
+          sms_enabled: [false],
+          compatibility: [null]
+        });
+      default:
+        return null;
     }
   }
 

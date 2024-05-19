@@ -99,20 +99,6 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item *ngIf="form.get('space_id')">
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
-    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
-      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
-        <ng-container *ngFor="let space of spaces">
-          <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
-        </ng-container>
-      </nz-select>
-      <nz-form-explain *ngIf="hasErrors('space_id')">
-        <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-
   <!-- TODO: add phone -->
   <fieldset formArrayName="phones">
     <legend class="senior-care-legend">
@@ -194,6 +180,20 @@
       </tbody>
     </table>
   </fieldset>
+
+  <nz-form-item *ngIf="form.get('space_id')">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="space_id" nzRequired>Space</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('space_id')?'error':null">
+      <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="space_id">
+        <ng-container *ngFor="let space of spaces">
+          <nz-option [nzLabel]="space.name" [nzValue]="space.id"></nz-option>
+        </ng-container>
+      </nz-select>
+      <nz-form-explain *ngIf="hasErrors('space_id')">
+        <app-field-errors [errors]="fieldErrors('space_id')"></app-field-errors>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
 
   <nz-form-item *ngIf="formErrors()">
     <nz-form-control [nzSm]="24" [nzXs]="24">
