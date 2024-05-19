@@ -15,6 +15,12 @@
         <p class="text-center m-1">
           <strong
             style="font-size: large;">{{ rrp.responsible_person|responsible_person }}</strong>
+
+          <button class="pull-right" nz-button nzSize="small" nzType="default"
+                  (click)="show_rp_edit(rrp.responsible_person.id); $event.preventDefault();"
+                  [nzLoading]="loading_rp_edit_modal">
+            <i nz-icon type="edit"></i> {{ "grid.edit"|translate }}
+          </button>
         </p>
       </div>
     </div>

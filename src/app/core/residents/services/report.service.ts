@@ -3,12 +3,16 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {first} from 'rxjs/operators';
 import {saveFile} from '../../../shared/helpers/file-download-helper';
+import {ResidentSelectorService} from './resident-selector.service';
 
 @Injectable({providedIn: 'root'})
 export class ReportService {
   protected SERVICE_URL_BASE;
 
-  constructor(protected http: HttpClient) {
+  constructor(
+    protected http: HttpClient,
+    private residentSelector$: ResidentSelectorService
+  ) {
     this.SERVICE_URL_BASE = `${environment.apiUrl}/api/v1.0/admin/report`;
   }
 
@@ -34,9 +38,12 @@ export class ReportService {
     if (params.resident_id) {
       request_params = request_params.append('resident_id', params.resident_id);
     }
+
     if (params.resident_all) {
       request_params = request_params.append('resident_all', params.resident_all);
+      request_params = request_params.append('type_id', this.residentSelector$.group.value.toString());
     }
+
     if (params.date) {
       request_params = request_params.append('date', params.date.toISOString());
     }

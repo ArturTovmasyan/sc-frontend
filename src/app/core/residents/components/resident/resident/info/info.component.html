@@ -18,7 +18,7 @@
                    style="max-height: 25rem"
                    alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
               <img *ngIf="resident.image && resident.image.photo" src="{{ resident.image.photo }}" class="img-thumbnail"
-                   style="max-height: 25rem"
+                   style="min-height: 20rem;max-height: 25rem"
                    alt="{{ resident|resident }}" title="{{ resident|resident }}"/>
               <div *ngIf="resident.image && resident.image.photo" class="edit">
                 <button nz-button nzType="primary" (click)="show_modal_image_editor();"><i

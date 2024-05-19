@@ -6,11 +6,13 @@ import {ResidentResponsiblePersonService} from '../../../services/resident-respo
 import {ResidentResponsiblePerson} from '../../../models/resident-responsible-person';
 import {FormComponent} from './form/form.component';
 import {FormComponent as ReorderFormComponent} from './reorder/form.component';
+import {FormComponent as ResponsiblePersonFormComponent} from '../../responsible-person/form/form.component';
 import {Observable, Subscription} from 'rxjs';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
 import {ResidentSelectorService} from '../../../services/resident-selector.service';
 import {first} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
+import {ResponsiblePersonService} from '../../../services/responsible-person.service';
 
 @Component({
   templateUrl: './list.component.html',
@@ -22,6 +24,7 @@ export class ListComponent implements OnInit, OnDestroy {
   selected_tab: number;
 
   loading_edit_modal: boolean;
+  loading_rp_edit_modal: boolean;
 
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
@@ -32,6 +35,7 @@ export class ListComponent implements OnInit, OnDestroy {
     private title$: TitleService,
     private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService,
+    private responsiblePerson$: ResponsiblePersonService,
     private sanitizer: DomSanitizer,
   ) {
     this.selected_tab = 0;
@@ -93,6 +97,20 @@ export class ListComponent implements OnInit, OnDestroy {
 
   show_modal_add(): void {
     this.create_modal(FormComponent, data => this.service$.add(data), null);
+  }
+
+  show_rp_edit(id: number): void {
+    this.loading_rp_edit_modal = true;
+    this.responsiblePerson$.get(id).subscribe(
+      res => {
+        this.loading_rp_edit_modal = false;
+
+        this.create_modal(ResponsiblePersonFormComponent, data => this.responsiblePerson$.edit(data), res);
+      },
+      error => {
+        this.loading_rp_edit_modal = false;
+        // console.error(error);
+      });
   }
 
   show_modal_edit(): void {
@@ -272,7 +290,9 @@ export class ListComponent implements OnInit, OnDestroy {
 
     modal.afterOpen.subscribe(() => {
       const component = modal.getContentComponent();
-      if (component instanceof FormComponent || component instanceof ReorderFormComponent) {
+      if (component instanceof FormComponent
+        || component instanceof ResponsiblePersonFormComponent
+        || component instanceof ReorderFormComponent) {
         const form = component.formObject;
 
         if (component instanceof ReorderFormComponent) {
