@@ -20,8 +20,12 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   selectedTab: number;
 
-  constructor(private formBuilder: FormBuilder, private role$: RoleService, private space$: SpaceService,
-              private _el: ElementRef) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private role$: RoleService,
+    private space$: SpaceService,
+    private _el: ElementRef
+  ) {
     super();
   }
 

@@ -333,14 +333,17 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
         const form = component.formObject;
 
         if (result !== null) {
+          component.edit_mode = true;
           component.loaded.subscribe(v => {
             if (v) {
-              component.edit_mode = true;
               component.before_set_form_data();
               component.set_form_data(component, form, result);
               component.after_set_form_data();
             }
           });
+        } else {
+          component.edit_mode = false;
+          component.before_set_form_data(); // review
         }
 
         valid = form.valid;

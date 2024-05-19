@@ -1,5 +1,4 @@
 import {Space} from './space';
-import {Permission} from './permission';
 
 export class Role implements IdInterface {
   private _id: number;
@@ -8,7 +7,7 @@ export class Role implements IdInterface {
   private _default: boolean;
   private _space_default: boolean;
   private _space: Space;
-  private _permissions: Permission[];
+  private _grants: any[];
 
 
   get id(): number {
@@ -51,11 +50,11 @@ export class Role implements IdInterface {
     this._space = value;
   }
 
-  get permissions(): Permission[] {
-    return this._permissions;
+  get grants(): any[] {
+    return this._grants;
   }
 
-  set permissions(value: Permission[]) {
-    this._permissions = value;
+  set grants(value: any[]) {
+    this._grants = value;
   }
 }
