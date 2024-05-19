@@ -435,9 +435,11 @@ export class FormComponent extends AbstractForm implements OnInit {
       switch (this.form.get('group_type').value) {
         case GroupType.FACILITY:
           this.group_id = data.facility_bed.room.facility.id;
+          this.admission_types = this.facility_admission_types;
           break;
         case GroupType.APARTMENT:
           this.group_id = data.apartment_bed.room.apartment.id;
+          this.admission_types = this.apartment_admission_types;
           break;
         case GroupType.REGION:
           this.group_id = data.region.id;
