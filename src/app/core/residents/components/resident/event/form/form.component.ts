@@ -3,34 +3,34 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {MedicationService} from '../../../../services/medication.service';
-import {Physician} from '../../../../models/physician';
-import {PhysicianService} from '../../../../services/physician.service';
 import {MedicationFormFactorService} from '../../../../services/medication-form-factor.service';
 import {EventDefinitionService} from '../../../../services/event-definition.service';
-import {ResponsiblePersonService} from '../../../../services/responsible-person.service';
 import {EventDefinition} from '../../../../models/event-definition';
-import {ResponsiblePerson} from '../../../../models/responsible-person';
 import {FormComponent as EventDefinitionFormComponent} from '../../../event-definition/form/form.component';
+import {FormComponent as ResidentPhysicianFormComponent} from '../../physician/form/form.component';
+import {FormComponent as ResidentResponsiblePersonFormComponent} from '../../responsible-person/form/form.component';
 import {NzModalService} from 'ng-zorro-antd';
 import {ResidentSelectorService} from '../../../../services/resident-selector.service';
+import {ResidentResponsiblePersonService} from '../../../../services/resident-responsible-person.service';
+import {ResidentPhysicianService} from '../../../../services/resident-physician.service';
+import {ResidentResponsiblePerson} from '../../../../models/resident-responsible-person';
+import {ResidentPhysician} from '../../../../models/resident-physician';
 
 @Component({
   templateUrl: 'form.component.html'
 })
 export class FormComponent extends AbstractForm implements OnInit {
   definitions: EventDefinition[];
-  responsible_persons: ResponsiblePerson[];
-  physicians: Physician[];
-
-  resident_id: number;
+  resident_responsible_persons: ResidentResponsiblePerson[];
+  resident_physicians: ResidentPhysician[];
 
   constructor(
     private formBuilder: FormBuilder,
     private medication$: MedicationService,
     private form_factor$: MedicationFormFactorService,
     private definition$: EventDefinitionService,
-    private responsible_person$: ResponsiblePersonService,
-    private physician$: PhysicianService,
+    private resident_responsible_person$: ResidentResponsiblePersonService,
+    private resident_physician$: ResidentPhysicianService,
     private modal$: NzModalService,
     private residentSelector$: ResidentSelectorService
   ) {
@@ -60,8 +60,6 @@ export class FormComponent extends AbstractForm implements OnInit {
 
     this.subscribe('rs_resident');
     this.subscribe('list_definition');
-    this.subscribe('list_physician');
-    this.subscribe('list_responsible_person');
   }
 
   protected subscribe(key: string, params?: any): void {
@@ -81,19 +79,41 @@ export class FormComponent extends AbstractForm implements OnInit {
           }
         });
         break;
-      case 'list_physician':
-        this.$subscriptions[key] = this.physician$.all().pipe(first()).subscribe(res => {
+      case 'list_resident_physician':
+        this.$subscriptions[key] = this.resident_physician$.all([{
+          key: 'resident_id',
+          value: this.form.get('resident_id').value
+        }]).pipe(first()).subscribe(res => {
           if (res) {
-            this.physicians = res;
-            this.form.get('physician_id').setValue(this.form.get('physician_id').value);
+            this.resident_physicians = res;
+
+            if (params) {
+              const id = this.resident_physicians
+                .filter(v => v.id === params.resident_physician_id).map(v => v.physician.id).pop();
+
+              this.form.get('physician_id').setValue(id);
+            } else {
+              this.form.get('physician_id').setValue(this.form.get('physician_id').value);
+            }
           }
         });
         break;
-      case 'list_responsible_person':
-        this.$subscriptions[key] = this.responsible_person$.all().pipe(first()).subscribe(res => {
+      case 'list_resident_responsible_person':
+        this.$subscriptions[key] = this.resident_responsible_person$.all([{
+          key: 'resident_id',
+          value: this.form.get('resident_id').value
+        }]).pipe(first()).subscribe(res => {
           if (res) {
-            this.responsible_persons = res;
-            this.form.get('responsible_person_id').setValue(this.form.get('responsible_person_id').value);
+            this.resident_responsible_persons = res;
+
+            if (params) {
+              const id = this.resident_responsible_persons
+                .filter(v => v.id === params.resident_responsible_person_id).map(v => v.responsible_person.id).pop();
+
+              this.form.get('responsible_person_id').setValue(id);
+            } else {
+              this.form.get('responsible_person_id').setValue(this.form.get('responsible_person_id').value);
+            }
           }
         });
         break;
@@ -128,6 +148,9 @@ export class FormComponent extends AbstractForm implements OnInit {
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
           if (next) {
             this.form.get('resident_id').setValue(next);
+
+            this.subscribe('list_resident_physician');
+            this.subscribe('list_resident_responsible_person');
           }
         });
         break;
@@ -145,6 +168,26 @@ export class FormComponent extends AbstractForm implements OnInit {
           data => this.definition$.add(data),
           data => {
             this.subscribe('list_definition', {definition_id: data[0]});
+            return null;
+          });
+        break;
+      case 'resident_physician':
+        this.create_modal(
+          this.modal$,
+          ResidentPhysicianFormComponent,
+          data => this.resident_physician$.add(data),
+          data => {
+            this.subscribe('list_resident_physician', {resident_physician_id: data[0]});
+            return null;
+          });
+        break;
+      case 'resident_responsible_person':
+        this.create_modal(
+          this.modal$,
+          ResidentResponsiblePersonFormComponent,
+          data => this.resident_responsible_person$.add(data),
+          data => {
+            this.subscribe('list_resident_responsible_person', {resident_responsible_person_id: data[0]});
             return null;
           });
         break;
