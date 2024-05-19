@@ -58,7 +58,9 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="file" nzRequired>File</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('file')?'error':null">
-      <input type="file" #file (change)="onFileChange(files[0], $event)" style="display: none;">
+      <input type="file" #file (change)="onFileChange(files[0], $event)"
+             accept=".doc,.docx,.ppt,.pptx,.xls,.xlsx,.pdf"
+             style="display: none;">
       <button type="button" nz-button nzSize="small" *ngIf="form.get('file').value === null"
               (click)="select_file(files[0]);">
         <i nz-icon nzType="upload"></i>

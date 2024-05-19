@@ -37,7 +37,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   ngOnInit(): void {
     this.files = [
-      {file_name: '', size_exceed: false, form_item: 'file', element: this.el_file},
+      {file_name: '', full_file_name: '', extension: '', size_exceed: false, form_item: 'file', element: this.el_file},
     ];
 
     this.form = this.formBuilder.group({
@@ -87,6 +87,9 @@ export class FormComponent extends AbstractForm implements OnInit {
     if ($event.target.files && $event.target.files.length > 0) {
       const file = $event.target.files[0];
       model.file_name = StringUtil.truncate(file.name, 25);
+      model.full_file_name = file.name;
+      model.extension = StringUtil.extension(file.name);
+
       reader.readAsDataURL(file);
       reader.onload = () => {
         if (reader.result) {
@@ -102,7 +105,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get(model.form_item).setValue(null);
           } else {
             model.size_exceed = false;
-            this.form.get(model.form_item).setValue(reader.result);
+            this.form.get(model.form_item).setValue(`extension:${model.extension};${reader.result}`);
           }
         }
       };

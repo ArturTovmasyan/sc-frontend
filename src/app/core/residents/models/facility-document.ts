@@ -4,4 +4,6 @@ export class FacilityDocument implements IdInterface {
   title: string;
 
   file: any; // PDF blob separate
+
+  extension: any;
 }

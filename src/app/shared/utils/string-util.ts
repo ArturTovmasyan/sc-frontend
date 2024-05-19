@@ -4,6 +4,6 @@ export class StringUtil {
   }
 
   public static extension(value: string): string {
-    return value.slice((Math.max(0, value.lastIndexOf(".")) || Infinity) + 1);
+    return value.slice((Math.max(0, value.lastIndexOf('.')) || Infinity) + 1);
   }
 }

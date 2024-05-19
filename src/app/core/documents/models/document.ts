@@ -9,6 +9,7 @@ export class Document implements IdInterface {
   facilities: Facility[];
 
   file: any; // PDF blob separate
+  extension?: any;
 
   date_uploaded: Date;
 }

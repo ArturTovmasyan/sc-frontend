@@ -4,4 +4,6 @@ export class ResidentDocument implements IdInterface {
   title: string;
 
   file: any; // PDF blob separate
+  extension?: any;
+
 }

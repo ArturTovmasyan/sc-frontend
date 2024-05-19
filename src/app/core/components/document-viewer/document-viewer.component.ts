@@ -19,6 +19,10 @@ import {ResidentDocument} from '../../residents/models/resident-document';
   templateUrl: './document-viewer.component.html'
 })
 export class DocumentViewerComponent implements OnInit, OnDestroy {
+  private static pdf_formats: string[] = ['pdf'];
+  private static office_formats: string[] = ['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx'];
+  private static support_formats: string[] = [...DocumentViewerComponent.pdf_formats, ...DocumentViewerComponent.office_formats];
+
   private _service$: GridService<any>;
   private _permission: string;
 
@@ -53,6 +57,8 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
 
   documents: Document[] | FacilityDocument[] | ResidentDocument[];
   document: Document | FacilityDocument | ResidentDocument;
+
+  officeUrl: any = null;
 
   loading: boolean;
   loading_edit_modal: boolean;
@@ -140,9 +146,9 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
 
             if (res.length > 0) {
               if (params && params.hasOwnProperty('document_id')) {
-                this.openPDF(this.documents.filter(v => v.id === params.document_id).pop());
+                this.open(this.documents.filter(v => v.id === params.document_id).pop());
               } else {
-                this.openPDF(this.documents[0]);
+                this.open(this.documents[0]);
               }
             }
           }
@@ -156,14 +162,6 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
   protected unsubscribe(key: string): void {
     if (this.$subscriptions.hasOwnProperty(key)) {
       this.$subscriptions[key].unsubscribe();
-    }
-  }
-
-  public openPDF(document: Document | FacilityDocument | ResidentDocument) {
-    this.document = document;
-
-    if (this.document) {
-      setTimeout(() => PDFObject.embed(this.document.file, '#documentsPDFViewer'), 250);
     }
   }
 
@@ -194,4 +192,60 @@ export class DocumentViewerComponent implements OnInit, OnDestroy {
   public checkPermission(expected_permissions: string[]): boolean {
     return this.auth_$.checkPermission(expected_permissions);
   }
+
+  public open(document: Document | FacilityDocument | ResidentDocument) {
+    if (this.isPDF(document)) {
+      this.openPDF(document);
+    } else if (this.isOffice(document)) {
+      this.openOffice(document);
+    } else {
+      this.document = document;
+    }
+  }
+
+  public openPDF(document: Document | FacilityDocument | ResidentDocument) {
+    this.officeUrl = null;
+    this.document = document;
+
+    if (this.document) {
+      setTimeout(() => PDFObject.embed(this.document.file, '#documentsPDFViewer'), 250);
+    }
+  }
+
+  public openOffice(document: Document | FacilityDocument | ResidentDocument) {
+    this.officeUrl = null;
+    this.document = document;
+
+    if (this.document) {
+      const escaped_url = encodeURIComponent(this.document.file);
+      this.officeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://view.officeapps.live.com/op/embed.aspx?src=${escaped_url}`);
+
+      console.log(this.officeUrl);
+    }
+  }
+
+  public checkExtension(document: Document | FacilityDocument | ResidentDocument) {
+    if (document.hasOwnProperty('extension')) {
+      return DocumentViewerComponent.support_formats.includes(document.extension);
+    }
+
+    return true;
+  }
+
+  isPDF(document: Document | FacilityDocument | ResidentDocument) {
+    if (document.hasOwnProperty('extension')) {
+      return DocumentViewerComponent.pdf_formats.includes(document.extension);
+    }
+
+    return true;
+  }
+
+  isOffice(document: Document | FacilityDocument | ResidentDocument) {
+    if (document.hasOwnProperty('extension')) {
+      return DocumentViewerComponent.office_formats.includes(document.extension);
+    }
+
+    return false;
+  }
+
 }
