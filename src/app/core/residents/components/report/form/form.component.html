@@ -7,6 +7,7 @@
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date')?'error':null">
       <nz-date-picker *ngIf="format_date === 'MM/dd/yyyy'" formControlName="date" [nzFormat]="format_date" [nzDisabledDate]="disabledDate"></nz-date-picker>
       <nz-month-picker *ngIf="format_date === 'MM/yyyy'" formControlName="date" [nzFormat]="format_date" [nzDisabledDate]="disabledDate"></nz-month-picker>
+      <nz-year-picker *ngIf="format_date === 'yyyy'" formControlName="date" [nzFormat]="format_date" [nzDisabledDate]="disabledDate"></nz-year-picker>
       <nz-form-explain *ngIf="hasErrors('date')">
         <app-field-errors [errors]="fieldErrors('date')"></app-field-errors>
       </nz-form-explain>
@@ -18,6 +19,7 @@
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date_from')?'error':null">
       <nz-date-picker *ngIf="format_date_from === 'MM/dd/yyyy'" formControlName="date_from" [nzFormat]="format_date_from" [nzDisabledDate]="disabledDate"></nz-date-picker>
       <nz-month-picker *ngIf="format_date_from === 'MM/yyyy'" formControlName="date_from" [nzFormat]="format_date_from" [nzDisabledDate]="disabledDate"></nz-month-picker>
+      <nz-year-picker *ngIf="format_date_from === 'yyyy'" formControlName="date_from" [nzFormat]="format_date_from" [nzDisabledDate]="disabledDate"></nz-year-picker>
       <nz-form-explain *ngIf="hasErrors('date_from')">
         <app-field-errors [errors]="fieldErrors('date_from')"></app-field-errors>
       </nz-form-explain>
@@ -29,6 +31,7 @@
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('date_to')?'error':null">
       <nz-date-picker *ngIf="format_date_to === 'MM/dd/yyyy'" formControlName="date_to" [nzFormat]="format_date_to" [nzDisabledDate]="disabledDate"></nz-date-picker>
       <nz-month-picker *ngIf="format_date_to === 'MM/yyyy'" formControlName="date_to" [nzFormat]="format_date_to" [nzDisabledDate]="disabledDate"></nz-month-picker>
+      <nz-year-picker *ngIf="format_date_to === 'yyyy'" formControlName="date_to" [nzFormat]="format_date_to" [nzDisabledDate]="disabledDate"></nz-year-picker>
       <nz-form-explain *ngIf="hasErrors('date_to')">
         <app-field-errors [errors]="fieldErrors('date_to')"></app-field-errors>
       </nz-form-explain>
