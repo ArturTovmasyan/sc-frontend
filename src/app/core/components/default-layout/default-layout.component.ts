@@ -74,7 +74,7 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.profile$.me().subscribe(user => {
           this.user = user;
 
-          this.licenseVisible = this.user && this.user.license_accepted === false;
+          this.licenseVisible = this.user && this.user.owner === true && this.user.license_accepted === false;
         });
         break;
       case 'list_change_log':

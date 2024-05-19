@@ -19,6 +19,7 @@ export class User {
 
   space: Space;
 
+  owner: boolean;
   license_accepted: boolean;
 }
 
