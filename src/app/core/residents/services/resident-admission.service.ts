@@ -30,8 +30,8 @@ export class ResidentAdmissionService extends GridService<ResidentAdmission> {
     return this.http.get(this.SERVICE_URL_BASE + `/active/first`);
   }
 
-  public list_active(type: number, type_id: number): Observable<Resident[]> {
-    return this.http.get<Resident[]>(this.SERVICE_URL_BASE + `/active/${type}/${type_id}`);
+  public list_by_state(state: string, type: number, type_id: number): Observable<Resident[]> {
+    return this.http.get<Resident[]>(this.SERVICE_URL_BASE + `/${state}/${type}/${type_id}`);
   }
 
   public list_by_page(params: {key: any, value: any}[]): Observable<PagedResponse<Resident>> {

@@ -155,12 +155,21 @@ export class FormComponent extends AbstractForm implements OnInit {
         break;
       case 'list_admission':
         this.$subscriptions[key] = this.residentAdmission$
-          .list_active(this.form.get('group').value, this.form.get('group_id').value)
+          .list_by_state(this.residentSelector$.state.value, this.form.get('group').value, this.form.get('group_id').value)
           .pipe(first()).subscribe(res => {
             if (res) {
               this.residents = res;
             }
           });
+        break;
+      case 'rs_state':
+        this.$subscriptions[key] = this.residentSelector$.state.subscribe(next => {
+          if (next) {
+            if (this.form.get('group').value !== null && this.form.get('group_id').value !== null) {
+              this.subscribe('list_admission');
+            }
+          }
+        });
         break;
       case 'rs_resident':
         this.$subscriptions[key] = this.residentSelector$.resident.subscribe(next => {
@@ -183,9 +192,7 @@ export class FormComponent extends AbstractForm implements OnInit {
             this.form.get('group_list').setValue(this.group_helper.get_group_data(next, this.form.get('group').value));
           }
 
-          if (this.form.get('group').value !== null && this.form.get('group_id').value !== null) {
-            this.subscribe('list_admission');
-          }
+          this.subscribe('rs_state');
         });
         break;
       case 'vc_resident_all':
