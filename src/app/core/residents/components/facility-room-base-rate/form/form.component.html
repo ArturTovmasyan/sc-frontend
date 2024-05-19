@@ -43,7 +43,7 @@
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let base_rate of get_form_array('levels').controls;let i = index">
+        <ng-container *ngFor="let level of get_form_array('levels').controls;let i = index">
           <tr [formGroupName]="i.toString()">
             <td>{{ this.care_levels[i].title }}</td>
             <td>
