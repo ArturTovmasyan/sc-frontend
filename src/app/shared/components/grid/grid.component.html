@@ -18,7 +18,9 @@
     [modal_callback]="modal_callback"
     [ids]="checkbox_config.ids"
     [single_select]="checkbox_config.ids.length === 1"
-    [multi_select]="checkbox_config.ids.length > 1">
+    [multi_select]="checkbox_config.ids.length > 1"
+    [hidden]="fields === null"
+  >
     <ng-container *ngIf="searchable">
       <nz-input-group *ngIf="fields != null" [nzSize]="'small'" nzCompact nzSearch [nzAddOnAfter]="suffixIconButton"
                       style="width: 25rem;">

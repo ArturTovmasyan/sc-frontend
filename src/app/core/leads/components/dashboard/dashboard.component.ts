@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs';
 import {NzModalService, simpleEmptyImage} from 'ng-zorro-antd';
 import {DomSanitizer} from '@angular/platform-browser';
 import {TitleService} from '../../../services/title.service';
+import {AuthGuard} from '../../../guards/auth.guard';
 
 @Component({
   templateUrl: './dashboard.component.html'
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private modal$: NzModalService,
     private title$: TitleService,
+    private auth_$: AuthGuard
   ) {
     this.$subscriptions = {};
   }
