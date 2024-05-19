@@ -192,4 +192,19 @@ export class ListComponent implements OnInit, OnDestroy {
     });
   }
 
+  show_group (group: any) {
+    let show_in_mode = group.value['show_in_' + this.mode + '_list'];
+    let show_in_mode_group = group.value['show_in_' + this.mode_group + '_list'];
+
+    if (show_in_mode === null || show_in_mode === undefined) {
+      show_in_mode = true;
+    }
+
+    if (show_in_mode_group === null || show_in_mode_group === undefined) {
+      show_in_mode_group = true;
+    }
+
+    return show_in_mode && show_in_mode_group;
+  }
+
 }

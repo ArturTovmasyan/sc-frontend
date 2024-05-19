@@ -15,10 +15,10 @@
 <ng-template #reportBody>
   <nz-collapse [nzNoAnimation]="true">
     <ng-container *ngFor="let group of reports|keyvalue:no_sort_order">
-      <nz-collapse-panel *ngIf="group.value['show_in_' + this.mode + '_list'] && (this.mode_group ? group.value['show_in_' + this.mode_group + '_list'] : true)" [nzHeader]="group.value['title']">
+      <nz-collapse-panel *ngIf="show_group(group)" [nzHeader]="group.value['title']">
         <ul class="reports-list">
           <ng-container *ngFor="let report of group.value['reports']|keyvalue:no_sort_order">
-            <li *ngIf="report.value['show_in_' + this.mode + '_list'] && (this.mode_group ? report.value['show_in_' + this.mode_group + '_list'] : true)">
+            <li *ngIf="show_group(report)">
               <a [routerLink]="" (click)="show_modal_report(group.key, report.key, report.value)"><i
                 class="fas fa-file-download"></i> {{ report.value['title'] }}</a>
             </li>
