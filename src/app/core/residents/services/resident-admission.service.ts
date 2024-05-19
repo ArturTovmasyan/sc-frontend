@@ -40,13 +40,14 @@ export class ResidentAdmissionService extends GridService<ResidentAdmission> {
   public move(data: any): Observable<any> { // TODO(haykg): review when backend will be ready
     const request_data = {id: data.id};
 
+    request_data['group_type'] = data.group_type;
+
     if (data.group_id) {
-      request_data['group_type'] = data.group_type;
-      request_data['group_id'] = data.group_id;
+      request_data['move_id'] = data.group_id;
     }
 
     if (data.bed_id) {
-      request_data['bed_id'] = data.bed_id;
+      request_data['move_id'] = data.bed_id;
     }
 
     return this.http.put<Message>(this.SERVICE_URL_BASE + `/${data.id}/move`, request_data);
