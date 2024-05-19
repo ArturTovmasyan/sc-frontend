@@ -2,7 +2,7 @@
 <nz-divider></nz-divider>
 <form nz-form [formGroup]="form">
   <nz-form-item>
-    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="company_id" nzRequired>Category</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="company_id" nzRequired>Company</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('company_id')?'error':null">
       <div class="add-select-container">
         <nz-select nzShowSearch nzMode="default" nzPlaceHolder="Please select" formControlName="company_id">
@@ -24,7 +24,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="medical_record_number" nzRequired>Medical Record Number</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('medical_record_number')?'error':null">
-      <input nz-input placeholder="First Name" formControlName="medical_record_number">
+      <input nz-input placeholder="Medical Record Number" formControlName="medical_record_number">
       <nz-form-explain *ngIf="hasErrors('medical_record_number')">
         <app-field-errors [errors]="fieldErrors('medical_record_number')"></app-field-errors>
       </nz-form-explain>
@@ -35,7 +35,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="group_number" nzRequired>Group Number</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('group_number')?'error':null">
-      <input nz-input placeholder="First Name" formControlName="group_number">
+      <input nz-input placeholder="Group Number" formControlName="group_number">
       <nz-form-explain *ngIf="hasErrors('group_number')">
         <app-field-errors [errors]="fieldErrors('group_number')"></app-field-errors>
       </nz-form-explain>
@@ -45,7 +45,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="notes">Notes</nz-form-label>
     <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('notes')?'error':null">
-      <input-counter formControlName="notes" placeholder="Description" [maxlength]="512"></input-counter>
+      <input-counter formControlName="notes" placeholder="Notes" [maxlength]="512"></input-counter>
       <nz-form-explain *ngIf="hasErrors('notes')">
         <app-field-errors [errors]="fieldErrors('notes')"></app-field-errors>
       </nz-form-explain>
