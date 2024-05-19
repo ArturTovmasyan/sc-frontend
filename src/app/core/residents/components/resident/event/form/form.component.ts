@@ -53,7 +53,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
       physician_id: [null, Validators.required],
 
-      responsible_persons: [null, Validators.required],
+      responsible_persons: [[], Validators.required],
 
       resident_id: [null, Validators.required]
     });
