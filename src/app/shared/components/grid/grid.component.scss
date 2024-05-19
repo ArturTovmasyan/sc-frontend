@@ -8,6 +8,7 @@
     margin: 5px;
     min-width: 100px;
   }
+
   .custom-filter-dropdown-footer {
     margin: 5px;
     text-align: center;
@@ -20,6 +21,7 @@
 
 nz-checkbox-group {
   display: block;
+
   ::ng-deep .ant-checkbox-wrapper {
     margin-left: 0;
     display: block;
@@ -54,24 +56,32 @@ nz-button-group [nz-button] {
   }
 }
 
-
 dl.grid-definition-list {
+  width: 30rem; // TODO: review
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+
   dt {
     float: left;
-    margin-right: 10%;
-    max-width: 40%;
-    font-weight: bold;
+    width: 50%;
+    /* adjust the width; make sure the total of both is 100% */
+    margin: 0;
+
+    text-align: right;
+    padding: 0 1rem 0 0;
+
+    &:after {
+      content: ":";
+    }
   }
 
   dd {
-    color: grey;
-    margin-left: 50%;
-    margin-bottom: .5em;
-  }
-
-  dd::after {
-    content: " ";
-    display: block;
-    clear: left;
+    float: left;
+    width: 50%;
+    /* adjust the width; make sure the total of both is 100% */
+    padding: 0;
+    margin: 0;
   }
 }
