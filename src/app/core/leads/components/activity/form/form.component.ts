@@ -102,7 +102,7 @@ export class FormComponent extends AbstractForm implements OnInit {
       case 'list_activity_type':
         this.unsubscribe('vc_activity_type');
         this.$subscriptions[key] = this.activity_type$
-          .all([{key: 'owner_type', value: this.form.get('owner_type').value}])
+          .all([{key: 'category', value: this.form.get('owner_type').value}])
           .pipe(first()).subscribe(res => {
           if (res) {
             this.activity_types = res;

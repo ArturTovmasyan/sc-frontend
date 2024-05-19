@@ -366,6 +366,7 @@
     "lead-activity-type-list": {
       "id": "ID",
       "title": "Title",
+      "categories": "Categories",
       "default_status": "Default Status",
       "assign_to": "Assign To",
       "due_date": "Due Date",
