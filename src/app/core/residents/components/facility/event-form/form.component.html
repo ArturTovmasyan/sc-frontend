@@ -18,7 +18,7 @@
   <ng-container *ngIf="this.form.get('start_date').enabled && this.form.get('all_day').enabled">
     <nz-form-item>
       <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="start_date" nzRequired>Start</nz-form-label>
-      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('start_date')?'error':null">
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('start_date')||hasErrors('start_time')?'error':null">
 
         <div *ngIf="this.form.get('start_time').enabled" nz-row nzType="flex" nzJustify="space-between">
           <div nz-col nzSpan="10">
@@ -47,7 +47,7 @@
     </nz-form-item>
     <nz-form-item *ngIf="this.form.get('end_date').enabled">
       <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="end_date" nzRequired>End</nz-form-label>
-      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('end_date')?'error':null">
+      <nz-form-control [nzSm]="16" [nzXs]="24" [nzValidateStatus]="hasErrors('end_date')||hasErrors('end_time')?'error':null">
 
         <div nz-row nzType="flex" nzJustify="space-between">
           <div nz-col nzSpan="10"><nz-date-picker formControlName="end_date" nzFormat="MM/dd/yyyy" [nzDisabledDate]="disabledEndDate"></nz-date-picker></div>
