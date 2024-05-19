@@ -24,7 +24,8 @@ export class UserActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscribe('timer_change_log');
+    // this.subscribe('timer_change_log');
+    this.subscribe('list_change_log');
   }
 
   protected subscribe(key: string) {
@@ -35,13 +36,13 @@ export class UserActivityComponent implements OnInit {
           if (res) {
             this.change_logs = res;
           }
-          this.subscribe('timer_change_log');
+          // this.subscribe('timer_change_log');
         });
         break;
-      case 'timer_change_log':
-        this.$subscriptions[key] =
-          timer(5000).pipe(first()).subscribe(() => this.subscribe('list_change_log'));
-        break;
+      // case 'timer_change_log':
+      //   this.$subscriptions[key] =
+      //     timer(5000).pipe(first()).subscribe(() => this.subscribe('list_change_log'));
+      //   break;
     }
   }
 
