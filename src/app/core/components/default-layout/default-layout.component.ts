@@ -7,13 +7,14 @@ import {User} from '../../models/user';
 import {AuthGuard} from '../../guards/auth.guard';
 import {ProfileService} from '../../services/profile.service';
 import {AuthenticationService} from '../../services/auth.service';
+import {DomHelper} from '../../../shared/helpers/dom-helper';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss']
 })
-export class DefaultLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DefaultLayoutComponent implements OnInit, OnDestroy {
   public navItems = [];
   public sidebarMinimized = true;
   private changes: MutationObserver;
@@ -47,15 +48,16 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy, AfterViewInit 
     this.subscribe('get_profile');
 
     this.generateNavigation(this.router.config[0]);
-  }
 
-  ngAfterViewInit(): void {
-    const nav_ref = document.querySelector('.sc-reference-nav');
-    nav_ref.addEventListener('click', () => {
-      this.toggleRef(nav_ref);
-    });
-
-    setTimeout(() => this.toggleRef(nav_ref, true), 250);
+    DomHelper.checkElement('.sc-reference-nav')
+      .then((element) => {
+        console.log(element);
+        const nav_ref = document.querySelector('.sc-reference-nav');
+        nav_ref.addEventListener('click', () => {
+          this.toggleRef(nav_ref);
+        });
+        this.toggleRef(nav_ref, true);
+      });
   }
 
   toggleRef(nav_ref: Element, first: boolean = false) {
