@@ -58,7 +58,9 @@ export class ResidentSelectorComponent implements OnInit, OnDestroy {
         break;
       case 'rs_group':
         this.$subscriptions[key] = this.residentSelector$.group.subscribe(next => {
-          this.subscribe('list_resident');
+          if (next) {
+            this.subscribe('list_resident');
+          }
         });
         break;
       case 'rs_resident':

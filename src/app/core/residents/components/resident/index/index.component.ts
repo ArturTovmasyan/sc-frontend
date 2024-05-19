@@ -57,6 +57,15 @@ export class IndexComponent implements OnInit, OnDestroy {
 
   subscribe(key: string, params?: any) {
     switch (key) {
+      case 'query':
+        this.$subscriptions[key] = this.route$.queryParams.subscribe(value => {
+          if (value && value.hasOwnProperty('mode')) {
+            this.mode = value.mode === 'true';
+          } else {
+            this.mode = false;
+          }
+        });
+        break;
       case 'segment':
         this.$subscriptions[key] = this.route$.url.subscribe(value => {
           if (value && value.length > 0) {
@@ -74,6 +83,8 @@ export class IndexComponent implements OnInit, OnDestroy {
               this.subscribe('list_apartment');
               this.subscribe('list_region');
             }
+
+            this.subscribe('query');
           }
         });
         break;

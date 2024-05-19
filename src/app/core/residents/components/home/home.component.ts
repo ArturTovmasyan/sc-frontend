@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
         this.data = res;
         // TODO: add region/apartment case
         if (this.data.facility.length === 1) {
-          this.router$.navigate(['residents', GroupType.FACILITY, this.data.facility[0].id]);
+          this.router$.navigate(['residents', GroupType.FACILITY, this.data.facility[0].id], { queryParams: {mode: true}} );
         }
       }
     });
