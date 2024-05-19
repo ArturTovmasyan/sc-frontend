@@ -154,10 +154,10 @@
                     [ngTemplateOutlet]="json_field"></template>
         </ng-container>
         <ng-container *ngSwitchCase="'icon'">
-          <i [attr.class]="row[field.id]" style="font-size: 24px;" [title]="row[field.id]"></i>
+          <i [attr.class]="row[field.id]" style="font-size: 24px;"></i>
         </ng-container>
         <ng-container *ngSwitchCase="'color'">
-          <i class="fas fa-circle" style="font-size: 24px;" [style.color]="row[field.id]"></i>
+          <i class="fas fa-circle" style="font-size: 24px;" [style.color]="row[field.id]" [title]="row[field.id]"></i>
         </ng-container>
         <ng-container *ngSwitchDefault>
           <ng-container *ngIf="field.link">
