@@ -89,18 +89,6 @@
             </ng-container>
           </tr>
           <tr>
-            <td>Web Leads</td>
-            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
-              <td class="text-center">{{item.value.web_leads}}</td>
-            </ng-container>
-          </tr>
-          <tr>
-            <td>Hot Leads</td>
-            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
-              <td class="text-center"><a [routerLink]="['/dashboard', facilityId, 'hot-leads', item.key]">{{item.value.hot_leads}}</a></td>
-            </ng-container>
-          </tr>
-          <tr>
             <td>Notice to Vacate</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
               <td class="text-center">{{item.value.notice_to_vacate}}</td>
@@ -133,6 +121,24 @@
               <td class="text-center">{{item.value.tours_per_month}}</td>
             </ng-container>
           </tr>
+          <tr class="table-info">
+            <td>Social Media Inquiries</td>
+            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
+              <td class="text-center">{{item.value.web_page_inquiries + item.value.facebook_ads_inquiries}}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Web Page Inquiries</td>
+            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
+              <td class="text-center">{{item.value.web_page_inquiries}}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Facebook Ads Inquiries</td>
+            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
+              <td class="text-center">{{item.value.facebook_ads_inquiries}}</td>
+            </ng-container>
+          </tr>
           <tr class="table-success">
             <td>Total Inquiries per month</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
@@ -155,6 +161,18 @@
             <td>Not Qualified Inquiries per month</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
               <td class="text-center">{{item.value.not_qualified_inquiries}}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Web Leads</td>
+            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
+              <td class="text-center">{{item.value.web_leads}}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Hot Leads</td>
+            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
+              <td class="text-center"><a [routerLink]="['/dashboard', facilityId, 'hot-leads', item.key]">{{item.value.hot_leads}}</a></td>
             </ng-container>
           </tr>
           <tr class="table-warning">

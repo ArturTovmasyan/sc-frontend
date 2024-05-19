@@ -52,6 +52,8 @@ class FacilityDashboardData {
   notice_to_vacate: number;
   outreach_per_month: number;
   projected_near_term_occupancy: number;
+  web_page_inquiries: number;
+  facebook_ads_inquiries: number;
   qualified_inquiries: number;
   not_sure_inquiries: number;
   not_qualified_inquiries: number;

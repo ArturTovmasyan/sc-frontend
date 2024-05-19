@@ -110,20 +110,6 @@
             </ng-container>
           </tr>
           <tr>
-            <td>Web Leads</td>
-            <ng-container *ngFor="let facility of facilities">
-              <td
-                class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.web_leads : '-' }}</td>
-            </ng-container>
-          </tr>
-          <tr>
-            <td>Hot Leads</td>
-            <ng-container *ngFor="let facility of facilities">
-              <td
-                class="text-center"><a [routerLink]="['/dashboard', facility.id, 'hot-leads', currentDate|date:'MMM-yy']">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.hot_leads : '-' }}</a></td>
-            </ng-container>
-          </tr>
-          <tr>
             <td>Notice to Vacate</td>
             <ng-container *ngFor="let facility of facilities">
               <td
@@ -160,6 +146,27 @@
                 class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.tours_per_month : '-' }}</td>
             </ng-container>
           </tr>
+          <tr class="table-info">
+            <td>Social Media Inquiries</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td
+                class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.web_page_inquiries + dashboardData[facility.id].data.facebook_ads_inquiries : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Web Page Inquiries</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td
+                class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.web_page_inquiries : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Facebook Ads Inquiries</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td
+                class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.facebook_ads_inquiries : '-' }}</td>
+            </ng-container>
+          </tr>
           <tr class="table-success">
             <td>Total Inquiries per month</td>
             <ng-container *ngFor="let facility of facilities">
@@ -186,6 +193,20 @@
             <ng-container *ngFor="let facility of facilities">
               <td
                       class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.not_qualified_inquiries : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Web Leads</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td
+                class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.web_leads : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td>Hot Leads</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td
+                class="text-center"><a [routerLink]="['/dashboard', facility.id, 'hot-leads', currentDate|date:'MMM-yy']">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.hot_leads : '-' }}</a></td>
             </ng-container>
           </tr>
           <tr class="table-warning">
