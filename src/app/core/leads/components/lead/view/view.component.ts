@@ -25,7 +25,8 @@ import {AuthGuard} from '../../../../guards/auth.guard';
 export class ViewComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
-  broadcast_reload: number;
+  broadcast_reload_funnel_stage: number;
+  broadcast_reload_activity: number;
 
   lead: Lead;
   referral: Referral;
@@ -225,6 +226,10 @@ export class ViewComponent implements OnInit, OnDestroy {
 
                 this.subscribe('get_lead', {lead_id: this.lead.id});
 
+                if (component instanceof LeadFormComponent || component instanceof QualificationFormComponent) {
+                    this.broadcast_reload_funnel_stage = Math.random();
+                }
+
                 modal.close();
               },
               error => {
@@ -271,7 +276,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   broadcast_reload_event($event) {
       this.subscribe('get_lead', {lead_id: this.lead.id});
-      this.broadcast_reload = $event;
+      this.broadcast_reload_activity = $event;
   }
 
   mark_spam(state: boolean) {

@@ -88,12 +88,14 @@ export class FormComponent extends AbstractForm implements OnInit {
                                         this.add_field('qualifications', {
                                             qualification_requirement_id: value.id,
                                             qualified: Qualified.NOT_SURE
-                                        }, this.onQualificationValueChange);
+                                        });
                                     });
                                 }
-
-
                             }
+
+                            this.get_form_array('qualifications').controls.forEach(control => {
+                                control.valueChanges.subscribe(next => this.onQualificationValueChange(next));
+                            });
                         }
                     }
                 });
@@ -177,8 +179,7 @@ export class FormComponent extends AbstractForm implements OnInit {
     onQualificationValueChange(next: any): void {
         if (this.edit_mode) {
             if (this.getFullQualifiedValue() === Qualified.NO) {
-                // this.form.get('close_lead').enable();
-                this.form.get('close_lead').disable();
+                this.form.get('close_lead').enable();
             } else {
                 this.form.get('close_lead').disable();
             }

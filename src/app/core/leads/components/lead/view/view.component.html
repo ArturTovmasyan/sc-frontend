@@ -340,7 +340,8 @@
               <nz-empty *ngIf="!lead" class="ant-empty-normal" [nzNotFoundImage]="defaultSvg"></nz-empty>
               <app-lead-lead-funnel-stage *ngIf="lead"
                                           [lead_id]="lead.id"
-                                          (reload)="broadcast_reload_event($event)"></app-lead-lead-funnel-stage>
+                                          [reloadIn]="broadcast_reload_funnel_stage"
+                                          (reloadOut)="broadcast_reload_event($event)"></app-lead-lead-funnel-stage>
             </div>
           </nz-collapse-panel>
         </nz-collapse>

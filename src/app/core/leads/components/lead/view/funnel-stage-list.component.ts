@@ -15,7 +15,10 @@ import {ModalFormService} from '../../../../../shared/services/modal-form.servic
 })
 export class ListComponent extends GridComponent<LeadFunnelStage, LeadFunnelStageService> implements OnInit, AfterViewInit {
   @Input() lead_id: number;
-  @Output() reload: EventEmitter<number> = new EventEmitter();
+  @Input() set reloadIn(value: number) {
+      this.reload_data();
+  };
+  @Output() reloadOut: EventEmitter<number> = new EventEmitter();
 
   constructor(
     protected service$: LeadFunnelStageService,
@@ -43,6 +46,6 @@ export class ListComponent extends GridComponent<LeadFunnelStage, LeadFunnelStag
   }
 
   on_reload() {
-    this.reload.emit(Math.random());
+    this.reloadOut.emit(Math.random());
   }
 }
