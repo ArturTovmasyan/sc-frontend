@@ -4,6 +4,7 @@ import {filter, map, mergeMap} from 'rxjs/operators';
 import {TitleService} from './services/title.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Spinkit} from 'ng-http-loader';
+import {NzModalService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'body',
@@ -20,6 +21,7 @@ export class CoreComponent {
 
   constructor(
     private router: Router,
+    private nzModal$: NzModalService,
     private activatedRoute: ActivatedRoute,
     private title$: TitleService,
     private translate$: TranslateService,
@@ -44,7 +46,10 @@ export class CoreComponent {
       }))
       .pipe(filter((route) => route.outlet === 'primary' || route.outlet === 'resident-details')) // TODO(haykg): review
       .pipe(mergeMap((route) => route.data))
-      .subscribe((event) => this.title$.setTitle(event['title']));
+      .subscribe((event) => {
+        this.nzModal$.closeAll();
+        this.title$.setTitle(event['title']);
+      });
 
     translate$.setDefaultLang('en');
     translate$.use('en');
