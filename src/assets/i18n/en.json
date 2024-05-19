@@ -556,7 +556,7 @@
       "button": {
         "open": "Open",
         "closed": "Closed",
-        "both": "Open & Closed",
+        "both": "Both",
         "report": "Report"
       },
       "id": "ID",
