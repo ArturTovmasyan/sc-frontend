@@ -29,7 +29,7 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   selectedTab: number;
 
-  protected group_helper: GroupHelper;
+  public group_helper: GroupHelper;
 
   city_state_zips: CityStateZip[];
   care_levels: CareLevel[];

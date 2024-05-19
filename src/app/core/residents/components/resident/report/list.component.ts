@@ -13,7 +13,7 @@ import {Subscription} from 'rxjs';
 })
 export class ListComponent implements OnInit, OnDestroy {
   protected title: string = null;
-  protected reports = null;
+  public reports = null;
   protected $subscriptions: { [key: string]: Subscription; };
 
   constructor(
@@ -54,7 +54,7 @@ export class ListComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {
+  public no_sort_order(a: KeyValue<any, any>, b: KeyValue<any, any>): number {
     return 0;
   }
 

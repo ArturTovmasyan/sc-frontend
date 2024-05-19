@@ -20,7 +20,7 @@ import {GroupHelper} from '../../helper/group-helper';
 export class ResidentSelectorComponent implements OnInit, OnDestroy {
   public form: FormGroup;
 
-  protected group_helper: GroupHelper;
+  public group_helper: GroupHelper;
 
   public active_residents: Resident[];
   public inactive_residents: Resident[];
