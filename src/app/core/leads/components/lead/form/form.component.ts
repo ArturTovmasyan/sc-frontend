@@ -1,4 +1,5 @@
-﻿import * as _ from 'lodash';
+﻿import * as differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
+import * as _ from 'lodash';
 import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AbstractForm} from '../../../../../shared/components/abstract-form/abstract-form';
@@ -72,6 +73,8 @@ export class FormComponent extends AbstractForm implements OnInit {
 
   edit_data: Lead;
 
+  disabledDate: (date: Date) => boolean;
+
   constructor(
     protected modal$: ModalFormService,
     private formBuilder: FormBuilder,
@@ -102,6 +105,11 @@ export class FormComponent extends AbstractForm implements OnInit {
          {key: 'funnel_stage', component: FunnelStageFormComponent},
          {key: 'temperature', component: TemperatureFormComponent}
     ];
+
+    this.disabledDate = (current: Date): boolean => {
+        const today = DateHelper.newDate();
+        return differenceInCalendarDays(current, today) > 0;
+    };
   }
 
   ngOnInit(): void {
