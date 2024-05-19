@@ -9,6 +9,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {FormComponent as LedgerFormComponent} from '../form/form.component';
 import {AbstractForm} from '../../../../../../shared/components/abstract-form/abstract-form';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {PaymentSource} from '../../../../models/payment-source';
+import {PaymentSourceService} from '../../../../services/payment-source.service';
 
 @Component({
   templateUrl: './view.component.html'
@@ -17,6 +19,8 @@ export class ViewComponent implements OnInit, OnDestroy {
   defaultSvg = this.sanitizer.bypassSecurityTrustResourceUrl(simpleEmptyImage);
 
   ledger: ResidentLedger;
+
+  payment_sources: PaymentSource[];
 
   public title: string = null;
 
@@ -29,7 +33,8 @@ export class ViewComponent implements OnInit, OnDestroy {
     private title$: TitleService,
     private ledger$: ResidentLedgerService,
     private route$: ActivatedRoute,
-    private router$: Router
+    private router$: Router,
+    private paymentSource$: PaymentSourceService
   ) {
     this.$subscriptions = {};
   }
@@ -37,6 +42,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribe('title');
     this.subscribe('query_map');
+    this.subscribe('list_payment_source');
   }
 
   ngOnDestroy(): void {
@@ -65,6 +71,13 @@ export class ViewComponent implements OnInit, OnDestroy {
         this.$subscriptions[key] = this.ledger$.get(params.ledger_id, this.query_params).pipe(first()).subscribe(res => {
           if (res) {
             this.ledger = res;
+          }
+        });
+        break;
+      case 'list_payment_source':
+        this.$subscriptions[key] = this.paymentSource$.all().pipe(first()).subscribe(res => {
+          if (res) {
+            this.payment_sources = res;
           }
         });
         break;
@@ -192,5 +205,19 @@ export class ViewComponent implements OnInit, OnDestroy {
       this.router$.navigate(['resident', 'ledger', this.ledger.next_ledger_id], {queryParams: this.query_params}).then(() => {
           location.reload();
       });
+  }
+
+  get_source_title(id: number) {
+    let result = '(none)';
+
+    if (this.payment_sources && this.payment_sources.length > 0) {
+      const source = this.payment_sources.filter(v => v.id === id).pop();
+
+      if (source) {
+        result = source.title;
+      }
+    }
+
+    return result;
   }
 }

@@ -459,7 +459,8 @@
       "resident": "Resident",
       "date_created": "Created At",
       "amount": "Amount",
-      "balance_due": "Balance Due"
+      "balance_due": "Balance Due",
+      "info": "Sources"
     },
     "resident-expense-item-list": {
       "id": "ID",
