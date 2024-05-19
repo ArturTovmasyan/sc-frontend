@@ -107,6 +107,12 @@
             </ng-container>
           </tr>
           <tr>
+            <td>Hospice</td>
+            <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
+              <td class="text-center">{{item.value.hospice}}</td>
+            </ng-container>
+          </tr>
+          <tr>
             <td>Projected Near Term Occupancy</td>
             <ng-container *ngFor="let item of dashboardData.data | keyvalue:no_sort_order">
               <td class="text-center">{{item.value.projected_near_term_occupancy}}</td>

@@ -61,4 +61,5 @@ class FacilityDashboardData {
   beds_configured: number;
   total_inquiries: number;
   tours_per_month: number;
+  hospice: number;
 }

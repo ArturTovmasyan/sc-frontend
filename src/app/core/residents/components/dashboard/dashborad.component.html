@@ -131,6 +131,13 @@
             </ng-container>
           </tr>
           <tr>
+            <td>Hospice</td>
+            <ng-container *ngFor="let facility of facilities">
+              <td
+                class="text-center">{{ dashboardData.hasOwnProperty(facility.id) ? dashboardData[facility.id].data.hospice : '-' }}</td>
+            </ng-container>
+          </tr>
+          <tr>
             <td>Projected Near Term Occupancy</td>
             <ng-container *ngFor="let facility of facilities">
               <td
