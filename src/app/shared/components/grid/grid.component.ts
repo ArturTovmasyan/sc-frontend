@@ -460,7 +460,11 @@ export class GridComponent<T extends IdInterface, Service extends GridService<T>
   }
 
   public check_empty(value: any) {
-    return !_.isEmpty(value) && !_.isEmpty(_.trim(value)) && value[0] !== null;
+    if (_.isString(value) || _.isArray(value) || value === null || value === undefined) {
+      return !_.isEmpty(value) && !_.isEmpty(_.trim(value)) && value[0] !== null;
+    }
+
+    return true;
   }
 
   protected replace_known_value(value: any) {
