@@ -455,6 +455,13 @@
       "status": "Status",
       "type_info": "Type"
     },
+    "lead-contact-list": {
+      "id": "ID",
+      "full_name": "Full Name",
+      "organization": "Organization",
+      "notes": "Notes",
+      "space": "Space"
+    },
     "admin-notification-list": {
       "id": "ID",
       "type": "Type",
